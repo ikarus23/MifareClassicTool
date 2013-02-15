@@ -122,3 +122,12 @@ Icons used in this application:
   ([Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/))
 
 MIFARE is a registered trademark of NXP Semiconductors.
+
+
+
+Import Code to Eclipse
+----------------------
+
+* File -> Project... -> Android -> Android Project from Existing Code
+* Select (browse to) the MifareClassicTool folder from the git-repository
+* Click Finish
