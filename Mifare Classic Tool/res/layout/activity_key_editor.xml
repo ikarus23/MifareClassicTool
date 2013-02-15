@@ -1,0 +1,74 @@
+<!-- 
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ -->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayoutKeyEditor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".KeyEditorActivity" >
+
+    <!-- Dummy for preventing EditTexts to get focus on Activity startup -->
+    <LinearLayout
+        android:id="@+id/dummyView"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0dip"
+        android:layout_height="0dip" />
+
+    <ScrollView
+        android:id="@+id/scrollViewKeyEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonKeyEditorSave"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
+
+        <EditText
+            android:id="@+id/editTextKeyEditorKeys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textCapCharacters|textMultiLine|textNoSuggestions"
+            android:typeface="monospace" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonKeyEditorSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/buttonKeyEditorRemovieDoubles"
+        android:onClick="onSave"
+        android:text="@string/button_save" />
+
+    <Button
+        android:id="@+id/buttonKeyEditorRemovieDoubles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onRemoveDuplicates"
+        android:text="@string/button_remove_duplicates" />
+
+</RelativeLayout>

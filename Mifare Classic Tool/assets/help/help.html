@@ -1,0 +1,328 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Help and Infos</title>
+</head>
+<body>
+  <div align="center">
+    <img src="mct_logo_no_bg.png" width="250px" />
+  </div>
+  <hr />
+  <h1>Help and Infos</h1>
+  <h2>Table of Contents</h2>
+  <ul>
+    <li>
+      <a href="#general_information">1. General Information</a>
+      <ul>
+        <li><a href="#features">1.1 Features</a></li>
+        <li><a href="#license">1.2 License</a></li>
+      </ul>
+    </li>
+    <li><a href="#getting_started">2. Getting Started</a></li>
+    <li><a href="#read_tag">3 Read Tag</a></li>
+    <li><a href="#write_tag">4 Write Tags</a>
+    <ul>
+        <li><a href="#write_block">4.1 Write Block</a></li>
+        <li><a href="#write_full_dump">4.2 Write Full Dump (Clone)</a>
+          </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#edit_dump_file">5. Edit Tag Dump File</a>
+      <ul>
+        <li><a href="#display_ascii">5.1 Display Data as ASCII</a></li>
+        <li><a href="#display_ac">5.2 Display Access Conditions</a></li>
+        <li><a href="#display_vb">5.3 Display Value Blocks as Integer</a></li>
+      </ul>
+    </li>
+    <li><a href="#edit_key_file">6. Edit or Add Key File</a></li>
+  </ul>
+  <hr />
+
+  <h2 id="general_information">1. General Information</h2>
+  <p>
+    This tool provides several features to interact with (and only with)
+    Mifare Classic RFID-Tags. It is designed for users who are
+    at least a bit familiar with the Mifare Classic technology.
+    You also need an understanding of the hexadecimal number system,
+    because all data input and output is in hexadecimal.
+    <br /><br />
+    Some important thing are:
+    <ul>
+      <li>The features this tool provides are really basic. There are no such
+        fancy things like saving an URL to a RFID-Tag with a nice looking
+        graphical user interface. If you want so save things on a tag,
+        you have to input the raw hexadecimal data.
+      </li>
+      <li>This App <b>can not crack/hack</b>
+        any Mifare Classic keys. If you want to read/write a RFID-Tag, you
+        first need keys for this specific tag. For additional information
+        please read/see chapter
+        <a href="#getting_started">Getting Started</a>.
+      </li>
+      <li>There will be <b>no &quot;brute-force&quot; attack</b>
+        possibility in this application. It is way to slow due
+        to the protocol.
+      </li>
+    </ul>
+    For further information about Mifare classic check
+    <a href="https://en.wikipedia.org/wiki/MIFARE">Wikipedia</a>,
+    <a href="https://www.google.com/search?q=mifare+classic">
+    do some Google search</a> or read the
+    <a href="http://www.nxp.com/documents/data_sheet/MF1S503x.pdf">
+    Mifare Classic (1k) 'Datasheet'</a> (PDF) from NXP.
+    <br /><br />
+    This application is fee software under the GPLv3
+    <a href="#license">License</a>. The source code is available on
+    <a href="https://github.com/ikarus23/MifareClassicTool">
+      github</a>.
+    <br />
+    <br />
+    This application was tested on:
+    <ul>
+      <li>Google Nexus 7, Android 4.1.0 - 4.2.1</li>
+      <li>Samsung Galaxy Nexus, Android 4.1.0 - 4.2.1</li>
+    </ul>
+  </p>
+
+  <h3 id="features">1.1 Features</h3>
+  <p>
+    <ul>
+      <li>Read Mifare Classic tags</li>
+      <li>Edit and save (dump) the tag data you read</li>
+      <li>Write to Mifare Classic tags (block-wise)</li>
+      <li>Clone Mifare Classic tags<br />
+        (Write dump from a tag to a new tag;
+        except the first block.)</li>
+      <li>Key management based on dictionary-attack <br />
+        (Write the keys you know in a file (dictionary).<br />
+        MCT will try to authenticate with these
+        keys against all sectors<br />and read as much as possible.
+        See chapter <a href="#getting_started">Getting Started</a>.)
+      </li>
+      <li>Create, edit and save key files (dictionaries).</li>
+      <li>Display the tag data as highlighted hex.</li>
+      <li>Display the tag data as 7-Bit US-ASCII.</li>
+      <li>Display the Mifare Classic Access Conditions as a table.</li>
+      <li>Display Mifare Classic Value Blocks as integer.</li>
+      <li>It's open source. ;)</li>
+    </ul>
+  </p>
+
+  <h3 id="license">1.2 License</h3>
+  <p>
+    This application is originally developed by
+    Gerhard Klostermeier in cooperation with SySS GmbH
+    (<a href="http://www.syss.de/">www.syss.de</a>) in 2012/2013.
+    It is an open source application and licensed under the
+    <a href="https://www.gnu.org/licenses/gpl-3.0.txt">
+      GNU General Public License v3.0 (GPLv3)</a>.
+    <br /><br />
+    Icons used in this application:
+    <ul>
+      <li>Oxygen Icons: <a href="http://www.oxygen-icons.org/">www.oxygen-icons.org</a>
+        <br />(<a href="http://www.gnu.org/licenses/lgpl.html">GNU Library General Public License</a>)
+      </li>
+      <li>RFID Tag: <a href="http://www.nfc-tag.de/">www.nfc-tag.de</a>
+        <br />(<a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons 3.0</a>)
+      </li>
+    </ul>
+    MIFARE is a registered trademark of NXP Semiconductors.
+  </p>
+  <hr />
+
+
+  <h2 id="getting_started">2. Getting Started</h2>
+  <p>
+    First of all you need the keys for the tag you want to read.
+    Due to some weaknesses in Mifare Classic, you can retrieve
+    all the keys (A and B) of a tag with tools like the
+    <a href="http://www.proxmark.org/">Proxmark3</a> or
+    normal RFID-Readers and some special software
+    (<a href="https://code.google.com/p/mfcuk/">mfcuk</a>,
+    <a href="https://code.google.com/p/nfc-tools/wiki/mfoc">mfoc</a>).
+    <br /><br />
+    The application comes with a standard key file called
+    <i>std.keys</i>, which only contains the
+    well known keys and some standard keys from a short Google search.
+    You can try to read a tag with this key file using
+    &quot;Read Tag&quot; from main menu.
+    <br /><br />
+    Once you know some keys, you cam to put them into a simple text
+    file (one key per line). You can do this on your PC and transfer
+    the file to the <i>MifareClassicTool/key-files/</i>
+    directory (on external storage), or you can create a new key file via
+    &quot;Edit or Add Key File&quot; from main menu.
+    If you are finished setting up your key file, you can read a tag
+    using &quot;Read Tag&quot; from main menu.
+    <br /><br />
+    <b>Advantages of the Key Files Concept:</b>
+    <ul>
+      <li>
+        <b>You don't have to worry about which key is for which
+        sector.</b><br />
+        The application tries to authenticate with all keys from the key
+        file against all sectors (like a dictionary-attack).
+      </li>
+      <li>
+        <b>You don't have to know all the keys.</b><br />
+        If neither key A nor key B for a specific sector is found in the
+        key file (dictionary), the application will skip reading this
+        sector.
+      </li>
+    </ul>
+    This dictionary-attack based mapping process
+    (keys &lt;-&gt; sectors) makes it easy for you to read as much as
+    possible with the keys you know!
+  </p>
+  <hr />
+
+
+  <h2 id="read_tag">3. Read Tag</h2>
+  <p>
+    Technical speaking, reading a RFID-Tag is done in two steps:
+    <ul>
+      <li>
+        <b>Choose a key file.</b><br />
+        Press &quot;Read Tag&quot; from main menu. Now select
+        key files which (perhaps) contain the keys for the tag.
+        You can also specify the range of sectors you want to read.
+        Start the mapping process with the lower right button.<br />
+        But: For large key files this could take quite some time!
+      </li>
+      <li>
+        <b>Read tag.</b><br />
+        After the keys are mapped to sectors based on a kind of
+        dictionary-attack, the application will instantly start
+        to read the tag. The result will be displayed in a
+        simple editor (See chapter
+        <a href="#edit_dump_file">Edit Tag Dump File</a>.)
+      </li>
+    </ul>
+  </p>
+  <hr />
+
+
+  <h2 id="write_tag">4. Write Tag</h2>
+  <p>
+    If you want to write data to a Mifare Classic tag, it is important
+    that you understand what you are doing. Writing the wrong data
+    to certain blocks may cause irreparable damage to the tag.
+  </p>
+
+  <h3 id="write_block">4.1 Write Block</h3>
+  <p>
+    First you have to specify to what block you want to write to.
+    Typical (Mifare Classic 1k) ranges are: sector 0-15, block 0-3.
+    The second step is to enter the data you want to write. This is
+    done in hexadecimal format with a length of 16 byte (32 characters).
+    After pressing the button the last step is to chose key files
+    which (possibly) contain the key with privilege to write for this
+    sector/block.
+  </p>
+
+  <h3 id="write_full_dump">4.2 Write Full Dump (Clone)</h3>
+  <p>
+    If you want to clone a tag, you first have to read and then dump
+    the original tag. Make sure you got a full dump (all sectors and
+    blocks). The second step is to restore the dumped data on a
+    new tag. A new tag is one where all Sector Trailers are
+    factory formatted (Key A = 0xFFFFFFFFFFFF, Key B = not important,
+    Access Conditions = 0xFF0780).
+    <br /><br />
+    <b>Attention:</b>
+    <ul>
+      <li>Dump and tag size must be the same.<br />
+      You can not restore a Mifare Classic 4k dump on a Mifare Classic
+      1k tag.</li>
+      <li>The first block of the first sector of a Mifare Classic
+      tag is read-only and therefore not cloneable.</li>
+    </ul>
+  </p>
+  <hr />
+
+
+  <h2 id="edit_dump_file">5. Edit Tag Dump File</h2>
+  <p>
+    The tag editor is a simple hex-editor with some highlighting.
+    This editor can be accessed by two different ways:
+    <ul>
+      <li>
+        Read a tag.<br />
+        After reading a tag the result is displayed in this
+        editor (See chapter <a href="#read_tag">Read Tag</a>.)
+      </li>
+      <li>
+        Open a saved tag.<br />
+        You can edit a saved dump via &quot;Edit Tag Dump&quot; from
+        main menu.
+      </li>
+    </ul>
+    You can save a dump into a file by pressing the save button.
+    The dumps will be saved in the <b>MifareClassicTool/dump-files/</b>
+    directory (on external storage).
+  </p>
+
+  <h3 id="display_ascii">5.1 Display Data as ASCII</h3>
+  <p>
+    From the dump editor you can display the data in 7-Bit US-ASCII.
+    Non printable characters are replaced with a dot (".").
+    The last block of a sector, the sector trailer, will not be
+    translated to ASCII.
+  </p>
+
+  <h3 id="display_ac">5.2 Display Access Conditions</h3>
+  <p>
+    From the dump editor you can display the Mifare Classic Access
+    Conditions. If you do not know what they are, you can read
+    chapter 8.6.3 and 8.7 (and subchapters) from the
+    <a href="http://www.nxp.com/documents/data_sheet/MF1S503x.pdf">
+    Mifare Classic (1k) Datasheet</a> (PDF).
+  </p>
+
+  <h3 id="display_vb">5.3 Display Value Blocks as Integer</h3>
+  <p>
+    From the dump editor you can resolve blocks formatted as
+    Mifare Classic Value Block to integer format.
+    For further information regarding Value Blocks read/see
+    chapter 8.6.2.1 from the
+    <a href="http://www.nxp.com/documents/data_sheet/MF1S503x.pdf">
+    Mifare Classic (1k) Datasheet</a> (PDF).
+  </p>
+  <hr />
+
+
+  <h2 id="edit_key_file">6. Edit or Add Key File</h2>
+  <p>
+    There are two ways to create a key file:
+    <ul>
+      <li><b>This Application</b><br />
+        You can create a new key file via
+        &quot;Edit/Add Key File&quot; from main menu.
+      </li>
+      <li><b>On your Computer</b><br />
+        You can create a simple text file on your computer and
+        transmit to <b>MifareClassicTool/key-files/</b> on
+        external storage.
+      </li>
+    </ul>
+    Key files are simple text files which contain one Mifare Classic
+    key per line (hexadecimal, 6 byte, 12 characters).
+    Lines <b>starting</b> with # as well as empty lines are not
+    considered.
+    <br /><br />
+    You can edit key files any time you want with
+    &quot;Edit/Add Key File&quot; from main menu.
+    <br /><br />
+    Because key files are used like dictionaries in dictionary-attacks,
+    it is sufficient to enter only different keys (even if the key
+    is used for multiple sectors). You can remove duplicates
+    from a key file with the lower right button in the key editor.
+    For other advantages see chapter
+    <a href="#getting_started">Getting Started</a>, section
+    &quot;Advantages of the key files concept&quot;.
+  </p>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.syss.MifareClassicTool"
+    android:versionCode="1"
+    android:versionName="1.0.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
+    <application
+        android:name="de.syss.MifareClassicTool.MCTApp"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- NFC Tech Filter -->
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.CreateKeyMapActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:icon="@drawable/map_keys_to_sector"
+            android:label="@string/title_activity_create_key_map"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.DumpEditorActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:icon="@drawable/edit_dump"
+            android:label="@string/title_activity_dump_editor" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.FileChooserActivity"
+            android:icon="@drawable/open"
+            android:label="@string/title_activity_file_chooser"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.AccessConditionsActivity"
+            android:configChanges="orientation|screenSize"
+            android:icon="@drawable/access_conditions"
+            android:label="@string/title_activity_access_conditions"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.ValueBlocksActivity"
+            android:configChanges="orientation|screenSize"
+            android:icon="@drawable/value_block_to_int"
+            android:label="@string/title_activity_value_blocks"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.WriteTagActivity"
+            android:icon="@drawable/write_tag"
+            android:label="@string/title_activity_write_tag"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.ReadTagActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:icon="@drawable/read_tag"
+            android:label="@string/title_activity_read_tag"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.KeyEditorActivity"
+            android:icon="@drawable/edit_keys"
+            android:label="@string/title_activity_key_editor"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.HelpActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:icon="@drawable/help_and_infos"
+            android:label="@string/title_activity_help"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.HexToAsciiActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:icon="@drawable/hex_to_ascii"
+            android:label="@string/title_activity_hex_to_ascii"
+            android:launchMode="singleTop" >
+        </activity>
+    </application>
+
+</manifest>

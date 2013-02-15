@@ -1,0 +1,32 @@
+TODO:
+
+()   = Just a "todo"  (= LOW in source code)
+(+)  = Important      (= TODO in source code)
+(++) = Very important (= FIXME in source code)
+
+
+
+(+)  Move the dump editor functions (save, ascii,
+     access conditions, value blocks) from buttons
+     to android options menu.
+
+(+)  Clone tag but use "08778F" as access condition.
+     This ACs permit any change with key B. If a reader
+     does not check the ACs, this functionality could
+     be used to make the RFID-Tag reusable
+     (there is no read only block).
+
+(+)  Use XML to save dumps.
+     Tagging lines with symbols like "+" is a ugly hack.
+
+(+)  Test Application with Mifare Classic 2k Tags.
+
+()   Import key files from any location on the device.
+
+()   Pass better objects between activities (via intent)
+     then a stringblobb separated by new line.
+     Each occurrence of this issue is marked in the source code.
+     (See http://stackoverflow.com/a/2141166)
+
+()   The key map creator activity should return the key map
+     in intent extra.

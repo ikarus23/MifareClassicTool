@@ -1,0 +1,76 @@
+#!/usr/bin/expect -f
+
+########################################################################
+#
+# Copyright 2013 Gerhard Klostermeier
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+########################################################################
+#
+# Usage: ./mct-dump2prox-emu <dump-file> <proxmark3-client-bin>
+#
+########################################################################
+#
+# Info:
+# - You have to install "expect"!
+# - "dump-file" must be exactly formatted like
+#   "example-dump-file.txt".
+# - "proxmark3-client-bin" is the client binary
+#   (proxmark-svn/client/proxmark3)
+# - For more information see the README.txt
+#
+########################################################################
+
+
+
+# Set vars.
+set dump [lindex $argv 0]
+set pm3 [lindex $argv 1]
+set i 0
+
+# Run pm3 client.
+spawn $pm3
+#interact -o "proxmark3> " return
+
+# Clear emulator memory.
+expect "proxmark3> "
+send "hf mf eclr\r"
+expect "proxmark3> "
+
+# Open dump file.
+set fhandle [open $dump r]
+
+while {[gets $fhandle inline] >= 0} {
+    # Is it a header (starting with "+")?
+    if {![regexp {^\+.*$} $inline]} {
+        # Is it the first block?
+        if {$i == 0} {
+            # Save UID for later use.
+            regexp {^.{8}} $inline uid
+        }
+        # set emulator blocks
+        send "hf mf eset $i $inline\r"
+        expect "proxmark3> "
+        incr i 1
+    }
+}
+# Close dump file.
+close $fhandle
+
+# Enter sim command.
+send "hf mf sim $uid"
+
+# Hand over to user.
+interact

@@ -1,0 +1,208 @@
+<!-- 
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ -->
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewWriteTag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutWriteTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textViewWriteTagBlockHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_gray"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/text_wirte_block"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutWriteTagBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewWriteTagBlockHeader" >
+
+            <!-- Dummy for preventing EditTexts to get focus on -->
+            <!-- Activity startup -->
+            <LinearLayout
+                android:id="@+id/dummyView"
+                android:layout_width="0dip"
+                android:layout_height="0dip"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <TextView
+                android:id="@+id/textViewWriteTagSector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editTextWriteTagSector"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:text="@string/text_sector"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editTextWriteTagSector"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/textViewWriteTagSector"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="number"
+                android:maxLength="2"
+                android:minWidth="50dp" />
+
+            <TextView
+                android:id="@+id/textViewWriteTagHint1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/editTextWriteTagSector"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@id/editTextWriteTagSector"
+                android:text="@string/text_starting_at_0"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textViewWriteTagBlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editTextWriteTagBlock"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/textViewWriteTagSector"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:text="@string/text_block"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editTextWriteTagBlock"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editTextWriteTagSector"
+                android:layout_below="@id/editTextWriteTagSector"
+                android:layout_marginRight="5dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="number"
+                android:maxLength="2"
+                android:minWidth="50dp" />
+
+            <TextView
+                android:id="@+id/textViewWriteTagHint2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/editTextWriteTagBlock"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@id/editTextWriteTagBlock"
+                android:text="@string/text_starting_at_0"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textViewWriteTagData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editTextWriteTagData"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/textViewWriteTagBlock"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:text="@string/text_data"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editTextWriteTagData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editTextWriteTagBlock"
+                android:layout_below="@id/editTextWriteTagBlock"
+                android:layout_marginRight="20dp"
+                android:ems="10"
+                android:hint="@string/hint_hex_data"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:maxLength="32" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonWriteTagBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/RelativeLayoutWriteTagBlock"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:onClick="onWriteBlock"
+            android:text="@string/button_write_block" />
+
+        <TextView
+            android:id="@+id/textViewWriteTagFullDumpHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonWriteTagBlock"
+            android:background="@color/dark_gray"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/text_write_full_dump"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutWriteTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewWriteTagFullDumpHeader"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewWriteTagFullDump"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:text="@string/text_write_full_dump_info"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonWriteTagFullDump"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:onClick="onWriteFullDump"
+                android:text="@string/button_write_full_dump" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

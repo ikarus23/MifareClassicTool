@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" author="true" 
+          classpath="../libs/android-support-v4.jar;/opt/android-sdk/platforms/android-16/android.jar"
+          destdir="javadoc"
+          doctitle="Mifare Classic Tool (MCT)"
+          nodeprecated="false"
+          nodeprecatedlist="false"
+          noindex="false"
+          nonavbar="false"
+          notree="false" source="1.7"
+          splitindex="true"
+          use="true"
+          version="true">
+            <link href="file:/opt/android-sdk/docs/reference" />
+            <sourcefiles>
+                <fileset dir="../src" />
+                <fileset dir="../gen"> 
+                    <include name="**/*.java" />
+                    <exclude name="**/BuildConfig.java" />
+                </fileset>
+            </sourcefiles>
+        </javadoc>
+    </target>
+</project>

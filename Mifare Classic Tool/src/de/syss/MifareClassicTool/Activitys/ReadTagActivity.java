@@ -1,0 +1,181 @@
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+package de.syss.MifareClassicTool.Activitys;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.util.SparseArray;
+import android.widget.Toast;
+import de.syss.MifareClassicTool.Common;
+import de.syss.MifareClassicTool.MCReader;
+import de.syss.MifareClassicTool.MCTApp;
+import de.syss.MifareClassicTool.R;
+
+/**
+ * Create a key map with the {@link CreateKeyMapActivity} and then
+ * read the tag.
+ * @author Gerhard Klostermeier
+ */
+public class ReadTagActivity extends Activity {
+
+    private final static int KEY_MAP_CREATOR = 1;
+
+    private Handler mHandler = new Handler();
+    private boolean mIsReading;
+    private SparseArray<String[]> mRawDump;
+
+    /**
+     * Check for external storage, create {@link Common#KEYS_DIR} (if it
+     * not already exists) and show the {@link CreateKeyMapActivity}.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_read_tag);
+
+
+        if (!Common.isExternalStorageWritableErrorToast(this)) {
+            finish();
+            return;
+        }
+
+        Intent intent = new Intent(this, CreateKeyMapActivity.class);
+        intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
+                Environment.getExternalStoragePublicDirectory(
+                        Common.HOME_DIR) + Common.KEYS_DIR);
+        intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
+                getString(R.string.button_create_key_map_and_read));
+        startActivityForResult(intent, KEY_MAP_CREATOR);
+    }
+
+    /**
+     * Cancel the reading process.
+     * This method is not called, if screen orientation changes.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mIsReading = false;
+    }
+
+    /**
+     * Checks the result code of the key mapping process. If the process
+     * was successful the {@link #readTag()}
+     * method will be called.
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+        case KEY_MAP_CREATOR:
+            if (resultCode != Activity.RESULT_OK) {
+                // Error.
+                if (resultCode == 4) {
+                    Toast.makeText(this, R.string.info_no_key_found,
+                            Toast.LENGTH_LONG).show();
+                }
+                finish();
+            } else {
+                // Read Tag.
+                mIsReading = true;
+                readTag();
+            }
+            break;
+        }
+    }
+
+    /**
+     * Triggered by {@link #onActivityResult(int, int, Intent)}
+     * this method starts a worker thread that first reads the tag and then
+     * calls {@link #createTagDump(SparseArray)}.
+     */
+    private void readTag() {
+        new Thread(new Runnable() {
+            public void run() {
+                MCReader reader = new MCReader(Common.getTag());
+//              MCReader reader = (MCReader) data.getSerializableExtra(
+//                      CreateKeyMapActivity.EXTRA_KEY_MAP);
+                reader.connect();
+                if (!reader.isConnected()) {
+                    return;
+                }
+
+                // Get key map from glob. variable.
+                mRawDump = reader.readAsMuchAsPossible(
+                        ((MCTApp)getApplication()).getKeyMap());
+
+                reader.close();
+
+                mHandler.post(new Runnable() {
+                    public void run() {
+                        if (mIsReading == false) {
+                            mRawDump = null;
+                        }
+                        createTagDump(mRawDump);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * Create a tag dump in a format the {@link DumpEditorActivity}
+     * can read (via Intent), and then start the dump editor with this dump.
+     * @param rawDump A tag dump like {@link MCReader#readAsMuchAsPossible()}
+     * returns.
+     */
+    private void createTagDump(SparseArray<String[]> rawDump) {
+        String dump = "";
+        String s = System.getProperty("line.separator");
+        if (rawDump != null) {
+            if (rawDump.size() != 0) {
+                for (int i = 0; i < rawDump.size(); i++) {
+                    // Mark headers (sectors) with "+".
+                    dump += "+" + getString(R.string.text_sector)
+                            + " " + rawDump.keyAt(i) + s;
+                    String[] val = rawDump.valueAt(i);
+                    if (val != null ) {
+                        for (int j = 0; j < val.length; j++) {
+                            dump += val[j] + s;
+                        }
+                    }
+                }
+                // UGLY: remove last "\n".
+                dump = dump.substring(0, dump.length() -1);
+                // Show Dump Editor Activity.
+                Intent intent = new Intent(this,
+                        DumpEditorActivity.class);;
+                intent.putExtra(DumpEditorActivity.EXTRA_DUMP, dump);
+                startActivity(intent);
+            } else {
+                // Error, keys from key map are not valid for reading.
+                Toast.makeText(this, R.string.info_none_key_valid_for_reading,
+                        Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, R.string.info_tag_removed_while_reading,
+                    Toast.LENGTH_LONG).show();
+        }
+        finish();
+    }
+}
