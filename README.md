@@ -4,10 +4,10 @@ MifareClassicTool
 An Android NFC-App for reading/writing/analysing/etc Mifare Classic RFID-Tags.
 
 
-* **Download MifareClassicTool (APK file, Version 1.0.0)
+* **Download MifareClassicTool (APK file)
   [here](http://publications.icaria.de/mct/releases/)**
 * **Screenshots available
-  [here](http://publications.icaria.de/mct/screenshots/)**
+  [here](http://publications.icaria.de/mct/screenshots/)** <sup>(outdated)</sup>
 * **Documentation (doxygen) online
   [here](http://publications.icaria.de/mct/documentation/annotated.html)**
 
@@ -20,11 +20,10 @@ Features
 * Edit and save (dump) the tag data you read
 * Write to Mifare Classic tags (block-wise)
 * Clone Mifare Classic tags  
-  (Write dump from a tag to a new tag;
-  except the first block.)
+  (Write dump from a tag to another tag; write 'dump-wise')
 * Key management based on dictionary-attack  
   (Write the keys you know in a file (dictionary).  
-  MCT will try to authenticate with these
+  MCT will try to authenticate with these  
   keys against all sectors and read as much as possible.  
   See chapter [Getting Started](#getting-started).)
 * Create, edit and save key files (dictionaries)
@@ -110,9 +109,9 @@ License
 -------
 
 This application is originally developed by
-Gerhard Klostermeier in cooperation withSySS GmbH
+Gerhard Klostermeier in cooperation with SySS GmbH
 ([www.syss.de](https://www.syss.de/)) in 2012/2013.
-It is an open source application and licensed under the
+It is free software and licensed under the
 [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 Icons used in this application:
