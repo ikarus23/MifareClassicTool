@@ -84,6 +84,14 @@ public class Common {
             "1A982C7E459A",
             "AABBCCDDEEFF"  };
 
+    /**
+     * Possible operations the on a Mifare Classic Tag.
+     */
+    public enum Operations {
+        Read, Write, Increment, DecTransRest, ReadKeyA, ReadKeyB, ReadAC,
+        WriteKeyA, WriteKeyB, WriteAC
+    }
+
     private static final String LOG_TAG = Common.class.getSimpleName();
 
     /**
@@ -261,6 +269,208 @@ public class Common {
             id += ")";
             Toast.makeText(context, id, Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Depending on the provided Access Conditions this method will return
+     * with which key you can achieve the operation ({@link Operations})
+     * you asked for.<br />
+     * This method contains the table from the NXP Mifare Classic Datasheet.
+     * @param c1 Access Condition byte "C!".
+     * @param c2 Access Condition byte "C2".
+     * @param c3 Access Condition byte "C3".
+     * @param op The operation you want to do.
+     * @param isSectorTrailer True if it is a Sector Trailer, False otherwise.
+     * @param isKeyBReadable True if key B is readable, False otherwise.
+     * @return The operation "op" is possible with:<br />
+     * <ul>
+     * <li>0 - Never.</li>
+     * <li>1 - Key A.</li>
+     * <li>2 - Key B.</li>
+     * <li>3 - Key A or B.</li>
+     * <li>-1 - Error.</li>
+     * </ul>
+     */
+    public static int getOperationInfoForBlock(byte c1, byte c2, byte c3,
+            Operations op, boolean isSectorTrailer, boolean isKeyBReadable) {
+        // Is Sector Trailer?
+        if (isSectorTrailer) {
+            // Sector Trailer.
+            if (op != Operations.ReadKeyA && op != Operations.ReadKeyB
+                    && op != Operations.ReadAC
+                    && op != Operations.WriteKeyA
+                    && op != Operations.WriteKeyB
+                    && op != Operations.WriteAC) {
+                // Error. Sector Trailer but no Sector Trailer permissions.
+                return 4;
+            }
+            if          (c1 == 0 && c2 == 0 && c3 == 0) {
+                if (op == Operations.WriteKeyA
+                        || op == Operations.WriteKeyB
+                        || op == Operations.ReadKeyB
+                        || op == Operations.ReadAC) {
+                    return 1;
+                }
+                return 0;
+            } else if   (c1 == 0 && c2 == 1 && c3 == 0) {
+                if (op == Operations.ReadKeyB
+                        || op == Operations.ReadAC) {
+                    return 1;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 0 && c3 == 0) {
+                if (op == Operations.WriteKeyA
+                        || op == Operations.WriteKeyB) {
+                    return 2;
+                }
+                if (op == Operations.ReadAC) {
+                    return 3;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 1 && c3 == 0) {
+                if (op == Operations.ReadAC) {
+                    return 3;
+                }
+                return 0;
+            } else if   (c1 == 0 && c2 == 0 && c3 == 1) {
+                if (op == Operations.ReadKeyA) {
+                    return 0;
+                }
+                return 1;
+            } else if   (c1 == 0 && c2 == 1 && c3 == 1) {
+                if (op == Operations.ReadAC) {
+                    return 3;
+                }
+                if (op == Operations.ReadKeyA
+                        || op == Operations.ReadKeyB) {
+                    return 0;
+                }
+                return 2;
+            } else if   (c1 == 1 && c2 == 0 && c3 == 1) {
+                if (op == Operations.ReadAC) {
+                    return 3;
+                }
+                if (op == Operations.WriteAC) {
+                    return 2;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 1 && c3 == 1) {
+                if (op == Operations.ReadAC) {
+                    return 3;
+                }
+                return 0;
+            } else {
+                return -1;
+            }
+        } else {
+            // Data Block.
+            if (op != Operations.Read && op != Operations.Write
+                    && op != Operations.Increment
+                    && op != Operations.DecTransRest) {
+                // Error. Data block but no data block permissions.
+                return -1;
+            }
+            if          (c1 == 0 && c2 == 0 && c3 == 0) {
+                return (isKeyBReadable) ? 1 : 3;
+            } else if   (c1 == 0 && c2 == 1 && c3 == 0) {
+                if (op == Operations.Read) {
+                    return (isKeyBReadable) ? 1 : 3;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 0 && c3 == 0) {
+                if (op == Operations.Read) {
+                    return (isKeyBReadable) ? 1 : 3;
+                }
+                if (op == Operations.Write) {
+                    return 2;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 1 && c3 == 0) {
+                if (op == Operations.Read
+                        || op == Operations.DecTransRest) {
+                    return (isKeyBReadable) ? 1 : 3;
+                }
+                return 2;
+            } else if   (c1 == 0 && c2 == 0 && c3 == 1) {
+                if (op == Operations.Read
+                        || op == Operations.DecTransRest) {
+                    return (isKeyBReadable) ? 1 : 3;
+                }
+                return 0;
+            } else if   (c1 == 0 && c2 == 1 && c3 == 1) {
+                if (op == Operations.Read || op == Operations.Write) {
+                    return 2;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 0 && c3 == 1) {
+                if (op == Operations.Read) {
+                    return 2;
+                }
+                return 0;
+            } else if   (c1 == 1 && c2 == 1 && c3 == 1) {
+                return 0;
+            } else {
+                // Error.
+                return -1;
+            }
+        }
+    }
+
+    /**
+     * Check if key B is readable.
+     * Key B is readable for the following configurations:
+     * <ul>
+     * <li>C1 = 0, C2 = 0, C3 = 0</li>
+     * <li>C1 = 0, C2 = 0, C3 = 1</li>
+     * <li>C1 = 0, C2 = 1, C3 = 0</li>
+     * </ul>
+     * @param c1 Access Condition byte "C1"
+     * @param c2 Access Condition byte "C2"
+     * @param c3 Access Condition byte "C3"
+     * @return True if key B is readable. False otherwise.
+     */
+    public static boolean isKeyBReadable(byte c1, byte c2, byte c3) {
+        if (c1 == 0
+                && (c2 == 0 && c3 == 0)
+                || (c2 == 1 && c3 == 0)
+                || (c2 == 0 && c3 == 1)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Convert the Access Condition bytes to a matrix containing the
+     * resolved C1, C2 and C3 for each block.
+     * @param ac The Access Conditions.
+     * @return Matrix of access conditions bits (C1-C3) where the first
+     * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
+     * dimension is the block number (Index 0-3).
+     */
+    public static byte[][] acToACMatrix(byte ac[]) {
+        // ACs correct?
+        // C1 (Byte 7, 4-7) == ~C1 (Byte 6, 0-3) and
+        // C2 (Byte 8, 0-3) == ~C2 (Byte 6, 4-7) and
+        // C3 (Byte 8, 4-7) == ~C3 (Byte 7, 0-3)
+        byte[][] acMatrix = new byte[3][4];
+        if ((byte)((ac[1]>>>4)&0x0F)  == (byte)((ac[0]^0xFF)&0x0F) &&
+            (byte)(ac[2]&0x0F) == (byte)(((ac[0]^0xFF)>>>4)&0x0F) &&
+            (byte)((ac[2]>>>4)&0x0F)  == (byte)((ac[1]^0xFF)&0x0F)) {
+            // C1, Block 0-3
+            for (int i = 0; i < 4; i++) {
+                acMatrix[0][i] = (byte)((ac[1]>>>4+i)&0x01);
+            }
+            // C2, Block 0-3
+            for (int i = 0; i < 4; i++) {
+                acMatrix[1][i] = (byte)((ac[2]>>>i)&0x01);
+            }
+            // C3, Block 0-3
+            for (int i = 0; i < 4; i++) {
+                acMatrix[2][i] = (byte)((ac[2]>>>4+i)&0x01);
+            }
+            return acMatrix;
+        }
+        return null;
     }
 
     /**

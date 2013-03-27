@@ -21,8 +21,11 @@ package de.syss.MifareClassicTool;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
+import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.MifareClassic;
@@ -30,9 +33,10 @@ import android.util.Log;
 import android.util.SparseArray;
 
 /**
- * Provide functions to read/write a Mifare Classic tag.
+ * Provide functions to read/write/analyze a Mifare Classic tag.
  * @author Gerhard Klostermeier
  */
+@SuppressLint("UseSparseArrays")
 public class MCReader {
 
     private static final String LOG_TAG = MCReader.class.getSimpleName();
@@ -45,8 +49,8 @@ public class MCReader {
      */
     public  static final String NO_DATA = "--------------------------------";
 
-    private Tag mTag;
-    private MifareClassic mMFC;
+    private final Tag mTag;
+    private final MifareClassic mMFC;
     private SparseArray<byte[][]> mKeyMap = new SparseArray<byte[][]>();
     private int mKeyMapStatus = 0;
     private int mLastSector = -1;
@@ -139,43 +143,126 @@ public class MCReader {
     }
 
     /**
-     * Set the key files for {@link #buildNextKeyMapPart()}.
-     * @param keyFiles One or more key files.
-     * These files are simple text files with one key
-     * per line. Empty lines and lines STARTING with "#"
-     * will not be interpreted.
+     * Read a as much as possible from a sector with the given key.
+     * Best results are gained from a valid key B (except key B is marked as
+     * readable in the access conditions).
+     * @param sectorIndex Index of the Sector to read. (For Mifare Classic 1K:
+     * 0-63)
+     * @param key Key for the authentication.
+     * @param useAsKeyB If true, key will be treated as key B
+     * for authentication.
+     * @return Array of blocks (index 0-3 or 0-15). If a block or a key is
+     * marked with {@link #NO_DATA} or {@link #NO_KEY}
+     * it means that this data could be read or found. On authentication error
+     * "null" will be returned.
+     * @throws TagLostException When tag is lost.
+     * @see #mergeSectorData(String[], String[])
      */
-    public void setKeyFile(File[] keyFiles) {
-        mKeys = new HashSet<byte[]>();
-        for (File file : keyFiles) {
-            String[] lines = Common.readFileLineByLine(file, false);
-            if (lines != null) {
-                for (String line : lines) {
-                    if (!line.equals("") && line.length() == 12
-                            && line.matches("[0-9A-Fa-f]+")) {
-                        mKeys.add(Common.hexStringToByteArray(line));
+    public String[] readSector(int sectorIndex, byte[] key, boolean useAsKeyB)
+            throws TagLostException {
+        boolean auth = authenticate(sectorIndex, key, useAsKeyB);
+        String[] ret = null;
+        // Read sector.
+        if (auth) {
+            // Read all blocks.
+            ArrayList<String> blocks = new ArrayList<String>();
+            int firstBlock = mMFC.sectorToBlock(sectorIndex);
+            int lastBlock = firstBlock + 4;
+            if (mMFC.getSize() == MifareClassic.SIZE_4K
+                    && sectorIndex > 31) {
+                lastBlock = firstBlock + 16;
+            }
+            for (int i = firstBlock; i < lastBlock; i++) {
+                try {
+                    blocks.add(Common.byte2HexString(
+                            mMFC.readBlock(i)));
+                } catch (TagLostException e) {
+                    throw e;
+                } catch (IOException e) {
+                    // Could not read block.
+                    // (Maybe due to key/authentication method.)
+                    Log.d(LOG_TAG, "Error while reading block "
+                            + i + " from tag.");
+                    blocks.add(NO_DATA);
+                    if (!mMFC.isConnected()) {
+                        throw new TagLostException(
+                                "Tag removed during readSector(...)");
                     }
+                    // After error reauthentication is needed.
+                    auth = authenticate(sectorIndex, key, useAsKeyB);
+                }
+            }
+            ret = blocks.toArray(new String[blocks.size()]);
+            int last = ret.length -1;
+            // Merge key in last block (sector trailer).
+            if (!useAsKeyB) {
+                if (isKeyBReadable(Common.hexStringToByteArray(
+                        ret[last].substring(12, 20)))) {
+                    ret[last] = Common.byte2HexString(key)
+                            + ret[last].substring(12, 32);
+                } else {
+                    ret[last] = Common.byte2HexString(key)
+                            + ret[last].substring(12, 20) + NO_KEY;
+                }
+            } else {
+                if (ret[0].equals(NO_DATA)) {
+                    // If Key B may be read in the corresponding Sector Trailer,
+                    // it cannot serve for authentication (according to NXP).
+                    // What they mean is that you can authenticate successfully,
+                    // but can not read data. In this case the
+                    // readBlock() result is 0 for each block.
+                    ret = null;
+                } else {
+                    ret[last] = NO_KEY + ret[last].substring(12, 20)
+                            + Common.byte2HexString(key);
                 }
             }
         }
+        return ret;
     }
 
     /**
-     * Set the mapping range for {@link #buildNextKeyMapPart()}.
-     * @param firstSector Index of the first sector of the key map.
-     * @param lastSector Index of the last sector of the key map.
-     * @return True if range parameters were correct. False otherwise.
+     * Write a block of 16 Byte data to tag.
+     * @param sectorIndex The sector to where the data should be written
+     * @param blockIndex The block to where the data should be written
+     * @param data 16 Byte of data.
+     * @param key The Mifare Classic key for the given sector.
+     * @param useAsKeyB If true, key will be treated as key B
+     * for authentication.
+     * @return The return codes are:<br />
+     * <ul>
+     * <li>0 - Everything went fine.</li>
+     * <li>1 - Sector index is out of range.</li>
+     * <li>2 - Block index is out of range.</li>
+     * <li>3 - Data are not 16 Byte.</li>
+     * <li>4 - Authentication went wrong.</li>
+     * <li>5 - Error while writing to tag.</li>
+     * </ul>
+     * @see #authenticate(int, byte[], boolean)
      */
-    public boolean setMappingRange(int firstSector, int lastSector) {
-        if (firstSector >= 0 && lastSector < mMFC.getSectorCount()
-                && firstSector <= lastSector) {
-            mFirstSector = firstSector;
-            mLastSector = lastSector;
-            // Init. status of buildNextKeyMapPart to create a new key map.
-            mKeyMapStatus = lastSector+1;
-            return true;
+    public int writeBlock(int sectorIndex, int blockIndex, byte[] data,
+            byte[] key, boolean useAsKeyB) {
+        if (mMFC.getSectorCount()-1 < sectorIndex) {
+            return 1;
         }
-        return false;
+        if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
+            return 2;
+        }
+        if (data.length != 16) {
+            return 3;
+        }
+        if (!authenticate(sectorIndex, key, useAsKeyB)) {
+            return 4;
+        }
+        // Write block.
+        int block = mMFC.sectorToBlock(sectorIndex) + blockIndex;
+        try {
+            mMFC.writeBlock(block, data);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error while writing block to tag.", e);
+            return 5;
+        }
+        return 0;
     }
 
     /**
@@ -256,104 +343,6 @@ public class MCReader {
     }
 
     /**
-     * Get the key map build from {@link #buildNextKeyMapPart()} with
-     * the given key file ({@link #setKeyFile(File[])}). If you want a
-     * full key map, you have to call {@link #buildNextKeyMapPart()} as
-     * often as there are sectors on the tag
-     * (See {@link #getSectorCount()}).
-     * @return A Key-Value Pair. Keys are the sector numbers,
-     * values are the Mifare keys.
-     * The Mifare keys are 2D arrays with key type (first dimension, 0-1,
-     * 0 = KeyA / 1 = KeyB) and key (second dimension, 0-6). If a key "null"
-     * it means that the key A or B (depending of first dimension) could not
-     * be found.
-     * @see #getSectorCount()
-     * @see #buildNextKeyMapPart()
-     */
-    public SparseArray<byte[][]> getKeyMap() {
-        return mKeyMap;
-    }
-
-    /**
-     * Read a as much as possible from a sector with the given key.
-     * Best results are gained from a valid key B (except key B is marked as
-     * readable in the access conditions).
-     * @param sectorIndex Index of the Sector to read. (For Mifare Classic 1K:
-     * 0-63)
-     * @param key Key for the authentication.
-     * @param useAsKeyB If true, key will be treated as key B
-     * for authentication.
-     * @return Array of blocks (index 0-3 or 0-15). If a block or a key is
-     * marked with {@link #NO_DATA} or {@link #NO_KEY}
-     * it means that this data could be read or found. On authentication error
-     * "null" will be returned.
-     * @throws TagLostException When tag is lost.
-     * @see #mergeSectorData(String[], String[])
-     */
-    public String[] readSector(int sectorIndex, byte[] key, boolean useAsKeyB)
-            throws TagLostException {
-        boolean auth = authenticate(sectorIndex, key, useAsKeyB);
-        String[] ret = null;
-        // Read sector.
-        if (auth) {
-            // Read all blocks.
-            ArrayList<String> blocks = new ArrayList<String>();
-            int firstBlock = mMFC.sectorToBlock(sectorIndex);
-            int lastBlock = firstBlock + 4;
-            if (mMFC.getSize() == MifareClassic.SIZE_4K
-                    && sectorIndex > 31) {
-                lastBlock = firstBlock + 16;
-            }
-            for (int i = firstBlock; i < lastBlock; i++) {
-                try {
-                    blocks.add(Common.byte2HexString(
-                            mMFC.readBlock(i)));
-                } catch (TagLostException e) {
-                    throw e;
-                } catch (IOException e) {
-                    // Could not read block.
-                    // (Maybe due to key/authentication method.)
-                    Log.d(LOG_TAG, "Error while reading block "
-                            + i + " from tag.");
-                    blocks.add(NO_DATA);
-                    if (!mMFC.isConnected()) {
-                        throw new TagLostException(
-                                "Tag removed during readSector(...)");
-                    }
-                    // After error reauthentication is needed.
-                    auth = authenticate(sectorIndex, key, useAsKeyB);
-                }
-            }
-            ret = blocks.toArray(new String[blocks.size()]);
-            int last = ret.length -1;
-            // Merge key in last block (sector trailer).
-            if (!useAsKeyB) {
-                if (isKeyBReadable(Common.hexStringToByteArray(
-                        ret[last].substring(12, 20)))) {
-                    ret[last] = Common.byte2HexString(key)
-                            + ret[last].substring(12, 32);
-                } else {
-                    ret[last] = Common.byte2HexString(key)
-                            + ret[last].substring(12, 20) + NO_KEY;
-                }
-            } else {
-                if (ret[0].equals(NO_DATA)) {
-                    // If Key B may be read in the corresponding Sector Trailer,
-                    // it cannot serve for authentication (according to NXP).
-                    // What they mean is that you can authenticate successfully,
-                    // but can not read data. In this case the
-                    // readBlock() result is 0 for each block.
-                    ret = null;
-                } else {
-                    ret[last] = NO_KEY + ret[last].substring(12, 20)
-                            + Common.byte2HexString(key);
-                }
-            }
-        }
-        return ret;
-    }
-
-    /**
      * Merge the result of two {@link #readSector(int, byte[], boolean)}
      * calls on the same sector (with different keys or authentication methods).
      * In this case merging means empty blocks will be overwritten with non
@@ -420,47 +409,161 @@ public class MCReader {
     }
 
     /**
-     * Write a block of 16 Byte data to tag.
-     * @param sectorIndex The sector to where the data should be written
-     * @param blockIndex The block to where the data should be written
-     * @param data 16 Byte of data.
-     * @param key The Mifare Classic key for the given sector.
-     * @param useAsKeyB If true, key will be treated as key B
-     * for authentication.
-     * @return The return codes are:<br />
+     * This method checks if the present tag is writable with the provided keys
+     * on the given positions (sectors, blocks). This is done by authenticating
+     * with one of the keys followed by reading and interpreting
+     * ({@link Common#getOperationInfoForBlock(byte, byte, byte,
+     * de.syss.MifareClassicTool.Common.Operations, boolean, boolean)}) of the
+     * Access Conditions.
+     * @param pos A map of positions (key = sector, value = Array of blocks).
+     * For each of these positions you will get the write information
+     * (see return values).
+     * @param keyMap A key map a generated by {@link CreateKeyMapActivity}.
+     * @return A map within a map (all with type = Integer).
+     * The key of the outer map is the sector number and the value is another
+     * map with key = block number and value = write information.
+     * The write information indicates which key is needed to write to the
+     * present tag on the given position.<br /><br />
+     * Write informations are:<br />
      * <ul>
-     * <li>0 - Everything went fine.</li>
-     * <li>1 - Sector index is out of range.</li>
-     * <li>2 - Block index is out of range.</li>
-     * <li>3 - Data are not 16 Byte.</li>
-     * <li>4 - Authentication went wrong.</li>
-     * <li>5 - Error while writing to tag.</li>
+     * <li>0 - Never</li>
+     * <li>1 - Key A</li>
+     * <li>2 - Key B</li>
+     * <li>3 - Key A|B</li>
+     * <li>4 - Key A, but AC never</li>
+     * <li>5 - Key B, but AC never</li>
+     * <li>6 - Key B, but keys never</li>
+     * <li>-1 - Error</li>
+     * <li>Inner map == null - Whole sector is dead (IO Error)</li>
      * </ul>
-     * @see #authenticate(int, byte[], boolean)
      */
-    public int writeBlock(int sectorIndex, int blockIndex, byte[] data,
-            byte[] key, boolean useAsKeyB) {
-        if (mMFC.getSectorCount()-1 < sectorIndex) {
-            return 1;
+    public HashMap<Integer, HashMap<Integer, Integer>> isWritableOnPositions(
+            HashMap<Integer, int[]> pos,
+            SparseArray<byte[][]> keyMap) {
+        HashMap<Integer, HashMap<Integer, Integer>> ret =
+                new HashMap<Integer, HashMap<Integer,Integer>>();
+        for (int i = 0; i < keyMap.size(); i++) {
+            int sector = keyMap.keyAt(i);
+            if (pos.containsKey(sector)) {
+                byte[][] keys = keyMap.get(sector);
+                byte[] ac = null;
+                // Authenticate.
+                if (keys[0] != null) {
+                    if (authenticate(sector, keys[0], false) == false) {
+                        return null;
+                    }
+                } else if (keys[1] != null) {
+                    if (authenticate(sector, keys[1], true) == false) {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+                // Read Mifare Access Conditions.
+                int acBlock = mMFC.sectorToBlock(sector)
+                        + mMFC.getBlockCountInSector(sector) -1;
+                try {
+                    ac = mMFC.readBlock(acBlock);
+                } catch (IOException e) {
+                    ret.put(sector, null);
+                    continue;
+                }
+                ac = Arrays.copyOfRange(ac, 6, 9);
+                byte[][] acMatrix = Common.acToACMatrix(ac);
+                boolean isKeyBReadable = Common.isKeyBReadable(
+                        acMatrix[0][3], acMatrix[1][3], acMatrix[2][3]);
+
+                // Check all Blocks with data (!= null).
+                HashMap<Integer, Integer> blockWithWriteInfo =
+                        new HashMap<Integer, Integer>();
+                for (int block : pos.get(sector)) {
+                    if ((block == 3 && sector <= 31)
+                            || (block == 15 && sector >=32)) {
+                        // Sector Trailer.
+                        // Are the Access Bits writable?
+                        int acValue = Common.getOperationInfoForBlock(
+                                acMatrix[0][block],
+                                acMatrix[1][block],
+                                acMatrix[2][block],
+                                Common.Operations.WriteAC,
+                                true, isKeyBReadable);
+                        // Is key A writable? (If so, key B will be writable
+                        // with the same key.)
+                        int keyABValue = Common.getOperationInfoForBlock(
+                                acMatrix[0][block],
+                                acMatrix[1][block],
+                                acMatrix[2][block],
+                                Common.Operations.WriteKeyA,
+                                true, isKeyBReadable);
+
+                        int result = keyABValue;
+                        if (acValue == 0 && keyABValue != 0) {
+                            // Write key found, but ac-bits are not writable.
+                            result += 3;
+                        } else if (acValue == 2 && keyABValue == 0) {
+                            // Access Bits are writable with key B,
+                            // but keys are not writable.
+                            result = 6;
+                        }
+                        blockWithWriteInfo.put(block, result);
+                    } else {
+                        // Data block.
+                        blockWithWriteInfo.put(
+                                block, Common.getOperationInfoForBlock(
+                                        acMatrix[0][block],
+                                        acMatrix[1][block],
+                                        acMatrix[2][block],
+                                        Common.Operations.Write,
+                                        false, isKeyBReadable));
+                    }
+
+                }
+                if (blockWithWriteInfo.size() > 0) {
+                    ret.put(sector, blockWithWriteInfo);
+                }
+            }
         }
-        if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
-            return 2;
+        return ret;
+    }
+
+    /**
+     * Set the key files for {@link #buildNextKeyMapPart()}.
+     * @param keyFiles One or more key files.
+     * These files are simple text files with one key
+     * per line. Empty lines and lines STARTING with "#"
+     * will not be interpreted.
+     */
+    public void setKeyFile(File[] keyFiles) {
+        mKeys = new HashSet<byte[]>();
+        for (File file : keyFiles) {
+            String[] lines = Common.readFileLineByLine(file, false);
+            if (lines != null) {
+                for (String line : lines) {
+                    if (!line.equals("") && line.length() == 12
+                            && line.matches("[0-9A-Fa-f]+")) {
+                        mKeys.add(Common.hexStringToByteArray(line));
+                    }
+                }
+            }
         }
-        if (data.length != 16) {
-            return 3;
+    }
+
+    /**
+     * Set the mapping range for {@link #buildNextKeyMapPart()}.
+     * @param firstSector Index of the first sector of the key map.
+     * @param lastSector Index of the last sector of the key map.
+     * @return True if range parameters were correct. False otherwise.
+     */
+    public boolean setMappingRange(int firstSector, int lastSector) {
+        if (firstSector >= 0 && lastSector < mMFC.getSectorCount()
+                && firstSector <= lastSector) {
+            mFirstSector = firstSector;
+            mLastSector = lastSector;
+            // Init. status of buildNextKeyMapPart to create a new key map.
+            mKeyMapStatus = lastSector+1;
+            return true;
         }
-        if (!authenticate(sectorIndex, key, useAsKeyB)) {
-            return 4;
-        }
-        // Write block.
-        int block = mMFC.sectorToBlock(sectorIndex) + blockIndex;
-        try {
-            mMFC.writeBlock(block, data);
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error while writing block to tag.", e);
-            return 5;
-        }
-        return 0;
+        return false;
     }
 
     /**
@@ -541,6 +644,25 @@ public class MCReader {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Get the key map build from {@link #buildNextKeyMapPart()} with
+     * the given key file ({@link #setKeyFile(File[])}). If you want a
+     * full key map, you have to call {@link #buildNextKeyMapPart()} as
+     * often as there are sectors on the tag
+     * (See {@link #getSectorCount()}).
+     * @return A Key-Value Pair. Keys are the sector numbers,
+     * values are the Mifare keys.
+     * The Mifare keys are 2D arrays with key type (first dimension, 0-1,
+     * 0 = KeyA / 1 = KeyB) and key (second dimension, 0-6). If a key "null"
+     * it means that the key A or B (depending of first dimension) could not
+     * be found.
+     * @see #getSectorCount()
+     * @see #buildNextKeyMapPart()
+     */
+    public SparseArray<byte[][]> getKeyMap() {
+        return mKeyMap;
     }
 
     /**

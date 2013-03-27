@@ -71,9 +71,9 @@
     <string name="text_update_colors">Update Colors</string>
     <string name="text_data">Data:</string>
     <string name="text_wirte_block">Write Block</string>
-    <string name="text_write_full_dump">Write Full Dump (Clone)</string>
-    <string name="text_write_full_dump_info">Write a full dump to
-        a NEW tag\n(NEW = factory formatted Sector Trailers).</string>
+    <string name="text_write_full_dump">Write Dump (Clone)</string>
+    <string name="text_write_full_dump_info">Write a dump to
+        a tag.\nBlocks containing unknown data (---) will be skipped!</string>
     <string name="text_starting_at_0">(Starting at 0)</string>
     <string name="text_open_key_file_title">Open or Create a Key File</string>
     <string name="text_std_keys_comment">Standard Keys (auto. gen.)</string>
@@ -81,6 +81,20 @@
     <string name="text_from">From</string>
     <string name="text_to">To</string>
     <string name="text_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
+    <string name="text_key_a">Key A</string>
+    <string name="text_key_b">Key B</string>
+    <string name="text_key_ab">Key A|B</string>
+    <string name="text_never">Never</string>
+    <string name="text_keys_not_known">Keys (A and B) not known</string>
+    <string name="text_block_read_only">Block is read-only</string>
+    <string name="text_write_key_a_not_known">Key with write access (A)
+        not known</string>
+    <string name="text_write_key_b_not_known">Key with write access (B)
+        not known</string>
+    <string name="text_ac_read_only">Access Conditions are read-only</string>
+    <string name="text_keys_read_only">Keys (A and B) are read-only</string>
+    <string name="text_sector_dead">Sector is dead (IO Error) :(</string>
+    <string name="text_strange_error">Some strange error occurred :(</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -106,7 +120,9 @@
     <string name="button_write_block">Write Block</string>
     <string name="button_create_key_map_and_write_block">Start Mapping and
         Write Block</string>
-    <string name="button_write_full_dump">Write Full Dump</string>
+        <string name="button_create_key_map_and_write_dump">Start Mapping and
+        Write Dump</string>
+    <string name="button_write_full_dump">Select Dump</string>
     <string name="button_i_know_what_i_am_doing">I know what I\'m doing</string>
     <string name="button_open_key_file">Open Key File</string>
     <string name="button_remove_duplicates">Remove Duplicates</string>
@@ -114,6 +130,8 @@
     <string name="button_show_ascii">ASCII</string>
     <string name="button_select_all">Select All</string>
     <string name="button_select_none">Select None</string>
+    <string name="button_cancel_all">Cancel Writing</string>
+    <string name="button_skip_blocks">Write as Much as Possible</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -143,13 +161,13 @@
     <string name="info_sector_out_of_range">Error: The sector is out of range</string>
     <string name="info_block_out_of_range">Error: The block is out of range</string>
     <string name="info_manuf_block_not_writable">Error: The manufacturer
-        block is read only. (Sector 0, Block 0)</string>
+        block is read-only. (Sector 0, Block 0)</string>
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
     <string name="info_not_16_byte">Error: Data must be 16 byte (32 characters)</string>
     <string name="info_block_not_in_sector">Error: The sector does not contain
         a block with the given number.</string>
-    <string name="info_error_writing_block">Write Error: Block is \"read only\"
+    <string name="info_error_writing_block">Write Error: Block is read-only
         or not writable with keys from key file.</string>
     <string name="info_write_successful">Data successfully written</string>
     <string name="info_none_key_valid_for_reading">Error: None of the
@@ -170,10 +188,13 @@
         (or IO error)</string>
     <string name="info_tag_not_clean">Error: Tag is not clean
         (Sector Trailers are not factory formated)</string>
-    <string name="info_tag_dump_size_not_match">Error: Dump size does
-        not match the tag size</string>
+    <string name="info_tag_too_small">Error: Tag is too small for the
+        chosen dump</string>
     <string name="info_write_error">Error: Some error occurred while
-    writing.\nThis could be really bad.</string>
+        writing.\nThis could be really bad.</string>
+    <string name="info_check_ac_error">Error: Tag lost while checking for keys
+        with write privileges</string>
+    <string name="info_nothing_to_write">There is nothing left to write</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -209,6 +230,9 @@
         blocks may cause irreparable damage to the tag.
         \n\n<b>FOR MORE INFORMATION AND HELP CHECK OUT THE
         \"Help and Infos\" SECTION.</b></string>
+    <string name="dialog_not_writable_title">Write Issues</string>
+    <string name="dialog_not_writable">Some parts are not writable! Check the
+        WHOLE list below.</string>
 
     <!-- Hints -->
     <string name="hint_hex_data">Hex, 16 Bytes (e.g. 0A4F&#8230;)</string>

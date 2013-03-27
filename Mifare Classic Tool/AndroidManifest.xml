@@ -95,6 +95,7 @@
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activitys.WriteTagActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/write_tag"
             android:label="@string/title_activity_write_tag"
             android:launchMode="singleTop" >
@@ -108,20 +109,21 @@
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activitys.KeyEditorActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/edit_keys"
             android:label="@string/title_activity_key_editor"
             android:launchMode="singleTop" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activitys.HelpActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="orientation|screenSize"
             android:icon="@drawable/help_and_infos"
             android:label="@string/title_activity_help"
             android:launchMode="singleTop" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activitys.HexToAsciiActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="orientation|screenSize"
             android:icon="@drawable/hex_to_ascii"
             android:label="@string/title_activity_hex_to_ascii"
             android:launchMode="singleTop" >
