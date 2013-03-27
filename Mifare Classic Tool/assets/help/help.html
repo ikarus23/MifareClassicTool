@@ -25,7 +25,7 @@
     <li><a href="#write_tag">4 Write Tags</a>
     <ul>
         <li><a href="#write_block">4.1 Write Block</a></li>
-        <li><a href="#write_full_dump">4.2 Write Full Dump (Clone)</a>
+        <li><a href="#write_dump">4.2 Write Dump (Clone)</a>
           </li>
       </ul>
     </li>
@@ -78,13 +78,6 @@
     <a href="#license">License</a>. The source code is available on
     <a href="https://github.com/ikarus23/MifareClassicTool">
       github</a>.
-    <br />
-    <br />
-    This application was tested on:
-    <ul>
-      <li>Google Nexus 7, Android 4.1.0 - 4.2.1</li>
-      <li>Samsung Galaxy Nexus, Android 4.1.0 - 4.2.1</li>
-    </ul>
   </p>
 
   <h3 id="features">1.1 Features</h3>
@@ -94,8 +87,8 @@
       <li>Edit and save (dump) the tag data you read</li>
       <li>Write to Mifare Classic tags (block-wise)</li>
       <li>Clone Mifare Classic tags<br />
-        (Write dump from a tag to a new tag;
-        except the first block.)</li>
+        (Write dump from a tag to another tag;
+        write 'dump-wise')</li>
       <li>Key management based on dictionary-attack <br />
         (Write the keys you know in a file (dictionary).<br />
         MCT will try to authenticate with these
@@ -116,7 +109,7 @@
     This application is originally developed by
     Gerhard Klostermeier in cooperation with SySS GmbH
     (<a href="http://www.syss.de/">www.syss.de</a>) in 2012/2013.
-    It is an open source application and licensed under the
+    It is fee software under the
     <a href="https://www.gnu.org/licenses/gpl-3.0.txt">
       GNU General Public License v3.0 (GPLv3)</a>.
     <br /><br />
@@ -223,23 +216,19 @@
     sector/block.
   </p>
 
-  <h3 id="write_full_dump">4.2 Write Full Dump (Clone)</h3>
+  <h3 id="write_dump">4.2 Write Dump (Clone)</h3>
   <p>
     If you want to clone a tag, you first have to read and then dump
-    the original tag. Make sure you got a full dump (all sectors and
-    blocks). The second step is to restore the dumped data on a
-    new tag. A new tag is one where all Sector Trailers are
-    factory formatted (Key A = 0xFFFFFFFFFFFF, Key B = not important,
-    Access Conditions = 0xFF0780).
+    the original tag. The second step is to restore the dumped data on another
+    tag (for which you know the keys). You need the keys with write privileges
+    for all sectors of the dump. If the dump consists of e.g. 5 sectors you
+    only need the keys for these 5 sectors.<br />
+    After selecting the dump and the key files the App will check everything
+    for you! If there are issues like 'block is read-only', 'key with write
+    access not known', etc., you will get a report before writing!
     <br /><br />
-    <b>Attention:</b>
-    <ul>
-      <li>Dump and tag size must be the same.<br />
-      You can not restore a Mifare Classic 4k dump on a Mifare Classic
-      1k tag.</li>
-      <li>The first block of the first sector of a Mifare Classic
-      tag is read-only and therefore not cloneable.</li>
-    </ul>
+    <b>Attention:</b> The first block of the first sector of a Mifare Classic
+    tag is read-only and therefore not writable.
   </p>
   <hr />
 
