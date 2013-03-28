@@ -35,7 +35,7 @@
             android:id="@+id/textViewAccessConditionsHeader1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="35dp"
+            android:paddingRight="30dp"
             android:text="@string/text_ac_pos"
             android:textColor="@color/light_gray" />
 
@@ -97,7 +97,7 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:height="0dp"
-		            android:paddingRight="35dp"
+		            android:paddingRight="30dp"
 		            android:text="@string/text_ac_pos" />
 		
 		        <TextView
