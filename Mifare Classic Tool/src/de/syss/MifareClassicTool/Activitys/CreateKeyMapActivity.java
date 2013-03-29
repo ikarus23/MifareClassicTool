@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import android.R.mipmap;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -287,13 +288,18 @@ public class CreateKeyMapActivity extends Activity {
 
     /**
      * Inform the worker thread from {@link #createKeyMap()}
-     * to stop creating the key map.
+     * to stop creating the key map. If the thread is already
+     * informed or does not exists this button will finish the activity.
      * @param view The View object that triggered the method
      * (in this case the cancel button).
      * @see #createKeyMap()
      */
     public void onCancelCreateKeyMap(View view) {
-        mIsCreatingKeyMap = false;
+        if (mIsCreatingKeyMap == true) {
+            mIsCreatingKeyMap = false;
+        } else {
+            finish();
+        }
     }
 
     /**
