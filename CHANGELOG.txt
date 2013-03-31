@@ -1,5 +1,8 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.1.1:
+ * Some minor bug fixes (layout and usability).
+
 Version 1.1.0:
  * Write dump to a tag providing its keys.
    This feature replaces the old "write full dump (clone)" function.
