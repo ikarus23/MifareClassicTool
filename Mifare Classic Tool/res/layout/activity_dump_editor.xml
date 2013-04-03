@@ -33,55 +33,13 @@
         android:focusableInTouchMode="true" />
 
     <LinearLayout
-        android:id="@+id/LinearLayoutDumpEditorBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="false" >
-
-        <Button
-            android:id="@+id/buttonDumpEditorSaveDump"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onSaveDump"
-            android:text="@string/button_save" />
-
-        <Button
-            android:id="@+id/buttonDumpEditorAscii"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onShowAscii"
-            android:text="@string/button_show_ascii" />
-
-        <Button
-            android:id="@+id/buttonDumpEditorShowAC"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onShowAC"
-            android:text="@string/button_show_ac" />
-
-        <Button
-            android:id="@+id/buttonDumpEditorResolveValueBlocks"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onResolveValueBlocks"
-            android:text="@string/button_show_value_blocks" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/LinearLayoutDumpEditorCaption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/LinearLayoutDumpEditorBottom"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:paddingLeft="5dp" >
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
 
         <TextView
             android:id="@+id/textViewDumpEditorCaptionTitle"
@@ -94,7 +52,7 @@
 
         <TextView
             android:id="@+id/textViewDumpEditorCaption"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>

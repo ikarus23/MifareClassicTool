@@ -38,7 +38,7 @@ import de.syss.MifareClassicTool.R;
  * Google something like "nxp mifare classic access conditions",
  * if you want to have a closer look.
  * This Activity will be shown from the {@link DumpEditorActivity}, if the user
- * clicks on the show ACs button.
+ * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
 public class AccessConditionsActivity extends Activity {

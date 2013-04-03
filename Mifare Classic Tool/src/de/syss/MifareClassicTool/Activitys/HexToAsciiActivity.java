@@ -31,6 +31,8 @@ import de.syss.MifareClassicTool.R;
 
 /**
  * Display a (hex) dump as 7-Bit US-ASCII.
+ * This Activity will be shown from the {@link DumpEditorActivity}, if the user
+ * clicks the corresponding menu item.
  * @author user Gerhard Klostermeier
  */
 public class HexToAsciiActivity extends Activity {

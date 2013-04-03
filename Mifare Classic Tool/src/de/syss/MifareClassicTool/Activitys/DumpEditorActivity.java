@@ -36,6 +36,8 @@ import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -191,6 +193,44 @@ public class DumpEditorActivity extends Activity {
     }
 
     /**
+     * Add the menu with the editor functions to the Activity.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.editor_functions, menu);
+        return true;
+    }
+
+    /**
+     * Handle the selected function from the editor menu.
+     * @see #onSaveDump()
+     * @see #onShowAscii()
+     * @see #onShowAC()
+     * @see #onDecodeValueBlocks()
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+        case R.id.menuDumpEditorSave:
+            onSaveDump();
+            return true;
+        case R.id.menuDumpEditorAscii:
+            onShowAscii();
+            return true;
+        case R.id.menuDumpEditorAccessConditions:
+            onShowAC();
+            return true;
+        case R.id.menuDumpEditorValueBlocksAsInt:
+            onDecodeValueBlocks();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
      * Update the coloring. This method updates the colors if all
      * data are valid {@link #isValidDumpErrorToast()}.
      * To do so, it reinitializes the whole editor... not quite beautiful.
@@ -220,13 +260,11 @@ public class DumpEditorActivity extends Activity {
      * ask user for a save name and then call
      * {@link Common#saveFile(File, String[])}
      * with {@link #mLines}.
-     * @param view The View object that triggered the method
-     * (in this case the save dump button).
      * @see #isValidDump()
      * @see #isValidDumpErrorToast()
      * @see Common#saveFile(File, String[])
      */
-    public void onSaveDump(View view) {
+    public void onSaveDump() {
         if (isValidDumpErrorToast()) {
             if (!Common.isExternalStorageWritableErrorToast(this)) {
                 return;
@@ -453,11 +491,9 @@ public class DumpEditorActivity extends Activity {
 
     /**
      * Display the the hex data as US-ASCII ({@link HexToAsciiActivity}).
-     * @param view The View object that triggered the method
-     * (in this case the show ASCII button).
      * @see HexToAsciiActivity
      */
-    public void onShowAscii(View view) {
+    public void onShowAscii() {
         if (isValidDumpErrorToast()) {
             String dump = "";
             String s = System.getProperty("line.separator");
@@ -478,11 +514,9 @@ public class DumpEditorActivity extends Activity {
 
     /**
      * Display the access conditions {@link AccessConditionsActivity}.
-     * @param view The View object that triggered the method
-     * (in this case the show ACs button).
      * @see AccessConditionsActivity
      */
-    public void onShowAC(View view) {
+    public void onShowAC() {
         if (isValidDumpErrorToast()) {
             String ac = "";
             int lastSectorHeader = 0;
@@ -511,11 +545,9 @@ public class DumpEditorActivity extends Activity {
 
     /**
      * Display the value blocks as integer {@link ValueBlocksActivity}.
-     * @param view The View object that triggered the method
-     * (in this case the show VBs as int. button).
      * @see ValueBlocksActivity
      */
-    public void onResolveValueBlocks(View view) {
+    public void onDecodeValueBlocks() {
         if (isValidDumpErrorToast()) {
             String vb = "";
             String header = "";
