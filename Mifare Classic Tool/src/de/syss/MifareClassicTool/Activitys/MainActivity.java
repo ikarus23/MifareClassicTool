@@ -64,7 +64,6 @@ public class MainActivity extends Activity {
 
     /**
      * Check for NFC hardware, Mifare Classic support and for external storage.
-     * If there isn't at least one of these things, the application will exit.
      * If the directory structure and the std. keys file is not already there
      * it will be created. Also, at the first run of this App, a warning
      * notice will be displayed.
@@ -157,10 +156,6 @@ public class MainActivity extends Activity {
             if (!hasStdKeysFile()) {
                 createStdKeysFile();
             }
-        } else {
-            mResume = false;
-            finish();
-            return;
         }
 
         // Find Read/Write buttons and bind them to member vars.
