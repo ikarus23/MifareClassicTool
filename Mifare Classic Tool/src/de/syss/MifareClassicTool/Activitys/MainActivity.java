@@ -20,6 +20,7 @@ package de.syss.MifareClassicTool.Activitys;
 
 import java.io.File;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,8 +31,10 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.MifareClassic;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -169,10 +172,15 @@ public class MainActivity extends Activity {
             .setMessage(R.string.dialog_nfc_not_enabled)
             .setPositiveButton(R.string.button_nfc,
                     new DialogInterface.OnClickListener() {
+                @SuppressLint("InlinedApi")
                 public void onClick(DialogInterface dialog, int which) {
                     // Goto NFC Settings.
-                    startActivity(new Intent(
-                            android.provider.Settings.ACTION_NFC_SETTINGS));
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+                    } else {
+                        startActivity(new Intent(
+                                Settings.ACTION_WIRELESS_SETTINGS));
+                    }
                     // Enable read/write tag options.
                     mReadTag.setEnabled(true);
                     mWriteTag.setEnabled(true);
