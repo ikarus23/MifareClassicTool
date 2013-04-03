@@ -127,6 +127,6 @@ MIFARE is a registered trademark of NXP Semiconductors.
 Import Code to Eclipse
 ----------------------
 
-* File -> Project... -> Android -> Android Project from Existing Code
+* File -> New -> Project... -> Android -> Android Project from Existing Code
 * Select (browse to) the MifareClassicTool folder from the git-repository
 * Click Finish
