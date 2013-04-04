@@ -39,7 +39,8 @@
     <string name="title_activity_hex_to_ascii">Data as ASCII</string>
 
     <!-- Texts (labels etc.) -->
-    <string name="text_footer">GPLv3 - © 2013 by Gerhard K.</string>
+    <string name="text_footer">GPLv3 -
+        <a href="https://github.com/ikarus23/MifareClassicTool">Homepage</a></string>
     <string name="text_choose_key_file">Choose some key file(s):</string>
     <string name="text_wait_read_tag">Reading tag…\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>

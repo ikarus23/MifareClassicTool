@@ -114,7 +114,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:paddingRight="5dp"
+        android:paddingBottom="1dp"
+        android:paddingRight="14dp"
         android:text="@string/text_footer"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
