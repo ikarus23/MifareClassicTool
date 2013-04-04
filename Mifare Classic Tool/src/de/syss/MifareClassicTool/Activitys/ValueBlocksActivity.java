@@ -20,8 +20,6 @@ package de.syss.MifareClassicTool.Activitys;
 
 import java.nio.ByteBuffer;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TableLayout;
@@ -41,7 +39,7 @@ import de.syss.MifareClassicTool.R;
  * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
-public class ValueBlocksActivity extends Activity {
+public class ValueBlocksActivity extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
@@ -86,35 +84,6 @@ public class ValueBlocksActivity extends Activity {
             Log.d(LOG_TAG, "There was no value block in intent.");
             finish();
         }
-    }
-
-    /**
-     * Enable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        Common.enableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Disable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        Common.disableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Handle new Intent as a new tag Intent.
-     * @see Common#treatAsNewTag(Intent, android.content.Context)
-     */
-    @Override
-    public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
     }
 
     /**

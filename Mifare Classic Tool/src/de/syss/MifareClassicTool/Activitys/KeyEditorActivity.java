@@ -22,7 +22,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,7 +39,7 @@ import de.syss.MifareClassicTool.R;
  * Show and edit key files.
  * @author Gerhard Klostermeier
  */
-public class KeyEditorActivity extends Activity {
+public class KeyEditorActivity extends BasicActivity {
 
     private EditText mKeys;
     private String mFileName;
@@ -73,35 +72,6 @@ public class KeyEditorActivity extends Activity {
             setResult(1);
             finish();
         }
-    }
-
-    /**
-     * Enable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        Common.enableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Disable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        Common.disableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Handle new Intent as a new tag Intent.
-     * @see Common#treatAsNewTag(Intent, android.content.Context)
-     */
-    @Override
-    public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
     }
 
     /**

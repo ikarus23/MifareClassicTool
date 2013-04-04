@@ -264,7 +264,7 @@ public class Common {
 
             // Show Toast message with UID.
             String id = context.getResources().getString(
-                    R.string.info_new_tag_found) + " (UID ";
+                    R.string.info_new_tag_found) + " (UID: ";
             id += byte2HexString(tag.getId());
             id += ")";
             Toast.makeText(context, id, Toast.LENGTH_LONG).show();

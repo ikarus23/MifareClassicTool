@@ -58,7 +58,7 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class FileChooserActivity extends Activity {
+public class FileChooserActivity extends BasicActivity {
 
     // Input parameters.
     /**
@@ -116,35 +116,6 @@ public class FileChooserActivity extends Activity {
         setContentView(R.layout.activity_file_chooser);
         mGroupOfFiles = (RadioGroup) findViewById(R.id.radioGroupFileChooser);
         mNewFile = (Button) findViewById(R.id.buttonFileChooserNewFile);
-    }
-
-    /**
-     * Enable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        Common.enableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Disable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        Common.disableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Handle new Intent as a new tag Intent.
-     * @see Common#treatAsNewTag(Intent, android.content.Context)
-     */
-    @Override
-    public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
     }
 
     /**

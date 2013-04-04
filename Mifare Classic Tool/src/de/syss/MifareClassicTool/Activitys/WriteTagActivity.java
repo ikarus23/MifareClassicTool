@@ -56,7 +56,7 @@ import de.syss.MifareClassicTool.R;
  * @author Gerhard Klostermeier
  */
 @SuppressLint("UseSparseArrays")
-public class WriteTagActivity extends Activity {
+public class WriteTagActivity extends BasicActivity {
 
     private static final int FC_WRITE_DUMP = 1;
     private static final int KMC_WRTIE_DUMP = 2;
@@ -79,35 +79,6 @@ public class WriteTagActivity extends Activity {
         mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
         mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
-    }
-
-    /**
-     * Enable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        Common.enableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Disable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        Common.disableNfcForegroundDispatch(this);
-    }
-
-    /**
-     * Handle new Intent as a new tag Intent.
-     * @see Common#treatAsNewTag(Intent, android.content.Context)
-     */
-    @Override
-    public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
     }
 
     /**

@@ -65,7 +65,7 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class CreateKeyMapActivity extends Activity {
+public class CreateKeyMapActivity extends BasicActivity {
 
     // Input parameters.
     /**
@@ -188,16 +188,6 @@ public class CreateKeyMapActivity extends Activity {
     }
 
     /**
-     * Enable NFC foreground dispatch system.
-     * @see Common#disableNfcForegroundDispatch(Activity)
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        Common.enableNfcForegroundDispatch(this);
-    }
-
-    /**
      * Cancel the mapping process and disable NFC foreground dispatch system.
      * This method is not called, if screen orientation changes.
      * @see Common#disableNfcForegroundDispatch(Activity)
@@ -245,15 +235,6 @@ public class CreateKeyMapActivity extends Activity {
             c.setText(f.getName());
             mKeyFilesGroup.addView(c);
         }
-    }
-
-    /**
-     * Handle new Intent as a new tag Intent.
-     * @see Common#treatAsNewTag(Intent, android.content.Context)
-     */
-    @Override
-    public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
     }
 
     /**
