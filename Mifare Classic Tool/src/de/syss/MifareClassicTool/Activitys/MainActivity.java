@@ -36,7 +36,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.util.Linkify;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -82,6 +82,7 @@ public class MainActivity extends Activity {
 
         // Show App version and footer.
         TextView tv = (TextView) findViewById(R.id.textViewMainFooter);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
         try {
             String appVersion = getPackageManager().getPackageInfo(
                     getPackageName(), 0).versionName;
@@ -90,7 +91,6 @@ public class MainActivity extends Activity {
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
         }
-        Linkify.addLinks(tv, Linkify.ALL);
 
         // Check if there is an NFC hardware component.
         Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
