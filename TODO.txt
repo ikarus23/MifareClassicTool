@@ -1,4 +1,4 @@
-TODO:
+TODO (Maybe outdated):
 
 ()   = Just a "todo"  (= LOW in source code)
 (+)  = Important      (= TODO in source code)
@@ -6,9 +6,16 @@ TODO:
 
 
 
-(+)  Move the dump editor functions (save, ascii,
-     access conditions, value blocks) from buttons
-     to android options menu.
+(++) Show tag infos like the NFC Tag Info app does.
+     This will introduce a new "Tools" section in the main menu.
+     (This will also fix the issue with the false positive
+     "No Mifare Classic Support" dialog on some devices.)
+
+(+)  Display blanks between hexbytes in the dump editor view
+     for better reading.
+     
+(+)  Create a Value Block encode / decode (to int) tool.
+     (With clipboard ability.) 
 
 (+)  Clone tag but use "08778F" as access condition.
      This ACs permit any change with key B. If a reader
@@ -16,10 +23,12 @@ TODO:
      be used to make the RFID-Tag reusable
      (there is no read only block).
 
-(+)  Use XML to save dumps.
-     Tagging lines with symbols like "+" is a ugly hack.
-
 (+)  Test Application with Mifare Classic 2k Tags.
+
+()   Create a Access Conditions encode / decode tool.
+
+()   Use XML to save dumps.
+     Tagging lines with symbols like "+" is a ugly hack.
 
 ()   Import key files from any location on the device.
 
