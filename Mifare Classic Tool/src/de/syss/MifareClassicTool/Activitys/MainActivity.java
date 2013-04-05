@@ -38,6 +38,10 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -91,6 +95,10 @@ public class MainActivity extends Activity {
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
         }
+
+        // Add the context menu to the tools button.
+        Button tools = (Button) findViewById(R.id.buttonMainTools);
+        registerForContextMenu(tools);
 
         // Check if there is an NFC hardware component.
         Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
@@ -232,6 +240,19 @@ public class MainActivity extends Activity {
     }
 
     /**
+     * Add the menu with the tools.
+     * It will be shown if the user clicks on "Tools".
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        menu.setHeaderTitle(R.string.dialog_tools_menu_title);
+        inflater.inflate(R.menu.tools, menu);
+    }
+
+    /**
      * If resuming is allowed because all dependencies from
      * {@link #onCreate(Bundle)} are satisfied, call
      * {@link #checkNfc()}
@@ -328,9 +349,13 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    // TODO: Implement & doc.
+    /**
+     * Show the tools menu (as context menu).
+     * @param view The View object that triggered the method
+     * (in this case the tools button).
+     */
     public void onShowTools(View view) {
-
+        openContextMenu(view);
     }
 
     /**
@@ -383,6 +408,17 @@ public class MainActivity extends Activity {
                 getString(R.string.button_open_key_file));
         intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE_BUTTON, true);
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
+    }
+
+    // TODO: implement & doc.
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menuMainTagInfos:
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+        }
     }
 
     /**

@@ -137,6 +137,7 @@
     <string name="menu_show_ascii">Show Data as ASCII</string>
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
+    <string name="menu_tag_infos">Show Tag Infos</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -238,6 +239,7 @@
     <string name="dialog_not_writable_title">Write Issues</string>
     <string name="dialog_not_writable">Some parts are not writable! Check the
         WHOLE list below.</string>
+    <string name="dialog_tools_menu_title">Available Tools</string>
 
     <!-- Hints -->
     <string name="hint_hex_data">Hex, 16 Bytes (e.g. 0A4F&#8230;)</string>
