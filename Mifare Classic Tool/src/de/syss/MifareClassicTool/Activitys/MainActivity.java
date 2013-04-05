@@ -410,11 +410,15 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
     }
 
-    // TODO: implement & doc.
+    /**
+     * Handle (start) the selected tool from the tools menu.
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menuMainTagInfos:
+            Intent intent = new Intent(this, TagInfosActivity.class);
+            startActivity(intent);
             return true;
         default:
             return super.onContextItemSelected(item);

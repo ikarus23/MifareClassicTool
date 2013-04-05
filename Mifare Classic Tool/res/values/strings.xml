@@ -18,7 +18,6 @@
  */
 -->
 
-
 <resources>
 
     <!-- Common stuff -->
@@ -37,6 +36,7 @@
     <string name="title_activity_key_editor">Key Editor</string>
     <string name="title_activity_help">Help and Infos</string>
     <string name="title_activity_hex_to_ascii">Data as ASCII</string>
+    <string name="title_activity_tag_infos">Tag Infos</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -120,7 +120,7 @@
     <string name="button_write_block">Write Block</string>
     <string name="button_create_key_map_and_write_block">Start Mapping and
         Write Block</string>
-        <string name="button_create_key_map_and_write_dump">Start Mapping and
+    <string name="button_create_key_map_and_write_dump">Start Mapping and
         Write Dump</string>
     <string name="button_write_full_dump">Select Dump</string>
     <string name="button_i_know_what_i_am_doing">I know what I\'m doing</string>

@@ -18,7 +18,6 @@
  */
 -->
 
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.syss.MifareClassicTool"
     android:versionCode="4"
@@ -126,6 +125,13 @@
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/hex_to_ascii"
             android:label="@string/title_activity_hex_to_ascii"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activitys.TagInfosActivity"
+            android:icon="@drawable/tag_infos"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_tag_infos"
             android:launchMode="singleTop" >
         </activity>
     </application>
