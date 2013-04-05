@@ -34,9 +34,9 @@
     <string name="title_activity_file_chooser">File Chooser</string>
     <string name="title_activity_value_blocks">Value Blocks as Integers</string>
     <string name="title_activity_key_editor">Key Editor</string>
-    <string name="title_activity_help">Help and Infos</string>
+    <string name="title_activity_help">Help and Info</string>
     <string name="title_activity_hex_to_ascii">Data as ASCII</string>
-    <string name="title_activity_tag_infos">Tag Infos</string>
+    <string name="title_activity_tag_info">Tag Info</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -108,7 +108,7 @@
     <string name="button_create_key_map">Map Keys to Sectors</string>
     <string name="button_create_key_map_and_read">Start Mapping and
         Read Tag</string>
-    <string name="button_help">Help and Infos</string>
+    <string name="button_help">Help and Info</string>
     <string name="button_editor_only">Use Only As Editor</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
@@ -137,7 +137,7 @@
     <string name="menu_show_ascii">Show Data as ASCII</string>
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
-    <string name="menu_tag_infos">Show Tag Infos</string>
+    <string name="menu_tag_info">Show Tag Info</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -235,7 +235,7 @@
         you write data to a tag. Writing the wrong data to certain
         blocks may cause irreparable damage to the tag.
         \n\n<b>FOR MORE INFORMATION AND HELP CHECK OUT THE
-        \"Help and Infos\" SECTION.</b></string>
+        \"Help and Info\" SECTION.</b></string>
     <string name="dialog_not_writable_title">Write Issues</string>
     <string name="dialog_not_writable">Some parts are not writable! Check the
         WHOLE list below.</string>

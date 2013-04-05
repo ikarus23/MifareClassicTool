@@ -30,12 +30,12 @@ import de.syss.MifareClassicTool.R;
  * Mifare Classic.
  * @author Gerhard Klostermeier
  */
-public class TagInfosActivity extends BasicActivity {
+public class TagInfoActivity extends BasicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tag_infos);
+        setContentView(R.layout.activity_tag_info);
     }
 
     /**

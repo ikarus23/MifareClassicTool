@@ -20,6 +20,6 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuMainTagInfos"
-        android:title="@string/menu_tag_infos" />
+    <item android:id="@+id/menuMainTagInfo"
+        android:title="@string/menu_tag_info" />
 </menu>

@@ -6,7 +6,7 @@ TODO (Maybe outdated):
 
 
 
-(++) Show tag infos like the NFC Tag Info app does.
+(++) Show tag info like the NFC Tag Info app does.
      This will introduce a new "Tools" section in the main menu.
      (This will also fix the issue with the false positive
      "No Mifare Classic Support" dialog on some devices.)

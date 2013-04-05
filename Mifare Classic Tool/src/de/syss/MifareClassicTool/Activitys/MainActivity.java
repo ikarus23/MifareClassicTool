@@ -342,7 +342,7 @@ public class MainActivity extends Activity {
     /**
      * Show the help Activity.
      * @param view The View object that triggered the method
-     * (in this case the help/infos button).
+     * (in this case the help/info button).
      */
     public void onShowHelp(View view) {
         Intent intent = new Intent(this, HelpActivity.class);
@@ -416,8 +416,8 @@ public class MainActivity extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menuMainTagInfos:
-            Intent intent = new Intent(this, TagInfosActivity.class);
+        case R.id.menuMainTagInfo:
+            Intent intent = new Intent(this, TagInfoActivity.class);
             startActivity(intent);
             return true;
         default:
