@@ -35,7 +35,10 @@
             android:id="@+id/LinearLayoutMainMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp" >
 
             <LinearLayout
                 android:id="@+id/LinearLayoutMainMenuRow1"
@@ -44,10 +47,9 @@
 
                 <Button
                     android:id="@+id/buttonMainReadTag"
-                    android:layout_width="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/read_tag"
                     android:onClick="onShowReadTag"
@@ -55,10 +57,9 @@
 
                 <Button
                     android:id="@+id/buttonMainWriteTag"
-                    android:layout_width="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/write_tag"
                     android:onClick="onShowWriteTag"
@@ -73,9 +74,9 @@
 
                 <Button
                     android:id="@+id/buttonMainEditCardDump"
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/edit_dump"
                     android:onClick="onOpenTagDumpEditor"
@@ -83,9 +84,9 @@
 
                 <Button
                     android:id="@+id/buttonMainEditKeyDump"
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/edit_keys"
                     android:onClick="onOpenKeyEditor"
@@ -93,17 +94,32 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/buttonMainHelp"
+            <LinearLayout
+                android:id="@+id/LinearLayoutMainMenuRow3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/help_and_infos"
-                android:onClick="onShowHelp"
-                android:text="@string/button_help" />
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/buttonMainTools"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/tools"
+                    android:onClick="onShowTools"
+                    android:text="@string/button_tools" />
+                
+                <Button
+                    android:id="@+id/buttonMainHelp"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:drawableTop="@drawable/help_and_infos"
+                    android:onClick="onShowHelp"
+                    android:text="@string/button_help" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

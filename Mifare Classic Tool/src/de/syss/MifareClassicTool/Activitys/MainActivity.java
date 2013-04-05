@@ -328,6 +328,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    // TODO: Implement & doc.
+    public void onShowTools(View view) {
+
+    }
+
     /**
      * Open a file chooser ({@link FileChooserActivity}). The
      * Activity result will be processed in

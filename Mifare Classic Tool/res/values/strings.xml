@@ -102,6 +102,7 @@
     <string name="button_write_tag">Write Tag</string>
     <string name="button_edit_tag_dump">Edit Dump File</string>
     <string name="button_edit_key_dump">Edit/Add Key File</string>
+    <string name="button_tools">Tools</string>
     <string name="button_exit_app">Exit App</string>
     <string name="button_nfc">Goto NFC Settings</string>
     <string name="button_create_key_map">Map Keys to Sectors</string>
