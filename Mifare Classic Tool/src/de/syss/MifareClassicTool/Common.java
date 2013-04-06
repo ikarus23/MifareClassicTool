@@ -25,6 +25,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -250,12 +251,20 @@ public class Common {
      * Tag attached. If the given Intent has a Tag extra, the
      * {@link #mTag} and {@link #mUID} will be updated and a Toast
      * message will be shown in the calling Context (Activity).
+     * This method will also check if the device/tag supports Mifare Classic
+     * (see return values).
      * @param intent The Intent which should be checked for a new Tag.
      * @param context The Context in which the Toast will be shown.
+     * @return
+     * <ul>
+     * <li>1 - The tag supports Mifare Classic</li>
+     * <li>0 - The tag does not support Mifare Classic</li>
+     * <li>-1 - Wrong Intent (action is not "ACTION_TECH_DISCOVERED").</li>
+     * </ul>
      * @see #mTag
      * @see #mUID
      */
-    public static void treatAsNewTag(Intent intent, Context context) {
+    public static int treatAsNewTag(Intent intent, Context context) {
         // Check if Intent has a NFC Tag.
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
@@ -268,7 +277,12 @@ public class Common {
             id += byte2HexString(tag.getId());
             id += ")";
             Toast.makeText(context, id, Toast.LENGTH_LONG).show();
+
+            // Return "1" if device supports Mifare Classic. "0" otherwise.
+            return (Arrays.asList(tag.getTechList()).contains(
+                    "android.nfc.tech.MifareClassic")) ? 1 : 0;
         }
+        return -1;
     }
 
     /**
