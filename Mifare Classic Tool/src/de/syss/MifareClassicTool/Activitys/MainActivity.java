@@ -169,9 +169,6 @@ public class MainActivity extends Activity {
                         startActivity(new Intent(
                                 Settings.ACTION_WIRELESS_SETTINGS));
                     }
-                    // Enable read/write tag options.
-                    mReadTag.setEnabled(true);
-                    mWriteTag.setEnabled(true);
                 }
              })
              .setNeutralButton(R.string.button_editor_only,
@@ -227,6 +224,10 @@ public class MainActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         menu.setHeaderTitle(R.string.dialog_tools_menu_title);
         inflater.inflate(R.menu.tools, menu);
+        // Enable/Disable tag info tool depending on NFC availability.
+        menu.findItem(R.id.menuMainTagInfo).setEnabled(
+                Common.getNfcAdapter() != null
+                && Common.getNfcAdapter().isEnabled());
     }
 
     /**
