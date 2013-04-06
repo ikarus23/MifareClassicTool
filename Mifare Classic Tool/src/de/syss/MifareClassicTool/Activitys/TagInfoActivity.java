@@ -18,9 +18,17 @@
 
 package de.syss.MifareClassicTool.Activitys;
 
+import java.util.Arrays;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -32,24 +40,76 @@ import de.syss.MifareClassicTool.R;
  */
 public class TagInfoActivity extends BasicActivity {
 
+    LinearLayout mLayout;
+    
+    /**
+     * Calls {@link #updateTagInfos(Tag)}.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_info);
+        
+        mLayout = (LinearLayout) findViewById(R.id.LinearLayoutTagInfo);
+        updateTagInfos(Common.getTag());
     }
 
     /**
-     * Call {@link Common#treatAsNewTag(Intent, android.content.Context)} and
-     * then call {@link #updateTagInfos(Tag)}
+     * Calls {@link Common#treatAsNewTag(Intent, android.content.Context)} and
+     * then calls {@link #updateTagInfos(Tag)}
      */
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         updateTagInfos(Common.getTag());
     }
+    
+    /**
+     * Show a dialog with further information.
+     * @param view The View object that triggered the method
+     * (in this case the read more button).
+     */
+    public void onReadMore(View view) {
+        new AlertDialog.Builder(this)
+        .setTitle(R.string.dialog_no_mfc_title)
+        .setMessage(R.string.dialog_no_mfc)
+        .setPositiveButton(R.string.button_ok,
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing.
+            }
+         })
+         .show();
+    }
 
-    // TODO: Implement & doc.
+    // TODO: doc.
     private void updateTagInfos(Tag tag) {
-
+        
+        if (tag != null) {
+            mLayout.removeAllViews();
+            // Display generic info.
+            // TODO: Implement.
+            
+            // Check for Mifare Classic support.
+            if (Arrays.asList(tag.getTechList()).contains(
+                    "android.nfc.tech.MifareClassic")) {
+                // Display Mifare Classic info.
+                // TODO: Implement.
+            } else {
+                // No Mifare Classic Support.
+                LinearLayout layout = (LinearLayout) findViewById(
+                        R.id.LinearLayoutTagInfoSupport);
+                layout.setVisibility(View.VISIBLE);
+            }
+        } else {
+            // There is no Tag.
+            TextView text = new TextView(this);
+            text.setTextAppearance(this, android.R.style.TextAppearance_Large);
+            text.setText(getString(R.string.text_no_tag));
+            mLayout.removeAllViews();
+            mLayout.addView(text);
+            Toast.makeText(this, R.string.info_no_tag_found,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

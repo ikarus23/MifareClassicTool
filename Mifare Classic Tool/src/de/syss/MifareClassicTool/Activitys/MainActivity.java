@@ -122,29 +122,6 @@ public class MainActivity extends Activity {
             return;
         }
 
-        // Check if there is Mifare support.
-        // LOW: Check for MFC support don't work always according to forum
-        // posts... Find a better was?!
-        if (!getPackageManager().hasSystemFeature("com.nxp.mifare")) {
-            new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_no_mfc_title)
-                .setMessage(R.string.dialog_no_mfc)
-                .setPositiveButton(R.string.button_exit_app,
-                        new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                 })
-                .show();
-            mResume = false;
-            return;
-        }
-
         if (Common.isExternalStorageWritableErrorToast(this)) {
             // Create keys directory.
             File path = new File(Environment.getExternalStoragePublicDirectory(
@@ -309,7 +286,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Handel new Intent as a new tag Intent.
+     * Handle new Intent as a new tag Intent.
      * @see Common#treatAsNewTag(Intent, android.content.Context)
      */
     @Override

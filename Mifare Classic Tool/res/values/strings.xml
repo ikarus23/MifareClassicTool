@@ -96,6 +96,8 @@
     <string name="text_keys_read_only">Keys (A and B) are read-only</string>
     <string name="text_sector_dead">Sector is dead (IO Error) :(</string>
     <string name="text_strange_error">Some strange error occurred :(</string>
+    <string name="text_no_mifare_support">No Mifare Classic Support!</string>
+    <string name="text_no_tag">There is no Mifare Classic tag.</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -131,6 +133,7 @@
     <string name="button_select_none">Select None</string>
     <string name="button_cancel_all">Cancel Writing</string>
     <string name="button_skip_blocks">Write as Much as Possible</string>
+    <string name="button_more">Read More&#8230;</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -209,9 +212,11 @@
         Please go to your Settings and enable it.</string>
     <string name="dialog_no_nfc_title">No NFC Hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC Not Enabled</string>
-    <string name="dialog_no_mfc_title">No Mifare Support</string>
+    <string name="dialog_no_mfc_title">No Mifare Classic Support</string>
     <string name="dialog_no_mfc">There is no Mifare support on your
-        device. You need Mifare support in order to run this App.</string>
+        device (due to hardware). Therefore this App is pretty much useless.
+        The only thing it can do, is to display the UID and some other generic
+        information. Further I/O operations are not possible.</string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>
