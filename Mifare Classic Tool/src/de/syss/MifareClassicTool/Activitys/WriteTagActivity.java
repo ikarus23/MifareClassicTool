@@ -187,6 +187,7 @@ public class WriteTagActivity extends BasicActivity {
             new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_sector_trailer_warning_title)
             .setMessage(R.string.dialog_sector_trailer_warning)
+            .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(R.string.button_i_know_what_i_am_doing,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -549,7 +550,7 @@ public class WriteTagActivity extends BasicActivity {
 
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_not_writable_title)
-                .setIcon(R.drawable.warning)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setView(ll)
                 .setPositiveButton(R.string.button_skip_blocks,
                         new DialogInterface.OnClickListener() {
@@ -653,11 +654,12 @@ public class WriteTagActivity extends BasicActivity {
         progressBar.setIndeterminate(true);
         progressBar.setPadding(0, 0, 10, 0);
         TextView tv = new TextView(this);
-        tv.setText(getString(R.string.text_wait_write_tag));
+        tv.setText(getString(R.string.dialog_wait_write_tag));
         tv.setTextSize(18);
         ll.addView(progressBar);
         ll.addView(tv);
         final AlertDialog warning = new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_wait_write_tag_title)
             .setView(ll)
             .create();
         warning.show();

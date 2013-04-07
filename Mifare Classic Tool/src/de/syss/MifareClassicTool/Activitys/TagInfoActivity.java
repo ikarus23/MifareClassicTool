@@ -77,6 +77,7 @@ public class TagInfoActivity extends BasicActivity {
         new AlertDialog.Builder(this)
         .setTitle(R.string.dialog_no_mfc_title)
         .setMessage(R.string.dialog_no_mfc)
+        .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(R.string.button_ok,
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

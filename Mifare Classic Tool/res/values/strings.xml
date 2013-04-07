@@ -81,7 +81,6 @@
     <string name="text_choose_dump_to_write">Choose the dump to be written:</string>
     <string name="text_from">From</string>
     <string name="text_to">To</string>
-    <string name="text_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
     <string name="text_key_a">Key A</string>
     <string name="text_key_b">Key B</string>
     <string name="text_key_ab">Key A|B</string>
@@ -255,6 +254,8 @@
     <string name="dialog_not_writable">Some parts are not writable! Check the
         WHOLE list below.</string>
     <string name="dialog_tools_menu_title">Available Tools</string>
+    <string name="dialog_wait_write_tag_title">Writing…</string>
+    <string name="dialog_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
 
     <!-- Hints -->
     <string name="hint_hex_data">Hex, 16 Bytes (e.g. 0A4F&#8230;)</string>
