@@ -46,13 +46,13 @@
     <string name="text_key_map_progress">Key Mapping Progress:</string>
     <string name="text_sector">Sector:</string>
     <string name="text_block">Block:</string>
-    <string name="text_caption_title">Caption:</string>
-    <string name="text_caption_light_green">KeyA</string>
-    <string name="text_caption_dark_green">KeyB</string>
-    <string name="text_caption_ac">ACs</string>
-    <string name="text_caption_uid">UID</string>
-    <string name="text_caption_manufacturer">ManufInfo</string>
-    <string name="text_caption_value_block">ValueBlock</string>
+    <string name="text_caption_title">Caption</string>
+    <string name="text_keya">KeyA</string>
+    <string name="text_keyb">KeyB</string>
+    <string name="text_ac">ACs</string>
+    <string name="text_uid">UID</string>
+    <string name="text_manufacturer">ManufInfo</string>
+    <string name="text_valueblock">ValueBlock</string>
     <string name="text_chooser_info_text">Choose a file:</string>
     <string name="text_open_dump_title">Open Tag Dump</string>
     <string name="text_no_files_in_chooser">No files found</string>
@@ -98,6 +98,16 @@
     <string name="text_strange_error">Some strange error occurred :(</string>
     <string name="text_no_mifare_support">No Mifare Classic Support!</string>
     <string name="text_no_tag">There is no Mifare Classic tag.</string>
+    <string name="text_generic_info">Generic Info</string>
+    <string name="text_mf_info">Mifare Classic Info</string>
+    <string name="text_rf_tech">RF Technologie</string>
+    <string name="text_rf_tech_14a">ISO/IEC 14443, Type A</string>
+    <string name="text_atqa">ATQA</string>
+    <string name="text_sak">SAK</string>
+    <string name="text_mem_size">Memory Size</string>
+    <string name="text_block_size">Block Size</string>
+    <string name="text_sector_count">Number of Sectors</string>
+    <string name="text_block_count">Number of Blocks</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>

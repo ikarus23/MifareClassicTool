@@ -108,22 +108,22 @@ public class DumpEditorActivity extends BasicActivity {
 
         // Color caption.
         SpannableString keyA = Common.colorString(
-                getString(R.string.text_caption_light_green),
+                getString(R.string.text_keya),
                 getResources().getColor(R.color.light_green));
         SpannableString keyB =  Common.colorString(
-                getString(R.string.text_caption_dark_green),
+                getString(R.string.text_keyb),
                 getResources().getColor(R.color.dark_green));
         SpannableString ac = Common.colorString(
-                getString(R.string.text_caption_ac),
+                getString(R.string.text_ac),
                 getResources().getColor(R.color.orange));
         SpannableString uid = Common.colorString(
-                getString(R.string.text_caption_uid),
+                getString(R.string.text_uid),
                 getResources().getColor(R.color.cyan));
         SpannableString mb = Common.colorString(
-                getString(R.string.text_caption_manufacturer),
+                getString(R.string.text_manufacturer),
                 getResources().getColor(R.color.purple));
         SpannableString vb = Common.colorString(
-                getString(R.string.text_caption_value_block),
+                getString(R.string.text_valueblock),
                 getResources().getColor(R.color.yellow));
 
         TextView caption = (TextView) findViewById(
@@ -139,7 +139,7 @@ public class DumpEditorActivity extends BasicActivity {
         updateText.setSpan(new UnderlineSpan(), 0, updateText.length(), 0);
         captionTitle.setText(TextUtils.concat(
                 getString(R.string.text_caption_title),
-                " (", updateText, ")"));
+                ": (", updateText, ")"));
 
         // Init. editor on intent.
         if (getIntent().hasExtra(EXTRA_DUMP)) {
