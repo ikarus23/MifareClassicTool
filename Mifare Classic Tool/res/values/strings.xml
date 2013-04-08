@@ -18,7 +18,6 @@
  */
 -->
 
-
 <resources>
 
     <!-- Common stuff -->
@@ -35,8 +34,9 @@
     <string name="title_activity_file_chooser">File Chooser</string>
     <string name="title_activity_value_blocks">Value Blocks as Integers</string>
     <string name="title_activity_key_editor">Key Editor</string>
-    <string name="title_activity_help">Help and Infos</string>
+    <string name="title_activity_help">Help and Info</string>
     <string name="title_activity_hex_to_ascii">Data as ASCII</string>
+    <string name="title_activity_tag_info">Tag Info</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -46,13 +46,13 @@
     <string name="text_key_map_progress">Key Mapping Progress:</string>
     <string name="text_sector">Sector:</string>
     <string name="text_block">Block:</string>
-    <string name="text_caption_title">Caption:</string>
-    <string name="text_caption_light_green">KeyA</string>
-    <string name="text_caption_dark_green">KeyB</string>
-    <string name="text_caption_ac">ACs</string>
-    <string name="text_caption_uid">UID</string>
-    <string name="text_caption_manufacturer">ManufInfo</string>
-    <string name="text_caption_value_block">ValueBlock</string>
+    <string name="text_caption_title">Caption</string>
+    <string name="text_keya">KeyA</string>
+    <string name="text_keyb">KeyB</string>
+    <string name="text_ac">ACs</string>
+    <string name="text_uid">UID</string>
+    <string name="text_manufacturer">ManufInfo</string>
+    <string name="text_valueblock">ValueBlock</string>
     <string name="text_chooser_info_text">Choose a file:</string>
     <string name="text_open_dump_title">Open Tag Dump</string>
     <string name="text_no_files_in_chooser">No files found</string>
@@ -81,7 +81,6 @@
     <string name="text_choose_dump_to_write">Choose the dump to be written:</string>
     <string name="text_from">From</string>
     <string name="text_to">To</string>
-    <string name="text_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
     <string name="text_key_a">Key A</string>
     <string name="text_key_b">Key B</string>
     <string name="text_key_ab">Key A|B</string>
@@ -96,18 +95,31 @@
     <string name="text_keys_read_only">Keys (A and B) are read-only</string>
     <string name="text_sector_dead">Sector is dead (IO Error) :(</string>
     <string name="text_strange_error">Some strange error occurred :(</string>
+    <string name="text_no_mifare_support">No Mifare Classic Support!</string>
+    <string name="text_no_tag">There is no Mifare Classic tag.</string>
+    <string name="text_generic_info">Generic Info</string>
+    <string name="text_mf_info">Mifare Classic Info</string>
+    <string name="text_rf_tech">RF Technologie</string>
+    <string name="text_rf_tech_14a">ISO/IEC 14443, Type A</string>
+    <string name="text_atqa">ATQA</string>
+    <string name="text_sak">SAK</string>
+    <string name="text_mem_size">Memory Size</string>
+    <string name="text_block_size">Block Size</string>
+    <string name="text_sector_count">Number of Sectors</string>
+    <string name="text_block_count">Number of Blocks</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
     <string name="button_write_tag">Write Tag</string>
     <string name="button_edit_tag_dump">Edit Dump File</string>
     <string name="button_edit_key_dump">Edit/Add Key File</string>
+    <string name="button_tools">Tools</string>
     <string name="button_exit_app">Exit App</string>
     <string name="button_nfc">Goto NFC Settings</string>
     <string name="button_create_key_map">Map Keys to Sectors</string>
     <string name="button_create_key_map_and_read">Start Mapping and
         Read Tag</string>
-    <string name="button_help">Help and Infos</string>
+    <string name="button_help">Help and Info</string>
     <string name="button_editor_only">Use Only As Editor</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
@@ -119,7 +131,7 @@
     <string name="button_write_block">Write Block</string>
     <string name="button_create_key_map_and_write_block">Start Mapping and
         Write Block</string>
-        <string name="button_create_key_map_and_write_dump">Start Mapping and
+    <string name="button_create_key_map_and_write_dump">Start Mapping and
         Write Dump</string>
     <string name="button_write_full_dump">Select Dump</string>
     <string name="button_i_know_what_i_am_doing">I know what I\'m doing</string>
@@ -130,12 +142,14 @@
     <string name="button_select_none">Select None</string>
     <string name="button_cancel_all">Cancel Writing</string>
     <string name="button_skip_blocks">Write as Much as Possible</string>
+    <string name="button_more">Read More&#8230;</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
     <string name="menu_show_ascii">Show Data as ASCII</string>
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
+    <string name="menu_tag_info">Display Tag Info</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -207,9 +221,16 @@
         Please go to your Settings and enable it.</string>
     <string name="dialog_no_nfc_title">No NFC Hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC Not Enabled</string>
-    <string name="dialog_no_mfc_title">No Mifare Support</string>
-    <string name="dialog_no_mfc">There is no Mifare support on your
-        device. You need Mifare support in order to run this App.</string>
+    <string name="dialog_no_mfc_title">No Mifare Classic Support</string>
+    <string name="dialog_no_mfc">Your device (due to hardware) or the tag
+        does not support Mifare Classic! The only thing this App can do,
+        is to display the UID and some other generic information.
+        Further I/O operations are not possible.
+        \n\n<b>If your device does not support Mifare Classic,
+        this App is pretty much useless.</b>
+        \n\nKnown devices with no Mifare Classic support:\n
+        - Google Nexus 4\n
+        - Google Nexus 10</string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>
@@ -233,10 +254,13 @@
         you write data to a tag. Writing the wrong data to certain
         blocks may cause irreparable damage to the tag.
         \n\n<b>FOR MORE INFORMATION AND HELP CHECK OUT THE
-        \"Help and Infos\" SECTION.</b></string>
+        \"Help and Info\" SECTION.</b></string>
     <string name="dialog_not_writable_title">Write Issues</string>
     <string name="dialog_not_writable">Some parts are not writable! Check the
         WHOLE list below.</string>
+    <string name="dialog_tools_menu_title">Available Tools</string>
+    <string name="dialog_wait_write_tag_title">Writing…</string>
+    <string name="dialog_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
 
     <!-- Hints -->
     <string name="hint_hex_data">Hex, 16 Bytes (e.g. 0A4F&#8230;)</string>

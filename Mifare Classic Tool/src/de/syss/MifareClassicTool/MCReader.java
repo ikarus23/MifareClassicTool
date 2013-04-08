@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import de.syss.MifareClassicTool.Activitys.CreateKeyMapActivity;
+
 import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.nfc.TagLostException;

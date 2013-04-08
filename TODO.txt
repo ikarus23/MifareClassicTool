@@ -6,11 +6,6 @@ TODO (Maybe outdated):
 
 
 
-(++) Show tag infos like the NFC Tag Info app does.
-     This will introduce a new "Tools" section in the main menu.
-     (This will also fix the issue with the false positive
-     "No Mifare Classic Support" dialog on some devices.)
-
 (+)  Display blanks between hexbytes in the dump editor view
      for better reading.
      

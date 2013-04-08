@@ -27,6 +27,7 @@ Features
   keys against all sectors and read as much as possible.  
   See chapter [Getting Started](#getting-started).)
 * Create, edit and save key files (dictionaries)
+* Display generic tag information
 * Display the tag data as highlighted hex
 * Display the tag data as 7-Bit US-ASCII
 * Display the Mifare Classic Access Conditions as a table

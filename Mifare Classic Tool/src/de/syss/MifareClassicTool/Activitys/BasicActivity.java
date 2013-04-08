@@ -18,9 +18,9 @@
 
 package de.syss.MifareClassicTool.Activitys;
 
-import de.syss.MifareClassicTool.Common;
 import android.app.Activity;
 import android.content.Intent;
+import de.syss.MifareClassicTool.Common;
 
 /**
  * An Activity implementing the NFC foreground dispatch system overwriting
@@ -54,11 +54,18 @@ public abstract class BasicActivity extends Activity {
     }
 
     /**
-     * Handle new Intent as a new tag Intent.
+     * Handle new Intent as a new tag Intent and if the tag/device does not
+     * support Mifare Classic, then run {@link TagInfoActivity}.
      * @see Common#treatAsNewTag(Intent, android.content.Context)
+     * @see TagInfoActivity
      */
     @Override
     public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
+        if (Common.treatAsNewTag(intent, this) == 0) {
+            // Device or tag does not support Mifare Classic.
+            // Run the only thing that is possible: The tag info tool.
+            Intent i = new Intent(this, TagInfoActivity.class);
+            startActivity(i);
+        }
     }
 }

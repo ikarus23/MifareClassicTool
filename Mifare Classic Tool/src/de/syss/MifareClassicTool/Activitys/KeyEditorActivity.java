@@ -103,6 +103,7 @@ public class KeyEditorActivity extends BasicActivity {
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_save_keys_title)
                 .setMessage(R.string.dialog_save_keys)
+                .setIcon(android.R.drawable.ic_menu_save)
                 .setView(input)
                 .setPositiveButton(R.string.button_ok,
                         new DialogInterface.OnClickListener() {

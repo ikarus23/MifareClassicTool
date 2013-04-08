@@ -23,7 +23,7 @@ import android.webkit.WebView;
 import de.syss.MifareClassicTool.R;
 
 /**
- * In-App (offline) help and infos.
+ * In-App (offline) help and info.
  * @author Gerhard Klostermeier
  */
 public class HelpActivity extends BasicActivity {

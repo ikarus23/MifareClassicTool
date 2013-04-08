@@ -38,6 +38,10 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -92,12 +96,17 @@ public class MainActivity extends Activity {
             Log.d(LOG_TAG, "Version not found.");
         }
 
+        // Add the context menu to the tools button.
+        Button tools = (Button) findViewById(R.id.buttonMainTools);
+        registerForContextMenu(tools);
+
         // Check if there is an NFC hardware component.
         Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
         if (Common.getNfcAdapter() == null) {
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_no_nfc_title)
                 .setMessage(R.string.dialog_no_nfc)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.button_exit_app,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -110,29 +119,6 @@ public class MainActivity extends Activity {
                     }
                  })
                  .show();
-            mResume = false;
-            return;
-        }
-
-        // Check if there is Mifare support.
-        // LOW: Check for MFC support don't work always according to forum
-        // posts... Find a better was?!
-        if (!getPackageManager().hasSystemFeature("com.nxp.mifare")) {
-            new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_no_mfc_title)
-                .setMessage(R.string.dialog_no_mfc)
-                .setPositiveButton(R.string.button_exit_app,
-                        new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                 })
-                .show();
             mResume = false;
             return;
         }
@@ -173,6 +159,7 @@ public class MainActivity extends Activity {
         mEnableNfc = new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_nfc_not_enabled_title)
             .setMessage(R.string.dialog_nfc_not_enabled)
+            .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.button_nfc,
                     new DialogInterface.OnClickListener() {
                 @SuppressLint("InlinedApi")
@@ -184,9 +171,6 @@ public class MainActivity extends Activity {
                         startActivity(new Intent(
                                 Settings.ACTION_WIRELESS_SETTINGS));
                     }
-                    // Enable read/write tag options.
-                    mReadTag.setEnabled(true);
-                    mWriteTag.setEnabled(true);
                 }
              })
              .setNeutralButton(R.string.button_editor_only,
@@ -212,7 +196,7 @@ public class MainActivity extends Activity {
             e.commit();
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
-                .setIcon(R.drawable.warning)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(R.string.dialog_first_run)
                 .setPositiveButton(R.string.button_ok,
                         new DialogInterface.OnClickListener() {
@@ -229,6 +213,24 @@ public class MainActivity extends Activity {
                 .show();
             mResume = false;
         }
+    }
+
+    /**
+     * Add the menu with the tools.
+     * It will be shown if the user clicks on "Tools".
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        menu.setHeaderTitle(R.string.dialog_tools_menu_title);
+        menu.setHeaderIcon(android.R.drawable.ic_menu_preferences);
+        inflater.inflate(R.menu.tools, menu);
+        // Enable/Disable tag info tool depending on NFC availability.
+        menu.findItem(R.id.menuMainTagInfo).setEnabled(
+                Common.getNfcAdapter() != null
+                && Common.getNfcAdapter().isEnabled());
     }
 
     /**
@@ -267,7 +269,12 @@ public class MainActivity extends Activity {
             // NFC is enabled. Hide dialog and enable NFC
             // foreground dispatch.
             if (mOldIntent != getIntent()) {
-                Common.treatAsNewTag(getIntent(), this);
+                if (Common.treatAsNewTag(getIntent(), this) == 0) {
+                    // Device or tag does not support Mifare Classic.
+                    // Run the only thing that is possible: The tag info tool.
+                    Intent i = new Intent(this, TagInfoActivity.class);
+                    startActivity(i);
+                }
                 mOldIntent = getIntent();
             }
             Common.enableNfcForegroundDispatch(this);
@@ -288,12 +295,19 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Handel new Intent as a new tag Intent.
+     * Handle new Intent as a new tag Intent and if the tag/device does not
+     * support Mifare Classic, then run {@link TagInfoActivity}.
      * @see Common#treatAsNewTag(Intent, android.content.Context)
+     * @see TagInfoActivity
      */
     @Override
     public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
+        if (Common.treatAsNewTag(intent, this) == 0) {
+            // Device or tag does not support Mifare Classic.
+            // Run the only thing that is possible: The tag info tool.
+            Intent i = new Intent(this, TagInfoActivity.class);
+            startActivity(i);
+        }
     }
 
     /**
@@ -321,11 +335,20 @@ public class MainActivity extends Activity {
     /**
      * Show the help Activity.
      * @param view The View object that triggered the method
-     * (in this case the help/infos button).
+     * (in this case the help/info button).
      */
     public void onShowHelp(View view) {
         Intent intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Show the tools menu (as context menu).
+     * @param view The View object that triggered the method
+     * (in this case the tools button).
+     */
+    public void onShowTools(View view) {
+        openContextMenu(view);
     }
 
     /**
@@ -378,6 +401,21 @@ public class MainActivity extends Activity {
                 getString(R.string.button_open_key_file));
         intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE_BUTTON, true);
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
+    }
+
+    /**
+     * Handle (start) the selected tool from the tools menu.
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menuMainTagInfo:
+            Intent intent = new Intent(this, TagInfoActivity.class);
+            startActivity(intent);
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+        }
     }
 
     /**
