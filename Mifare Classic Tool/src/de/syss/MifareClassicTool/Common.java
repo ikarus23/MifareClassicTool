@@ -34,6 +34,7 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
+import android.nfc.tech.NfcA;
 import android.os.Environment;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -230,7 +231,7 @@ public class Common {
                     targetActivity, 0, intent, 0);
             mNfcAdapter.enableForegroundDispatch(
                     targetActivity, pendingIntent, null, new String[][] {
-                            new String[] { MifareClassic.class.getName() } });
+                            new String[] { NfcA.class.getName() } });
         }
     }
 
@@ -257,8 +258,8 @@ public class Common {
      * @param context The Context in which the Toast will be shown.
      * @return
      * <ul>
-     * <li>1 - The tag supports Mifare Classic</li>
-     * <li>0 - The tag does not support Mifare Classic</li>
+     * <li>1 - The device/tag supports Mifare Classic</li>
+     * <li>0 - The device/tag does not support Mifare Classic</li>
      * <li>-1 - Wrong Intent (action is not "ACTION_TECH_DISCOVERED").</li>
      * </ul>
      * @see #mTag
@@ -280,7 +281,7 @@ public class Common {
 
             // Return "1" if device supports Mifare Classic. "0" otherwise.
             return (Arrays.asList(tag.getTechList()).contains(
-                    "android.nfc.tech.MifareClassic")) ? 1 : 0;
+                    MifareClassic.class.getName())) ? 1 : 0;
         }
         return -1;
     }

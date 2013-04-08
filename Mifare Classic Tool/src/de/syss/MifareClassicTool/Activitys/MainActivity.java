@@ -269,7 +269,12 @@ public class MainActivity extends Activity {
             // NFC is enabled. Hide dialog and enable NFC
             // foreground dispatch.
             if (mOldIntent != getIntent()) {
-                Common.treatAsNewTag(getIntent(), this);
+                if (Common.treatAsNewTag(getIntent(), this) == 0) {
+                    // Device or tag does not support Mifare Classic.
+                    // Run the only thing that is possible: The tag info tool.
+                    Intent i = new Intent(this, TagInfoActivity.class);
+                    startActivity(i);
+                }
                 mOldIntent = getIntent();
             }
             Common.enableNfcForegroundDispatch(this);
@@ -298,7 +303,7 @@ public class MainActivity extends Activity {
     @Override
     public void onNewIntent(Intent intent) {
         if (Common.treatAsNewTag(intent, this) == 0) {
-            // Device does not support Mifare Classic.
+            // Device or tag does not support Mifare Classic.
             // Run the only thing that is possible: The tag info tool.
             Intent i = new Intent(this, TagInfoActivity.class);
             startActivity(i);

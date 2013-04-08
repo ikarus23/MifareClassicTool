@@ -222,10 +222,15 @@
     <string name="dialog_no_nfc_title">No NFC Hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC Not Enabled</string>
     <string name="dialog_no_mfc_title">No Mifare Classic Support</string>
-    <string name="dialog_no_mfc">There is no Mifare support on your
-        device (due to hardware). Therefore this App is pretty much useless.
-        The only thing it can do, is to display the UID and some other generic
-        information. Further I/O operations are not possible.</string>
+    <string name="dialog_no_mfc">Your device (due to hardware) or the tag
+        does not support Mifare Classic! The only thing this App can do,
+        is to display the UID and some other generic information.
+        Further I/O operations are not possible.
+        \n\n<b>If your device does not support Mifare Classic,
+        this App is pretty much useless.</b>
+        \n\nKnown devices with no Mifare Classic support:\n
+        - Google Nexus 4\n
+        - Google Nexus 10</string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>
