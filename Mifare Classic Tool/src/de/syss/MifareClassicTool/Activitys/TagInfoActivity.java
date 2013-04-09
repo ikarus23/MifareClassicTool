@@ -135,24 +135,35 @@ public class TagInfoActivity extends BasicActivity {
             if (iso != null ) {
                 ats = Common.byte2HexString(iso.getHistoricalBytes());
             }
+            int tagTypeResourceID = getTagIdentifier(atqa, sak, ats);
+            String tagType = getString(tagTypeResourceID);
             int hc = getResources().getColor(R.color.light_green);
             genericInfo.setText(TextUtils.concat(
                     Common.colorString(getString(R.string.text_uid) + ":", hc),
-                    "\n  ", uid, "\n",
+                    "\n", uid, "\n",
                     Common.colorString(getString(
                             R.string.text_rf_tech) + ":", hc),
                     // Tech is always ISO 14443a due to NFC Intet filter.
-                    "\n  ", getString(R.string.text_rf_tech_14a), "\n",
+                    "\n", getString(R.string.text_rf_tech_14a), "\n",
                     Common.colorString(getString(R.string.text_atqa) + ":", hc),
-                    "\n  ", atqa, "\n",
+                    "\n", atqa, "\n",
                     Common.colorString(getString(R.string.text_sak) + ":", hc),
-                    "\n  ", sak, "\n",
+                    "\n", sak, "\n",
                     Common.colorString(getString(
                             R.string.text_ats_atr) + ":", hc),
-                    "\n  ", ats, "\n",
+                    "\n", ats, "\n",
                     Common.colorString(getString(
                             R.string.text_tag_type_and_manuf) + ":", hc),
-                    "\n  ", getString(getTagIdentifier(atqa+sak+ats))));
+                    "\n", tagType));
+
+            // Add message that the tag type might be wrong.
+            if (tagTypeResourceID != R.string.tag_unknown) {
+                TextView tagTypeInfo = new TextView(this);
+                tagTypeInfo.setPadding(pad, 0, pad, pad);
+                tagTypeInfo.setText(
+                        "(" + getString(R.string.text_tag_type_guess) + ")");
+                mLayout.addView(tagTypeInfo);
+            }
 
             LinearLayout layout = (LinearLayout) findViewById(
                     R.id.LinearLayoutTagInfoSupport);
@@ -186,17 +197,17 @@ public class TagInfoActivity extends BasicActivity {
                 mifareInfo.setText(TextUtils.concat(
                         Common.colorString(getString(
                                 R.string.text_mem_size) + ":", hc),
-                        "\n  ", size, " Byte\n",
+                        "\n", size, " Byte\n",
                         Common.colorString(getString(
                                 R.string.text_block_size) + ":", hc),
                         // Block size is always 16 Byte on Mifare Classic Tags.
-                        "\n  ", "" + MifareClassic.BLOCK_SIZE, " Byte\n",
+                        "\n", "" + MifareClassic.BLOCK_SIZE, " Byte\n",
                         Common.colorString(getString(
                                 R.string.text_sector_count) + ":", hc),
-                        "\n  ", sectorCount, "\n",
+                        "\n", sectorCount, "\n",
                         Common.colorString(getString(
                                 R.string.text_block_count) + ":", hc),
-                        "\n  ", blockCount));
+                        "\n", blockCount));
                 layout.setVisibility(View.GONE);
             } else {
                 // No Mifare Classic Support.
@@ -215,17 +226,36 @@ public class TagInfoActivity extends BasicActivity {
     }
 
     /**
-     * Get the tag type resource ID from ATQA + SAK + ATS.
-     * @param name Concatenated string of ATQA + SAK + ATS (hex, uppercase).
+     * Get (determine) the tag type resource ID from ATQA + SAK + ATS.
+     * If no resource is found check for the tag type only on ATQA + SAK
+     * (and then on ATQA only).
+     * @param atqa The ATQA from the tag.
+     * @param sak The SAK from the tag.
+     * @param ats The ATS from the tag.
      * @return The resource ID.
      */
-    private int getTagIdentifier(String name) {
-        name = name.replace("-", "");
-        name = "tag_" + name;
+    private int getTagIdentifier(String atqa, String sak, String ats) {
+        String prefix = "tag_";
+        ats = ats.replace("-", "");
+
+        // First check on ATQA + SAK + ATS.
         int ret = getResources().getIdentifier(
-                name,"string", getPackageName());
+                prefix + atqa + sak + ats, "string", getPackageName());
+
         if (ret == 0) {
-            // Unknown tag type.
+            // Check on ATQA + SAK.
+            ret = getResources().getIdentifier(
+                    prefix + atqa + sak, "string", getPackageName());
+        }
+
+        if (ret == 0) {
+            // Check on ATQA.
+            ret = getResources().getIdentifier(
+                    prefix + atqa, "string", getPackageName());
+        }
+
+        if (ret == 0) {
+            // No match found return "Unknown".
             return R.string.tag_unknown;
         }
         return ret;
