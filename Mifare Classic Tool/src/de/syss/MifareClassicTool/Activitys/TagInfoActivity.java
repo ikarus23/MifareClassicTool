@@ -120,7 +120,8 @@ public class TagInfoActivity extends BasicActivity {
             String uid = Common.byte2HexString(tag.getId());
             NfcA nfca = NfcA.get(tag);
             String atqa = Common.byte2HexString(nfca.getAtqa());
-            String sak = "" + nfca.getSak();
+            String sak = Common.byte2HexString(
+                    new byte[] {(byte)nfca.getSak()});
             int hc = getResources().getColor(R.color.light_green);
             genericInfo.setText(TextUtils.concat(
                     Common.colorString(getString(R.string.text_uid) + ":", hc),
