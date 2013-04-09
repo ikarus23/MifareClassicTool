@@ -103,6 +103,7 @@
     <string name="text_rf_tech_14a">ISO/IEC 14443, Type A</string>
     <string name="text_atqa">ATQA</string>
     <string name="text_sak">SAK</string>
+    <string name="text_ats_atr">ATS (ATR)</string>
     <string name="text_mem_size">Memory Size</string>
     <string name="text_block_size">Block Size</string>
     <string name="text_sector_count">Number of Sectors</string>

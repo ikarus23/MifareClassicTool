@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
@@ -128,6 +129,11 @@ public class TagInfoActivity extends BasicActivity {
             String atqa = Common.byte2HexString(atqaBytes);
             String sak = Common.byte2HexString(
                     new byte[] {(byte)nfca.getSak()});
+            String ats = "-";
+            IsoDep iso = IsoDep.get(tag);
+            if (iso != null ) {
+                ats = Common.byte2HexString(iso.getHistoricalBytes());
+            }
             int hc = getResources().getColor(R.color.light_green);
             genericInfo.setText(TextUtils.concat(
                     Common.colorString(getString(R.string.text_uid) + ":", hc),
@@ -139,7 +145,10 @@ public class TagInfoActivity extends BasicActivity {
                     Common.colorString(getString(R.string.text_atqa) + ":", hc),
                     "\n  ", atqa, "\n",
                     Common.colorString(getString(R.string.text_sak) + ":", hc),
-                    "\n  ", sak));
+                    "\n  ", sak, "\n",
+                    Common.colorString(getString(
+                            R.string.text_ats_atr) + ":", hc),
+                    "\n  ", ats));
 
             LinearLayout layout = (LinearLayout) findViewById(
                     R.id.LinearLayoutTagInfoSupport);
