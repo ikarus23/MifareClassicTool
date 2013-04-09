@@ -23,6 +23,7 @@ import java.util.Arrays;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
@@ -66,7 +67,9 @@ public class TagInfoActivity extends BasicActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        updateTagInfos(Common.getTag());
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+            updateTagInfos(Common.getTag());
+        }
     }
 
     /**
@@ -123,9 +126,7 @@ public class TagInfoActivity extends BasicActivity {
             // Swap ATQA to match the common order like shown here:
             // http://nfc-tools.org/index.php?title=ISO14443A
             byte[] atqaBytes = nfca.getAtqa();
-            byte temp = atqaBytes[0];
-            atqaBytes[0] = atqaBytes[1];
-            atqaBytes[1] = temp;
+            atqaBytes = new byte[] {atqaBytes[1], atqaBytes[0]};
             String atqa = Common.byte2HexString(atqaBytes);
             String sak = Common.byte2HexString(
                     new byte[] {(byte)nfca.getSak()});
@@ -148,7 +149,10 @@ public class TagInfoActivity extends BasicActivity {
                     "\n  ", sak, "\n",
                     Common.colorString(getString(
                             R.string.text_ats_atr) + ":", hc),
-                    "\n  ", ats));
+                    "\n  ", ats, "\n",
+                    Common.colorString(getString(
+                            R.string.text_tag_type_and_manuf) + ":", hc),
+                    "\n  ", getString(getTagIdentifier(atqa+sak+ats))));
 
             LinearLayout layout = (LinearLayout) findViewById(
                     R.id.LinearLayoutTagInfoSupport);
@@ -208,5 +212,22 @@ public class TagInfoActivity extends BasicActivity {
             Toast.makeText(this, R.string.info_no_tag_found,
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Get the tag type resource ID from ATQA + SAK + ATS.
+     * @param name Concatenated string of ATQA + SAK + ATS (hex, uppercase).
+     * @return The resource ID.
+     */
+    private int getTagIdentifier(String name) {
+        name = name.replace("-", "");
+        name = "tag_" + name;
+        int ret = getResources().getIdentifier(
+                name,"string", getPackageName());
+        if (ret == 0) {
+            // Unknown tag type.
+            return R.string.tag_unknown;
+        }
+        return ret;
     }
 }
