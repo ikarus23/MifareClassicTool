@@ -119,7 +119,13 @@ public class TagInfoActivity extends BasicActivity {
             // Get generic info and set these as text.
             String uid = Common.byte2HexString(tag.getId());
             NfcA nfca = NfcA.get(tag);
-            String atqa = Common.byte2HexString(nfca.getAtqa());
+            // Swap ATQA to match the common order like shown here:
+            // http://nfc-tools.org/index.php?title=ISO14443A
+            byte[] atqaBytes = nfca.getAtqa();
+            byte temp = atqaBytes[0];
+            atqaBytes[0] = atqaBytes[1];
+            atqaBytes[1] = temp;
+            String atqa = Common.byte2HexString(atqaBytes);
             String sak = Common.byte2HexString(
                     new byte[] {(byte)nfca.getSak()});
             int hc = getResources().getColor(R.color.light_green);
