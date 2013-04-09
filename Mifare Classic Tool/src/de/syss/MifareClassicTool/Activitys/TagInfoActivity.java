@@ -135,6 +135,8 @@ public class TagInfoActivity extends BasicActivity {
                     Common.colorString(getString(R.string.text_sak) + ":", hc),
                     "\n  ", sak));
 
+            LinearLayout layout = (LinearLayout) findViewById(
+                    R.id.LinearLayoutTagInfoSupport);
             // Check for Mifare Classic support.
             if (Arrays.asList(tag.getTechList()).contains(
                     "android.nfc.tech.MifareClassic")) {
@@ -176,10 +178,9 @@ public class TagInfoActivity extends BasicActivity {
                         Common.colorString(getString(
                                 R.string.text_block_count) + ":", hc),
                         "\n  ", blockCount));
+                layout.setVisibility(View.GONE);
             } else {
                 // No Mifare Classic Support.
-                LinearLayout layout = (LinearLayout) findViewById(
-                        R.id.LinearLayoutTagInfoSupport);
                 layout.setVisibility(View.VISIBLE);
             }
         } else {
