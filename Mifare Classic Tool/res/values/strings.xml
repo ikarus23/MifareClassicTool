@@ -105,8 +105,8 @@
     <string name="text_sak">SAK</string>
     <string name="text_ats_atr">ATS (ATR)</string>
     <string name="text_tag_type_and_manuf">Tag Type and Manufacturer</string>
-    <string name="text_tag_type_guess">Tag Type and Manufacturer might be
-        wrong, see Help and Infos for more information.</string>
+    <string name="text_tag_type_guess">\'Tag Type and Manufacturer\' might be
+        wrong.\nSee \'Help and Infos\' for more information.</string>
     <string name="text_mem_size">Memory Size</string>
     <string name="text_block_size">Block Size</string>
     <string name="text_sector_count">Number of Sectors</string>
