@@ -287,6 +287,39 @@ public class Common {
     }
 
     /**
+     * Create a connected {@link MCReader} if there is a present Mifare Classic
+     * tag. If there is no Mifare Classic tag a error
+     * message will be displayed to toe user.
+     * @param context The Context in which the error Toast will be shown.
+     * @return A connected {@link MCReader} or "null" if no tag was present.
+     */
+    public static MCReader checkForTagAndCreateReader(Context context) {
+        // Check for tag.
+        if (mTag == null) {
+            // Error. There is no tag.
+            Toast.makeText(context, R.string.info_no_tag_found,
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+        MCReader reader = MCReader.get(mTag);
+        if (reader == null) {
+         // Error. The tag is not Mifare Classic.
+            Toast.makeText(context, R.string.info_no_tag_found,
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+        reader.connect();
+        if (!reader.isConnected()) {
+            // Error. The tag is gone.
+            Toast.makeText(context, R.string.info_no_tag_found,
+                    Toast.LENGTH_LONG).show();
+            reader.close();
+            return null;
+        }
+        return reader;
+    }
+
+    /**
      * Depending on the provided Access Conditions this method will return
      * with which key you can achieve the operation ({@link Operations})
      * you asked for.<br />

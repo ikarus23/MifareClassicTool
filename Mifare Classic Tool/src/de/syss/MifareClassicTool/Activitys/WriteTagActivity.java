@@ -235,7 +235,7 @@ public class WriteTagActivity extends BasicActivity {
      * @see #onWriteBlock(View)
      */
     private void writeBlock() {
-        MCReader reader = checkForTagAndCreateReader();
+        MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             return;
         }
@@ -367,7 +367,7 @@ public class WriteTagActivity extends BasicActivity {
      */
     private void checkTag() {
         // Create reader.
-        MCReader reader = checkForTagAndCreateReader();
+        MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             return;
         }
@@ -591,33 +591,6 @@ public class WriteTagActivity extends BasicActivity {
     }
 
     /**
-     * A helper function for {@link #checkTag()}, {@link #writeDump(HashMap,
-     * SparseArray)} and {@link #writeBlock()}. It checks for a present tag
-     * and create a {@link MCReader} connected to this tag.
-     * If there is no tag an error message will be displayed to the user.
-     * @return A connected {@link MCReader} or "null" if no tag was present.
-     */
-    private MCReader checkForTagAndCreateReader() {
-        // Check for tag.
-        if (Common.getTag() == null) {
-            // Error. There is no tag.
-            Toast.makeText(this, R.string.info_no_tag_found,
-                    Toast.LENGTH_LONG).show();
-            return null;
-        }
-        MCReader reader = new MCReader(Common.getTag());
-        reader.connect();
-        if (!reader.isConnected()) {
-            // Error. The tag is gone.
-            Toast.makeText(this, R.string.info_no_tag_found,
-                    Toast.LENGTH_LONG).show();
-            reader.close();
-            return null;
-        }
-        return reader;
-    }
-
-    /**
      * This method is triggered by {@link #checkTag()} and writes a dump
      * to a tag.
      * @param writeOnPos A map within a map (all with type = Integer).
@@ -641,7 +614,7 @@ public class WriteTagActivity extends BasicActivity {
         }
 
         // Create reader.
-        final MCReader reader = checkForTagAndCreateReader();
+        final MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             return;
         }

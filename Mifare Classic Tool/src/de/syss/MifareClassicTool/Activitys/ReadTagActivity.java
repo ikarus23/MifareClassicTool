@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activitys;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -110,13 +111,13 @@ public class ReadTagActivity extends Activity {
      * calls {@link #createTagDump(SparseArray)}.
      */
     private void readTag() {
+        final Context con = this;
         new Thread(new Runnable() {
             public void run() {
-                MCReader reader = new MCReader(Common.getTag());
+                MCReader reader = Common.checkForTagAndCreateReader(con);
 //              MCReader reader = (MCReader) data.getSerializableExtra(
 //                      CreateKeyMapActivity.EXTRA_KEY_MAP);
-                reader.connect();
-                if (!reader.isConnected()) {
+                if (reader == null) {
                     return;
                 }
 

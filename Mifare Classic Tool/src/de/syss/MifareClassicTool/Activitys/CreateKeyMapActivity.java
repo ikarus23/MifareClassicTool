@@ -123,8 +123,6 @@ public class CreateKeyMapActivity extends BasicActivity {
     private static final int DEFAULT_SECTOR_RANGE_FROM = 0;
     private static final int DEFAULT_SECTOR_RANGE_TO = 15;
 
-
-    private MCReader mMCReader;
     private Button mCreateKeyMap;
     private LinearLayout mKeyFilesGroup;
     private TextView mSectorRange;
@@ -196,7 +194,6 @@ public class CreateKeyMapActivity extends BasicActivity {
     public void onPause() {
         super.onPause();
         mIsCreatingKeyMap = false;
-        Common.disableNfcForegroundDispatch(this);
     }
 
     /**
@@ -239,7 +236,7 @@ public class CreateKeyMapActivity extends BasicActivity {
 
     /**
      * Select all of the key files.
-     * @param view The View bbject that triggered the method
+     * @param view The View object that triggered the method
      * (in this case the select all button).
      */
     public void onSelectAll(View view) {
@@ -267,12 +264,12 @@ public class CreateKeyMapActivity extends BasicActivity {
     }
 
     /**
-     * Inform the worker thread from {@link #createKeyMap()}
+     * Inform the worker thread from {@link #createKeyMap(MCReader)}
      * to stop creating the key map. If the thread is already
      * informed or does not exists this button will finish the activity.
      * @param view The View object that triggered the method
      * (in this case the cancel button).
-     * @see #createKeyMap()
+     * @see #createKeyMap(MCReader)
      */
     public void onCancelCreateKeyMap(View view) {
         if (mIsCreatingKeyMap == true) {
@@ -286,11 +283,11 @@ public class CreateKeyMapActivity extends BasicActivity {
      * Create a key map and save it to
      * {@link MCTApp#setKeyMap(android.util.SparseArray)}.
      * For doing so it uses other methods (
-     * {@link #createKeyMap()}, {@link #keyMapCreated()}).
+     * {@link #createKeyMap(MCReader)}, {@link #keyMapCreated(MCReader)}).
      * @param view The View object that triggered the method
      * (in this case the map keys to sectors button).
-     * @see #createKeyMap()
-     * @see #keyMapCreated()
+     * @see #createKeyMap(MCReader)
+     * @see #keyMapCreated(MCReader)
      */
     public void onCreateKeyMap(View view) {
         // Check for checked chek boxes.
@@ -315,26 +312,14 @@ public class CreateKeyMapActivity extends BasicActivity {
                 }
             }
             if (keyFiles.size() > 0) {
-                // Connect to tag.
-                if (Common.getTag() == null) {
-                 // Error. No tag found.
-                    Toast.makeText(this, R.string.info_no_tag_found,
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-                mMCReader = new MCReader(Common.getTag());
-                mMCReader.connect();
-                // Check if tag is still there.
-                if (!mMCReader.isConnected()) {
-                    // Error. No tag found.
-                    Toast.makeText(this, R.string.info_no_tag_found,
-                            Toast.LENGTH_LONG).show();
+                MCReader reader = Common.checkForTagAndCreateReader(this);
+                if (reader == null) {
                     return;
                 }
 
                 // Set key files.
                 File[] keys = keyFiles.toArray(new File[keyFiles.size()]);
-                mMCReader.setKeyFile(keys);
+                reader.setKeyFile(keys);
                 // Don't turn screen of while mapping.
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -343,7 +328,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                         getString(R.string.text_sector_range_all))) {
                     // Read all.
                     mFirstSector = 0;
-                    mLastSector = mMCReader.getSectorCount()-1;
+                    mLastSector = reader.getSectorCount()-1;
                 } else {
                     String[] fromAndTo = mSectorRange.getText()
                             .toString().split(" ");
@@ -351,12 +336,12 @@ public class CreateKeyMapActivity extends BasicActivity {
                     mLastSector = Integer.parseInt(fromAndTo[2]);
                 }
                 // Set map creation range.
-                if (!mMCReader.setMappingRange(
+                if (!reader.setMappingRange(
                         mFirstSector, mLastSector)) {
                     Toast.makeText(this,
                             R.string.info_mapping_sector_out_of_range,
                             Toast.LENGTH_LONG).show();
-                    mMCReader.close();
+                    reader.close();
                     return;
                 }
                 // Init. GUI elements.
@@ -367,7 +352,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                 Toast.makeText(this, R.string.info_wait_key_map,
                         Toast.LENGTH_SHORT).show();
                 // Read as much as possible with given key file.
-                createKeyMap();
+                createKeyMap(reader);
             }
         }
     }
@@ -375,17 +360,18 @@ public class CreateKeyMapActivity extends BasicActivity {
     /**
      * Triggered by {@link #onCreateKeyMap(View)} this
      * method starts a worker thread that first creates a key map and then
-     * calls {@link #keyMapCreated()}.
+     * calls {@link #keyMapCreated(MCReader)}.
      * It also updates the progress bar in the UI thread.
+     * @param reader A connected {@link MCReader}.
      * @see #onCreateKeyMap(View)
-     * @see #keyMapCreated()
+     * @see #keyMapCreated(MCReader)
      */
-    private void createKeyMap() {
+    private void createKeyMap(final MCReader reader) {
         new Thread(new Runnable() {
             public void run() {
                 // Build key map parts and update the progress bar.
                 while (mProgressStatus < mLastSector) {
-                    mProgressStatus = mMCReader.buildNextKeyMapPart();
+                    mProgressStatus = reader.buildNextKeyMapPart();
                     if (mProgressStatus == -1 || mIsCreatingKeyMap == false) {
                         // Error while building next key map part.
                         break;
@@ -405,10 +391,10 @@ public class CreateKeyMapActivity extends BasicActivity {
                                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                         mProgressBar.setProgress(0);
                         mCreateKeyMap.setEnabled(true);
-                        mMCReader.close();
+                        reader.close();
                         if (mIsCreatingKeyMap == true
                                 && mProgressStatus != -1) {
-                            keyMapCreated();
+                            keyMapCreated(reader);
                         } else {
                             ((MCTApp) getApplication()).setKeyMap(null);
                         }
@@ -420,21 +406,22 @@ public class CreateKeyMapActivity extends BasicActivity {
     }
 
     /**
-     * Triggered by {@link #createKeyMap()}, this method
+     * Triggered by {@link #createKeyMap(MCReader)}, this method
      * sets the result code to {@link Activity#RESULT_OK},
      * saves the created key map to
      * {@link MCTApp#setKeyMap(android.util.SparseArray)}
      * and finishes this Activity.
-     * @see #createKeyMap()
+     * @param reader A {@link MCReader}.
+     * @see #createKeyMap(MCReader)
      * @see #onCreateKeyMap(View)
      */
-    private void keyMapCreated() {
+    private void keyMapCreated(MCReader reader) {
         // LOW: Return key map in intent.
-        if (mMCReader.getKeyMap().size() == 0) {
+        if (reader.getKeyMap().size() == 0) {
             ((MCTApp) getApplication()).setKeyMap(null);
             setResult(4);
         } else {
-            ((MCTApp) getApplication()).setKeyMap(mMCReader.getKeyMap());
+            ((MCTApp) getApplication()).setKeyMap(reader.getKeyMap());
 //            Intent intent = new Intent();
 //            intent.putExtra(EXTRA_KEY_MAP, mMCReader);
 //            setResult(Activity.RESULT_OK, intent);

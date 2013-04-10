@@ -63,12 +63,28 @@ public class MCReader {
      * Initialize a Mifare Classic reader for the given tag.
      * @param tag The tag to operate on.
      */
-    public MCReader(Tag tag) {
-        if (tag == null) {
-            throw new NullPointerException("Tag argument can't be null");
-        }
+    private MCReader(Tag tag) {
         mTag = tag;
         mMFC = MifareClassic.get(mTag);
+    }
+
+    /**
+     * Get new instance of {@link MCReader}.
+     * If the tag is "null" or if it is not a Mifare Classic tag, "null"
+     * will be returned.
+     * @param tag The tag to operate on.
+     * @return {@link MCReader} object or "null" if tag is "null" or tag is
+     * not Mifare Classic.
+     */
+    public static MCReader get(Tag tag) {
+        MCReader mcr = null;
+        if (tag != null) {
+            mcr = new MCReader(tag);
+            if (mcr.isMifareClassic() == false) {
+                return null;
+            }
+        }
+        return mcr;
     }
 
     /**
@@ -665,6 +681,13 @@ public class MCReader {
      */
     public SparseArray<byte[][]> getKeyMap() {
         return mKeyMap;
+    }
+
+    public boolean isMifareClassic() {
+        if (mMFC == null) {
+            return false;
+        }
+        return true;
     }
 
     /**
