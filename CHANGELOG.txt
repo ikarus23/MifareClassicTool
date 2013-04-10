@@ -1,5 +1,12 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.2.1:
+ * tag info tool can now display the tag type and manufacturer.
+ * Fixed SAK, dec -> hex (tag info tool).
+ * Fixed ATQA order, e.g. 4400 -> 0044.
+ * Fixed crash issue, if tag is not MF Classic.
+ * Some minor bug fixes.
+
 Version 1.2.0:
  * Added new tool: Display tag information.
  * New system to check for Mifare Classic support.
