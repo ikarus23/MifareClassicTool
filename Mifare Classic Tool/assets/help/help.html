@@ -123,10 +123,12 @@
     Icons used in this application:
     <ul>
       <li>Oxygen Icons: <a href="http://www.oxygen-icons.org/">www.oxygen-icons.org</a>
-        <br />(<a href="http://www.gnu.org/licenses/lgpl.html">GNU Library General Public License</a>)
+        <br />(<a href="http://www.gnu.org/licenses/lgpl.html">GNU
+          Library General Public License</a>)
       </li>
       <li>RFID Tag: <a href="http://www.nfc-tag.de/">www.nfc-tag.de</a>
-        <br />(<a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons 3.0</a>)
+        <br />(<a href="http://creativecommons.org/licenses/by/3.0/">Creative
+          Commons 3.0</a>)
       </li>
     </ul>
     MIFARE is a registered trademark of NXP Semiconductors.
@@ -332,8 +334,24 @@
     In this view you can see some generic information
     (like UID, ATQA, SAK, Tag size, etc.) about the RFID-Tag.
     <br /><br />
-    If your device does not support Mifare Classic then this is the
+    If your device does not support Mifare Classic, this is the
     only thing you can do with this App. :(
+    <br /><br />
+    <b>Tag type and manufacturer identification:</b><br />
+    The identification mechanism is based on
+    <a href="http://nfc-tools.org/index.php?title=ISO14443A">this website</a>.
+    If you want to have a closer look at Mifare tag identification read
+    the <a href="http://www.nxp.com/documents/application_note/AN10833.pdf">NXP
+    MIFARE Type Identification Procedure</a> (PDF). Another
+    <a href="http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt">helpfuly
+    file</a> for ATS (ATR) based identification is provided by the PCSC project.
+    <br /><br />
+    The tag type and manufacturer determined by MCT might be wrong for
+    several reasons:
+    <ul>
+      <li>The Tag has a customized ATS</li>
+      <li>There are multiple tags in the reader field</li>
+    </ul>
   </p>
 
 </body>
