@@ -150,7 +150,7 @@ public class TagInfoActivity extends BasicActivity {
                     Common.colorString(getString(R.string.text_sak) + ":", hc),
                     "\n", sak, "\n",
                     Common.colorString(getString(
-                            R.string.text_ats_atr) + ":", hc),
+                            R.string.text_ats) + ":", hc),
                     "\n", ats, "\n",
                     Common.colorString(getString(
                             R.string.text_tag_type_and_manuf) + ":", hc),
