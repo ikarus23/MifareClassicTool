@@ -99,6 +99,10 @@ public class TagInfoActivity extends BasicActivity {
     private void updateTagInfos(Tag tag) {
 
         if (tag != null) {
+            //Check for Mifare Classic suppor.
+            boolean isMifareClassic = Arrays.asList(tag.getTechList()).contains(
+                    MifareClassic.class.getName());
+
             mLayout.removeAllViews();
             // Display generic info.
             // Create views and add them to the layout.
@@ -135,8 +139,15 @@ public class TagInfoActivity extends BasicActivity {
             if (iso != null ) {
                 ats = Common.byte2HexString(iso.getHistoricalBytes());
             }
+            // Identify tag type.
             int tagTypeResourceID = getTagIdentifier(atqa, sak, ats);
-            String tagType = getString(tagTypeResourceID);
+            String tagType = "";
+            if (tagTypeResourceID == R.string.tag_unknown && isMifareClassic) {
+                tagType = getString(R.string.tag_unknown_mf_classic);
+            } else {
+                tagType = getString(tagTypeResourceID);
+            }
+
             int hc = getResources().getColor(R.color.light_green);
             genericInfo.setText(TextUtils.concat(
                     Common.colorString(getString(R.string.text_uid) + ":", hc),
@@ -168,8 +179,7 @@ public class TagInfoActivity extends BasicActivity {
             LinearLayout layout = (LinearLayout) findViewById(
                     R.id.LinearLayoutTagInfoSupport);
             // Check for Mifare Classic support.
-            if (Arrays.asList(tag.getTechList()).contains(
-                    "android.nfc.tech.MifareClassic")) {
+            if (isMifareClassic) {
                 // Display Mifare Classic info.
                 // Create views and add them to the layout.
                 TextView headerMifareInfo = new TextView(this);

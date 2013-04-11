@@ -25,7 +25,9 @@
         The string mame is tag_+ATQA+SAK+ATS with hex-letters in uppercase.
         (Names must have at least one char. This is why it strats with "tag_")
     -->
+    <!-- Special tag types -->
     <string name="tag_unknown">Unknown</string>
+    <string name="tag_unknown_mf_classic">Mifare Classic, Unknown</string>
 
     <!-- With ATS -->
     <string name="tag_0344207577810280">MIFARE DESFire or
