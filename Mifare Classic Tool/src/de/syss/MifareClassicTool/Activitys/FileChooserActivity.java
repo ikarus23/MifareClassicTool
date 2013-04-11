@@ -232,6 +232,7 @@ public class FileChooserActivity extends BasicActivity {
         new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_new_file_title)
             .setMessage(R.string.dialog_new_file)
+            .setIcon(android.R.drawable.ic_menu_add)
             .setView(input)
             .setPositiveButton(R.string.button_ok,
                     new DialogInterface.OnClickListener() {
