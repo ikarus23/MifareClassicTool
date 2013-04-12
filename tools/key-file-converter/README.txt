@@ -16,7 +16,8 @@ Usage: ./prox-keys2mct-keys.sh <key-file>
 key-file:
   The key file is the screen output of the Proxmark3 nested attack
   copied into a file. It should look exactly like the
-  "example-key-dump.txt" (of course with different keys).
+  "example-key-dump.txt" (of course with different keys,
+  see "example-files" directory).
 
 Usage Examples:
   ./prox-keys2mct-keys.sh example-key-dump.txt > example.keys
