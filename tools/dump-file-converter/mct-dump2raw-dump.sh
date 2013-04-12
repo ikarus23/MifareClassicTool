@@ -19,15 +19,15 @@
 #
 ########################################################################
 #
-# Usage: ./mct-dump2raw.sh <dumpFile>
+# Usage: ./mct-dump2raw-dump.sh <dumpFile>
 #
 ########################################################################
 #
 # Info:
 # - You have to install "perl"!
-# - "dumpFile" must be like "dumpFile-example"
+# - "dumpFile" must be like "example-dump-file.txt"
 # - "dumpFile" must be complete (e.g. sectors 0-15)
-# - For more information see the README.txt
+# - For more information see the README-mct-dump2raw-dump.txt
 #
 #########################################################################
 
