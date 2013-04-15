@@ -44,8 +44,8 @@
     <string name="text_choose_key_file">Choose some key file(s):</string>
     <string name="text_wait_read_tag">Reading tag…\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>
-    <string name="text_sector">Sector:</string>
-    <string name="text_block">Block:</string>
+    <string name="text_sector">Sector</string>
+    <string name="text_block">Block</string>
     <string name="text_caption_title">Caption</string>
     <string name="text_keya">KeyA</string>
     <string name="text_keyb">KeyB</string>

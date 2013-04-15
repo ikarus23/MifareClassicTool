@@ -70,7 +70,7 @@ public class AccessConditionsActivity extends BasicActivity {
                     System.getProperty("line.separator"));
             for (int j = 0; j < accessConditions.length; j=j+2) {
                 boolean hasMoreThan4Blocks = false;
-                if (accessConditions[j+1].startsWith("+")) {
+                if (accessConditions[j+1].startsWith("*")) {
                     hasMoreThan4Blocks = true;
                     accessConditions[j+1] = accessConditions[j+1].substring(1);
                 }
@@ -81,8 +81,9 @@ public class AccessConditionsActivity extends BasicActivity {
                 // acMatrix[C1-C3][Block1-Block3 + Sector Trailer]
                 byte[][] acMatrix = Common.acToACMatrix(bAC);
                 if (acMatrix != null) {
-                    addSectorAC(acMatrix, accessConditions[j].substring(1),
-                            hasMoreThan4Blocks);
+                    String sectorNumber = accessConditions[j].split(": ")[1];
+                    addSectorAC(acMatrix, getString(R.string.text_sector)
+                            + ": " + sectorNumber, hasMoreThan4Blocks);
                 }
             }
         } else {
@@ -147,9 +148,9 @@ public class AccessConditionsActivity extends BasicActivity {
             String blockHeader = "";
             if (hasMoreThan4Blocks) {
                 blockHeader = getString(R.string.text_block)
-                        + " " + (i*4+i) + "-" + (i*4+4+i);
+                        + ": " + (i*4+i) + "-" + (i*4+4+i);
             } else {
-                blockHeader = getString(R.string.text_block) + " " + i;
+                blockHeader = getString(R.string.text_block) + ": " + i;
             }
             tr.setLayoutParams(new LayoutParams(
                     LayoutParams.MATCH_PARENT,

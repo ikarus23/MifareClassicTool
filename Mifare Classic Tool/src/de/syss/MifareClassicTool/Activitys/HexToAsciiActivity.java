@@ -61,8 +61,10 @@ public class HexToAsciiActivity extends BasicActivity {
                 for (String line : data) {
                     if (line.startsWith("+")) {
                         // Header.
+                        String sectorNumber = line.split(": ")[1];
                         ascii = TextUtils.concat(ascii, Common.colorString(
-                                line.substring(1),
+                                getString(R.string.text_sector)
+                                + ": " + sectorNumber,
                                 getResources().getColor(R.color.blue)), s);
                     } else {
                         // Data.

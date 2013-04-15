@@ -395,11 +395,13 @@ public class DumpEditorActivity extends BasicActivity {
                 // Is header?
                 if (lines[i].startsWith("+")) {
                     isFirstBlock = lines[i].endsWith(" 0");
+                    String sectorNumber = lines[i].split(": ")[1];
                     // Add sector header (TextView).
                     TextView tv = new TextView(this);
                     tv.setTextColor(
                             getResources().getColor(R.color.blue));
-                    tv.setText(lines[i].substring(1));
+                    tv.setText(getString(R.string.text_sector) +
+                            ": " + sectorNumber);
                     mLayout.addView(tv);
                     // Add sector data (EditText)
                     et = new EditText(this);
@@ -502,8 +504,8 @@ public class DumpEditorActivity extends BasicActivity {
                     // Access Condition.
                     if (i - lastSectorHeader > 4) {
                         // Access Conditions of a sector
-                        // with more than 4 blocks --> Mark ACs with "+".
-                        ac += "+";
+                        // with more than 4 blocks --> Mark ACs with "*".
+                        ac += "*";
                     }
                     ac += mLines[i].substring(12, 20) + s;
                 }
@@ -532,8 +534,7 @@ public class DumpEditorActivity extends BasicActivity {
                 } else {
                     if (isValueBlock(mLines[i])) {
                         // Header.
-                        vb += header + ", " + getString(R.string.text_block)
-                                + " " + blockCounter + s;
+                        vb += header + ", Block: " + blockCounter + s;
                         // Value Block.
                         vb += mLines[i] + s;
                         blockCounter ++;

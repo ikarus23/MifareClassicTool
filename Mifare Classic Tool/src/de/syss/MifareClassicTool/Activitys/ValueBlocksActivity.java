@@ -70,7 +70,13 @@ public class ValueBlocksActivity extends BasicActivity {
                 String[] valueBlocks = extra.split(
                         System.getProperty("line.separator"));
                 for (int i = 0; i < valueBlocks.length; i=i+2) {
-                    addPosInfoRow(valueBlocks[i].substring(1));
+                    String[] sectorAndBlock = valueBlocks[i].split(", ");
+                    String sectorNumber = sectorAndBlock[0].split(": ")[1];
+                    String blockNumber = sectorAndBlock[1].split(": ")[1];
+                    addPosInfoRow(getString(R.string.text_sector)
+                            + ": " + sectorNumber + ", "
+                            + getString(R.string.text_block)
+                            + ": " + blockNumber);
                     addValueBlock(valueBlocks[i+1]);
                 }
             } else {

@@ -421,7 +421,7 @@ public class WriteTagActivity extends BasicActivity {
         for (int sector : mDumpWithPos.keySet()) {
             if (keyMap.indexOfKey(sector) < 0) {
                 // Problem. Keys for sector not found.
-                addToList(list, getString(R.string.text_sector) + " " + sector,
+                addToList(list, getString(R.string.text_sector) + ": " + sector,
                         getString(R.string.text_keys_not_known));
                 writeOnPosSafe.remove(sector);
             }
@@ -432,7 +432,7 @@ public class WriteTagActivity extends BasicActivity {
         for (int sector : sectors) {
             if (writeOnPos.get(sector) == null) {
                 // Error. Sector is dead (IO Error).
-                addToList(list, getString(R.string.text_sector) + " " + sector,
+                addToList(list, getString(R.string.text_sector) + ": " + sector,
                         getString(R.string.text_sector_dead));
                 continue;
             }
@@ -441,9 +441,9 @@ public class WriteTagActivity extends BasicActivity {
             Set<Integer> blocks = writeOnPos.get(sector).keySet();
             for (int block : blocks) {
                 boolean isSafeForWriting = true;
-                String position = getString(R.string.text_sector) + " "
+                String position = getString(R.string.text_sector) + ": "
                         + sector + ", " + getString(R.string.text_block)
-                        + " " + block;
+                        + ": " + block;
                 int writeInfo = writeOnPos.get(sector).get(block);
                 switch (writeInfo) {
                 case 0:

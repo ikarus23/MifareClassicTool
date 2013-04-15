@@ -152,8 +152,7 @@ public class ReadTagActivity extends Activity {
             if (rawDump.size() != 0) {
                 for (int i = 0; i < rawDump.size(); i++) {
                     // Mark headers (sectors) with "+".
-                    dump += "+" + getString(R.string.text_sector)
-                            + " " + rawDump.keyAt(i) + s;
+                    dump += "+Sector: " + rawDump.keyAt(i) + s;
                     String[] val = rawDump.valueAt(i);
                     if (val != null ) {
                         for (int j = 0; j < val.length; j++) {
