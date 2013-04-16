@@ -17,10 +17,10 @@ Features
 --------
 
 * Read Mifare Classic tags
-* Edit and save (dump) the tag data you read
+* Save and edit the tag data you read
 * Write to Mifare Classic tags (block-wise)
 * Clone Mifare Classic tags  
-  (Write dump from a tag to another tag; write 'dump-wise')
+  (Write dump of a tag to another tag; write 'dump-wise')
 * Key management based on dictionary-attack  
   (Write the keys you know in a file (dictionary).  
   MCT will try to authenticate with these  
