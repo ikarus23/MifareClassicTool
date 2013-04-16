@@ -254,7 +254,7 @@ public class MCReader {
      * <li>2 - Block index is out of range.</li>
      * <li>3 - Data are not 16 Byte.</li>
      * <li>4 - Authentication went wrong.</li>
-     * <li>5 - Error while writing to tag.</li>
+     * <li>-1 - Error while writing to tag.</li>
      * </ul>
      * @see #authenticate(int, byte[], boolean)
      */
@@ -278,7 +278,7 @@ public class MCReader {
             mMFC.writeBlock(block, data);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error while writing block to tag.", e);
-            return 5;
+            return -1;
         }
         return 0;
     }

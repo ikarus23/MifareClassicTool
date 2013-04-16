@@ -251,7 +251,7 @@ public class WriteTagActivity extends BasicActivity {
         }
         // Error while writing? Maybe tag has default factory settings ->
         // try to write with key a (if there is one).
-        if ((result == 5 || result == -1) && keys[0] != null) {
+        if (result == -1 && keys[0] != null) {
             result = reader.writeBlock(sector, block,
                     Common.hexStringToByteArray(mDataText.getText().toString()),
                     keys[0], false);
@@ -264,7 +264,7 @@ public class WriteTagActivity extends BasicActivity {
             Toast.makeText(this, R.string.info_block_not_in_sector,
                     Toast.LENGTH_LONG).show();
             return;
-        case 5:
+        case -1:
             Toast.makeText(this, R.string.info_error_writing_block,
                     Toast.LENGTH_LONG).show();
             return;
