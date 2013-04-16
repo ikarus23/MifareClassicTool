@@ -51,7 +51,7 @@
     <string name="text_keyb">KeyB</string>
     <string name="text_ac">ACs</string>
     <string name="text_uid">UID</string>
-    <string name="text_manufacturer">ManufInfo</string>
+    <string name="text_uid_and_manuf">UID &amp; ManufInfo</string>
     <string name="text_valueblock">ValueBlock</string>
     <string name="text_chooser_info_text">Choose a file:</string>
     <string name="text_open_dump_title">Open Tag Dump</string>

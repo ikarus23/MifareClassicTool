@@ -116,11 +116,8 @@ public class DumpEditorActivity extends BasicActivity {
         SpannableString ac = Common.colorString(
                 getString(R.string.text_ac),
                 getResources().getColor(R.color.orange));
-        SpannableString uid = Common.colorString(
-                getString(R.string.text_uid),
-                getResources().getColor(R.color.cyan));
-        SpannableString mb = Common.colorString(
-                getString(R.string.text_manufacturer),
+        SpannableString uidAndManuf = Common.colorString(
+                getString(R.string.text_uid_and_manuf),
                 getResources().getColor(R.color.purple));
         SpannableString vb = Common.colorString(
                 getString(R.string.text_valueblock),
@@ -128,7 +125,7 @@ public class DumpEditorActivity extends BasicActivity {
 
         TextView caption = (TextView) findViewById(
                 R.id.textViewDumpEditorCaption);
-        caption.setText(TextUtils.concat(uid, " | ", mb, " | ",
+        caption.setText(TextUtils.concat(uidAndManuf, " | ",
                 vb, " | ", keyA, " | ", keyB, " | ", ac), BufferType.SPANNABLE);
         // Add web-link optic to update colors text view (= caption title).
         TextView captionTitle = (TextView) findViewById(
@@ -566,9 +563,7 @@ public class DumpEditorActivity extends BasicActivity {
         if (hasUID) {
             // First block (UID, manuf. data).
             ret = new SpannableString(TextUtils.concat(
-                    Common.colorString(data.substring(0, 8),
-                            getResources().getColor(R.color.cyan)),
-                    Common.colorString(data.substring(8),
+                    Common.colorString(data,
                             getResources().getColor(R.color.purple))));
         } else {
             if (isValueBlock(data)) {
