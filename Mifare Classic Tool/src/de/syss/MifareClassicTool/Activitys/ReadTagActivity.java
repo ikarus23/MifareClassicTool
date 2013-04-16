@@ -28,7 +28,6 @@ import android.util.SparseArray;
 import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
-import de.syss.MifareClassicTool.MCTApp;
 import de.syss.MifareClassicTool.R;
 
 /**
@@ -123,7 +122,7 @@ public class ReadTagActivity extends Activity {
 
                 // Get key map from glob. variable.
                 mRawDump = reader.readAsMuchAsPossible(
-                        ((MCTApp)getApplication()).getKeyMap());
+                        Common.getKeyMap());
 
                 reader.close();
 

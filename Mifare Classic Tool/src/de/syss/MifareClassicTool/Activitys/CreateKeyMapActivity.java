@@ -44,7 +44,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
-import de.syss.MifareClassicTool.MCTApp;
 import de.syss.MifareClassicTool.R;
 
 /**
@@ -396,7 +395,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                                 && mProgressStatus != -1) {
                             keyMapCreated(reader);
                         } else {
-                            ((MCTApp) getApplication()).setKeyMap(null);
+                            Common.setKeyMap(null);
                         }
                         mIsCreatingKeyMap = false;
                     }
@@ -418,10 +417,10 @@ public class CreateKeyMapActivity extends BasicActivity {
     private void keyMapCreated(MCReader reader) {
         // LOW: Return key map in intent.
         if (reader.getKeyMap().size() == 0) {
-            ((MCTApp) getApplication()).setKeyMap(null);
+            Common.setKeyMap(null);
             setResult(4);
         } else {
-            ((MCTApp) getApplication()).setKeyMap(reader.getKeyMap());
+            Common.setKeyMap(reader.getKeyMap());
 //            Intent intent = new Intent();
 //            intent.putExtra(EXTRA_KEY_MAP, mMCReader);
 //            setResult(Activity.RESULT_OK, intent);

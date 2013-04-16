@@ -46,7 +46,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
-import de.syss.MifareClassicTool.MCTApp;
 import de.syss.MifareClassicTool.R;
 
 /**
@@ -241,7 +240,7 @@ public class WriteTagActivity extends BasicActivity {
         }
         int sector = Integer.parseInt(mSectorText.getText().toString());
         int block = Integer.parseInt(mBlockText.getText().toString());
-        byte[][] keys = ((MCTApp)getApplication()).getKeyMap().get(sector);
+        byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
 
         if (keys[1] != null) {
@@ -385,7 +384,7 @@ public class WriteTagActivity extends BasicActivity {
         // Check if tag is writable on needed blocks.
         // Reformat for reader.isWritabeOnPosition(...).
         final SparseArray<byte[][]> keyMap  =
-                ((MCTApp)getApplication()).getKeyMap();
+                Common.getKeyMap();
         HashMap<Integer, int[]> dataPos =
                 new HashMap<Integer, int[]>(mDumpWithPos.size());
         for (int sector : mDumpWithPos.keySet()) {
