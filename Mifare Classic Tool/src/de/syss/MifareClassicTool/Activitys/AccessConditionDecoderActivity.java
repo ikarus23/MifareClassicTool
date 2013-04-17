@@ -64,7 +64,7 @@ public class AccessConditionDecoderActivity extends BasicActivity {
 
         if (getIntent().hasExtra(EXTRA_AC)) {
             mLayout = (TableLayout) findViewById(
-                    R.id.TableLayoutAccessConditions);
+                    R.id.TableLayoutAccessConditionDecoder);
             String extra = getIntent().getStringExtra(EXTRA_AC);
             String[] accessConditions = extra.split(
                     System.getProperty("line.separator"));

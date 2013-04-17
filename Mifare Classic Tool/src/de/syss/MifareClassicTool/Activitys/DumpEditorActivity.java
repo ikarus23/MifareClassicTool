@@ -514,8 +514,8 @@ public class DumpEditorActivity extends BasicActivity {
     }
 
     /**
-     * Display the value blocks as integer {@link ValueBlockToIntActivity}.
-     * @see ValueBlockToIntActivity
+     * Display the value blocks as integer {@link ValueBlocksToIntActivity}.
+     * @see ValueBlocksToIntActivity
      */
     public void onDecodeValueBlocks() {
         if (isValidDumpErrorToast()) {
@@ -538,9 +538,9 @@ public class DumpEditorActivity extends BasicActivity {
                     }
                 }
             }
-            Intent intent = new Intent(this, ValueBlockToIntActivity.class);
+            Intent intent = new Intent(this, ValueBlocksToIntActivity.class);
             if (!vb.equals("")) {
-                intent.putExtra(ValueBlockToIntActivity.EXTRA_VB, vb);
+                intent.putExtra(ValueBlocksToIntActivity.EXTRA_VB, vb);
                 startActivity(intent);
             } else {
                 // No value blocks found.
