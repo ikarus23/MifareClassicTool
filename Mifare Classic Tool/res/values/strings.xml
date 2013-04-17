@@ -37,6 +37,8 @@
     <string name="title_activity_help">Help and Info</string>
     <string name="title_activity_hex_to_ascii">Data as ASCII</string>
     <string name="title_activity_tag_info">Tag Info</string>
+    <string name="title_activity_value_block_tool">Value Block Decoder
+        &amp; Encoder</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -

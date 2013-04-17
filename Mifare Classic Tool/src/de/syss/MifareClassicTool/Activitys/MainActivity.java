@@ -408,13 +408,15 @@ public class MainActivity extends Activity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()) {
         case R.id.menuMainTagInfo:
-            Intent intent = new Intent(this, TagInfoActivity.class);
+            intent = new Intent(this, TagInfoActivity.class);
             startActivity(intent);
             return true;
         case R.id.menuMainValueBlockCoder:
-            // TODO: Start ValueBlockToolActivity.
+            intent = new Intent(this, ValueBlockToolActivity.class);
+            startActivity(intent);
             return true;
         default:
             return super.onContextItemSelected(item);
