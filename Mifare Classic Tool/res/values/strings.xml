@@ -154,6 +154,7 @@
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
     <string name="menu_tag_info">Display Tag Info</string>
+    <string name="menu_vb_coder">Decode or Encode Value Blocks</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

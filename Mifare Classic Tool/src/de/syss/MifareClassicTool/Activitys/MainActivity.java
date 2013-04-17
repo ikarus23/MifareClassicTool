@@ -413,6 +413,9 @@ public class MainActivity extends Activity {
             Intent intent = new Intent(this, TagInfoActivity.class);
             startActivity(intent);
             return true;
+        case R.id.menuMainValueBlockCoder:
+            // TODO: Start ValueBlockToolActivity.
+            return true;
         default:
             return super.onContextItemSelected(item);
         }
