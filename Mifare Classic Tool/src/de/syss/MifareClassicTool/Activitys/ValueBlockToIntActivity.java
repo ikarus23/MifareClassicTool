@@ -39,7 +39,7 @@ import de.syss.MifareClassicTool.R;
  * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
-public class ValueBlocksActivity extends BasicActivity {
+public class ValueBlockToIntActivity extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
@@ -47,7 +47,7 @@ public class ValueBlocksActivity extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.VB";
 
     private static final String LOG_TAG =
-            ValueBlocksActivity.class.getSimpleName();
+            ValueBlockToIntActivity.class.getSimpleName();
 
     private TableLayout mLayout;
 
@@ -59,7 +59,7 @@ public class ValueBlocksActivity extends BasicActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_value_blocks);
+        setContentView(R.layout.activity_value_block_to_int);
 
         boolean noValueBlocks = false;
         if (getIntent().hasExtra(EXTRA_VB)) {

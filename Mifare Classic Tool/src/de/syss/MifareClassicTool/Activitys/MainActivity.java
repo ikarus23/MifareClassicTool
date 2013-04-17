@@ -272,7 +272,7 @@ public class MainActivity extends Activity {
                 if (Common.treatAsNewTag(getIntent(), this) == 0) {
                     // Device or tag does not support Mifare Classic.
                     // Run the only thing that is possible: The tag info tool.
-                    Intent i = new Intent(this, TagInfoActivity.class);
+                    Intent i = new Intent(this, TagInfoToolActivity.class);
                     startActivity(i);
                 }
                 mOldIntent = getIntent();
@@ -296,16 +296,16 @@ public class MainActivity extends Activity {
 
     /**
      * Handle new Intent as a new tag Intent and if the tag/device does not
-     * support Mifare Classic, then run {@link TagInfoActivity}.
+     * support Mifare Classic, then run {@link TagInfoToolActivity}.
      * @see Common#treatAsNewTag(Intent, android.content.Context)
-     * @see TagInfoActivity
+     * @see TagInfoToolActivity
      */
     @Override
     public void onNewIntent(Intent intent) {
         if (Common.treatAsNewTag(intent, this) == 0) {
             // Device or tag does not support Mifare Classic.
             // Run the only thing that is possible: The tag info tool.
-            Intent i = new Intent(this, TagInfoActivity.class);
+            Intent i = new Intent(this, TagInfoToolActivity.class);
             startActivity(i);
         }
     }
@@ -411,7 +411,7 @@ public class MainActivity extends Activity {
         Intent intent = null;
         switch (item.getItemId()) {
         case R.id.menuMainTagInfo:
-            intent = new Intent(this, TagInfoActivity.class);
+            intent = new Intent(this, TagInfoToolActivity.class);
             startActivity(intent);
             return true;
         case R.id.menuMainValueBlockCoder:

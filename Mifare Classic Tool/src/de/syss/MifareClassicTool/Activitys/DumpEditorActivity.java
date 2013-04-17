@@ -483,8 +483,8 @@ public class DumpEditorActivity extends BasicActivity {
     }
 
     /**
-     * Display the access conditions {@link AccessConditionsActivity}.
-     * @see AccessConditionsActivity
+     * Display the access conditions {@link AccessConditionDecoderActivity}.
+     * @see AccessConditionDecoderActivity
      */
     public void onShowAC() {
         if (isValidDumpErrorToast()) {
@@ -507,15 +507,15 @@ public class DumpEditorActivity extends BasicActivity {
                     ac += mLines[i].substring(12, 20) + s;
                 }
             }
-            Intent intent = new Intent(this, AccessConditionsActivity.class);
-            intent.putExtra(AccessConditionsActivity.EXTRA_AC, ac);
+            Intent intent = new Intent(this, AccessConditionDecoderActivity.class);
+            intent.putExtra(AccessConditionDecoderActivity.EXTRA_AC, ac);
             startActivity(intent);
         }
     }
 
     /**
-     * Display the value blocks as integer {@link ValueBlocksActivity}.
-     * @see ValueBlocksActivity
+     * Display the value blocks as integer {@link ValueBlockToIntActivity}.
+     * @see ValueBlockToIntActivity
      */
     public void onDecodeValueBlocks() {
         if (isValidDumpErrorToast()) {
@@ -538,9 +538,9 @@ public class DumpEditorActivity extends BasicActivity {
                     }
                 }
             }
-            Intent intent = new Intent(this, ValueBlocksActivity.class);
+            Intent intent = new Intent(this, ValueBlockToIntActivity.class);
             if (!vb.equals("")) {
-                intent.putExtra(ValueBlocksActivity.EXTRA_VB, vb);
+                intent.putExtra(ValueBlockToIntActivity.EXTRA_VB, vb);
                 startActivity(intent);
             } else {
                 // No value blocks found.

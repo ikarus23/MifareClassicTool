@@ -23,7 +23,7 @@
     android:id="@+id/RelativeLayoutTagInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TagInfoActivity" >
+    tools:context=".TagInfoToolActivity" >
 
     <LinearLayout
         android:id="@+id/LinearLayoutTagInfoSupport"

@@ -78,14 +78,14 @@
             android:launchMode="singleTop" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activitys.AccessConditionsActivity"
+            android:name="de.syss.MifareClassicTool.Activitys.AccessConditionDecoderActivity"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/access_conditions"
             android:label="@string/title_activity_access_conditions"
             android:launchMode="singleTop" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activitys.ValueBlocksActivity"
+            android:name="de.syss.MifareClassicTool.Activitys.ValueBlockToIntActivity"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_to_int"
             android:label="@string/title_activity_value_blocks"
@@ -127,7 +127,7 @@
             android:launchMode="singleTop" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activitys.TagInfoActivity"
+            android:name="de.syss.MifareClassicTool.Activitys.TagInfoToolActivity"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/tag_info"
             android:label="@string/title_activity_tag_info"

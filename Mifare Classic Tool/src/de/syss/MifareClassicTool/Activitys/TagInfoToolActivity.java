@@ -44,7 +44,7 @@ import de.syss.MifareClassicTool.R;
  * Mifare Classic.
  * @author Gerhard Klostermeier
  */
-public class TagInfoActivity extends BasicActivity {
+public class TagInfoToolActivity extends BasicActivity {
 
     LinearLayout mLayout;
 
