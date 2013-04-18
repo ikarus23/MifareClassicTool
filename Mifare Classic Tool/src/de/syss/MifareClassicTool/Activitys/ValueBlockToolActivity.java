@@ -18,15 +18,40 @@
 
 package de.syss.MifareClassicTool.Activitys;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import de.syss.MifareClassicTool.R;
 
-public class ValueBlockToolActivity extends Activity {
+/**
+ * Decode Mifare Classic Value Blocks from their hex format
+ * to an integer and vice versa (encode).
+ * @author Gerhard Klostermeier
+ */
+public class ValueBlockToolActivity extends BasicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_value_block_tool);
+    }
+
+    // TODO: Implement & doc.
+    public void onDecode(View view) {
+
+    }
+
+    // TODO: Implement & doc.
+    public void onEncode(View view) {
+
+    }
+
+    // TODO: Implement & doc.
+    public void onCopyToClipboard(View view) {
+
+    }
+
+    // TODO: Implement & doc.
+    public void onPasteFromClipboard(View view) {
+
     }
 }
