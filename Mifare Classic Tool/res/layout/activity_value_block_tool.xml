@@ -16,6 +16,7 @@
             android:id="@+id/textViewValueBlockToolVB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="@string/text_vb"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -24,7 +25,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="textCapCharacters" >
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:hint="@string/hint_hex_data"
+            android:maxLength="32" >
 
             <requestFocus />
         </EditText>
@@ -86,6 +89,7 @@
             android:id="@+id/textViewValueBlockToolVBasInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="@string/text_vb_as_int"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -94,13 +98,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number" />
+            android:hint="@string/hint_int_423"
+            android:inputType="numberSigned" />
 
         <TextView
             android:id="@+id/textViewValueBlockToolAddr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp"
             android:text="@string/text_addr"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -109,7 +115,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:inputType="textCapCharacters" />
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:hint="@string/hint_hex_00"
+            android:maxLength="2" />
 
     </LinearLayout>
 
