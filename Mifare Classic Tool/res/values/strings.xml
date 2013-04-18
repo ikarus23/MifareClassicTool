@@ -68,7 +68,7 @@
     <string name="text_vb_what">What:</string>
     <string name="text_vb_value">Value:</string>
     <string name="text_vb_orig">Original:</string>
-    <string name="text_vb_as_int">As Integer:</string>
+    <string name="text_vb_as_int_decoded">As Integer:</string>
     <string name="text_sector_range">Create Map for Sectors:</string>
     <string name="text_sector_range_all">All</string>
     <string name="text_update_colors">Update Colors</string>
@@ -113,6 +113,11 @@
     <string name="text_block_size">Block Size</string>
     <string name="text_sector_count">Number of Sectors</string>
     <string name="text_block_count">Number of Blocks</string>
+    <string name="text_vb">VB:</string>
+    <string name="text_vb_as_int">VB as Int:</string>
+    <string name="text_addr">Addr:</string>
+    <string name="text_copy">Copy</string>
+    <string name="text_paste">Paste</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -149,6 +154,8 @@
     <string name="button_cancel_all">Cancel Writing</string>
     <string name="button_skip_blocks">Write as Much as Possible</string>
     <string name="button_more">Read More&#8230;</string>
+    <string name="button_decode">Decode</string>
+    <string name="button_encode">Encode</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -156,7 +163,7 @@
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
     <string name="menu_tag_info">Display Tag Info</string>
-    <string name="menu_vb_coder">Decode or Encode Value Blocks</string>
+    <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

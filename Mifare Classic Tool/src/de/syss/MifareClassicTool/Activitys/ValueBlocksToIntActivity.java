@@ -141,7 +141,7 @@ public class ValueBlocksToIntActivity extends BasicActivity {
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
         what = new TextView(this);
-        what.setText(R.string.text_vb_as_int);
+        what.setText(R.string.text_vb_as_int_decoded);
         value = new TextView(this);
         byte[] asBytes = Common.hexStringToByteArray(
                 hexValueBlock.substring(0, 8));
