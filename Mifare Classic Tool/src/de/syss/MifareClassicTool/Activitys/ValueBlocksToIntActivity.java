@@ -145,14 +145,7 @@ public class ValueBlocksToIntActivity extends BasicActivity {
         value = new TextView(this);
         byte[] asBytes = Common.hexStringToByteArray(
                 hexValueBlock.substring(0, 8));
-        // Reverse (Little Endian -> Big Endian).
-        // Hmpf! Java has no Array.reverse(). And I don't want to use
-        // Commons.Lang (ArrayUtils) form Apache.
-        for(int i = 0; i < asBytes.length / 2; i++) {
-            byte temp = asBytes[i];
-            asBytes[i] = asBytes[asBytes.length - i - 1];
-            asBytes[asBytes.length - i - 1] = temp;
-        }
+        Common.reverseByteArrasInPlace(asBytes);
         ByteBuffer bb = ByteBuffer.wrap(asBytes);
         int i = bb.getInt();
         String asInt = "" + i;

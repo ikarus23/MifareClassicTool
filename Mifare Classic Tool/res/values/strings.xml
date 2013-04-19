@@ -173,7 +173,7 @@
     <string name="info_wait_key_map">Creating key map… Please wait…</string>
     <string name="info_tag_removed_while_reading">Read Error: Tag removed
         during reading</string>
-    <string name="info_no_vb">There are no value blocks in this dump</string>
+    <string name="info_no_vb_in_dump">There are no value blocks in this dump</string>
     <string name="info_valid_dump_not_hex">Error: Some block(s) contain
         invalid data (not hex)</string>
     <string name="info_valid_dump_not_4_or_16_lines">Error: Some
@@ -197,6 +197,7 @@
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
     <string name="info_not_16_byte">Error: Data must be 16 byte (32 characters)</string>
+    <string name="info_is_not_vb">Error: Not a value block.</string>
     <string name="info_block_not_in_sector">Error: The sector does not contain
         a block with the given number.</string>
     <string name="info_error_writing_block">Write Error: Block is read-only

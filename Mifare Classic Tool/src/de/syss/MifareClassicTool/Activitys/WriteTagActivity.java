@@ -169,16 +169,7 @@ public class WriteTagActivity extends BasicActivity {
         }
 
         String data = mDataText.getText().toString();
-        if (data.matches("[0-9A-Fa-f]+") == false) {
-            // Error, not hex.
-            Toast.makeText(this, R.string.info_not_hex_data,
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (data.length() != 32) {
-            // Error, not 16 byte (32 chars).
-            Toast.makeText(this, R.string.info_not_16_byte,
-                    Toast.LENGTH_LONG).show();
+        if (Common.isHexAnd16Byte(data, this) == false) {
             return;
         }
         if (block == 3 || block == 15) {

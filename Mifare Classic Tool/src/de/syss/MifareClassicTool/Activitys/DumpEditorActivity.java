@@ -529,7 +529,7 @@ public class DumpEditorActivity extends BasicActivity {
                     blockCounter = 0;
                     continue;
                 } else {
-                    if (isValueBlock(mLines[i])) {
+                    if (Common.isValueBlock(mLines[i])) {
                         // Header.
                         vb += header + ", Block: " + blockCounter + s;
                         // Value Block.
@@ -544,7 +544,7 @@ public class DumpEditorActivity extends BasicActivity {
                 startActivity(intent);
             } else {
                 // No value blocks found.
-                Toast.makeText(this, R.string.info_no_vb,
+                Toast.makeText(this, R.string.info_no_vb_in_dump,
                         Toast.LENGTH_LONG).show();
             }
 
@@ -566,7 +566,7 @@ public class DumpEditorActivity extends BasicActivity {
                     Common.colorString(data,
                             getResources().getColor(R.color.purple))));
         } else {
-            if (isValueBlock(data)) {
+            if (Common.isValueBlock(data)) {
                 // Value block.
                 ret = Common.colorString(data,
                         getResources().getColor(R.color.yellow));
@@ -606,33 +606,5 @@ public class DumpEditorActivity extends BasicActivity {
                     "sector trailer");
         }
         return new SpannableString(data);
-    }
-
-    /**
-     * Check if the given block (hex string) is a value block.
-     * NXP has PDFs describing what value blocks are. Google something
-     * like "nxp mifare classic value block" if you want to have a
-     * closer look.
-     * @param data Block data as hex string.
-     * @return True if it is a value block. False otherwise.
-     */
-    private boolean isValueBlock(String data) {
-        byte[] b = Common.hexStringToByteArray(data);
-        if (b.length == 16) {
-            // Google some NXP info PDFs about Mifare Classic to see how
-            // Value Blocks are formated
-            // For better reading (~ = invert operator):
-            // if (b0=b8 and b0=~b4) and (b1=b9 and b9=~b5) ...
-            // ... and (b12=b14 and b13=b15 and b12=~b13) then
-            if (    (b[0] == b[8] && (byte)(b[0]^0xFF) == b[4]) &&
-                    (b[1] == b[9] && (byte)(b[1]^0xFF) == b[5]) &&
-                    (b[2] == b[10] && (byte)(b[2]^0xFF) == b[6]) &&
-                    (b[3] == b[11] && (byte)(b[3]^0xFF) == b[7]) &&
-                    (b[12] == b[14] && b[13] == b[15] &&
-                    (byte)(b[12]^0xFF) == b[13])) {
-                return true;
-            }
-        }
-        return false;
     }
 }

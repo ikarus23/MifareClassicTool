@@ -142,10 +142,10 @@
             android:id="@+id/editTextValueBlockAddr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="2"
-            android:inputType="textCapCharacters|textNoSuggestions"
             android:hint="@string/hint_hex_00"
-            android:maxLength="2" />
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxLength="2"
+            android:minEms="2" />
 
     </LinearLayout>
 

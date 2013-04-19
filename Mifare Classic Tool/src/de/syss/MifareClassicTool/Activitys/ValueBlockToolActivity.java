@@ -18,8 +18,13 @@
 
 package de.syss.MifareClassicTool.Activitys;
 
+import java.nio.ByteBuffer;
+
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
 /**
@@ -29,15 +34,43 @@ import de.syss.MifareClassicTool.R;
  */
 public class ValueBlockToolActivity extends BasicActivity {
 
+    private EditText mVB;
+    private EditText mVBasInt;
+    private EditText mAddr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_value_block_tool);
+
+        mVB = (EditText) findViewById(R.id.editTextValueBlockToolVB);
+        mVBasInt = (EditText) findViewById(R.id.editTextValueBlockToolVBasInt);
+        mAddr = (EditText) findViewById(R.id.editTextValueBlockAddr);
     }
 
-    // TODO: Implement & doc.
+    /**
+     * Decode a Mifare Classic Value Block into an integer and the Addr value.
+     * @param view The View object that triggered the method
+     * (in this case the decode button).
+     */
     public void onDecode(View view) {
-
+        String data = mVB.getText().toString();
+        if (Common.isHexAnd16Byte(data, this) == false) {
+            return;
+        }
+        if (Common.isValueBlock(data) == false) {
+             // No value block.
+            Toast.makeText(this, R.string.info_is_not_vb,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        // Decode.
+        byte[] vbAsBytes = Common.hexStringToByteArray(
+                data.substring(0, 8));
+        Common.reverseByteArrasInPlace(vbAsBytes);
+        ByteBuffer bb = ByteBuffer.wrap(vbAsBytes);
+        mVBasInt.setText("" + bb.getInt());
+        mAddr.setText(data.substring(24, 26));
     }
 
     // TODO: Implement & doc.
