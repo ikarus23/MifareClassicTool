@@ -138,9 +138,8 @@ public class DumpEditorActivity extends BasicActivity {
                 getString(R.string.text_caption_title),
                 ": (", updateText, ")"));
 
-        // Init. editor on intent.
         if (getIntent().hasExtra(EXTRA_DUMP)) {
-            // Called from ReadTagActivity.
+            // Called from ReadTagActivity (init editor by intent).
             String dump = getIntent().getStringExtra(EXTRA_DUMP);
             // Set title with UID.
             setTitle(getTitle() + " (UID: " + Common.byte2HexString(
@@ -150,11 +149,11 @@ public class DumpEditorActivity extends BasicActivity {
             setIntent(null);
         } else if (getIntent().hasExtra(
                 FileChooserActivity.EXTRA_CHOSEN_FILE)) {
-            // Called form FileChooser.
+            // Called form FileChooser (init editor by file).
             File file = new File(getIntent().getStringExtra(
                     FileChooserActivity.EXTRA_CHOSEN_FILE));
             mFileName = file.getName();
-            initEditorByFile(file);
+            initEditor(Common.readFileLineByLine(file, false));
             setIntent(null);
         }
     }
@@ -350,24 +349,6 @@ public class DumpEditorActivity extends BasicActivity {
                     Toast.LENGTH_LONG).show();
         }
         return err == 0;
-    }
-
-    /**
-     * Initialize the editor with the data form the given dump file.
-     * (Reads the file and then calls
-     * {@link #initEditor(String[])}.)
-     * @param file The dump file.
-     * @see #initEditor(String[])
-     */
-    private void initEditorByFile(File file) {
-        String[] lines = Common.readFileLineByLine(file, false);
-
-        if (lines != null && lines.length > 1 && lines[0].endsWith(" 0")
-                && lines[1].length() == 32) {
-            setTitle(getTitle() + " (UID: "
-                    + lines[1].substring(0, 8) + ")");
-        }
-        initEditor(lines);
     }
 
     /**
