@@ -232,6 +232,7 @@
         to be encoded</string>
     <string name="info_addr_not_hex_byte">Error: Addr is not a hex byte
         (0-9, A-F, 2 characters)</string>
+    <string name="info_copied_to_clipboard">Copied to clipboard</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
