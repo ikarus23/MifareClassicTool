@@ -99,7 +99,7 @@ public class TagInfoToolActivity extends BasicActivity {
     private void updateTagInfos(Tag tag) {
 
         if (tag != null) {
-            //Check for Mifare Classic suppor.
+            // Check for Mifare Classic support.
             boolean isMifareClassic = Arrays.asList(tag.getTechList()).contains(
                     MifareClassic.class.getName());
 
@@ -116,7 +116,7 @@ public class TagInfoToolActivity extends BasicActivity {
                     android.R.style.TextAppearance_Large);
             headerGenericInfo.setGravity(Gravity.CENTER_HORIZONTAL);
             final float scale = getResources().getDisplayMetrics().density;
-            int pad = (int) (5 * scale + 0.5f); // 5dp to px
+            int pad = (int) (5 * scale + 0.5f); // 5dp to px.
             headerGenericInfo.setPadding(pad, pad, pad, pad);
             mLayout.addView(headerGenericInfo);
             TextView genericInfo = new TextView(this);
@@ -126,6 +126,14 @@ public class TagInfoToolActivity extends BasicActivity {
             mLayout.addView(genericInfo);
             // Get generic info and set these as text.
             String uid = Common.byte2HexString(tag.getId());
+            int uidLen = tag.getId().length;
+            uid += " (" + uidLen + " byte";
+            if (uidLen == 7) {
+                uid += ", CL2";
+            } else if (uidLen == 10) {
+                uid += ", CL3";
+            }
+            uid += ")";
             NfcA nfca = NfcA.get(tag);
             // Swap ATQA to match the common order like shown here:
             // http://nfc-tools.org/index.php?title=ISO14443A
@@ -207,11 +215,11 @@ public class TagInfoToolActivity extends BasicActivity {
                 mifareInfo.setText(TextUtils.concat(
                         Common.colorString(getString(
                                 R.string.text_mem_size) + ":", hc),
-                        "\n", size, " Byte\n",
+                        "\n", size, " byte\n",
                         Common.colorString(getString(
                                 R.string.text_block_size) + ":", hc),
-                        // Block size is always 16 Byte on Mifare Classic Tags.
-                        "\n", "" + MifareClassic.BLOCK_SIZE, " Byte\n",
+                        // Block size is always 16 byte on Mifare Classic Tags.
+                        "\n", "" + MifareClassic.BLOCK_SIZE, " byte\n",
                         Common.colorString(getString(
                                 R.string.text_sector_count) + ":", hc),
                         "\n", sectorCount, "\n",

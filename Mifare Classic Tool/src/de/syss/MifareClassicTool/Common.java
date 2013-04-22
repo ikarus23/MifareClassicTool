@@ -530,7 +530,7 @@ public class Common {
     }
 
     /**
-     * Check if a (hex) string is pure hex (0-9, A-F, a-f) and 16 Byte
+     * Check if a (hex) string is pure hex (0-9, A-F, a-f) and 16 byte
      * (32 chars) long. If not show an error Toast in the context.
      * @param hexString The string to check.
      * @param context The Context in which the Toast will be shown.

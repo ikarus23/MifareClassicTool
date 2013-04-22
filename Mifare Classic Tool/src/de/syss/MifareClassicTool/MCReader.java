@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.MifareClassic;
@@ -237,10 +236,10 @@ public class MCReader {
     }
 
     /**
-     * Write a block of 16 Byte data to tag.
+     * Write a block of 16 byte data to tag.
      * @param sectorIndex The sector to where the data should be written
      * @param blockIndex The block to where the data should be written
-     * @param data 16 Byte of data.
+     * @param data 16 byte of data.
      * @param key The Mifare Classic key for the given sector.
      * @param useAsKeyB If true, key will be treated as key B
      * for authentication.
@@ -249,7 +248,7 @@ public class MCReader {
      * <li>0 - Everything went fine.</li>
      * <li>1 - Sector index is out of range.</li>
      * <li>2 - Block index is out of range.</li>
-     * <li>3 - Data are not 16 Byte.</li>
+     * <li>3 - Data are not 16 byte.</li>
      * <li>4 - Authentication went wrong.</li>
      * <li>-1 - Error while writing to tag.</li>
      * </ul>
