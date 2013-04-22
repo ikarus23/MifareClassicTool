@@ -39,7 +39,7 @@ import de.syss.MifareClassicTool.R;
  * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
-public class ValueBlocksActivity extends BasicActivity {
+public class ValueBlocksToIntActivity extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
@@ -47,7 +47,7 @@ public class ValueBlocksActivity extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.VB";
 
     private static final String LOG_TAG =
-            ValueBlocksActivity.class.getSimpleName();
+            ValueBlocksToIntActivity.class.getSimpleName();
 
     private TableLayout mLayout;
 
@@ -59,12 +59,12 @@ public class ValueBlocksActivity extends BasicActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_value_blocks);
+        setContentView(R.layout.activity_value_blocks_to_int);
 
         boolean noValueBlocks = false;
         if (getIntent().hasExtra(EXTRA_VB)) {
             mLayout = (TableLayout) findViewById(
-                    R.id.TableLayoutValueBlocks);
+                    R.id.TableLayoutValueBlocksToInt);
             String extra = getIntent().getStringExtra(EXTRA_VB);
             if (!extra.equals("")) {
                 String[] valueBlocks = extra.split(
@@ -141,18 +141,11 @@ public class ValueBlocksActivity extends BasicActivity {
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
         what = new TextView(this);
-        what.setText(R.string.text_vb_as_int);
+        what.setText(R.string.text_vb_as_int_decoded);
         value = new TextView(this);
         byte[] asBytes = Common.hexStringToByteArray(
                 hexValueBlock.substring(0, 8));
-        // Reverse (Little Endian -> Big Endian).
-        // Hmpf! Java has no Array.reverse(). And I don't want to use
-        // Commons.Lang (ArrayUtils) form Apache.
-        for(int i = 0; i < asBytes.length / 2; i++) {
-            byte temp = asBytes[i];
-            asBytes[i] = asBytes[asBytes.length - i - 1];
-            asBytes[asBytes.length - i - 1] = temp;
-        }
+        Common.reverseByteArrasInPlace(asBytes);
         ByteBuffer bb = ByteBuffer.wrap(asBytes);
         int i = bb.getInt();
         String asInt = "" + i;

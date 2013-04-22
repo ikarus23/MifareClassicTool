@@ -44,7 +44,7 @@ import de.syss.MifareClassicTool.R;
  * Mifare Classic.
  * @author Gerhard Klostermeier
  */
-public class TagInfoActivity extends BasicActivity {
+public class TagInfoToolActivity extends BasicActivity {
 
     LinearLayout mLayout;
 
@@ -54,9 +54,9 @@ public class TagInfoActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tag_info);
+        setContentView(R.layout.activity_tag_info_tool);
 
-        mLayout = (LinearLayout) findViewById(R.id.LinearLayoutTagInfo);
+        mLayout = (LinearLayout) findViewById(R.id.LinearLayoutTagInfoTool);
         updateTagInfos(Common.getTag());
     }
 
@@ -177,7 +177,7 @@ public class TagInfoActivity extends BasicActivity {
             }
 
             LinearLayout layout = (LinearLayout) findViewById(
-                    R.id.LinearLayoutTagInfoSupport);
+                    R.id.LinearLayoutTagInfoToolSupport);
             // Check for Mifare Classic support.
             if (isMifareClassic) {
                 // Display Mifare Classic info.

@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * Copyright 2013 Gerhard Klostermeier
  *
@@ -15,24 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- -->
+-->
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutValueBlocks"
+    android:id="@+id/RelativeLayoutValueBlocksToInt"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
  <TableRow
-     android:id="@+id/tableRowValueBlocksHeader"
+     android:id="@+id/tableRowValueBlocksToIntHeader"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:background="@color/dark_gray"
      android:padding="3dp" >
 
         <TextView
-            android:id="@+id/textViewValueBlocksHeader1"
+            android:id="@+id/textViewValueBlocksToIntHeader1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="100dp"
@@ -40,7 +40,7 @@
             android:textColor="@color/light_gray" />
 
         <TextView
-            android:id="@+id/textViewValueBlocksHeader2"
+            android:id="@+id/textViewValueBlocksToIntHeader2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_vb_value"
@@ -48,14 +48,14 @@
     </TableRow>
 
     <ScrollView
-        android:id="@+id/scrollViewValueBlocks"
+        android:id="@+id/scrollViewValueBlocksToInt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/tableRowValueBlocksHeader" >
+        android:layout_below="@id/tableRowValueBlocksToIntHeader" >
 
         <TableLayout
-            android:id="@+id/TableLayoutValueBlocks"
+            android:id="@+id/TableLayoutValueBlocksToInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
@@ -63,13 +63,13 @@
             (external, nonscroll) header -->
 
             <TableRow
-                android:id="@+id/tableRowValueBlocksHeaderFake"
+                android:id="@+id/tableRowValueBlocksToIntHeaderFake"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="3dp" >
         
                 <TextView
-                    android:id="@+id/textViewValueBlocksHeaderFake1"
+                    android:id="@+id/textViewValueBlocksToIntHeaderFake1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:height="0dp"
@@ -77,7 +77,7 @@
                     android:text="@string/text_vb_what" />
         
                 <TextView
-                    android:id="@+id/textViewValueBlocksHeaderFake2"
+                    android:id="@+id/textViewValueBlocksToIntHeaderFake2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:height="0dp"

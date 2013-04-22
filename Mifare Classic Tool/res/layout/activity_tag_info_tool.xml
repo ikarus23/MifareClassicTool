@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /*
  * Copyright 2013 Gerhard Klostermeier
  *
@@ -15,18 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- -->
- 
- 
+-->
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutTagInfo"
+    android:id="@+id/RelativeLayoutTagInfoTool"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TagInfoActivity" >
+    tools:context=".TagInfoToolActivity" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutTagInfoSupport"
+        android:id="@+id/LinearLayoutTagInfoToolSupport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -41,7 +41,7 @@
             android:src="@drawable/warning" />
 
         <TextView
-            android:id="@+id/textTagInfoNoMFSupport"
+            android:id="@+id/textTagInfoToolNoMFSupport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -52,7 +52,7 @@
             android:textColor="@color/red" />
 
         <Button
-            android:id="@+id/buttonTagInfoReadMore"
+            android:id="@+id/buttonTagInfoToolReadMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -62,15 +62,15 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/ScrollViewTagInfo"
+        android:id="@+id/ScrollViewTagInfoTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
-        android:layout_below="@+id/LinearLayoutTagInfoSupport"
+        android:layout_below="@+id/LinearLayoutTagInfoToolSupport"
         android:layout_centerHorizontal="true" >
 
         <LinearLayout
-            android:id="@+id/LinearLayoutTagInfo"
+            android:id="@+id/LinearLayoutTagInfoTool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >

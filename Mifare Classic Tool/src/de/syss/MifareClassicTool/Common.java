@@ -27,8 +27,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import de.syss.MifareClassicTool.Activitys.CreateKeyMapActivity;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -529,6 +527,71 @@ public class Common {
             return acMatrix;
         }
         return null;
+    }
+
+    /**
+     * Check if a (hex) string is pure hex (0-9, A-F, a-f) and 16 Byte
+     * (32 chars) long. If not show an error Toast in the context.
+     * @param hexString The string to check.
+     * @param context The Context in which the Toast will be shown.
+     * @return True if sting is hex an 16 Bytes long, False otherwise.
+     */
+    public static boolean isHexAnd16Byte(String hexString, Context context) {
+        if (hexString.matches("[0-9A-Fa-f]+") == false) {
+            // Error, not hex.
+            Toast.makeText(context, R.string.info_not_hex_data,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (hexString.length() != 32) {
+            // Error, not 16 byte (32 chars).
+            Toast.makeText(context, R.string.info_not_16_byte,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the given block (hex string) is a value block.
+     * NXP has PDFs describing what value blocks are. Google something
+     * like "nxp mifare classic value block" if you want to have a
+     * closer look.
+     * @param data Block data as hex string.
+     * @return True if it is a value block. False otherwise.
+     */
+    public static boolean isValueBlock(String hexString) {
+        byte[] b = Common.hexStringToByteArray(hexString);
+        if (b.length == 16) {
+            // Google some NXP info PDFs about Mifare Classic to see how
+            // Value Blocks are formated.
+            // For better reading (~ = invert operator):
+            // if (b0=b8 and b0=~b4) and (b1=b9 and b9=~b5) ...
+            // ... and (b12=b14 and b13=b15 and b12=~b13) then
+            if (    (b[0] == b[8] && (byte)(b[0]^0xFF) == b[4]) &&
+                    (b[1] == b[9] && (byte)(b[1]^0xFF) == b[5]) &&
+                    (b[2] == b[10] && (byte)(b[2]^0xFF) == b[6]) &&
+                    (b[3] == b[11] && (byte)(b[3]^0xFF) == b[7]) &&
+                    (b[12] == b[14] && b[13] == b[15] &&
+                    (byte)(b[12]^0xFF) == b[13])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Reverse a byte Array (e.g. Little Endian -> Big Endian).
+     * Hmpf! Java has no Array.reverse(). And I don't want to use
+     * Commons.Lang (ArrayUtils) form Apache....
+     * @param array The array to reverse (in-place).
+     */
+    public static void reverseByteArrasInPlace(byte[] array) {
+        for(int i = 0; i < array.length / 2; i++) {
+            byte temp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
+        }
     }
 
     /**

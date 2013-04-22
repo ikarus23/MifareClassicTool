@@ -39,7 +39,7 @@ import de.syss.MifareClassicTool.R;
  * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
-public class AccessConditionsActivity extends BasicActivity {
+public class AccessConditionDecoderActivity extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
@@ -48,7 +48,7 @@ public class AccessConditionsActivity extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.AC";
 
     private static final String LOG_TAG =
-            AccessConditionsActivity.class.getSimpleName();
+            AccessConditionDecoderActivity.class.getSimpleName();
 
     private TableLayout mLayout;
 
@@ -60,11 +60,11 @@ public class AccessConditionsActivity extends BasicActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_access_conditions);
+        setContentView(R.layout.activity_access_condition_decoder);
 
         if (getIntent().hasExtra(EXTRA_AC)) {
             mLayout = (TableLayout) findViewById(
-                    R.id.TableLayoutAccessConditions);
+                    R.id.TableLayoutAccessConditionDecoder);
             String extra = getIntent().getStringExtra(EXTRA_AC);
             String[] accessConditions = extra.split(
                     System.getProperty("line.separator"));

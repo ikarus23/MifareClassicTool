@@ -37,6 +37,8 @@
     <string name="title_activity_help">Help and Info</string>
     <string name="title_activity_hex_to_ascii">Data as ASCII</string>
     <string name="title_activity_tag_info">Tag Info</string>
+    <string name="title_activity_value_block_tool">Value Block Decoder
+        &amp; Encoder</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -66,7 +68,7 @@
     <string name="text_vb_what">What:</string>
     <string name="text_vb_value">Value:</string>
     <string name="text_vb_orig">Original:</string>
-    <string name="text_vb_as_int">As Integer:</string>
+    <string name="text_vb_as_int_decoded">As Integer:</string>
     <string name="text_sector_range">Create Map for Sectors:</string>
     <string name="text_sector_range_all">All</string>
     <string name="text_update_colors">Update Colors</string>
@@ -111,6 +113,11 @@
     <string name="text_block_size">Block Size</string>
     <string name="text_sector_count">Number of Sectors</string>
     <string name="text_block_count">Number of Blocks</string>
+    <string name="text_vb">VB:</string>
+    <string name="text_vb_as_int">VB as Int:</string>
+    <string name="text_addr">Addr:</string>
+    <string name="text_copy">Copy</string>
+    <string name="text_paste">Paste</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -147,6 +154,8 @@
     <string name="button_cancel_all">Cancel Writing</string>
     <string name="button_skip_blocks">Write as Much as Possible</string>
     <string name="button_more">Read More&#8230;</string>
+    <string name="button_decode">Decode</string>
+    <string name="button_encode">Encode</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -154,6 +163,7 @@
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
     <string name="menu_tag_info">Display Tag Info</string>
+    <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -163,7 +173,7 @@
     <string name="info_wait_key_map">Creating key map… Please wait…</string>
     <string name="info_tag_removed_while_reading">Read Error: Tag removed
         during reading</string>
-    <string name="info_no_vb">There are no value blocks in this dump</string>
+    <string name="info_no_vb_in_dump">There are no value blocks in this dump</string>
     <string name="info_valid_dump_not_hex">Error: Some block(s) contain
         invalid data (not hex)</string>
     <string name="info_valid_dump_not_4_or_16_lines">Error: Some
@@ -187,10 +197,11 @@
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
     <string name="info_not_16_byte">Error: Data must be 16 byte (32 characters)</string>
+    <string name="info_is_not_vb">Error: Not a value block.</string>
     <string name="info_block_not_in_sector">Error: The sector does not contain
         a block with the given number.</string>
     <string name="info_error_writing_block">Write Error: Block is read-only
-        or not writable with keys from key file.</string>
+        or not writable with keys from key file</string>
     <string name="info_write_successful">Data successfully written</string>
     <string name="info_none_key_valid_for_reading">Error: None of the
         keys were valid for reading</string>
@@ -217,6 +228,11 @@
     <string name="info_check_ac_error">Error: Tag lost while checking for keys
         with write privileges</string>
     <string name="info_nothing_to_write">There is nothing left to write</string>
+    <string name="info_no_int_to_encode">Error: There is no integer
+        to be encoded</string>
+    <string name="info_addr_not_hex_byte">Error: Addr is not a hex byte
+        (0-9, A-F, 2 characters)</string>
+    <string name="info_copied_to_clipboard">Copied to clipboard</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -267,6 +283,8 @@
     <string name="dialog_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
 
     <!-- Hints -->
-    <string name="hint_hex_data">Hex, 16 Bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_00">00</string>
+    <string name="hint_int_423">e.g. 423</string>
 
 </resources>

@@ -53,14 +53,14 @@ import de.syss.MifareClassicTool.R;
  * The result codes are:
  * <ul>
  * <li>{@link Activity#RESULT_OK} - Everything is O.K. The key map can be
- * retrieved by calling {@link MCTApp#getKeyMap()}.</li>
+ * retrieved by calling {@link Common#getKeyMap()}.</li>
  * <li>1 - Directory from {@link #EXTRA_KEYS_DIR} does not
  * exist.</li>
  * <li>2 - No directory specified in Intent
  * ({@link #EXTRA_KEYS_DIR})</li>
  * <li>3 - External Storage is not read/writable. This error is
  * displayed to the user via Toast.</li>
- * <li>4 - No key was found. {@link MCTApp#getKeyMap()} will return "null".</li>
+ * <li>4 - No key was found. {@link Common#getKeyMap()} will return "null".</li>
  * </ul>
  * @author Gerhard Klostermeier
  */
@@ -280,7 +280,7 @@ public class CreateKeyMapActivity extends BasicActivity {
 
     /**
      * Create a key map and save it to
-     * {@link MCTApp#setKeyMap(android.util.SparseArray)}.
+     * {@link Common#setKeyMap(android.util.SparseArray)}.
      * For doing so it uses other methods (
      * {@link #createKeyMap(MCReader)}, {@link #keyMapCreated(MCReader)}).
      * @param view The View object that triggered the method
@@ -408,7 +408,7 @@ public class CreateKeyMapActivity extends BasicActivity {
      * Triggered by {@link #createKeyMap(MCReader)}, this method
      * sets the result code to {@link Activity#RESULT_OK},
      * saves the created key map to
-     * {@link MCTApp#setKeyMap(android.util.SparseArray)}
+     * {@link Common#setKeyMap(android.util.SparseArray)}
      * and finishes this Activity.
      * @param reader A {@link MCReader}.
      * @see #createKeyMap(MCReader)
