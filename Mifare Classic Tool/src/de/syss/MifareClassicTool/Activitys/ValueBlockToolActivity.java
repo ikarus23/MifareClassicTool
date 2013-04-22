@@ -56,10 +56,11 @@ public class ValueBlockToolActivity extends BasicActivity {
     public void onDecode(View view) {
         String data = mVB.getText().toString();
         if (Common.isHexAnd16Byte(data, this) == false) {
+            // Error. Not hex and 16 Byte
             return;
         }
         if (Common.isValueBlock(data) == false) {
-             // No value block.
+             // Error. No value block.
             Toast.makeText(this, R.string.info_is_not_vb,
                     Toast.LENGTH_LONG).show();
             return;
@@ -73,8 +74,40 @@ public class ValueBlockToolActivity extends BasicActivity {
         mAddr.setText(data.substring(24, 26));
     }
 
-    // TODO: Implement & doc.
+    /**
+     * Encode a integer (and addr.) into a Mifare Classic Value Block.
+     * @param view The View object that triggered the method
+     * (in this case the encode button).
+     */
     public void onEncode(View view) {
+        String vbText = mVBasInt.getText().toString();
+        String addrText = mAddr.getText().toString();
+        if (vbText.equals("")){
+            // Error. There is no integer to encode.
+            Toast.makeText(this, R.string.info_no_int_to_encode,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (addrText.matches("[0-9A-Fa-f]{2}") == false) {
+            // Error. There is no valid value block addr.
+            Toast.makeText(this, R.string.info_addr_not_hex_byte,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        // Encode.
+        // String -> Int.
+        int vbAsInt = Integer.parseInt(vbText);
+        // Int -> reverse -> byte array -> hex string.
+        String vb = Common.byte2HexString(ByteBuffer.allocate(4).putInt(
+                Integer.reverseBytes(vbAsInt)).array());
+        // Int -> invert -> reverse -> byte array -> hex string.
+        String vbInverted = Common.byte2HexString(ByteBuffer.allocate(4).putInt(
+                Integer.reverseBytes(~vbAsInt)).array());
+        String addr = addrText;
+        String addrInverted = Integer.toHexString(
+                ~Integer.parseInt(addr, 16)).toUpperCase().substring(6, 8);
+        mVB.setText(vb + vbInverted + vb
+                + addr + addrInverted + addr + addrInverted);
 
     }
 

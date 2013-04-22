@@ -201,7 +201,7 @@
     <string name="info_block_not_in_sector">Error: The sector does not contain
         a block with the given number.</string>
     <string name="info_error_writing_block">Write Error: Block is read-only
-        or not writable with keys from key file.</string>
+        or not writable with keys from key file</string>
     <string name="info_write_successful">Data successfully written</string>
     <string name="info_none_key_valid_for_reading">Error: None of the
         keys were valid for reading</string>
@@ -228,6 +228,10 @@
     <string name="info_check_ac_error">Error: Tag lost while checking for keys
         with write privileges</string>
     <string name="info_nothing_to_write">There is nothing left to write</string>
+    <string name="info_no_int_to_encode">Error: There is no integer
+        to be encoded</string>
+    <string name="info_addr_not_hex_byte">Error: Addr is not a hex byte
+        (0-9, A-F, 2 characters)</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -278,7 +282,7 @@
     <string name="dialog_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
 
     <!-- Hints -->
-    <string name="hint_hex_data">HEX, 16 Bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
 
