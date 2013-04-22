@@ -36,7 +36,6 @@ import android.util.SparseArray;
  * Provide functions to read/write/analyze a Mifare Classic tag.
  * @author Gerhard Klostermeier
  */
-@SuppressLint("UseSparseArrays")
 public class MCReader {
 
     private static final String LOG_TAG = MCReader.class.getSimpleName();

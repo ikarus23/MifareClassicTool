@@ -51,6 +51,10 @@
         <ignore path="res/layout/activity_hex_to_ascii.xml" />
     </issue>
 
+    <!-- Sparse Arrays are not really usefull for small collections -->
+    <!-- http://www.programmingmobile.com/2012/07/android-performance-tweaking-parsearray.html -->
+    <issue id="UseSparseArrays" severity="ignore" />
+
     <!-- If icon is only in "drawable", it is suitable for all resolutions -->
     <issue id="IconLocation" severity="ignore" />
     <issue id="IconDensities" severity="ignore" />

@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -54,7 +53,6 @@ import de.syss.MifareClassicTool.R;
  * Classic tag providing its keys.
  * @author Gerhard Klostermeier
  */
-@SuppressLint("UseSparseArrays")
 public class WriteTagActivity extends BasicActivity {
 
     private static final int FC_WRITE_DUMP = 1;
