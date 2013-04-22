@@ -186,7 +186,6 @@ public class KeyEditorActivity extends BasicActivity {
      * <li>3 - At least one key has not 6 byte (12 chars).</li>
      * </ul>
      */
-    @SuppressLint("DefaultLocale")
     private int isValidKeyFile() {
         String[] lines = mKeys.getText().toString()
                 .split(System.getProperty("line.separator"));

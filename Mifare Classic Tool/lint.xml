@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<lint>
+    
+    <issue id="UselessParent">
+        <!-- Non scroll table header -->
+        <ignore path="res/layout/activity_access_condition_decoder.xml" />
+        <ignore path="res/layout/activity_value_blocks_to_int.xml" />
+    </issue>
+
+    <issue id="UselessLeaf">
+        <!-- Suppress edit text focus on startup -->
+        <ignore path="res/layout/activity_value_block_tool.xml" />
+        <ignore path="res/layout/activity_dump_editor.xml" />
+    </issue>
+
+    <issue id="UnusedResources">
+        <!-- Resources are used dynamically -->
+        <ignore path="res/values/tag_type_list.xml" />
+    </issue>
+
+    <issue id="DefaultLocale">
+        <!-- Only a "String.toUpperCase" -->
+        <ignore path="src/de/syss/MifareClassicTool/Activitys/ValueBlockToolActivity.java" />
+        <ignore path="src/de/syss/MifareClassicTool/Activitys/DumpEditorActivity.java" />
+        <ignore path="src/de/syss/MifareClassicTool/Activitys/KeyEditorActivity.java" />
+    </issue>
+
+    <issue id="SelectableText">
+        <!-- Text is set programmatically (but static) -->
+        <ignore path="res/layout/activity_dump_editor.xml" />
+        <ignore path="res/layout/activity_hex_to_ascii.xml" />
+    </issue>
+
+    <!-- If icon is only in "drawable", it is suitable for all resolutions -->
+    <issue id="IconLocation" severity="ignore" />
+    <issue id="IconDensities" severity="ignore" />
+
+</lint>

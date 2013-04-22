@@ -296,7 +296,6 @@ public class DumpEditorActivity extends BasicActivity {
      * </ul>
      * @see #mLines
      */
-    @SuppressLint("DefaultLocale")
     private int isValidDump() {
         ArrayList<String> checkedLines = new ArrayList<String>();
         for(int i = 0; i < mLayout.getChildCount(); i++){

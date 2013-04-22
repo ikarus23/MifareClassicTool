@@ -68,7 +68,7 @@
             android:id="@+id/imageButtonValueBlockToolPaste"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/text_copy"
+            android:contentDescription="@string/text_paste"
             android:onClick="onPasteFromClipboard"
             android:src="@drawable/paste" />
 
