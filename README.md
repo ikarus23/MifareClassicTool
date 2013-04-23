@@ -63,7 +63,7 @@ For further information about Mifare classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
 [do some Google search](https://www.google.com/search?q=mifare+classic")
 or read the
-[Mifare Classic (1k) 'Datasheet'](http://www.nxp.com/documents/data_sheet/MF1S503x.pdf)
+[Mifare Classic (1k) 'Datasheet'](http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf)
 (PDF) from NXP.
 
 
