@@ -8,9 +8,6 @@ TODO (Maybe outdated):
 
 (+)  Display blanks between hexbytes in the dump editor view
      for better reading.
-     
-(+)  Create a Value Block encode / decode (to int) tool.
-     (With clipboard ability.) 
 
 (+)  Clone tag but use "08778F" as access condition.
      This ACs permit any change with key B. If a reader

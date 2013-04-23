@@ -41,7 +41,8 @@
     <li>
       <a href="#tools">7. Tools</a>
       <ul>
-        <li><a href="#tag_info">7.1 Display Tag Info</a></li>
+        <li><a href="#tag_info_tool">7.1 Display Tag Info</a></li>
+        <li><a href="#value_block_tool">7.2 Value Block Decoder/Encoder</a></li>
       </ul>
     </li>
   </ul>
@@ -102,6 +103,7 @@
         See chapter <a href="#getting_started">Getting Started</a>.)
       </li>
       <li>Create, edit and save key files (dictionaries).</li>
+      <li>Decode &amp; Encode Mifare Classic Value Blocks</li>
       <li>Display generic tag information</li>
       <li>Display the tag data as highlighted hex</li>
       <li>Display the tag data as 7-Bit US-ASCII</li>
@@ -329,7 +331,7 @@
     This section provides some general tools to work with Mifare Classic.
   </p>
 
-  <h3 id="tag_info">7.1 Display Tag Info</h3>
+  <h3 id="tag_info_tool">7.1 Display Tag Info</h3>
   <p>
     In this view you can see some generic information
     (like UID, ATQA, SAK, Tag size, etc.) about the RFID-Tag.
@@ -341,10 +343,11 @@
     The identification mechanism is based on
     <a href="http://nfc-tools.org/index.php?title=ISO14443A">this website</a>.
     If you want to have a closer look at Mifare tag identification read
-    the <a href="http://www.nxp.com/documents/application_note/AN10833.pdf">NXP
-    MIFARE Type Identification Procedure</a> (PDF). Another
-    <a href="http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt">helpfuly
-    file</a> for ATS (ATR) based identification is provided by the PCSC project.
+    the <a href="http://www.nxp.com/documents/application_note/AN10833.pdf">
+    NXP MIFARE Type Identification Procedure</a> (PDF). Another
+    <a href="http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt">
+    helpful file</a> for ATS (ATR) based identification is provided
+    by the PCSC project.
     <br /><br />
     The tag type and manufacturer determined by MCT might be wrong for
     several reasons:
@@ -352,6 +355,21 @@
       <li>The Tag has a customized ATS</li>
       <li>There are multiple tags in the reader field</li>
     </ul>
+  </p>
+
+  <h3 id="value_block_tool">7.2 Value Block Decoder/Encoder</h3>
+  <p>
+    This tool is able of decoding Mifare Classic Blocks into integer
+    and the other way around (encode integer to Mifare Classic Block).
+    If you don't know what a Mifare Classic Value Block is, you should read
+    chapter 8.6.2.1 of the
+    <a href="http://www.nxp.com/documents/data_sheet/MF1S503x.pdf">
+    Mifare Classic (1k) Datasheet</a> (PDF).
+    <br /><br />
+    In most cases the &quot;Addr&quot; of a value block is 00 (hex)
+    because it is not used. However according to NXP it<br />
+    &quot;can be used to save the storage address of a
+    block, when implementing a powerful backup management.&quot;.
   </p>
 
 </body>

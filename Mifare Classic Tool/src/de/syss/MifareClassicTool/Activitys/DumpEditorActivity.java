@@ -94,7 +94,6 @@ public class DumpEditorActivity extends BasicActivity {
      * Check whether to initialize the editor on a dump file or on
      * a new dump directly from {@link ReadTagActivity}.
      * (Also it will color the caption of the dump editor.)
-     * @see #initEditorByFile(File)
      * @see #initEditor(String[])
      */
     @Override

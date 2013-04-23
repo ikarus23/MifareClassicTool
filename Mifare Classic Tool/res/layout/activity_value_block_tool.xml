@@ -52,8 +52,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="textCapCharacters|textNoSuggestions"
             android:hint="@string/hint_hex_data"
+            android:imeOptions="actionDone"
+            android:inputType="textCapCharacters|textNoSuggestions"
             android:maxLength="32" />
 
         <ImageButton
@@ -127,6 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/hint_int_423"
+            android:imeOptions="actionNext"
             android:inputType="numberSigned" />
 
         <TextView
@@ -143,6 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/hint_hex_00"
+            android:imeOptions="actionDone"
             android:inputType="textCapCharacters|textNoSuggestions"
             android:maxLength="2"
             android:minEms="2" />

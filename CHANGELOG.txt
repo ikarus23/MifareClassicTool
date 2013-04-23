@@ -1,7 +1,17 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.3.0:
+ * Added new tool: Decode & Encode Mifare Classic Value Blocks.
+ * Added script to convert MCT dumps to RAW dumps.
+ * Added script to convert RAW dumps to MCT dumps.
+ * Display the UID length (and the CL) in tag info tool.
+ * Use proguard to shrink APK files.
+ * Fixed: Do not create language-dependent dump files using strings.xml
+ * Some bug fixes.
+ * Some code cleanup.
+
 Version 1.2.1:
- * tag info tool can now display the tag type and manufacturer.
+ * Tag info tool can now display the tag type and manufacturer.
  * Fixed SAK, dec -> hex (tag info tool).
  * Fixed ATQA order, e.g. 4400 -> 0044.
  * Fixed crash issue, if tag is not MF Classic.
