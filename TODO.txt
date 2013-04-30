@@ -5,6 +5,17 @@ TODO (Maybe outdated):
 (++) = Very important (= FIXME in source code)
 
 
+(++) Send raw ISO 14443A commands.
+
+(++) Change manufacturer block of Magic Chinese Cards
+     (if this is possible with raw NfcA commands).
+
+(+)  Write one or more sectors from a dump to a tag.
+
+(+)  Quick read (and dump) tags.
+     Choose key files -> Map keys to sectors of the first tag
+     -> Remember this key map for the next tags to read them
+     as quick as possible -> dump the tags with time stamp.
 
 (+)  Display blanks between hexbytes in the dump editor view
      for better reading.
