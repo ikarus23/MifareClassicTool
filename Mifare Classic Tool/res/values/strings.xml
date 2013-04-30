@@ -251,7 +251,8 @@
         this App is pretty much useless.</b>
         \n\nKnown devices with no Mifare Classic support:\n
         - Google Nexus 4\n
-        - Google Nexus 10</string>
+        - Google Nexus 10\n
+        - Samsung Galaxy S4</string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>
