@@ -218,6 +218,7 @@ public class MainActivity extends Activity {
     /**
      * Add the menu with the tools.
      * It will be shown if the user clicks on "Tools".
+     * Also disable menu entries that require NFC if NFC is off.
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -228,9 +229,10 @@ public class MainActivity extends Activity {
         menu.setHeaderIcon(android.R.drawable.ic_menu_preferences);
         inflater.inflate(R.menu.tools, menu);
         // Enable/Disable tag info tool depending on NFC availability.
-        menu.findItem(R.id.menuMainTagInfo).setEnabled(
-                Common.getNfcAdapter() != null
-                && Common.getNfcAdapter().isEnabled());
+        boolean enable = Common.getNfcAdapter() != null
+                && Common.getNfcAdapter().isEnabled();
+        menu.findItem(R.id.menuMainTagInfo).setEnabled(enable);
+        menu.findItem(R.id.menuMainNfcACommands).setEnabled(enable);
     }
 
     /**
@@ -412,6 +414,10 @@ public class MainActivity extends Activity {
         switch (item.getItemId()) {
         case R.id.menuMainTagInfo:
             intent = new Intent(this, TagInfoToolActivity.class);
+            startActivity(intent);
+            return true;
+        case R.id.menuMainNfcACommands:
+            intent = new Intent(this, NfcACommandsToolActivity.class);
             startActivity(intent);
             return true;
         case R.id.menuMainValueBlockCoder:

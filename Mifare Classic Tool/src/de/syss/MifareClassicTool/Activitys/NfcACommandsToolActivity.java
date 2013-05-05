@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
  * Copyright 2013 Gerhard Klostermeier
  *
@@ -16,14 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
--->
 
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuMainTagInfo"
-        android:title="@string/menu_tag_info" />
-    <item android:id="@+id/menuMainNfcACommands"
-        android:title="@string/menu_send_nfca_commands" />
-    <item android:id="@+id/menuMainValueBlockCoder"
-        android:title="@string/menu_vb_coder" />
-</menu>
+package de.syss.MifareClassicTool.Activitys;
+
+import android.os.Bundle;
+import de.syss.MifareClassicTool.R;
+
+// TODO: implement & doc.
+public class NfcACommandsToolActivity extends BasicActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_nfca_commands_tool);
+    }
+
+}

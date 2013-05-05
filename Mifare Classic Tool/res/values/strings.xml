@@ -40,6 +40,7 @@
     <string name="title_activity_tag_info">Tag Info</string>
     <string name="title_activity_value_block_tool">Value Block Decoder
         &amp; Encoder</string>
+    <string name="title_activity_nfca_commands_tool">Send ISO 14443A Commands</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -165,6 +166,7 @@
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
     <string name="menu_tag_info">Display Tag Info</string>
     <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
+    <string name="menu_send_nfca_commands">Send ISO 14443A Commands</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

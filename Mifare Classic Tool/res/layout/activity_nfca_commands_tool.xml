@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
  * Copyright 2013 Gerhard Klostermeier
@@ -19,11 +18,10 @@
 -->
 
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuMainTagInfo"
-        android:title="@string/menu_tag_info" />
-    <item android:id="@+id/menuMainNfcACommands"
-        android:title="@string/menu_send_nfca_commands" />
-    <item android:id="@+id/menuMainValueBlockCoder"
-        android:title="@string/menu_vb_coder" />
-</menu>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayoutNfcACommandsTool"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+</RelativeLayout>
