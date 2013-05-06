@@ -24,4 +24,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- Dummy to prevent EditTexts from getting focus on Activity startup -->
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <Button
+        android:id="@+id/buttonNfcACommandsToolSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextNfcACommandsToolCommand"
+        android:onClick="onSendCommand"
+        android:text="@string/button_send_command" />
+
+    <TextView
+        android:id="@+id/textViewNfcACommandsToolCommandLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/text_nfca_command"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editTextNfcACommandsToolCommand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewNfcACommandsToolCommandLabel"
+        android:ems="10"
+        android:inputType="textCapCharacters|textNoSuggestions"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+
+    <TextView
+        android:id="@+id/textViewNfcACommandsToolLogLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonNfcACommandsToolSend"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp"
+        android:text="@string/text_command_answer_log"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ScrollView
+        android:id="@+id/scrollViewNfcACommandToolLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewNfcACommandsToolLogLabel"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textViewNfcACommandsToolLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
+
+    </ScrollView>
+
 </RelativeLayout>

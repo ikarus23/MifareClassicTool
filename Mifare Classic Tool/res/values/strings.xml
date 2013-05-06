@@ -120,6 +120,8 @@
     <string name="text_addr">Addr:</string>
     <string name="text_copy">Copy</string>
     <string name="text_paste">Paste</string>
+    <string name="text_nfca_command">ISO 14443A Command:</string>
+    <string name="text_command_answer_log">Command and Answer Log:</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -158,6 +160,7 @@
     <string name="button_more">Read More&#8230;</string>
     <string name="button_decode">Decode</string>
     <string name="button_encode">Encode</string>
+    <string name="button_send_command">Send Command</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>

@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activitys;
 
 import android.os.Bundle;
+import android.view.View;
 import de.syss.MifareClassicTool.R;
 
 // TODO: implement & doc.
@@ -28,6 +29,11 @@ public class NfcACommandsToolActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfca_commands_tool);
+    }
+
+    // TODO: implement & doc.
+    public void onSendCommand(View view) {
+
     }
 
 }
