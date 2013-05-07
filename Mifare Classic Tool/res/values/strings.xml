@@ -160,7 +160,10 @@
     <string name="button_more">Read More&#8230;</string>
     <string name="button_decode">Decode</string>
     <string name="button_encode">Encode</string>
-    <string name="button_send_command">Send Command</string>
+    <string name="button_send">Send</string>
+    <string name="button_connect">Connect</string>
+    <string name="button_disconnect">Disconnect</string>
+    <string name="button_change_timeout">Change Timeout</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -239,6 +242,7 @@
     <string name="info_addr_not_hex_byte">Error: Addr is not a hex byte
         (0-9, A-F, 2 characters)</string>
     <string name="info_copied_to_clipboard">Copied to clipboard</string>
+    <string name="info_no_nfca_tag_found">Error: There is no ISO 14443A tag</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -292,5 +296,6 @@
     <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
+    <string name="hint_hex_command">HEX (e.g. 5000 for halt)</string>
 
 </resources>

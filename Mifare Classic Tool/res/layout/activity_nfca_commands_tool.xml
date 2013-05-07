@@ -37,8 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editTextNfcACommandsToolCommand"
+        android:enabled="false"
         android:onClick="onSendCommand"
-        android:text="@string/button_send_command" />
+        android:text="@string/button_send" />
 
     <TextView
         android:id="@+id/textViewNfcACommandsToolCommandLabel"
@@ -59,6 +60,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewNfcACommandsToolCommandLabel"
         android:ems="10"
+        android:hint="@string/hint_hex_command"
+        android:imeOptions="actionDone"
         android:inputType="textCapCharacters|textNoSuggestions"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" />
@@ -92,5 +95,27 @@
             android:textIsSelectable="true" />
 
     </ScrollView>
+
+    <ToggleButton
+        android:id="@+id/toggleButtonNfcACommandsToolConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editTextNfcACommandsToolCommand"
+        android:minEms="6"
+        android:onClick="onToggleConnect"
+        android:textOff="@string/button_connect"
+        android:textOn="@string/button_disconnect" />
+
+    <Button
+        android:id="@+id/buttonNfcACommandsToolTimeout"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNfcACommandsToolCommand"
+        android:layout_toRightOf="@+id/toggleButtonNfcACommandsToolConnect"
+        android:enabled="false"
+        android:onClick="onChangeTimeout"
+        android:text="@string/button_change_timeout" />
 
 </RelativeLayout>
