@@ -122,6 +122,8 @@
     <string name="text_paste">Paste</string>
     <string name="text_nfca_command">ISO 14443A Command:</string>
     <string name="text_command_answer_log">Command and Answer Log:</string>
+    <string name="text_connected_to">Connected to</string>
+    <string name="text_disconnected_from">Disconnected from</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -243,6 +245,8 @@
         (0-9, A-F, 2 characters)</string>
     <string name="info_copied_to_clipboard">Copied to clipboard</string>
     <string name="info_no_nfca_tag_found">Error: There is no ISO 14443A tag</string>
+    <string name="info_command_too_long">Error: Command is too long</string>
+    <string name="info_command_not_hex">Error: Command is not hex (0-9 and A-F)</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

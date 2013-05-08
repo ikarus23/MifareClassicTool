@@ -22,7 +22,9 @@ import java.io.IOException;
 
 import android.annotation.SuppressLint;
 import android.nfc.tech.NfcA;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,24 +86,34 @@ public class NfcACommandsToolActivity extends BasicActivity {
     @SuppressLint("NewApi")
     public void onSendCommand(View view) {
         String command = mCommandText.getText().toString();
-        if (command.equals("")) {
-            // Error. There is no command.
-            // TODO: implement error message.
+        if (!command.matches("[0-9A-Fa-f]+")) {
+            // Error. There is no command or command is not hex.
+            Toast.makeText(this, R.string.info_command_not_hex,
+                    Toast.LENGTH_LONG).show();
             return;
         }
-        // TODO: distinguish API versions.
-        if (command.length() <= mNfcA.getMaxTransceiveLength()) {
-            try {
-                byte[] tagAnswer = mNfcA.transceive(
-                        Common.hexStringToByteArray(command));
-                // TODO: Do not use fixed strings. This is just for testing.
-                mLogText.setText("Command: " + command + "\n" + "Answer: "
-                        + Common.byte2HexString(tagAnswer) + "\n" + mLogText.getText());
-
-            } catch (IOException e) {
-                // Error.
-                // TODO: implement.
+        if (Build.VERSION.SDK_INT >= 14) {
+            if (command.length() > mNfcA.getMaxTransceiveLength()) {
+                // Error. Command is too long.
+                Toast.makeText(this, R.string.info_command_too_long,
+                        Toast.LENGTH_LONG).show();
+                return;
             }
+        }
+        try {
+            byte[] tagAnswer = mNfcA.transceive(
+                    Common.hexStringToByteArray(command));
+            // TODO: Do not use fixed strings. This is just for testing.
+            appendToLog("Command: " + command + "\n" + "Answer: "
+                    + Common.byte2HexString(tagAnswer));
+
+        } catch (Exception e) {
+            // Error.
+            // TODO: implement real error message.
+            String ex = e.getClass().toString();
+            ex = ex.substring(ex.lastIndexOf(".")+1);
+            Toast.makeText(this, ex + ": "
+                    + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -125,12 +137,16 @@ public class NfcACommandsToolActivity extends BasicActivity {
                 mNfcA.connect();
                 mTimeoutButton.setEnabled(true);
                 mCommandButton.setEnabled(true);
+                appendToLog(getString(R.string.text_connected_to)
+                        + ": " + Common.byte2HexString(Common.getUID()));
             } catch (Exception e) {
                 // Error. Maybe there is no tag.
                 Toast.makeText(this, R.string.info_no_nfca_tag_found,
                         Toast.LENGTH_LONG).show();
                 mNfcA = null;
                 mConnectToggleButton.setChecked(false);
+                appendToLog(getString(R.string.text_disconnected_from)
+                        + ": " + Common.byte2HexString(Common.getUID()));
             }
         } else {
             // Disconnect.
@@ -147,7 +163,13 @@ public class NfcACommandsToolActivity extends BasicActivity {
 
     // TODO implement & doc.
     public void onChangeTimeout(View view) {
+        Toast.makeText(this, R.string.info_not_supported_now,
+                Toast.LENGTH_LONG).show();
+    }
 
+    // TODO doc.
+    private void appendToLog(String msg) {
+        mLogText.setText(msg + "\n" + mLogText.getText());
     }
 
 }
