@@ -24,7 +24,6 @@ import android.annotation.SuppressLint;
 import android.nfc.tech.NfcA;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -145,8 +144,6 @@ public class NfcACommandsToolActivity extends BasicActivity {
                         Toast.LENGTH_LONG).show();
                 mNfcA = null;
                 mConnectToggleButton.setChecked(false);
-                appendToLog(getString(R.string.text_disconnected_from)
-                        + ": " + Common.byte2HexString(Common.getUID()));
             }
         } else {
             // Disconnect.
@@ -156,6 +153,8 @@ public class NfcACommandsToolActivity extends BasicActivity {
                 Log.d(LOG_TAG, "Error while closing NfcA tag");
             }
             mNfcA = null;
+            appendToLog(getString(R.string.text_disconnected_from)
+                    + ": " + Common.byte2HexString(Common.getUID()));
             mTimeoutButton.setEnabled(false);
             mCommandButton.setEnabled(false);
         }
