@@ -16,7 +16,7 @@
  */
 
 
-package de.syss.MifareClassicTool.Activitys;
+package de.syss.MifareClassicTool.Activities;
 
 import java.util.Arrays;
 
