@@ -5,11 +5,9 @@ TODO (Maybe outdated):
 (++) = Very important (= FIXME in source code)
 
 
-(++) Send raw ISO 14443A commands.
 
-(++) Change manufacturer block of Magic Chinese Cards
-     (if this is possible with raw NfcA commands).
-
+(++) Export/Share dumps (e.g. as e-mail).
+ 
 (+)  Write one or more sectors from a dump to a tag.
 
 (+)  Quick read (and dump) tags.
@@ -17,23 +15,29 @@ TODO (Maybe outdated):
      -> Remember this key map for the next tags to read them
      as quick as possible -> dump the tags with time stamp.
 
-(+)  Display blanks between hexbytes in the dump editor view
-     for better reading.
-
 (+)  Clone tag but use "08778F" as access condition.
      This ACs permit any change with key B. If a reader
      does not check the ACs, this functionality could
      be used to make the RFID-Tag reusable
      (there is no read only block).
+     
+(+)  Display blanks between hexbytes in the dump editor view
+     for better reading.
 
 (+)  Test Application with Mifare Classic 2k Tags.
 
 ()   Create a Access Conditions encode / decode tool.
 
-()   Use XML to save dumps.
-     Tagging lines with symbols like "+" is a ugly hack.
+()   Send raw ISO 14443A commands.
+     (This can not be done easily! A custom patched libnfc-nxp is needed.)
+
+()   Change manufacturer block of Magic Chinese Cards
+     (This can not be done easily! A custom patched libnfc-nxp is needed.)
 
 ()   Import key files from any location on the device.
+
+()   Use XML to save dumps.
+     Tagging lines with symbols like "+" is a ugly hack.
 
 ()   Pass better objects between activities (via intent)
      then a stringblobb separated by new line.
