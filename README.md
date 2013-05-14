@@ -17,7 +17,7 @@ Features
 --------
 
 * Read Mifare Classic tags
-* Save and edit the tag data you read
+* Save, edit and share the tag data you read
 * Write to Mifare Classic tags (block-wise)
 * Clone Mifare Classic tags  
   (Write dump of a tag to another tag; write 'dump-wise')

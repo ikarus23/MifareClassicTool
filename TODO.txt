@@ -5,8 +5,6 @@ TODO (Maybe outdated):
 (++) = Very important (= FIXME in source code)
 
 
-
-(++) Export/Share dumps (e.g. as e-mail).
  
 (+)  Write one or more sectors from a dump to a tag.
 

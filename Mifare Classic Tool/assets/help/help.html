@@ -32,6 +32,7 @@
     <li>
       <a href="#edit_dump_file">5. Edit Tag Dump File</a>
       <ul>
+        <li><a href="#share_dump">5.1 Share a Dump</a></li>
         <li><a href="#display_ascii">5.1 Display Data as ASCII</a></li>
         <li><a href="#display_ac">5.2 Display Access Conditions</a></li>
         <li><a href="#display_vb">5.3 Display Value Blocks as Integer</a></li>
@@ -91,7 +92,7 @@
   <p>
     <ul>
       <li>Read Mifare Classic tags</li>
-      <li>Save and edit the tag data you read</li>
+      <li>Save, edit and share the tag data you read</li>
       <li>Write to Mifare Classic tags (block-wise)</li>
       <li>Clone Mifare Classic tags<br />
         (Write dump of a tag to another tag;
@@ -265,7 +266,15 @@
     <b>MifareClassicTool/dump-files/</b> directory (on external storage).
   </p>
 
-  <h3 id="display_ascii">5.1 Display Data as ASCII</h3>
+  <h3 id="share_dump">5.1 Share a Dump</h3>
+  <p>
+    From the dump editor you can share a dump (via toolbar or menu item).
+    You can choose between Apps that are willing to process the dump file.
+    Note that some Apps fail to process the dump.<br />
+    Apps which are known for working with MCT: Gmail, Bluetooth, etc.
+  </p>
+
+  <h3 id="display_ascii">5.2 Display Data as ASCII</h3>
   <p>
     From the dump editor you can display the data in 7-Bit US-ASCII (via menu).
     Non printable characters are replaced with a dot (".").
@@ -273,7 +282,7 @@
     translated to ASCII.
   </p>
 
-  <h3 id="display_ac">5.2 Display Access Conditions</h3>
+  <h3 id="display_ac">5.3 Display Access Conditions</h3>
   <p>
     From the dump editor you can display the Mifare Classic Access
     Conditions as table (via menu). If you do not know what they are, you can
@@ -282,7 +291,7 @@
     Mifare Classic (1k) Datasheet</a> (PDF).
   </p>
 
-  <h3 id="display_vb">5.3 Display Value Blocks as Integer</h3>
+  <h3 id="display_vb">5.4 Display Value Blocks as Integer</h3>
   <p>
     From the dump editor you can decode blocks formatted as
     Mifare Classic Value Block to integer format (via menu).
