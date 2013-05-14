@@ -16,7 +16,7 @@
  */
 
 
-package de.syss.MifareClassicTool.Activitys;
+package de.syss.MifareClassicTool.Activities;
 
 import android.app.Activity;
 import android.content.Context;

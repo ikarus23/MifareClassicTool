@@ -16,7 +16,7 @@
  */
 
 
-package de.syss.MifareClassicTool.Activitys;
+package de.syss.MifareClassicTool.Activities;
 
 import android.os.Bundle;
 import android.webkit.WebView;
