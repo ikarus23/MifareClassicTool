@@ -24,6 +24,10 @@
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/menu_save"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menuDumpEditorShare"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/menu_share"
+        android:showAsAction="ifRoom" />
     <item android:id="@+id/menuDumpEditorAscii"
         android:title="@string/menu_show_ascii" />
     <item android:id="@+id/menuDumpEditorAccessConditions"

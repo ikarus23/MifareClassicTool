@@ -119,6 +119,7 @@
     <string name="text_addr">Addr:</string>
     <string name="text_copy">Copy</string>
     <string name="text_paste">Paste</string>
+    <string name="text_share_subject">MCT Dump</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -160,6 +161,7 @@
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
+    <string name="menu_share">Share</string>
     <string name="menu_show_ascii">Show Data as ASCII</string>
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
@@ -283,6 +285,7 @@
     <string name="dialog_tools_menu_title">Available Tools</string>
     <string name="dialog_wait_write_tag_title">Writing…</string>
     <string name="dialog_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
+    <string name="dialog_share_title">Send Dump File to…</string>
 
     <!-- Hints -->
     <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>

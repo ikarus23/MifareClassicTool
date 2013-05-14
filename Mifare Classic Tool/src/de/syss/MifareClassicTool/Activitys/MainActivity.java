@@ -144,6 +144,20 @@ public class MainActivity extends Activity {
                 return;
             }
 
+            // Create tmp directory.
+            path = new File(Environment.getExternalStoragePublicDirectory(
+                    Common.HOME_DIR) + Common.TMP_DIR);
+            if (path.exists() == false && !path.mkdirs()) {
+                // Could not create directory.
+                Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
+                        + Common.TMP_DIR + "' directory.");
+                return;
+            }
+            // Clean up tmp directory.
+            for (File file : path.listFiles()) {
+                file.delete();
+            }
+
             // Create std. key file if there is none.
             if (!hasStdKeysFile()) {
                 createStdKeysFile();

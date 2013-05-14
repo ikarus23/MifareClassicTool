@@ -26,11 +26,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -169,6 +171,7 @@ public class DumpEditorActivity extends BasicActivity {
     /**
      * Handle the selected function from the editor menu.
      * @see #onSaveDump()
+     * @see #shareDump()
      * @see #onShowAscii()
      * @see #onShowAC()
      * @see #onDecodeValueBlocks()
@@ -188,6 +191,9 @@ public class DumpEditorActivity extends BasicActivity {
             return true;
         case R.id.menuDumpEditorValueBlocksAsInt:
             onDecodeValueBlocks();
+            return true;
+        case R.id.menuDumpEditorShare:
+            shareDump();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -527,6 +533,43 @@ public class DumpEditorActivity extends BasicActivity {
             }
 
         }
+    }
+
+    /**
+     * Share a dump as "file://" stream resource (e.g. as e-mail attachment).
+     * The dump will be checked and stored in the {@link Common#TMP_DIR}
+     * directory. After this, a dialog will be displayed in which the user
+     * can choose between apps that are willing to handle the dump.
+     * @see #isValidDumpErrorToast()
+     * @see Common#TMP_DIR
+     */
+    private void shareDump() {
+        // Save dump to to a temporary file which will be
+        // attached for sharing (and stored in the tmp folder).
+        String fileName;
+        if (mFileName.equals("")) {
+            // The dump has no name. Use date and time as name.
+            Time today = new Time(Time.getCurrentTimezone());
+            today.setToNow();
+            fileName = today.format("%Y-%m-%d-%H-%M-%S");
+        } else {
+            fileName = mFileName;
+        }
+        // Save file to tmp directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Common.HOME_DIR) + Common.TMP_DIR, fileName);
+        Common.saveFile(file, mLines);
+
+        // Share file.
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                "file://" + file.getAbsolutePath()));
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT,
+                getString(R.string.text_share_subject)
+                + " (" + fileName + ")");
+        startActivity(Intent.createChooser(sendIntent,
+                getText(R.string.dialog_share_title)));
     }
 
     /**

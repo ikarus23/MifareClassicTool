@@ -54,15 +54,22 @@ public class Common {
      */
     public static final String HOME_DIR = "/MifareClassicTool";
     /**
-     * The directory name  of the key files directory
+     * The directory name  of the key files directory.
      * (sub directory of {@link #HOME_DIR}.)
      */
     public static final String KEYS_DIR = "/key-files";
     /**
-     * The directory name  of the dump files directory
+     * The directory name  of the dump files directory.
      * (sub directory of {@link #HOME_DIR}.)
      */
     public static final String DUMPS_DIR = "/dump-files";
+    /**
+     * The directory name of the folder where temporary files are
+     * stored. The directory will be cleaned during the creation of
+     * the main activity ({@link Activitys.MainActivity}).
+     * (sub directory of {@link #HOME_DIR}.)
+     */
+    public static final String TMP_DIR = "/tmp";
     /**
      * This file contains some standard Mifare keys.
      * <ul>
