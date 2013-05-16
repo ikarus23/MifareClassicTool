@@ -1,7 +1,7 @@
 MifareClassicTool
 =================
 
-An Android NFC-App for reading/writing/analysing/etc Mifare Classic RFID-Tags.
+An Android NFC-App for reading, writing, analyzing, etc. Mifare Classic RFID-Tags.
 
 * **[MifareClassicTool on Google Play]
   (https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)**
