@@ -66,7 +66,7 @@ public class Common {
     /**
      * The directory name of the folder where temporary files are
      * stored. The directory will be cleaned during the creation of
-     * the main activity ({@link Activitys.MainActivity}).
+     * the main activity ({@link Activities.MainActivity}).
      * (sub directory of {@link #HOME_DIR}.)
      */
     public static final String TMP_DIR = "/tmp";

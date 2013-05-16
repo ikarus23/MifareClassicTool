@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.3.1:
+ * Share dump files (e.g. via mail or bluetooth).
+ * Some minor bug fixes.
+
 Version 1.3.0:
  * Added new tool: Decode & Encode Mifare Classic Value Blocks.
  * Added script to convert MCT dumps to RAW dumps.

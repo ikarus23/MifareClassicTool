@@ -3,13 +3,15 @@ MifareClassicTool
 
 An Android NFC-App for reading/writing/analysing/etc Mifare Classic RFID-Tags.
 
-
-* **Download MifareClassicTool (APK file)
-  [here](http://publications.icaria.de/mct/releases/)**
-* **Screenshots available
-  [here](http://publications.icaria.de/mct/screenshots/)** <sup>(outdated)</sup>
-* **Documentation (doxygen) online
-  [here](http://publications.icaria.de/mct/documentation/annotated.html)**
+* **[MifareClassicTool on Google Play]
+  (https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)**
+* **[Download MifareClassicTool (APK file)]
+  (http://publications.icaria.de/mct/releases/)**
+* **[Screenshots]
+  (http://publications.icaria.de/mct/screenshots/)**
+  (outdated, check Google Play)
+* **[Additional stuff]
+  (http://publications.icaria.de/mct/)** (Documentation, etc.)
 
 
 
