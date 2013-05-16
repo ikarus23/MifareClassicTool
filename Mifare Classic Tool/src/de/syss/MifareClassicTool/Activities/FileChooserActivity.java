@@ -215,7 +215,9 @@ public class FileChooserActivity extends BasicActivity {
         return true;
     }
 
-    // TODO: doc.
+    /**
+     * Handle selected function form the menu (create new file, delete file).
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
@@ -250,7 +252,12 @@ public class FileChooserActivity extends BasicActivity {
         finish();
     }
 
-    // TODO: doc.
+    /**
+     * Update the file list and the components that depend on it
+     * (e.g. disable the open file button if there is no file).
+     * @param path Path to the directory which will be listed.
+     * @return True if directory is empty. False otherwise.
+     */
     private boolean updateFileIndex(File path) {
         File[] files = path.listFiles();
         Arrays.sort(files);
@@ -337,7 +344,10 @@ public class FileChooserActivity extends BasicActivity {
             }).show();
     }
 
-    // TODO: doc.
+    /**
+     * Delete the selected file and update the file list.
+     * @see #updateFileIndex(File)
+     */
     private void onDeleteFile() {
         RadioButton selected = (RadioButton) findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
