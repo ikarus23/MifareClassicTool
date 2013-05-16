@@ -391,6 +391,7 @@ public class MainActivity extends Activity {
                     getString(R.string.text_open_dump_title));
             intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
                     getString(R.string.button_open_dump_file));
+            intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
             startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE);
         }
     }
@@ -413,7 +414,8 @@ public class MainActivity extends Activity {
                 getString(R.string.text_open_key_file_title));
         intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
                 getString(R.string.button_open_key_file));
-        intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE_BUTTON, true);
+        intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE, true);
+        intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
     }
 
