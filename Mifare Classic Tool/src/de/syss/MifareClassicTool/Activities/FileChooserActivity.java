@@ -57,6 +57,7 @@ import de.syss.MifareClassicTool.R;
  * ({@link #EXTRA_DIR})</li>
  * <li>3 - External Storage is not read/writable. This error is
  * displayed to the user via Toast.</li>
+ * <li>4 - Directory from {@link #EXTRA_DIR} is not a directory.</li>
  * </ul>
  * @author Gerhard Klostermeier
  */
@@ -176,10 +177,14 @@ public class FileChooserActivity extends BasicActivity {
         }
 
 
-        // Init. files. If there are no files disable chooser button.
+        // Check path and initialize file list.
         if (intent.hasExtra(EXTRA_DIR)) {
             File path = new File(intent.getStringExtra(EXTRA_DIR));
             if (path.exists()) {
+                if (!path.isDirectory()) {
+                    setResult(4);
+                    finish();
+                }
                 mDir = path;
                 mIsDirEmpty = updateFileIndex(path);
             } else {

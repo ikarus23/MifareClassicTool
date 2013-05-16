@@ -381,7 +381,8 @@ public class MainActivity extends Activity {
                 Common.HOME_DIR) + Common.DUMPS_DIR;
         if (Common.isExternalStorageWritableErrorToast(this)) {
             File file = new File(dumpsDir);
-            if (file.listFiles() == null || file.listFiles().length == 0) {
+            if (file.isDirectory() && (file.listFiles() == null
+                    || file.listFiles().length == 0)) {
                 Toast.makeText(this, R.string.info_no_dumps,
                     Toast.LENGTH_LONG).show();
             }
@@ -406,17 +407,19 @@ public class MainActivity extends Activity {
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenKeyEditor(View view) {
-        Intent intent = new Intent(this, FileChooserActivity.class);
-        intent.putExtra(FileChooserActivity.EXTRA_DIR,
-                Environment.getExternalStoragePublicDirectory(
-                        Common.HOME_DIR) + Common.KEYS_DIR);
-        intent.putExtra(FileChooserActivity.EXTRA_TITLE,
-                getString(R.string.text_open_key_file_title));
-        intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
-                getString(R.string.button_open_key_file));
-        intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE, true);
-        intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
-        startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
+        if (Common.isExternalStorageWritableErrorToast(this)) {
+            Intent intent = new Intent(this, FileChooserActivity.class);
+            intent.putExtra(FileChooserActivity.EXTRA_DIR,
+                    Environment.getExternalStoragePublicDirectory(
+                            Common.HOME_DIR) + Common.KEYS_DIR);
+            intent.putExtra(FileChooserActivity.EXTRA_TITLE,
+                    getString(R.string.text_open_key_file_title));
+            intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
+                    getString(R.string.button_open_key_file));
+            intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE, true);
+            intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
+            startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
+        }
     }
 
     /**
