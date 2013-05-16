@@ -61,7 +61,7 @@ Some important thing are:
   possibility in this application. It is way to slow due
   to the protocol.
 
-For further information about Mifare classic check
+For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
 [do some Google search](https://www.google.com/search?q=mifare+classic")
 or read the
