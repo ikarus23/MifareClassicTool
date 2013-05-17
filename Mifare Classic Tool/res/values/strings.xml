@@ -150,7 +150,6 @@
     <string name="button_i_know_what_i_am_doing">I know what I\'m doing</string>
     <string name="button_open_key_file">Open Key File</string>
     <string name="button_remove_duplicates">Remove Duplicates</string>
-    <string name="button_new_file">Create File</string>
     <string name="button_select_all">Select All</string>
     <string name="button_select_none">Select None</string>
     <string name="button_cancel_all">Cancel Writing</string>
@@ -167,6 +166,8 @@
     <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
     <string name="menu_tag_info">Display Tag Info</string>
     <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
+    <string name="menu_new_file">Create New File</string>
+    <string name="menu_delete_file">Delete File</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

@@ -30,6 +30,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,9 +44,9 @@ import de.syss.MifareClassicTool.R;
 
 /**
  * A simple generic file chooser that lets the user choose a file from
- * a given directory.
- * This Activity should be called via startActivityForResult() with
- * an Intent containing the {@link #EXTRA_DIR}.
+ * a given directory. Optionally, it is also possible to delete files or to
+ * create new ones. This Activity should be called via startActivityForResult()
+ * with an Intent containing the {@link #EXTRA_DIR}.
  * The result codes are:
  * <ul>
  * <li>{@link Activity#RESULT_OK} - Everything is O.K. The chosen file will be
@@ -55,6 +57,7 @@ import de.syss.MifareClassicTool.R;
  * ({@link #EXTRA_DIR})</li>
  * <li>3 - External Storage is not read/writable. This error is
  * displayed to the user via Toast.</li>
+ * <li>4 - Directory from {@link #EXTRA_DIR} is not a directory.</li>
  * </ul>
  * @author Gerhard Klostermeier
  */
@@ -86,11 +89,17 @@ public class FileChooserActivity extends BasicActivity {
     public final static String EXTRA_BUTTON_TEXT =
             "de.syss.MifareClassicTool.Activity.BUTTON_TEXT";
     /**
-     * Enable/Disable the button that allows the user to create a new file.
+     * Enable/Disable the menu item  that allows the user to create a new file.
      * Optional. Boolean value. Disabled (false) by default.
      */
-    public final static String EXTRA_ENABLE_NEW_FILE_BUTTON =
-            "de.syss.MifareClassicTool.Activity.ENABLE_NEW_FILE_BUTTON";
+    public final static String EXTRA_ENABLE_NEW_FILE =
+            "de.syss.MifareClassicTool.Activity.ENABLE_NEW_FILE";
+    /**
+     * Enable/Disable the menu item  that allows the user to delete a file.
+     * Optional. Boolean value. Disabled (false) by default.
+     */
+    public final static String EXTRA_ENABLE_DELETE_FILE =
+            "de.syss.MifareClassicTool.Activity.ENABLE_DELETE_FILE";
 
 
     // Output parameter.
@@ -107,15 +116,19 @@ public class FileChooserActivity extends BasicActivity {
     private static final String LOG_TAG =
             FileChooserActivity.class.getSimpleName();
     private RadioGroup mGroupOfFiles;
-    private Button mNewFile;
+    private Button mChooserButton;
+    private TextView mChooserText;
+    private MenuItem mDeleteFile;
     private File mDir;
+    private boolean mIsDirEmpty;
+    private boolean mCreateFileEnabled = false;
+    private boolean mDeleteFileEnabled = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_chooser);
         mGroupOfFiles = (RadioGroup) findViewById(R.id.radioGroupFileChooser);
-        mNewFile = (Button) findViewById(R.id.buttonFileChooserNewFile);
     }
 
     /**
@@ -134,9 +147,9 @@ public class FileChooserActivity extends BasicActivity {
             setResult(3);
             finish();
         }
-        TextView chooserText = (TextView) findViewById(
+        mChooserText = (TextView) findViewById(
                 R.id.textViewFileChooser);
-        Button chooserButton = (Button) findViewById(
+        mChooserButton = (Button) findViewById(
                 R.id.buttonFileChooserChoose);
         Intent intent = getIntent();
 
@@ -146,44 +159,34 @@ public class FileChooserActivity extends BasicActivity {
         }
         // Set chooser text.
         if (intent.hasExtra(EXTRA_CHOOSER_TEXT)) {
-            chooserText.setText(intent.getStringExtra(EXTRA_CHOOSER_TEXT));
+            mChooserText.setText(intent.getStringExtra(EXTRA_CHOOSER_TEXT));
         }
         // Set button text.
         if (intent.hasExtra(EXTRA_BUTTON_TEXT)) {
-            chooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
+            mChooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
-        // Enable/Disable new file button.
-        if (intent.hasExtra(EXTRA_ENABLE_NEW_FILE_BUTTON)) {
-            mNewFile.setEnabled(intent.getBooleanExtra(
-                        EXTRA_ENABLE_NEW_FILE_BUTTON, false));
+        // Remember to enable/disable new file functionality.
+        if (intent.hasExtra(EXTRA_ENABLE_NEW_FILE)) {
+            mCreateFileEnabled = intent.getBooleanExtra(
+                        EXTRA_ENABLE_NEW_FILE, false);
+        }
+        // Remember to enable/disable new file functionality.
+        if (intent.hasExtra(EXTRA_ENABLE_DELETE_FILE)) {
+            mDeleteFileEnabled = intent.getBooleanExtra(
+                        EXTRA_ENABLE_DELETE_FILE, false);
         }
 
-        // Init. files. If there are no files disable chooser button.
+
+        // Check path and initialize file list.
         if (intent.hasExtra(EXTRA_DIR)) {
             File path = new File(intent.getStringExtra(EXTRA_DIR));
             if (path.exists()) {
-                File[] files = path.listFiles();
-                Arrays.sort(files);
-                mGroupOfFiles.removeAllViews();
-                // Refresh file list.
-                if (files.length > 0) {
-                    for(File f : files) {
-                        RadioButton r = new RadioButton(this);
-                        r.setText(f.getName());
-                        mGroupOfFiles.addView(r);
-                    }
-                    // Check first file.
-                    ((RadioButton)mGroupOfFiles.getChildAt(0)).setChecked(true);
-                    mDir = path;
-                    chooserButton.setEnabled(true);
-                } else {
-                    // No files in directory.
-                    chooserButton.setEnabled(false);
-                    chooserText.setText(chooserText.getText()
-                            + "\n   --- "
-                            + getString(R.string.text_no_files_in_chooser)
-                            + " ---");
+                if (!path.isDirectory()) {
+                    setResult(4);
+                    finish();
                 }
+                mDir = path;
+                mIsDirEmpty = updateFileIndex(path);
             } else {
                 // Path does not exist.
                 Log.e(LOG_TAG, "Directory for FileChooser does not exist.");
@@ -194,6 +197,44 @@ public class FileChooserActivity extends BasicActivity {
             Log.d(LOG_TAG, "Directory for FileChooser was not in intent.");
             setResult(2);
             finish();
+        }
+    }
+
+    /**
+     * Add the menu to the Activity.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.file_chooser_functions, menu);
+        menu.findItem(R.id.menuFileChooserNewFile)
+                .setEnabled(mCreateFileEnabled);
+        mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
+        // Only use the enable/disable system for the delete file menu item
+        // if there is a least one file.
+        if (mIsDirEmpty == false) {
+            mDeleteFile.setEnabled(mDeleteFileEnabled);
+        } else {
+            mDeleteFile.setEnabled(false);
+        }
+        return true;
+    }
+
+    /**
+     * Handle selected function form the menu (create new file, delete file).
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+        case R.id.menuFileChooserNewFile:
+            onNewFile();
+            return true;
+        case R.id.menuFileChooserDeleteFile:
+            onDeleteFile();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -217,12 +258,48 @@ public class FileChooserActivity extends BasicActivity {
     }
 
     /**
-     * Ask the user for a file name, create this file and choose it
-     * ({@link #onFileChosen(View)}).
-     * @param view The View object that triggered the function
-     * (in this case the new file button).
+     * Update the file list and the components that depend on it
+     * (e.g. disable the open file button if there is no file).
+     * @param path Path to the directory which will be listed.
+     * @return True if directory is empty. False otherwise.
      */
-    public void onNewFile(View view) {
+    private boolean updateFileIndex(File path) {
+        File[] files = path.listFiles();
+        Arrays.sort(files);
+        mGroupOfFiles.removeAllViews();
+        // Refresh file list.
+        if (files.length > 0) {
+            for(File f : files) {
+                RadioButton r = new RadioButton(this);
+                r.setText(f.getName());
+                mGroupOfFiles.addView(r);
+            }
+            // Check first file.
+            ((RadioButton)mGroupOfFiles.getChildAt(0)).setChecked(true);
+            mChooserButton.setEnabled(true);
+            if (mDeleteFile != null) {
+                mDeleteFile.setEnabled(mDeleteFileEnabled);
+            }
+            return false;
+        } else {
+            // No files in directory.
+            mChooserButton.setEnabled(false);
+            if (mDeleteFile != null) {
+                mDeleteFile.setEnabled(false);
+            }
+            mChooserText.setText(mChooserText.getText()
+                    + "\n   --- "
+                    + getString(R.string.text_no_files_in_chooser)
+                    + " ---");
+        }
+        return true;
+    }
+
+    /**
+     * Ask the user for a file name, create this file and choose it.
+     * ({@link #onFileChosen(View)}).
+     */
+    private void onNewFile() {
         final Context cont = this;
         // Ask user for filename.
         final EditText input = new EditText(this);
@@ -270,5 +347,17 @@ public class FileChooserActivity extends BasicActivity {
                     // Do nothing.
                 }
             }).show();
+    }
+
+    /**
+     * Delete the selected file and update the file list.
+     * @see #updateFileIndex(File)
+     */
+    private void onDeleteFile() {
+        RadioButton selected = (RadioButton) findViewById(
+                mGroupOfFiles.getCheckedRadioButtonId());
+        File file  = new File(mDir.getPath(), selected.getText().toString());
+        file.delete();
+        mIsDirEmpty = updateFileIndex(mDir);
     }
 }

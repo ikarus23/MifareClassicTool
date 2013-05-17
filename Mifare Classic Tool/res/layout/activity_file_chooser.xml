@@ -31,26 +31,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:padding="5dp"
         android:text="@string/text_chooser_info_text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/buttonFileChooserNewFile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:enabled="false"
-        android:onClick="onNewFile"
-        android:text="@string/button_new_file" />
-
-    <Button
         android:id="@+id/buttonFileChooserChoose"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/buttonFileChooserNewFile"
         android:onClick="onFileChosen"
         android:text="@string/button_choose_file" />
     
@@ -61,7 +50,8 @@
         android:layout_above="@id/buttonFileChooserChoose"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewFileChooser" >
+        android:layout_below="@+id/textViewFileChooser"
+        android:padding="5dp" >
 
         <RadioGroup
             android:id="@+id/radioGroupFileChooser"
