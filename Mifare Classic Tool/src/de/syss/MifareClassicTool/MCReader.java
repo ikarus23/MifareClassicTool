@@ -493,7 +493,7 @@ public class MCReader {
                         new HashMap<Integer, Integer>();
                 for (int block : pos.get(sector)) {
                     if ((block == 3 && sector <= 31)
-                            || (block == 15 && sector >=32)) {
+                            || (block == 15 && sector >= 32)) {
                         // Sector Trailer.
                         // Are the Access Bits writable?
                         int acValue = Common.getOperationInfoForBlock(
@@ -523,11 +523,22 @@ public class MCReader {
                         blockWithWriteInfo.put(block, result);
                     } else {
                         // Data block.
+                        int acBitsForBlock = block;
+                        // Handle Mifare Classic 4k Tags.
+                        if (sector >= 32) {
+                            if (block >= 0 && block <= 4) {
+                                acBitsForBlock = 0;
+                            } else if (block >= 5 && block <= 9) {
+                                acBitsForBlock = 1;
+                            } else if (block >= 10 && block <= 14) {
+                                acBitsForBlock = 2;
+                            }
+                        }
                         blockWithWriteInfo.put(
                                 block, Common.getOperationInfoForBlock(
-                                        acMatrix[0][block],
-                                        acMatrix[1][block],
-                                        acMatrix[2][block],
+                                        acMatrix[0][acBitsForBlock],
+                                        acMatrix[1][acBitsForBlock],
+                                        acMatrix[2][acBitsForBlock],
                                         Common.Operations.Write,
                                         false, isKeyBReadable));
                     }

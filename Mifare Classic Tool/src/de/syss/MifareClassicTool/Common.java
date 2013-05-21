@@ -160,9 +160,10 @@ public class Common {
                 String line;
                 ArrayList<String> linesArray = new ArrayList<String>();
                 while ((line = br.readLine()) != null)   {
-                    // Ignore empty an comment lines.
-                    if ( readComments
-                            || (!line.equals("") && !line.startsWith("#"))) {
+                    // Ignore empty lines.
+                    // Ignore comments if readComments == false.
+                    if ( !line.equals("")
+                            && (readComments || !line.startsWith("#"))) {
                         linesArray.add(line);
                     }
                 }
