@@ -518,8 +518,8 @@ public class DumpEditorActivity extends BasicActivity {
                         vb += header + ", Block: " + blockCounter + s;
                         // Value Block.
                         vb += mLines[i] + s;
-                        blockCounter ++;
                     }
+                    blockCounter++;
                 }
             }
             Intent intent = new Intent(this, ValueBlocksToIntActivity.class);
