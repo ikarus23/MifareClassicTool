@@ -41,6 +41,7 @@
     <string name="tag_000409">MIFARE Mini, NXP</string>
     <string name="tag_000408">MIFARE Classic 1k, NXP</string>
     <string name="tag_000218">MIFARE Classic 4k, NXP</string>
+    <string name="tag_004218">MIFARE Classic 4k, NXP</string>
     <string name="tag_004400">MIFARE Ultralight, NXP</string>
     <string name="tag_000488">MIFARE Classic 1K, Infineon</string>
     <string name="tag_000298">MPCOS, Gemplus</string>
