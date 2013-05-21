@@ -497,17 +497,17 @@ public class MCReader {
                         // Sector Trailer.
                         // Are the Access Bits writable?
                         int acValue = Common.getOperationInfoForBlock(
-                                acMatrix[0][block],
-                                acMatrix[1][block],
-                                acMatrix[2][block],
+                                acMatrix[0][3],
+                                acMatrix[1][3],
+                                acMatrix[2][3],
                                 Common.Operations.WriteAC,
                                 true, isKeyBReadable);
                         // Is key A writable? (If so, key B will be writable
                         // with the same key.)
                         int keyABValue = Common.getOperationInfoForBlock(
-                                acMatrix[0][block],
-                                acMatrix[1][block],
-                                acMatrix[2][block],
+                                acMatrix[0][3],
+                                acMatrix[1][3],
+                                acMatrix[2][3],
                                 Common.Operations.WriteKeyA,
                                 true, isKeyBReadable);
 
