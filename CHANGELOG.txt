@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.3.3:
+ * Fixed crash issue while writing 4k dumps to MF 4k tags.
+ * Fixed wrong block nr. in value blocks as int view.
+
 Version 1.3.2:
  * Delete dump or key files via the file chooser's menu.
 
