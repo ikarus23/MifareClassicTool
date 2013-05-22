@@ -62,11 +62,12 @@ public class WriteTagActivity extends BasicActivity {
     private EditText mSectorText;
     private EditText mBlockText;
     private EditText mDataText;
+    private ArrayList<View> mWriteModeLayouts;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
 
 
     /**
-     * Initialize the layout and some member0; variables.
+     * Initialize the layout and some member variables.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,20 @@ public class WriteTagActivity extends BasicActivity {
         mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
         mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
+
+        mWriteModeLayouts = new ArrayList<View>();
+        mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
+        mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteDump));
+    }
+
+    // TODO: doc.
+    public void onChangeWriteMode(View view) {
+        for (View layout : mWriteModeLayouts) {
+            layout.setVisibility(View.GONE);
+        }
+        View parent = findViewById(R.id.LinearLayoutWriteTag);
+        parent.findViewWithTag(
+                view.getTag() + "_layout").setVisibility(View.VISIBLE);
     }
 
     /**

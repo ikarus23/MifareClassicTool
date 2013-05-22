@@ -25,6 +25,8 @@
         <!-- Non scroll table header -->
         <ignore path="res/layout/activity_access_condition_decoder.xml" />
         <ignore path="res/layout/activity_value_blocks_to_int.xml" />
+        <!-- Only radio group in parent layout -->
+        <ignore path="res/layout/activity_write_tag.xml" />
     </issue>
 
     <issue id="UselessLeaf">
