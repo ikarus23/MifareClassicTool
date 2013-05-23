@@ -74,10 +74,10 @@
     <string name="text_sector_range_all">All</string>
     <string name="text_update_colors">Update Colors</string>
     <string name="text_data">Data:</string>
-    <string name="text_wirte_block">Write Block</string>
-    <string name="text_write_full_dump">Write Dump (Clone)</string>
-    <string name="text_write_full_dump_info">Write a dump to
+    <string name="text_write_dump_info">Write a dump to
         a tag.\nBlocks containing unknown data (---) will be skipped!</string>
+    <string name="text_factory_format_info">Try to format the tag to
+        factory settings</string>
     <string name="text_starting_at_0">(Starting at 0)</string>
     <string name="text_open_key_file_title">Open or Create a Key File</string>
     <string name="text_std_keys_comment">Standard Keys (auto. gen.)</string>
@@ -157,6 +157,9 @@
     <string name="button_more">Read More&#8230;</string>
     <string name="button_decode">Decode</string>
     <string name="button_encode">Encode</string>
+    <string name="button_wirte_block">Write Block</string>
+    <string name="button_write_dump">Write Dump (Clone)</string>
+    <string name="button_factory_format">Factory Format</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>

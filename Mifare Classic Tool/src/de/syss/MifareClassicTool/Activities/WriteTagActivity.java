@@ -47,6 +47,7 @@ import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
 
+// TODO: update doc.
 /**
  * Write data to tag. The user can choose to write
  * a single block of data or to write a dump to a Mifare
@@ -81,6 +82,7 @@ public class WriteTagActivity extends BasicActivity {
         mWriteModeLayouts = new ArrayList<View>();
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteDump));
+        mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagFactoryFormat));
     }
 
     // TODO: doc.
@@ -697,5 +699,10 @@ public class WriteTagActivity extends BasicActivity {
                 a.finish();
             }
         }).start();
+    }
+
+    // TODO: implement & doc.
+    public void onFactoryFormat(View view) {
+
     }
 }

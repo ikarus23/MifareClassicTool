@@ -45,7 +45,7 @@
             android:gravity="center_horizontal"
             android:onClick="onChangeWriteMode"
             android:tag="write_block"
-            android:text="@string/text_wirte_block"
+            android:text="@string/button_wirte_block"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/blue" />
 
@@ -176,7 +176,7 @@
             android:gravity="center_horizontal"
             android:onClick="onChangeWriteMode"
             android:tag="write_dump"
-            android:text="@string/text_write_full_dump"
+            android:text="@string/button_write_dump"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/blue" />
 
@@ -191,11 +191,11 @@
             android:visibility="gone" >
 
             <TextView
-                android:id="@+id/textViewWriteTagFullDump"
+                android:id="@+id/textViewWriteTagDump"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@string/text_write_full_dump_info"
+                android:text="@string/text_write_dump_info"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
@@ -204,6 +204,51 @@
                 android:layout_height="wrap_content"
                 android:onClick="onWriteDump"
                 android:text="@string/button_write_full_dump" />
+        </LinearLayout>
+
+        <!-- Seperator -->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_gray"
+            android:layout_margin="10dp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonWriteTagFactoryFormat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_gray"
+            android:gravity="center_horizontal"
+            android:onClick="onChangeWriteMode"
+            android:tag="factory_format"
+            android:text="@string/button_factory_format"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:id="@+id/LayoutWriteTagFactoryFormat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:tag="factory_format_layout"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/textViewWriteFactoryFormat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/text_factory_format_info"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonWriteTagFactoryFormat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onFactoryFormat"
+                android:text="@string/button_factory_format" />
         </LinearLayout>
         </RadioGroup>
     </LinearLayout>
