@@ -153,6 +153,7 @@ public class DumpEditorActivity extends BasicActivity {
             File file = new File(getIntent().getStringExtra(
                     FileChooserActivity.EXTRA_CHOSEN_FILE));
             mFileName = file.getName();
+            setTitle(getTitle() + " (" + mFileName + ")");
             initEditor(Common.readFileLineByLine(file, false));
             setIntent(null);
         }
