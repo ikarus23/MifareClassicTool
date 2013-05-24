@@ -64,6 +64,7 @@ public class KeyEditorActivity extends BasicActivity {
             File keyFile = new File(getIntent().getStringExtra(
                     FileChooserActivity.EXTRA_CHOSEN_FILE));
             mFileName = keyFile.getName();
+            setTitle(getTitle() + " (" + mFileName + ")");
             String keyDump[] = Common.readFileLineByLine(keyFile, true);
             setKeyArrayAsText(keyDump);
             setIntent(null);
