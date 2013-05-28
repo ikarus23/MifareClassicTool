@@ -54,6 +54,7 @@ public class MCReader {
     private int mLastSector = -1;
     private int mFirstSector = 0;
     private HashSet<byte[]> mKeys;
+    private ArrayList<byte[]> mKeysArray;
 
     /**
      * Initialize a Mifare Classic reader for the given tag.
@@ -304,7 +305,7 @@ public class MCReader {
      * @see #readAsMuchAsPossible(SparseArray)
      */
     public int buildNextKeyMapPart() {
-        // Clear status and key map before new walk trough sectors.
+        // Clear status and key map before new walk through sectors.
         boolean error = false;
         if (mKeys != null && mLastSector != -1) {
             if (mKeyMapStatus == mLastSector+1) {
@@ -317,7 +318,7 @@ public class MCReader {
             try {
                 // Check next sector against all keys (lines) with
                 // authentication method A and B.
-                for (byte[] key : mKeys) {
+                for (byte[] key : mKeysArray) {
                     if (!foundKeys[0] &&
                             mMFC.authenticateSectorWithKeyA(
                                     mKeyMapStatus, key)) {
@@ -338,6 +339,16 @@ public class MCReader {
                 if (foundKeys[0] || foundKeys[1]) {
                     // At least one key found. Add key(s).
                     mKeyMap.put(mKeyMapStatus, keys);
+                    
+                    /* Key reuse is very likely, so try these first for the next sector */
+                    if (foundKeys[0]) { 
+                    	mKeysArray.remove(keys[0]);
+                    	mKeysArray.add(0, keys[0]);
+                    }
+                    if (foundKeys[1]) { 
+                    	mKeysArray.remove(keys[1]);
+                    	mKeysArray.add(0, keys[1]);
+                    }
                 }
                 mKeyMapStatus++;
             } catch (Exception e) {
@@ -572,6 +583,7 @@ public class MCReader {
                 }
             }
         }
+        mKeysArray = new ArrayList<byte[]>(mKeys);
     }
 
     /**
