@@ -202,6 +202,13 @@
                 android:layout_marginRight="20dp"
                 android:onClick="onWriteDump"
                 android:text="@string/button_write_full_dump" />
+
+            <CheckBox
+                android:id="@+id/checkBoxWriteMfid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkbox_write_mfid" />
+
         </LinearLayout>
     </RelativeLayout>
 
