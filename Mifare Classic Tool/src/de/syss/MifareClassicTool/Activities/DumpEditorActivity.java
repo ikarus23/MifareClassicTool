@@ -20,6 +20,7 @@ package de.syss.MifareClassicTool.Activities;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -321,7 +322,7 @@ public class DumpEditorActivity extends BasicActivity {
                         // Not 32 chars per line.
                         return 3;
                     }
-                    lines[j] = lines[j].toUpperCase();
+                    lines[j] = lines[j].toUpperCase(Locale.getDefault());
                     checkedLines.add(lines[j]);
                 }
             } else if (child instanceof TextView) {

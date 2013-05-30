@@ -20,6 +20,7 @@ package de.syss.MifareClassicTool.Activities;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -204,7 +205,7 @@ public class KeyEditorActivity extends BasicActivity {
 
             if (!lines[i].startsWith("#") && !lines[i].equals("")) {
                 // At least one key found.
-                lines[i] = lines[i].toUpperCase();
+                lines[i] = lines[i].toUpperCase(Locale.getDefault());
                 keyFound = true;
             }
         }

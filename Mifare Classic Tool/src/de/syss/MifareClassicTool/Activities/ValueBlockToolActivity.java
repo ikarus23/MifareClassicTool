@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import java.nio.ByteBuffer;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -108,7 +109,8 @@ public class ValueBlockToolActivity extends BasicActivity {
                 Integer.reverseBytes(~vbAsInt)).array());
         String addr = addrText;
         String addrInverted = Integer.toHexString(
-                ~Integer.parseInt(addr, 16)).toUpperCase().substring(6, 8);
+                ~Integer.parseInt(addr, 16)).toUpperCase(
+                        Locale.getDefault()).substring(6, 8);
         mVB.setText(vb + vbInverted + vb
                 + addr + addrInverted + addr + addrInverted);
 

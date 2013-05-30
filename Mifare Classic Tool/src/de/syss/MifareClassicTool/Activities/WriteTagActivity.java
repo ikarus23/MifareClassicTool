@@ -29,6 +29,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -47,11 +48,10 @@ import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
 
-// TODO: update doc.
 /**
  * Write data to tag. The user can choose to write
- * a single block of data or to write a dump to a Mifare
- * Classic tag providing its keys.
+ * a single block of data or to write a dump to a tag providing its keys
+ * or to factory format a tag.
  * @author Gerhard Klostermeier
  */
 public class WriteTagActivity extends BasicActivity {
@@ -59,6 +59,7 @@ public class WriteTagActivity extends BasicActivity {
     private static final int FC_WRITE_DUMP = 1;
     private static final int KMC_WRTIE_DUMP = 2;
     private static final int KMC_WRTIE_BLOCK = 3;
+    private static final int KMC_FACTORY_FORMAT = 4;
 
     private EditText mSectorText;
     private EditText mBlockText;
@@ -85,7 +86,11 @@ public class WriteTagActivity extends BasicActivity {
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagFactoryFormat));
     }
 
-    // TODO: doc.
+    /**
+     * Update the layout to the current selected write mode.
+     * @param view The View object that triggered the method
+     * (in this case one of the write mode radio buttons).
+     */
     public void onChangeWriteMode(View view) {
         for (View layout : mWriteModeLayouts) {
             layout.setVisibility(View.GONE);
@@ -101,6 +106,7 @@ public class WriteTagActivity extends BasicActivity {
      * @see #writeBlock()
      * @see #checkTag()
      * @see #createKeyMapForDump(String)
+     * @see #createFactoryFormatedDump()
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -125,6 +131,17 @@ public class WriteTagActivity extends BasicActivity {
                 }
             } else {
                 checkTag();
+            }
+            break;
+        case KMC_FACTORY_FORMAT:
+            if (resultCode != Activity.RESULT_OK) {
+                // Error.
+                if (resultCode == 4) {
+                    Toast.makeText(this, R.string.info_no_key_found,
+                            Toast.LENGTH_LONG).show();
+                }
+            } else {
+                createFactoryFormatedDump();
             }
             break;
         case KMC_WRTIE_BLOCK:
@@ -355,7 +372,7 @@ public class WriteTagActivity extends BasicActivity {
     }
 
     /**
-     * Check if the tag is suitable for the selected dump.
+     * Check if the tag is suitable for the dump ({@link #mDumpWithPos}).
      * This is done in three steps. The first check determines if the dump
      * fits on the tag (size check). The second check determines if the keys for
      * relevant sectors are known (key check). At last this method will check
@@ -701,8 +718,75 @@ public class WriteTagActivity extends BasicActivity {
         }).start();
     }
 
-    // TODO: implement & doc.
+    /**
+     * Open key map creator.
+     * @param view The View object that triggered the method
+     * (in this case the factory format button).
+     * @see CreateKeyMapActivity
+     */
     public void onFactoryFormat(View view) {
+        // Show key map creator.
+        Intent intent = new Intent(this, CreateKeyMapActivity.class);
+        intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
+                Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
+                + Common.KEYS_DIR);
+        intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER, false);
+        intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
+                getString(R.string.button_create_key_map_and_factory_format));
+        startActivityForResult(intent, KMC_FACTORY_FORMAT);
+    }
 
+    /**
+     * Create an factory formated, empty dump with a size matching
+     * the current tag size and then call {@link #checkTag()}.
+     * Factory (default) Mifare Classic Access Conditions are: 0xFF0780XX
+     * XX = Sometimes is 69 or BC. But this is not really important, because XX
+     * is a user data field. This method will set XX to 0x00.
+     * @see #checkTag()
+     */
+    private void createFactoryFormatedDump() {
+        // This function is directly called after a key map was created.
+        // So Common.getTag() will return den current present tag
+        // (and its size/sector count).
+        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
+        int sectors = MifareClassic.get(Common.getTag()).getSectorCount();
+        byte[] emptyBlock = new byte[]
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        byte[] sectorTrailer = new byte[] {-1, -1, -1, -1, -1, -1,
+                -1, 7, -128, 0, -1, -1, -1, -1, -1, -1};
+        // Empty 4 block sector.
+        HashMap<Integer, byte[]> empty4BlockSector =
+                new HashMap<Integer, byte[]>(4);
+        for (int i = 0; i < 3; i++) {
+            empty4BlockSector.put(i, emptyBlock);
+        }
+        empty4BlockSector.put(3, sectorTrailer);
+        // Empty 16 block sector.
+        HashMap<Integer, byte[]> empty16BlockSector =
+                new HashMap<Integer, byte[]>(16);
+        for (int i = 0; i < 15; i++) {
+            empty16BlockSector.put(i, emptyBlock);
+        }
+        empty16BlockSector.put(15, sectorTrailer);
+
+        // Sector 0.
+        HashMap<Integer, byte[]> firstSector = new HashMap<Integer, byte[]>(4);
+        firstSector.put(1, emptyBlock);
+        firstSector.put(2, emptyBlock);
+        firstSector.put(3, sectorTrailer);
+        mDumpWithPos.put(0, firstSector);
+        // Sector 1 - (max.) 31.
+        for (int i = 1; i < sectors && i < 32; i++) {
+            mDumpWithPos.put(i, empty4BlockSector);
+        }
+        // Sector 32 - 39.
+        if (sectors == 40) {
+            // Add the large sectors (containing 16 blocks)
+            // of a Mifare Classic 4k tag.
+            for (int i = 32; i < sectors && i < 40; i++) {
+                mDumpWithPos.put(i, empty16BlockSector);
+            }
+        }
+        checkTag();
     }
 }

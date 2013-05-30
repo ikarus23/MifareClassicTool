@@ -32,7 +32,7 @@
         android:padding="5dp" >
 
         <RadioGroup
-            android:id="@+id/radioGroupWriteTag"
+            android:id="@+id/radioGroupWriteTagMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
