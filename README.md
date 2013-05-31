@@ -28,6 +28,7 @@ Features
   MCT will try to authenticate with these  
   keys against all sectors and read as much as possible.  
   See chapter [Getting Started](#getting-started).)
+* Format a tag back to the factory/delivery state
 * Create, edit and save key files (dictionaries)
 * Decode & Encode Mifare Classic Value Blocks
 * Display generic tag information

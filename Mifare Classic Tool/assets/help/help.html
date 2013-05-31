@@ -24,9 +24,9 @@
     <li><a href="#read_tag">3 Read Tag</a></li>
     <li><a href="#write_tag">4 Write Tags</a>
     <ul>
-        <li><a href="#write_block">4.1 Write Block</a></li>
-        <li><a href="#write_dump">4.2 Write Dump (Clone)</a>
-          </li>
+      <li><a href="#write_block">4.1 Write Block</a></li>
+      <li><a href="#write_dump">4.2 Write Dump (Clone)</a></li>
+      <li><a href="#factory_format">4.3 Factory Format</a></li>
       </ul>
     </li>
     <li>
@@ -97,13 +97,14 @@
       <li>Clone Mifare Classic tags<br />
         (Write dump of a tag to another tag;
         write 'dump-wise')</li>
-      <li>Key management based on dictionary-attack <br />
+      <li>Key management based on dictionary-attack<br />
         (Write the keys you know in a file (dictionary).<br />
         MCT will try to authenticate with these
         keys against all sectors<br />and read as much as possible.
         See chapter <a href="#getting_started">Getting Started</a>.)
       </li>
-      <li>Create, edit and save key files (dictionaries).</li>
+      <li> Format a tag back to the factory/delivery state</li>
+      <li>Create, edit and save key files (dictionaries)</li>
       <li>Decode &amp; Encode Mifare Classic Value Blocks</li>
       <li>Display generic tag information</li>
       <li>Display the tag data as highlighted hex</li>
@@ -241,6 +242,13 @@
     <br /><br />
     <b>Attention:</b> The first block of the first sector of a Mifare Classic
     tag is read-only and therefore not writable.
+  </p>
+
+  <h3 id="factory_format">4.3 Factory Format</h3>
+  <p>
+    This will try to format the tag back to factory/delivery state. In this
+    state, all data block bytes are 0x00 and the sector trailers contain
+    0xFFFFFFFFFFFF as key A/B and 0xFF078000 as access conditions.
   </p>
   <hr />
 
