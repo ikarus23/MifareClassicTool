@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -65,6 +66,7 @@ public class WriteTagActivity extends BasicActivity {
     private EditText mBlockText;
     private EditText mDataText;
     private ArrayList<View> mWriteModeLayouts;
+    private CheckBox mWriteMFID;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
 
 
@@ -79,6 +81,7 @@ public class WriteTagActivity extends BasicActivity {
         mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
         mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
+        mWriteMFID = (CheckBox) findViewById(R.id.checkBoxWriteMfid);
 
         mWriteModeLayouts = new ArrayList<View>();
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
@@ -193,7 +196,7 @@ public class WriteTagActivity extends BasicActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (sector == 0 && block == 0) {
+        if (!mWriteMFID.isChecked() && sector == 0 && block == 0) {
             // Error, read only (manuf.) block.
             Toast.makeText(this, R.string.info_manuf_block_not_writable,
                     Toast.LENGTH_LONG).show();
@@ -469,7 +472,7 @@ public class WriteTagActivity extends BasicActivity {
                 int writeInfo = writeOnPos.get(sector).get(block);
                 switch (writeInfo) {
                 case 0:
-                    if (!(sector == 0 && block == 0)) {
+                    if (!(!mWriteMFID.isChecked() && sector == 0 && block == 0)) {
                         // Problem. Block is read-only.
                         addToList(list, position, getString(
                                 R.string.text_block_read_only));
@@ -669,8 +672,8 @@ public class WriteTagActivity extends BasicActivity {
                 for (int sector : writeOnPos.keySet()) {
                     byte[][] keys = keyMap.get(sector);
                     for (int block : writeOnPos.get(sector).keySet()) {
-                        // Skip sector 0, block 0 (always read-only).
-                        if (sector == 0 && block == 0) {
+                        // Sector 0, block 0 (usually read-only, but some mfc clone cards are writable).
+                        if (!mWriteMFID.isChecked()  &&  sector == 0 && block == 0) {
                             continue;
                         }
                         // Select key with write privileges.

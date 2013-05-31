@@ -297,5 +297,6 @@
     <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
+    <string name="checkbox_write_mfid">Enable writing of manufacturer block</string>
 
 </resources>
