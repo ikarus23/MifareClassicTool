@@ -29,6 +29,7 @@ Features
   keys against all sectors and read as much as possible.  
   See chapter [Getting Started](#getting-started).)
 * Format a tag back to the factory/delivery state
+* Write the manufacturer block of special Mifare Classic tags
 * Create, edit and save key files (dictionaries)
 * Decode & Encode Mifare Classic Value Blocks
 * Display generic tag information

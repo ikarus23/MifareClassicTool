@@ -104,6 +104,7 @@
         See chapter <a href="#getting_started">Getting Started</a>.)
       </li>
       <li> Format a tag back to the factory/delivery state</li>
+      <li>Write the manufacturer block of special Mifare Classic tags</li>
       <li>Create, edit and save key files (dictionaries)</li>
       <li>Decode &amp; Encode Mifare Classic Value Blocks</li>
       <li>Display generic tag information</li>
@@ -240,8 +241,14 @@
     for you! If there are issues like 'block is read-only', 'key with write
     access not known', etc., you will get a report before writing!
     <br /><br />
-    <b>Attention:</b> The first block of the first sector of a Mifare Classic
-    tag is read-only and therefore not writable.
+    <b>Attention:</b> The first block of the first sector of an <b>original</b>
+    Mifare Classic tag is read-only and therefore not writable. But there are
+    <b>special</b> Mifare Classic tags that support writing to the manufacturer
+    block with a simple write command. This App is able to write to such tags
+    and can therefore create fully correct clones.
+    <br />However, some special tags require a special command sequence to
+    put them into the state where writing to the manufacturer block is possible.
+    These tags will not work.
   </p>
 
   <h3 id="factory_format">4.3 Factory Format</h3>
