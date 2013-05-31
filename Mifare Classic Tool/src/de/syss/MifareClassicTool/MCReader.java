@@ -54,7 +54,7 @@ public class MCReader {
     private int mLastSector = -1;
     private int mFirstSector = 0;
     private HashSet<byte[]> mKeys;
-    private ArrayList<byte[]> mKeysArray;
+    private ArrayList<byte[]> mKeysWithOrder;
 
     /**
      * Initialize a Mifare Classic reader for the given tag.
@@ -318,17 +318,23 @@ public class MCReader {
             try {
                 // Check next sector against all keys (lines) with
                 // authentication method A and B.
-                for (byte[] key : mKeysArray) {
+                // Key reuse is very likely, so try these first
+                // for the next sector.
+                for (byte[] key : mKeysWithOrder) {
                     if (!foundKeys[0] &&
                             mMFC.authenticateSectorWithKeyA(
                                     mKeyMapStatus, key)) {
                         keys[0] = key;
+                        mKeysWithOrder.remove(key);
+                        mKeysWithOrder.add(0, key);
                         foundKeys[0] = true;
                     }
                     if (!foundKeys[1] &&
                             mMFC.authenticateSectorWithKeyB(
                                     mKeyMapStatus, key)) {
                         keys[1] = key;
+                        mKeysWithOrder.remove(key);
+                        mKeysWithOrder.add(0, key);
                         foundKeys[1] = true;
                     }
                     if (foundKeys[0] && foundKeys[1]) {
@@ -339,16 +345,6 @@ public class MCReader {
                 if (foundKeys[0] || foundKeys[1]) {
                     // At least one key found. Add key(s).
                     mKeyMap.put(mKeyMapStatus, keys);
-                    
-                    /* Key reuse is very likely, so try these first for the next sector */
-                    if (foundKeys[0]) { 
-                    	mKeysArray.remove(keys[0]);
-                    	mKeysArray.add(0, keys[0]);
-                    }
-                    if (foundKeys[1]) { 
-                    	mKeysArray.remove(keys[1]);
-                    	mKeysArray.add(0, keys[1]);
-                    }
                 }
                 mKeyMapStatus++;
             } catch (Exception e) {
@@ -583,7 +579,7 @@ public class MCReader {
                 }
             }
         }
-        mKeysArray = new ArrayList<byte[]>(mKeys);
+        mKeysWithOrder = new ArrayList<byte[]>(mKeys);
     }
 
     /**
