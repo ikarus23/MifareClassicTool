@@ -120,6 +120,7 @@
     <string name="text_copy">Copy</string>
     <string name="text_paste">Paste</string>
     <string name="text_share_subject">MCT Dump</string>
+    <string name="text_advanced_info">Info to Advanced Content</string>
 
     <!-- Buttons -->
     <string name="button_read_tag">Read Tag</string>
@@ -162,6 +163,8 @@
     <string name="button_wirte_block">Write Block</string>
     <string name="button_write_dump">Write Dump (Clone)</string>
     <string name="button_factory_format">Factory Format</string>
+    <string name="checkbox_write_mfid">Advanced: Enable writing to
+        manufacturer block</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -201,8 +204,6 @@
         specified</string>
     <string name="info_sector_out_of_range">Error: The sector is out of range</string>
     <string name="info_block_out_of_range">Error: The block is out of range</string>
-    <string name="info_manuf_block_not_writable">Error: The manufacturer
-        block is read-only. (Sector 0, Block 0)</string>
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
     <string name="info_not_16_byte">Error: Data must be 16 byte (32 characters)</string>
@@ -292,11 +293,16 @@
     <string name="dialog_wait_write_tag_title">Writing…</string>
     <string name="dialog_wait_write_tag">Writing tag…\n(Don\'t remove tag)</string>
     <string name="dialog_share_title">Send Dump File to…</string>
+    <string name="dialog_block0_writing_title">Write Manufacturer Block</string>
+    <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
+        is not supported on original Mifare Classic tags.</b>
+        \n\nPlease make sure you
+        are using a special tag that supports writing to the manufacturer block
+        (with a normal Mifare Classic write command).</string>
 
     <!-- Hints -->
     <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
-    <string name="checkbox_write_mfid">Enable writing of manufacturer block</string>
 
 </resources>

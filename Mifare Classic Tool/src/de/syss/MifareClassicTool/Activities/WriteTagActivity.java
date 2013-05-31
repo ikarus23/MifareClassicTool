@@ -81,7 +81,7 @@ public class WriteTagActivity extends BasicActivity {
         mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
         mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
-        mWriteMFID = (CheckBox) findViewById(R.id.checkBoxWriteMfid);
+        mWriteMFID = (CheckBox) findViewById(R.id.checkBoxWriteTagWriteManuf);
 
         mWriteModeLayouts = new ArrayList<View>();
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
@@ -184,7 +184,7 @@ public class WriteTagActivity extends BasicActivity {
         final int block = Integer.parseInt(mBlockText.getText().toString());
         if (sector > CreateKeyMapActivity.MAX_SECTOR_COUNT-1
                 || sector < 0) {
-            // Error, sector is out of range for any mifare tag.
+            // Error, sector is out of range for any Mifare tag.
             Toast.makeText(this, R.string.info_sector_out_of_range,
                     Toast.LENGTH_LONG).show();
             return;
@@ -196,19 +196,13 @@ public class WriteTagActivity extends BasicActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (!mWriteMFID.isChecked() && sector == 0 && block == 0) {
-            // Error, read only (manuf.) block.
-            Toast.makeText(this, R.string.info_manuf_block_not_writable,
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
         String data = mDataText.getText().toString();
         if (Common.isHexAnd16Byte(data, this) == false) {
             return;
         }
+
         if (block == 3 || block == 15) {
-            // Warning, this is a sector trailer.
+            // Warning. This is a sector trailer.
             new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_sector_trailer_warning_title)
             .setMessage(R.string.dialog_sector_trailer_warning)
@@ -226,9 +220,49 @@ public class WriteTagActivity extends BasicActivity {
                     // Do nothing.
                 }
              }).show();
+        } else if (sector == 0 && block == 0) {
+            // Warning. Writing to manufacturer block.
+            showAdvancedInfo(true);
         } else {
             createKeyMapForBlock(sector);
         }
+    }
+
+    /**
+     * Display information about writing to the manufacturer block.
+     * @param view The View object that triggered the method
+     * (in this case the info button).
+     * @see #showAdvancedInfo(boolean, int)
+     */
+    public void onShowAdvancedInfo(View view) {
+        showAdvancedInfo(false);
+    }
+
+    /**
+     * Display information about writing to the manufacturer block and
+     * optionally create a key map for the first sector.
+     * @param createKeyMap If true {@link #createKeyMapForBlock(int)} will be
+     * triggered the time the user confirms the dialog. False otherwise.
+     */
+    private void showAdvancedInfo(final boolean createKeyMap) {
+        // Warning. Writing to the manufacturer block is not normal.
+        int buttonID = R.string.button_ok;
+        if (createKeyMap) {
+            buttonID = R.string.button_i_know_what_i_am_doing;
+        }
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_block0_writing_title)
+            .setMessage(R.string.dialog_block0_writing)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(buttonID,
+                    new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing or create a key map.
+                    if (createKeyMap) {
+                        createKeyMapForBlock(0);
+                    }
+                }
+             }).show();
     }
 
     /**
@@ -672,8 +706,10 @@ public class WriteTagActivity extends BasicActivity {
                 for (int sector : writeOnPos.keySet()) {
                     byte[][] keys = keyMap.get(sector);
                     for (int block : writeOnPos.get(sector).keySet()) {
-                        // Sector 0, block 0 (usually read-only, but some mfc clone cards are writable).
-                        if (!mWriteMFID.isChecked()  &&  sector == 0 && block == 0) {
+                        // Sector 0, block 0 (usually read-only, but some
+                        // special Mifare Classic clone tags are writable).
+                        if (!mWriteMFID.isChecked()
+                                &&  sector == 0 && block == 0) {
                             continue;
                         }
                         // Select key with write privileges.

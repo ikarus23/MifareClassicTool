@@ -205,11 +205,34 @@
                 android:onClick="onWriteDump"
                 android:text="@string/button_write_full_dump" />
 
-            <CheckBox
-                android:id="@+id/checkBoxWriteMfid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_write_mfid" />
+            <!-- Seperator -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@color/light_gray"
+                android:layout_margin="10dp" />
+
+            <LinearLayout
+                android:id="@+id/LayoutWriteTagWriteDumpAdvanced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxWriteTagWriteManuf"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkbox_write_mfid" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonWriteTagAdvancedInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/text_advanced_info"
+                    android:onClick="onShowAdvancedInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
