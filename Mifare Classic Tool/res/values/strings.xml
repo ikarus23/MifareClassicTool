@@ -119,7 +119,8 @@
     <string name="text_addr">Addr:</string>
     <string name="text_copy">Copy</string>
     <string name="text_paste">Paste</string>
-    <string name="text_share_subject">MCT Dump</string>
+    <string name="text_share_subject_dump">MCT Dump</string>
+    <string name="text_share_subject_key_file">MCT Key File</string>
     <string name="text_advanced_info">Info to Advanced Content</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
@@ -152,7 +153,6 @@
     <string name="action_write_full_dump">Select Dump</string>
     <string name="action_i_know_what_i_am_doing">I know what I\'m doing</string>
     <string name="action_open_key_file">Open Key File</string>
-    <string name="action_remove_duplicates">Remove Duplicates</string>
     <string name="action_select_all">Select All</string>
     <string name="action_select_none">Select None</string>
     <string name="action_cancel_all">Cancel Writing</string>
@@ -176,6 +176,7 @@
     <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
     <string name="menu_new_file">Create New File</string>
     <string name="menu_delete_file">Delete File</string>
+    <string name="menu_remove_duplicates">Remove Duplicates</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -227,8 +228,7 @@
     <string name="info_empty_file_name">Error: Files must have a name</string>
     <string name="info_save_successful">Data successfully saved</string>
     <string name="info_save_error">Error: Error while saving data</string>
-    <string name="info_new_file_error">Error: File already exists
-        (or IO error)</string>
+    <string name="info_file_already_exists">Error: File already exists</string>
     <string name="info_tag_too_small">Error: Tag is too small for the
         chosen dump</string>
     <string name="info_write_error">Error: Some error occurred while

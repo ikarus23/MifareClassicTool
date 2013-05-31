@@ -19,7 +19,6 @@
 package de.syss.MifareClassicTool.Activities;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 import android.app.Activity;
@@ -318,22 +317,16 @@ public class FileChooserActivity extends BasicActivity {
                             && !input.getText().toString().equals("")) {
                         File file = new File(mDir.getPath(),
                                 input.getText().toString());
-                        boolean createdSuccessfully;
-                        try {
-                            createdSuccessfully = file.createNewFile();
-                        } catch (IOException e) {
-                            createdSuccessfully = false;
-                        }
-                        if (createdSuccessfully) {
-                            Intent intent = new Intent();
-                            intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
-                            setResult(Activity.RESULT_OK, intent);
-                            finish();
-                        } else {
+                        if (file.exists())  {
                             Toast.makeText(cont,
-                                    R.string.info_new_file_error,
+                                    R.string.info_file_already_exists,
                                     Toast.LENGTH_LONG).show();
+                            return;
                         }
+                        Intent intent = new Intent();
+                        intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
                     } else {
                         // Empty name is not allowed.
                         Toast.makeText(cont, R.string.info_empty_file_name,

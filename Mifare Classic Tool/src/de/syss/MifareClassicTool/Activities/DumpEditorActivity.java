@@ -166,7 +166,7 @@ public class DumpEditorActivity extends BasicActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.editor_functions, menu);
+        getMenuInflater().inflate(R.menu.dump_editor_functions, menu);
         return true;
     }
 
@@ -568,7 +568,7 @@ public class DumpEditorActivity extends BasicActivity {
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
                 "file://" + file.getAbsolutePath()));
         sendIntent.putExtra(Intent.EXTRA_SUBJECT,
-                getString(R.string.text_share_subject)
+                getString(R.string.text_share_subject_dump)
                 + " (" + fileName + ")");
         startActivity(Intent.createChooser(sendIntent,
                 getText(R.string.dialog_share_title)));

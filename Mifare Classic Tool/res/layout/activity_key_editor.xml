@@ -35,11 +35,9 @@
 
     <ScrollView
         android:id="@+id/scrollViewKeyEditor"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonKeyEditorSave"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" >
 
         <EditText
@@ -51,24 +49,5 @@
             android:typeface="monospace" />
 
     </ScrollView>
-
-    <Button
-        android:id="@+id/buttonKeyEditorSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/buttonKeyEditorRemovieDoubles"
-        android:onClick="onSave"
-        android:text="@string/action_save" />
-
-    <Button
-        android:id="@+id/buttonKeyEditorRemovieDoubles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="onRemoveDuplicates"
-        android:text="@string/action_remove_duplicates" />
 
 </RelativeLayout>
