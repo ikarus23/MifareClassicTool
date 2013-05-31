@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
                 .setTitle(R.string.dialog_no_nfc_title)
                 .setMessage(R.string.dialog_no_nfc)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.button_exit_app,
+                .setPositiveButton(R.string.action_exit_app,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
             .setTitle(R.string.dialog_nfc_not_enabled_title)
             .setMessage(R.string.dialog_nfc_not_enabled)
             .setIcon(android.R.drawable.ic_dialog_info)
-            .setPositiveButton(R.string.button_nfc,
+            .setPositiveButton(R.string.action_nfc,
                     new DialogInterface.OnClickListener() {
                 @SuppressLint("InlinedApi")
                 public void onClick(DialogInterface dialog, int which) {
@@ -187,13 +187,13 @@ public class MainActivity extends Activity {
                     }
                 }
              })
-             .setNeutralButton(R.string.button_editor_only,
+             .setNeutralButton(R.string.action_editor_only,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // Only use Editor. Do nothing.
                 }
              })
-             .setNegativeButton(R.string.button_exit_app,
+             .setNegativeButton(R.string.action_exit_app,
                      new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // Exit the App.
@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
                 .setTitle(R.string.dialog_first_run_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(R.string.dialog_first_run)
-                .setPositiveButton(R.string.button_ok,
+                .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -391,7 +391,7 @@ public class MainActivity extends Activity {
             intent.putExtra(FileChooserActivity.EXTRA_TITLE,
                     getString(R.string.text_open_dump_title));
             intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
-                    getString(R.string.button_open_dump_file));
+                    getString(R.string.action_open_dump_file));
             intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
             startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE);
         }
@@ -415,7 +415,7 @@ public class MainActivity extends Activity {
             intent.putExtra(FileChooserActivity.EXTRA_TITLE,
                     getString(R.string.text_open_key_file_title));
             intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
-                    getString(R.string.button_open_key_file));
+                    getString(R.string.action_open_key_file));
             intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE, true);
             intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
             startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);

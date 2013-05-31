@@ -122,48 +122,48 @@
     <string name="text_share_subject">MCT Dump</string>
     <string name="text_advanced_info">Info to Advanced Content</string>
 
-    <!-- Buttons -->
-    <string name="button_read_tag">Read Tag</string>
-    <string name="button_write_tag">Write Tag</string>
-    <string name="button_edit_tag_dump">Edit Dump File</string>
-    <string name="button_edit_key_dump">Edit/Add Key File</string>
-    <string name="button_tools">Tools</string>
-    <string name="button_exit_app">Exit App</string>
-    <string name="button_nfc">Goto NFC Settings</string>
-    <string name="button_create_key_map">Map Keys to Sectors</string>
-    <string name="button_create_key_map_and_read">Start Mapping and
+    <!-- Actions (Buttons, Checkboxs, etc. -->
+    <string name="action_read_tag">Read Tag</string>
+    <string name="action_write_tag">Write Tag</string>
+    <string name="action_edit_tag_dump">Edit Dump File</string>
+    <string name="action_edit_key_dump">Edit/Add Key File</string>
+    <string name="action_tools">Tools</string>
+    <string name="action_exit_app">Exit App</string>
+    <string name="action_nfc">Goto NFC Settings</string>
+    <string name="action_create_key_map">Map Keys to Sectors</string>
+    <string name="action_create_key_map_and_read">Start Mapping and
         Read Tag</string>
-    <string name="button_help">Help and Info</string>
-    <string name="button_editor_only">Use Only As Editor</string>
-    <string name="button_save">Save</string>
-    <string name="button_ok">OK</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="button_choose_file">Choose Selected File</string>
-    <string name="button_open_dump_file">Open Dump File</string>
-    <string name="button_change">Change</string>
-    <string name="button_read_all_sectors">Read All Sectors</string>
-    <string name="button_write_block">Write Block</string>
-    <string name="button_create_key_map_and_write_block">Start Mapping and
+    <string name="action_help">Help and Info</string>
+    <string name="action_editor_only">Use Only As Editor</string>
+    <string name="action_save">Save</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_choose_file">Choose Selected File</string>
+    <string name="action_open_dump_file">Open Dump File</string>
+    <string name="action_change">Change</string>
+    <string name="action_read_all_sectors">Read All Sectors</string>
+    <string name="action_write_block">Write Block</string>
+    <string name="action_create_key_map_and_write_block">Start Mapping and
         Write Block</string>
-    <string name="button_create_key_map_and_write_dump">Start Mapping and
+    <string name="action_create_key_map_and_write_dump">Start Mapping and
         Write Dump</string>
-    <string name="button_create_key_map_and_factory_format">Start Mapping and
+    <string name="action_create_key_map_and_factory_format">Start Mapping and
         Format Tag</string>
-    <string name="button_write_full_dump">Select Dump</string>
-    <string name="button_i_know_what_i_am_doing">I know what I\'m doing</string>
-    <string name="button_open_key_file">Open Key File</string>
-    <string name="button_remove_duplicates">Remove Duplicates</string>
-    <string name="button_select_all">Select All</string>
-    <string name="button_select_none">Select None</string>
-    <string name="button_cancel_all">Cancel Writing</string>
-    <string name="button_skip_blocks">Write as Much as Possible</string>
-    <string name="button_more">Read More&#8230;</string>
-    <string name="button_decode">Decode</string>
-    <string name="button_encode">Encode</string>
-    <string name="button_wirte_block">Write Block</string>
-    <string name="button_write_dump">Write Dump (Clone)</string>
-    <string name="button_factory_format">Factory Format</string>
-    <string name="checkbox_write_mfid">Advanced: Enable writing to
+    <string name="action_write_full_dump">Select Dump</string>
+    <string name="action_i_know_what_i_am_doing">I know what I\'m doing</string>
+    <string name="action_open_key_file">Open Key File</string>
+    <string name="action_remove_duplicates">Remove Duplicates</string>
+    <string name="action_select_all">Select All</string>
+    <string name="action_select_none">Select None</string>
+    <string name="action_cancel_all">Cancel Writing</string>
+    <string name="action_skip_blocks">Write as Much as Possible</string>
+    <string name="action_more">Read More&#8230;</string>
+    <string name="action_decode">Decode</string>
+    <string name="action_encode">Encode</string>
+    <string name="action_wirte_block">Write Block</string>
+    <string name="action_write_dump">Write Dump (Clone)</string>
+    <string name="action_factory_format">Factory Format</string>
+    <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
 
     <!-- Menu items -->

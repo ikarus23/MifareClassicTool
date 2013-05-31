@@ -82,7 +82,7 @@ public class TagInfoToolActivity extends BasicActivity {
         .setTitle(R.string.dialog_no_mfc_title)
         .setMessage(R.string.dialog_no_mfc)
         .setIcon(android.R.drawable.ic_dialog_alert)
-        .setPositiveButton(R.string.button_ok,
+        .setPositiveButton(R.string.action_ok,
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing.

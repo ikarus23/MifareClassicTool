@@ -257,7 +257,7 @@ public class DumpEditorActivity extends BasicActivity {
                 .setMessage(R.string.dialog_save_dump)
                 .setIcon(android.R.drawable.ic_menu_save)
                 .setView(input)
-                .setPositiveButton(R.string.button_ok,
+                .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (input.getText() != null
@@ -281,7 +281,7 @@ public class DumpEditorActivity extends BasicActivity {
                         }
                     }
                 })
-                .setNegativeButton(R.string.button_cancel,
+                .setNegativeButton(R.string.action_cancel,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Do nothing.

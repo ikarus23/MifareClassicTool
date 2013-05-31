@@ -207,14 +207,14 @@ public class WriteTagActivity extends BasicActivity {
             .setTitle(R.string.dialog_sector_trailer_warning_title)
             .setMessage(R.string.dialog_sector_trailer_warning)
             .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(R.string.button_i_know_what_i_am_doing,
+            .setPositiveButton(R.string.action_i_know_what_i_am_doing,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // Show key map creator.
                     createKeyMapForBlock(sector);
                 }
              })
-             .setNegativeButton(R.string.button_cancel,
+             .setNegativeButton(R.string.action_cancel,
                      new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // Do nothing.
@@ -246,9 +246,9 @@ public class WriteTagActivity extends BasicActivity {
      */
     private void showAdvancedInfo(final boolean createKeyMap) {
         // Warning. Writing to the manufacturer block is not normal.
-        int buttonID = R.string.button_ok;
+        int buttonID = R.string.action_ok;
         if (createKeyMap) {
-            buttonID = R.string.button_i_know_what_i_am_doing;
+            buttonID = R.string.action_i_know_what_i_am_doing;
         }
         new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_block0_writing_title)
@@ -282,7 +282,7 @@ public class WriteTagActivity extends BasicActivity {
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_FROM, sector);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_TO, sector);
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
-                getString(R.string.button_create_key_map_and_write_block));
+                getString(R.string.action_create_key_map_and_write_block));
         startActivityForResult(intent, KMC_WRTIE_BLOCK);
     }
 
@@ -356,7 +356,7 @@ public class WriteTagActivity extends BasicActivity {
         intent.putExtra(FileChooserActivity.EXTRA_CHOOSER_TEXT,
                 getString(R.string.text_choose_dump_to_write));
         intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
-                getString(R.string.button_write_full_dump));
+                getString(R.string.action_write_full_dump));
         startActivityForResult(intent, FC_WRITE_DUMP);
     }
 
@@ -404,7 +404,7 @@ public class WriteTagActivity extends BasicActivity {
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_TO,
                 (int) Collections.max(mDumpWithPos.keySet()));
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
-                getString(R.string.button_create_key_map_and_write_dump));
+                getString(R.string.action_create_key_map_and_write_dump));
         startActivityForResult(intent, KMC_WRTIE_DUMP);
     }
 
@@ -611,14 +611,14 @@ public class WriteTagActivity extends BasicActivity {
                 .setTitle(R.string.dialog_not_writable_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setView(ll)
-                .setPositiveButton(R.string.button_skip_blocks,
+                .setPositiveButton(R.string.action_skip_blocks,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Skip not writable blocks and start writing.
                         writeDump(writeOnPosSafe, keyMap);
                     }
                 })
-                .setNegativeButton(R.string.button_cancel_all,
+                .setNegativeButton(R.string.action_cancel_all,
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing.
@@ -771,7 +771,7 @@ public class WriteTagActivity extends BasicActivity {
                 + Common.KEYS_DIR);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
-                getString(R.string.button_create_key_map_and_factory_format));
+                getString(R.string.action_create_key_map_and_factory_format));
         startActivityForResult(intent, KMC_FACTORY_FORMAT);
     }
 

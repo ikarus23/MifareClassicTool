@@ -63,7 +63,7 @@ public class ReadTagActivity extends Activity {
                 Environment.getExternalStoragePublicDirectory(
                         Common.HOME_DIR) + Common.KEYS_DIR);
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
-                getString(R.string.button_create_key_map_and_read));
+                getString(R.string.action_create_key_map_and_read));
         startActivityForResult(intent, KEY_MAP_CREATOR);
     }
 

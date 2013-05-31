@@ -476,7 +476,7 @@ public class CreateKeyMapActivity extends BasicActivity {
             .setTitle(R.string.dialog_mapping_range_title)
             .setMessage(R.string.dialog_mapping_range)
             .setView(ll)
-            .setPositiveButton(R.string.button_ok,
+            .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Read from x to y.
@@ -499,7 +499,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                     }
                 }
             })
-            .setNeutralButton(R.string.button_read_all_sectors,
+            .setNeutralButton(R.string.action_read_all_sectors,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Read all sectors.
@@ -507,7 +507,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                             getString(R.string.text_sector_range_all));
                 }
             })
-            .setNegativeButton(R.string.button_cancel,
+            .setNegativeButton(R.string.action_cancel,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Cancel dialog (do nothing).

@@ -93,7 +93,7 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/arrow_down"
             android:onClick="onDecode"
-            android:text="@string/button_decode" />
+            android:text="@string/action_decode" />
 
         <Button
             android:id="@+id/buttonValueBlockToolEncode"
@@ -102,7 +102,7 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/arrow_up"
             android:onClick="onEncode"
-            android:text="@string/button_encode" />
+            android:text="@string/action_encode" />
 
     </LinearLayout>
 

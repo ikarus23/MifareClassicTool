@@ -60,7 +60,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/buttonKeyEditorRemovieDoubles"
         android:onClick="onSave"
-        android:text="@string/button_save" />
+        android:text="@string/action_save" />
 
     <Button
         android:id="@+id/buttonKeyEditorRemovieDoubles"
@@ -69,6 +69,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:onClick="onRemoveDuplicates"
-        android:text="@string/button_remove_duplicates" />
+        android:text="@string/action_remove_duplicates" />
 
 </RelativeLayout>

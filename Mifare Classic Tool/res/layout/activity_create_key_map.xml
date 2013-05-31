@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:minHeight="34dip"
             android:onClick="onChangeSectorRange"
-            android:text="@string/button_change" />
+            android:text="@string/action_change" />
 
     </LinearLayout>
 
@@ -78,7 +78,7 @@
         android:layout_below="@id/textViewCreateKeyMapChooseKeyFile"
         android:minHeight="34dip"
         android:onClick="onSelectAll"
-        android:text="@string/button_select_all" />
+        android:text="@string/action_select_all" />
 
     <Button
         android:id="@+id/buttonCreateKeyMapSelectNone"
@@ -89,7 +89,7 @@
         android:layout_toRightOf="@id/buttonCreateKeyMapSelectAll"
         android:minHeight="34dip"
         android:onClick="onSelectNone"
-        android:text="@string/button_select_none" />
+        android:text="@string/action_select_none" />
 
     <ScrollView
         android:id="@+id/scrollViewCreateKeyMap"
@@ -139,7 +139,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/buttonCreateKeyMap"
         android:onClick="onCancelCreateKeyMap"
-        android:text="@string/button_cancel" />
+        android:text="@string/action_cancel" />
 
     <Button
         android:id="@+id/buttonCreateKeyMap"
@@ -149,6 +149,6 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/buttonCreateKeyMapCancel"
         android:onClick="onCreateKeyMap"
-        android:text="@string/button_create_key_map" />
+        android:text="@string/action_create_key_map" />
 
 </RelativeLayout>
