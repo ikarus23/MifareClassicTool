@@ -605,38 +605,6 @@ public class MCReader {
     }
 
     /**
-     * Check if the Mifare Classic tag has the factory Mifare Classic Access
-     * Conditions (0xFF0780) and the standard key A
-     * (0xFFFFFFFFFFFF).
-     * @return True if tag has factory ACs and factory key A, False otherwise.
-     */
-    public boolean isCleanTag() {
-        int blockIndex = 0;
-        for (int i = 0; i < mMFC.getSectorCount(); i++) {
-            // Authenticate.
-            if (!authenticate(i, MifareClassic.KEY_DEFAULT, false)) {
-                return false;
-            }
-            // Read.
-            byte[] data = null;
-            blockIndex += mMFC.getBlockCountInSector(i);
-            try {
-                data = mMFC.readBlock(blockIndex-1);
-            } catch (IOException e) {
-                Log.d(LOG_TAG, "Error while reading block from tag.");
-                return false;
-            }
-            // Extract Access Conditions.
-            String ac = Common.byte2HexString(data).substring(12, 18);
-            // Check Access Conditions (= Factory settings).
-            if (!ac.equals("FF0780")) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Authenticate to given sector of the tag.
      * @param sectorIndex The sector to authenticate to.
      * @param key Key for the authentication.

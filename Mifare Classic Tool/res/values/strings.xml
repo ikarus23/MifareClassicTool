@@ -229,8 +229,6 @@
     <string name="info_save_error">Error: Error while saving data</string>
     <string name="info_new_file_error">Error: File already exists
         (or IO error)</string>
-    <string name="info_tag_not_clean">Error: Tag is not clean
-        (Sector Trailers are not factory formated)</string>
     <string name="info_tag_too_small">Error: Tag is too small for the
         chosen dump</string>
     <string name="info_write_error">Error: Some error occurred while
