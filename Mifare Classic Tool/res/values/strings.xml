@@ -136,7 +136,6 @@
         Read Tag</string>
     <string name="action_help">Help and Info</string>
     <string name="action_editor_only">Use Only As Editor</string>
-    <string name="action_save">Save</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_choose_file">Choose Selected File</string>

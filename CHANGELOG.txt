@@ -1,5 +1,15 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.4.0:
+ * Format tags back to factory/delivery state.
+ * Writing the UID (manufacturer block) of *special*
+   MF Classic tags is now possible (thanks to alfs).
+ * Improved key mapping speed (thanks to alfs).
+ * Share key files (e.g. via mail or bluetooth).
+ * Changed key file editor functions layout from buttons to menu.
+ * Fixed some minor bugs.
+ * Cleaned up some code.
+
 Version 1.3.3:
  * Fixed crash issue while writing 4k dumps to MF 4k tags.
  * Fixed wrong block nr. in value blocks as int view.
