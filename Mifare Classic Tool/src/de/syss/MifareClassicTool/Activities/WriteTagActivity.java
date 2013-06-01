@@ -232,7 +232,7 @@ public class WriteTagActivity extends BasicActivity {
      * Display information about writing to the manufacturer block.
      * @param view The View object that triggered the method
      * (in this case the info button).
-     * @see #showAdvancedInfo(boolean, int)
+     * @see #showAdvancedInfo(boolean)
      */
     public void onShowAdvancedInfo(View view) {
         showAdvancedInfo(false);

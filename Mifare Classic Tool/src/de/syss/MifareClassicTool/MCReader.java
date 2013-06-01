@@ -53,7 +53,6 @@ public class MCReader {
     private int mKeyMapStatus = 0;
     private int mLastSector = -1;
     private int mFirstSector = 0;
-    private HashSet<byte[]> mKeys;
     private ArrayList<byte[]> mKeysWithOrder;
 
     /**
@@ -307,7 +306,7 @@ public class MCReader {
     public int buildNextKeyMapPart() {
         // Clear status and key map before new walk through sectors.
         boolean error = false;
-        if (mKeys != null && mLastSector != -1) {
+        if (mKeysWithOrder != null && mLastSector != -1) {
             if (mKeyMapStatus == mLastSector+1) {
                 mKeyMapStatus = mFirstSector;
                 mKeyMap = new SparseArray<byte[][]>();
@@ -565,25 +564,28 @@ public class MCReader {
 
     /**
      * Set the key files for {@link #buildNextKeyMapPart()}.
+     * Key duplicates from the key file will be removed.
      * @param keyFiles One or more key files.
      * These files are simple text files with one key
      * per line. Empty lines and lines STARTING with "#"
      * will not be interpreted.
      */
     public void setKeyFile(File[] keyFiles) {
-        mKeys = new HashSet<byte[]>();
+        HashSet<byte[]> keys = new HashSet<byte[]>();
         for (File file : keyFiles) {
             String[] lines = Common.readFileLineByLine(file, false);
             if (lines != null) {
                 for (String line : lines) {
                     if (!line.equals("") && line.length() == 12
                             && line.matches("[0-9A-Fa-f]+")) {
-                        mKeys.add(Common.hexStringToByteArray(line));
+                        keys.add(Common.hexStringToByteArray(line));
                     }
                 }
             }
         }
-        mKeysWithOrder = new ArrayList<byte[]>(mKeys);
+        if (keys.size() > 0) {
+            mKeysWithOrder = new ArrayList<byte[]>(keys);
+        }
     }
 
     /**
