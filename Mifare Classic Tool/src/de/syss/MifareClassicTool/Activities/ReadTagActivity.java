@@ -40,7 +40,6 @@ public class ReadTagActivity extends Activity {
     private final static int KEY_MAP_CREATOR = 1;
 
     private Handler mHandler = new Handler();
-    private boolean mIsReading;
     private SparseArray<String[]> mRawDump;
 
     /**
@@ -68,16 +67,6 @@ public class ReadTagActivity extends Activity {
     }
 
     /**
-     * Cancel the reading process.
-     * This method is not called, if screen orientation changes.
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        mIsReading = false;
-    }
-
-    /**
      * Checks the result code of the key mapping process. If the process
      * was successful the {@link #readTag()}
      * method will be called.
@@ -97,7 +86,6 @@ public class ReadTagActivity extends Activity {
                 finish();
             } else {
                 // Read Tag.
-                mIsReading = true;
                 readTag();
             }
             break;
@@ -128,9 +116,6 @@ public class ReadTagActivity extends Activity {
 
                 mHandler.post(new Runnable() {
                     public void run() {
-                        if (mIsReading == false) {
-                            mRawDump = null;
-                        }
                         createTagDump(mRawDump);
                     }
                 });

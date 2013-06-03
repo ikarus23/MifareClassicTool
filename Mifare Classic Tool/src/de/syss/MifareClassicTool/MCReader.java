@@ -92,8 +92,8 @@ public class MCReader {
      * one block per field (index 0-3 or 0-15).
      * If a block is "null" it means that the block couldn't be
      * read with the given key information.<br />
-     * On Error "null" will be returned (most likely the tag was removed
-     * during reading). If none of the keys in the key map is valid for reading
+     * On Error "null" will be returned (tag was removed during reading or
+     * keyMap is null). If none of the keys in the key map is valid for reading
      * and therefore no sector is read, an empty set (SparseArray.size() == 0)
      * will be returned.
      * @see #buildNextKeyMapPart()
@@ -145,7 +145,7 @@ public class MCReader {
      * @return A Key-Value Pair. Keys are the sector numbers, values
      * are the tag data. This tag data (values) are arrays containing
      * one block per field (index 0-3 or 0-15).
-     * If a block is "NULL" it means that the block couldn't be
+     * If a block is "null" it means that the block couldn't be
      * read with the given key information.
      * @see #buildNextKeyMapPart()
      * @see #setKeyFile(File[])
