@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.4.1:
+ * Fixed "No valid key found" issue.
+   (This issue appeared on some devices with custom ROM.)
+
 Version 1.4.0:
  * Format tags back to factory/delivery state.
  * Writing the UID (manufacturer block) of *special*
