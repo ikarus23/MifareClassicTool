@@ -246,15 +246,22 @@ public class WriteTagActivity extends BasicActivity {
      */
     private void showAdvancedInfo(final boolean createKeyMap) {
         // Warning. Writing to the manufacturer block is not normal.
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.dialog_block0_writing_title);
+        dialog.setMessage(R.string.dialog_block0_writing);
+        dialog.setIcon(android.R.drawable.ic_dialog_info);
+
         int buttonID = R.string.action_ok;
         if (createKeyMap) {
             buttonID = R.string.action_i_know_what_i_am_doing;
+            dialog.setNegativeButton(R.string.action_cancel,
+                        new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing.
+                    }
+                });
         }
-        new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_block0_writing_title)
-            .setMessage(R.string.dialog_block0_writing)
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .setPositiveButton(buttonID,
+        dialog.setPositiveButton(buttonID,
                     new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing or create a key map.
@@ -262,7 +269,8 @@ public class WriteTagActivity extends BasicActivity {
                         createKeyMapForBlock(0);
                     }
                 }
-             }).show();
+             });
+        dialog.show();
     }
 
     /**
