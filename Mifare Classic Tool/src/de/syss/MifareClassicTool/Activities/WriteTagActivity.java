@@ -66,7 +66,7 @@ public class WriteTagActivity extends BasicActivity {
     private EditText mBlockText;
     private EditText mDataText;
     private ArrayList<View> mWriteModeLayouts;
-    private CheckBox mWriteMFID;
+    private CheckBox mWriteManufBlock;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
 
 
@@ -81,7 +81,8 @@ public class WriteTagActivity extends BasicActivity {
         mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
         mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
-        mWriteMFID = (CheckBox) findViewById(R.id.checkBoxWriteTagWriteManuf);
+        mWriteManufBlock = (CheckBox) findViewById(
+                R.id.checkBoxWriteTagWriteManuf);
 
         mWriteModeLayouts = new ArrayList<View>();
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
@@ -508,17 +509,24 @@ public class WriteTagActivity extends BasicActivity {
             Set<Integer> blocks = writeOnPos.get(sector).keySet();
             for (int block : blocks) {
                 boolean isSafeForWriting = true;
+                if (!mWriteManufBlock.isChecked()
+                        && sector == 0 && block == 0) {
+                    // Block 0 is read-only. This is normal.
+                    // Do not add an entry to the dialog and skip the
+                    // "write info" check (except for some
+                    // special (non-original) Mifare tags).
+                    break;
+                }
+
                 String position = getString(R.string.text_sector) + ": "
                         + sector + ", " + getString(R.string.text_block)
                         + ": " + block;
                 int writeInfo = writeOnPos.get(sector).get(block);
                 switch (writeInfo) {
                 case 0:
-                    if (!(!mWriteMFID.isChecked() && sector == 0 && block == 0)) {
-                        // Problem. Block is read-only.
-                        addToList(list, position, getString(
-                                R.string.text_block_read_only));
-                    }
+                    // Problem. Block is read-only.
+                    addToList(list, position, getString(
+                            R.string.text_block_read_only));
                     isSafeForWriting = false;
                     break;
                 case 1:
@@ -716,7 +724,7 @@ public class WriteTagActivity extends BasicActivity {
                     for (int block : writeOnPos.get(sector).keySet()) {
                         // Sector 0, block 0 (usually read-only, but some
                         // special Mifare Classic clone tags are writable).
-                        if (!mWriteMFID.isChecked()
+                        if (!mWriteManufBlock.isChecked()
                                 &&  sector == 0 && block == 0) {
                             continue;
                         }
