@@ -515,7 +515,7 @@ public class WriteTagActivity extends BasicActivity {
                     // Do not add an entry to the dialog and skip the
                     // "write info" check (except for some
                     // special (non-original) Mifare tags).
-                    break;
+                    continue;
                 }
 
                 String position = getString(R.string.text_sector) + ": "
@@ -722,12 +722,6 @@ public class WriteTagActivity extends BasicActivity {
                 for (int sector : writeOnPos.keySet()) {
                     byte[][] keys = keyMap.get(sector);
                     for (int block : writeOnPos.get(sector).keySet()) {
-                        // Sector 0, block 0 (usually read-only, but some
-                        // special Mifare Classic clone tags are writable).
-                        if (!mWriteManufBlock.isChecked()
-                                &&  sector == 0 && block == 0) {
-                            continue;
-                        }
                         // Select key with write privileges.
                         byte writeKey[] = null;
                         boolean useAsKeyB = true;
