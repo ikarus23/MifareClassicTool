@@ -37,6 +37,7 @@ Features
 * Display the tag data as 7-Bit US-ASCII
 * Display the Mifare Classic Access Conditions as a table
 * Display Mifare Classic Value Blocks as integer
+* In-App (offline) help and information
 * It's open source. ;)
 
 
@@ -116,7 +117,8 @@ License
 
 This application is originally developed by
 Gerhard Klostermeier in cooperation with SySS GmbH
-([www.syss.de](https://www.syss.de/)) in 2012/2013.
+([www.syss.de](https://www.syss.de/)) and Aalen
+University ([www.htw-aalen.de](http://www.htw-aalen.de/)) in 2012/2013.
 It is free software and licensed under the
 [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
