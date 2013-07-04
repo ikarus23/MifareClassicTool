@@ -609,8 +609,10 @@ public class Common {
      */
     public static String byte2HexString(byte[] bytes) {
         String ret = "";
-        for (Byte b : bytes) {
-            ret += String.format("%02X", b.intValue() & 0xFF);
+        if (bytes != null) {
+            for (Byte b : bytes) {
+                ret += String.format("%02X", b.intValue() & 0xFF);
+            }
         }
         return ret;
     }

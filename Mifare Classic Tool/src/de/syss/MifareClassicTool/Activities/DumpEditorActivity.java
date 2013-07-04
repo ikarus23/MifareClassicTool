@@ -143,8 +143,10 @@ public class DumpEditorActivity extends BasicActivity {
             // Called from ReadTagActivity (init editor by intent).
             String dump = getIntent().getStringExtra(EXTRA_DUMP);
             // Set title with UID.
-            setTitle(getTitle() + " (UID: " + Common.byte2HexString(
-                    Common.getUID())+ ")");
+            if (Common.getUID() != null) {
+                setTitle(getTitle() + " (UID: " + Common.byte2HexString(
+                        Common.getUID())+ ")");
+            }
             String[] lines = dump.split(System.getProperty("line.separator"));
             initEditor(lines);
             setIntent(null);
