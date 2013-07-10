@@ -165,6 +165,8 @@ public class DumpEditorActivity extends BasicActivity {
             mFileName = savedInstanceState.getString("file_name");
             if (mFileName == null) {
                 mFileName = "";
+            } else {
+                setTitle(getTitle() + " (" + mFileName + ")");
             }
             mLines = savedInstanceState.getStringArray("lines");
             if (mLines != null) {
