@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.4.2:
+ * Fixed some crash issues (thanks to Stéphane Haziza).
+ * Some minor bug fixes.
+
 Version 1.4.1:
  * Fixed "No valid key found" issue.
    (This issue appeared on some devices with custom ROM.)
