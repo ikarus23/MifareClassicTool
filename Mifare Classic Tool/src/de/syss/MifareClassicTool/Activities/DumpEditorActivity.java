@@ -95,8 +95,9 @@ public class DumpEditorActivity extends BasicActivity {
 
     /**
      * Check whether to initialize the editor on a dump file or on
-     * a new dump directly from {@link ReadTagActivity}.
-     * (Also it will color the caption of the dump editor.)
+     * a new dump directly from {@link ReadTagActivity}
+     * (or recreate instance state if the activity was killed).
+     * Also it will color the caption of the dump editor.
      * @see #initEditor(String[])
      */
     @Override
@@ -159,6 +160,16 @@ public class DumpEditorActivity extends BasicActivity {
             setTitle(getTitle() + " (" + mFileName + ")");
             initEditor(Common.readFileLineByLine(file, false));
             setIntent(null);
+        } else if (savedInstanceState != null) {
+            // Recreated after kill by Android (due to low memory).
+            mFileName = savedInstanceState.getString("file_name");
+            if (mFileName == null) {
+                mFileName = "";
+            }
+            mLines = savedInstanceState.getStringArray("lines");
+            if (mLines != null) {
+                initEditor(mLines);
+            }
         }
     }
 
@@ -170,6 +181,15 @@ public class DumpEditorActivity extends BasicActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dump_editor_functions, menu);
         return true;
+    }
+
+    /**
+     * Save {@link #mLines} and {@link #mFileName}.
+     */
+    @Override
+    public void onSaveInstanceState (Bundle outState) {
+        outState.putStringArray("lines", mLines);
+        outState.putString("file_name", mFileName);
     }
 
     /**

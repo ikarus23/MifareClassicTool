@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,6 +74,8 @@ public class WriteTagActivity extends BasicActivity {
     /**
      * Initialize the layout and some member variables.
      */
+    // It is checked but the IDE don't get it.
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,27 @@ public class WriteTagActivity extends BasicActivity {
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteDump));
         mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagFactoryFormat));
+
+        // Restore mDumpWithPos and the "write to manufacturer block"-state.
+        if (savedInstanceState != null) {
+            mWriteManufBlock.setChecked(
+                    savedInstanceState.getBoolean("write_manuf_block", false));
+            Serializable s = savedInstanceState
+                    .getSerializable("dump_with_pos");
+            if (s instanceof HashMap<?, ?>) {
+                mDumpWithPos = (HashMap<Integer, HashMap<Integer, byte[]>>) s;
+            }
+        }
+    }
+
+    /**
+     * Save {@link #mWriteManufBlock} state and {@link #mDumpWithPos}.
+     */
+    @Override
+    public void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("write_manuf_block", mWriteManufBlock.isChecked());
+        outState.putSerializable("dump_with_pos", mDumpWithPos);
     }
 
     /**
