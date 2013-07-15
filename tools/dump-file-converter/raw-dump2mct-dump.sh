@@ -37,7 +37,7 @@ file=${1:?no dump file given}
 s=$(ls -l $file | cut -d ' ' -f 5)
 if [ $s -eq 320 -o $s -eq 1024 -o $s -eq 2048 -o $s -eq 4096 ]
 then
-    hex=$(xxd -p $file | tr -d '\n')
+    hex=$(xxd -u -p $file | tr -d '\n')
     line=""
     i=1
     sec=0
@@ -59,6 +59,8 @@ then
         (( i=i+32 ))
         (( blk++ ))
     done
+    # Remove first "\n".
+    out=${out:2:${#out}}
     echo -e "$out"
 else
     echo "Not a (complete) dump."
