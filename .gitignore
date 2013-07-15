@@ -1,6 +1,7 @@
 # my stuff
 Mifare Classic Tool/doc/javadoc/
 Mifare Classic Tool/doc/doxygen/
+Mifare Classic Tool/.settings/
 
 # built application files
 *.apk
