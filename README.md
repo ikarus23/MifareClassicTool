@@ -138,3 +138,5 @@ Import Code to Eclipse
 * File -> New -> Project... -> Android -> Android Project from Existing Code
 * Select (browse to) the MifareClassicTool folder from the git-repository
 * Click Finish
+* If there are issues with the project properties: right-click on the
+    MifareClassicTool project -> Android Tools -> Fix Project Properties
