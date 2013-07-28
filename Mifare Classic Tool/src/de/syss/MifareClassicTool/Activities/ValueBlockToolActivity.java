@@ -100,11 +100,22 @@ public class ValueBlockToolActivity extends BasicActivity {
         }
         // Encode.
         // String -> Int.
-        int vbAsInt = Integer.parseInt(vbText);
-        // Int -> reverse -> byte array -> hex string.
+        int vbAsInt;
+        try {
+            vbAsInt = Integer.parseInt(vbText);
+        } catch (NumberFormatException e) {
+            // Error. Number was more than Integer.MAX_VALUE
+            // or less than Integer.MIN_VALUE.
+            String message = getString(R.string.info_invalid_int)
+                    + " (Max: " + Integer.MAX_VALUE + ", Min: "
+                    + Integer.MIN_VALUE + ")";
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            return;
+        }
+        // Int. -> reverse -> byte array -> hex string.
         String vb = Common.byte2HexString(ByteBuffer.allocate(4).putInt(
                 Integer.reverseBytes(vbAsInt)).array());
-        // Int -> invert -> reverse -> byte array -> hex string.
+        // Int. -> invert -> reverse -> byte array -> hex string.
         String vbInverted = Common.byte2HexString(ByteBuffer.allocate(4).putInt(
                 Integer.reverseBytes(~vbAsInt)).array());
         String addr = addrText;
