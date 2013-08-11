@@ -509,7 +509,8 @@ public class Common {
      * @param ac The Access Conditions.
      * @return Matrix of access conditions bits (C1-C3) where the first
      * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
-     * dimension is the block number (Index 0-3).
+     * dimension is the block number (Index 0-3). If the ACs are incorrect
+     * null will be returned.
      */
     public static byte[][] acToACMatrix(byte ac[]) {
         // ACs correct?

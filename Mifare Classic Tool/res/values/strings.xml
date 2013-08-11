@@ -96,7 +96,8 @@
         not known</string>
     <string name="text_ac_read_only">Access Conditions are read-only</string>
     <string name="text_keys_read_only">Keys (A and B) are read-only</string>
-    <string name="text_sector_dead">Sector is dead (IO Error) :(</string>
+    <string name="text_invalid_ac_or_sector_dead">Invalid Access Conditions or
+        dead sector :(</string>
     <string name="text_strange_error">Some strange error occurred :(</string>
     <string name="text_no_mifare_support">No Mifare Classic Support!</string>
     <string name="text_no_tag">There is no Mifare Classic tag.</string>

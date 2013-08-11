@@ -459,7 +459,9 @@ public class MCReader {
      * <li>5 - Key B, but AC never</li>
      * <li>6 - Key B, but keys never</li>
      * <li>-1 - Error</li>
-     * <li>Inner map == null - Whole sector is dead (IO Error)</li>
+     * <li>Inner map == null - Whole sector is dead (IO Error) or ACs are
+     *  incorrect</li>
+     * <li>null - Authentication error</li>
      * </ul>
      */
     public HashMap<Integer, HashMap<Integer, Integer>> isWritableOnPositions(
@@ -495,6 +497,10 @@ public class MCReader {
                 }
                 ac = Arrays.copyOfRange(ac, 6, 9);
                 byte[][] acMatrix = Common.acToACMatrix(ac);
+                if (acMatrix == null) {
+                    ret.put(sector, null);
+                    continue;
+                }
                 boolean isKeyBReadable = Common.isKeyBReadable(
                         acMatrix[0][3], acMatrix[1][3], acMatrix[2][3]);
 

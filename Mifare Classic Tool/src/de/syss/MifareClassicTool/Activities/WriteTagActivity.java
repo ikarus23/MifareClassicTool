@@ -137,7 +137,8 @@ public class WriteTagActivity extends BasicActivity {
      * @see #createFactoryFormatedDump()
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode,
+            int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch(requestCode) {
@@ -234,6 +235,7 @@ public class WriteTagActivity extends BasicActivity {
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(R.string.action_i_know_what_i_am_doing,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Show key map creator.
                     createKeyMapForBlock(sector);
@@ -241,6 +243,7 @@ public class WriteTagActivity extends BasicActivity {
              })
              .setNegativeButton(R.string.action_cancel,
                      new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int id) {
                     // Do nothing.
                 }
@@ -281,6 +284,7 @@ public class WriteTagActivity extends BasicActivity {
             buttonID = R.string.action_i_know_what_i_am_doing;
             dialog.setNegativeButton(R.string.action_cancel,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing.
                     }
@@ -288,6 +292,7 @@ public class WriteTagActivity extends BasicActivity {
         }
         dialog.setPositiveButton(buttonID,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing or create a key map.
                     if (createKeyMap) {
@@ -523,9 +528,9 @@ public class WriteTagActivity extends BasicActivity {
         Set<Integer> sectors = writeOnPos.keySet();
         for (int sector : sectors) {
             if (writeOnPos.get(sector) == null) {
-                // Error. Sector is dead (IO Error).
+                // Error. Sector is dead (IO Error) or ACs are invalid.
                 addToList(list, getString(R.string.text_sector) + ": " + sector,
-                        getString(R.string.text_sector_dead));
+                        getString(R.string.text_invalid_ac_or_sector_dead));
                 continue;
             }
             writeOnPosSafe.put(sector, new HashMap<Integer, Integer>());
@@ -653,6 +658,7 @@ public class WriteTagActivity extends BasicActivity {
                 .setView(ll)
                 .setPositiveButton(R.string.action_skip_blocks,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Skip not writable blocks and start writing.
                         writeDump(writeOnPosSafe, keyMap);
@@ -660,6 +666,7 @@ public class WriteTagActivity extends BasicActivity {
                 })
                 .setNegativeButton(R.string.action_cancel_all,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing.
                     }
@@ -741,6 +748,7 @@ public class WriteTagActivity extends BasicActivity {
         final Activity a = this;
         final Handler handler = new Handler();
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 // Write dump to tag.
                 for (int sector : writeOnPos.keySet()) {
@@ -765,6 +773,7 @@ public class WriteTagActivity extends BasicActivity {
                         if (result != 0) {
                             // Error. Some error while writing.
                             handler.post(new Runnable() {
+                                @Override
                                 public void run() {
                                     Toast.makeText(a,
                                             R.string.info_write_error,
@@ -781,6 +790,7 @@ public class WriteTagActivity extends BasicActivity {
                 reader.close();
                 warning.cancel();
                 handler.post(new Runnable() {
+                    @Override
                     public void run() {
                         Toast.makeText(a, R.string.info_write_successful,
                                 Toast.LENGTH_LONG).show();
@@ -843,7 +853,8 @@ public class WriteTagActivity extends BasicActivity {
         empty16BlockSector.put(15, sectorTrailer);
 
         // Sector 0.
-        HashMap<Integer, byte[]> firstSector = new HashMap<Integer, byte[]>(4);
+        HashMap<Integer, byte[]> firstSector =
+                new HashMap<Integer, byte[]>(4);
         firstSector.put(1, emptyBlock);
         firstSector.put(2, emptyBlock);
         firstSector.put(3, sectorTrailer);
