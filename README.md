@@ -30,7 +30,7 @@ Features
   See chapter [Getting Started](#getting-started).)
 * Format a tag back to the factory/delivery state
 * Write the manufacturer block of special Mifare Classic tags
-* Create, edit and save key files (dictionaries)
+* Create, edit, save and share key files (dictionaries)
 * Decode & Encode Mifare Classic Value Blocks
 * Display generic tag information
 * Display the tag data as highlighted hex
