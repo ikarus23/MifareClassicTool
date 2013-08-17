@@ -250,20 +250,36 @@ public class WriteTagActivity extends BasicActivity {
              }).show();
         } else if (sector == 0 && block == 0) {
             // Warning. Writing to manufacturer block.
-            showAdvancedInfo(true);
+            showWriteManufInfo(true);
         } else {
             createKeyMapForBlock(sector);
         }
     }
 
     /**
+     * Show or hide the options section of write dump.
+     * @param view The View object that triggered the method
+     * (in this case the show options button).
+     */
+    public void onShowOptions(View view) {
+        LinearLayout ll = (LinearLayout)
+                findViewById(R.id.LayoutWriteTagWriteDumpOptions);
+        CheckBox cb = (CheckBox) findViewById(R.id.checkBoxWriteTagDumpOptions);
+        if (cb.isChecked()) {
+            ll.setVisibility(View.VISIBLE);
+        } else {
+            ll.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * Display information about writing to the manufacturer block.
      * @param view The View object that triggered the method
-     * (in this case the info button).
-     * @see #showAdvancedInfo(boolean)
+     * (in this case the info on write-to-manufacturer button).
+     * @see #showWriteManufInfo(boolean)
      */
-    public void onShowAdvancedInfo(View view) {
-        showAdvancedInfo(false);
+    public void onShowWriteManufInfo(View view) {
+        showWriteManufInfo(false);
     }
 
     /**
@@ -272,7 +288,7 @@ public class WriteTagActivity extends BasicActivity {
      * @param createKeyMap If true {@link #createKeyMapForBlock(int)} will be
      * triggered the time the user confirms the dialog. False otherwise.
      */
-    private void showAdvancedInfo(final boolean createKeyMap) {
+    private void showWriteManufInfo(final boolean createKeyMap) {
         // Warning. Writing to the manufacturer block is not normal.
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(R.string.dialog_block0_writing_title);

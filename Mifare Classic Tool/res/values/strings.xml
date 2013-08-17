@@ -165,6 +165,7 @@
     <string name="action_factory_format">Factory Format</string>
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
+    <string name="action_show_options">Show Options</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>

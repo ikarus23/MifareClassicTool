@@ -20,7 +20,7 @@
 
 
 <lint>
-    
+
     <issue id="UselessParent">
         <!-- Non scroll table header -->
         <ignore path="res/layout/activity_access_condition_decoder.xml" />
@@ -33,6 +33,7 @@
         <!-- Suppress edit text focus on startup -->
         <ignore path="res/layout/activity_value_block_tool.xml" />
         <ignore path="res/layout/activity_dump_editor.xml" />
+        <ignore path="res/layout/activity_write_dump.xml" />
     </issue>
 
     <issue id="UnusedResources">

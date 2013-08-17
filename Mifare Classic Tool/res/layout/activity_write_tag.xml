@@ -53,14 +53,14 @@
             android:id="@+id/LayoutWriteTagWriteBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:tag="write_block_layout" >
 
             <!-- Dummy for preventing EditTexts to get focus on -->
             <!-- Activity startup -->
             <LinearLayout
-                android:id="@+id/dummyView"
+                android:orientation="horizontal"
                 android:layout_width="0dip"
                 android:layout_height="0dip"
                 android:focusable="true"
@@ -185,8 +185,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:tag="write_dump_layout"
             android:visibility="gone" >
 
@@ -212,26 +212,43 @@
                 android:background="@color/light_gray"
                 android:layout_margin="10dp" />
 
+            <CheckBox
+                android:id="@+id/checkBoxWriteTagDumpOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onShowOptions"
+                android:text="@string/action_show_options" />
+
             <LinearLayout
-                android:id="@+id/LayoutWriteTagWriteDumpAdvanced"
+                android:id="@+id/LayoutWriteTagWriteDumpOptions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:visibility="gone" >
 
-                <CheckBox
-                    android:id="@+id/checkBoxWriteTagWriteManuf"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                <LinearLayout
+                    android:id="@+id/LayoutWriteTagWriteDumpWriteManuf"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/action_write_mfid" />
+                    android:gravity="center_vertical" >
 
-                <ImageButton
-                    android:id="@+id/imageButtonWriteTagAdvancedInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/text_advanced_info"
-                    android:onClick="onShowAdvancedInfo"
-                    android:src="@android:drawable/ic_dialog_info" />
+                    <CheckBox
+                        android:id="@+id/checkBoxWriteTagWriteManuf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/action_write_mfid" />
+
+                    <ImageButton
+                        android:id="@+id/imageButtonWriteTagWriteManufInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:contentDescription="@string/text_advanced_info"
+                        android:onClick="onShowWriteManufInfo"
+                        android:src="@android:drawable/ic_dialog_info" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -261,8 +278,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:tag="factory_format_layout"
             android:visibility="gone" >
 
