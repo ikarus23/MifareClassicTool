@@ -122,7 +122,8 @@
     <string name="text_paste">Paste</string>
     <string name="text_share_subject_dump">MCT Dump</string>
     <string name="text_share_subject_key_file">MCT Key File</string>
-    <string name="text_advanced_info">Info to Advanced Content</string>
+    <string name="text_option_info">Info to option</string>
+    <string name="text_static_ac_default">08778F</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -166,6 +167,8 @@
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
     <string name="action_show_options">Show Options</string>
+    <string name="action_static_ac">Use these Access Conditions for all
+        sectors:</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>

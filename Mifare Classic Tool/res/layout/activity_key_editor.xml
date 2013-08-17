@@ -27,7 +27,6 @@
 
     <!-- Dummy for preventing EditTexts to get focus on Activity startup -->
     <LinearLayout
-        android:id="@+id/dummyView"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="0dip"

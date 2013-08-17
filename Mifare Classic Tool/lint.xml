@@ -34,6 +34,13 @@
         <ignore path="res/layout/activity_value_block_tool.xml" />
         <ignore path="res/layout/activity_dump_editor.xml" />
         <ignore path="res/layout/activity_write_dump.xml" />
+        <ignore path="res/layout/activity_key_editor.xml" />
+        <ignore path="res/layout/activity_write_tag.xml" />
+    </issue>
+
+    <issue id="Orientation">
+        <!-- Horizontal orientation for linear layouts as default is O.K. -->
+        <ignore path="res/layout/activity_key_editor.xml" />
     </issue>
 
     <issue id="UnusedResources">
