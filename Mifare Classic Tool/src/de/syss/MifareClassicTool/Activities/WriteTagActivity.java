@@ -325,6 +325,26 @@ public class WriteTagActivity extends BasicActivity {
     }
 
     /**
+     * Display information about using custom Access Conditions for all
+     * sectors of the dump.
+     * @param view The View object that triggered the method
+     * (in this case the info on "use-static-access-conditions" button).
+     */
+    public void onShowStaticACInfo(View view) {
+        new AlertDialog.Builder(this)
+        .setTitle(R.string.dialog_static_ac_title)
+        .setMessage(R.string.dialog_static_ac)
+        .setIcon(android.R.drawable.ic_dialog_info)
+        .setPositiveButton(R.string.action_ok,
+                new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing.
+            }
+         }).show();
+    }
+
+    /**
      * Helper function for {@link #onWriteBlock(View)} to show
      * the {@link CreateKeyMapActivity}.
      * @param sector The sector for the mapping range of

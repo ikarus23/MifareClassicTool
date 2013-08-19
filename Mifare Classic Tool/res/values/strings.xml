@@ -304,9 +304,16 @@
     <string name="dialog_block0_writing_title">Write Manufacturer Block</string>
     <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
         is not supported on original Mifare Classic tags.</b>
-        \n\nPlease make sure you
-        are using a special tag that supports writing to the manufacturer block
+        \n\nPlease make sure you are using a special tag that
+        supports writing to the manufacturer block
         (with a normal Mifare Classic write command).</string>
+    <string name="dialog_static_ac_title">Use static Access Conditions</string>
+    <string name="dialog_static_ac"><b>Replace all Access Conditions from the
+        dump with the chosen ones.</b>
+        \n\nThis will become in handy if the dump contains Access Conditions
+        that will be permanent for a tag. In case the reader does not check
+        them, you can easily use custom ones to make the tag reusable.
+    </string>
 
     <!-- Hints -->
     <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>

@@ -256,7 +256,9 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerVertical="false"
                             android:contentDescription="@string/text_option_info"
+                            android:onClick="onShowStaticACInfo"
                             android:src="@android:drawable/ic_dialog_info" />
+
                     </RelativeLayout>
 
                     <!-- Seperator -->
