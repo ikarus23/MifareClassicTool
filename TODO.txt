@@ -5,7 +5,7 @@ TODO (Maybe outdated):
 (++) = Very important (= FIXME in source code)
 
 
- 
+
 (+)  Write one or more sectors from a dump to a tag.
 
 (+)  Quick read (and dump) tags.
@@ -13,18 +13,14 @@ TODO (Maybe outdated):
      -> Remember this key map for the next tags to read them
      as quick as possible -> dump the tags with time stamp.
 
-(+)  Clone tag but use "08778F" as access condition.
-     This ACs permit any change with key B. If a reader
-     does not check the ACs, this functionality could
-     be used to make the RFID-Tag reusable
-     (there is no read only block).
-     
+(+)  Create a Access Conditions encode / decode tool.
+
+(+)  Decode the Mifare Application Directory (MAD) of a tag.
+
 (+)  Display blanks between hexbytes in the dump editor view
      for better reading.
 
 (+)  Test Application with Mifare Classic 2k Tags.
-
-()   Create a Access Conditions encode / decode tool.
 
 ()   Send raw ISO 14443A commands.
      (This can not be done easily! A custom patched libnfc-nxp is needed.)
