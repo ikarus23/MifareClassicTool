@@ -1,5 +1,12 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.5.0:
+ * New Feature: Replace all Access Conditions from the
+   dump you want to write with custom ones.
+ * Fixed parse issue for to big/small integers (in value block tool).
+ * Fixed crash issue for incorrect Access Conditions.
+ * Fixed minor bug fixes.
+
 Version 1.4.2:
  * Fixed some crash issues (thanks to Stéphane Haziza).
  * Some minor bug fixes.
