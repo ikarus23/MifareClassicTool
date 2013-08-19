@@ -122,7 +122,8 @@
     <string name="text_paste">Paste</string>
     <string name="text_share_subject_dump">MCT Dump</string>
     <string name="text_share_subject_key_file">MCT Key File</string>
-    <string name="text_advanced_info">Info to Advanced Content</string>
+    <string name="text_option_info">Info to option</string>
+    <string name="text_static_ac_default">08778F</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -165,6 +166,9 @@
     <string name="action_factory_format">Factory Format</string>
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
+    <string name="action_show_options">Show Options</string>
+    <string name="action_static_ac">Use these Access Conditions for all
+        sectors:</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -207,7 +211,8 @@
     <string name="info_block_out_of_range">Error: The block is out of range</string>
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
-    <string name="info_not_16_byte">Error: Data must be 16 byte (32 characters)</string>
+    <string name="info_not_16_byte">Error: Data must be 16 byte
+        (32 characters) long</string>
     <string name="info_is_not_vb">Error: Not a value block.</string>
     <string name="info_block_not_in_sector">Error: The sector does not contain
         a block with the given number.</string>
@@ -242,6 +247,10 @@
         (0-9, A-F, 2 characters)</string>
     <string name="info_copied_to_clipboard">Copied to clipboard</string>
     <string name="info_invalid_int">Not a valid integer</string>
+    <string name="info_static_ac_not_hex">Error: Static Access Conditions are
+        not hex (0-9, A-F)</string>
+    <string name="info_static_ac_not_3_byte">Error: Static Access Conditions
+        have to be 3 byte (6 characters) long</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -295,9 +304,16 @@
     <string name="dialog_block0_writing_title">Write Manufacturer Block</string>
     <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
         is not supported on original Mifare Classic tags.</b>
-        \n\nPlease make sure you
-        are using a special tag that supports writing to the manufacturer block
+        \n\nPlease make sure you are using a special tag that
+        supports writing to the manufacturer block
         (with a normal Mifare Classic write command).</string>
+    <string name="dialog_static_ac_title">Use static Access Conditions</string>
+    <string name="dialog_static_ac"><b>Replace all Access Conditions from the
+        dump with the chosen ones.</b>
+        \n\nThis will become in handy if the dump contains Access Conditions
+        that will be permanent for a tag. In case the reader does not check
+        them, you can easily use custom ones to make the tag reusable.
+    </string>
 
     <!-- Hints -->
     <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>

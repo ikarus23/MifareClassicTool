@@ -36,251 +36,311 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-        <RadioButton
-            android:id="@+id/radioButtonWriteTagWriteBlock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_gray"
-            android:checked="true"
-            android:gravity="center_horizontal"
-            android:onClick="onChangeWriteMode"
-            android:tag="write_block"
-            android:text="@string/action_wirte_block"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
-
-        <RelativeLayout
-            android:id="@+id/LayoutWriteTagWriteBlock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:tag="write_block_layout" >
-
-            <!-- Dummy for preventing EditTexts to get focus on -->
-            <!-- Activity startup -->
-            <LinearLayout
-                android:id="@+id/dummyView"
-                android:layout_width="0dip"
-                android:layout_height="0dip"
-                android:focusable="true"
-                android:focusableInTouchMode="true" />
-
-            <TextView
-                android:id="@+id/textViewWriteTagSector"
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/radioButtonWriteTagWriteBlock"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/editTextWriteTagSector"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:padding="5dp"
-                android:text="@string/text_sector"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/editTextWriteTagSector"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="5dp"
-                android:layout_toRightOf="@id/textViewWriteTagSector"
+                android:background="@color/dark_gray"
+                android:checked="true"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:minEms="3"
-                android:maxLength="2" />
+                android:onClick="onChangeWriteMode"
+                android:tag="write_block"
+                android:text="@string/action_wirte_block"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
 
-            <TextView
-                android:id="@+id/textViewWriteTagHint1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/editTextWriteTagSector"
-                android:layout_toRightOf="@id/editTextWriteTagSector"
-                android:text="@string/text_starting_at_0"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/textViewWriteTagBlock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/editTextWriteTagBlock"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/textViewWriteTagSector"
-                android:padding="5dp"
-                android:text="@string/text_block"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/editTextWriteTagBlock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/editTextWriteTagSector"
-                android:layout_below="@id/editTextWriteTagSector"
-                android:layout_marginRight="5dp"
-                android:gravity="center_horizontal"
-                android:inputType="number"
-                android:maxLength="2"
-                android:minEms="3" />
-
-            <TextView
-                android:id="@+id/textViewWriteTagHint2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/editTextWriteTagBlock"
-                android:layout_toRightOf="@id/editTextWriteTagBlock"
-                android:text="@string/text_starting_at_0"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/textViewWriteTagData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/editTextWriteTagData"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/textViewWriteTagBlock"
-                android:padding="5dp"
-                android:text="@string/text_data"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/editTextWriteTagData"
+            <RelativeLayout
+                android:id="@+id/LayoutWriteTagWriteBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/editTextWriteTagBlock"
-                android:layout_below="@id/editTextWriteTagBlock"
-                android:hint="@string/hint_hex_data"
-                android:inputType="textCapCharacters|textNoSuggestions"
-                android:maxLength="32" />
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:tag="write_block_layout" >
 
-            <Button
-                android:id="@+id/buttonWriteTagBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editTextWriteTagData"
-                android:onClick="onWriteBlock"
-                android:text="@string/action_write_block" />
+                <!-- Dummy for preventing EditTexts to get focus on
+                Activity startup -->
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="0dip"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/textViewWriteTagSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editTextWriteTagSector"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="5dp"
+                    android:text="@string/text_sector"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <!-- Seperator -->
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="@color/light_gray"
-            android:layout_margin="10dp" />
+                <EditText
+                    android:id="@+id/editTextWriteTagSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toRightOf="@id/textViewWriteTagSector"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:minEms="3" />
 
-        <RadioButton
-            android:id="@+id/radioButtonWriteTagWriteDump"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_gray"
-            android:gravity="center_horizontal"
-            android:onClick="onChangeWriteMode"
-            android:tag="write_dump"
-            android:text="@string/action_write_dump"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
+                <TextView
+                    android:id="@+id/textViewWriteTagHint1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/editTextWriteTagSector"
+                    android:layout_toRightOf="@id/editTextWriteTagSector"
+                    android:text="@string/text_starting_at_0"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <LinearLayout
-            android:id="@+id/LayoutWriteTagWriteDump"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:tag="write_dump_layout"
-            android:visibility="gone" >
+                <TextView
+                    android:id="@+id/textViewWriteTagBlock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editTextWriteTagBlock"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/textViewWriteTagSector"
+                    android:padding="5dp"
+                    android:text="@string/text_block"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/textViewWriteTagDump"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/text_write_dump_info"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                <EditText
+                    android:id="@+id/editTextWriteTagBlock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editTextWriteTagSector"
+                    android:layout_below="@id/editTextWriteTagSector"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:minEms="3" />
 
-            <Button
-                android:id="@+id/buttonWriteTagDump"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onWriteDump"
-                android:text="@string/action_write_full_dump" />
+                <TextView
+                    android:id="@+id/textViewWriteTagHint2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/editTextWriteTagBlock"
+                    android:layout_toRightOf="@id/editTextWriteTagBlock"
+                    android:text="@string/text_starting_at_0"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editTextWriteTagData"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/textViewWriteTagBlock"
+                    android:padding="5dp"
+                    android:text="@string/text_data"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editTextWriteTagBlock"
+                    android:layout_below="@id/editTextWriteTagBlock"
+                    android:hint="@string/hint_hex_data"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:maxLength="32" />
+
+                <Button
+                    android:id="@+id/buttonWriteTagBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextWriteTagData"
+                    android:onClick="onWriteBlock"
+                    android:text="@string/action_write_block" />
+            </RelativeLayout>
 
             <!-- Seperator -->
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
-                android:background="@color/light_gray"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:background="@color/light_gray" />
+
+            <RadioButton
+                android:id="@+id/radioButtonWriteTagWriteDump"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_gray"
+                android:gravity="center_horizontal"
+                android:onClick="onChangeWriteMode"
+                android:tag="write_dump"
+                android:text="@string/action_write_dump"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
 
             <LinearLayout
-                android:id="@+id/LayoutWriteTagWriteDumpAdvanced"
+                android:id="@+id/LayoutWriteTagDump"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:tag="write_dump_layout"
+                android:visibility="gone" >
 
-                <CheckBox
-                    android:id="@+id/checkBoxWriteTagWriteManuf"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/action_write_mfid" />
-
-                <ImageButton
-                    android:id="@+id/imageButtonWriteTagAdvancedInfo"
+                <TextView
+                    android:id="@+id/textViewWriteTagDump"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/text_advanced_info"
-                    android:onClick="onShowAdvancedInfo"
-                    android:src="@android:drawable/ic_dialog_info" />
+                    android:padding="5dp"
+                    android:text="@string/text_write_dump_info"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
+                <Button
+                    android:id="@+id/buttonWriteTagDump"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onWriteDump"
+                    android:text="@string/action_write_full_dump" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxWriteTagDumpOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onShowOptions"
+                    android:text="@string/action_show_options" />
+
+                <LinearLayout
+                    android:id="@+id/LayoutWriteTagDumpOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="25dp"
+                    android:visibility="gone" >
+
+                    <RelativeLayout
+                        android:id="@+id/LayoutWriteTagDumpStaticAC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@xml/layout_border"
+                        android:padding="2dp" >
+
+                        <CheckBox
+                            android:id="@+id/checkBoxWriteTagDumpStaticAC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_toLeftOf="@+id/imageButtonWriteTagDumpStaticACInfo"
+                            android:text="@string/action_static_ac" />
+
+                        <EditText
+                            android:id="@+id/editTextWriteTagDumpStaticAC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignRight="@+id/checkBoxWriteTagDumpStaticAC"
+                            android:layout_below="@id/checkBoxWriteTagDumpStaticAC"
+                            android:ems="8"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:maxLength="6"
+                            android:minEms="3"
+                            android:text="@string/text_static_ac_default" />
+
+                        <ImageButton
+                            android:id="@+id/imageButtonWriteTagDumpStaticACInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="false"
+                            android:contentDescription="@string/text_option_info"
+                            android:onClick="onShowStaticACInfo"
+                            android:src="@android:drawable/ic_dialog_info" />
+
+                    </RelativeLayout>
+
+                    <!-- Seperator -->
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/light_gray" />
+
+                    <RelativeLayout
+                        android:id="@+id/LayoutWriteTagDumpWriteManuf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@xml/layout_border"
+                        android:padding="2dp" >
+
+                        <CheckBox
+                            android:id="@+id/checkBoxWriteTagDumpWriteManuf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_toLeftOf="@+id/imageButtonWriteTagDumpWriteManufInfo"
+                            android:text="@string/action_write_mfid" />
+
+                        <ImageButton
+                            android:id="@+id/imageButtonWriteTagDumpWriteManufInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:contentDescription="@string/text_option_info"
+                            android:onClick="onShowWriteManufInfo"
+                            android:src="@android:drawable/ic_dialog_info" />
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+            <!-- Seperator -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_margin="10dp"
+                android:background="@color/light_gray" />
 
-        <!-- Seperator -->
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="@color/light_gray"
-            android:layout_margin="10dp" />
-
-        <RadioButton
-            android:id="@+id/radioButtonWriteTagFactoryFormat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_gray"
-            android:gravity="center_horizontal"
-            android:onClick="onChangeWriteMode"
-            android:tag="factory_format"
-            android:text="@string/action_factory_format"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/blue" />
-
-        <LinearLayout
-            android:id="@+id/LayoutWriteTagFactoryFormat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:tag="factory_format_layout"
-            android:visibility="gone" >
-
-            <TextView
-                android:id="@+id/textViewWriteFactoryFormat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/text_factory_format_info"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/buttonWriteTagFactoryFormat"
+            <RadioButton
+                android:id="@+id/radioButtonWriteTagFactoryFormat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onFactoryFormat"
-                android:text="@string/action_factory_format" />
-        </LinearLayout>
+                android:background="@color/dark_gray"
+                android:gravity="center_horizontal"
+                android:onClick="onChangeWriteMode"
+                android:tag="factory_format"
+                android:text="@string/action_factory_format"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <LinearLayout
+                android:id="@+id/LayoutWriteTagFactoryFormat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:tag="factory_format_layout"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/textViewWriteFactoryFormat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/text_factory_format_info"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/buttonWriteTagFactoryFormat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onFactoryFormat"
+                    android:text="@string/action_factory_format" />
+            </LinearLayout>
         </RadioGroup>
     </LinearLayout>
 

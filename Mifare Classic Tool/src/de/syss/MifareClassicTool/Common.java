@@ -518,9 +518,10 @@ public class Common {
         // C2 (Byte 8, 0-3) == ~C2 (Byte 6, 4-7) and
         // C3 (Byte 8, 4-7) == ~C3 (Byte 7, 0-3)
         byte[][] acMatrix = new byte[3][4];
-        if ((byte)((ac[1]>>>4)&0x0F)  == (byte)((ac[0]^0xFF)&0x0F) &&
-            (byte)(ac[2]&0x0F) == (byte)(((ac[0]^0xFF)>>>4)&0x0F) &&
-            (byte)((ac[2]>>>4)&0x0F)  == (byte)((ac[1]^0xFF)&0x0F)) {
+        if (ac.length > 2 &&
+                (byte)((ac[1]>>>4)&0x0F)  == (byte)((ac[0]^0xFF)&0x0F) &&
+                (byte)(ac[2]&0x0F) == (byte)(((ac[0]^0xFF)>>>4)&0x0F) &&
+                (byte)((ac[2]>>>4)&0x0F)  == (byte)((ac[1]^0xFF)&0x0F)) {
             // C1, Block 0-3
             for (int i = 0; i < 4; i++) {
                 acMatrix[0][i] = (byte)((ac[1]>>>4+i)&0x01);

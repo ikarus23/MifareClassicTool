@@ -18,16 +18,11 @@
 -->
 
 
-<resources>
-    <color name="blue">#3366FF</color>
-    <color name="light_green">#66FF66</color>
-    <color name="dark_green">#338800</color>
-    <color name="orange">#FF6600</color>
-    <color name="cyan">#33B5E5</color>
-    <color name="purple">#9933FF</color>
-    <color name="yellow">#CCCC00</color>
-    <color name="red">#FF0000</color>
-    <color name="light_gray">#DDDDDD</color>
-    <color name="middle_gray">#444444</color>
-    <color name="dark_gray">#222222</color>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="5dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/middle_gray" />
+    <solid android:color="@android:color/transparent"/>
+</shape>

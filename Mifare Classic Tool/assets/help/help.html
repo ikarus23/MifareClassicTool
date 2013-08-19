@@ -243,14 +243,28 @@
     for you! If there are issues like 'block is read-only', 'key with write
     access not known', etc., you will get a report before writing!
     <br /><br />
-    <b>Attention:</b> The first block of the first sector of an <b>original</b>
-    Mifare Classic tag is read-only and therefore not writable. But there are
-    <b>special</b> Mifare Classic tags that support writing to the manufacturer
-    block with a simple write command. This App is able to write to such tags
-    and can therefore create fully correct clones.
-    <br />However, some special tags require a special command sequence to
-    put them into the state where writing to the manufacturer block is possible.
-    These tags will not work.
+    <b>Options:</b>
+    <ul>
+      <li>
+        <i>Use static (custom) Access Conditions:</i><br />
+        By enabling this option, all Access Conditions from the dump
+        will be replaced with the chosen ones.
+        <br />This will become in handy if the dump contains Access Conditions
+        that will be permanent for a tag. In case the reader does not check
+        them, you can easily use custom ones to make the tag reusable.
+      </li>
+      <li>
+        <i>Write to Manufacturer Block:</i><br />
+        The first block of the first sector of an <b>original</b>
+        Mifare Classic tag is read-only and therefore not writable. But there are
+        <b>special</b> Mifare Classic tags that support writing to the manufacturer
+        block with a simple write command. This App is able to write to such tags
+        and can therefore create fully correct clones.
+        <br />However, some special tags require a special command sequence to
+        put them into the state where writing to the manufacturer block is possible.
+        These tags will not work.
+      </li>
+    </ul>
   </p>
 
   <h3 id="factory_format">4.3 Factory Format</h3>
