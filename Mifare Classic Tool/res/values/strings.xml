@@ -196,7 +196,7 @@
     <string name="info_valid_dump_not_4_or_16_lines">Error: Some
         sectors don\'t have 4 or 16 blocks (lines)</string>
     <string name="info_valid_dump_not_16_bytes">Error: Some blocks
-        don\'t have 16 byte (32 characters)</string>
+        don\'t have 16 bytes (32 characters)</string>
     <string name="info_editor_init_error">Error: Data was not correct for this
         editor</string>
     <string name="info_no_dumps">There are no dumps.
@@ -211,7 +211,7 @@
     <string name="info_block_out_of_range">Error: The block is out of range</string>
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
-    <string name="info_not_16_byte">Error: Data must be 16 byte
+    <string name="info_not_16_byte">Error: Data must be 16 bytes
         (32 characters) long</string>
     <string name="info_is_not_vb">Error: Not a value block.</string>
     <string name="info_block_not_in_sector">Error: The sector does not contain
@@ -229,7 +229,7 @@
     <string name="info_valid_keys_not_hex">Error: Some key(s) contain
         invalid data (not hex)</string>
     <string name="info_valid_keys_not_6_byte"> Error: Some keys
-        don\'t have 6 byte (12 characters)</string>
+        don\'t have 6 bytes (12 characters)</string>
     <string name="info_empty_file_name">Error: Files must have a name</string>
     <string name="info_save_successful">Data successfully saved</string>
     <string name="info_save_error">Error: Error while saving data</string>
@@ -250,7 +250,7 @@
     <string name="info_static_ac_not_hex">Error: Static Access Conditions are
         not hex (0-9, A-F)</string>
     <string name="info_static_ac_not_3_byte">Error: Static Access Conditions
-        have to be 3 byte (6 characters) long</string>
+        have to be 3 bytes (6 characters) long</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -316,7 +316,7 @@
     </string>
 
     <!-- Hints -->
-    <string name="hint_hex_data">HEX, 16 byte (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_data">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
 
