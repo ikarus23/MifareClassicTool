@@ -211,7 +211,8 @@
     <string name="info_block_out_of_range">Error: The block is out of range</string>
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
-    <string name="info_not_16_byte">Error: Data must be 16 byte (32 characters)</string>
+    <string name="info_not_16_byte">Error: Data must be 16 byte
+        (32 characters) long</string>
     <string name="info_is_not_vb">Error: Not a value block.</string>
     <string name="info_block_not_in_sector">Error: The sector does not contain
         a block with the given number.</string>
@@ -246,6 +247,10 @@
         (0-9, A-F, 2 characters)</string>
     <string name="info_copied_to_clipboard">Copied to clipboard</string>
     <string name="info_invalid_int">Not a valid integer</string>
+    <string name="info_static_ac_not_hex">Error: Static Access Conditions are
+        not hex (0-9, A-F)</string>
+    <string name="info_static_ac_not_3_byte">Error: Static Access Conditions
+        have to be 3 byte (6 characters) long</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

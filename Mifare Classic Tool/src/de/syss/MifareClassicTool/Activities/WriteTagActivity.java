@@ -66,8 +66,10 @@ public class WriteTagActivity extends BasicActivity {
     private EditText mSectorText;
     private EditText mBlockText;
     private EditText mDataText;
+    private EditText mStaticAC;
     private ArrayList<View> mWriteModeLayouts;
     private CheckBox mWriteManufBlock;
+    private CheckBox mEnableStaticAC;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
 
 
@@ -84,6 +86,9 @@ public class WriteTagActivity extends BasicActivity {
         mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
         mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
+        mStaticAC = (EditText) findViewById(R.id.editTextWriteTagDumpStaticAC);
+        mEnableStaticAC = (CheckBox) findViewById(
+                R.id.checkBoxWriteTagDumpStaticAC);
         mWriteManufBlock = (CheckBox) findViewById(
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
@@ -133,7 +138,7 @@ public class WriteTagActivity extends BasicActivity {
      * {@link FileChooserActivity}.
      * @see #writeBlock()
      * @see #checkTag()
-     * @see #createKeyMapForDump(String)
+     * @see #readDumpAndCreateKeyMapForDump(String)
      * @see #createFactoryFormatedDump()
      */
     @Override
@@ -147,7 +152,7 @@ public class WriteTagActivity extends BasicActivity {
                 // Error.
             } else {
                 // Create keys.
-                createKeyMapForDump(data.getStringExtra(
+                readDumpAndCreateKeyMapForDump(data.getStringExtra(
                         FileChooserActivity.EXTRA_CHOSEN_FILE));
             }
             break;
@@ -390,16 +395,33 @@ public class WriteTagActivity extends BasicActivity {
     /**
      * Open a file chooser ({@link FileChooserActivity}) and wait for its
      * result in {@link #onActivityResult(int, int, Intent)}.
+     * (Also check the static Access Conditions, if the option is enabled.)
      * This method triggers the call chain: open {@link FileChooserActivity}
      * (this method) -> open {@link CreateKeyMapActivity} (from
-     * {@link #createKeyMapForDump(String)}) -> run {@link #checkTag()}
-     * -> run {@link #writeDump(HashMap, SparseArray)}.
+     * {@link #readDumpAndCreateKeyMapForDump(String)}) -> run
+     * {@link #checkTag()} -> run {@link #writeDump(HashMap, SparseArray)}.
      * @param view The View object that triggered the method
      * (in this case the write full dump button).
      * @see FileChooserActivity
      * @see #onActivityResult(int, int, Intent)
      */
     public void onWriteDump(View view) {
+        // Check the static Access Condition option.
+        if (mEnableStaticAC.isChecked()) {
+            String ac = mStaticAC.getText().toString();
+            if (ac.matches("[0-9A-Fa-f]+") == false) {
+                // Error, not hex.
+                Toast.makeText(this, R.string.info_static_ac_not_hex,
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (ac.length() != 6) {
+                // Error, not 3 byte (6 chars).
+                Toast.makeText(this, R.string.info_static_ac_not_3_byte,
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
         // Show file chooser (chose dump).
         Intent intent = new Intent(this, FileChooserActivity.class);
         intent.putExtra(FileChooserActivity.EXTRA_DIR,
@@ -419,12 +441,14 @@ public class WriteTagActivity extends BasicActivity {
      * dump was selected (by {@link FileChooserActivity}), this method
      * reads the dump (skipping all blocks with unknown data "-") and saves
      * the data including its position in {@link #mDumpWithPos}.
-     * After reading the dump {@link CreateKeyMapActivity} is called to create
+     * If the "use static Access Condition" option is enabled, all the ACs
+     * will be replaced by the static ones.
+     * After all this, {@link CreateKeyMapActivity} is called to create
      * a key map for the present tag.
      * @param pathToDump path and filename of the dump
      * (selected by {@link FileChooserActivity}).
      */
-    private void createKeyMapForDump(String pathToDump) {
+    private void readDumpAndCreateKeyMapForDump(String pathToDump) {
         // Read dump.
         File file = new File(pathToDump);
         String[] dump = Common.readFileLineByLine(file, false);
@@ -434,15 +458,25 @@ public class WriteTagActivity extends BasicActivity {
         // Transform the simple dump array into a structure (mDumpWithPos)
         // where the sector and block information are known additionally.
         // Blocks containing unknown data ("-") are dropped.
-        for (String line : dump) {
-            if (line.startsWith("+")) {
-                String[] tmp = line.split(": ");
+        for (int i = 0; i < dump.length; i++) {
+            if (dump[i].startsWith("+")) {
+                String[] tmp = dump[i].split(": ");
                 sector = Integer.parseInt(tmp[tmp.length-1]);
                 block = 0;
                 mDumpWithPos.put(sector, new HashMap<Integer, byte[]>());
-            } else if (!line.contains("-")) {
+            } else if (!dump[i].contains("-")) {
+                // Use static Access Conditions for all sectors?
+                if (mEnableStaticAC.isChecked()
+                        && (i+1 == dump.length || dump[i+1].startsWith("+"))) {
+                    // This is a Sector Trailer. Replace its ACs
+                    // with the static ones.
+                    String newBlock = dump[i].substring(0, 12)
+                            + mStaticAC.getText().toString()
+                            + dump[i].substring(18, dump[i].length());
+                    dump[i] = newBlock;
+                }
                 mDumpWithPos.get(sector).put(block++,
-                        Common.hexStringToByteArray(line));
+                        Common.hexStringToByteArray(dump[i]));
             } else {
                 block++;
             }

@@ -17,6 +17,7 @@
  */
 -->
 
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollViewWriteTag"
@@ -243,6 +244,7 @@
                             android:ems="8"
                             android:imeOptions="actionDone"
                             android:inputType="textCapCharacters|textNoSuggestions"
+                            android:maxLength="6"
                             android:minEms="3"
                             android:text="@string/text_static_ac_default" />
 
