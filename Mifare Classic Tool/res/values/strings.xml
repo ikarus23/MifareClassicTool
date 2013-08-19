@@ -251,10 +251,10 @@
     <string name="dialog_no_nfc_title">No NFC Hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC Not Enabled</string>
     <string name="dialog_no_mfc_title">No Mifare Classic Support</string>
-    <string name="dialog_no_mfc">Your device (due to hardware) or the tag
-        does not support Mifare Classic! The only thing this App can do,
-        is to display the UID and some other generic information.
-        Further I/O operations are not possible.
+    <string name="dialog_no_mfc">The tag (most likely) or your device
+        (due to hardware) does not support Mifare Classic! The only thing
+        possible is to display the UID and some other generic
+        information. Further I/O operations are  impossible.
         \n\n<b>If your device does not support Mifare Classic,
         this App is pretty much useless.</b>
         \n\nKnown devices with no Mifare Classic support:\n
