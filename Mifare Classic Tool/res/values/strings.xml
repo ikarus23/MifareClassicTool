@@ -269,6 +269,7 @@
         \n\nKnown devices with no Mifare Classic support:\n
         - Google Nexus 4\n
         - Google Nexus 10\n
+        - Google Nexus 7 (2013)\n
         - Samsung Galaxy S4</string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
