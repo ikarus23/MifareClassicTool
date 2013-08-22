@@ -5,7 +5,7 @@ Version 1.5.0:
    dump you want to write with custom ones.
  * Fixed parse issue for to big/small integers (in value block tool).
  * Fixed crash issue for incorrect Access Conditions.
- * Fixed minor bug fixes.
+ * Some minor bug fixes.
 
 Version 1.4.2:
  * Fixed some crash issues (thanks to Stéphane Haziza).
@@ -22,7 +22,7 @@ Version 1.4.0:
  * Improved key mapping speed (thanks to alfs).
  * Share key files (e.g. via mail or bluetooth).
  * Changed key file editor functions layout from buttons to menu.
- * Fixed some minor bugs.
+ * Some minor bug fixes.
  * Cleaned up some code.
 
 Version 1.3.3:
