@@ -268,8 +268,8 @@
         this App is pretty much useless.</b>
         \n\nKnown devices with no Mifare Classic support:\n
         - Google Nexus 4\n
-        - Google Nexus 10\n
         - Google Nexus 7 (2013)\n
+        - Google Nexus 10\n
         - Samsung Galaxy S4</string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
@@ -314,6 +314,8 @@
         \n\nThis will become in handy if the dump contains Access Conditions
         that will be permanent for a tag. In case the reader does not check
         them, you can easily use custom ones to make the tag reusable.
+        \n\n<b>WARNING: Writing wrong data may cause irreparable
+        damage to the tag.</b>
     </string>
 
     <!-- Hints -->
