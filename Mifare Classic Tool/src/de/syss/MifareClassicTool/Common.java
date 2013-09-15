@@ -324,8 +324,14 @@ public class Common {
                     Toast.LENGTH_LONG).show();
             return null;
         }
-        reader.connect();
-        if (!reader.isConnected()) {
+
+        boolean tagLost = false;
+        try {
+            reader.connect();
+        } catch (Exception e) {
+            tagLost = true;
+        }
+        if (tagLost || !reader.isConnected()) {
             // Error. The tag is gone.
             Toast.makeText(context, R.string.info_no_tag_found,
                     Toast.LENGTH_LONG).show();
