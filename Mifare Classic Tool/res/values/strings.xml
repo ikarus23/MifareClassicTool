@@ -124,6 +124,7 @@
     <string name="text_share_subject_key_file">MCT Key File</string>
     <string name="text_option_info">Info to option</string>
     <string name="text_static_ac_default">08778F</string>
+    <string name="text_no_key_io_error">No keys found (or dead sector)</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>

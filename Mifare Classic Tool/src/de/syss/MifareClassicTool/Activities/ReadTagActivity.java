@@ -100,6 +100,7 @@ public class ReadTagActivity extends Activity {
     private void readTag() {
         final Context con = this;
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 MCReader reader = Common.checkForTagAndCreateReader(con);
 //              MCReader reader = (MCReader) data.getSerializableExtra(
@@ -115,6 +116,7 @@ public class ReadTagActivity extends Activity {
                 reader.close();
 
                 mHandler.post(new Runnable() {
+                    @Override
                     public void run() {
                         createTagDump(mRawDump);
                     }

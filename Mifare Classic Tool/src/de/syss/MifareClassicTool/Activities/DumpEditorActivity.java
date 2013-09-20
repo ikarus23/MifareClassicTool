@@ -283,6 +283,7 @@ public class DumpEditorActivity extends BasicActivity {
                 .setView(input)
                 .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (input.getText() != null
                                 && !input.getText().toString().equals("")) {
@@ -307,6 +308,7 @@ public class DumpEditorActivity extends BasicActivity {
                 })
                 .setNegativeButton(R.string.action_cancel,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Do nothing.
                     }
@@ -352,7 +354,8 @@ public class DumpEditorActivity extends BasicActivity {
                 }
             } else if (child instanceof TextView) {
                 // Mark headers (sectors) with "+"
-                checkedLines.add("+" + ((TextView)child).getText().toString());
+                checkedLines.add("+Sector: " + ((TextView)child).getText()
+                        .toString().split(": ")[1]);
             }
         }
         // Update mLines.
@@ -390,7 +393,7 @@ public class DumpEditorActivity extends BasicActivity {
      */
     private void initEditor(String[] lines) {
         boolean err = false;
-        if (lines != null && lines.length > 4 && lines[0].startsWith("+")) {
+        if (lines != null && lines[0].startsWith("+")) {
             // Parse dump and show it.
             mLayout.removeAllViews();
             boolean isFirstBlock = false;
@@ -399,8 +402,8 @@ public class DumpEditorActivity extends BasicActivity {
             ArrayList<SpannableString> blocks =
                     new ArrayList<SpannableString>(4);
             for (int i = 0; i < lines.length; i++) {
-                // Is header?
                 if (lines[i].startsWith("+")) {
+                    // Line is a header.
                     isFirstBlock = lines[i].endsWith(" 0");
                     String sectorNumber = lines[i].split(": ")[1];
                     // Add sector header (TextView).
@@ -419,14 +422,26 @@ public class DumpEditorActivity extends BasicActivity {
                             |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                             |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
                     et.setTypeface(Typeface.MONOSPACE);
-                    // Set text size of an EditText to the text size of a TextView.
-                    // (getTextSize() returns pixels - unit is needed.)
+                    // Set text size of an EditText to the text size of
+                    // a TextView. (getTextSize() returns
+                    // pixels - unit is needed.)
                     et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                             new TextView(this).getTextSize());
                     mLayout.addView(et);
                     continue;
+
+                // For later use...
+//                } else if (lines[i].startsWith("*")){
+//                    // Line is a sector that could not be read.
+//                    TextView tv = new TextView(this);
+//                    tv.setTextColor(
+//                            getResources().getColor(R.color.red));
+//                    tv.setText("   " +  getString(
+//                            R.string.text_no_key_io_error));
+//                    mLayout.addView(tv);
+
                 } else {
-                    // Not a header, just a block.
+                    // Line is a block.
                     if (i+1 == lines.length || lines[i+1].startsWith("+")) {
                         // Add sector trailer.
                         blocks.add(colorSectorTrailer(lines[i]));
@@ -437,7 +452,8 @@ public class DumpEditorActivity extends BasicActivity {
                             CharSequence text = "";
                             int j;
                             for (j = 0; j < blocks.size()-1; j++) {
-                                text = TextUtils.concat(text, blocks.get(j), "\n");
+                                text = TextUtils.concat(
+                                        text, blocks.get(j), "\n");
                             }
                             text = TextUtils.concat(text, blocks.get(j));
                             et.setText(text, BufferType.SPANNABLE);
