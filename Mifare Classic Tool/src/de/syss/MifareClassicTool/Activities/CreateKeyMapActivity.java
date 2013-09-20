@@ -343,6 +343,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                     reader.close();
                     return;
                 }
+                Common.setKeyMapRange(mFirstSector, mLastSector);
                 // Init. GUI elements.
                 mProgressStatus = -1;
                 mProgressBar.setMax((mLastSector-mFirstSector)+1);
@@ -367,6 +368,7 @@ public class CreateKeyMapActivity extends BasicActivity {
      */
     private void createKeyMap(final MCReader reader) {
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 // Build key map parts and update the progress bar.
                 while (mProgressStatus < mLastSector) {
@@ -377,6 +379,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                     }
 
                     mHandler.post(new Runnable() {
+                        @Override
                         public void run() {
                             mProgressBar.setProgress(
                                     (mProgressStatus - mFirstSector) + 1);
@@ -385,6 +388,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                 }
 
                 mHandler.post(new Runnable() {
+                    @Override
                     public void run() {
                         getWindow().clearFlags(
                                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -396,6 +400,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                             keyMapCreated(reader);
                         } else {
                             Common.setKeyMap(null);
+                            Common.setKeyMapRange(-1, -1);
                         }
                         mIsCreatingKeyMap = false;
                     }
@@ -478,6 +483,7 @@ public class CreateKeyMapActivity extends BasicActivity {
             .setView(ll)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Read from x to y.
                     String txtFrom = "" + (DEFAULT_SECTOR_RANGE_FROM);
@@ -501,6 +507,7 @@ public class CreateKeyMapActivity extends BasicActivity {
             })
             .setNeutralButton(R.string.action_read_all_sectors,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Read all sectors.
                     mSectorRange.setText(
@@ -509,6 +516,7 @@ public class CreateKeyMapActivity extends BasicActivity {
             })
             .setNegativeButton(R.string.action_cancel,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Cancel dialog (do nothing).
                 }

@@ -127,23 +127,30 @@ public class ReadTagActivity extends Activity {
 
     /**
      * Create a tag dump in a format the {@link DumpEditorActivity}
-     * can read (via Intent), and then start the dump editor with this dump.
+     * can read (format: headers (sectors) marked with "+", errors
+     * marked with "*"), and then start the dump editor with this dump.
      * @param rawDump A tag dump like {@link MCReader#readAsMuchAsPossible()}
      * returns.
+     * @see DumpEditorActivity#EXTRA_DUMP
+     * @see DumpEditorActivity
      */
     private void createTagDump(SparseArray<String[]> rawDump) {
         String dump = "";
         String s = System.getProperty("line.separator");
         if (rawDump != null) {
             if (rawDump.size() != 0) {
-                for (int i = 0; i < rawDump.size(); i++) {
+                for (int i = Common.getKeyMapRangeFrom();
+                        i <= Common.getKeyMapRangeTo(); i++) {
+                    String[] val = rawDump.get(i);
                     // Mark headers (sectors) with "+".
-                    dump += "+Sector: " + rawDump.keyAt(i) + s;
-                    String[] val = rawDump.valueAt(i);
+                    dump += "+Sector: " + i + s;
                     if (val != null ) {
                         for (int j = 0; j < val.length; j++) {
                             dump += val[j] + s;
                         }
+                    } else {
+                        // Mark sector as not readable ("*").
+                        dump += "*No keys found or dead sector" + s;
                     }
                 }
                 // UGLY: remove last "\n".

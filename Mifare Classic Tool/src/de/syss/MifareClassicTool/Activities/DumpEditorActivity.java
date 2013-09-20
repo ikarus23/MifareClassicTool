@@ -73,8 +73,9 @@ public class DumpEditorActivity extends BasicActivity {
     // (See http://stackoverflow.com/a/2141166)
 
     /**
-     * A dump seperated by new lines. Headers (e.g. "Sector 01") are marked
-     * with a "+"-symbol (e.g. "+Sector 01").
+     * A dump separated by new lines. Headers (e.g. "Sector 01") are marked
+     * with a "+"-symbol (e.g. "+Sector 01"). Errors (e.g. "No keys found or
+     * dead sector") are marked with a "*"-symbol.
      */
     public final static String EXTRA_DUMP =
             "de.syss.MifareClassicTool.Activity.DUMP";
@@ -86,7 +87,7 @@ public class DumpEditorActivity extends BasicActivity {
     private String mFileName = "";
 
     /**
-     * All blocks AND their headers (marked with "+"
+     * All blocks containing valid data AND their headers (marked with "+"
      * e.g. "+Sector: 0") as strings.
      * This will be updated with every {@link #isValidDump()}
      * check.
@@ -353,9 +354,15 @@ public class DumpEditorActivity extends BasicActivity {
                     checkedLines.add(lines[j]);
                 }
             } else if (child instanceof TextView) {
-                // Mark headers (sectors) with "+"
-                checkedLines.add("+Sector: " + ((TextView)child).getText()
-                        .toString().split(": ")[1]);
+                TextView tv = (TextView) child;
+                String tag = (String) tv.getTag();
+                // Only save real headers (not the headers
+                // of sectors with "no keys found or dead sector" error).
+                if (tag != null && tag.equals("real_header")) {
+                    // Mark headers (sectors) with "+"
+                    checkedLines.add("+Sector: "
+                            + tv.getText().toString().split(": ")[1]);
+                }
             }
         }
         // Update mLines.
@@ -413,33 +420,37 @@ public class DumpEditorActivity extends BasicActivity {
                     tv.setText(getString(R.string.text_sector) +
                             ": " + sectorNumber);
                     mLayout.addView(tv);
-                    // Add sector data (EditText)
-                    et = new EditText(this);
-                    et.setLayoutParams(new LayoutParams(
-                            LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT));
-                    et.setInputType(et.getInputType()
-                            |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                            |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                    et.setTypeface(Typeface.MONOSPACE);
-                    // Set text size of an EditText to the text size of
-                    // a TextView. (getTextSize() returns
-                    // pixels - unit is needed.)
-                    et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                            new TextView(this).getTextSize());
-                    mLayout.addView(et);
-                    continue;
-
-                // For later use...
-//                } else if (lines[i].startsWith("*")){
-//                    // Line is a sector that could not be read.
-//                    TextView tv = new TextView(this);
-//                    tv.setTextColor(
-//                            getResources().getColor(R.color.red));
-//                    tv.setText("   " +  getString(
-//                            R.string.text_no_key_io_error));
-//                    mLayout.addView(tv);
-
+                    // Add sector data (EditText) if not at the end and if the
+                    // next line is not an error line ("*").
+                    if (i+1 != lines.length && !lines[i+1].startsWith("*")) {
+                        // Add sector data (EditText).
+                        et = new EditText(this);
+                        et.setLayoutParams(new LayoutParams(
+                                LayoutParams.WRAP_CONTENT,
+                                LayoutParams.WRAP_CONTENT));
+                        et.setInputType(et.getInputType()
+                                |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                                |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+                        et.setTypeface(Typeface.MONOSPACE);
+                        // Set text size of an EditText to the text size of
+                        // a TextView. (getTextSize() returns
+                        // pixels - unit is needed.)
+                        et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                                new TextView(this).getTextSize());
+                        mLayout.addView(et);
+                        // Tag headers of real sectors (sectors containing
+                        // data (EditText) and not errors ("*")).
+                        tv.setTag("real_header");
+                    }
+                } else if (lines[i].startsWith("*")){
+                    // Error Line: Line is a sector that could not be read.
+                    TextView tv = new TextView(this);
+                    tv.setTextColor(
+                            getResources().getColor(R.color.red));
+                    tv.setText("   " +  getString(
+                            R.string.text_no_key_io_error));
+                    tv.setTag("error");
+                    mLayout.addView(tv);
                 } else {
                     // Line is a block.
                     if (i+1 == lines.length || lines[i+1].startsWith("+")) {
