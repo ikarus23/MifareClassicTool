@@ -893,8 +893,8 @@ public class WriteTagActivity extends BasicActivity {
      * Create an factory formated, empty dump with a size matching
      * the current tag size and then call {@link #checkTag()}.
      * Factory (default) Mifare Classic Access Conditions are: 0xFF0780XX
-     * XX = Sometimes is 69 or BC. But this is not really important, because XX
-     * is a user data field. This method will set XX to 0x00.
+     * XX = General purpose byte (GPB): Most of the time 0x69. At the end of
+     * an Tag XX = 0xBC.
      * @see #checkTag()
      */
     private void createFactoryFormatedDump() {
@@ -905,29 +905,33 @@ public class WriteTagActivity extends BasicActivity {
         int sectors = MifareClassic.get(Common.getTag()).getSectorCount();
         byte[] emptyBlock = new byte[]
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        byte[] sectorTrailer = new byte[] {-1, -1, -1, -1, -1, -1,
-                -1, 7, -128, 0, -1, -1, -1, -1, -1, -1};
+        byte[] normalSectorTrailer = new byte[] {-1, -1, -1, -1, -1, -1,
+                -1, 7, -128, 105, -1, -1, -1, -1, -1, -1};
+        byte[] lastSectorTrailer = new byte[] {-1, -1, -1, -1, -1, -1,
+                -1, 7, -128, -68, -1, -1, -1, -1, -1, -1};
         // Empty 4 block sector.
         HashMap<Integer, byte[]> empty4BlockSector =
                 new HashMap<Integer, byte[]>(4);
         for (int i = 0; i < 3; i++) {
             empty4BlockSector.put(i, emptyBlock);
         }
-        empty4BlockSector.put(3, sectorTrailer);
+        empty4BlockSector.put(3, normalSectorTrailer);
         // Empty 16 block sector.
         HashMap<Integer, byte[]> empty16BlockSector =
                 new HashMap<Integer, byte[]>(16);
         for (int i = 0; i < 15; i++) {
             empty16BlockSector.put(i, emptyBlock);
         }
-        empty16BlockSector.put(15, sectorTrailer);
+        empty16BlockSector.put(15, normalSectorTrailer);
+        // Last sector.
+        HashMap<Integer, byte[]> lastSector = null;
 
         // Sector 0.
         HashMap<Integer, byte[]> firstSector =
                 new HashMap<Integer, byte[]>(4);
         firstSector.put(1, emptyBlock);
         firstSector.put(2, emptyBlock);
-        firstSector.put(3, sectorTrailer);
+        firstSector.put(3, normalSectorTrailer);
         mDumpWithPos.put(0, firstSector);
         // Sector 1 - (max.) 31.
         for (int i = 1; i < sectors && i < 32; i++) {
@@ -937,10 +941,18 @@ public class WriteTagActivity extends BasicActivity {
         if (sectors == 40) {
             // Add the large sectors (containing 16 blocks)
             // of a Mifare Classic 4k tag.
-            for (int i = 32; i < sectors && i < 40; i++) {
+            for (int i = 32; i < sectors && i < 39; i++) {
                 mDumpWithPos.put(i, empty16BlockSector);
             }
+            // In the last sector the Sector Trailer is different.
+            lastSector = new HashMap<Integer, byte[]>(empty16BlockSector);
+            lastSector.put(15, lastSectorTrailer);
+        } else {
+            // In the last sector the Sector Trailer is different.
+            lastSector = new HashMap<Integer, byte[]>(empty4BlockSector);
+            lastSector.put(3, lastSectorTrailer);
         }
+        mDumpWithPos.put(sectors - 1, lastSector);
         checkTag();
     }
 }
