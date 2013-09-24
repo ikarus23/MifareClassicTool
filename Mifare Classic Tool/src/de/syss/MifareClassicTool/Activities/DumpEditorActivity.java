@@ -247,7 +247,13 @@ public class DumpEditorActivity extends BasicActivity {
             initEditor(mLines);
             if (focusIndex != -1) {
                 // Restore focused view.
-                mLayout.getChildAt(focusIndex).requestFocus();
+                while (focusIndex >= 0
+                        && mLayout.getChildAt(focusIndex) == null) {
+                    focusIndex--;
+                }
+                if (focusIndex >= 0) {
+                    mLayout.getChildAt(focusIndex).requestFocus();
+                }
             }
         }
     }
