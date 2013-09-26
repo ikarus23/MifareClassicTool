@@ -84,6 +84,7 @@ public class TagInfoToolActivity extends BasicActivity {
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(R.string.action_ok,
                 new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing.
             }

@@ -72,9 +72,9 @@ public class ValueBlockToolActivity extends BasicActivity {
         // Decode.
         byte[] vbAsBytes = Common.hexStringToByteArray(
                 data.substring(0, 8));
-        Common.reverseByteArrasInPlace(vbAsBytes);
-        ByteBuffer bb = ByteBuffer.wrap(vbAsBytes);
-        mVBasInt.setText("" + bb.getInt());
+        // Bytes -> Int. -> reverse.
+        int vbAsInt = Integer.reverseBytes(ByteBuffer.wrap(vbAsBytes).getInt());
+        mVBasInt.setText("" + vbAsInt);
         mAddr.setText(data.substring(24, 26));
     }
 
