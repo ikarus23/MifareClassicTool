@@ -70,12 +70,17 @@ public class KeyEditorActivity extends BasicActivity {
             mFileName = keyFile.getName();
             setTitle(getTitle() + " (" + mFileName + ")");
             if (keyFile.exists()) {
-                String keyDump[] = Common.readFileLineByLine(keyFile, true);
+                String keyDump[] = Common.readFileLineByLine(keyFile,
+                        true, this);
+                if (keyDump == null) {
+                    // Error. Exit.
+                    finish();
+                    return;
+                }
                 setKeyArrayAsText(keyDump);
             }
             setIntent(null);
         } else {
-            setResult(1);
             finish();
         }
     }
@@ -183,6 +188,7 @@ public class KeyEditorActivity extends BasicActivity {
                 .setView(input)
                 .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (input.getText() != null
                                 && !input.getText().toString().equals("")) {
@@ -206,6 +212,7 @@ public class KeyEditorActivity extends BasicActivity {
                 })
                 .setNegativeButton(R.string.action_cancel,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Do nothing.
                     }

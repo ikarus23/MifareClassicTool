@@ -318,7 +318,11 @@ public class CreateKeyMapActivity extends BasicActivity {
 
                 // Set key files.
                 File[] keys = keyFiles.toArray(new File[keyFiles.size()]);
-                reader.setKeyFile(keys);
+                if (reader.setKeyFile(keys, this) == false) {
+                    // Error.
+                    reader.close();
+                    return;
+                }
                 // Don't turn screen of while mapping.
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -337,6 +341,7 @@ public class CreateKeyMapActivity extends BasicActivity {
                 // Set map creation range.
                 if (!reader.setMappingRange(
                         mFirstSector, mLastSector)) {
+                    // Error.
                     Toast.makeText(this,
                             R.string.info_mapping_sector_out_of_range,
                             Toast.LENGTH_LONG).show();

@@ -252,6 +252,8 @@
         not hex (0-9, A-F)</string>
     <string name="info_static_ac_not_3_byte">Error: Static Access Conditions
         have to be 3 bytes (6 characters) long</string>
+    <string name="info_file_to_big">Error: File is to big (out of memory)</string>
+    <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

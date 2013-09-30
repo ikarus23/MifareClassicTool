@@ -159,7 +159,7 @@ public class DumpEditorActivity extends BasicActivity {
                     FileChooserActivity.EXTRA_CHOSEN_FILE));
             mFileName = file.getName();
             setTitle(getTitle() + " (" + mFileName + ")");
-            initEditor(Common.readFileLineByLine(file, false));
+            initEditor(Common.readFileLineByLine(file, false, this));
             setIntent(null);
         } else if (savedInstanceState != null) {
             // Recreated after kill by Android (due to low memory).

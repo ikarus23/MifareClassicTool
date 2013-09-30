@@ -171,10 +171,13 @@ public class Common {
      * @param file The file to read.
      * @param readComments Whether to read comments or to ignore them.
      * Comments are lines STARTING with "#" (and empty lines).
+     * @param context  The context in which the possible "Out of memory"-Toast
+     * will be shown.
      * @return Array of strings representing the lines of the file.
      * If the file is empty or an error occurs "null" will be returned.
      */
-    public static String[] readFileLineByLine(File file, boolean readComments) {
+    public static String[] readFileLineByLine(File file, boolean readComments,
+            Context context) {
         BufferedReader br = null;
         String[] ret = null;
         if (file != null && file.exists()) {
@@ -188,7 +191,15 @@ public class Common {
                     // Ignore comments if readComments == false.
                     if ( !line.equals("")
                             && (readComments || !line.startsWith("#"))) {
-                        linesArray.add(line);
+                        try {
+                            linesArray.add(line);
+                        } catch (OutOfMemoryError e) {
+                            // Error. File is too big
+                            // (too many lines, out of memory).
+                            Toast.makeText(context, R.string.info_file_to_big,
+                                    Toast.LENGTH_LONG).show();
+                            return null;
+                        }
                     }
                 }
                 if (linesArray.size() > 0) {

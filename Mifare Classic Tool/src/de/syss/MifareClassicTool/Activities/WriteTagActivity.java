@@ -471,7 +471,11 @@ public class WriteTagActivity extends BasicActivity {
     private void readDumpAndCreateKeyMapForDump(String pathToDump) {
         // Read dump.
         File file = new File(pathToDump);
-        String[] dump = Common.readFileLineByLine(file, false);
+        String[] dump = Common.readFileLineByLine(file, false, this);
+        if (dump == null) {
+            // Error.
+            return;
+        }
         mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
         int sector = 0;
         int block = 0;

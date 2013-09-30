@@ -25,11 +25,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import android.content.Context;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.MifareClassic;
 import android.util.Log;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 /**
  * Provide functions to read/write/analyze a Mifare Classic tag.
@@ -575,16 +577,27 @@ public class MCReader {
      * These files are simple text files with one key
      * per line. Empty lines and lines STARTING with "#"
      * will not be interpreted.
+     * @param context The context in which the possible "Out of memory"-Toast
+     * will be shown.
+     * @return True if the key files are correctly loaded. False
+     * on error (out of memory).
      */
-    public void setKeyFile(File[] keyFiles) {
+    public boolean setKeyFile(File[] keyFiles, Context context) {
         HashSet<byte[]> keys = new HashSet<byte[]>();
         for (File file : keyFiles) {
-            String[] lines = Common.readFileLineByLine(file, false);
+            String[] lines = Common.readFileLineByLine(file, false, context);
             if (lines != null) {
                 for (String line : lines) {
                     if (!line.equals("") && line.length() == 12
                             && line.matches("[0-9A-Fa-f]+")) {
-                        keys.add(Common.hexStringToByteArray(line));
+                        try {
+                            keys.add(Common.hexStringToByteArray(line));
+                        } catch (OutOfMemoryError e) {
+                            // Error. Too many keys (out of memory).
+                            Toast.makeText(context, R.string.info_to_many_keys,
+                                    Toast.LENGTH_LONG).show();
+                            return false;
+                        }
                     }
                 }
             }
@@ -592,6 +605,7 @@ public class MCReader {
         if (keys.size() > 0) {
             mKeysWithOrder = new ArrayList<byte[]>(keys);
         }
+        return true;
     }
 
     /**
