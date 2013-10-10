@@ -23,12 +23,12 @@ Features
 * Read Mifare Classic tags
 * Save, edit and share the tag data you read
 * Write to Mifare Classic tags (block-wise)
-* Clone Mifare Classic tags
+* Clone Mifare Classic tags  
   (Write dump of a tag to another tag; write 'dump-wise')
-* Key management based on dictionary-attack
-  (Write the keys you know in a file (dictionary).
-  MCT will try to authenticate with these
-  keys against all sectors and read as much as possible.
+* Key management based on dictionary-attack  
+  (Write the keys you know in a file (dictionary).  
+  MCT will try to authenticate with these  
+  keys against all sectors and read as much as possible.  
   See chapter [Getting Started](#getting-started).)
 * Format a tag back to the factory/delivery state
 * Write the manufacturer block of special Mifare Classic tags
@@ -101,9 +101,9 @@ If you are finished setting up your key file, you can read a tag
 using &quot;Read Tag&quot; from main menu.
 
 Advantages of the Key Files Concept:
-* **You don't have to worry about which key is for which sector.**
+* **You don't have to worry about which key is for which sector.**  
   The application tries to authenticate with all keys from the key
-* **You don't have to know all the keys.**
+* **You don't have to know all the keys.**  
   If neither key A nor key B for a specific sector is found in the
   key file (dictionary), the application will skip reading this
   sector.
@@ -125,9 +125,9 @@ It is free software and licensed under the
 [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 Icons used in this application:
-* Oxygen Icons: [www.oxygen-icons.org](http://www.oxygen-icons.org/)
+* Oxygen Icons: [www.oxygen-icons.org](http://www.oxygen-icons.org/)  
   ([GNU Library General Public License](http://www.gnu.org/licenses/lgpl.html))
-* RFID Tag: [www.nfc-tag.de](http://www.nfc-tag.de/)
+* RFID Tag: [www.nfc-tag.de](http://www.nfc-tag.de/)  
   ([Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/))
 
 MIFARE is a registered trademark of NXP Semiconductors.
