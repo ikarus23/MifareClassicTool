@@ -587,7 +587,7 @@ public class WriteTagActivity extends BasicActivity {
                 ArrayList<HashMap<String, String>>();
         final HashMap<Integer, HashMap<Integer, Integer>> writeOnPosSafe =
                 new HashMap<Integer, HashMap<Integer,Integer>>(
-                        writeOnPos.size());
+                        mDumpWithPos.size());
         // Keys that are missing completely (mDumpWithPos vs. keyMap).
         for (int sector : mDumpWithPos.keySet()) {
             if (keyMap.indexOfKey(sector) < 0) {
@@ -599,7 +599,7 @@ public class WriteTagActivity extends BasicActivity {
         }
         // Keys with write privileges that are missing or some
         // blocks (block-parts) are read-only (writeOnPos vs. keyMap).
-        Set<Integer> sectors = writeOnPos.keySet();
+        Set<Integer> sectors = mDumpWithPos.keySet();
         for (int sector : sectors) {
             if (writeOnPos.get(sector) == null) {
                 // Error. Sector is dead (IO Error) or ACs are invalid.
@@ -609,7 +609,7 @@ public class WriteTagActivity extends BasicActivity {
             }
             writeOnPosSafe.put(sector, new HashMap<Integer, Integer>());
             byte[][] keys = keyMap.get(sector);
-            Set<Integer> blocks = writeOnPos.get(sector).keySet();
+            Set<Integer> blocks = mDumpWithPos.get(sector).keySet();
             for (int block : blocks) {
                 boolean isSafeForWriting = true;
                 if (!mWriteManufBlock.isChecked()
