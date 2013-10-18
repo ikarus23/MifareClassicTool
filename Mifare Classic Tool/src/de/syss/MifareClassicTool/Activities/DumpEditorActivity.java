@@ -197,30 +197,33 @@ public class DumpEditorActivity extends BasicActivity {
 
     /**
      * Handle the selected function from the editor menu.
-     * @see #onSaveDump()
+     * @see #saveDump()
      * @see #shareDump()
-     * @see #onShowAscii()
-     * @see #onShowAC()
-     * @see #onDecodeValueBlocks()
+     * @see #showAscii()
+     * @see #showAC()
+     * @see #decodeValueBlocks()
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
         case R.id.menuDumpEditorSave:
-            onSaveDump();
+            saveDump();
             return true;
         case R.id.menuDumpEditorAscii:
-            onShowAscii();
+            showAscii();
             return true;
         case R.id.menuDumpEditorAccessConditions:
-            onShowAC();
+            showAC();
             return true;
         case R.id.menuDumpEditorValueBlocksAsInt:
-            onDecodeValueBlocks();
+            decodeValueBlocks();
             return true;
         case R.id.menuDumpEditorShare:
             shareDump();
+            return true;
+        case R.id.menuDumpEditorOpenValueBLockTool:
+            openValueBlockTool();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -267,7 +270,7 @@ public class DumpEditorActivity extends BasicActivity {
      * @see #isValidDumpErrorToast()
      * @see Common#saveFile(File, String[])
      */
-    public void onSaveDump() {
+    private void saveDump() {
         if (isValidDumpErrorToast()) {
             if (!Common.isExternalStorageWritableErrorToast(this)) {
                 return;
@@ -506,7 +509,7 @@ public class DumpEditorActivity extends BasicActivity {
      * Display the the hex data as US-ASCII ({@link HexToAsciiActivity}).
      * @see HexToAsciiActivity
      */
-    public void onShowAscii() {
+    private void showAscii() {
         if (isValidDumpErrorToast()) {
             String dump = "";
             String s = System.getProperty("line.separator");
@@ -529,7 +532,7 @@ public class DumpEditorActivity extends BasicActivity {
      * Display the access conditions {@link AccessConditionDecoderActivity}.
      * @see AccessConditionDecoderActivity
      */
-    public void onShowAC() {
+    private void showAC() {
         if (isValidDumpErrorToast()) {
             String ac = "";
             int lastSectorHeader = 0;
@@ -557,10 +560,10 @@ public class DumpEditorActivity extends BasicActivity {
     }
 
     /**
-     * Display the value blocks as integer {@link ValueBlocksToIntActivity}.
+     * Display the value blocks as integer ({@link ValueBlocksToIntActivity}).
      * @see ValueBlocksToIntActivity
      */
-    public void onDecodeValueBlocks() {
+    private void decodeValueBlocks() {
         if (isValidDumpErrorToast()) {
             String vb = "";
             String header = "";
@@ -593,6 +596,16 @@ public class DumpEditorActivity extends BasicActivity {
 
         }
     }
+
+    /**
+     * Open the Value Block decoder/encoder ({@link ValueBlockToolActivity}).
+     * @see ValueBlockToolActivity
+     */
+    private void openValueBlockTool() {
+        Intent intent = new Intent(this, ValueBlockToolActivity.class);
+        startActivity(intent);
+    }
+
 
     /**
      * Share a dump as "file://" stream resource (e.g. as e-mail attachment).

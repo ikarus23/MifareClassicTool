@@ -34,4 +34,6 @@
         android:title="@string/menu_show_ac" />
     <item android:id="@+id/menuDumpEditorValueBlocksAsInt"
         android:title="@string/menu_show_value_blocks" />
+    <item android:id="@+id/menuDumpEditorOpenValueBLockTool"
+        android:title="@string/menu_open_value_block_tool" />
 </menu>

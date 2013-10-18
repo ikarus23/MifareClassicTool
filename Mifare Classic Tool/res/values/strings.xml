@@ -176,9 +176,10 @@
     <!-- Menu items -->
     <string name="menu_save">Save</string>
     <string name="menu_share">Share</string>
-    <string name="menu_show_ascii">Show Data as ASCII</string>
+    <string name="menu_show_ascii">Data as ASCII</string>
     <string name="menu_show_ac">Decode Access Conditions</string>
-    <string name="menu_show_value_blocks">Show Value Blocks as Int.</string>
+    <string name="menu_show_value_blocks">Value Blocks as Int.</string>
+    <string name="menu_open_value_block_tool">Value Block De-/Encoder</string>
     <string name="menu_tag_info">Display Tag Info</string>
     <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
     <string name="menu_new_file">Create New File</string>
