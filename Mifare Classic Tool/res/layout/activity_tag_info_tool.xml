@@ -30,24 +30,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:background="@xml/layout_border"
+        android:padding="2dp"
+        android:layout_margin="5dp"
         android:visibility="gone" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imageViewIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/text_no_mifare_support"
+            android:contentDescription="@string/text_no_mfc_support_device"
             android:src="@drawable/warning" />
 
         <TextView
-            android:id="@+id/textTagInfoToolNoMFSupport"
+            android:id="@+id/textTagInfoToolErrorMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:padding="5dp"
-            android:text="@string/text_no_mifare_support"
+            android:text="@string/text_no_mfc_support_device"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/red" />
 

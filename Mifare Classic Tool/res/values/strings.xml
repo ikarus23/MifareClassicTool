@@ -99,7 +99,9 @@
     <string name="text_invalid_ac_or_sector_dead">Invalid Access Conditions or
         dead sector :(</string>
     <string name="text_strange_error">Some strange error occurred :(</string>
-    <string name="text_no_mifare_support">No Mifare Classic Support!</string>
+    <string name="text_no_mfc_support_device">This device does not
+        support Mifare Classic!</string>
+    <string name="text_no_mfc_support_tag">Not a Mifare Classic tag!</string>
     <string name="text_no_tag">There is no Mifare Classic tag.</string>
     <string name="text_generic_info">Generic Info</string>
     <string name="text_mf_info">Mifare Classic Info</string>
@@ -262,18 +264,22 @@
         Please go to your Settings and enable it.</string>
     <string name="dialog_no_nfc_title">No NFC Hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC Not Enabled</string>
-    <string name="dialog_no_mfc_title">No Mifare Classic Support</string>
-    <string name="dialog_no_mfc">The tag (most likely) or your device
+    <string name="dialog_no_mfc_support_device_title">No Mifare Classic Support</string>
+    <string name="dialog_no_mfc_support_device">Your device
         (due to hardware) does not support Mifare Classic! The only thing
         possible is to display the UID and some other generic
         information. Further I/O operations are  impossible.
-        \n\n<b>If your device does not support Mifare Classic,
-        this App is pretty much useless.</b>
+        \n\n<b>Therefore, this App is pretty much useless for this device.</b>
         \n\nKnown devices with no Mifare Classic support:\n
         - Google Nexus 4\n
         - Google Nexus 7 (2013)\n
         - Google Nexus 10\n
         - Samsung Galaxy S4</string>
+    <string name="dialog_no_mfc_support_tag_title">Not a Mifare Classic tag</string>
+    <string name="dialog_no_mfc_support_tag">This tag is not compatible with
+        the Mifare Classic technology! Notice that this App is designed for
+        Mifare Classic tags only!
+        \n\n<b>Please use another tag.</b></string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>

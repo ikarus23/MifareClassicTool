@@ -109,11 +109,13 @@ public class MainActivity extends Activity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.action_exit_app,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }
                  })
                  .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
                     public void onCancel(DialogInterface dialog) {
                         finish();
                     }
@@ -176,6 +178,7 @@ public class MainActivity extends Activity {
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_nfc,
                     new DialogInterface.OnClickListener() {
+                @Override
                 @SuppressLint("InlinedApi")
                 public void onClick(DialogInterface dialog, int which) {
                     // Goto NFC Settings.
@@ -189,12 +192,14 @@ public class MainActivity extends Activity {
              })
              .setNeutralButton(R.string.action_editor_only,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Only use Editor. Do nothing.
                 }
              })
              .setNegativeButton(R.string.action_exit_app,
                      new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int id) {
                     // Exit the App.
                     finish();
@@ -214,11 +219,13 @@ public class MainActivity extends Activity {
                 .setMessage(R.string.dialog_first_run)
                 .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 })
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
                     public void onCancel(DialogInterface dialog) {
                         mResume = true;
                         checkNfc();
@@ -283,7 +290,8 @@ public class MainActivity extends Activity {
             // NFC is enabled. Hide dialog and enable NFC
             // foreground dispatch.
             if (mOldIntent != getIntent()) {
-                if (Common.treatAsNewTag(getIntent(), this) == 0) {
+                int typeCheck = Common.treatAsNewTag(getIntent(), this);
+                if (typeCheck == -1 || typeCheck == -2) {
                     // Device or tag does not support Mifare Classic.
                     // Run the only thing that is possible: The tag info tool.
                     Intent i = new Intent(this, TagInfoToolActivity.class);
@@ -316,7 +324,8 @@ public class MainActivity extends Activity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        if (Common.treatAsNewTag(intent, this) == 0) {
+        int typeCheck = Common.treatAsNewTag(intent, this);
+        if (typeCheck == -1 || typeCheck == -2) {
             // Device or tag does not support Mifare Classic.
             // Run the only thing that is possible: The tag info tool.
             Intent i = new Intent(this, TagInfoToolActivity.class);

@@ -304,17 +304,20 @@ public class Common {
      * {@link #mTag} and {@link #mUID} will be updated and a Toast
      * message will be shown in the calling Context (Activity).
      * This method will also check if the device/tag supports Mifare Classic
-     * (see return values).
+     * (see return values and {@link #checkMifareClassicSupport(Tag, Context)}).
      * @param intent The Intent which should be checked for a new Tag.
      * @param context The Context in which the Toast will be shown.
      * @return
      * <ul>
-     * <li>1 - The device/tag supports Mifare Classic</li>
-     * <li>0 - The device/tag does not support Mifare Classic</li>
-     * <li>-1 - Wrong Intent (action is not "ACTION_TECH_DISCOVERED").</li>
+     * <li>0 - The device/tag supports Mifare Classic</li>
+     * <li>-1 - Device does not support Mifare Classic.</li>
+     * <li>-2 - Tag does not support Mifare Classic.</li>
+     * <li>-3 - Error (tag or context is null).</li>
+     * <li>-4 - Wrong Intent (action is not "ACTION_TECH_DISCOVERED").</li>
      * </ul>
      * @see #mTag
      * @see #mUID
+     * @see #checkMifareClassicSupport(Tag, Context)
      */
     public static int treatAsNewTag(Intent intent, Context context) {
         // Check if Intent has a NFC Tag.
@@ -329,12 +332,60 @@ public class Common {
             id += byte2HexString(tag.getId());
             id += ")";
             Toast.makeText(context, id, Toast.LENGTH_LONG).show();
-
-            // Return "1" if device supports Mifare Classic. "0" otherwise.
-            return (Arrays.asList(tag.getTechList()).contains(
-                    MifareClassic.class.getName())) ? 1 : 0;
+            return checkMifareClassicSupport(tag, context);
         }
-        return -1;
+        return -4;
+    }
+
+    /**
+     * Check if the tag and the device support the Mifare Classic technology.
+     * @param tag The tag to check.
+     * @param context The context of the package manager.
+     * @return
+     * <ul>
+     * <li>0 - Device and tag support Mifare Classic.</li>
+     * <li>-1 - Device does not support Mifare Classic.</li>
+     * <li>-2 - Tag does not support Mifare Classic.</li>
+     * <li>-3 - Error (tag or context is null).</li>
+     * </ul>
+     */
+    public static int checkMifareClassicSupport(Tag tag, Context context) {
+        if (tag == null || context == null) {
+            // Error.
+            return -3;
+        }
+
+        if (Arrays.asList(tag.getTechList()).contains(
+                MifareClassic.class.getName())) {
+            // Device and tag support Mifare Classic.
+            return 0;
+        } else if (context.getPackageManager().hasSystemFeature(
+                "com.nxp.mifare")){
+            // Tag does not support Mifare Classic.
+            return -2;
+        } else {
+            // Check if device does not support Mifare Classic.
+            // For doing so, check if the ATQA + SAK of the tag indicate that
+            // it's a Mifare Classic tag.
+            // See: http://www.nxp.com/documents/application_note/AN10833.pdf
+            // (Table 5 and 6)
+            NfcA nfca = NfcA.get(tag);
+            byte[] atqa = nfca.getAtqa();
+            if (atqa[1] == 0 &&
+                    (atqa[0] == 4 || atqa[0] == (byte)0x44 ||
+                     atqa[0] == 2 || atqa[0] == (byte)0x42)) {
+                // ATQA says it is most likely a Mifare Classic tag.
+                byte sak = (byte)nfca.getSak();
+                if (sak == 8 || sak == 9 || sak == (byte)0x18) {
+                    // SAK says it is most likely a Mifare Classic tag.
+                    // --> Device does not support Mifare Classic.
+                    return -1;
+                }
+            }
+            // Nope, it's not the device (most likely).
+            // The tag does not support Mifare Classic.
+            return -2;
+        }
     }
 
     /**

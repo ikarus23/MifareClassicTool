@@ -61,7 +61,8 @@ public abstract class BasicActivity extends Activity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        if (Common.treatAsNewTag(intent, this) == 0) {
+        int typeCheck = Common.treatAsNewTag(intent, this);
+        if (typeCheck == -1 || typeCheck == -2) {
             // Device or tag does not support Mifare Classic.
             // Run the only thing that is possible: The tag info tool.
             Intent i = new Intent(this, TagInfoToolActivity.class);

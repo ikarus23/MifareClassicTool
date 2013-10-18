@@ -18,8 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.util.Arrays;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,9 +45,12 @@ import de.syss.MifareClassicTool.R;
 public class TagInfoToolActivity extends BasicActivity {
 
     LinearLayout mLayout;
+    TextView mErrorMessage;
+    int mMFCSupport;
 
     /**
-     * Calls {@link #updateTagInfos(Tag)}.
+     * Calls {@link #updateTagInfos(Tag)} (and initialize some member
+     * variables).
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,8 @@ public class TagInfoToolActivity extends BasicActivity {
         setContentView(R.layout.activity_tag_info_tool);
 
         mLayout = (LinearLayout) findViewById(R.id.LinearLayoutTagInfoTool);
+        mErrorMessage = (TextView) findViewById(
+                R.id.textTagInfoToolErrorMessage);
         updateTagInfos(Common.getTag());
     }
 
@@ -78,9 +81,20 @@ public class TagInfoToolActivity extends BasicActivity {
      * (in this case the read more button).
      */
     public void onReadMore(View view) {
+        int titleID = 0;
+        int messageID = 0;
+        if (mMFCSupport == -1) {
+            // Device does not support Mifare Classic.
+            titleID = R.string.dialog_no_mfc_support_device_title;
+            messageID = R.string.dialog_no_mfc_support_device;
+        } else if (mMFCSupport == -2) {
+            // Tag does not support Mifare Classic.
+            titleID = R.string.dialog_no_mfc_support_tag_title;
+            messageID = R.string.dialog_no_mfc_support_tag;
+        }
         new AlertDialog.Builder(this)
-        .setTitle(R.string.dialog_no_mfc_title)
-        .setMessage(R.string.dialog_no_mfc)
+        .setTitle(titleID)
+        .setMessage(messageID)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(R.string.action_ok,
                 new DialogInterface.OnClickListener() {
@@ -101,8 +115,7 @@ public class TagInfoToolActivity extends BasicActivity {
 
         if (tag != null) {
             // Check for Mifare Classic support.
-            boolean isMifareClassic = Arrays.asList(tag.getTechList()).contains(
-                    MifareClassic.class.getName());
+            mMFCSupport = Common.checkMifareClassicSupport(tag, this);
 
             mLayout.removeAllViews();
             // Display generic info.
@@ -151,7 +164,7 @@ public class TagInfoToolActivity extends BasicActivity {
             // Identify tag type.
             int tagTypeResourceID = getTagIdentifier(atqa, sak, ats);
             String tagType = "";
-            if (tagTypeResourceID == R.string.tag_unknown && isMifareClassic) {
+            if (tagTypeResourceID == R.string.tag_unknown && mMFCSupport > -2) {
                 tagType = getString(R.string.tag_unknown_mf_classic);
             } else {
                 tagType = getString(tagTypeResourceID);
@@ -188,7 +201,7 @@ public class TagInfoToolActivity extends BasicActivity {
             LinearLayout layout = (LinearLayout) findViewById(
                     R.id.LinearLayoutTagInfoToolSupport);
             // Check for Mifare Classic support.
-            if (isMifareClassic) {
+            if (mMFCSupport == 0) {
                 // Display Mifare Classic info.
                 // Create views and add them to the layout.
                 TextView headerMifareInfo = new TextView(this);
@@ -228,8 +241,15 @@ public class TagInfoToolActivity extends BasicActivity {
                                 R.string.text_block_count) + ":", hc),
                         "\n", blockCount));
                 layout.setVisibility(View.GONE);
-            } else {
-                // No Mifare Classic Support.
+            } else if (mMFCSupport == -1) {
+                // No Mifare Classic Support (due to the device hardware).
+                // Set error message.
+                mErrorMessage.setText(R.string.text_no_mfc_support_device);
+                layout.setVisibility(View.VISIBLE);
+            } else if (mMFCSupport == -2) {
+                // The tag does not support Mifare Classic.
+                // Set error message.
+                mErrorMessage.setText(R.string.text_no_mfc_support_tag);
                 layout.setVisibility(View.VISIBLE);
             }
         } else {
