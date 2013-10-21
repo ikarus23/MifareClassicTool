@@ -137,7 +137,7 @@ public class MCReader {
      * Read as much as possible from the tag depending on the
      * mapping range and the given key information.
      * The key information must be set before calling this method
-     * (use {@link #setKeyFile(File[])}).
+     * (use {@link #setKeyFile(File[], Context)}).
      * Also the mapping range must be specified before calling this method
      * (use {@link #setMappingRange(int, int)}).
      * Attention: This method builds a key map. Depending on the key count
@@ -150,7 +150,7 @@ public class MCReader {
      * If a block is "null" it means that the block couldn't be
      * read with the given key information.
      * @see #buildNextKeyMapPart()
-     * @see #setKeyFile(File[])
+     * @see #setKeyFile(File[], Context)
      */
     public SparseArray<String[]> readAsMuchAsPossible() {
         mKeyMapStatus = getSectorCount();
@@ -285,7 +285,7 @@ public class MCReader {
      * Build Key-Value Pairs in which keys represent the sector and
      * values are one or both of the Mifare keys (A/B).
      * The Mifare key information must be set before calling this method
-     * (use {@link #setKeyFile(File[])}).
+     * (use {@link #setKeyFile(File[], Context)}).
      * Also the mapping range must be specified before calling this method
      * (use {@link #setMappingRange(int, int)}).<br /><br />
      * The mapping works like some kind of dictionary attack.
@@ -301,7 +301,7 @@ public class MCReader {
      * @return The sector that was checked at the moment. On error it returns
      * "-1" and resets the key map to "null".
      * @see #getKeyMap()
-     * @see #setKeyFile(File[])
+     * @see #setKeyFile(File[], Context)
      * @see #setMappingRange(int, int)
      * @see #readAsMuchAsPossible(SparseArray)
      */
@@ -676,7 +676,7 @@ public class MCReader {
 
     /**
      * Get the key map build from {@link #buildNextKeyMapPart()} with
-     * the given key file ({@link #setKeyFile(File[])}). If you want a
+     * the given key file ({@link #setKeyFile(File[], Context)}). If you want a
      * full key map, you have to call {@link #buildNextKeyMapPart()} as
      * often as there are sectors on the tag
      * (See {@link #getSectorCount()}).

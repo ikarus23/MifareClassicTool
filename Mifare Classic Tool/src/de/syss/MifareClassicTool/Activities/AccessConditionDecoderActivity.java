@@ -164,14 +164,14 @@ public class AccessConditionDecoderActivity extends BasicActivity {
             TextView decr = new TextView(this);
 
             // Set cell texts to colored permissions.
-            read.setText(coloredPermissionText(c1, c2, c3,
-                    Common.Operations.Read, false, isKeyBReadable));
-            write.setText(coloredPermissionText(c1, c2, c3,
-                    Common.Operations.Write, false, isKeyBReadable));
-            incr.setText(coloredPermissionText(c1, c2, c3,
-                    Common.Operations.Increment, false, isKeyBReadable));
-            decr.setText(coloredPermissionText(c1, c2, c3,
-                    Common.Operations.DecTransRest, false, isKeyBReadable));
+            read.setText(getColoredPermissionText(c1, c2, c3,
+                    Operations.Read, false, isKeyBReadable));
+            write.setText(getColoredPermissionText(c1, c2, c3,
+                    Operations.Write, false, isKeyBReadable));
+            incr.setText(getColoredPermissionText(c1, c2, c3,
+                    Operations.Increment, false, isKeyBReadable));
+            decr.setText(getColoredPermissionText(c1, c2, c3,
+                    Operations.DecTransRest, false, isKeyBReadable));
 
             // Add cells to row.
             tr.addView(location);
@@ -206,18 +206,18 @@ public class AccessConditionDecoderActivity extends BasicActivity {
         }
 
         // Set row texts to colored permissions.
-        read[0].setText(coloredPermissionText(c1, c2, c3,
-                Common.Operations.ReadKeyA, true, false));
-        write[0].setText(coloredPermissionText(c1, c2, c3,
-                Common.Operations.WriteKeyA, true, false));
-        read[1].setText(coloredPermissionText(c1, c2, c3,
-                Common.Operations.ReadAC, true, false));
-        write[1].setText(coloredPermissionText(c1, c2, c3,
-                Common.Operations.WriteAC, true, false));
-        read[2].setText(coloredPermissionText(c1, c2, c3,
-                Common.Operations.ReadKeyB, true, false));
-        write[2].setText(coloredPermissionText(c1, c2, c3,
-                Common.Operations.WriteKeyB, true, false));
+        read[0].setText(getColoredPermissionText(c1, c2, c3,
+                Operations.ReadKeyA, true, false));
+        write[0].setText(getColoredPermissionText(c1, c2, c3,
+                Operations.WriteKeyA, true, false));
+        read[1].setText(getColoredPermissionText(c1, c2, c3,
+                Operations.ReadAC, true, false));
+        write[1].setText(getColoredPermissionText(c1, c2, c3,
+                Operations.WriteAC, true, false));
+        read[2].setText(getColoredPermissionText(c1, c2, c3,
+                Operations.ReadKeyB, true, false));
+        write[2].setText(getColoredPermissionText(c1, c2, c3,
+                Operations.WriteKeyB, true, false));
 
         // Add rows to layout.
         String[] headers = new String[] {"Key A:", "AC Bits:", "Key B:"};
@@ -240,8 +240,8 @@ public class AccessConditionDecoderActivity extends BasicActivity {
     /**
      * A helper function for {@link #addBlockAC(byte[][], boolean)} and
      * {@link #addSectorTrailerAC(byte[][])} creating a colored text
-     * depending on the Access Conditions and the requested operation (
-     * {@link Operations}).
+     * depending on the Access Conditions and the requested operation
+     * ({@link Operations}).
      * @param c1 Access Condition byte "C1"
      * @param c2 Access Condition byte "C2"
      * @param c3 Access Condition byte "C3"
@@ -250,10 +250,10 @@ public class AccessConditionDecoderActivity extends BasicActivity {
      * @param isKeyBReadable True if key B is readable, False otherwise.
      * @return A colored text depending on the return value of
      * {@link Common#getOperationInfoForBlock(byte, byte, byte, Operations,
-     * boolean, boolean)}.
+     * boolean, boolean)}. On Error an empty string will be returned.
      */
-    private SpannableString coloredPermissionText(byte c1, byte c2, byte c3,
-            Common.Operations op, boolean isSectorTrailer,
+    private SpannableString getColoredPermissionText(byte c1, byte c2, byte c3,
+            Operations op, boolean isSectorTrailer,
             boolean isKeyBReadable) {
         switch (Common.getOperationInfoForBlock(c1, c2, c3, op,
                 isSectorTrailer, isKeyBReadable)) {
@@ -274,12 +274,12 @@ public class AccessConditionDecoderActivity extends BasicActivity {
             return Common.colorString(getString(R.string.text_key_ab),
                     getResources().getColor(R.color.light_green));
         case 4:
-            // Error.
+            // Access Condition Error.
             return Common.colorString(getString(R.string.text_ac_error),
                     getResources().getColor(R.color.red));
+        default:
+            // Error:
+            return new SpannableString("");
         }
-
-        // Dummy.
-        return new SpannableString("");
     }
 }
