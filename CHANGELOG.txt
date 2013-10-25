@@ -1,5 +1,12 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.5.3:
+ * Improved Mifare Classic support check.
+   (The app tells you now whether it is your device or the tag that does not
+   support Mifare Classic.)
+ * Fixed crash issue for too big/many key files.
+ * Some bug fixes.
+
 Version 1.5.2:
  * Hotfix: Fixed crash issue introduced with the release of version 1.5.1
    (This issue occurred in combination of unreadable sectors,

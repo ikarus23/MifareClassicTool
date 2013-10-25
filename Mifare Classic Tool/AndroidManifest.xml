@@ -20,8 +20,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.syss.MifareClassicTool"
-    android:versionCode="16"
-    android:versionName="1.5.2" >
+    android:versionCode="17"
+    android:versionName="1.5.3" >
 
     <uses-sdk
         android:minSdkVersion="10"
