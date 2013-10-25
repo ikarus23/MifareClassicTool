@@ -280,7 +280,10 @@
     <string name="dialog_no_mfc_support_tag">This tag is not compatible with
         the Mifare Classic technology! Notice that this App is designed for
         Mifare Classic tags only!
-        \n\n<b>Please use another tag.</b></string>
+        \n\n<b>Please use another tag.</b>
+        \n\n<small>(Notice: In some rare cases this message could be a false
+        positive caused by multiple tags in the reader filed or strange
+        ATQA+SAK values.)</small></string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>
