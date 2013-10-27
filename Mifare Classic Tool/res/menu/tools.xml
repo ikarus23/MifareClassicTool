@@ -22,6 +22,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/menuMainTagInfo"
         android:title="@string/menu_tag_info" />
-    <item android:id="@+id/menuMainValueBlockCoder"
-        android:title="@string/menu_vb_coder" />
+    <item android:id="@+id/menuMainValueBlockTool"
+        android:title="@string/menu_vb_tool" />
+    <item android:id="@+id/menuMainAccessConditionTool"
+        android:title="@string/menu_ac_tool" />
 </menu>

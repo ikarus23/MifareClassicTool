@@ -225,6 +225,9 @@ public class DumpEditorActivity extends BasicActivity {
         case R.id.menuDumpEditorOpenValueBLockTool:
             openValueBlockTool();
             return true;
+        case R.id.menuDumpEditorOpenAccessConditionTool:
+            openAccessConditionTool();
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -593,7 +596,6 @@ public class DumpEditorActivity extends BasicActivity {
                 Toast.makeText(this, R.string.info_no_vb_in_dump,
                         Toast.LENGTH_LONG).show();
             }
-
         }
     }
 
@@ -606,6 +608,14 @@ public class DumpEditorActivity extends BasicActivity {
         startActivity(intent);
     }
 
+    /**
+     * Open the Access Condition decoder/encoder ({@link AccessConditionTool}).
+     * @see AccessConditionTool
+     */
+    private void openAccessConditionTool() {
+        Intent intent = new Intent(this, AccessConditionTool.class);
+        startActivity(intent);
+    }
 
     /**
      * Share a dump as "file://" stream resource (e.g. as e-mail attachment).

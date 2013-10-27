@@ -442,8 +442,12 @@ public class MainActivity extends Activity {
             intent = new Intent(this, TagInfoToolActivity.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainValueBlockCoder:
+        case R.id.menuMainValueBlockTool:
             intent = new Intent(this, ValueBlockToolActivity.class);
+            startActivity(intent);
+            return true;
+        case R.id.menuMainAccessConditionTool:
+            intent = new Intent(this, AccessConditionTool.class);
             startActivity(intent);
             return true;
         default:
