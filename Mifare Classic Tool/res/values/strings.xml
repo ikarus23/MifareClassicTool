@@ -40,6 +40,8 @@
     <string name="title_activity_tag_info">Tag Info</string>
     <string name="title_activity_value_block_tool">Value Block Decoder
         &amp; Encoder</string>
+    <string name="title_activity_access_condition_tool">Access Condition
+        Decoder &amp; Encode</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -328,8 +330,7 @@
         that will be permanent for a tag. In case the reader does not check
         them, you can easily use custom ones to make the tag reusable.
         \n\n<b>WARNING: Writing wrong data may cause irreparable
-        damage to the tag.</b>
-    </string>
+        damage to the tag.</b></string>
 
     <!-- Hints -->
     <string name="hint_hex_data">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

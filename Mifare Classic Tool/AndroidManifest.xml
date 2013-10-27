@@ -140,6 +140,12 @@
             android:label="@string/title_activity_value_block_tool"
             android:launchMode="singleTop" >
         </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activities.AccessConditionTool"
+            android:label="@string/title_activity_access_condition_tool"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop" >
+        </activity>
     </application>
 
 </manifest>
