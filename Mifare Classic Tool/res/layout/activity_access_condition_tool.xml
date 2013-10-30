@@ -23,4 +23,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- Dummy to prevent EditTexts from getting focus on Activity startup -->
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutAccessConditionToolAC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textViewAccessConditionToolAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/text_ac_label"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editTextAccessConditionToolAC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_hex_3_byte"
+            android:imeOptions="actionDone"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxEms="6"
+            android:maxLength="6"
+            android:minEms="6" />
+
+        <ImageButton
+            android:id="@+id/imageButtonAccessConditionToolCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_copy"
+            android:onClick="onCopyToClipboard"
+            android:src="@drawable/copy" />
+
+        <ImageButton
+            android:id="@+id/imageButtonAccessConditionToolPaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_paste"
+            android:onClick="onPasteFromClipboard"
+            android:src="@drawable/paste" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutAccessConditionToolConvert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LinearLayoutAccessConditionToolAC"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp" >
+
+        <Button
+            android:id="@+id/buttonAccessConditionToolDecode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/arrow_down"
+            android:onClick="onDecode"
+            android:text="@string/action_decode" />
+
+        <Button
+            android:id="@+id/buttonAccessConditionToolEncode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/arrow_up"
+            android:onClick="onEncode"
+            android:text="@string/action_encode" />
+
+    </LinearLayout>
+
 </RelativeLayout>

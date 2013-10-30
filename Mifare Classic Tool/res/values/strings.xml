@@ -129,6 +129,7 @@
     <string name="text_option_info">Info to option</string>
     <string name="text_static_ac_default">08778F</string>
     <string name="text_no_key_io_error">No keys found (or dead sector)</string>
+    <string name="text_ac_label">ACs:</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -334,7 +335,8 @@
         damage to the tag.</b></string>
 
     <!-- Hints -->
-    <string name="hint_hex_data">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_3_byte">HEX, 3 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
 

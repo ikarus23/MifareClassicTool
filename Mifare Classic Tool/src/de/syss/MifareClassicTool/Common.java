@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -35,6 +36,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
+import android.os.Build;
 import android.os.Environment;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -743,6 +745,77 @@ public class Common {
         ret.setSpan(new ForegroundColorSpan(color),
                 0, data.length(), 0);
         return ret;
+    }
+
+    /**
+     * Copy a text to the Android clipboard.
+     * @param text The text that should be stored on the clipboard.
+     * @param context Context of the SystemService
+     * (and the Toast message that will by shown).
+     */
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    public static void copyToClipboard(String text, Context context) {
+        if (text.equals("") == false) {
+            if (Build.VERSION.SDK_INT >= 11) {
+                // Android API level 11+.
+                android.content.ClipboardManager clipboard =
+                        (android.content.ClipboardManager)
+                        context.getSystemService(
+                                Context.CLIPBOARD_SERVICE);
+                android.content.ClipData clip =
+                        android.content.ClipData.newPlainText(
+                                "mifare classic tool data", text);
+                clipboard.setPrimaryClip(clip);
+            } else {
+                // Android API level 10.
+                android.text.ClipboardManager clipboard =
+                        (android.text.ClipboardManager)
+                        context.getSystemService(
+                                Context.CLIPBOARD_SERVICE);
+                clipboard.setText(text);
+            }
+            Toast.makeText(context, R.string.info_copied_to_clipboard,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Get the content of the Android clipboard (if it is plain text).
+     * @param context Context of the SystemService
+     * @return The content of the Android clipboard. On error
+     * (clipboard empty, clipboard content not plain text, etc.) null will
+     * be returned.
+     */
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    public static String getFromClipboard(Context context) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            // Android API level 11+.
+            android.content.ClipboardManager clipboard =
+                    (android.content.ClipboardManager)
+                    context.getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+            if (clipboard.getPrimaryClip() != null
+                    && clipboard.getPrimaryClip().getItemCount() > 0
+                    && clipboard.getPrimaryClipDescription().hasMimeType(
+                        android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                return clipboard.getPrimaryClip()
+                        .getItemAt(0).getText().toString();
+            }
+        } else {
+            // Android API level 10.
+            android.text.ClipboardManager clipboard =
+                    (android.text.ClipboardManager)
+                    context.getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+            if (clipboard.hasText()) {
+                return clipboard.getText().toString();
+            }
+        }
+
+        // Error.
+        return null;
     }
 
     /**

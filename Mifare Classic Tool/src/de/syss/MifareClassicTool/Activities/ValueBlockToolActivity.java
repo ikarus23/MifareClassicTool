@@ -21,9 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -42,6 +39,9 @@ public class ValueBlockToolActivity extends BasicActivity {
     private EditText mVBasInt;
     private EditText mAddr;
 
+    /**
+     * Initialize the some member variables.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,59 +132,21 @@ public class ValueBlockToolActivity extends BasicActivity {
      * @param view The View object that triggered the method
      * (in this case the copy button).
      */
-    @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public void onCopyToClipboard(View view) {
-        if (mVB.getText().toString().equals("") == false) {
-            if (Build.VERSION.SDK_INT >= 11) {
-                // Android API level 11+.
-                android.content.ClipboardManager clipboard =
-                        (android.content.ClipboardManager) getSystemService(
-                                Context.CLIPBOARD_SERVICE);
-                android.content.ClipData clip =
-                        android.content.ClipData.newPlainText(
-                                "mifare classic value block", mVB.getText());
-                clipboard.setPrimaryClip(clip);
-            } else {
-                // Android API level 10.
-                android.text.ClipboardManager clipboard =
-                        (android.text.ClipboardManager) getSystemService(
-                                Context.CLIPBOARD_SERVICE);
-                clipboard.setText(mVB.getText().toString());
-            }
-            Toast.makeText(this, R.string.info_copied_to_clipboard,
-                    Toast.LENGTH_SHORT).show();
-        }
+        Common.copyToClipboard(mVB.getText().toString(), this);
     }
 
     /**
      * Paste the content of the Android clipboard (if plain text) to the
-     * value block edit text of this layout.
+     * value block edit text.
      * @param view The View object that triggered the method
      * (in this case the paste button).
      */
-    @SuppressLint("NewApi")
-    @SuppressWarnings("deprecation")
     public void onPasteFromClipboard(View view) {
-        if (Build.VERSION.SDK_INT >= 11) {
-            // Android API level 11+.
-            android.content.ClipboardManager clipboard =
-                    (android.content.ClipboardManager) getSystemService(
-                            Context.CLIPBOARD_SERVICE);
-            if (clipboard.getPrimaryClip() != null
-                    && clipboard.getPrimaryClip().getItemCount() > 0
-                    && clipboard.getPrimaryClipDescription().hasMimeType(
-                        android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                mVB.setText(clipboard.getPrimaryClip().getItemAt(0).getText());
-            }
-        } else {
-            // Android API level 10.
-            android.text.ClipboardManager clipboard =
-                    (android.text.ClipboardManager) getSystemService(
-                            Context.CLIPBOARD_SERVICE);
-            if (clipboard.hasText()) {
-                mVB.setText(clipboard.getText());
-            }
+        String text = Common.getFromClipboard(this);
+        if (text != null) {
+            mVB.setText(text);
         }
     }
+
 }
