@@ -130,6 +130,10 @@
     <string name="text_static_ac_default">08778F</string>
     <string name="text_no_key_io_error">No keys found (or dead sector)</string>
     <string name="text_ac_label">ACs:</string>
+    <string name="text_block_0">Block 0 (0-4):</string>
+    <string name="text_block_1">Block 1 (5-9):</string>
+    <string name="text_block_2">Block 2 (10-14):</string>
+    <string name="text_block_3">Block 3 (15) - Sector Trailer:</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -333,6 +337,7 @@
         them, you can easily use custom ones to make the tag reusable.
         \n\n<b>WARNING: Writing wrong data may cause irreparable
         damage to the tag.</b></string>
+    <string name="dialog_choose_ac_title">Choose Access Conditions</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

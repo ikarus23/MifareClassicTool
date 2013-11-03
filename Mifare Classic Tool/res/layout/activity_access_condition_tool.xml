@@ -108,4 +108,87 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:id="@+id/scrollViewAccessConditionTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinearLayoutAccessConditionToolConvert" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutAccessConditionToolBloks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_0"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock0"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_data_block_0"
+                android:onClick="onChooseACforDataBock" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_data_block_0"
+                android:onClick="onChooseACforDataBock" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_data_block_0"
+                android:onClick="onChooseACforDataBock" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_3"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_sector_trailer_4"
+                android:onClick="onChooseACforSectorTrailer" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

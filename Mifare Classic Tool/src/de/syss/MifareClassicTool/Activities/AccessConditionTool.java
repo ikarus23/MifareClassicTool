@@ -18,12 +18,19 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
+// TODO: Icon & doc.
 /**
  *
  * @author Gerhard Klostermeier
@@ -31,7 +38,12 @@ import de.syss.MifareClassicTool.R;
 public class AccessConditionTool extends BasicActivity {
 
     private EditText mAC;
+    // TODO: doc.
+    private Button mSelectedButton;
+    private AlertDialog mDataBlockDialog;
+    private AlertDialog mSectorTrailerDialog;
 
+    // TODO: Update doc.
     /**
      * Initialize the some member variables.
      */
@@ -40,7 +52,60 @@ public class AccessConditionTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_condition_tool);
 
+        // Init. member vars.
         mAC = (EditText) findViewById(R.id.editTextAccessConditionToolAC);
+
+        // Build the dialog with Access Conditions for data blocks.
+        String[] items = new String[8];
+        for (int i = 0; i < 8; i++) {
+            items[i] = getString(getResourceByACNumber(i, true));
+        }
+        ListAdapter adapter = new ArrayAdapter<String>(
+                this, R.layout.list_item_small_text, items);
+        ListView lv = new ListView(this);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                    int position, long id) {
+                // Change button text to selected Access Conditions.
+                mSelectedButton.setText(getString(
+                        getResourceByACNumber(position, true)));
+                mDataBlockDialog.dismiss();
+            }
+        });
+        mDataBlockDialog =  new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_choose_ac_title)
+                .setView(lv)
+                .create();
+
+        // Build the dialog with Access Conditions for the Sector Trailer.
+        items = new String[8];
+        for (int i = 0; i < 8; i++) {
+            items[i] = getString(getResourceByACNumber(i, false));
+        }
+        adapter = new ArrayAdapter<String>(
+                this, R.layout.list_item_small_text, items);
+        lv = new ListView(this);
+        lv.setAdapter(adapter);
+        final Button sectorTrailerButton = (Button) findViewById(
+                R.id.buttonAccessConditionToolBlock3);
+        lv.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                    int position, long id) {
+                // Change button text to selected Access Conditions.
+                sectorTrailerButton.setText(getString(
+                        getResourceByACNumber(position, false)));
+                mSectorTrailerDialog.dismiss();
+            }
+        });
+        mSectorTrailerDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_choose_ac_title)
+                .setView(lv)
+                .create();
     }
 
     // TODO: Implement and doc.
@@ -51,6 +116,17 @@ public class AccessConditionTool extends BasicActivity {
     // TODO: Implement and doc.
     public void onEncode(View view) {
 
+    }
+
+    // TODO: doc.
+    public void onChooseACforDataBock(View view) {
+        mSelectedButton = (Button) view;
+        mDataBlockDialog.show();
+    }
+
+    // TODO: doc.
+    public void onChooseACforSectorTrailer(View view) {
+        mSectorTrailerDialog.show();
     }
 
     /**
@@ -73,6 +149,16 @@ public class AccessConditionTool extends BasicActivity {
         if (text != null) {
             mAC.setText(text);
         }
+    }
+
+    // TODO: doc.
+    private int getResourceByACNumber(int acNumber, boolean isDataBlock) {
+        String prefix = "ac_data_block_";
+        if (!isDataBlock) {
+            prefix = "ac_sector_trailer_";
+        }
+        return getResources().getIdentifier(
+                prefix + acNumber, "string", getPackageName());
     }
 
 }
