@@ -30,22 +30,35 @@ import android.widget.ListView;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-// TODO: Icon & doc.
+// TODO: Icon.
 /**
- *
+ * Decode Mifare Classic Access Conditions from their hex format
+ * to a more human readable format and vice versa.
  * @author Gerhard Klostermeier
  */
 public class AccessConditionTool extends BasicActivity {
 
     private EditText mAC;
-    // TODO: doc.
+    /**
+     * The last clicked "choose Access Conditions for data block"-button.
+     * @see #onChooseACforDataBock(View)
+     */
     private Button mSelectedButton;
+    /**
+     * A dialog which allow the user to choose between all possible
+     * Access Conditions for a data block.
+     */
     private AlertDialog mDataBlockDialog;
+    /**
+     * A dialog which allow the user to choose between all possible
+     * Access Conditions for a Sector Trailer.
+     */
     private AlertDialog mSectorTrailerDialog;
 
-    // TODO: Update doc.
     /**
-     * Initialize the some member variables.
+     * Build the two dialogs for choosing the Access Conditions
+     * ({@link #mDataBlockDialog} and {@link #mSectorTrailerDialog}) and
+     * initialize the some member variables.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,13 +131,27 @@ public class AccessConditionTool extends BasicActivity {
 
     }
 
-    // TODO: doc.
+    /**
+     * Backup the button which triggered this method to {@link #mSelectedButton}
+     * to change its text later and show the Access Condition chooser dialog
+     * for data blocks ({@link #mDataBlockDialog}).
+     * @param view The View object that triggered the method
+     * (in this case one of the data block buttons).
+     * @see #mDataBlockDialog
+     * @see #mSelectedButton
+     */
     public void onChooseACforDataBock(View view) {
         mSelectedButton = (Button) view;
         mDataBlockDialog.show();
     }
 
-    // TODO: doc.
+    /**
+     * Show the Access Condition chooser dialog for Sector Trailers
+     * ({@link #mSectorTrailerDialog}).
+     * @param view The View object that triggered the method
+     * (in this case the Sector Trailer button).
+     * @see #mSectorTrailerDialog
+     */
     public void onChooseACforSectorTrailer(View view) {
         mSectorTrailerDialog.show();
     }
@@ -151,7 +178,15 @@ public class AccessConditionTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Return the resource ID of an Access Condition string based on its
+     * position in the table (see: res/values/access_conditions.xml and
+     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * @param acNumber Row number of the Access Condition in the table.
+     * @param isDataBlock True for data blocks, False for Sector Trailers
+     * (True = Table 8, False = Table 7).
+     * @return The resource ID of an Access Condition string.
+     */
     private int getResourceByACNumber(int acNumber, boolean isDataBlock) {
         String prefix = "ac_data_block_";
         if (!isDataBlock) {

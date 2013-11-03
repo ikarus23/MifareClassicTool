@@ -30,7 +30,7 @@ import de.syss.MifareClassicTool.R;
 
 /**
  * Decode Mifare Classic Value Blocks from their hex format
- * to an integer and vice versa (encode).
+ * to an integer and vice versa.
  * @author Gerhard Klostermeier
  */
 public class ValueBlockToolActivity extends BasicActivity {
