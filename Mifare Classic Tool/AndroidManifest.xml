@@ -142,8 +142,9 @@
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.AccessConditionTool"
-            android:label="@string/title_activity_access_condition_tool"
             android:configChanges="orientation|screenSize"
+            android:icon="@drawable/access_condition_tool"
+            android:label="@string/title_activity_access_condition_tool"
             android:launchMode="singleTop" >
         </activity>
     </application>

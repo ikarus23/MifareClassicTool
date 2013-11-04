@@ -30,7 +30,6 @@ import android.widget.ListView;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-// TODO: Icon.
 /**
  * Decode Mifare Classic Access Conditions from their hex format
  * to a more human readable format and vice versa.
