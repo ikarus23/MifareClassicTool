@@ -145,7 +145,7 @@ public class ValueBlocksToIntActivity extends BasicActivity {
         value = new TextView(this);
         byte[] asBytes = Common.hexStringToByteArray(
                 hexValueBlock.substring(0, 8));
-        Common.reverseByteArrasInPlace(asBytes);
+        Common.reverseByteArrayInPlace(asBytes);
         ByteBuffer bb = ByteBuffer.wrap(asBytes);
         int i = bb.getInt();
         String asInt = "" + i;

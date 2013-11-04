@@ -688,7 +688,7 @@ public class Common {
      * Commons.Lang (ArrayUtils) form Apache....
      * @param array The array to reverse (in-place).
      */
-    public static void reverseByteArrasInPlace(byte[] array) {
+    public static void reverseByteArrayInPlace(byte[] array) {
         for(int i = 0; i < array.length / 2; i++) {
             byte temp = array[i];
             array[i] = array[array.length - i - 1];
