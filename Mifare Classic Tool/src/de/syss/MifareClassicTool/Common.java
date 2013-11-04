@@ -600,37 +600,94 @@ public class Common {
     /**
      * Convert the Access Condition bytes to a matrix containing the
      * resolved C1, C2 and C3 for each block.
-     * @param ac The Access Conditions.
+     * @param acBytes The Access Condition bytes (3 byte).
      * @return Matrix of access conditions bits (C1-C3) where the first
      * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
      * dimension is the block number (Index 0-3). If the ACs are incorrect
      * null will be returned.
      */
-    public static byte[][] acToACMatrix(byte ac[]) {
+    public static byte[][] acBytesToACMatrix(byte acBytes[]) {
         // ACs correct?
         // C1 (Byte 7, 4-7) == ~C1 (Byte 6, 0-3) and
         // C2 (Byte 8, 0-3) == ~C2 (Byte 6, 4-7) and
         // C3 (Byte 8, 4-7) == ~C3 (Byte 7, 0-3)
         byte[][] acMatrix = new byte[3][4];
-        if (ac.length > 2 &&
-                (byte)((ac[1]>>>4)&0x0F)  == (byte)((ac[0]^0xFF)&0x0F) &&
-                (byte)(ac[2]&0x0F) == (byte)(((ac[0]^0xFF)>>>4)&0x0F) &&
-                (byte)((ac[2]>>>4)&0x0F)  == (byte)((ac[1]^0xFF)&0x0F)) {
+        if (acBytes.length > 2 &&
+                (byte)((acBytes[1]>>>4)&0x0F)  ==
+                        (byte)((acBytes[0]^0xFF)&0x0F) &&
+                (byte)(acBytes[2]&0x0F) ==
+                        (byte)(((acBytes[0]^0xFF)>>>4)&0x0F) &&
+                (byte)((acBytes[2]>>>4)&0x0F)  ==
+                        (byte)((acBytes[1]^0xFF)&0x0F)) {
             // C1, Block 0-3
             for (int i = 0; i < 4; i++) {
-                acMatrix[0][i] = (byte)((ac[1]>>>4+i)&0x01);
+                acMatrix[0][i] = (byte)((acBytes[1]>>>4+i)&0x01);
             }
             // C2, Block 0-3
             for (int i = 0; i < 4; i++) {
-                acMatrix[1][i] = (byte)((ac[2]>>>i)&0x01);
+                acMatrix[1][i] = (byte)((acBytes[2]>>>i)&0x01);
             }
             // C3, Block 0-3
             for (int i = 0; i < 4; i++) {
-                acMatrix[2][i] = (byte)((ac[2]>>>4+i)&0x01);
+                acMatrix[2][i] = (byte)((acBytes[2]>>>4+i)&0x01);
             }
             return acMatrix;
         }
         return null;
+    }
+
+    /**
+     * Convert a matrix with Access Conditions bits into normal 3
+     * Access Condition bytes.
+     * @param acMatrix Matrix of access conditions bits (C1-C3) where the first
+     * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
+     * dimension is the block number (Index 0-3).
+     * @return The Access Condition bytes (3 byte).
+     */
+    public static byte[] acMatrixToACBytes(byte acMatrix[][]) {
+        if (acMatrix != null && acMatrix.length == 3) {
+            for (int i = 0; i < 3; i++) {
+                if (acMatrix[i].length != 4)
+                    // Error.
+                    return null;
+            }
+        } else {
+            // Error.
+            return null;
+        }
+        byte[] acBytes = new byte[3];
+        // Byte 6, Bit 0-3.
+        acBytes[0] = (byte)((acMatrix[0][0]^0xFF)&0x01);
+        acBytes[0] |= (byte)(((acMatrix[0][1]^0xFF)<<1)&0x02);
+        acBytes[0] |= (byte)(((acMatrix[0][2]^0xFF)<<2)&0x04);
+        acBytes[0] |= (byte)(((acMatrix[0][3]^0xFF)<<3)&0x08);
+        // Byte 6, Bit 4-7.
+        acBytes[0] |= (byte)(((acMatrix[1][0]^0xFF)<<4)&0x10);
+        acBytes[0] |= (byte)(((acMatrix[1][1]^0xFF)<<5)&0x20);
+        acBytes[0] |= (byte)(((acMatrix[1][2]^0xFF)<<6)&0x40);
+        acBytes[0] |= (byte)(((acMatrix[1][3]^0xFF)<<7)&0x80);
+        // Byte 7, Bit 0-3.
+        acBytes[1] = (byte)((acMatrix[2][0]^0xFF)&0x01);
+        acBytes[1] |= (byte)(((acMatrix[2][1]^0xFF)<<1)&0x02);
+        acBytes[1] |= (byte)(((acMatrix[2][2]^0xFF)<<2)&0x04);
+        acBytes[1] |= (byte)(((acMatrix[2][3]^0xFF)<<3)&0x08);
+        // Byte 7, Bit 4-7.
+        acBytes[1] |= (byte)((acMatrix[0][0]<<4)&0x10);
+        acBytes[1] |= (byte)((acMatrix[0][1]<<5)&0x20);
+        acBytes[1] |= (byte)((acMatrix[0][2]<<6)&0x40);
+        acBytes[1] |= (byte)((acMatrix[0][3]<<7)&0x80);
+        // Byte 8, Bit 0-3.
+        acBytes[2] = (byte)(acMatrix[1][1]&0x01);
+        acBytes[2] |= (byte)((acMatrix[1][1]<<1)&0x02);
+        acBytes[2] |= (byte)((acMatrix[1][2]<<2)&0x04);
+        acBytes[2] |= (byte)((acMatrix[1][3]<<3)&0x08);
+        // Byte 8, Bit 4-7.
+        acBytes[2] |= (byte)((acMatrix[2][0]<<4)&0x10);
+        acBytes[2] |= (byte)((acMatrix[2][1]<<5)&0x20);
+        acBytes[2] |= (byte)((acMatrix[2][2]<<6)&0x40);
+        acBytes[2] |= (byte)((acMatrix[2][3]<<7)&0x80);
+
+        return acBytes;
     }
 
     /**
