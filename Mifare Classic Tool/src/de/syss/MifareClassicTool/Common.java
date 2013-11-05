@@ -677,7 +677,7 @@ public class Common {
         acBytes[1] |= (byte)((acMatrix[0][2]<<6)&0x40);
         acBytes[1] |= (byte)((acMatrix[0][3]<<7)&0x80);
         // Byte 8, Bit 0-3.
-        acBytes[2] = (byte)(acMatrix[1][1]&0x01);
+        acBytes[2] = (byte)(acMatrix[1][0]&0x01);
         acBytes[2] |= (byte)((acMatrix[1][1]<<1)&0x02);
         acBytes[2] |= (byte)((acMatrix[1][2]<<2)&0x04);
         acBytes[2] |= (byte)((acMatrix[1][3]<<3)&0x08);

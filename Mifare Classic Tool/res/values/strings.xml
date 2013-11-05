@@ -193,7 +193,6 @@
     <string name="menu_delete_file">Delete File</string>
     <string name="menu_remove_duplicates">Remove Duplicates</string>
 
-
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
     <string name="info_no_external_storage">Error: External storage is not
@@ -259,12 +258,14 @@
         (0-9, A-F, 2 characters)</string>
     <string name="info_copied_to_clipboard">Copied to clipboard</string>
     <string name="info_invalid_int">Not a valid integer</string>
-    <string name="info_static_ac_not_hex">Error: Static Access Conditions are
+    <string name="info_ac_not_hex">Error: Access Conditions are
         not hex (0-9, A-F)</string>
-    <string name="info_static_ac_not_3_byte">Error: Static Access Conditions
+    <string name="info_ac_not_3_byte">Error: Access Conditions
         have to be 3 bytes (6 characters) long</string>
     <string name="info_file_to_big">Error: File is to big (out of memory)</string>
     <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
+    <string name="info_ac_format_error">Error: The Access Conditions
+        are invalid</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

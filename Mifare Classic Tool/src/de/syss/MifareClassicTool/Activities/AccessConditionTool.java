@@ -27,9 +27,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
+// FIXME: If a config. were chosen with key B readable,
+// the data blocks must use ACs without key B.
 /**
  * Decode Mifare Classic Access Conditions from their hex format
  * to a more human readable format and vice versa.
@@ -38,6 +41,7 @@ import de.syss.MifareClassicTool.R;
 public class AccessConditionTool extends BasicActivity {
 
     private EditText mAC;
+    private Button[] mBlockButtons;
     /**
      * Matrix of access conditions bits (C1-C3) where the first
      * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
@@ -74,6 +78,15 @@ public class AccessConditionTool extends BasicActivity {
 
         // Init. member vars.
         mAC = (EditText) findViewById(R.id.editTextAccessConditionToolAC);
+        mBlockButtons = new Button[4];
+        mBlockButtons[0] = (Button) findViewById(
+                R.id.buttonAccessConditionToolBlock0);
+        mBlockButtons[1] = (Button) findViewById(
+                R.id.buttonAccessConditionToolBlock1);
+        mBlockButtons[2] = (Button) findViewById(
+                R.id.buttonAccessConditionToolBlock2);
+        mBlockButtons[3] = (Button) findViewById(
+                R.id.buttonAccessConditionToolBlock3);
         // Init AC matrix with factory setting/transport configuration.
         mACMatrix = new byte[][] {
                 {0, 0, 0, 0},
@@ -122,15 +135,13 @@ public class AccessConditionTool extends BasicActivity {
                 this, R.layout.list_item_small_text, items);
         lv = new ListView(this);
         lv.setAdapter(adapter);
-        final Button sectorTrailerButton = (Button) findViewById(
-                R.id.buttonAccessConditionToolBlock3);
         lv.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                     int position, long id) {
                 // Change button text to selected Access Conditions.
-                sectorTrailerButton.setText(getString(
+                mBlockButtons[3].setText(getString(
                         getResourceByACNumber(position, false)));
                 // Set Access Condition bits for sector trailer.
                 byte[] acBits = acRowNrToACBits(position);
@@ -147,9 +158,62 @@ public class AccessConditionTool extends BasicActivity {
                 .create();
     }
 
-    // TODO: Implement and doc.
+    /**
+     * Convert the 3 Access Condition bytes into a more human readable format
+     * using {@link Common#acBytesToACMatrix(byte[])},
+     * {@link #acBitsToACRowNr(byte[])} and
+     * {@link #getResourceByACNumber(int, boolean)}.
+     * @param view The View object that triggered the method
+     * (in this case the decode button).
+     * @see Common#acBytesToACMatrix(byte[])
+     * @see #acBitsToACRowNr(byte[])
+     * @see #getResourceByACNumber(int, boolean)
+     * @see #mACMatrix
+     */
     public void onDecode(View view) {
+        String ac = mAC.getText().toString();
+        if (ac.length() != 6) {
+            // Error. Access Conditions are not 3 byte (6 characters) long.
+            Toast.makeText(this, R.string.info_ac_not_3_byte,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (ac.matches("[0-9A-Fa-f]+") == false) {
+            // Error. Not hex.
+            Toast.makeText(this, R.string.info_ac_not_hex,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
+        byte[][] acMatrix = Common.acBytesToACMatrix(
+                Common.hexStringToByteArray(ac));
+        boolean error = false;
+        if (acMatrix != null) {
+            for (int i = 0; i < 4; i++) {
+                byte[] acBits = {acMatrix[0][i], acMatrix[1][i],
+                        acMatrix[2][i]};
+                int rowNr = acBitsToACRowNr(acBits);
+                if (rowNr == -1) {
+                    // Error.
+                    error = true;
+                    break;
+                }
+                mBlockButtons[i].setText(getString(
+                        getResourceByACNumber(rowNr, i < 3)));
+            }
+        } else {
+            // Error.
+            error = true;
+        }
+
+        // Were there some error during this process?
+        if (error) {
+            // Display an error message.
+            Toast.makeText(this, R.string.info_ac_format_error,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        mACMatrix = acMatrix;
     }
 
     /**
@@ -157,8 +221,9 @@ public class AccessConditionTool extends BasicActivity {
      * {@link Common#acMatrixToACBytes(byte[][])} and display them.
      * @param view The View object that triggered the method
      * (in this case the encode button).
-     * @see #mACMatrix
      * @see Common#acMatrixToACBytes(byte[][])
+     * @see #mACMatrix
+     * @see #acRowNrToACBits(int)
      */
     public void onEncode(View view) {
         mAC.setText(Common.byte2HexString(Common.acMatrixToACBytes(mACMatrix)));

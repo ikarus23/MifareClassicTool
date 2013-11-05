@@ -431,13 +431,13 @@ public class WriteTagActivity extends BasicActivity {
             String ac = mStaticAC.getText().toString();
             if (ac.matches("[0-9A-Fa-f]+") == false) {
                 // Error, not hex.
-                Toast.makeText(this, R.string.info_static_ac_not_hex,
+                Toast.makeText(this, R.string.info_ac_not_hex,
                         Toast.LENGTH_LONG).show();
                 return;
             }
             if (ac.length() != 6) {
                 // Error, not 3 byte (6 chars).
-                Toast.makeText(this, R.string.info_static_ac_not_3_byte,
+                Toast.makeText(this, R.string.info_ac_not_3_byte,
                         Toast.LENGTH_LONG).show();
                 return;
             }
