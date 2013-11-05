@@ -31,8 +31,7 @@ import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-// FIXME: If a config. were chosen with key B readable,
-// the data blocks must use ACs without key B.
+// TODO: Change layout (selecting the Sector Trailer is the first step).
 /**
  * Decode Mifare Classic Access Conditions from their hex format
  * to a more human readable format and vice versa.
@@ -42,6 +41,9 @@ public class AccessConditionTool extends BasicActivity {
 
     private EditText mAC;
     private Button[] mBlockButtons;
+    private boolean mKeyBWasReadable;
+    // TODO: doc.
+    private boolean mIsKeyBReadable;
     /**
      * Matrix of access conditions bits (C1-C3) where the first
      * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
@@ -93,12 +95,12 @@ public class AccessConditionTool extends BasicActivity {
                 {0, 0, 0, 0},
                 {0, 0, 0, 1} };
 
-        // Build the dialog with Access Conditions for data blocks.
+        // Build the dialog with Access Conditions for the Sector Trailer.
         String[] items = new String[8];
         for (int i = 0; i < 8; i++) {
-            items[i] = getString(getResourceByACNumber(i, true));
+            items[i] = getString(getResourceForSectorTrailersByRowNr(i));
         }
-        ListAdapter adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, R.layout.list_item_small_text, items);
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);
@@ -108,46 +110,22 @@ public class AccessConditionTool extends BasicActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                     int position, long id) {
                 // Change button text to selected Access Conditions.
-                mSelectedButton.setText(getString(
-                        getResourceByACNumber(position, true)));
-                // Set Access Condition bits for this block.
-                byte[] acBits = acRowNrToACBits(position);
-                int blockNr = Integer.parseInt(
-                        mSelectedButton.getTag().toString());
-                mACMatrix[0][blockNr] = acBits [0];
-                mACMatrix[1][blockNr] = acBits [1];
-                mACMatrix[2][blockNr] = acBits [2];
-                // Close dialog.
-                mDataBlockDialog.dismiss();
-            }
-        });
-        mDataBlockDialog =  new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_choose_ac_title)
-                .setView(lv)
-                .create();
-
-        // Build the dialog with Access Conditions for the Sector Trailer.
-        items = new String[8];
-        for (int i = 0; i < 8; i++) {
-            items[i] = getString(getResourceByACNumber(i, false));
-        }
-        adapter = new ArrayAdapter<String>(
-                this, R.layout.list_item_small_text, items);
-        lv = new ListView(this);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                    int position, long id) {
-                // Change button text to selected Access Conditions.
                 mBlockButtons[3].setText(getString(
-                        getResourceByACNumber(position, false)));
+                        getResourceForSectorTrailersByRowNr(position)));
                 // Set Access Condition bits for sector trailer.
-                byte[] acBits = acRowNrToACBits(position);
+                byte[] acBits = acRowNrToACBits(position, true);
                 mACMatrix[0][3] = acBits [0];
                 mACMatrix[1][3] = acBits [1];
                 mACMatrix[2][3] = acBits [2];
+                // Rebuild the data block dialog based on the readability of
+                // key B.
+                if (position < 2 || position == 4) {
+                    // Key B is readable.
+                    mIsKeyBReadable = true;
+                } else {
+                    mIsKeyBReadable = false;
+                }
+                buildDataBlockDialogAndUpdateBlocks();
                 // Close dialog.
                 mSectorTrailerDialog.dismiss();
             }
@@ -156,6 +134,11 @@ public class AccessConditionTool extends BasicActivity {
                 .setTitle(R.string.dialog_choose_ac_title)
                 .setView(lv)
                 .create();
+
+        // Build the dialog with Access Conditions for data blocks.
+        // Key B is readable in the default configuration.
+        mIsKeyBReadable = true;
+        buildDataBlockDialogAndUpdateBlocks();
     }
 
     /**
@@ -189,17 +172,35 @@ public class AccessConditionTool extends BasicActivity {
                 Common.hexStringToByteArray(ac));
         boolean error = false;
         if (acMatrix != null) {
-            for (int i = 0; i < 4; i++) {
-                byte[] acBits = {acMatrix[0][i], acMatrix[1][i],
-                        acMatrix[2][i]};
-                int rowNr = acBitsToACRowNr(acBits);
-                if (rowNr == -1) {
-                    // Error.
-                    error = true;
-                    break;
+            // First check & set Sector Trailer.
+            byte[] acBits = {acMatrix[0][3], acMatrix[1][3], acMatrix[2][3]};
+            int rowNr = acBitsToACRowNr(acBits, true);
+            if (rowNr != -1) {
+                // Check if key B is readable.
+                if (rowNr < 2 || rowNr == 4) {
+                    mIsKeyBReadable = true;
+                } else {
+                    mIsKeyBReadable = false;
                 }
-                mBlockButtons[i].setText(getString(
-                        getResourceByACNumber(rowNr, i < 3)));
+                mBlockButtons[3].setText(getString(
+                        getResourceForSectorTrailersByRowNr(rowNr)));
+
+                // Now check & set Data blocks.
+                for (int i = 0; i < 3; i++) {
+                    acBits = new byte [] {acMatrix[0][i], acMatrix[1][i],
+                            acMatrix[2][i]};
+                    rowNr = acBitsToACRowNr(acBits, false);
+                    if (rowNr == -1) {
+                        // Error.
+                        error = true;
+                        break;
+                    }
+                    mBlockButtons[i].setText(getString(
+                            getResourceForDataBlocksByRowNr(rowNr)));
+                }
+            } else {
+                // Error.
+                error = true;
             }
         } else {
             // Error.
@@ -214,6 +215,7 @@ public class AccessConditionTool extends BasicActivity {
             return;
         }
         mACMatrix = acMatrix;
+        buildDataBlockDialogAndUpdateBlocks();
     }
 
     /**
@@ -276,24 +278,37 @@ public class AccessConditionTool extends BasicActivity {
         }
     }
 
+    // TODO: Update doc.
     /**
      * Return the resource ID of an Access Condition string based on its
      * position in the table (see: res/values/access_conditions.xml and
      * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
-     * @param acNumber Row number of the Access Condition in the table.
+     * @param rowNr Row number of the Access Condition in the table.
      * @param isDataBlock True for data blocks, False for Sector Trailers
      * (True = Table 8, False = Table 7).
      * @return The resource ID of an Access Condition string.
      */
-    private int getResourceByACNumber(int acNumber, boolean isDataBlock) {
+    private int getResourceForDataBlocksByRowNr(int rowNr) {
         String prefix = "ac_data_block_";
-        if (!isDataBlock) {
-            prefix = "ac_sector_trailer_";
+        if (mIsKeyBReadable) {
+            prefix = "ac_data_block_no_keyb_";
         }
-        return getResources().getIdentifier(
-                prefix + acNumber, "string", getPackageName());
+        return getResourceForAccessCondition(prefix, rowNr);
     }
 
+    // TODO: doc.
+    private int getResourceForSectorTrailersByRowNr(int rowNr) {
+        return getResourceForAccessCondition("ac_sector_trailer_", rowNr);
+    }
+
+    // TODO: doc.
+    private int getResourceForAccessCondition(String prefix, int rowNr) {
+        return getResources().getIdentifier(
+                prefix + rowNr, "string", getPackageName());
+    }
+
+
+    // TODO: Update doc.
     /**
      * Convert the the row number of the Access Condition table to its
      * corresponding access bits C1, C2 and C3
@@ -302,7 +317,18 @@ public class AccessConditionTool extends BasicActivity {
      * @param rowNr The row number of the Access Condition table (0-7).
      * @return The access bits C1, C2 and C3. On error null will be returned.
      */
-    private byte[] acRowNrToACBits(int rowNr) {
+    private byte[] acRowNrToACBits(int rowNr, boolean isSectorTrailer) {
+        if (!isSectorTrailer && mIsKeyBReadable && rowNr > 1) {
+            switch (rowNr) {
+            case 2:
+                return new byte[] {0, 0, 1};
+            case 3:
+                return new byte[] {1, 1, 1};
+            default:
+                return null;
+            }
+        }
+
         switch (rowNr) {
         case 0:
             return new byte[] {0, 0, 0};
@@ -326,6 +352,7 @@ public class AccessConditionTool extends BasicActivity {
         }
     }
 
+    // TODO: Update doc.
     /**
      * Convert the access bits C1, C2 and C3 to its corresponding row number
      * in the Access Condition table (see: res/values/access_conditions.xml and
@@ -334,30 +361,99 @@ public class AccessConditionTool extends BasicActivity {
      * @return The row number of the Access Condition table. On error -1 will
      * be returned.
      */
-    private int acBitsToACRowNr(byte[] acBits) {
+    private int acBitsToACRowNr(byte[] acBits, boolean isSectorTailer) {
         if (acBits != null && acBits.length != 3) {
             return -1;
         }
-        if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 0) {
-            return 0;
-        } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 0) {
-            return 1;
-        } else if (acBits[0] == 1 && acBits[1] == 0 && acBits[2] == 0) {
-            return 2;
-        } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 0) {
-            return 3;
-        } else if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 1) {
-            return 4;
-        } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 1) {
-            return 5;
-        } else if (acBits[0] == 1 && acBits[1] == 0 && acBits[2] == 1) {
-            return 6;
-        } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 1) {
-            return 7;
+
+        if (!isSectorTailer && mIsKeyBReadable) {
+            if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 0) {
+                return 0;
+            } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 0) {
+                return 1;
+            } else if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 1) {
+                return 2;
+            } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 0) {
+                return 3;
+            }
+        } else {
+            if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 0) {
+                return 0;
+            } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 0) {
+                return 1;
+            } else if (acBits[0] == 1 && acBits[1] == 0 && acBits[2] == 0) {
+                return 2;
+            } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 0) {
+                return 3;
+            } else if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 1) {
+                return 4;
+            } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 1) {
+                return 5;
+            } else if (acBits[0] == 1 && acBits[1] == 0 && acBits[2] == 1) {
+                return 6;
+            } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 1) {
+                return 7;
+            }
         }
 
         // Error.
         return -1;
+    }
+
+    // TODO: doc.
+    private void buildDataBlockDialogAndUpdateBlocks() {
+        String[] items = null;
+        if (mIsKeyBReadable && !mKeyBWasReadable) {
+            // Rebuild dialog (because key B is now readable).
+            items = new String[4];
+            for (int i = 0; i < 4; i++) {
+                items[i] = getString(getResourceForDataBlocksByRowNr(i));
+            }
+            mKeyBWasReadable = true;
+        } else if (!mIsKeyBReadable && mKeyBWasReadable){
+            // Rebuild dialog (because key B is no longer readable).
+            items = new String[8];
+            for (int i = 0; i < 8; i++) {
+                items[i] = getString(getResourceForDataBlocksByRowNr(i));
+            }
+            mKeyBWasReadable = false;
+        } else {
+            // No build is needed.
+            return;
+        }
+
+        // Reset buttons.
+        for (int i = 0; i < 3; i++) {
+            mBlockButtons[i].setText(items[0]);
+        }
+
+        ListAdapter adapter = new ArrayAdapter<String>(
+                this, R.layout.list_item_small_text, items);
+        ListView lv = new ListView(this);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                    int position, long id) {
+                // Change button text to selected Access Conditions.
+                mSelectedButton.setText(getString(
+                        getResourceForDataBlocksByRowNr(position)));
+                // Set Access Condition bits for this block.
+                byte[] acBits = acRowNrToACBits(position, false);
+                int blockNr = Integer.parseInt(
+                        mSelectedButton.getTag().toString());
+                mACMatrix[0][blockNr] = acBits [0];
+                mACMatrix[1][blockNr] = acBits [1];
+                mACMatrix[2][blockNr] = acBits [2];
+                // Close dialog.
+                mDataBlockDialog.dismiss();
+            }
+        });
+        mDataBlockDialog =  new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_choose_ac_title)
+                .setView(lv)
+                .create();
     }
 
 }

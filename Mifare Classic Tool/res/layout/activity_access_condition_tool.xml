@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="@string/ac_data_block_0"
+                android:text="@string/ac_data_block_no_keyb_0"
                 android:tag="0"
                 android:onClick="onChooseACforDataBock" />
 
@@ -153,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="@string/ac_data_block_0"
+                android:text="@string/ac_data_block_no_keyb_0"
                 android:tag="1"
                 android:onClick="onChooseACforDataBock" />
 
@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="@string/ac_data_block_0"
+                android:text="@string/ac_data_block_no_keyb_0"
                 android:tag="2"
                 android:onClick="onChooseACforDataBock" />
 

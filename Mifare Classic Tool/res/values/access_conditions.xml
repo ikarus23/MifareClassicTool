@@ -39,6 +39,16 @@
     <string name="ac_data_block_7">
         Read: None\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
 
+    <!-- Access Conditions for data blocks if key B is readable-->
+    <string name="ac_data_block_no_keyb_0">
+        Read: A\nWrite: A\nIncr: A\nDecr/Trans/Rest: A</string>
+    <string name="ac_data_block_no_keyb_1">
+        Read: A\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+    <string name="ac_data_block_no_keyb_2">
+        Read: A\nWrite: None\nIncr: None\nDecr/Trans/Rest: A</string>
+    <string name="ac_data_block_no_keyb_3">
+        Read: None\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+
     <!-- Access Conditions for a Sector Trailer -->
     <string name="ac_sector_trailer_0">
         Read KeyA: None\nWrite KeyA: A\nRead AC: A\nWrite AC: None
