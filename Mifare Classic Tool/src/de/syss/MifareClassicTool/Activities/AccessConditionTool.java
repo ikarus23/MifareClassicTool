@@ -39,6 +39,14 @@ public class AccessConditionTool extends BasicActivity {
 
     private EditText mAC;
     /**
+     * Matrix of access conditions bits (C1-C3) where the first
+     * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
+     * dimension is the block number (Index 0-3).
+     * This matrix will be updated each time a user chooses an Access Condition
+     * via {@link #mDataBlockDialog} or {@link #mSectorTrailerDialog}
+     */
+    private byte[][] mACMatrix;
+    /**
      * The last clicked "choose Access Conditions for data block"-button.
      * @see #onChooseACforDataBock(View)
      */
@@ -66,6 +74,11 @@ public class AccessConditionTool extends BasicActivity {
 
         // Init. member vars.
         mAC = (EditText) findViewById(R.id.editTextAccessConditionToolAC);
+        // Init AC matrix with factory setting/transport configuration.
+        mACMatrix = new byte[][] {
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 1} };
 
         // Build the dialog with Access Conditions for data blocks.
         String[] items = new String[8];
@@ -84,6 +97,14 @@ public class AccessConditionTool extends BasicActivity {
                 // Change button text to selected Access Conditions.
                 mSelectedButton.setText(getString(
                         getResourceByACNumber(position, true)));
+                // Set Access Condition bits for this block.
+                byte[] acBits = acRowNrToACBits(position);
+                int blockNr = Integer.parseInt(
+                        mSelectedButton.getTag().toString());
+                mACMatrix[0][blockNr] = acBits [0];
+                mACMatrix[1][blockNr] = acBits [1];
+                mACMatrix[2][blockNr] = acBits [2];
+                // Close dialog.
                 mDataBlockDialog.dismiss();
             }
         });
@@ -111,6 +132,12 @@ public class AccessConditionTool extends BasicActivity {
                 // Change button text to selected Access Conditions.
                 sectorTrailerButton.setText(getString(
                         getResourceByACNumber(position, false)));
+                // Set Access Condition bits for sector trailer.
+                byte[] acBits = acRowNrToACBits(position);
+                mACMatrix[0][3] = acBits [0];
+                mACMatrix[1][3] = acBits [1];
+                mACMatrix[2][3] = acBits [2];
+                // Close dialog.
                 mSectorTrailerDialog.dismiss();
             }
         });
@@ -125,9 +152,16 @@ public class AccessConditionTool extends BasicActivity {
 
     }
 
-    // TODO: Implement and doc.
+    /**
+     * Convert the {@link #mACMatrix} to 3 Access Condition bytes using
+     * {@link Common#acMatrixToACBytes(byte[][])} and display them.
+     * @param view The View object that triggered the method
+     * (in this case the encode button).
+     * @see #mACMatrix
+     * @see Common#acMatrixToACBytes(byte[][])
+     */
     public void onEncode(View view) {
-
+        mAC.setText(Common.byte2HexString(Common.acMatrixToACBytes(mACMatrix)));
     }
 
     /**
@@ -193,6 +227,72 @@ public class AccessConditionTool extends BasicActivity {
         }
         return getResources().getIdentifier(
                 prefix + acNumber, "string", getPackageName());
+    }
+
+    /**
+     * Convert the the row number of the Access Condition table to its
+     * corresponding access bits C1, C2 and C3
+     * (see: res/values/access_conditions.xml and
+     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * @param rowNr The row number of the Access Condition table (0-7).
+     * @return The access bits C1, C2 and C3. On error null will be returned.
+     */
+    private byte[] acRowNrToACBits(int rowNr) {
+        switch (rowNr) {
+        case 0:
+            return new byte[] {0, 0, 0};
+        case 1:
+            return new byte[] {0, 1, 0};
+        case 2:
+            return new byte[] {1, 0, 0};
+        case 3:
+            return new byte[] {1, 1, 0};
+        case 4:
+            return new byte[] {0, 0, 1};
+        case 5:
+            return new byte[] {0, 1, 1};
+        case 6:
+            return new byte[] {1, 0, 1};
+        case 7:
+            return new byte[] {1, 1, 1};
+        default:
+            // Error.
+            return null;
+        }
+    }
+
+    /**
+     * Convert the access bits C1, C2 and C3 to its corresponding row number
+     * in the Access Condition table (see: res/values/access_conditions.xml and
+     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * @param acBits The access bits C1, C2 and C3.
+     * @return The row number of the Access Condition table. On error -1 will
+     * be returned.
+     */
+    private int acBitsToACRowNr(byte[] acBits) {
+        if (acBits != null && acBits.length != 3) {
+            return -1;
+        }
+        if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 0) {
+            return 0;
+        } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 0) {
+            return 1;
+        } else if (acBits[0] == 1 && acBits[1] == 0 && acBits[2] == 0) {
+            return 2;
+        } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 0) {
+            return 3;
+        } else if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 1) {
+            return 4;
+        } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 1) {
+            return 5;
+        } else if (acBits[0] == 1 && acBits[1] == 0 && acBits[2] == 1) {
+            return 6;
+        } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 1) {
+            return 7;
+        }
+
+        // Error.
+        return -1;
     }
 
 }

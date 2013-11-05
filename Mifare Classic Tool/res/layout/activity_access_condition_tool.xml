@@ -137,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="@string/ac_data_block_0"
+                android:tag="0"
                 android:onClick="onChooseACforDataBock" />
 
             <TextView
@@ -153,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="@string/ac_data_block_0"
+                android:tag="1"
                 android:onClick="onChooseACforDataBock" />
 
             <TextView
@@ -169,6 +171,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="@string/ac_data_block_0"
+                android:tag="2"
                 android:onClick="onChooseACforDataBock" />
 
             <TextView
