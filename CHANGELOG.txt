@@ -1,5 +1,10 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.6.0:
+ * New Feature: Decode & Encode Mifare Classic Access Conditions.
+   (Access the new tool via "Tools" form main menu or
+   form the dump editor menu.)
+
 Version 1.5.3:
  * Improved Mifare Classic support check.
    (The app tells you now whether it is your device or the tag that does not
