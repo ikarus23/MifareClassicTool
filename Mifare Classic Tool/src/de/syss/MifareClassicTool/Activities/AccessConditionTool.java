@@ -48,7 +48,7 @@ public class AccessConditionTool extends BasicActivity {
      * {@link #getResourceForSectorTrailersByRowNr(int)},
      * {@link #acRowNrToACBits(int, boolean)},
      * {@link #acBitsToACRowNr(byte[], boolean)},
-     * {@link #buildDataBlockDialog()}).
+     * {@link #buildDataBlockDialog(boolean)}).
      */
     private boolean mIsKeyBReadable;
     /**
@@ -151,13 +151,15 @@ public class AccessConditionTool extends BasicActivity {
     /**
      * Convert the 3 Access Condition bytes into a more human readable format
      * using {@link Common#acBytesToACMatrix(byte[])},
-     * {@link #acBitsToACRowNr(byte[])} and
-     * {@link #getResourceByACNumber(int, boolean)}.
+     * {@link #acBitsToACRowNr(byte[], boolean)},
+     * {@link #getResourceForDataBlocksByRowNr(int)} and
+     * {@link #getResourceForSectorTrailersByRowNr(int)}.
      * @param view The View object that triggered the method
      * (in this case the decode button).
      * @see Common#acBytesToACMatrix(byte[])
-     * @see #acBitsToACRowNr(byte[])
-     * @see #getResourceByACNumber(int, boolean)
+     * @see #acBitsToACRowNr(byte[], boolean)
+     * @see #getResourceForDataBlocksByRowNr(int)
+     * @see #getResourceForDataBlocksByRowNr(int)
      * @see #mACMatrix
      */
     public void onDecode(View view) {
@@ -232,7 +234,7 @@ public class AccessConditionTool extends BasicActivity {
      * (in this case the encode button).
      * @see Common#acMatrixToACBytes(byte[][])
      * @see #mACMatrix
-     * @see #acRowNrToACBits(int)
+     * @see #acRowNrToACBits(int, boolean)
      */
     public void onEncode(View view) {
         mAC.setText(Common.byte2HexString(Common.acMatrixToACBytes(mACMatrix)));
