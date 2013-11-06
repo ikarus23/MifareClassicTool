@@ -47,13 +47,12 @@
     <issue id="UnusedResources">
         <!-- Resources are used dynamically -->
         <ignore path="res/values/tag_type_list.xml" />
+        <ignore path="res/values/access_conditions.xml" />
     </issue>
 
-    <issue id="DefaultLocale">
-        <!-- Only a "String.toUpperCase" -->
-        <ignore path="src/de/syss/MifareClassicTool/Activitys/ValueBlockToolActivity.java" />
-        <ignore path="src/de/syss/MifareClassicTool/Activitys/DumpEditorActivity.java" />
-        <ignore path="src/de/syss/MifareClassicTool/Activitys/KeyEditorActivity.java" />
+    <issue id="TypographyDashes">
+        <!-- This dashes are right the way they are -->
+        <ignore path="res/values/strings.xml" />
     </issue>
 
     <issue id="SelectableText">
