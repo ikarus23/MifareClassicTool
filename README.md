@@ -34,6 +34,7 @@ Features
 * Write the manufacturer block of special Mifare Classic tags
 * Create, edit, save and share key files (dictionaries)
 * Decode & Encode Mifare Classic Value Blocks
+* Decode & Encode Mifare Classic Access Conditions
 * Display generic tag information
 * Display the tag data as highlighted hex
 * Display the tag data as 7-Bit US-ASCII
