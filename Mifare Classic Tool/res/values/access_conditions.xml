@@ -51,28 +51,28 @@
 
     <!-- Access Conditions for a Sector Trailer -->
     <string name="ac_sector_trailer_0">
-        Read KeyA:\tNone\nWrite KeyA:\tA\nRead AC:\t\tA\nWrite AC:\t\tNone
+        Read KeyA:\tNone\nWrite KeyA:\tA\nRead AC:s\t\tA\nWrite ACs:\t\tNone
         \nRead KeyB:\tA\nWrite KeyB:\tA</string>
     <string name="ac_sector_trailer_1">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead AC:\t\tA\nWrite AC:\t\tNone
+        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA\nWrite ACs:\t\tNone
         \nRead KeyB:\tA\nWrite KeyB:\tNone</string>
     <string name="ac_sector_trailer_2">
-        Read KeyA:\tNone\nWrite KeyA:\tB\nRead AC:\t\tA|B\nWrite AC:\t\tNone
+        Read KeyA:\tNone\nWrite KeyA:\tB\nRead ACs:\t\tA|B\nWrite ACs:\t\tNone
         \nRead KeyB:\tNone\nWrite KeyB:\tB</string>
     <string name="ac_sector_trailer_3">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead AC:\t\tA|B\nWrite AC:\t\tNone
+        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA|B\nWrite ACs:\t\tNone
         \nRead KeyB:\tNone\nWrite KeyB:\tNone</string>
     <string name="ac_sector_trailer_4">
-        Read KeyA:\tNone\nWrite KeyA:\tA\nRead AC:\t\tA\nWrite AC:\t\tA
+        Read KeyA:\tNone\nWrite KeyA:\tA\nRead ACs:\t\tA\nWrite ACs:\t\tA
         \nRead KeyB:\tA\nWrite KeyB:\tA</string>
     <string name="ac_sector_trailer_5">
-        Read KeyA:\tNone\nWrite KeyA:\tB\nRead AC:\t\tA|B\nWrite AC:\t\tB
+        Read KeyA:\tNone\nWrite KeyA:\tB\nRead ACs:\t\tA|B\nWrite ACs:\t\tB
         \nRead KeyB:\tNone\nWrite KeyB:\tB</string>
     <string name="ac_sector_trailer_6">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead AC:\t\tA|B\nWrite AC:\t\tB
+        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA|B\nWrite ACs:\t\tB
         \nRead KeyB:\tNone\nWrite KeyB:\tNone</string>
     <string name="ac_sector_trailer_7">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead AC:\t\tA|B\nWrite AC:\t\tNone
+        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA|B\nWrite ACs:\t\tNone
         \nRead KeyB:\tNone\nWrite KeyB:\tNone</string>
 
 </resources>
