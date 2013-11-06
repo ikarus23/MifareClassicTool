@@ -45,7 +45,7 @@ public class AccessConditionTool extends BasicActivity {
     /**
      * True if the Access Conditions of the Sector Trailer state that key B
      * is readable. Many methods rely on this member variable
-     * {@link #getResourceForDataBlocksByRowNr(int)},
+     * ({@link #getResourceForDataBlocksByRowNr(int)},
      * {@link #getResourceForSectorTrailersByRowNr(int)},
      * {@link #acRowNrToACBits(int, boolean)},
      * {@link #acBitsToACRowNr(byte[], boolean)},
@@ -452,9 +452,13 @@ public class AccessConditionTool extends BasicActivity {
             return;
         }
 
-        // Reset buttons.
+        // Reset buttons and mACMatrix.
         for (int i = 0; i < 3; i++) {
             mBlockButtons[i].setText(items[0]);
+
+            mACMatrix[0][i] = 0;
+            mACMatrix[1][i] = 0;
+            mACMatrix[2][i] = 0;
         }
 
         ListAdapter adapter = new ArrayAdapter<String>(
