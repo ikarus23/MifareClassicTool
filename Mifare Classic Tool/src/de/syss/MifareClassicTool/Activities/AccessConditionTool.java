@@ -289,7 +289,7 @@ public class AccessConditionTool extends BasicActivity {
      * Return the resource ID of an Access Condition string for data
      * blocks based on its position in the table
      * (see: res/values/access_conditions.xml and
-     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * NXP's MF1S50yyX, Chapter 8.7.1, 8.7.2, 8.7.3, Table 7 and 8).
      * @param rowNr Row number of the Access Condition table.
      * @return The resource ID of an Access Condition string.
      * @see #mIsKeyBReadable
@@ -306,7 +306,7 @@ public class AccessConditionTool extends BasicActivity {
      * Return the resource ID of an Access Condition string for Sector
      * Trailers based on its position in the table
      * (see: res/values/access_conditions.xml and
-     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * NXP's MF1S50yyX, Chapter 8.7.1, 8.7.2, 8.7.3, Table 7 and 8).
      * @param rowNr Row number of the Access Condition table.
      * @return The resource ID of an Access Condition string.
      * @see #mIsKeyBReadable
@@ -332,7 +332,7 @@ public class AccessConditionTool extends BasicActivity {
      * Convert the the row number of the Access Condition table to its
      * corresponding access bits C1, C2 and C3
      * (see: res/values/access_conditions.xml and
-     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * NXP's MF1S50yyX, Chapter 8.7.1, 8.7.2, 8.7.3, Table 7 and 8).
      * @param rowNr The row number of the Access Condition table (0-7).
      * @param isSectorTrailer True if the row number refers to a Sector Trailer.
      * @return The access bits C1, C2 and C3. On error null will be returned.
@@ -376,7 +376,7 @@ public class AccessConditionTool extends BasicActivity {
     /**
      * Convert the access bits C1, C2 and C3 to its corresponding row number
      * in the Access Condition table (see: res/values/access_conditions.xml and
-     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * NXP's MF1S50yyX, Chapter 8.7.1, 8.7.2, 8.7.3, Table 7 and 8).
      * @param acBits The access bits C1, C2 and C3.
      * @param isSectorTrailer True if the row number refers to a Sector Trailer.
      * @return The row number of the Access Condition table. On error -1 will
