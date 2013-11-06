@@ -13,8 +13,6 @@ TODO (Maybe outdated):
      -> Remember this key map for the next tags to read them
      as quick as possible -> dump the tags with time stamp.
 
-(+)  Create a Access Conditions encode / decode tool.
-
 (+)  Decode the Mifare Application Directory (MAD) of a tag.
 
 (+)  Display blanks between hexbytes in the dump editor view
