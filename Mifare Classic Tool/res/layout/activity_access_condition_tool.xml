@@ -124,6 +124,39 @@
             android:padding="10dp" >
 
             <TextView
+                android:id="@+id/textViewAccessConditionToolStep1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_step_1_sector_trailer"
+                android:layout_marginBottom="2dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_3"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_sector_trailer_4"
+                android:onClick="onChooseACforSectorTrailer" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolStep2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_step_2_data_blocks"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
                 android:id="@+id/textViewAccessConditionToolBlock0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,22 +206,6 @@
                 android:text="@string/ac_data_block_no_keyb_0"
                 android:tag="2"
                 android:onClick="onChooseACforDataBock" />
-
-            <TextView
-                android:id="@+id/textViewAccessConditionToolBlock3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_block_3"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/buttonAccessConditionToolBlock3"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="@string/ac_sector_trailer_4"
-                android:onClick="onChooseACforSectorTrailer" />
 
         </LinearLayout>
 

@@ -31,7 +31,6 @@ import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-// TODO: Change layout (selecting the Sector Trailer is the first step).
 /**
  * Decode Mifare Classic Access Conditions from their hex format
  * to a more human readable format and vice versa.
