@@ -48,7 +48,7 @@ public class AccessConditionTool extends BasicActivity {
      * {@link #getResourceForSectorTrailersByRowNr(int)},
      * {@link #acRowNrToACBits(int, boolean)},
      * {@link #acBitsToACRowNr(byte[], boolean)},
-     * {@link #buildDataBlockDialogAndUpdateBlocks()}).
+     * {@link #buildDataBlockDialog()}).
      */
     private boolean mIsKeyBReadable;
     /**
@@ -132,7 +132,7 @@ public class AccessConditionTool extends BasicActivity {
                 } else {
                     mIsKeyBReadable = false;
                 }
-                buildDataBlockDialogAndUpdateBlocks();
+                buildDataBlockDialog(true);
                 // Close dialog.
                 mSectorTrailerDialog.dismiss();
             }
@@ -145,7 +145,7 @@ public class AccessConditionTool extends BasicActivity {
         // Build the dialog with Access Conditions for data blocks.
         // Key B is readable in the default configuration.
         mIsKeyBReadable = true;
-        buildDataBlockDialogAndUpdateBlocks();
+        buildDataBlockDialog(true);
     }
 
     /**
@@ -222,7 +222,7 @@ public class AccessConditionTool extends BasicActivity {
             return;
         }
         mACMatrix = acMatrix;
-        buildDataBlockDialogAndUpdateBlocks();
+        buildDataBlockDialog(false);
     }
 
     /**
@@ -427,10 +427,12 @@ public class AccessConditionTool extends BasicActivity {
      * If key B is readable due to the Access Conditions of a Sector Trailer,
      * the Access Conditions for a normal data block are limited to
      * conditions that don't use key B.
+     * @param resetBlockACs If True the Access Conditions of all data blocks
+     * will be reseted (C1=0, C2=0, C3=0).
      * @see #mDataBlockDialog
      * @see #mIsKeyBReadable
      */
-    private void buildDataBlockDialogAndUpdateBlocks() {
+    private void buildDataBlockDialog(boolean resetBlockACs) {
         String[] items = null;
         if (mIsKeyBReadable && !mKeyBWasReadable) {
             // Rebuild dialog (because key B is now readable).
@@ -451,13 +453,15 @@ public class AccessConditionTool extends BasicActivity {
             return;
         }
 
-        // Reset buttons and mACMatrix.
-        for (int i = 0; i < 3; i++) {
-            mBlockButtons[i].setText(items[0]);
+        if (resetBlockACs) {
+            // Reset mACMatrix and update button text.
+            for (int i = 0; i < 3; i++) {
+                mBlockButtons[i].setText(items[0]);
 
-            mACMatrix[0][i] = 0;
-            mACMatrix[1][i] = 0;
-            mACMatrix[2][i] = 0;
+                mACMatrix[0][i] = 0;
+                mACMatrix[1][i] = 0;
+                mACMatrix[2][i] = 0;
+            }
         }
 
         ListAdapter adapter = new ArrayAdapter<String>(
