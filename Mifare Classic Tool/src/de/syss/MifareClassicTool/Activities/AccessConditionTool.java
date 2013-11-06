@@ -395,7 +395,7 @@ public class AccessConditionTool extends BasicActivity {
                 return 1;
             } else if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 1) {
                 return 2;
-            } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 0) {
+            } else if (acBits[0] == 1 && acBits[1] == 1 && acBits[2] == 1) {
                 return 3;
             }
         } else {
