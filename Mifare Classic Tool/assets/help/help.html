@@ -44,6 +44,7 @@
       <ul>
         <li><a href="#tag_info_tool">7.1 Display Tag Info</a></li>
         <li><a href="#value_block_tool">7.2 Value Block Decoder/Encoder</a></li>
+        <li><a href="#ac_tool">7.3 Access Condition Decoder/Encoder</a></li>
       </ul>
     </li>
   </ul>
@@ -107,6 +108,7 @@
       <li>Write the manufacturer block of special Mifare Classic tags</li>
       <li>Create, edit, save and share key files (dictionaries)</li>
       <li>Decode &amp; Encode Mifare Classic Value Blocks</li>
+      <li>Decode &amp; Encode Mifare Classic Access Conditions</li>
       <li>Display generic tag information</li>
       <li>Display the tag data as highlighted hex</li>
       <li>Display the tag data as 7-Bit US-ASCII</li>
@@ -404,7 +406,7 @@
   <h3 id="value_block_tool">7.2 Value Block Decoder/Encoder</h3>
   <p>
     This tool is able of decoding Mifare Classic Blocks into integer
-    and the other way around (encode integer to Mifare Classic Block).
+    and the other way around (encode integer to  a Mifare Classic Value Block).
     If you don't know what a Mifare Classic Value Block is, you should read
     chapter 8.6.2.1 of the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
@@ -414,6 +416,17 @@
     because it is not used. However, according to NXP it<br />
     &quot;can be used to save the storage address of a
     block, when implementing a powerful backup management.&quot;.
+  </p>
+
+  <h3 id="ac_tool">7.3 Access Condition Decoder/Encoder</h3>
+  <p>
+    This tool is able of decoding Mifare Classic Access Conditions into a
+    more human readable format and the other way around (encode to
+    Mifare Classic Access Conditions).
+    If you don't know what Mifare Classic Access Conditions are, you should read
+    chapter 8.7 of the
+    <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
+    Mifare Classic (1k) Datasheet</a> (PDF).
   </p>
 
 </body>
