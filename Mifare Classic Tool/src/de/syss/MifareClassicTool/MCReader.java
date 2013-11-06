@@ -498,7 +498,7 @@ public class MCReader {
                     continue;
                 }
                 ac = Arrays.copyOfRange(ac, 6, 9);
-                byte[][] acMatrix = Common.acToACMatrix(ac);
+                byte[][] acMatrix = Common.acBytesToACMatrix(ac);
                 if (acMatrix == null) {
                     ret.put(sector, null);
                     continue;

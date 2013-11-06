@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<resources>
+
+    <!-- Access Conditions for a data block -->
+    <string name="ac_data_block_0">
+        Read: A|B\nWrite: A|B\nIncr: A|B\nDecr/Trans/Rest: A|B</string>
+    <string name="ac_data_block_1">
+        Read: A|B\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+    <string name="ac_data_block_2">
+        Read: A|B\nWrite: B\nIncr: None\nDecr/Trans/Rest: None</string>
+    <string name="ac_data_block_3">
+        Read: A|B\nWrite: B\nIncr: B\nDecr/Trans/Rest: A|B</string>
+    <string name="ac_data_block_4">
+        Read: A|B\nWrite: None\nIncr: None\nDecr/Trans/Rest: A|B</string>
+    <string name="ac_data_block_5">
+        Read: B\nWrite: B\nIncr: None\nDecr/Trans/Rest: None</string>
+    <string name="ac_data_block_6">
+        Read: B\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+    <string name="ac_data_block_7">
+        Read: None\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+
+    <!-- Access Conditions for data blocks if key B is readable-->
+    <string name="ac_data_block_no_keyb_0">
+        Read: A\nWrite: A\nIncr: A\nDecr/Trans/Rest: A</string>
+    <string name="ac_data_block_no_keyb_1">
+        Read: A\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+    <string name="ac_data_block_no_keyb_2">
+        Read: A\nWrite: None\nIncr: None\nDecr/Trans/Rest: A</string>
+    <string name="ac_data_block_no_keyb_3">
+        Read: None\nWrite: None\nIncr: None\nDecr/Trans/Rest: None</string>
+
+    <!-- Access Conditions for a Sector Trailer -->
+    <string name="ac_sector_trailer_0">
+        Read KeyA: None\nWrite KeyA: A\nRead AC: A\nWrite AC: None
+        \nRead KeyB: A\nWrite KeyB: A</string>
+    <string name="ac_sector_trailer_1">
+        Read KeyA: None\nWrite KeyA: None\nRead AC: A\nWrite AC: None
+        \nRead KeyB: A\nWrite KeyB: None</string>
+    <string name="ac_sector_trailer_2">
+        Read KeyA: None\nWrite KeyA: B\nRead AC: A|B\nWrite AC: None
+        \nRead KeyB: None\nWrite KeyB: B</string>
+    <string name="ac_sector_trailer_3">
+        Read KeyA: None\nWrite KeyA: None\nRead AC: A|B\nWrite AC: None
+        \nRead KeyB: None\nWrite KeyB: None</string>
+    <string name="ac_sector_trailer_4">
+        Read KeyA: None\nWrite KeyA: A\nRead AC: A\nWrite AC: A
+        \nRead KeyB: A\nWrite KeyB: A</string>
+    <string name="ac_sector_trailer_5">
+        Read KeyA: None\nWrite KeyA: B\nRead AC: A|B\nWrite AC: B
+        \nRead KeyB: None\nWrite KeyB: B</string>
+    <string name="ac_sector_trailer_6">
+        Read KeyA: None\nWrite KeyA: None\nRead AC: A|B\nWrite AC: B
+        \nRead KeyB: None\nWrite KeyB: None</string>
+    <string name="ac_sector_trailer_7">
+        Read KeyA: None\nWrite KeyA: None\nRead AC: A|B\nWrite AC: None
+        \nRead KeyB: None\nWrite KeyB: None</string>
+
+</resources>

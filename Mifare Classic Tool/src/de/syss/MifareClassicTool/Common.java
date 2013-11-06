@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -35,6 +36,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
+import android.os.Build;
 import android.os.Environment;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -598,37 +600,94 @@ public class Common {
     /**
      * Convert the Access Condition bytes to a matrix containing the
      * resolved C1, C2 and C3 for each block.
-     * @param ac The Access Conditions.
+     * @param acBytes The Access Condition bytes (3 byte).
      * @return Matrix of access conditions bits (C1-C3) where the first
      * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
      * dimension is the block number (Index 0-3). If the ACs are incorrect
      * null will be returned.
      */
-    public static byte[][] acToACMatrix(byte ac[]) {
+    public static byte[][] acBytesToACMatrix(byte acBytes[]) {
         // ACs correct?
         // C1 (Byte 7, 4-7) == ~C1 (Byte 6, 0-3) and
         // C2 (Byte 8, 0-3) == ~C2 (Byte 6, 4-7) and
         // C3 (Byte 8, 4-7) == ~C3 (Byte 7, 0-3)
         byte[][] acMatrix = new byte[3][4];
-        if (ac.length > 2 &&
-                (byte)((ac[1]>>>4)&0x0F)  == (byte)((ac[0]^0xFF)&0x0F) &&
-                (byte)(ac[2]&0x0F) == (byte)(((ac[0]^0xFF)>>>4)&0x0F) &&
-                (byte)((ac[2]>>>4)&0x0F)  == (byte)((ac[1]^0xFF)&0x0F)) {
+        if (acBytes.length > 2 &&
+                (byte)((acBytes[1]>>>4)&0x0F)  ==
+                        (byte)((acBytes[0]^0xFF)&0x0F) &&
+                (byte)(acBytes[2]&0x0F) ==
+                        (byte)(((acBytes[0]^0xFF)>>>4)&0x0F) &&
+                (byte)((acBytes[2]>>>4)&0x0F)  ==
+                        (byte)((acBytes[1]^0xFF)&0x0F)) {
             // C1, Block 0-3
             for (int i = 0; i < 4; i++) {
-                acMatrix[0][i] = (byte)((ac[1]>>>4+i)&0x01);
+                acMatrix[0][i] = (byte)((acBytes[1]>>>4+i)&0x01);
             }
             // C2, Block 0-3
             for (int i = 0; i < 4; i++) {
-                acMatrix[1][i] = (byte)((ac[2]>>>i)&0x01);
+                acMatrix[1][i] = (byte)((acBytes[2]>>>i)&0x01);
             }
             // C3, Block 0-3
             for (int i = 0; i < 4; i++) {
-                acMatrix[2][i] = (byte)((ac[2]>>>4+i)&0x01);
+                acMatrix[2][i] = (byte)((acBytes[2]>>>4+i)&0x01);
             }
             return acMatrix;
         }
         return null;
+    }
+
+    /**
+     * Convert a matrix with Access Conditions bits into normal 3
+     * Access Condition bytes.
+     * @param acMatrix Matrix of access conditions bits (C1-C3) where the first
+     * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
+     * dimension is the block number (Index 0-3).
+     * @return The Access Condition bytes (3 byte).
+     */
+    public static byte[] acMatrixToACBytes(byte acMatrix[][]) {
+        if (acMatrix != null && acMatrix.length == 3) {
+            for (int i = 0; i < 3; i++) {
+                if (acMatrix[i].length != 4)
+                    // Error.
+                    return null;
+            }
+        } else {
+            // Error.
+            return null;
+        }
+        byte[] acBytes = new byte[3];
+        // Byte 6, Bit 0-3.
+        acBytes[0] = (byte)((acMatrix[0][0]^0xFF)&0x01);
+        acBytes[0] |= (byte)(((acMatrix[0][1]^0xFF)<<1)&0x02);
+        acBytes[0] |= (byte)(((acMatrix[0][2]^0xFF)<<2)&0x04);
+        acBytes[0] |= (byte)(((acMatrix[0][3]^0xFF)<<3)&0x08);
+        // Byte 6, Bit 4-7.
+        acBytes[0] |= (byte)(((acMatrix[1][0]^0xFF)<<4)&0x10);
+        acBytes[0] |= (byte)(((acMatrix[1][1]^0xFF)<<5)&0x20);
+        acBytes[0] |= (byte)(((acMatrix[1][2]^0xFF)<<6)&0x40);
+        acBytes[0] |= (byte)(((acMatrix[1][3]^0xFF)<<7)&0x80);
+        // Byte 7, Bit 0-3.
+        acBytes[1] = (byte)((acMatrix[2][0]^0xFF)&0x01);
+        acBytes[1] |= (byte)(((acMatrix[2][1]^0xFF)<<1)&0x02);
+        acBytes[1] |= (byte)(((acMatrix[2][2]^0xFF)<<2)&0x04);
+        acBytes[1] |= (byte)(((acMatrix[2][3]^0xFF)<<3)&0x08);
+        // Byte 7, Bit 4-7.
+        acBytes[1] |= (byte)((acMatrix[0][0]<<4)&0x10);
+        acBytes[1] |= (byte)((acMatrix[0][1]<<5)&0x20);
+        acBytes[1] |= (byte)((acMatrix[0][2]<<6)&0x40);
+        acBytes[1] |= (byte)((acMatrix[0][3]<<7)&0x80);
+        // Byte 8, Bit 0-3.
+        acBytes[2] = (byte)(acMatrix[1][0]&0x01);
+        acBytes[2] |= (byte)((acMatrix[1][1]<<1)&0x02);
+        acBytes[2] |= (byte)((acMatrix[1][2]<<2)&0x04);
+        acBytes[2] |= (byte)((acMatrix[1][3]<<3)&0x08);
+        // Byte 8, Bit 4-7.
+        acBytes[2] |= (byte)((acMatrix[2][0]<<4)&0x10);
+        acBytes[2] |= (byte)((acMatrix[2][1]<<5)&0x20);
+        acBytes[2] |= (byte)((acMatrix[2][2]<<6)&0x40);
+        acBytes[2] |= (byte)((acMatrix[2][3]<<7)&0x80);
+
+        return acBytes;
     }
 
     /**
@@ -743,6 +802,77 @@ public class Common {
         ret.setSpan(new ForegroundColorSpan(color),
                 0, data.length(), 0);
         return ret;
+    }
+
+    /**
+     * Copy a text to the Android clipboard.
+     * @param text The text that should be stored on the clipboard.
+     * @param context Context of the SystemService
+     * (and the Toast message that will by shown).
+     */
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    public static void copyToClipboard(String text, Context context) {
+        if (text.equals("") == false) {
+            if (Build.VERSION.SDK_INT >= 11) {
+                // Android API level 11+.
+                android.content.ClipboardManager clipboard =
+                        (android.content.ClipboardManager)
+                        context.getSystemService(
+                                Context.CLIPBOARD_SERVICE);
+                android.content.ClipData clip =
+                        android.content.ClipData.newPlainText(
+                                "mifare classic tool data", text);
+                clipboard.setPrimaryClip(clip);
+            } else {
+                // Android API level 10.
+                android.text.ClipboardManager clipboard =
+                        (android.text.ClipboardManager)
+                        context.getSystemService(
+                                Context.CLIPBOARD_SERVICE);
+                clipboard.setText(text);
+            }
+            Toast.makeText(context, R.string.info_copied_to_clipboard,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Get the content of the Android clipboard (if it is plain text).
+     * @param context Context of the SystemService
+     * @return The content of the Android clipboard. On error
+     * (clipboard empty, clipboard content not plain text, etc.) null will
+     * be returned.
+     */
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    public static String getFromClipboard(Context context) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            // Android API level 11+.
+            android.content.ClipboardManager clipboard =
+                    (android.content.ClipboardManager)
+                    context.getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+            if (clipboard.getPrimaryClip() != null
+                    && clipboard.getPrimaryClip().getItemCount() > 0
+                    && clipboard.getPrimaryClipDescription().hasMimeType(
+                        android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                return clipboard.getPrimaryClip()
+                        .getItemAt(0).getText().toString();
+            }
+        } else {
+            // Android API level 10.
+            android.text.ClipboardManager clipboard =
+                    (android.text.ClipboardManager)
+                    context.getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+            if (clipboard.hasText()) {
+                return clipboard.getText().toString();
+            }
+        }
+
+        // Error.
+        return null;
     }
 
     /**

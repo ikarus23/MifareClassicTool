@@ -36,6 +36,7 @@
         <ignore path="res/layout/activity_write_dump.xml" />
         <ignore path="res/layout/activity_key_editor.xml" />
         <ignore path="res/layout/activity_write_tag.xml" />
+        <ignore path="res/layout/activity_access_condition_tool.xml" />
     </issue>
 
     <issue id="Orientation">

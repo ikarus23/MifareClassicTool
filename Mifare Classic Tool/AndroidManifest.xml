@@ -25,7 +25,7 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -138,6 +138,13 @@
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_tool"
             android:label="@string/title_activity_value_block_tool"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activities.AccessConditionTool"
+            android:configChanges="orientation|screenSize"
+            android:icon="@drawable/access_condition_tool"
+            android:label="@string/title_activity_access_condition_tool"
             android:launchMode="singleTop" >
         </activity>
     </application>

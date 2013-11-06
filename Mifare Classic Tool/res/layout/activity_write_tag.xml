@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
  * Copyright 2013 Gerhard Klostermeier
@@ -146,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/editTextWriteTagBlock"
                     android:layout_below="@id/editTextWriteTagBlock"
-                    android:hint="@string/hint_hex_data"
+                    android:hint="@string/hint_hex_16_byte"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="32" />
 

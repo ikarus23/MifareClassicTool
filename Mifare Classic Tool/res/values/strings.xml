@@ -40,6 +40,8 @@
     <string name="title_activity_tag_info">Tag Info</string>
     <string name="title_activity_value_block_tool">Value Block Decoder
         &amp; Encoder</string>
+    <string name="title_activity_access_condition_tool">Access Condition
+        Decoder &amp; Encode</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_footer">GPLv3 -
@@ -127,6 +129,15 @@
     <string name="text_option_info">Info to option</string>
     <string name="text_static_ac_default">08778F</string>
     <string name="text_no_key_io_error">No keys found (or dead sector)</string>
+    <string name="text_ac_label">ACs:</string>
+    <string name="text_block_0">Block 0 (0-4):</string>
+    <string name="text_block_1">Block 1 (5-9):</string>
+    <string name="text_block_2">Block 2 (10-14):</string>
+    <string name="text_block_3">Block 3 (15) - Sector Trailer:</string>
+    <string name="text_step_1_sector_trailer">Step 1:
+        Choose ACs for Sector Trailer</string>
+    <string name="text_step_2_data_blocks">Step 2:
+        Choose ACs for Data Blocks</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -179,9 +190,9 @@
     <string name="menu_show_ascii">Data as ASCII</string>
     <string name="menu_show_ac">Decode Access Conditions</string>
     <string name="menu_show_value_blocks">Value Blocks as Int.</string>
-    <string name="menu_open_value_block_tool">Value Block De-/Encoder</string>
     <string name="menu_tag_info">Display Tag Info</string>
-    <string name="menu_vb_coder">Decode &amp; Encode Value Blocks</string>
+    <string name="menu_vb_tool">Value Block De-/Encoder</string>
+    <string name="menu_ac_tool">Access Condition De-/Encoder</string>
     <string name="menu_new_file">Create New File</string>
     <string name="menu_delete_file">Delete File</string>
     <string name="menu_remove_duplicates">Remove Duplicates</string>
@@ -251,12 +262,14 @@
         (0-9, A-F, 2 characters)</string>
     <string name="info_copied_to_clipboard">Copied to clipboard</string>
     <string name="info_invalid_int">Not a valid integer</string>
-    <string name="info_static_ac_not_hex">Error: Static Access Conditions are
+    <string name="info_ac_not_hex">Error: Access Conditions are
         not hex (0-9, A-F)</string>
-    <string name="info_static_ac_not_3_byte">Error: Static Access Conditions
+    <string name="info_ac_not_3_byte">Error: Access Conditions
         have to be 3 bytes (6 characters) long</string>
     <string name="info_file_to_big">Error: File is to big (out of memory)</string>
     <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
+    <string name="info_ac_format_error">Error: The Access Conditions
+        are invalid</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -328,11 +341,12 @@
         that will be permanent for a tag. In case the reader does not check
         them, you can easily use custom ones to make the tag reusable.
         \n\n<b>WARNING: Writing wrong data may cause irreparable
-        damage to the tag.</b>
-    </string>
+        damage to the tag.</b></string>
+    <string name="dialog_choose_ac_title">Choose Access Conditions</string>
 
     <!-- Hints -->
-    <string name="hint_hex_data">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_3_byte">HEX, 3 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
 
