@@ -42,7 +42,15 @@ public class AccessConditionTool extends BasicActivity {
     private EditText mAC;
     private Button[] mBlockButtons;
     private boolean mKeyBWasReadable;
-    // TODO: doc.
+    /**
+     * True if the Access Conditions of the Sector Trailer state that key B
+     * is readable. Many methods rely on this member variable
+     * {@link #getResourceForDataBlocksByRowNr(int)},
+     * {@link #getResourceForSectorTrailersByRowNr(int)},
+     * {@link #acRowNrToACBits(int, boolean)},
+     * {@link #acBitsToACRowNr(byte[], boolean)},
+     * {@link #buildDataBlockDialogAndUpdateBlocks()}).
+     */
     private boolean mIsKeyBReadable;
     /**
      * Matrix of access conditions bits (C1-C3) where the first
@@ -278,15 +286,14 @@ public class AccessConditionTool extends BasicActivity {
         }
     }
 
-    // TODO: Update doc.
     /**
-     * Return the resource ID of an Access Condition string based on its
-     * position in the table (see: res/values/access_conditions.xml and
+     * Return the resource ID of an Access Condition string for data
+     * blocks based on its position in the table
+     * (see: res/values/access_conditions.xml and
      * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
-     * @param rowNr Row number of the Access Condition in the table.
-     * @param isDataBlock True for data blocks, False for Sector Trailers
-     * (True = Table 8, False = Table 7).
+     * @param rowNr Row number of the Access Condition table.
      * @return The resource ID of an Access Condition string.
+     * @see #mIsKeyBReadable
      */
     private int getResourceForDataBlocksByRowNr(int rowNr) {
         String prefix = "ac_data_block_";
@@ -296,26 +303,41 @@ public class AccessConditionTool extends BasicActivity {
         return getResourceForAccessCondition(prefix, rowNr);
     }
 
-    // TODO: doc.
+    /**
+     * Return the resource ID of an Access Condition string for Sector
+     * Trailers based on its position in the table
+     * (see: res/values/access_conditions.xml and
+     * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
+     * @param rowNr Row number of the Access Condition table.
+     * @return The resource ID of an Access Condition string.
+     * @see #mIsKeyBReadable
+     */
     private int getResourceForSectorTrailersByRowNr(int rowNr) {
         return getResourceForAccessCondition("ac_sector_trailer_", rowNr);
     }
 
-    // TODO: doc.
+    /**
+     * A helper function for {@link #getResourceForDataBlocksByRowNr(int)} and
+     * {@link #getResourceForSectorTrailersByRowNr(int)}.
+     * @param prefix The prefix of the resource name
+     * ("ac_data_block_", "ac_data_block_no_keyb_" or "ac_sector_trailer_").
+     * @param rowNr Row number of the Access Condition table.
+     * @return The resource ID of an Access Condition string.
+     */
     private int getResourceForAccessCondition(String prefix, int rowNr) {
         return getResources().getIdentifier(
                 prefix + rowNr, "string", getPackageName());
     }
 
-
-    // TODO: Update doc.
     /**
      * Convert the the row number of the Access Condition table to its
      * corresponding access bits C1, C2 and C3
      * (see: res/values/access_conditions.xml and
      * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
      * @param rowNr The row number of the Access Condition table (0-7).
+     * @param isSectorTrailer True if the row number refers to a Sector Trailer.
      * @return The access bits C1, C2 and C3. On error null will be returned.
+     * @see #mIsKeyBReadable
      */
     private byte[] acRowNrToACBits(int rowNr, boolean isSectorTrailer) {
         if (!isSectorTrailer && mIsKeyBReadable && rowNr > 1) {
@@ -352,21 +374,22 @@ public class AccessConditionTool extends BasicActivity {
         }
     }
 
-    // TODO: Update doc.
     /**
      * Convert the access bits C1, C2 and C3 to its corresponding row number
      * in the Access Condition table (see: res/values/access_conditions.xml and
      * NXP's MF1S50yyX, Chapter 8.7.1, Table 7 and 8).
      * @param acBits The access bits C1, C2 and C3.
+     * @param isSectorTrailer True if the row number refers to a Sector Trailer.
      * @return The row number of the Access Condition table. On error -1 will
      * be returned.
+     * @see #mIsKeyBReadable
      */
-    private int acBitsToACRowNr(byte[] acBits, boolean isSectorTailer) {
+    private int acBitsToACRowNr(byte[] acBits, boolean isSectorTrailer) {
         if (acBits != null && acBits.length != 3) {
             return -1;
         }
 
-        if (!isSectorTailer && mIsKeyBReadable) {
+        if (!isSectorTrailer && mIsKeyBReadable) {
             if (acBits[0] == 0 && acBits[1] == 0 && acBits[2] == 0) {
                 return 0;
             } else if (acBits[0] == 0 && acBits[1] == 1 && acBits[2] == 0) {
@@ -400,7 +423,14 @@ public class AccessConditionTool extends BasicActivity {
         return -1;
     }
 
-    // TODO: doc.
+    /**
+     * Rebuild the {@link #mDataBlockDialog} based on {@link #mIsKeyBReadable}.
+     * If key B is readable due to the Access Conditions of a Sector Trailer,
+     * the Access Conditions for a normal data block are limited to
+     * conditions that don't use key B.
+     * @see #mDataBlockDialog
+     * @see #mIsKeyBReadable
+     */
     private void buildDataBlockDialogAndUpdateBlocks() {
         String[] items = null;
         if (mIsKeyBReadable && !mKeyBWasReadable) {
