@@ -40,7 +40,7 @@ public class AccessConditionTool extends BasicActivity {
 
     private EditText mAC;
     private Button[] mBlockButtons;
-    private boolean mKeyBWasReadable;
+    private boolean mWasKeyBReadable;
     /**
      * True if the Access Conditions of the Sector Trailer state that key B
      * is readable. Many methods rely on this member variable
@@ -145,7 +145,7 @@ public class AccessConditionTool extends BasicActivity {
         // Build the dialog with Access Conditions for data blocks.
         // Key B is readable in the default configuration.
         mIsKeyBReadable = true;
-        buildDataBlockDialog(true);
+        buildDataBlockDialog(false);
     }
 
     /**
@@ -436,20 +436,20 @@ public class AccessConditionTool extends BasicActivity {
      */
     private void buildDataBlockDialog(boolean resetBlockACs) {
         String[] items = null;
-        if (mIsKeyBReadable && !mKeyBWasReadable) {
+        if (mIsKeyBReadable && !mWasKeyBReadable) {
             // Rebuild dialog (because key B is now readable).
             items = new String[4];
             for (int i = 0; i < 4; i++) {
                 items[i] = getString(getResourceForDataBlocksByRowNr(i));
             }
-            mKeyBWasReadable = true;
-        } else if (!mIsKeyBReadable && mKeyBWasReadable){
+            mWasKeyBReadable = true;
+        } else if (!mIsKeyBReadable && mWasKeyBReadable){
             // Rebuild dialog (because key B is no longer readable).
             items = new String[8];
             for (int i = 0; i < 8; i++) {
                 items[i] = getString(getResourceForDataBlocksByRowNr(i));
             }
-            mKeyBWasReadable = false;
+            mWasKeyBReadable = false;
         } else {
             // No build is needed.
             return;
@@ -464,6 +464,13 @@ public class AccessConditionTool extends BasicActivity {
                 mACMatrix[1][i] = 0;
                 mACMatrix[2][i] = 0;
             }
+            int r = 0;
+            if (mIsKeyBReadable) {
+                r = R.string.info_ac_reset_keyb_readable;
+            } else {
+                r = R.string.info_ac_reset_keyb_not_readable;
+            }
+            Toast.makeText(this, r, Toast.LENGTH_LONG).show();
         }
 
         ListAdapter adapter = new ArrayAdapter<String>(

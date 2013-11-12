@@ -270,6 +270,10 @@
     <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
     <string name="info_ac_format_error">Error: The Access Conditions
         are invalid</string>
+    <string name="info_ac_reset_keyb_readable">Key B is readable.
+        \nACs of data blocks have been updated.</string>
+    <string name="info_ac_reset_keyb_not_readable">Key B is not readable.
+        \nACs of data blocks have been updated.</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
