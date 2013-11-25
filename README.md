@@ -49,14 +49,14 @@ General Information
 -------------------
 
 This tool provides several features to interact with (and only with)
-Mifare Classic RFID-Tags. It is designed for users who are
-at least a bit familiar with the Mifare Classic technology.
+Mifare Classic RFID-Tags. It is designed for users who have at least
+basic familiarity with the Mifare Classic technology.
 You also need an understanding of the hexadecimal number system,
 because all data input and output is in hexadecimal.
 
-Some important thing are:
-* The features this tool provides are really basic. There are no such
-  fancy things like saving an URL to a RFID-Tag with a nice looking
+Some important things are:
+* The features this tool provides are very basic. There are no such
+  fancy things like saving a URL to an RFID-Tag with a nice looking
   graphical user interface. If you want so save things on a tag,
   you have to input the raw hexadecimal data.
 * This App **can not crack/hack**
@@ -64,12 +64,12 @@ Some important thing are:
   first need keys for this specific tag. For additional information
   please read/see chapter [Getting Started](#getting-started).
 * There will be **no &quot;brute-force&quot; attack**
-  possibility in this application. It is way to slow due
+  capability in this application. It is way too slow due
   to the protocol.
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
-[do some Google search](https://www.google.com/search?q=mifare+classic")
+[do some Google searches](https://www.google.com/search?q=mifare+classic")
 or read the
 [Mifare Classic (1k) 'Datasheet'](http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf)
 (PDF) from NXP.
@@ -79,7 +79,7 @@ or read the
 Getting Started
 ---------------
 
-First of all you need the keys for the tag you want to read.
+First of all, you need the keys for the tag you want to read.
 Due to some weaknesses in Mifare Classic, you can retrieve
 all the keys (A and B) of a tag with tools like the
 [Proxmark3](http://www.proxmark.org/) or
@@ -106,7 +106,7 @@ Advantages of the Key Files Concept:
   The application tries to authenticate with all keys from the key
 * **You don't have to know all the keys.**  
   If neither key A nor key B for a specific sector is found in the
-  key file (dictionary), the application will skip reading this
+  key file (dictionary), the application will skip reading said
   sector.
 
 This dictionary-attack based mapping process
@@ -118,7 +118,7 @@ possible with the keys you know!
 License
 -------
 
-This application is originally developed by
+This application was originally developed by
 Gerhard Klostermeier in cooperation with SySS GmbH
 ([www.syss.de](https://www.syss.de/)) and Aalen
 University ([www.htw-aalen.de](http://www.htw-aalen.de/)) in 2012/2013.
