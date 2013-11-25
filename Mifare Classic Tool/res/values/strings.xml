@@ -47,7 +47,7 @@
     <string name="text_footer">GPLv3 -
         <a href="https://github.com/ikarus23/MifareClassicTool">Project Page</a></string>
     <string name="text_choose_key_file">Choose some key file(s):</string>
-    <string name="text_wait_read_tag">Reading tag…\n(Don\'t remove tag)</string>
+    <string name="text_wait_read_tag">Reading tag&#8230;\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>
     <string name="text_sector">Sector</string>
     <string name="text_block">Block</string>
@@ -238,7 +238,7 @@
         keys were valid for reading</string>
     <string name="info_not_supported_now">This function is not
         supported in this version.
-        (Maybe it will come with further versions&#8230;)</string>
+        (Maybe it will come in future versions&#8230;)</string>
     <string name="info_valid_keys_no_keys">Error: There must be at
         least one key</string>
     <string name="info_valid_keys_not_hex">Error: Some key(s) contain
@@ -266,7 +266,7 @@
         not hex (0-9, A-F)</string>
     <string name="info_ac_not_3_byte">Error: Access Conditions
         have to be 3 bytes (6 characters) long</string>
-    <string name="info_file_to_big">Error: File is to big (out of memory)</string>
+    <string name="info_file_to_big">Error: File is too big (out of memory)</string>
     <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
     <string name="info_ac_format_error">Error: The Access Conditions
         are invalid</string>
@@ -286,7 +286,7 @@
     <string name="dialog_no_mfc_support_device">Your device
         (due to hardware) does not support Mifare Classic! The only thing
         possible is to display the UID and some other generic
-        information. Further I/O operations are  impossible.
+        information. Further I/O operations are impossible.
         \n\n<b>Therefore, this App is pretty much useless for this device.</b>
         \n\nKnown devices with no Mifare Classic support:\n
         - Google Nexus 4\n
@@ -300,7 +300,7 @@
         Mifare Classic tags only!
         \n\n<b>Please use another tag.</b>
         \n\n<small>(Notice: In some rare cases this message could be a false
-        positive caused by multiple tags in the reader filed or strange
+        positive caused by multiple tags in the reader field or strange
         ATQA+SAK values.)</small></string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
@@ -310,7 +310,7 @@
     <string name="dialog_sector_trailer_warning_title">Writing
         Sector Trailer</string>
     <string name="dialog_sector_trailer_warning">You\'re about to write
-        to a sector trailer. Writing wrong data may cause irreparable
+        to a sector trailer. Writing incorrect data may cause irreparable
         damage to the tag.</string>
     <string name="dialog_save_keys_title">Save Key File</string>
     <string name="dialog_save_keys">Enter a file name for the key file:</string>
@@ -318,10 +318,10 @@
     <string name="dialog_new_file">Enter a file name for the new file:</string>
     <string name="dialog_first_run_title">WARNING NOTICE</string>
     <string name="dialog_first_run">This application is dedicated
-        to users who are at least a bit familiar with the
+        to users who have at least basic familiarity with the
         Mifare Classic technology. Its features are basic and at a low
         level. Therefore nearly all data input and output will be hexadecimal.
-        Its also important that you understand what you are doing, if
+        It is also important that you understand what you are doing, e.g. if
         you write data to a tag. Writing the wrong data to certain
         blocks may cause irreparable damage to the tag.
         \n\n<b>FOR MORE INFORMATION AND HELP CHECK OUT THE
@@ -342,10 +342,10 @@
     <string name="dialog_static_ac_title">Use static Access Conditions</string>
     <string name="dialog_static_ac"><b>Replace all Access Conditions from the
         dump with the chosen ones.</b>
-        \n\nThis will become in handy if the dump contains Access Conditions
+        \n\nThis is useful if the dump contains Access Conditions
         that will be permanent for a tag. In case the reader does not check
         them, you can easily use custom ones to make the tag reusable.
-        \n\n<b>WARNING: Writing wrong data may cause irreparable
+        \n\n<b>WARNING: Writing incorrect data may cause irreparable
         damage to the tag.</b></string>
     <string name="dialog_choose_ac_title">Choose Access Conditions</string>
 
