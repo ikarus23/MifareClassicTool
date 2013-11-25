@@ -53,33 +53,33 @@
   <h2 id="general_information">1. General Information</h2>
   <p>
     This tool provides several features to interact with (and only with)
-    Mifare Classic RFID-Tags. It is designed for users who are
-    at least a bit familiar with the Mifare Classic technology.
+    Mifare Classic RFID-Tags. It is designed for users who have at least
+    basic familiarity with the Mifare Classic technology.
     You also need an understanding of the hexadecimal number system,
     because all data input and output is in hexadecimal.
     <br /><br />
-    Some important thing are:
+    Some important things are:
     <ul>
-      <li>The features this tool provides are really basic. There are no such
-        fancy things like saving an URL to a RFID-Tag with a nice looking
+      <li>The features this tool provides are very basic. There are no such
+        fancy things like saving a URL to an RFID-Tag with a nice looking
         graphical user interface. If you want so save things on a tag,
         you have to input the raw hexadecimal data.
       </li>
       <li>This App <b>can not crack/hack</b>
-        any Mifare Classic keys. If you want to read/write a RFID-Tag, you
+        any Mifare Classic keys. If you want to read/write an RFID-Tag, you
         first need keys for this specific tag. For additional information
         please read/see chapter
         <a href="#getting_started">Getting Started</a>.
       </li>
       <li>There will be <b>no &quot;brute-force&quot; attack</b>
-        possibility in this application. It is way to slow due
+        capability in this application. It is way too slow due
         to the protocol.
       </li>
     </ul>
     For further information about Mifare Classic check
     <a href="https://en.wikipedia.org/wiki/MIFARE">Wikipedia</a>,
     <a href="https://www.google.com/search?q=mifare+classic">
-    do some Google search</a> or read the
+    do some Google searches</a> or read the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) 'Datasheet'</a> (PDF) from NXP.
     <br /><br />
@@ -121,11 +121,11 @@
 
   <h3 id="license">1.2 License</h3>
   <p>
-    This application is originally developed by
+    This application was originally developed by
     Gerhard Klostermeier in cooperation with SySS GmbH
     (<a href="http://www.syss.de/">www.syss.de</a>) and Aalen
     University (<a href="http://www.htw-aalen.de/">www.htw-aalen.de</a>) in
-    2012/2013. It is fee software under the
+    2012/2013. It is free software under the
     <a href="https://www.gnu.org/licenses/gpl-3.0.txt">
       GNU General Public License v3.0 (GPLv3)</a>.
     <br /><br />
@@ -147,7 +147,7 @@
 
   <h2 id="getting_started">2. Getting Started</h2>
   <p>
-    First of all you need the keys for the tag you want to read.
+    First of all, you need the keys for the tag you want to read.
     Due to some weaknesses in Mifare Classic, you can retrieve
     all the keys (A and B) of a tag with tools like the
     <a href="http://www.proxmark.org/">Proxmark3</a> or
@@ -180,7 +180,7 @@
       <li>
         <b>You don't have to know all the keys.</b><br />
         If neither key A nor key B for a specific sector is found in the
-        key file (dictionary), the application will skip reading this
+        key file (dictionary), the application will skip reading said
         sector.
       </li>
     </ul>
@@ -193,11 +193,11 @@
 
   <h2 id="read_tag">3. Read Tag</h2>
   <p>
-    Technical speaking, reading a RFID-Tag is done in two steps:
+    Technically speaking, reading an RFID-Tag is done in two steps:
     <ul>
       <li>
         <b>Choose a key file.</b><br />
-        Press &quot;Read Tag&quot; from main menu. Now select
+        Press &quot;Read Tag&quot; in the main menu. Now select
         key files which (perhaps) contain the keys for the tag.
         You can also specify the range of sectors you want to read.
         Start the mapping process with the lower right button.<br />
@@ -225,11 +225,11 @@
 
   <h3 id="write_block">4.1 Write Block</h3>
   <p>
-    First you have to specify to what block you want to write to.
+    First you have to specify to which block you want to write to.
     Typical (Mifare Classic 1k) ranges are: sector 0-15, block 0-3.
     The second step is to enter the data you want to write. This is
     done in hexadecimal format with a length of 16 bytes (32 characters).
-    After pressing the button the last step is to chose key files
+    After pressing the button, the last step is to chose key files
     which (possibly) contain the key with privilege to write for this
     sector/block.
   </p>
@@ -241,9 +241,9 @@
     tag (for which you know the keys). You need the keys with write privileges
     for all sectors of the dump. If the dump consists of e.g. 5 sectors you
     only need the keys for these 5 sectors.<br />
-    After selecting the dump and the key files the App will check everything
+    After selecting the dump and the key files, the App will check everything
     for you! If there are issues like 'block is read-only', 'key with write
-    access not known', etc., you will get a report before writing!
+    access not known', etc., you will get a report before writing.
     <br /><br />
     <b>Options:</b>
     <ul>
@@ -251,14 +251,14 @@
         <i>Use static (custom) Access Conditions:</i><br />
         By enabling this option, all Access Conditions from the dump
         will be replaced with the chosen ones.
-        <br />This will become in handy if the dump contains Access Conditions
+        <br />This is useful if the dump contains Access Conditions
         that will be permanent for a tag. In case the reader does not check
         them, you can easily use custom ones to make the tag reusable.
       </li>
       <li>
         <i>Write to Manufacturer Block:</i><br />
         The first block of the first sector of an <b>original</b>
-        Mifare Classic tag is read-only and therefore not writable. But there are
+        Mifare Classic tag is <u>read-only</u> i.e. not writable. But there are
         <b>special</b> Mifare Classic tags that support writing to the manufacturer
         block with a simple write command. This App is able to write to such tags
         and can therefore create fully correct clones.
@@ -304,7 +304,7 @@
     From the dump editor you can share a dump (via toolbar or menu item).
     You can choose between Apps that are willing to process the dump file.
     Note that some Apps fail to process the dump.<br />
-    Apps which are known for working with MCT: Gmail, Bluetooth, etc.
+    Apps which are known to work with MCT: Gmail, Bluetooth, etc.
   </p>
 
   <h3 id="display_ascii">5.2 Display Data as ASCII</h3>
@@ -318,16 +318,16 @@
   <h3 id="display_ac">5.3 Display Access Conditions</h3>
   <p>
     From the dump editor you can display the Mifare Classic Access
-    Conditions as table (via menu). If you do not know what they are, you can
+    Conditions as a table (via the menu). If you do not know what they are, you can
     read chapter 8.6.3 and 8.7 (and subchapters) from the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
   </p>
 
-  <h3 id="display_vb">5.4 Display Value Blocks as Integer</h3>
+  <h3 id="display_vb">5.4 Display Value Blocks as Integers</h3>
   <p>
     From the dump editor you can decode blocks formatted as
-    Mifare Classic Value Block to integer format (via menu).
+    Mifare Classic Value Block to integer format (via the menu).
     For further information regarding Value Blocks read/see
     chapter 8.6.2.1 from the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
@@ -346,14 +346,14 @@
       </li>
       <li><b>On your Computer</b><br />
         You can create a simple text file on your computer and
-        transmit to <b>MifareClassicTool/key-files/</b> on
+        transmit it to <b>MifareClassicTool/key-files/</b> on the phone's
         external storage.
       </li>
     </ul>
     Key files are simple text files which contain one Mifare Classic
     key per line (hexadecimal, 6 bytes, 12 characters).
-    Lines <b>starting</b> with # as well as empty lines are not
-    considered.
+    Lines <b>starting</b> with # as well as empty lines are 
+    ignored.
     <br /><br />
     You can edit key files any time you want with
     &quot;Edit/Add Key File&quot; from main menu.
@@ -395,7 +395,7 @@
     helpful file</a> for ATS (ATR) based identification is provided
     by the PCSC project.
     <br /><br />
-    The tag type and manufacturer determined by MCT might be wrong for
+    The tag type and manufacturer determined by MCT could be wrong for
     several reasons:
     <ul>
       <li>The Tag has a customized ATS</li>
@@ -405,8 +405,8 @@
 
   <h3 id="value_block_tool">7.2 Value Block Decoder/Encoder</h3>
   <p>
-    This tool is able of decoding Mifare Classic Blocks into integer
-    and the other way around (encode integer to  a Mifare Classic Value Block).
+    This tool is capable of decoding Mifare Classic Blocks into integer
+    and the other way around (encode integer to a Mifare Classic Value Block).
     If you don't know what a Mifare Classic Value Block is, you should read
     chapter 8.6.2.1 of the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
@@ -420,7 +420,7 @@
 
   <h3 id="ac_tool">7.3 Access Condition Decoder/Encoder</h3>
   <p>
-    This tool is able of decoding Mifare Classic Access Conditions into a
+    This tool is capable of decoding Mifare Classic Access Conditions into a
     more human readable format and the other way around (encode to
     Mifare Classic Access Conditions).
     If you don't know what Mifare Classic Access Conditions are, you should read
