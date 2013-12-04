@@ -37,6 +37,8 @@ import android.os.Handler;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -138,7 +140,7 @@ public class WriteTagActivity extends BasicActivity {
      * {@link FileChooserActivity}.
      * @see #writeBlock()
      * @see #checkTag()
-     * @see #readDumpAndCreateKeyMapForDump(String)
+     * @see #readDumpAndShowSectorChooserDialog(String)
      * @see #createFactoryFormatedDump()
      */
     @Override
@@ -152,7 +154,7 @@ public class WriteTagActivity extends BasicActivity {
                 // Error.
             } else {
                 // Create keys.
-                readDumpAndCreateKeyMapForDump(data.getStringExtra(
+                readDumpAndShowSectorChooserDialog(data.getStringExtra(
                         FileChooserActivity.EXTRA_CHOSEN_FILE));
             }
             break;
@@ -418,7 +420,7 @@ public class WriteTagActivity extends BasicActivity {
      * (Also check the static Access Conditions, if the option is enabled.)
      * This method triggers the call chain: open {@link FileChooserActivity}
      * (this method) -> open {@link CreateKeyMapActivity} (from
-     * {@link #readDumpAndCreateKeyMapForDump(String)}) -> run
+     * {@link #readDumpAndShowSectorChooserDialog(String)}) -> run
      * {@link #checkTag()} -> run {@link #writeDump(HashMap, SparseArray)}.
      * @param view The View object that triggered the method
      * (in this case the write full dump button).
@@ -456,6 +458,7 @@ public class WriteTagActivity extends BasicActivity {
         startActivityForResult(intent, FC_WRITE_DUMP);
     }
 
+    // TODO: update doc.
     /**
      * Triggered by {@link #onActivityResult(int, int, Intent)} after the
      * dump was selected (by {@link FileChooserActivity}), this method
@@ -468,7 +471,7 @@ public class WriteTagActivity extends BasicActivity {
      * @param pathToDump path and filename of the dump
      * (selected by {@link FileChooserActivity}).
      */
-    private void readDumpAndCreateKeyMapForDump(String pathToDump) {
+    private void readDumpAndShowSectorChooserDialog(String pathToDump) {
         // Read dump.
         File file = new File(pathToDump);
         String[] dump = Common.readFileLineByLine(file, false, this);
@@ -479,6 +482,7 @@ public class WriteTagActivity extends BasicActivity {
         mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
         int sector = 0;
         int block = 0;
+
         // Transform the simple dump array into a structure (mDumpWithPos)
         // where the sector and block information are known additionally.
         // Blocks containing unknown data ("-") are dropped.
@@ -505,6 +509,66 @@ public class WriteTagActivity extends BasicActivity {
                 block++;
             }
         }
+
+        // Create and show sector chooser dialog
+        // (let the user select the sectors which will be written).
+        View dialogLayout = getLayoutInflater().inflate(
+                R.layout.dialog_write_sectors, null);
+        LinearLayout llCheckBoxes = (LinearLayout) dialogLayout.findViewById(
+                R.id.linearLayoutWriteSectorsCheckBoxes);
+        Button selectAll = (Button) dialogLayout.findViewById(
+                R.id.buttonWriteSectorsSelectAll);
+        Button selectNone = (Button) dialogLayout.findViewById(
+                R.id.buttonWriteSectorsSelectNone);
+        Integer[] sectors = mDumpWithPos.keySet().toArray(
+                new Integer[mDumpWithPos.size()]);
+        final CheckBox[] sectorBoxes = new CheckBox[mDumpWithPos.size()];
+        for (int i = 0; i< sectors.length; i++) {
+            sectorBoxes[i] = new CheckBox(this);
+            sectorBoxes[i].setChecked(true);
+            sectorBoxes[i].setText(getString(R.string.text_sector)
+                    + " " + sectors[i]);
+            llCheckBoxes.addView(sectorBoxes[i]);
+        }
+        OnClickListener listener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tag = v.getTag().toString();
+                for (CheckBox box : sectorBoxes) {
+                    box.setChecked(tag.equals("all"));
+                }
+            }
+        };
+        selectAll.setOnClickListener(listener);
+        selectNone.setOnClickListener(listener);
+
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_write_sectors_title)
+            .setIcon(android.R.drawable.ic_menu_edit)
+            .setView(dialogLayout)
+            .setPositiveButton(R.string.action_ok,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Remove unwanted sectors.
+                    // TODO: implement this.
+
+                    // Create key map.
+                    createKeyMapForDump();
+                }
+            })
+            .setNegativeButton(R.string.action_cancel,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing.
+                }
+            })
+            .show();
+    }
+
+    // TODO: doc.
+    private void createKeyMapForDump() {
         // Show key map creator.
         Intent intent = new Intent(this, CreateKeyMapActivity.class);
         intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
@@ -711,10 +775,9 @@ public class WriteTagActivity extends BasicActivity {
             // the writeTag() method will be called.
             LinearLayout ll = new LinearLayout(this);
             ll.setPadding(10, 10, 10, 10);
-            ll.setGravity(Gravity.CENTER);
             ll.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(this);
-            textView.setText(getString(R.string.dialog_not_writable));
+            textView.setText(R.string.dialog_not_writable);
             textView.setTextAppearance(this,
                     android.R.style.TextAppearance_Medium);
             ListView listView = new ListView(this);
