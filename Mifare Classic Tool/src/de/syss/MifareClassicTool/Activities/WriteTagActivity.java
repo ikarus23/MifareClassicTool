@@ -21,6 +21,7 @@ package de.syss.MifareClassicTool.Activities;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.tech.MifareClassic;
@@ -414,6 +416,7 @@ public class WriteTagActivity extends BasicActivity {
         finish();
     }
 
+    // TODO: update doc.
     /**
      * Open a file chooser ({@link FileChooserActivity}) and wait for its
      * result in {@link #onActivityResult(int, int, Intent)}.
@@ -522,10 +525,13 @@ public class WriteTagActivity extends BasicActivity {
                 R.id.buttonWriteSectorsSelectNone);
         Integer[] sectors = mDumpWithPos.keySet().toArray(
                 new Integer[mDumpWithPos.size()]);
+        Arrays.sort(sectors);
+        final Context context = this;
         final CheckBox[] sectorBoxes = new CheckBox[mDumpWithPos.size()];
         for (int i = 0; i< sectors.length; i++) {
             sectorBoxes[i] = new CheckBox(this);
             sectorBoxes[i].setChecked(true);
+            sectorBoxes[i].setTag(sectors[i]);
             sectorBoxes[i].setText(getString(R.string.text_sector)
                     + " " + sectors[i]);
             llCheckBoxes.addView(sectorBoxes[i]);
@@ -551,8 +557,18 @@ public class WriteTagActivity extends BasicActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Remove unwanted sectors.
-                    // TODO: implement this.
-
+                    for (CheckBox box : sectorBoxes) {
+                        if (!box.isChecked()) {
+                            mDumpWithPos.remove(
+                                    Integer.parseInt(box.getTag().toString()));
+                        }
+                    }
+                    if (mDumpWithPos.size() == 0) {
+                        // Error. There is nothing to write.
+                        Toast.makeText(context, R.string.info_nothing_to_write,
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     // Create key map.
                     createKeyMapForDump();
                 }
@@ -567,7 +583,10 @@ public class WriteTagActivity extends BasicActivity {
             .show();
     }
 
-    // TODO: doc.
+    /**
+     * Create a key map for the dump.
+     * @see CreateKeyMapActivity
+     */
     private void createKeyMapForDump() {
         // Show key map creator.
         Intent intent = new Intent(this, CreateKeyMapActivity.class);
