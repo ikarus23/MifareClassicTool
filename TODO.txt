@@ -6,7 +6,7 @@ TODO (Maybe outdated):
 
 
 
-(+)  Write one or more sectors from a dump to a tag.
+(++)  Create key map for a list sectors (not for a range of sectors).
 
 (+)  Quick read (and dump) tags.
      Choose key files -> Map keys to sectors of the first tag
