@@ -236,14 +236,14 @@
 
   <h3 id="write_dump">4.2 Write Dump (Clone)</h3>
   <p>
+    With this method you can write a dump (or some sectors of it) to a tag.
     If you want to clone a tag, you first have to read and then dump
     the original tag. The second step is to restore the dumped data on another
     tag (for which you know the keys). You need the keys with write privileges
-    for all sectors of the dump. If the dump consists of e.g. 5 sectors you
-    only need the keys for these 5 sectors.<br />
-    After selecting the dump and the key files, the App will check everything
-    for you! If there are issues like 'block is read-only', 'key with write
-    access not known', etc., you will get a report before writing.
+    for all sectors you want to write.<br />
+    After selecting the dump, the sectors and the key files, the App will check
+    everything for you! If there are issues like 'block is read-only', 'key
+    with write access not known', etc., you will get a report before writing.
     <br /><br />
     <b>Options:</b>
     <ul>
@@ -352,7 +352,7 @@
     </ul>
     Key files are simple text files which contain one Mifare Classic
     key per line (hexadecimal, 6 bytes, 12 characters).
-    Lines <b>starting</b> with # as well as empty lines are 
+    Lines <b>starting</b> with # as well as empty lines are
     ignored.
     <br /><br />
     You can edit key files any time you want with

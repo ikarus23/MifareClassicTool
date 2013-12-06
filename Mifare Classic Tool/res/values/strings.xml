@@ -76,8 +76,8 @@
     <string name="text_sector_range_all">All</string>
     <string name="text_update_colors">Update Colors</string>
     <string name="text_data">Data:</string>
-    <string name="text_write_dump_info">Write a dump to
-        a tag.\nBlocks containing unknown data (---) will be skipped!</string>
+    <string name="text_write_dump_info">Write a dump (or some sectors of it) to
+        a tag. Blocks containing unknown data (---) will be skipped!</string>
     <string name="text_factory_format_info">Try to format the tag to
         factory/delivery state</string>
     <string name="text_starting_at_0">(Starting at 0)</string>
@@ -348,6 +348,9 @@
         \n\n<b>WARNING: Writing incorrect data may cause irreparable
         damage to the tag.</b></string>
     <string name="dialog_choose_ac_title">Choose Access Conditions</string>
+    <string name="dialog_write_sectors_title">Write Sectors</string>
+    <string name="dialog_write_sectors">Select the sectors you
+        want to write:</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
