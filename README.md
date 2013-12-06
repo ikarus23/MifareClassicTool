@@ -60,7 +60,7 @@ Some important things are:
   graphical user interface. If you want so save things on a tag,
   you have to input the raw hexadecimal data.
 * This App **can not crack/hack**
-  any Mifare Classic keys. If you want to read/write a RFID-Tag, you
+  any Mifare Classic keys. If you want to read/write an RFID-Tag, you
   first need keys for this specific tag. For additional information
   please read/see chapter [Getting Started](#getting-started).
 * There will be **no &quot;brute-force&quot; attack**
