@@ -85,7 +85,7 @@ all the keys (A and B) of a tag with tools like the
 [Proxmark3](http://www.proxmark.org/) or
 normal RFID-Readers and some special software
 ([mfcuk](https://code.google.com/p/mfcuk/),
-[mfoc](https://code.google.com/p/nfc-tools/wiki/mfoc)).
+[mfoc](http://code.google.com/p/mfoc/)).
 
 The application comes with a standard key file called
 *std.keys*, which only contains the
