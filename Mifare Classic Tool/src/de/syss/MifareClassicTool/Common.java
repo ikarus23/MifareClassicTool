@@ -325,8 +325,7 @@ public class Common {
         // Check if Intent has a NFC Tag.
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            mTag = tag;
-            mUID = tag.getId();
+            setTag(tag);
 
             // Show Toast message with UID.
             String id = context.getResources().getString(
@@ -885,11 +884,14 @@ public class Common {
     }
 
     /**
-     * Set the new active Tag.
+     * Set the new active Tag (and update {@link #mUID}).
      * @param tag The new Tag.
+     * @see #mTag
+     * @see #mUID
      */
     public static void setTag(Tag tag) {
         mTag = tag;
+        mUID = tag.getId();
     }
 
     /**
