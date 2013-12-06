@@ -416,15 +416,16 @@ public class WriteTagActivity extends BasicActivity {
         finish();
     }
 
-    // TODO: update doc.
     /**
      * Open a file chooser ({@link FileChooserActivity}) and wait for its
      * result in {@link #onActivityResult(int, int, Intent)}.
      * (Also check the static Access Conditions, if the option is enabled.)
      * This method triggers the call chain: open {@link FileChooserActivity}
-     * (this method) -> open {@link CreateKeyMapActivity} (from
-     * {@link #readDumpAndShowSectorChooserDialog(String)}) -> run
-     * {@link #checkTag()} -> run {@link #writeDump(HashMap, SparseArray)}.
+     * (this method) -> read dump
+     * ({@link #readDumpAndShowSectorChooserDialog(String)}) ->
+     * open {@link CreateKeyMapActivity} ({@link #createKeyMapForDump()})
+     * -> run {@link #checkTag()} -> run
+     * {@link #writeDump(HashMap, SparseArray)}.
      * @param view The View object that triggered the method
      * (in this case the write full dump button).
      * @see FileChooserActivity
@@ -461,7 +462,6 @@ public class WriteTagActivity extends BasicActivity {
         startActivityForResult(intent, FC_WRITE_DUMP);
     }
 
-    // TODO: update doc.
     /**
      * Triggered by {@link #onActivityResult(int, int, Intent)} after the
      * dump was selected (by {@link FileChooserActivity}), this method
@@ -469,10 +469,13 @@ public class WriteTagActivity extends BasicActivity {
      * the data including its position in {@link #mDumpWithPos}.
      * If the "use static Access Condition" option is enabled, all the ACs
      * will be replaced by the static ones.
-     * After all this, {@link CreateKeyMapActivity} is called to create
+     * After all this it will show a dialog in which the user can choose
+     * the sectors he wants to write. When the sectors are chosen, this
+     * method calls {@link #createKeyMapForDump()} to create
      * a key map for the present tag.
      * @param pathToDump path and filename of the dump
      * (selected by {@link FileChooserActivity}).
+     * @see #createKeyMapForDump()
      */
     private void readDumpAndShowSectorChooserDialog(String pathToDump) {
         // Read dump.
@@ -584,7 +587,7 @@ public class WriteTagActivity extends BasicActivity {
     }
 
     /**
-     * Create a key map for the dump.
+     * Create a key map for the dump ({@link #mDumpWithPos}).
      * @see CreateKeyMapActivity
      */
     private void createKeyMapForDump() {
