@@ -397,35 +397,29 @@ public class Common {
      * @return A connected {@link MCReader} or "null" if no tag was present.
      */
     public static MCReader checkForTagAndCreateReader(Context context) {
-        // Check for tag.
-        if (mTag == null) {
-            // Error. There is no tag.
-            Toast.makeText(context, R.string.info_no_tag_found,
-                    Toast.LENGTH_LONG).show();
-            return null;
-        }
-        MCReader reader = MCReader.get(mTag);
-        if (reader == null) {
-         // Error. The tag is not Mifare Classic.
-            Toast.makeText(context, R.string.info_no_tag_found,
-                    Toast.LENGTH_LONG).show();
-            return null;
-        }
-
+        MCReader reader = null;
         boolean tagLost = false;
-        try {
-            reader.connect();
-        } catch (Exception e) {
+        // Check for tag.
+        if (mTag != null && (reader = MCReader.get(mTag)) != null) {
+            try {
+                reader.connect();
+            } catch (Exception e) {
+                tagLost = true;
+            }
+            if (!tagLost && !reader.isConnected()) {
+                reader.close();
+                tagLost = true;
+            } else {
+                return reader;
+            }
+        } else {
             tagLost = true;
         }
-        if (tagLost || !reader.isConnected()) {
-            // Error. The tag is gone.
-            Toast.makeText(context, R.string.info_no_tag_found,
-                    Toast.LENGTH_LONG).show();
-            reader.close();
-            return null;
-        }
-        return reader;
+
+        // Error. The tag is gone.
+        Toast.makeText(context, R.string.info_no_tag_found,
+                Toast.LENGTH_LONG).show();
+        return null;
     }
 
     /**
