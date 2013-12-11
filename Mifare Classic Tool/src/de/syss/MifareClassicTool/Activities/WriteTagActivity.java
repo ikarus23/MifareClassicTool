@@ -680,7 +680,6 @@ public class WriteTagActivity extends BasicActivity {
                 // Problem. Keys for sector not found.
                 addToList(list, getString(R.string.text_sector) + ": " + sector,
                         getString(R.string.text_keys_not_known));
-                writeOnPosSafe.remove(sector);
             }
         }
         // Keys with write privileges that are missing or some
@@ -693,7 +692,6 @@ public class WriteTagActivity extends BasicActivity {
                         getString(R.string.text_invalid_ac_or_sector_dead));
                 continue;
             }
-            writeOnPosSafe.put(sector, new HashMap<Integer, Integer>());
             byte[][] keys = keyMap.get(sector);
             Set<Integer> blocks = mDumpWithPos.get(sector).keySet();
             for (int block : blocks) {
@@ -706,7 +704,6 @@ public class WriteTagActivity extends BasicActivity {
                     // special (non-original) Mifare tags).
                     continue;
                 }
-
                 String position = getString(R.string.text_sector) + ": "
                         + sector + ", " + getString(R.string.text_block)
                         + ": " + block;
@@ -737,9 +734,7 @@ public class WriteTagActivity extends BasicActivity {
                 case 3:
                     // No Problem. Both keys have write privileges.
                     // Set to key A or B depending on which one is available.
-                    writeOnPosSafe.get(sector).put(
-                            block, (keys[0] != null) ? 1 : 2);
-                    isSafeForWriting = false; // Already added.
+                    writeInfo = (keys[0] != null) ? 1 : 2;
                     break;
                 case 4:
                     if (keys[0] == null) {
@@ -786,7 +781,16 @@ public class WriteTagActivity extends BasicActivity {
                 }
                 // Add if safe for writing.
                 if (isSafeForWriting) {
-                    writeOnPosSafe.get(sector).put(block, writeInfo);
+                    if (writeOnPosSafe.get(sector) == null) {
+                        // Create sector.
+                        HashMap<Integer, Integer> blockInfo =
+                                new HashMap<Integer, Integer>();
+                        blockInfo.put(block, writeInfo);
+                        writeOnPosSafe.put(sector, blockInfo);
+                    } else {
+                        // Add to sector.
+                        writeOnPosSafe.get(sector).put(block, writeInfo);
+                    }
                 }
             }
         }
