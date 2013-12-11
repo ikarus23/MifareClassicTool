@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -675,16 +676,18 @@ public class WriteTagActivity extends BasicActivity {
                 new HashMap<Integer, HashMap<Integer,Integer>>(
                         mDumpWithPos.size());
         // Keys that are missing completely (mDumpWithPos vs. keyMap).
+        HashSet<Integer> sectors = new HashSet<Integer>();
         for (int sector : mDumpWithPos.keySet()) {
             if (keyMap.indexOfKey(sector) < 0) {
                 // Problem. Keys for sector not found.
                 addToList(list, getString(R.string.text_sector) + ": " + sector,
                         getString(R.string.text_keys_not_known));
+            } else {
+                sectors.add(sector);
             }
         }
         // Keys with write privileges that are missing or some
         // blocks (block-parts) are read-only (writeOnPos vs. keyMap).
-        Set<Integer> sectors = mDumpWithPos.keySet();
         for (int sector : sectors) {
             if (writeOnPos.get(sector) == null) {
                 // Error. Sector is dead (IO Error) or ACs are invalid.
