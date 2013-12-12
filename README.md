@@ -66,6 +66,15 @@ Some important things are:
 * There will be **no &quot;brute-force&quot; attack**
   capability in this application. It is way too slow due
   to the protocol.
+* This app will **not** work on the following devices because
+  their hardware (NFC-controller) does not support Mifare Classic
+  ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
+  This list may be incomplete.
+  * Google Nexus 4
+  * Google Nexus 5
+  * Google Nexus 7 (2013)
+  * Google Nexus 10
+  * Samsung Galaxy S4
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
