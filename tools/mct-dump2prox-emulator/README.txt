@@ -13,7 +13,8 @@ Dependencies:
 
 ########################################################################
 
-Usage: ./mct-dump2prox-emu <dump-file> <proxmark3-client-bin>
+Usage: ./mct-dump2prox-emu <dump-file> <uid-length>
+           <proxmark3-client-bin> <port>
 The script may need root privileges.
 
 dump-file:
@@ -24,14 +25,17 @@ dump-file:
   You can find the files in "MifareClassicTool/dump-files/" of your
   external storage (SD-Card).
 
+uid-length:
+  The length of the UID in byte (4, 7 or 10).
+
 proxmark3-client-bin:
   The client binary for communicating with the Proxmark3 is
   typically located in the "client" directory of your proxmark3-svn.
   It is simply called "proxmark3".
 
 Usage Examples:
-  ./mct-dump2prox-emu tag-to-clone.dump \
-    proxmark-read-only/client/proxmark3
+  ./mct-dump2prox-emu tag-to-clone.dump 4 \
+    proxmark-read-only/client/proxmark3 /dev/ttyACM0
 
 ########################################################################
 

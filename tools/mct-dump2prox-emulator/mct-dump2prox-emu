@@ -19,7 +19,8 @@
 #
 ########################################################################
 #
-# Usage: ./mct-dump2prox-emu <dump-file> <proxmark3-client-bin>
+# Usage: ./mct-dump2prox-emu <dump-file> <uid-length>
+#            <proxmark3-client-bin> <port>
 #
 ########################################################################
 #
@@ -37,11 +38,14 @@
 
 # Set vars.
 set dump [lindex $argv 0]
-set pm3 [lindex $argv 1]
+set uid_len [lindex $argv 1]
+set pm3 [lindex $argv 2]
+set port [lindex $argv 3]
 set i 0
+incr uid_len $uid_len
 
 # Run pm3 client.
-spawn $pm3
+spawn $pm3 $port
 #interact -o "proxmark3> " return
 
 # Clear emulator memory.
@@ -58,7 +62,7 @@ while {[gets $fhandle inline] >= 0} {
         # Is it the first block?
         if {$i == 0} {
             # Save UID for later use.
-            regexp {^.{8}} $inline uid
+            regexp ^.{$uid_len} $inline uid
         }
         # set emulator blocks
         send "hf mf eset $i $inline\r"
