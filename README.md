@@ -96,8 +96,8 @@ normal RFID-Readers and some special software
 ([mfcuk](https://code.google.com/p/mfcuk/),
 [mfoc](http://code.google.com/p/mfoc/)).
 
-The application comes with a standard key file called
-*std.keys*, which only contains the
+The application comes with standard key files called
+*std.keys* and *extended-std.keys*, which contains the
 well known keys and some standard keys from a short Google search.
 You can try to read a tag with this key file using
 &quot;Read Tag&quot; from main menu.
