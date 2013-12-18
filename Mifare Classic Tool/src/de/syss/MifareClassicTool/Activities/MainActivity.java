@@ -19,6 +19,10 @@
 package de.syss.MifareClassicTool.Activities;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -29,8 +33,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.nfc.NfcAdapter;
-import android.nfc.tech.MifareClassic;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -73,11 +77,10 @@ public class MainActivity extends Activity {
 
     /**
      * Check for NFC hardware, Mifare Classic support and for external storage.
-     * If the directory structure and the std. keys file is not already there
+     * If the directory structure and the std. keys files is not already there
      * it will be created. Also, at the first run of this App, a warning
      * notice will be displayed.
-     * @see #hasStdKeysFile()
-     * @see #createStdKeysFile()
+     * @see #copyStdKeysFilesIfNecessary()
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +131,7 @@ public class MainActivity extends Activity {
         if (Common.isExternalStorageWritableErrorToast(this)) {
             // Create keys directory.
             File path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + Common.KEYS_DIR);
+                    Common.HOME_DIR) + "/" + Common.KEYS_DIR);
             if (path.exists() == false && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
@@ -138,7 +141,7 @@ public class MainActivity extends Activity {
 
             // Create dumps directory.
             path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + Common.DUMPS_DIR);
+                    Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
             if (path.exists() == false && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
@@ -148,7 +151,7 @@ public class MainActivity extends Activity {
 
             // Create tmp directory.
             path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + Common.TMP_DIR);
+                    Common.HOME_DIR) + "/" + Common.TMP_DIR);
             if (path.exists() == false && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
@@ -161,9 +164,7 @@ public class MainActivity extends Activity {
             }
 
             // Create std. key file if there is none.
-            if (!hasStdKeysFile()) {
-                createStdKeysFile();
-            }
+            copyStdKeysFilesIfNecessary();
         }
 
         // Find Read/Write buttons and bind them to member vars.
@@ -387,7 +388,7 @@ public class MainActivity extends Activity {
      */
     public void onOpenTagDumpEditor(View view) {
         String dumpsDir = Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + Common.DUMPS_DIR;
+                Common.HOME_DIR) + "/" + Common.DUMPS_DIR;
         if (Common.isExternalStorageWritableErrorToast(this)) {
             File file = new File(dumpsDir);
             if (file.isDirectory() && (file.listFiles() == null
@@ -420,7 +421,7 @@ public class MainActivity extends Activity {
             Intent intent = new Intent(this, FileChooserActivity.class);
             intent.putExtra(FileChooserActivity.EXTRA_DIR,
                     Environment.getExternalStoragePublicDirectory(
-                            Common.HOME_DIR) + Common.KEYS_DIR);
+                            Common.HOME_DIR) + "/" + Common.KEYS_DIR);
             intent.putExtra(FileChooserActivity.EXTRA_TITLE,
                     getString(R.string.text_open_key_file_title));
             intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
@@ -490,46 +491,53 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Create a standard key file ({@link Common#STD_KEYS}) in
-     * {@link Common#KEYS_DIR}. This file contains some std. Mifare keys:
-     * <ul>
-     * <li>0xFFFFFFFFFFFF - Unformatted, factory fresh tags.</li>
-     * <li>0xA0A1A2A3A4A5 - First sector of the tag (Mifare MAD).</li>
-     * <li>0xD3F7D3F7D3F7 - All other sectors.</li>
-     * <li>Others from {@link Common#SOME_CLASSICAL_KNOWN_KEYS}.</li>
-     * </ul>
-     * The file is a simple text file, any plain text editor will do the trick.
-     * Data from this App are stored in
+     * Copy the standard key files ({@link Common#STD_KEYS} and
+     * {@link Common#STD_KEYS_EXTENDED}) form assets to {@link Common#KEYS_DIR}.
+     * Key files are simple text files. Any plain text editor will do the trick.
+     * All key and dump data from this App is stored in
      * getExternalStoragePublicDirectory(Common.HOME_DIR) to remain
      * there after App uninstallation.
-     * @see Common#SOME_CLASSICAL_KNOWN_KEYS
      * @see Common#KEYS_DIR
      * @see Common#HOME_DIR
+     * @see Common#copyFile(InputStream, OutputStream)
      */
-    private void createStdKeysFile() {
-        // Create std. keys file.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + Common.KEYS_DIR, Common.STD_KEYS);
-        String[] lines = new String[Common.SOME_CLASSICAL_KNOWN_KEYS.length+4];
-        lines[0] = "# " + getString(R.string.text_std_keys_comment);
-        lines[1] = Common.byte2HexString(MifareClassic.KEY_DEFAULT);
-        lines[2] = Common.byte2HexString(
-                MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
-        lines[3] = Common.byte2HexString(MifareClassic.KEY_NFC_FORUM);
-        System.arraycopy(Common.SOME_CLASSICAL_KNOWN_KEYS, 0,
-                lines, 4, Common.SOME_CLASSICAL_KNOWN_KEYS.length);
-        Common.saveFile(file, lines);
-    }
+    private void copyStdKeysFilesIfNecessary() {
+        File std = new File(Environment.getExternalStoragePublicDirectory(
+                Common.HOME_DIR) + "/" + Common.KEYS_DIR, Common.STD_KEYS);
+        File extended = new File(Environment.getExternalStoragePublicDirectory(
+                Common.HOME_DIR) + "/" + Common.KEYS_DIR,
+                Common.STD_KEYS_EXTENDED);
+        AssetManager assetManager = getAssets();
 
-    /**
-     * Check if there is a {@link Common#STD_KEYS} file
-     * in {@link Common#HOME_DIR}/{@link Common#KEYS_DIR}.
-     * @return True if there is such a file, False otherwise.
-     */
-    private boolean hasStdKeysFile() {
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + Common.KEYS_DIR, Common.STD_KEYS);
-        return file.exists();
+        if (!std.exists()) {
+            // Copy std.keys.
+            try {
+                InputStream in = assetManager.open(
+                        Common.KEYS_DIR + "/" + Common.STD_KEYS);
+                OutputStream out = new FileOutputStream(std);
+                Common.copyFile(in, out);
+                in.close();
+                out.flush();
+                out.close();
+              } catch(IOException e) {
+                  Log.e(LOG_TAG, "Error while copying 'std.keys' from assets "
+                          + "to external storage.");
+              }
+        }
+        if (!extended.exists()) {
+            // Copy extended-std.keys.
+            try {
+                InputStream in = assetManager.open(
+                        Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
+                OutputStream out = new FileOutputStream(extended);
+                Common.copyFile(in, out);
+                in.close();
+                out.flush();
+                out.close();
+              } catch(IOException e) {
+                  Log.e(LOG_TAG, "Error while copying 'extended-std.keys' "
+                          + "from assets to external storage.");
+              }
+        }
     }
-
 }

@@ -361,7 +361,7 @@ public class WriteTagActivity extends BasicActivity {
         Intent intent = new Intent(this, CreateKeyMapActivity.class);
         intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + Common.KEYS_DIR);
+                + "/" + Common.KEYS_DIR);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_FROM, sector);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_TO, sector);
@@ -453,7 +453,7 @@ public class WriteTagActivity extends BasicActivity {
         Intent intent = new Intent(this, FileChooserActivity.class);
         intent.putExtra(FileChooserActivity.EXTRA_DIR,
                 Environment.getExternalStoragePublicDirectory(
-                        Common.HOME_DIR) + Common.DUMPS_DIR);
+                        Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
         intent.putExtra(FileChooserActivity.EXTRA_TITLE,
                 getString(R.string.text_open_dump_title));
         intent.putExtra(FileChooserActivity.EXTRA_CHOOSER_TEXT,
@@ -596,7 +596,7 @@ public class WriteTagActivity extends BasicActivity {
         Intent intent = new Intent(this, CreateKeyMapActivity.class);
         intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + Common.KEYS_DIR);
+                + "/" + Common.KEYS_DIR);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_FROM,
                 (int) Collections.min(mDumpWithPos.keySet()));
@@ -978,7 +978,7 @@ public class WriteTagActivity extends BasicActivity {
         Intent intent = new Intent(this, CreateKeyMapActivity.class);
         intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + Common.KEYS_DIR);
+                + "/" + Common.KEYS_DIR);
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_factory_format));

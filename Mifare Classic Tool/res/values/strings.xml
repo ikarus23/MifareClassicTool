@@ -82,7 +82,6 @@
         factory/delivery state</string>
     <string name="text_starting_at_0">(Starting at 0)</string>
     <string name="text_open_key_file_title">Open or Create a Key File</string>
-    <string name="text_std_keys_comment">Standard Keys (auto. gen.)</string>
     <string name="text_choose_dump_to_write">Choose the dump to be written:</string>
     <string name="text_from">From</string>
     <string name="text_to">To</string>

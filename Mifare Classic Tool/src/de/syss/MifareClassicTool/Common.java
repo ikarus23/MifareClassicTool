@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -60,13 +62,13 @@ public class Common {
      * The directory name  of the key files directory.
      * (sub directory of {@link #HOME_DIR}.)
      */
-    public static final String KEYS_DIR = "/key-files";
+    public static final String KEYS_DIR = "key-files";
 
     /**
      * The directory name  of the dump files directory.
      * (sub directory of {@link #HOME_DIR}.)
      */
-    public static final String DUMPS_DIR = "/dump-files";
+    public static final String DUMPS_DIR = "dump-files";
 
     /**
      * The directory name of the folder where temporary files are
@@ -74,31 +76,24 @@ public class Common {
      * the main activity ({@link Activities.MainActivity}).
      * (sub directory of {@link #HOME_DIR}.)
      */
-    public static final String TMP_DIR = "/tmp";
+    public static final String TMP_DIR = "tmp";
 
     /**
      * This file contains some standard Mifare keys.
      * <ul>
      * <li>0xFFFFFFFFFFFF - Unformatted, factory fresh tags.</li>
      * <li>0xA0A1A2A3A4A5 - First sector of the tag (Mifare MAD).</li>
-     * <li>0xD3F7D3F7D3F7 - All other sectors.</li>
-     * <li>Others from {@link #SOME_CLASSICAL_KNOWN_KEYS}.</li>
+     * <li>0xD3F7D3F7D3F7 - NDEF formated tags.</li>
      * </ul>
      */
     public static final String STD_KEYS = "std.keys";
 
     /**
-     * Some classical Mifare keys retrieved by a quick google search
-     * ("mifare standard keys").
+     * Keys taken from SLURP by Anders Sundman anders@4zm.org
+     * (and a quick google search).
+     * https://github.com/4ZM/slurp/blob/master/res/xml/mifare_default_keys.xml
      */
-    public static final String[] SOME_CLASSICAL_KNOWN_KEYS =
-        {   "000000000000",
-            "A0B0C0D0E0F0",
-            "A1B1C1D1E1F1",
-            "B0B1B2B3B4B5",
-            "4D3A99C351DD",
-            "1A982C7E459A",
-            "AABBCCDDEEFF"  };
+    public static final String STD_KEYS_EXTENDED = "extended-std.keys";
 
     /**
      * Possible operations the on a Mifare Classic Tag.
@@ -866,6 +861,21 @@ public class Common {
 
         // Error.
         return null;
+    }
+
+    /**
+     * Copy file.
+     * @param in Input file (source).
+     * @param out Output file (destination).
+     * @throws IOException
+     */
+    public static void copyFile(InputStream in, OutputStream out)
+            throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while((read = in.read(buffer)) != -1){
+          out.write(buffer, 0, read);
+        }
     }
 
     /**

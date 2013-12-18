@@ -141,7 +141,7 @@ public class KeyEditorActivity extends BasicActivity {
             }
             // Save file to tmp directory.
             File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + Common.TMP_DIR, fileName);
+                    Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
             Common.saveFile(file, mLines);
 
             // Share file.
@@ -172,7 +172,7 @@ public class KeyEditorActivity extends BasicActivity {
             }
             final File path = new File(
                     Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + Common.KEYS_DIR);
+                    Common.HOME_DIR) + "/" + Common.KEYS_DIR);
             final Context cont = this;
             // Ask user for filename.
             final EditText input = new EditText(this);
