@@ -31,6 +31,7 @@ import java.util.Arrays;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +51,7 @@ import android.widget.Toast;
  * Common functions and variables for all Activities.
  * @author Gerhard Klostermeier
  */
-public class Common {
+public class Common extends Application {
 
     /**
      * The directory name of the root directory of this app
@@ -90,7 +91,7 @@ public class Common {
 
     /**
      * Keys taken from SLURP by Anders Sundman anders@4zm.org
-     * (and a quick google search).
+     * (and a short google search).
      * https://github.com/4ZM/slurp/blob/master/res/xml/mifare_default_keys.xml
      */
     public static final String STD_KEYS_EXTENDED = "extended-std.keys";
