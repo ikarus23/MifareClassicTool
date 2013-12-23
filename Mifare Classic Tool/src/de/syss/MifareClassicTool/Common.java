@@ -405,7 +405,8 @@ public class Common extends Application {
             if (!tagLost && !reader.isConnected()) {
                 reader.close();
                 tagLost = true;
-            } else {
+            }
+            if (!tagLost) {
                 return reader;
             }
         } else {

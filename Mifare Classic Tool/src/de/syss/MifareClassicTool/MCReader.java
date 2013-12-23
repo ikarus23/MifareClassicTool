@@ -745,11 +745,12 @@ public class MCReader {
     /**
      * Connect the reader to the tag.
      */
-    public void connect() {
+    public void connect() throws IOException {
         try {
             mMFC.connect();
         } catch (IOException e) {
             Log.d(LOG_TAG, "Error while connecting to tag.");
+            throw e;
         }
     }
 
