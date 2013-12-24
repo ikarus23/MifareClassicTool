@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
             if (path.exists() == false && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
-                        + Common.KEYS_DIR + "' directory.");
+                        + "/" + Common.KEYS_DIR + "' directory.");
                 return;
             }
 
@@ -145,7 +145,7 @@ public class MainActivity extends Activity {
             if (path.exists() == false && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
-                        + Common.DUMPS_DIR + "' directory.");
+                        + "/" + Common.DUMPS_DIR + "' directory.");
                 return;
             }
 
