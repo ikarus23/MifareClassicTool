@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
 
         // Check if there is an NFC hardware component.
         Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
-        /*if (Common.getNfcAdapter() == null) {
+        if (Common.getNfcAdapter() == null) {
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_no_nfc_title)
                 .setMessage(R.string.dialog_no_nfc)
@@ -129,7 +129,7 @@ public class MainActivity extends Activity {
                  .show();
             mResume = false;
             return;
-        }*/
+        }
 
         if (Common.isExternalStorageWritableErrorToast(this)) {
             // Create keys directory.
