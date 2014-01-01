@@ -25,54 +25,54 @@
     <string name="ac_data_block_0">
         Read:\tA|B\nWrite:\tA|B\nIncr:\tA|B\nDecr/Trans/Rest: A|B</string>
     <string name="ac_data_block_1">
-        Read:\tA|B\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tA|B\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
     <string name="ac_data_block_2">
-        Read:\tA|B\nWrite:\tB\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tA|B\nWrite:\tB\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
     <string name="ac_data_block_3">
         Read:\tA|B\nWrite:\tB\nIncr:\tB\nDecr/Trans/Rest: A|B</string>
     <string name="ac_data_block_4">
-        Read:\tA|B\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: A|B</string>
+        Read:\tA|B\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: A|B</string>
     <string name="ac_data_block_5">
-        Read:\tB\nWrite:\tB\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tB\nWrite:\tB\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
     <string name="ac_data_block_6">
-        Read:\tB\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tB\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
     <string name="ac_data_block_7">
-        Read:\tNone\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tNever\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
 
     <!-- Access Conditions for data blocks if key B is readable-->
     <string name="ac_data_block_no_keyb_0">
         Read:\tA\nWrite:\tA\nIncr:\tA\nDecr/Trans/Rest: A</string>
     <string name="ac_data_block_no_keyb_1">
-        Read:\tA\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tA\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
     <string name="ac_data_block_no_keyb_2">
-        Read:\tA\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: A</string>
+        Read:\tA\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: A</string>
     <string name="ac_data_block_no_keyb_3">
-        Read:\tNone\nWrite:\tNone\nIncr:\tNone\nDecr/Trans/Rest: None</string>
+        Read:\tNever\nWrite:\tNever\nIncr:\tNever\nDecr/Trans/Rest: Never</string>
 
     <!-- Access Conditions for a Sector Trailer -->
     <string name="ac_sector_trailer_0">
-        Read KeyA:\tNone\nWrite KeyA:\tA\nRead AC:s\t\tA\nWrite ACs:\t\tNone
+        Read KeyA:\tNever\nWrite KeyA:\tA\nRead AC:s\t\tA\nWrite ACs:\t\tNever
         \nRead KeyB:\tA\nWrite KeyB:\tA</string>
     <string name="ac_sector_trailer_1">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA\nWrite ACs:\t\tNone
-        \nRead KeyB:\tA\nWrite KeyB:\tNone</string>
+        Read KeyA:\tNever\nWrite KeyA:\tNever\nRead ACs:\t\tA\nWrite ACs:\t\tNever
+        \nRead KeyB:\tA\nWrite KeyB:\tNever</string>
     <string name="ac_sector_trailer_2">
-        Read KeyA:\tNone\nWrite KeyA:\tB\nRead ACs:\t\tA|B\nWrite ACs:\t\tNone
-        \nRead KeyB:\tNone\nWrite KeyB:\tB</string>
+        Read KeyA:\tNever\nWrite KeyA:\tB\nRead ACs:\t\tA|B\nWrite ACs:\t\tNever
+        \nRead KeyB:\tNever\nWrite KeyB:\tB</string>
     <string name="ac_sector_trailer_3">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA|B\nWrite ACs:\t\tNone
-        \nRead KeyB:\tNone\nWrite KeyB:\tNone</string>
+        Read KeyA:\tNever\nWrite KeyA:\tNever\nRead ACs:\t\tA|B\nWrite ACs:\t\tNever
+        \nRead KeyB:\tNever\nWrite KeyB:\tNever\n[Bits: {1, 1, 0}]</string>
     <string name="ac_sector_trailer_4">
-        Read KeyA:\tNone\nWrite KeyA:\tA\nRead ACs:\t\tA\nWrite ACs:\t\tA
+        Read KeyA:\tNever\nWrite KeyA:\tA\nRead ACs:\t\tA\nWrite ACs:\t\tA
         \nRead KeyB:\tA\nWrite KeyB:\tA</string>
     <string name="ac_sector_trailer_5">
-        Read KeyA:\tNone\nWrite KeyA:\tB\nRead ACs:\t\tA|B\nWrite ACs:\t\tB
-        \nRead KeyB:\tNone\nWrite KeyB:\tB</string>
+        Read KeyA:\tNever\nWrite KeyA:\tB\nRead ACs:\t\tA|B\nWrite ACs:\t\tB
+        \nRead KeyB:\tNever\nWrite KeyB:\tB</string>
     <string name="ac_sector_trailer_6">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA|B\nWrite ACs:\t\tB
-        \nRead KeyB:\tNone\nWrite KeyB:\tNone</string>
+        Read KeyA:\tNever\nWrite KeyA:\tNever\nRead ACs:\t\tA|B\nWrite ACs:\t\tB
+        \nRead KeyB:\tNever\nWrite KeyB:\tNever</string>
     <string name="ac_sector_trailer_7">
-        Read KeyA:\tNone\nWrite KeyA:\tNone\nRead ACs:\t\tA|B\nWrite ACs:\t\tNone
-        \nRead KeyB:\tNone\nWrite KeyB:\tNone</string>
+        Read KeyA:\tNever\nWrite KeyA:\tNever\nRead ACs:\t\tA|B\nWrite ACs:\t\tNever
+        \nRead KeyB:\tNever\nWrite KeyB:\tNever\n[Bits: {1, 1, 1}]</string>
 
 </resources>
