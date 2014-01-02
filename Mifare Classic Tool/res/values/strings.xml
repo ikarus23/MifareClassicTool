@@ -47,6 +47,8 @@
     <string name="text_footer">GPLv3 -
         <a href="https://github.com/ikarus23/MifareClassicTool">Project Page</a></string>
     <string name="text_choose_key_file">Choose some key file(s):</string>
+    <string name="text_select_first_file_title">Select first file</string>
+    <string name="text_select_second_file_title">Select second file</string>
     <string name="text_wait_read_tag">Reading tag&#8230;\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>
     <string name="text_sector">Sector</string>
@@ -154,6 +156,8 @@
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_choose_file">Choose Selected File</string>
+    <string name="action_select_file">Select As First File</string>
+    <string name="action_compare_files">Compare Files</string>
     <string name="action_open_dump_file">Open Dump File</string>
     <string name="action_change">Change</string>
     <string name="action_read_all_sectors">Read All Sectors</string>
@@ -195,6 +199,7 @@
     <string name="menu_new_file">Create New File</string>
     <string name="menu_delete_file">Delete File</string>
     <string name="menu_remove_duplicates">Remove Duplicates</string>
+    <string name="menu_compare_tool">Compare Two Dump Files</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

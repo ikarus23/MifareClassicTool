@@ -18,12 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -50,6 +44,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -69,6 +70,8 @@ public class MainActivity extends Activity {
 
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
+    private final static int FILE_CHOOSER_DUMP_FILE2 = 3;
+    private String tempfile = null;
     private AlertDialog mEnableNfc;
     private Button mReadTag;
     private Button mWriteTag;
@@ -438,6 +441,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         Intent intent = null;
+        Intent intent2 = null;
         switch (item.getItemId()) {
         case R.id.menuMainTagInfo:
             intent = new Intent(this, TagInfoToolActivity.class);
@@ -451,8 +455,37 @@ public class MainActivity extends Activity {
             intent = new Intent(this, AccessConditionTool.class);
             startActivity(intent);
             return true;
-        default:
-            return super.onContextItemSelected(item);
+            case R.id.menuMainCompareTool:
+                String dumpsDir = Environment.getExternalStoragePublicDirectory(
+                        Common.HOME_DIR) + "/" + Common.DUMPS_DIR;
+                if (Common.isExternalStorageWritableErrorToast(this)) {
+                    File file = new File(dumpsDir);
+                    if (file.isDirectory() && (file.listFiles() == null
+                            || file.listFiles().length == 0)) {
+                        Toast.makeText(this, R.string.info_no_dumps,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    //Now we test the second file operand
+                    intent2 = new Intent(this, FileChooserActivity.class);
+                    intent2.putExtra(FileChooserActivity.EXTRA_DIR, dumpsDir);
+                    intent2.putExtra(FileChooserActivity.EXTRA_TITLE,
+                            getString(R.string.text_select_second_file_title));
+                    intent2.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
+                            getString(R.string.action_compare_files));
+                    intent2.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
+                    startActivityForResult(intent2, FILE_CHOOSER_DUMP_FILE2);
+                    //First file selection
+                    intent = new Intent(this, FileChooserActivity.class);
+                    intent.putExtra(FileChooserActivity.EXTRA_DIR, dumpsDir);
+                    intent.putExtra(FileChooserActivity.EXTRA_TITLE,
+                            getString(R.string.text_select_first_file_title));
+                    intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
+                            getString(R.string.action_select_file));
+                    intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
+                    startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE2);
+                }
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 
@@ -487,6 +520,21 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
             break;
+            case FILE_CHOOSER_DUMP_FILE2:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (tempfile == null) {
+                        tempfile = data.getStringExtra(
+                                FileChooserActivity.EXTRA_CHOSEN_FILE);
+                    } else {
+                        Intent intent = new Intent(this, CompareActivity.class);
+                        intent.putExtra("FileOne", tempfile);
+                        this.tempfile = null;
+                        intent.putExtra("FileTwo", data.getStringExtra(
+                                FileChooserActivity.EXTRA_CHOSEN_FILE));
+                        startActivity(intent);
+                    }
+                }
+                break;
         }
     }
 
