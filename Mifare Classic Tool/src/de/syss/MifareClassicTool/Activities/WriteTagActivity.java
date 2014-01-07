@@ -64,9 +64,9 @@ import de.syss.MifareClassicTool.R;
 public class WriteTagActivity extends BasicActivity {
 
     private static final int FC_WRITE_DUMP = 1;
-    private static final int KMC_WRTIE_DUMP = 2;
-    private static final int KMC_WRTIE_BLOCK = 3;
-    private static final int KMC_FACTORY_FORMAT = 4;
+    private static final int CKM_WRTIE_DUMP = 2;
+    private static final int CKM_WRTIE_BLOCK = 3;
+    private static final int CKM_FACTORY_FORMAT = 4;
 
     private EditText mSectorText;
     private EditText mBlockText;
@@ -150,6 +150,7 @@ public class WriteTagActivity extends BasicActivity {
     public void onActivityResult(int requestCode,
             int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int ckmError = -1;
 
         switch(requestCode) {
         case FC_WRITE_DUMP:
@@ -161,40 +162,45 @@ public class WriteTagActivity extends BasicActivity {
                         FileChooserActivity.EXTRA_CHOSEN_FILE));
             }
             break;
-        case KMC_WRTIE_DUMP:
+        case CKM_WRTIE_DUMP:
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
-                if (resultCode == 4) {
-                    Toast.makeText(this, R.string.info_no_key_found,
-                            Toast.LENGTH_LONG).show();
-                }
+                ckmError = resultCode;
             } else {
                 checkTag();
             }
             break;
-        case KMC_FACTORY_FORMAT:
+        case CKM_FACTORY_FORMAT:
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
-                if (resultCode == 4) {
-                    Toast.makeText(this, R.string.info_no_key_found,
-                            Toast.LENGTH_LONG).show();
-                }
+                ckmError = resultCode;
             } else {
                 createFactoryFormatedDump();
             }
             break;
-        case KMC_WRTIE_BLOCK:
+        case CKM_WRTIE_BLOCK:
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
-                if (resultCode == 4) {
-                    Toast.makeText(this, R.string.info_no_key_found,
-                            Toast.LENGTH_LONG).show();
-                }
+                ckmError = resultCode;
             } else {
                 // Write block.
                 writeBlock();
             }
             break;
+        }
+
+        // Error handling for the return value of CreateKeyMapActivity.
+        switch (ckmError) {
+        case 4:
+            // Error. No keys found.
+            Toast.makeText(this, R.string.info_no_key_found,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 5:
+            // Error. Path from the calling intend was null.
+            // (This is really strange and should not occur.)
+            Toast.makeText(this, R.string.info_strange_error,
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -367,7 +373,7 @@ public class WriteTagActivity extends BasicActivity {
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER_TO, sector);
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_write_block));
-        startActivityForResult(intent, KMC_WRTIE_BLOCK);
+        startActivityForResult(intent, CKM_WRTIE_BLOCK);
     }
 
     /**
@@ -604,7 +610,7 @@ public class WriteTagActivity extends BasicActivity {
                 (int) Collections.max(mDumpWithPos.keySet()));
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_write_dump));
-        startActivityForResult(intent, KMC_WRTIE_DUMP);
+        startActivityForResult(intent, CKM_WRTIE_DUMP);
     }
 
     /**
@@ -982,7 +988,7 @@ public class WriteTagActivity extends BasicActivity {
         intent.putExtra(CreateKeyMapActivity.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_factory_format));
-        startActivityForResult(intent, KMC_FACTORY_FORMAT);
+        startActivityForResult(intent, CKM_FACTORY_FORMAT);
     }
 
     /**

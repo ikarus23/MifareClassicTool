@@ -273,6 +273,8 @@
         \nACs of data blocks have been updated.</string>
     <string name="info_ac_reset_keyb_not_readable">Key B is not readable.
         \nACs of data blocks have been updated.</string>
+    <string name="info_strange_error">Error: A strange error occoured...
+        and I don\'t know why :(\nPlease report this using the project page</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

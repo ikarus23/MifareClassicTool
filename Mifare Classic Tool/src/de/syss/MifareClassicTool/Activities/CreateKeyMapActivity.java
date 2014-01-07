@@ -61,6 +61,7 @@ import de.syss.MifareClassicTool.R;
  * <li>3 - External Storage is not read/writable. This error is
  * displayed to the user via Toast.</li>
  * <li>4 - No key was found. {@link Common#getKeyMap()} will return "null".</li>
+ * <li>5 - Directory from {@link #EXTRA_KEYS_DIR} is null.</li>
  * </ul>
  * @author Gerhard Klostermeier
  */
@@ -130,7 +131,7 @@ public class CreateKeyMapActivity extends BasicActivity {
     private int mProgressStatus;
     private ProgressBar mProgressBar;
     private boolean mIsCreatingKeyMap;
-    private String mKeyDirPath;
+    private File mKeyDirPath;
     private int mFirstSector;
     private int mLastSector;
 
@@ -197,33 +198,39 @@ public class CreateKeyMapActivity extends BasicActivity {
 
     /**
      * List files from the {@link #EXTRA_KEYS_DIR}.
-     * Also restore the last marked key file (if there was one).
      */
     @Override
     public void onStart() {
         super.onStart();
 
-        File dir = null;
-        // Is there a key directory in the Intent?
-        if (!getIntent().hasExtra(EXTRA_KEYS_DIR)) {
-            setResult(2);
-            finish();
+        if (mKeyDirPath == null) {
+            // Is there a key directory in the Intent?
+            if (!getIntent().hasExtra(EXTRA_KEYS_DIR)) {
+                setResult(2);
+                finish();
+            }
+            String path = getIntent().getStringExtra(EXTRA_KEYS_DIR);
+            // Is path null?
+            if (path == null) {
+                setResult(5);
+                finish();
+            }
+            mKeyDirPath = new File(path);
         }
-        dir = new File(getIntent().getStringExtra(EXTRA_KEYS_DIR));
+
         // Is external storage writable?
         if (!Common.isExternalStorageWritableErrorToast(this)) {
             setResult(3);
             finish();
         }
         // Does the directory exist?
-        if (!dir.exists()) {
+        if (!mKeyDirPath.exists()) {
             setResult(1);
             finish();
         }
 
         // List key files.
-        mKeyDirPath = dir.getPath();
-        File[] keyFiles = dir.listFiles();
+        File[] keyFiles = mKeyDirPath.listFiles();
         Arrays.sort(keyFiles);
         mKeyFilesGroup.removeAllViews();
         for(File f : keyFiles) {

@@ -81,6 +81,11 @@ public class ReadTagActivity extends Activity {
                 if (resultCode == 4) {
                     Toast.makeText(this, R.string.info_no_key_found,
                             Toast.LENGTH_LONG).show();
+                } else if (resultCode == 5) {
+                    // Error. Path from the calling intend was null.
+                    // (This is really strange and should not occur.)
+                    Toast.makeText(this, R.string.info_strange_error,
+                            Toast.LENGTH_LONG).show();
                 }
                 finish();
             } else {
