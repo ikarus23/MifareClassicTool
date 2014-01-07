@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.7.1:
+ * Tried to fix the strange crash which occurs sometimes when starting
+   the key mapper. I don't know why :(
+
 Version 1.7.0:
  * New Feature: Write only the sectors you want to be written
    (when using the Write Dump functionality).
