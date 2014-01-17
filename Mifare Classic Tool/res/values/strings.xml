@@ -44,8 +44,6 @@
         Decoder &amp; Encode</string>
 
     <!-- Texts (labels etc.) -->
-    <string name="text_footer">GPLv3 -
-        <a href="https://github.com/ikarus23/MifareClassicTool">Project Page</a></string>
     <string name="text_choose_key_file">Choose some key file(s):</string>
     <string name="text_wait_read_tag">Reading tag&#8230;\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>
@@ -195,6 +193,8 @@
     <string name="menu_new_file">Create New File</string>
     <string name="menu_delete_file">Delete File</string>
     <string name="menu_remove_duplicates">Remove Duplicates</string>
+    <string name="menu_preferences">Preferences</string>
+    <string name="menu_about">About</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -352,6 +352,23 @@
     <string name="dialog_write_sectors_title">Write Sectors</string>
     <string name="dialog_write_sectors">Select the sectors you
         want to write:</string>
+    <string name="dialog_about_mct_title">About MCT</string>
+    <string name="dialog_about_mct"><b>Mifare Classic Tool (MCT)</b>
+        <b>\n\n&#8226; Version: 1.7.1
+        \n&#8226; License:
+        <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a>
+        \n&#8226; Project Page:
+        <a href="https://github.com/ikarus23/MifareClassicTool">MCT
+        on github</a></b>
+        \n\nUseful information:
+        \n&#8226; <a href="https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool">MCT
+        on Google Play</a>
+        \n&#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
+        Tracker</a>
+        \n&#8226; <a href="http://publications.icaria.de/mct/">Documentation,
+        APKs, etc.</a>
+        \n&#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread
+        at the Proxmark forum</a></string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

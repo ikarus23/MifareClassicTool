@@ -177,7 +177,7 @@ public class DumpEditorActivity extends BasicActivity {
     }
 
     /**
-     * Add the menu with the editor functions to the Activity.
+     * Add a menu with editor functions to the Activity.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

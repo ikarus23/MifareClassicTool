@@ -133,7 +133,6 @@
         android:layout_alignParentRight="true"
         android:paddingBottom="1dp"
         android:paddingRight="14dp"
-        android:text="@string/text_footer"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

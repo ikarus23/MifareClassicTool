@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnShowListener;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
@@ -39,11 +40,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,8 +94,7 @@ public class MainActivity extends Activity {
         try {
             String appVersion = getPackageManager().getPackageInfo(
                     getPackageName(), 0).versionName;
-            tv.setText(TextUtils.concat(getString(R.string.app_version), ": ",
-                    appVersion, " - ", getText(R.string.text_footer)));
+            tv.setText(getString(R.string.app_version) +  ": " + appVersion);
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
         }
@@ -235,6 +235,16 @@ public class MainActivity extends Activity {
                 .show();
             mResume = false;
         }
+    }
+
+    /**
+     * Add a menu with "preferences", "about", etc. to the Activity.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     /**
@@ -432,8 +442,58 @@ public class MainActivity extends Activity {
         }
     }
 
+    // TODO: doc & implement.
+    public void onShowPreferences() {
+        Toast.makeText(this, R.string.info_not_supported_now,
+                Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Show the about dialog.
+     */
+    public void onShowAboutDialog() {
+        AlertDialog ad = new AlertDialog.Builder(this)
+        .setTitle(R.string.dialog_about_mct_title)
+        .setMessage(R.string.dialog_about_mct)
+        .setIcon(R.drawable.ic_launcher)
+        .setPositiveButton(R.string.action_ok,
+                new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing.
+            }
+         }).create();
+         ad.show();
+         // Make links clickable.
+         ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(
+                 LinkMovementMethod.getInstance());
+    }
+
+    /**
+     * Handle the user input from main menu (e.g. show the about dialog).
+     * @see #onShowAboutDialog()
+     * @see #onShowPreferences()
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+        case R.id.menuMainPreferences:
+            onShowPreferences();
+            return true;
+        case R.id.menuMainAbout:
+            onShowAboutDialog();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Handle (start) the selected tool from the tools menu.
+     * @see TagInfoToolActivity
+     * @see ValueBlockToolActivity
+     * @see AccessConditionTool
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
