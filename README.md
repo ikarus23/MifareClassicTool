@@ -12,7 +12,7 @@ An Android NFC-App for reading, writing, analyzing, etc. Mifare Classic RFID-Tag
   (outdated, check Google Play)
 * **[Additional stuff]
   (http://publications.icaria.de/mct/)** (Documentation, etc.)
-* **[Thread at the Proxmark Forum]
+* **[Thread at the Proxmark forum]
   (http://www.proxmark.org/forum/viewtopic.php?id=1535)**
 
 

@@ -31,7 +31,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnShowListener;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
@@ -243,7 +242,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.general_options, menu);
         return true;
     }
 
@@ -470,7 +469,8 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Handle the user input from main menu (e.g. show the about dialog).
+     * Handle the user input from the general options menu
+     * (e.g. show the about dialog).
      * @see #onShowAboutDialog()
      * @see #onShowPreferences()
      */
