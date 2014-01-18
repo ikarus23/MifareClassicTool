@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.os.Bundle;
+import android.view.View;
 import de.syss.MifareClassicTool.R;
 
 
@@ -34,5 +35,24 @@ public class PreferencesActivity extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
+    }
+
+    // TODO: implement & doc.
+    public void onShowAutoReconnectInfo(View view) {
+
+    }
+
+    // TODO: implement & doc.
+    public void onSave(View view) {
+
+    }
+
+    /**
+     * Exit the preferences view without saving anything.
+     * @param view The View object that triggered the method
+     * (in this case the cancel button).
+     */
+    public void onCancel(View view) {
+        finish();
     }
 }

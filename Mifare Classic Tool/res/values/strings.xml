@@ -181,6 +181,9 @@
     <string name="action_show_options">Show Options</string>
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
+    <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets lost
+        during authentication</string>
+    <string name="action_save">Save</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
