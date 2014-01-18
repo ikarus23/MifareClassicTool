@@ -366,7 +366,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Show the help Activity.
+     * Show the {@link HelpActivity}.
      * @param view The View object that triggered the method
      * (in this case the help/info button).
      */
@@ -441,10 +441,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    // TODO: doc & implement.
+    /**
+     * Show the {@link PreferencesActivity}.
+     */
     public void onShowPreferences() {
-        Toast.makeText(this, R.string.info_not_supported_now,
-                Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
     }
 
     /**

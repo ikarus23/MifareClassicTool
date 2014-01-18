@@ -42,6 +42,7 @@
         &amp; Encoder</string>
     <string name="title_activity_access_condition_tool">Access Condition
         Decoder &amp; Encode</string>
+    <string name="title_activity_preferences">Preferences</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
