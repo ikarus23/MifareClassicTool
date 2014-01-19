@@ -35,12 +35,14 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -143,8 +145,19 @@ public class Common extends Application {
     private static int keyMapTo = -1;
 
     private static NfcAdapter mNfcAdapter;
+    private static Context mAppContext;
 
 // ############################################################################
+
+    /**
+     * Initialize the {@link #mAppContext} with the application context
+     * (for {@link #getPreferences()).
+     */
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mAppContext = getApplicationContext();
+    }
 
     /**
      * Checks if external storage is available for read and write.
@@ -262,6 +275,15 @@ public class Common extends Application {
             noError = false;
         }
         return noError;
+    }
+
+    /**
+     * Get the shared preferences with application context for saving
+     * and loading ("global") values.
+     * @return The shared preferences object with application context.
+     */
+    public static SharedPreferences getPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(mAppContext);
     }
 
     /**

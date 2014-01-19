@@ -454,16 +454,16 @@ public class MainActivity extends Activity {
      */
     public void onShowAboutDialog() {
         AlertDialog ad = new AlertDialog.Builder(this)
-        .setTitle(R.string.dialog_about_mct_title)
-        .setMessage(R.string.dialog_about_mct)
-        .setIcon(R.drawable.ic_launcher)
-        .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-         }).create();
+            .setTitle(R.string.dialog_about_mct_title)
+            .setMessage(R.string.dialog_about_mct)
+            .setIcon(R.drawable.ic_launcher)
+            .setPositiveButton(R.string.action_ok,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing.
+                }
+            }).create();
          ad.show();
          // Make links clickable.
          ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(

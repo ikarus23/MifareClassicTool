@@ -373,6 +373,13 @@
         APKs, etc.</a>
         \n&#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread
         at the Proxmark forum</a></string>
+    <string name="dialog_auto_reconnect_title">Auto Reconnect</string>
+    <string name="dialog_auto_reconnect">If the tag gets lost during
+        authentication (most likely due to a timeout), the app will try to
+        reconnect to it (with a delay of 500ms) until one attempt will succeed.
+        \n\n<b>This may help if you encounter issues with emulated
+        Mifare Classic tags (e.g. smartMX P5CT072). However, it can
+        also lead to unexpected behavior!</b></string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

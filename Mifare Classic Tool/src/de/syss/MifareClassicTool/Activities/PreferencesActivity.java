@@ -18,33 +18,74 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-
-// TODO: doc.
 /**
- *
+ * This view will let the user edit global preferences.
  * @author Gerhard Klostermeier
  */
 public class PreferencesActivity extends BasicActivity {
 
-    // TODO: doc.
+    CheckBox mPrefAutoReconnect;
+
+    /**
+     * Initialize the preferences with the last stored ones.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
+
+        // Get preferences (init. the member variables).
+        mPrefAutoReconnect = (CheckBox) findViewById(
+                R.id.checkBoxPreferencesAutoReconnect);
+
+        // Assign the last stored values.
+        SharedPreferences pref = Common.getPreferences();
+        mPrefAutoReconnect.setChecked(pref.getBoolean(
+                "auto_reconnect", false));
     }
 
-    // TODO: implement & doc.
+    /**
+     * Show information on the "auto reconnect" preference.
+     * @param view The View object that triggered the method
+     * (in this case the info on auto reconnect button).
+     */
     public void onShowAutoReconnectInfo(View view) {
-
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_auto_reconnect_title)
+            .setMessage(R.string.dialog_auto_reconnect)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(R.string.action_ok,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing.
+                }
+            }).show();
     }
 
-    // TODO: implement & doc.
+    /**
+     * Save the preferences (to the application context,
+     * {@link Common#getPreferences()}).
+     * @param view The View object that triggered the method
+     * (in this case the save button).
+     */
     public void onSave(View view) {
+        // Save preferences.
+        SharedPreferences.Editor edit = Common.getPreferences().edit();
+        edit.putBoolean("auto_reconnect", mPrefAutoReconnect.isChecked());
+        edit.commit();
 
+        // Exit the preferences view.
+        finish();
     }
 
     /**
