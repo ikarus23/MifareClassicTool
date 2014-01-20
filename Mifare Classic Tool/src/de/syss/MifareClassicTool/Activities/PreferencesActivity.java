@@ -38,13 +38,13 @@ public class PreferencesActivity extends BasicActivity {
      * "toString()" so it can be used to access the shared preferences (e.g.
      * SharedPreferences.getBoolean(Pref.AutoReconnect.toString(), false)).
      */
-    public enum Pref {
+    public enum Preference {
         AutoReconnect("auto_reconnect");
         // Add more preferences here (comma separated).
 
         private final String text;
 
-        private Pref(final String text) {
+        private Preference(final String text) {
             this.text = text;
         }
 
@@ -71,7 +71,7 @@ public class PreferencesActivity extends BasicActivity {
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
         mPrefAutoReconnect.setChecked(pref.getBoolean(
-                Pref.AutoReconnect.toString(), false));
+                Preference.AutoReconnect.toString(), false));
     }
 
     /**
@@ -102,7 +102,7 @@ public class PreferencesActivity extends BasicActivity {
     public void onSave(View view) {
         // Save preferences.
         SharedPreferences.Editor edit = Common.getPreferences().edit();
-        edit.putBoolean(Pref.AutoReconnect.toString(),
+        edit.putBoolean(Preference.AutoReconnect.toString(),
                 mPrefAutoReconnect.isChecked());
         edit.commit();
 
