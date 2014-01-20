@@ -33,6 +33,27 @@ import de.syss.MifareClassicTool.R;
  */
 public class PreferencesActivity extends BasicActivity {
 
+    /**
+     * Enumeration with all preferences. This enumeration implements
+     * "toString()" so it can be used to access the shared preferences (e.g.
+     * SharedPreferences.getBoolean(Pref.AutoReconnect.toString(), false)).
+     */
+    public enum Pref {
+        AutoReconnect("auto_reconnect");
+        // Add more preferences here (comma separated).
+
+        private final String text;
+
+        private Pref(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
     CheckBox mPrefAutoReconnect;
 
     /**
@@ -50,7 +71,7 @@ public class PreferencesActivity extends BasicActivity {
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
         mPrefAutoReconnect.setChecked(pref.getBoolean(
-                "auto_reconnect", false));
+                Pref.AutoReconnect.toString(), false));
     }
 
     /**
@@ -81,7 +102,8 @@ public class PreferencesActivity extends BasicActivity {
     public void onSave(View view) {
         // Save preferences.
         SharedPreferences.Editor edit = Common.getPreferences().edit();
-        edit.putBoolean("auto_reconnect", mPrefAutoReconnect.isChecked());
+        edit.putBoolean(Pref.AutoReconnect.toString(),
+                mPrefAutoReconnect.isChecked());
         edit.commit();
 
         // Exit the preferences view.
