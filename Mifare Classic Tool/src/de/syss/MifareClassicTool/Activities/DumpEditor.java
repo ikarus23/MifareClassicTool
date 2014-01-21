@@ -294,7 +294,7 @@ public class DumpEditor extends BasicActivity {
                 .setMessage(R.string.dialog_save_dump)
                 .setIcon(android.R.drawable.ic_menu_save)
                 .setView(input)
-                .setPositiveButton(R.string.action_ok,
+                .setPositiveButton(R.string.action_save,
                         new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
