@@ -21,9 +21,9 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/menuMainTagInfo"
-        android:title="@string/menu_tag_info" />
+        android:title="@string/action_show_tag_info" />
     <item android:id="@+id/menuMainValueBlockTool"
-        android:title="@string/menu_vb_tool" />
+        android:title="@string/action_show_vb_tool" />
     <item android:id="@+id/menuMainAccessConditionTool"
-        android:title="@string/menu_ac_tool" />
+        android:title="@string/action_show_ac_tool" />
 </menu>

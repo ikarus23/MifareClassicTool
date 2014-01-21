@@ -23,13 +23,13 @@
 
     <item android:id="@+id/menuKeyEditorSave"
         android:icon="@android:drawable/ic_menu_save"
-        android:title="@string/menu_save"
+        android:title="@string/action_save"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menuKeyEditorShare"
         android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/menu_share"
+        android:title="@string/action_share"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menuKeyEditorRemoveDuplicates"
-        android:title="@string/menu_remove_duplicates" />
+        android:title="@string/action_remove_duplicates" />
 
 </menu>

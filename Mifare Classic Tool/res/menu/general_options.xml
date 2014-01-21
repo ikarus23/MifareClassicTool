@@ -23,9 +23,9 @@
 
     <item android:id="@+id/menuMainPreferences"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/menu_preferences"
+        android:title="@string/action_show_preferences"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menuMainAbout"
-        android:title="@string/menu_about" />
+        android:title="@string/action_show_about" />
 
 </menu>

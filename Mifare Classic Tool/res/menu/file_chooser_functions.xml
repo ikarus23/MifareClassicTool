@@ -21,7 +21,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/menuFileChooserNewFile"
-        android:title="@string/menu_new_file" />
+        android:title="@string/action_create_new_file" />
     <item android:id="@+id/menuFileChooserDeleteFile"
-        android:title="@string/menu_delete_file" />
+        android:title="@string/action_delete_file" />
 </menu>

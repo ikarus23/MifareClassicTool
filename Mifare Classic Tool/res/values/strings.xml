@@ -184,21 +184,18 @@
     <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
         lost during the key mapping process</string>
     <string name="action_save">Save</string>
-
-    <!-- Menu items -->
-    <string name="menu_save">Save</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_show_ascii">Data as ASCII</string>
-    <string name="menu_show_ac">Decode Access Conditions</string>
-    <string name="menu_show_value_blocks">Value Blocks as Int.</string>
-    <string name="menu_tag_info">Display Tag Info</string>
-    <string name="menu_vb_tool">Value Block De-/Encoder</string>
-    <string name="menu_ac_tool">Access Condition De-/Encoder</string>
-    <string name="menu_new_file">Create New File</string>
-    <string name="menu_delete_file">Delete File</string>
-    <string name="menu_remove_duplicates">Remove Duplicates</string>
-    <string name="menu_preferences">Preferences</string>
-    <string name="menu_about">About</string>
+    <string name="action_share">Share</string>
+    <string name="action_data_as_ascii">Data as ASCII</string>
+    <string name="action_decode_ac">Decode Access Conditions</string>
+    <string name="action_show_value_blocks_as_int">Value Blocks as Int.</string>
+    <string name="action_show_tag_info">Display Tag Info</string>
+    <string name="action_show_vb_tool">Value Block De-/Encoder</string>
+    <string name="action_show_ac_tool">Access Condition De-/Encoder</string>
+    <string name="action_create_new_file">Create New File</string>
+    <string name="action_delete_file">Delete File</string>
+    <string name="action_remove_duplicates">Remove Duplicates</string>
+    <string name="action_show_preferences">Preferences</string>
+    <string name="action_show_about">About</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

@@ -22,20 +22,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/menuDumpEditorSave"
         android:icon="@android:drawable/ic_menu_save"
-        android:title="@string/menu_save"
+        android:title="@string/action_save"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menuDumpEditorShare"
         android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/menu_share"
+        android:title="@string/action_share"
         android:showAsAction="ifRoom" />
     <item android:id="@+id/menuDumpEditorAscii"
-        android:title="@string/menu_show_ascii" />
+        android:title="@string/action_data_as_ascii" />
     <item android:id="@+id/menuDumpEditorAccessConditions"
-        android:title="@string/menu_show_ac" />
+        android:title="@string/action_decode_ac" />
     <item android:id="@+id/menuDumpEditorValueBlocksAsInt"
-        android:title="@string/menu_show_value_blocks" />
+        android:title="@string/action_show_value_blocks_as_int" />
     <item android:id="@+id/menuDumpEditorOpenValueBLockTool"
-        android:title="@string/menu_vb_tool" />
+        android:title="@string/action_show_vb_tool" />
     <item android:id="@+id/menuDumpEditorOpenAccessConditionTool"
-        android:title="@string/menu_ac_tool" />
+        android:title="@string/action_show_ac_tool" />
 </menu>
