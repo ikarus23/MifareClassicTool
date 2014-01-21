@@ -255,19 +255,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
-                            android:layout_centerVertical="false"
                             android:contentDescription="@string/text_option_info"
                             android:onClick="onShowStaticACInfo"
                             android:src="@android:drawable/ic_dialog_info" />
 
                     </RelativeLayout>
 
-                    <!-- Seperator -->
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_margin="2dp"
-                        android:background="@color/light_gray" />
+
 
                     <RelativeLayout
                         android:id="@+id/LayoutWriteTagDumpWriteManuf"
@@ -281,7 +275,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/imageButtonWriteTagDumpWriteManufInfo"
                             android:text="@string/action_write_mfid" />
 

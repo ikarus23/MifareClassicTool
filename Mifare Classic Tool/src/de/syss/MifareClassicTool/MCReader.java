@@ -32,6 +32,7 @@ import android.nfc.tech.MifareClassic;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+import de.syss.MifareClassicTool.Activities.PreferencesActivity.Preference;
 
 /**
  * Provide functions to read/write/analyze a Mifare Classic tag.
@@ -314,12 +315,18 @@ public class MCReader {
                 mKeyMap = new SparseArray<byte[][]>();
             }
 
+            // Get auto reconnect setting.
+            boolean autoReconnect = Common.getPreferences().getBoolean(
+                    Preference.AutoReconnect.toString(), false);
+
             byte[][] keys = new byte[2][];
             boolean[] foundKeys = new boolean[] {false, false};
-            try {
-                // Check next sector against all keys (lines) with
-                // authentication method A and B.
-                for (byte[] key : mKeysWithOrder) {
+
+            // Check next sector against all keys (lines) with
+            // authentication method A and B.
+            for (int i = 0; i < mKeysWithOrder.size();) {
+                byte[] key = mKeysWithOrder.get(i);
+                try {
                     if (!foundKeys[0] &&
                             mMFC.authenticateSectorWithKeyA(
                                     mKeyMapStatus, key)) {
@@ -332,30 +339,53 @@ public class MCReader {
                         keys[1] = key;
                         foundKeys[1] = true;
                     }
-                    if (foundKeys[0] && foundKeys[1]) {
-                        // Both keys found. Continue with next sector.
+                } catch (Exception e) {
+                    Log.d(LOG_TAG, "Error while building next key map part");
+                    // Is auto reconnect enabled?
+                    if (autoReconnect) {
+                        Log.d(LOG_TAG, "Auto recconect is enabled");
+                        while (!isConnected()) {
+                            // Sleep for 500ms.
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException ex) {
+                                // Do nothing.
+                            }
+                            // Try to reconnect.
+                            try {
+                                connect();
+                            } catch (IOException ex) {
+                                // Do nothing.
+                            }
+                        }
+                        // Repeat last loop (do not incr. i).
+                        continue;
+                    } else {
+                        error = true;
                         break;
                     }
                 }
-                if (foundKeys[0] || foundKeys[1]) {
-                    // At least one key found. Add key(s).
-                    mKeyMap.put(mKeyMapStatus, keys);
-                    // Key reuse is very likely, so try these first
-                    // for the next sector.
-                    if (foundKeys[0]) {
-                        mKeysWithOrder.remove(keys[0]);
-                        mKeysWithOrder.add(0, keys[0]);
-                    }
-                    if (foundKeys[1]) {
-                        mKeysWithOrder.remove(keys[1]);
-                        mKeysWithOrder.add(0, keys[1]);
-                    }
+                if (foundKeys[0] && foundKeys[1]) {
+                    // Both keys found. Continue with next sector.
+                    break;
                 }
-                mKeyMapStatus++;
-            } catch (Exception e) {
-                Log.d(LOG_TAG, "Error while building next key map part");
-                error = true;
+                i++;
             }
+            if (!error && (foundKeys[0] || foundKeys[1])) {
+                // At least one key found. Add key(s).
+                mKeyMap.put(mKeyMapStatus, keys);
+                // Key reuse is very likely, so try these first
+                // for the next sector.
+                if (foundKeys[0]) {
+                    mKeysWithOrder.remove(keys[0]);
+                    mKeysWithOrder.add(0, keys[0]);
+                }
+                if (foundKeys[1]) {
+                    mKeysWithOrder.remove(keys[1]);
+                    mKeysWithOrder.add(0, keys[1]);
+                }
+            }
+            mKeyMapStatus++;
         } else {
             error = true;
         }

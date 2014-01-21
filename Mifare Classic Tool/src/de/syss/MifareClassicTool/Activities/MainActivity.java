@@ -366,7 +366,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Show the help Activity.
+     * Show the {@link HelpActivity}.
      * @param view The View object that triggered the method
      * (in this case the help/info button).
      */
@@ -441,10 +441,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    // TODO: doc & implement.
+    /**
+     * Show the {@link PreferencesActivity}.
+     */
     public void onShowPreferences() {
-        Toast.makeText(this, R.string.info_not_supported_now,
-                Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -452,16 +454,16 @@ public class MainActivity extends Activity {
      */
     public void onShowAboutDialog() {
         AlertDialog ad = new AlertDialog.Builder(this)
-        .setTitle(R.string.dialog_about_mct_title)
-        .setMessage(R.string.dialog_about_mct)
-        .setIcon(R.drawable.ic_launcher)
-        .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-         }).create();
+            .setTitle(R.string.dialog_about_mct_title)
+            .setMessage(R.string.dialog_about_mct)
+            .setIcon(R.drawable.ic_launcher)
+            .setPositiveButton(R.string.action_ok,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing.
+                }
+            }).create();
          ad.show();
          // Make links clickable.
          ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(

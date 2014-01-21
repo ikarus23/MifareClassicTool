@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2014 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seperatorPreferences"
+        android:layout_alignParentTop="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesAutoReconnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/imageButtonPreferencesAutoReconnectInfo"
+                    android:text="@string/action_auto_reconnect" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonPreferencesAutoReconnectInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowAutoReconnectInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Seperator -->
+    <View
+        android:id="@+id/seperatorPreferences"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_margin="2dp"
+        android:layout_above="@+id/buttonPreferencesSave"
+        android:background="@color/light_gray" />
+    
+    <Button
+        android:id="@+id/buttonPreferencesSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/buttonPreferencesCancel"
+        android:onClick="onSave"
+        android:text="@string/action_save" />
+
+    <Button
+        android:id="@+id/buttonPreferencesCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onCancel"
+        android:text="@string/action_cancel" />
+
+</RelativeLayout>

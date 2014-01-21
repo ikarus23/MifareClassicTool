@@ -42,6 +42,7 @@
         &amp; Encoder</string>
     <string name="title_activity_access_condition_tool">Access Condition
         Decoder &amp; Encode</string>
+    <string name="title_activity_preferences">Preferences</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -180,6 +181,9 @@
     <string name="action_show_options">Show Options</string>
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
+    <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
+        lost during the key mapping process</string>
+    <string name="action_save">Save</string>
 
     <!-- Menu items -->
     <string name="menu_save">Save</string>
@@ -369,6 +373,14 @@
         APKs, etc.</a>
         \n&#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread
         at the Proxmark forum</a></string>
+    <string name="dialog_auto_reconnect_title">Auto Reconnect</string>
+    <string name="dialog_auto_reconnect">If the tag gets lost during
+        the key mapping process (most likely due to a timeout), the app will
+        try to reconnect to it (with a delay of 500ms) until one attempt
+        will succeed.
+        \n\n<b>This may help if you encounter issues with emulated
+        Mifare Classic tags (e.g. smartMX P5CT072). However, it can
+        also lead to unexpected behavior!</b></string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
