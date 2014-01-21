@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
@@ -462,6 +464,23 @@ public class MainMenu extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing.
+                }
+            })
+            .setNeutralButton(R.string.action_rate_this_app,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Uri uri = Uri.parse(
+                            "market://details?id=de.syss.MifareClassicTool");
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    try {
+                        startActivity(goToMarket);
+                    } catch (ActivityNotFoundException e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps"
+                                        + "/details?id=de.syss.Mifare"
+                                        + "ClassicTool")));
+                    }
                 }
             }).create();
          ad.show();
