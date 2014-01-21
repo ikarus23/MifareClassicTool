@@ -138,7 +138,7 @@ It is free software and licensed under the
 
 Icons used in this application:
 * Oxygen Icons: [www.oxygen-icons.org](http://www.oxygen-icons.org/)  
-  ([GNU Library General Public License](http://www.gnu.org/licenses/lgpl.html))
+  ([GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html))
 * RFID Tag: [www.nfc-tag.de](http://www.nfc-tag.de/)  
   ([Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/))
 
