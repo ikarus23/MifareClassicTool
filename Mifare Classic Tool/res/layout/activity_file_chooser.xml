@@ -23,7 +23,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayoutOpenFile"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".FileChooser" >
 
     <TextView
         android:id="@+id/textViewFileChooser"

@@ -24,7 +24,7 @@
     android:id="@+id/RelativeLayoutKeyEditor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KeyEditorActivity" >
+    tools:context=".KeyEditor" >
 
     <!-- Dummy for preventing EditTexts to get focus on Activity startup -->
     <LinearLayout

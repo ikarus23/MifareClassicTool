@@ -23,7 +23,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayoutReadTag"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".ReadTag" >
 
     <ProgressBar
         android:id="@+id/progressBarReadTag"

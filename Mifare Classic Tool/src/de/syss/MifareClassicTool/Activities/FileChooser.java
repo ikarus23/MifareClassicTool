@@ -60,7 +60,7 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class FileChooserActivity extends BasicActivity {
+public class FileChooser extends BasicActivity {
 
     // Input parameters.
     /**
@@ -113,7 +113,7 @@ public class FileChooserActivity extends BasicActivity {
 
 
     private static final String LOG_TAG =
-            FileChooserActivity.class.getSimpleName();
+            FileChooser.class.getSimpleName();
     private RadioGroup mGroupOfFiles;
     private Button mChooserButton;
     private TextView mChooserText;

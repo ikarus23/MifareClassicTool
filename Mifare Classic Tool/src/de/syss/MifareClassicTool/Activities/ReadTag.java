@@ -30,11 +30,11 @@ import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
 
 /**
- * Create a key map with the {@link CreateKeyMapActivity} and then
+ * Create a key map with the {@link CreateKeyMap} and then
  * read the tag.
  * @author Gerhard Klostermeier
  */
-public class ReadTagActivity extends Activity {
+public class ReadTag extends Activity {
 
     private final static int KEY_MAP_CREATOR = 1;
 
@@ -43,7 +43,7 @@ public class ReadTagActivity extends Activity {
 
     /**
      * Check for external storage, create {@link Common#KEYS_DIR} (if it
-     * not already exists) and show the {@link CreateKeyMapActivity}.
+     * not already exists) and show the {@link CreateKeyMap}.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,11 @@ public class ReadTagActivity extends Activity {
             return;
         }
 
-        Intent intent = new Intent(this, CreateKeyMapActivity.class);
-        intent.putExtra(CreateKeyMapActivity.EXTRA_KEYS_DIR,
+        Intent intent = new Intent(this, CreateKeyMap.class);
+        intent.putExtra(CreateKeyMap.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(
                         Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-        intent.putExtra(CreateKeyMapActivity.EXTRA_BUTTON_TEXT,
+        intent.putExtra(CreateKeyMap.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_read));
         startActivityForResult(intent, KEY_MAP_CREATOR);
     }
@@ -126,13 +126,13 @@ public class ReadTagActivity extends Activity {
     }
 
     /**
-     * Create a tag dump in a format the {@link DumpEditorActivity}
+     * Create a tag dump in a format the {@link DumpEditor}
      * can read (format: headers (sectors) marked with "+", errors
      * marked with "*"), and then start the dump editor with this dump.
      * @param rawDump A tag dump like {@link MCReader#readAsMuchAsPossible()}
      * returns.
-     * @see DumpEditorActivity#EXTRA_DUMP
-     * @see DumpEditorActivity
+     * @see DumpEditor#EXTRA_DUMP
+     * @see DumpEditor
      */
     private void createTagDump(SparseArray<String[]> rawDump) {
         String dump = "";
@@ -157,8 +157,8 @@ public class ReadTagActivity extends Activity {
                 dump = dump.substring(0, dump.length() -1);
                 // Show Dump Editor Activity.
                 Intent intent = new Intent(this,
-                        DumpEditorActivity.class);;
-                intent.putExtra(DumpEditorActivity.EXTRA_DUMP, dump);
+                        DumpEditor.class);;
+                intent.putExtra(DumpEditor.EXTRA_DUMP, dump);
                 startActivity(intent);
             } else {
                 // Error, keys from key map are not valid for reading.

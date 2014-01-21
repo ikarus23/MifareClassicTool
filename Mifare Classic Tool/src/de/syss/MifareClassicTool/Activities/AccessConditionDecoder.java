@@ -35,11 +35,11 @@ import de.syss.MifareClassicTool.R;
  * NXP has PDFs describing what access conditions are.
  * Google something like "nxp mifare classic access conditions",
  * if you want to have a closer look.
- * This Activity will be shown from the {@link DumpEditorActivity}, if the user
+ * This Activity will be shown from the {@link DumpEditor}, if the user
  * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
-public class AccessConditionDecoderActivity extends BasicActivity {
+public class AccessConditionDecoder extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
@@ -48,7 +48,7 @@ public class AccessConditionDecoderActivity extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.AC";
 
     private static final String LOG_TAG =
-            AccessConditionDecoderActivity.class.getSimpleName();
+            AccessConditionDecoder.class.getSimpleName();
 
     private TableLayout mLayout;
 

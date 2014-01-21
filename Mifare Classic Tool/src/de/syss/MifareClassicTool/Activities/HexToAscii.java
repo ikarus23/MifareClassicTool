@@ -29,21 +29,21 @@ import de.syss.MifareClassicTool.R;
 
 /**
  * Display a (hex) dump as 7-Bit US-ASCII.
- * This Activity will be shown from the {@link DumpEditorActivity}, if the user
+ * This Activity will be shown from the {@link DumpEditor}, if the user
  * clicks the corresponding menu item.
  * @author user Gerhard Klostermeier
  */
-public class HexToAsciiActivity extends BasicActivity {
+public class HexToAscii extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
 
     private static final String LOG_TAG =
-            HexToAsciiActivity.class.getSimpleName();
+            HexToAscii.class.getSimpleName();
 
     /**
      * Initialize the activity with the data from the Intent
-     * ({@link DumpEditorActivity#EXTRA_DUMP}) by displaying them as
+     * ({@link DumpEditor#EXTRA_DUMP}) by displaying them as
      * US-ASCII. Non printable ASCII characters will be displayed as ".".
      */
     @Override
@@ -51,9 +51,9 @@ public class HexToAsciiActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hex_to_ascii);
 
-        if (getIntent().hasExtra(DumpEditorActivity.EXTRA_DUMP)) {
+        if (getIntent().hasExtra(DumpEditor.EXTRA_DUMP)) {
             String dump = getIntent().getStringExtra(
-                    DumpEditorActivity.EXTRA_DUMP);
+                    DumpEditor.EXTRA_DUMP);
             if (!dump.equals("")) {
                 String s = System.getProperty("line.separator");
                 String[] data = dump.split(s);

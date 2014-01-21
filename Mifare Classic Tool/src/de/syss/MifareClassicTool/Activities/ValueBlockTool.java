@@ -33,7 +33,7 @@ import de.syss.MifareClassicTool.R;
  * to an integer and vice versa.
  * @author Gerhard Klostermeier
  */
-public class ValueBlockToolActivity extends BasicActivity {
+public class ValueBlockTool extends BasicActivity {
 
     private EditText mVB;
     private EditText mVBasInt;

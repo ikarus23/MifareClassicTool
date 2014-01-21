@@ -62,10 +62,10 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class MainActivity extends Activity {
+public class MainMenu extends Activity {
 
     private static final String LOG_TAG =
-            MainActivity.class.getSimpleName();
+            MainMenu.class.getSimpleName();
 
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_menu);
 
         // Show App version and footer.
         TextView tv = (TextView) findViewById(R.id.textViewMainFooter);
@@ -304,7 +304,7 @@ public class MainActivity extends Activity {
                 if (typeCheck == -1 || typeCheck == -2) {
                     // Device or tag does not support Mifare Classic.
                     // Run the only thing that is possible: The tag info tool.
-                    Intent i = new Intent(this, TagInfoToolActivity.class);
+                    Intent i = new Intent(this, TagInfoTool.class);
                     startActivity(i);
                 }
                 mOldIntent = getIntent();
@@ -328,9 +328,9 @@ public class MainActivity extends Activity {
 
     /**
      * Handle new Intent as a new tag Intent and if the tag/device does not
-     * support Mifare Classic, then run {@link TagInfoToolActivity}.
+     * support Mifare Classic, then run {@link TagInfoTool}.
      * @see Common#treatAsNewTag(Intent, android.content.Context)
-     * @see TagInfoToolActivity
+     * @see TagInfoTool
      */
     @Override
     public void onNewIntent(Intent intent) {
@@ -338,40 +338,40 @@ public class MainActivity extends Activity {
         if (typeCheck == -1 || typeCheck == -2) {
             // Device or tag does not support Mifare Classic.
             // Run the only thing that is possible: The tag info tool.
-            Intent i = new Intent(this, TagInfoToolActivity.class);
+            Intent i = new Intent(this, TagInfoTool.class);
             startActivity(i);
         }
     }
 
     /**
-     * Show the {@link ReadTagActivity}.
+     * Show the {@link ReadTag}.
      * @param view The View object that triggered the method
      * (in this case the read tag button).
-     * @see ReadTagActivity
+     * @see ReadTag
      */
     public void onShowReadTag(View view) {
-        Intent intent = new Intent(this, ReadTagActivity.class);
+        Intent intent = new Intent(this, ReadTag.class);
         startActivity(intent);
     }
 
     /**
-     * Show the {@link WriteTagActivity}.
+     * Show the {@link WriteTag}.
      * @param view The View object that triggered the method
      * (in this case the write tag button).
-     * @see WriteTagActivity
+     * @see WriteTag
      */
     public void onShowWriteTag(View view) {
-        Intent intent = new Intent(this, WriteTagActivity.class);
+        Intent intent = new Intent(this, WriteTag.class);
         startActivity(intent);
     }
 
     /**
-     * Show the {@link HelpActivity}.
+     * Show the {@link HelpAndInfo}.
      * @param view The View object that triggered the method
      * (in this case the help/info button).
      */
     public void onShowHelp(View view) {
-        Intent intent = new Intent(this, HelpActivity.class);
+        Intent intent = new Intent(this, HelpAndInfo.class);
         startActivity(intent);
     }
 
@@ -385,14 +385,14 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Open a file chooser ({@link FileChooserActivity}). The
+     * Open a file chooser ({@link FileChooser}). The
      * Activity result will be processed in
      * {@link #onActivityResult(int, int, Intent)}.
      * If the dump files folder is empty display an additional error
      * message.
      * @param view The View object that triggered the method
      * (in this case the show/edit tag dump button).
-     * @see FileChooserActivity
+     * @see FileChooser
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenTagDumpEditor(View view) {
@@ -405,47 +405,47 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, R.string.info_no_dumps,
                     Toast.LENGTH_LONG).show();
             }
-            Intent intent = new Intent(this, FileChooserActivity.class);
-            intent.putExtra(FileChooserActivity.EXTRA_DIR, dumpsDir);
-            intent.putExtra(FileChooserActivity.EXTRA_TITLE,
+            Intent intent = new Intent(this, FileChooser.class);
+            intent.putExtra(FileChooser.EXTRA_DIR, dumpsDir);
+            intent.putExtra(FileChooser.EXTRA_TITLE,
                     getString(R.string.text_open_dump_title));
-            intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
+            intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                     getString(R.string.action_open_dump_file));
-            intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
+            intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
             startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE);
         }
     }
 
     /**
-     * Open a file chooser ({@link FileChooserActivity}). The
+     * Open a file chooser ({@link FileChooser}). The
      * Activity result will be processed in
      * {@link #onActivityResult(int, int, Intent)}.
      * @param view The View object that triggered the method
      * (in this case the show/edit key button).
-     * @see FileChooserActivity
+     * @see FileChooser
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenKeyEditor(View view) {
         if (Common.isExternalStorageWritableErrorToast(this)) {
-            Intent intent = new Intent(this, FileChooserActivity.class);
-            intent.putExtra(FileChooserActivity.EXTRA_DIR,
+            Intent intent = new Intent(this, FileChooser.class);
+            intent.putExtra(FileChooser.EXTRA_DIR,
                     Environment.getExternalStoragePublicDirectory(
                             Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-            intent.putExtra(FileChooserActivity.EXTRA_TITLE,
+            intent.putExtra(FileChooser.EXTRA_TITLE,
                     getString(R.string.text_open_key_file_title));
-            intent.putExtra(FileChooserActivity.EXTRA_BUTTON_TEXT,
+            intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                     getString(R.string.action_open_key_file));
-            intent.putExtra(FileChooserActivity.EXTRA_ENABLE_NEW_FILE, true);
-            intent.putExtra(FileChooserActivity.EXTRA_ENABLE_DELETE_FILE, true);
+            intent.putExtra(FileChooser.EXTRA_ENABLE_NEW_FILE, true);
+            intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
             startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
         }
     }
 
     /**
-     * Show the {@link PreferencesActivity}.
+     * Show the {@link Preferences}.
      */
     public void onShowPreferences() {
-        Intent intent = new Intent(this, PreferencesActivity.class);
+        Intent intent = new Intent(this, Preferences.class);
         startActivity(intent);
     }
 
@@ -493,8 +493,8 @@ public class MainActivity extends Activity {
 
     /**
      * Handle (start) the selected tool from the tools menu.
-     * @see TagInfoToolActivity
-     * @see ValueBlockToolActivity
+     * @see TagInfoTool
+     * @see ValueBlockTool
      * @see AccessConditionTool
      */
     @Override
@@ -502,11 +502,11 @@ public class MainActivity extends Activity {
         Intent intent = null;
         switch (item.getItemId()) {
         case R.id.menuMainTagInfo:
-            intent = new Intent(this, TagInfoToolActivity.class);
+            intent = new Intent(this, TagInfoTool.class);
             startActivity(intent);
             return true;
         case R.id.menuMainValueBlockTool:
-            intent = new Intent(this, ValueBlockToolActivity.class);
+            intent = new Intent(this, ValueBlockTool.class);
             startActivity(intent);
             return true;
         case R.id.menuMainAccessConditionTool:
@@ -519,10 +519,10 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Run the {@link DumpEditorActivity} or the {@link KeyEditorActivity}
+     * Run the {@link DumpEditor} or the {@link KeyEditor}
      * if file chooser result is O.K.
-     * @see DumpEditorActivity
-     * @see KeyEditorActivity
+     * @see DumpEditor
+     * @see KeyEditor
      * @see #onOpenTagDumpEditor(View)
      * @see #onOpenKeyEditor(View)
      */
@@ -533,19 +533,19 @@ public class MainActivity extends Activity {
         switch(requestCode) {
         case FILE_CHOOSER_DUMP_FILE:
             if (resultCode == Activity.RESULT_OK) {
-                Intent intent = new Intent(this, DumpEditorActivity.class);
-                intent.putExtra(FileChooserActivity.EXTRA_CHOSEN_FILE,
+                Intent intent = new Intent(this, DumpEditor.class);
+                intent.putExtra(FileChooser.EXTRA_CHOSEN_FILE,
                         data.getStringExtra(
-                                FileChooserActivity.EXTRA_CHOSEN_FILE));
+                                FileChooser.EXTRA_CHOSEN_FILE));
                 startActivity(intent);
             }
             break;
         case FILE_CHOOSER_KEY_FILE:
             if (resultCode == Activity.RESULT_OK) {
-                Intent intent = new Intent(this, KeyEditorActivity.class);
-                intent.putExtra(FileChooserActivity.EXTRA_CHOSEN_FILE,
+                Intent intent = new Intent(this, KeyEditor.class);
+                intent.putExtra(FileChooser.EXTRA_CHOSEN_FILE,
                         data.getStringExtra(
-                                FileChooserActivity.EXTRA_CHOSEN_FILE));
+                                FileChooser.EXTRA_CHOSEN_FILE));
                 startActivity(intent);
             }
             break;

@@ -35,11 +35,11 @@ import de.syss.MifareClassicTool.R;
  * NXP has PDFs describing what value blocks are.
  * Google something like "nxp mifare classic value blocks",
  * if you want to have a closer look.
- * This Activity will be shown from the {@link DumpEditorActivity}, if the user
+ * This Activity will be shown from the {@link DumpEditor}, if the user
  * clicks the corresponding menu item.
  * @author Gerhard Klostermeier
  */
-public class ValueBlocksToIntActivity extends BasicActivity {
+public class ValueBlocksToInt extends BasicActivity {
 
     // LOW: Pass a better object then a stringblobb separated by new line.
     // (See http://stackoverflow.com/a/2141166)
@@ -47,7 +47,7 @@ public class ValueBlocksToIntActivity extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.VB";
 
     private static final String LOG_TAG =
-            ValueBlocksToIntActivity.class.getSimpleName();
+            ValueBlocksToInt.class.getSimpleName();
 
     private TableLayout mLayout;
 

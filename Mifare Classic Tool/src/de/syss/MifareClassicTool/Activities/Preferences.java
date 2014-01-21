@@ -31,7 +31,7 @@ import de.syss.MifareClassicTool.R;
  * This view will let the user edit global preferences.
  * @author Gerhard Klostermeier
  */
-public class PreferencesActivity extends BasicActivity {
+public class Preferences extends BasicActivity {
 
     /**
      * Enumeration with all preferences. This enumeration implements

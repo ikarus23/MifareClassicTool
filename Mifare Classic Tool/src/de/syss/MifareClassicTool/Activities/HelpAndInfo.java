@@ -26,7 +26,7 @@ import de.syss.MifareClassicTool.R;
  * In-App (offline) help and info.
  * @author Gerhard Klostermeier
  */
-public class HelpActivity extends BasicActivity {
+public class HelpAndInfo extends BasicActivity {
 
     /**
      * Initialize the layout and the web view (browser) on local

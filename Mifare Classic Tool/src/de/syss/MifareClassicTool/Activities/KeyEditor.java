@@ -42,7 +42,7 @@ import de.syss.MifareClassicTool.R;
  * Show and edit key files.
  * @author Gerhard Klostermeier
  */
-public class KeyEditorActivity extends BasicActivity {
+public class KeyEditor extends BasicActivity {
 
     private EditText mKeys;
     private String mFileName;
@@ -63,10 +63,10 @@ public class KeyEditorActivity extends BasicActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(
-                FileChooserActivity.EXTRA_CHOSEN_FILE)) {
+                FileChooser.EXTRA_CHOSEN_FILE)) {
             mKeys = (EditText) findViewById(R.id.editTextKeyEditorKeys);
             File keyFile = new File(getIntent().getStringExtra(
-                    FileChooserActivity.EXTRA_CHOSEN_FILE));
+                    FileChooser.EXTRA_CHOSEN_FILE));
             mFileName = keyFile.getName();
             setTitle(getTitle() + " (" + mFileName + ")");
             if (keyFile.exists()) {
