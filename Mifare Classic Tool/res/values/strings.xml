@@ -292,11 +292,11 @@
         information. Further I/O operations are impossible.
         \n\n<b>Therefore, this App is pretty much useless for this device.</b>
         \n\nKnown devices with no Mifare Classic support:\n
-        - Google Nexus 4\n
-        - Google Nexus 5\n
-        - Google Nexus 7 (2013)\n
-        - Google Nexus 10\n
-        - Samsung Galaxy S4</string>
+        &#8226; Google Nexus 4\n
+        &#8226; Google Nexus 5\n
+        &#8226; Google Nexus 7 (2013)\n
+        &#8226; Google Nexus 10\n
+        &#8226; Samsung Galaxy S4</string>
     <string name="dialog_no_mfc_support_tag_title">Not a Mifare Classic tag</string>
     <string name="dialog_no_mfc_support_tag">This tag is not compatible with
         the Mifare Classic technology! Notice that this App is designed for
@@ -373,12 +373,13 @@
         at the Proxmark forum</a></string>
     <string name="dialog_auto_reconnect_title">Auto Reconnect</string>
     <string name="dialog_auto_reconnect">If the tag gets lost during
-        the key mapping process (most likely due to a timeout), the app will
-        try to reconnect to it (with a delay of 500ms) until one attempt
-        will succeed.
-        \n\n<b>This may help if you encounter issues with emulated
-        Mifare Classic tags (e.g. smartMX P5CT072). However, it can
-        also lead to unexpected behavior!</b></string>
+        the key mapping process (due to antenna issues, timeout, etc.),
+        the app will try to reconnect to it (with a delay of 500ms)
+        until one attempt will succeed.
+        \n\n<b>This may help if you encounter issues during the key mapping
+        process. However, it might also cause MCT to behave a bit weird.</b>
+        \n\nKnown issues where this setting may help:\n
+        &#8226; Special tags (e.g. smartMX)</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
