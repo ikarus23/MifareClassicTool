@@ -140,7 +140,7 @@
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
     <string name="action_write_tag">Write Tag</string>
-    <string name="action_edit_tag_dump">Edit Dump File</string>
+    <string name="action_edit_tag_dump">Edit/Analyse Dump File</string>
     <string name="action_edit_key_dump">Edit/Add Key File</string>
     <string name="action_tools">Tools</string>
     <string name="action_exit_app">Exit App</string>
@@ -394,8 +394,9 @@
         contains invalid data.</b>
         \n\nThe last 2 bytes of the manufacturer block should be in binary
         coded decimal format (only digits, no letters). The first byte
-        (week of manufacture) must be between 1 and 52. The second byte
-        (year of manufacture) must be between 0 and the current year.
+        (week of manufacture) must be between 1 and 53 (e.g. 28).
+        The second byte (year of manufacture) must be between 0 and the
+        current year (e.g. 12, meaning 2012).
         \n\nMaybe the tag is not an original Mifare Classic tag.</string>
 
     <!-- Hints -->

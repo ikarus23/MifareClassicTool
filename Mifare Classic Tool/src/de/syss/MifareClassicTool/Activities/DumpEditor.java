@@ -618,7 +618,7 @@ public class DumpEditor extends BasicActivity {
      * Decode the date of manufacture (using the last 2 bytes of the
      * manufacturer block) and display the result as dialog.
      * Both of this bytes must be in BCD format (only digits, no letters).
-     * The first byte (week of manufacture) must be between 1 and 52.
+     * The first byte (week of manufacture) must be between 1 and 53.
      * The second byte (year of manufacture) must be between 0 and
      * the current year.
      */
@@ -633,7 +633,7 @@ public class DumpEditor extends BasicActivity {
                 year = Integer.parseInt(mLines[1].substring(30, 32));
                 week = Integer.parseInt(mLines[1].substring(28, 30));
                 int now = Integer.parseInt(sdf.format(new Date()));
-                if (year >= 0 && year <= now && week > 0 && week < 53) {
+                if (year >= 0 && year <= now && week >= 1 && week <= 53) {
                     // Calculate the date of manufacture.
                     Calendar calendar = Calendar.getInstance();
                     calendar.clear();
