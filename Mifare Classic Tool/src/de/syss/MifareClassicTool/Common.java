@@ -36,6 +36,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
@@ -134,7 +135,7 @@ public class Common extends Application {
      * @see CreateKeyMap.CreateKeyMap
      * @see MCReader#getKeyMap()
      */
-    private static int keyMapFrom = -1;
+    private static int mKeyMapFrom = -1;
 
     /**
      * Global storage for the point where
@@ -142,7 +143,12 @@ public class Common extends Application {
      * @see CreateKeyMap.CreateKeyMap
      * @see MCReader#getKeyMap()
      */
-    private static int keyMapTo = -1;
+    private static int mKeyMapTo = -1;
+
+    /**
+     * The version code from the Android manifest.
+     */
+    private static String mVersionCode;
 
     private static NfcAdapter mNfcAdapter;
     private static Context mAppContext;
@@ -151,12 +157,19 @@ public class Common extends Application {
 
     /**
      * Initialize the {@link #mAppContext} with the application context
-     * (for {@link #getPreferences()).
+     * (for {@link #getPreferences()) and {@link #mVersionCode}.
      */
     @Override
     public void onCreate() {
         super.onCreate();
         mAppContext = getApplicationContext();
+
+        try {
+            mVersionCode = getPackageManager().getPackageInfo(
+                    getPackageName(), 0).versionName;
+        } catch (NameNotFoundException e) {
+            Log.d(LOG_TAG, "Version not found.");
+        }
     }
 
     /**
@@ -947,31 +960,31 @@ public class Common extends Application {
     }
 
     /**
-     * Set {@link #keyMapFrom} and {@link #keyMapTo}.
+     * Set {@link #mKeyMapFrom} and {@link #mKeyMapTo}.
      * The  {@link CreateKeyMap.CreateKeyMap} will do this for every
      * created key map.
-     * @param from {@link #keyMapFrom}
-     * @param to {@link #keyMapTo}
+     * @param from {@link #mKeyMapFrom}
+     * @param to {@link #mKeyMapTo}
      */
     public static void setKeyMapRange (int from, int to){
-        keyMapFrom = from;
-        keyMapTo = to;
+        mKeyMapFrom = from;
+        mKeyMapTo = to;
     }
 
     /**
      * Get the key map start point.
-     * @return {@link #keyMapFrom}
+     * @return {@link #mKeyMapFrom}
      */
     public static int getKeyMapRangeFrom() {
-        return keyMapFrom;
+        return mKeyMapFrom;
     }
 
     /**
      * Get the key map end point
-     * @return {@link #keyMapTo}
+     * @return {@link #mKeyMapTo}
      */
     public static int getKeyMapRangeTo() {
-        return keyMapTo;
+        return mKeyMapTo;
     }
 
     /**
@@ -989,5 +1002,13 @@ public class Common extends Application {
      */
     public static byte[] getUID() {
         return mUID;
+    }
+
+    /**
+     * Get the version code.
+     * @return The version code.
+     */
+    public static String getVersionCode() {
+        return mVersionCode;
     }
 }

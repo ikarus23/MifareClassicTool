@@ -33,7 +33,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -91,14 +90,8 @@ public class MainMenu extends Activity {
 
         // Show App version and footer.
         TextView tv = (TextView) findViewById(R.id.textViewMainFooter);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
-        try {
-            String appVersion = getPackageManager().getPackageInfo(
-                    getPackageName(), 0).versionName;
-            tv.setText(getString(R.string.app_version) +  ": " + appVersion);
-        } catch (NameNotFoundException e) {
-            Log.d(LOG_TAG, "Version not found.");
-        }
+        tv.setText(getString(R.string.app_version)
+                + ": " + Common.getVersionCode());
 
         // Add the context menu to the tools button.
         Button tools = (Button) findViewById(R.id.buttonMainTools);
@@ -457,7 +450,8 @@ public class MainMenu extends Activity {
     public void onShowAboutDialog() {
         AlertDialog ad = new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_about_mct_title)
-            .setMessage(R.string.dialog_about_mct)
+            .setMessage(getString(R.string.dialog_about_mct,
+                    Common.getVersionCode()))
             .setIcon(R.drawable.ic_launcher)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {

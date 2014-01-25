@@ -356,7 +356,7 @@
         want to write:</string>
     <string name="dialog_about_mct_title">About MCT</string>
     <string name="dialog_about_mct"><b>MifareClassicTool (MCT)</b>
-        <b>\n\n&#8226; Version: 1.7.1
+        <b>\n\n&#8226; Version: %1$s
         \n&#8226; License:
         <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a>
         \n&#8226; Project Page:
