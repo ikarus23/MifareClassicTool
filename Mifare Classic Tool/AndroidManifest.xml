@@ -63,8 +63,7 @@
             android:name="de.syss.MifareClassicTool.Activities.CreateKeyMap"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/map_keys_to_sector"
-            android:label="@string/title_activity_create_key_map"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_create_key_map" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.DumpEditor"
@@ -75,85 +74,73 @@
         <activity
             android:name="de.syss.MifareClassicTool.Activities.FileChooser"
             android:icon="@drawable/open"
-            android:label="@string/title_activity_file_chooser"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_file_chooser" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.AccessConditionDecoder"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/access_conditions"
-            android:label="@string/title_activity_access_conditions"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_access_conditions" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.ValueBlocksToInt"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_to_int"
-            android:label="@string/title_activity_value_blocks"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_value_blocks" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.WriteTag"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/write_tag"
-            android:label="@string/title_activity_write_tag"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_write_tag" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.ReadTag"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/read_tag"
-            android:label="@string/title_activity_read_tag"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_read_tag" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.KeyEditor"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/edit_keys"
-            android:label="@string/title_activity_key_editor"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_key_editor" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.HelpAndInfo"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/help_and_info"
-            android:label="@string/title_activity_help"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_help" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.HexToAscii"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/hex_to_ascii"
-            android:label="@string/title_activity_hex_to_ascii"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_hex_to_ascii" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.TagInfoTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/tag_info"
-            android:label="@string/title_activity_tag_info"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_tag_info" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.ValueBlockTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_tool"
-            android:label="@string/title_activity_value_block_tool"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_value_block_tool" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.AccessConditionTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/access_condition_tool"
-            android:label="@string/title_activity_access_condition_tool"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_access_condition_tool" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.Preferences"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/preferences"
-            android:label="@string/title_activity_preferences"
-            android:launchMode="singleTop" >
+            android:label="@string/title_activity_preferences" >
         </activity>
     </application>
 
