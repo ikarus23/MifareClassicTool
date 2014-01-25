@@ -107,7 +107,7 @@ public class DumpEditor extends BasicActivity {
         setContentView(R.layout.activity_dump_editor);
 
         mLayout= (LinearLayout) findViewById(
-                R.id.LinearLayoutDumpEditor);
+                R.id.linearLayoutDumpEditor);
 
         // Color caption.
         SpannableString keyA = Common.colorString(

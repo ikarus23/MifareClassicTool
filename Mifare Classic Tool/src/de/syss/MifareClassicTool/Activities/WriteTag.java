@@ -98,9 +98,9 @@ public class WriteTag extends BasicActivity {
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
         mWriteModeLayouts = new ArrayList<View>();
-        mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagWriteBlock));
-        mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagDump));
-        mWriteModeLayouts.add(findViewById(R.id.LayoutWriteTagFactoryFormat));
+        mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagWriteBlock));
+        mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
+        mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagFactoryFormat));
 
         // Restore mDumpWithPos and the "write to manufacturer block"-state.
         if (savedInstanceState != null) {
@@ -133,7 +133,7 @@ public class WriteTag extends BasicActivity {
         for (View layout : mWriteModeLayouts) {
             layout.setVisibility(View.GONE);
         }
-        View parent = findViewById(R.id.LinearLayoutWriteTag);
+        View parent = findViewById(R.id.linearLayoutWriteTag);
         parent.findViewWithTag(
                 view.getTag() + "_layout").setVisibility(View.VISIBLE);
     }
@@ -279,7 +279,7 @@ public class WriteTag extends BasicActivity {
      */
     public void onShowOptions(View view) {
         LinearLayout ll = (LinearLayout)
-                findViewById(R.id.LayoutWriteTagDumpOptions);
+                findViewById(R.id.linearLayoutWriteTagDumpOptions);
         CheckBox cb = (CheckBox) findViewById(R.id.checkBoxWriteTagDumpOptions);
         if (cb.isChecked()) {
             ll.setVisibility(View.VISIBLE);

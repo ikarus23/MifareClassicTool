@@ -21,7 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutMain"
+    android:id="@+id/relativeLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainMenu" >
@@ -34,7 +34,7 @@
         android:layout_alignParentTop="true" >
 
         <LinearLayout
-            android:id="@+id/LinearLayoutMainMenu"
+            android:id="@+id/linearLayoutMainMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -43,7 +43,7 @@
             android:paddingTop="10dp" >
 
             <LinearLayout
-                android:id="@+id/LinearLayoutMainMenuRow1"
+                android:id="@+id/linearLayoutMainMenuRow1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -70,7 +70,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/LinearLayoutMainMenuRow2"
+                android:id="@+id/linearLayoutMainMenuRow2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -97,7 +97,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/LinearLayoutMainMenuRow3"
+                android:id="@+id/linearLayoutMainMenuRow3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 

@@ -21,7 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutValueBlockTool"
+    android:id="@+id/relativeLayoutValueBlockTool"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ValueBlockTool" >
@@ -34,7 +34,7 @@
         android:focusableInTouchMode="true" />
 
     <LinearLayout
-        android:id="@+id/LinearLayoutValueBlockToolVB"
+        android:id="@+id/linearLayoutValueBlockToolVB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -78,10 +78,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/LinearLayoutValueBlockToolConvert"
+        android:id="@+id/linearLayoutValueBlockToolConvert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/LinearLayoutValueBlockToolVB"
+        android:layout_below="@id/linearLayoutValueBlockToolVB"
         android:gravity="center_horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="5dp"
@@ -109,10 +109,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/LinearLayoutValueBlockToolVBasInt"
+        android:id="@+id/linearLayoutValueBlockToolVBasInt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/LinearLayoutValueBlockToolConvert"
+        android:layout_below="@+id/linearLayoutValueBlockToolConvert"
         android:layout_centerHorizontal="true"
         android:padding="5dp" >
 

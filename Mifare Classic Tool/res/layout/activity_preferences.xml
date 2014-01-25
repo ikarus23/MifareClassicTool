@@ -21,23 +21,27 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutPreferences"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Preferences"
     android:padding="5dp" >
 
     <ScrollView
+        android:id="@+id/scrollViewPreferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/seperatorPreferences"
         android:layout_alignParentTop="true" >
 
         <LinearLayout
+            android:id="@+id/linearLayoutPreferences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesAutoReconnect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@xml/layout_border"

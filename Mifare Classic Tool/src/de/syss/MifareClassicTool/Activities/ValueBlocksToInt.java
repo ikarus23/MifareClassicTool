@@ -64,7 +64,7 @@ public class ValueBlocksToInt extends BasicActivity {
         boolean noValueBlocks = false;
         if (getIntent().hasExtra(EXTRA_VB)) {
             mLayout = (TableLayout) findViewById(
-                    R.id.TableLayoutValueBlocksToInt);
+                    R.id.tableLayoutValueBlocksToInt);
             String extra = getIntent().getStringExtra(EXTRA_VB);
             if (!extra.equals("")) {
                 String[] valueBlocks = extra.split(

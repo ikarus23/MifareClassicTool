@@ -21,7 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutValueBlocksToInt"
+    android:id="@+id/relativeLayoutValueBlocksToInt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ValueBlocksToInt" >
@@ -57,7 +57,7 @@
         android:layout_below="@id/tableRowValueBlocksToIntHeader" >
 
         <TableLayout
-            android:id="@+id/TableLayoutValueBlocksToInt"
+            android:id="@+id/tableLayoutValueBlocksToInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 

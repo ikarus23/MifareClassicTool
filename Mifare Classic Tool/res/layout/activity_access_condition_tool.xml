@@ -21,6 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutAccessConditionTool"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccessConditionTool" >
@@ -33,7 +34,7 @@
         android:focusableInTouchMode="true" />
 
     <LinearLayout
-        android:id="@+id/LinearLayoutAccessConditionToolAC"
+        android:id="@+id/linearLayoutAccessConditionToolAC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -79,10 +80,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/LinearLayoutAccessConditionToolConvert"
+        android:id="@+id/linearLayoutAccessConditionToolConvert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/LinearLayoutAccessConditionToolAC"
+        android:layout_below="@id/linearLayoutAccessConditionToolAC"
         android:gravity="center_horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="5dp"
@@ -115,10 +116,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/LinearLayoutAccessConditionToolConvert" >
+        android:layout_below="@+id/linearLayoutAccessConditionToolConvert" >
 
         <LinearLayout
-            android:id="@+id/LinearLayoutAccessConditionToolBloks"
+            android:id="@+id/linearLayoutAccessConditionToolBloks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

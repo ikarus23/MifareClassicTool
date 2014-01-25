@@ -21,7 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutCreateKeyMap"
+    android:id="@+id/relativeLayoutCreateKeyMap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateKeyMap"
@@ -30,7 +30,7 @@
     android:rowCount="2" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutCreateKeyMap"
+        android:id="@+id/linearLayoutCreateKeyMap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -67,7 +67,7 @@
         android:id="@+id/textViewCreateKeyMapChooseKeyFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/LinearLayoutCreateKeyMap"
+        android:layout_below="@id/linearLayoutCreateKeyMap"
         android:paddingLeft="5dp"
         android:text="@string/text_choose_key_file"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -103,7 +103,7 @@
         android:layout_alignParentRight="true" >
 
         <LinearLayout
-            android:id="@+id/LinearLayoutCreateKeyMapKeyFiles"
+            android:id="@+id/linearLayoutCreateKeyMapKeyFiles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >

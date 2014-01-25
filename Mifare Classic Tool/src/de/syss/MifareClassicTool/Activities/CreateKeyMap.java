@@ -151,7 +151,7 @@ public class CreateKeyMap extends BasicActivity {
                 R.id.buttonCreateKeyMapChangeRange);
         mSectorRange = (TextView) findViewById(R.id.textViewCreateKeyMapFromTo);
         mKeyFilesGroup = (LinearLayout) findViewById(
-                R.id.LinearLayoutCreateKeyMapKeyFiles);
+                R.id.linearLayoutCreateKeyMapKeyFiles);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBarCreateKeyMap);
 
         // Init. sector range.

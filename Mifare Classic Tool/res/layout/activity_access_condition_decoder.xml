@@ -21,7 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutAccessConditionDecoder"
+    android:id="@+id/relativeLayoutAccessConditionDecoder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccessConditionDecoder" >
@@ -81,7 +81,7 @@
         android:layout_below="@+id/tableRowAccessConditionDecoderHeader" >
 
         <TableLayout
-            android:id="@+id/TableLayoutAccessConditionDecoder"
+            android:id="@+id/tableLayoutAccessConditionDecoder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp" >

@@ -21,13 +21,13 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayoutTagInfoTool"
+    android:id="@+id/relativeLayoutTagInfoTool"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TagInfoTool" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutTagInfoToolSupport"
+        android:id="@+id/linearLayoutTagInfoToolSupport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -66,15 +66,15 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/ScrollViewTagInfoTool"
+        android:id="@+id/scrollViewTagInfoTool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
-        android:layout_below="@+id/LinearLayoutTagInfoToolSupport"
+        android:layout_below="@+id/linearLayoutTagInfoToolSupport"
         android:layout_centerHorizontal="true" >
 
         <LinearLayout
-            android:id="@+id/LinearLayoutTagInfoTool"
+            android:id="@+id/linearLayoutTagInfoTool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >

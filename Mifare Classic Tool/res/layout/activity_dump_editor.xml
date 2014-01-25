@@ -21,7 +21,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RalativeLayoutDumpEditor"
+    android:id="@+id/ralativeLayoutDumpEditor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DumpEditor" >
@@ -34,7 +34,7 @@
         android:focusableInTouchMode="true" />
 
     <LinearLayout
-        android:id="@+id/LinearLayoutDumpEditorCaption"
+        android:id="@+id/linearLayoutDumpEditorCaption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -62,13 +62,13 @@
             android:id="@+id/scrollViewDumpEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/LinearLayoutDumpEditorCaption"
+            android:layout_above="@+id/linearLayoutDumpEditorCaption"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" >
 
         <LinearLayout
-            android:id="@+id/LinearLayoutDumpEditor"
+            android:id="@+id/linearLayoutDumpEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

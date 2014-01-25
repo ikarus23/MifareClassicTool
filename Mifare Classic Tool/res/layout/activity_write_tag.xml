@@ -27,7 +27,7 @@
     tools:context=".WriteTag" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutWriteTag"
+        android:id="@+id/linearLayoutWriteTag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -52,7 +52,7 @@
                 android:textColor="@color/blue" />
 
             <RelativeLayout
-                android:id="@+id/LayoutWriteTagWriteBlock"
+                android:id="@+id/linearLayoutWriteTagWriteBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
@@ -181,7 +181,7 @@
                 android:textColor="@color/blue" />
 
             <LinearLayout
-                android:id="@+id/LayoutWriteTagDump"
+                android:id="@+id/linearLayoutWriteTagDump"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -213,7 +213,7 @@
                     android:text="@string/action_show_options" />
 
                 <LinearLayout
-                    android:id="@+id/LayoutWriteTagDumpOptions"
+                    android:id="@+id/linearLayoutWriteTagDumpOptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -221,7 +221,7 @@
                     android:visibility="gone" >
 
                     <RelativeLayout
-                        android:id="@+id/LayoutWriteTagDumpStaticAC"
+                        android:id="@+id/layoutWriteTagDumpStaticAC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@xml/layout_border"
@@ -265,7 +265,7 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/LayoutWriteTagDumpWriteManuf"
+                        android:id="@+id/layoutWriteTagDumpWriteManuf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@xml/layout_border"
@@ -313,7 +313,7 @@
                 android:textColor="@color/blue" />
 
             <LinearLayout
-                android:id="@+id/LayoutWriteTagFactoryFormat"
+                android:id="@+id/linearLayoutWriteTagFactoryFormat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
