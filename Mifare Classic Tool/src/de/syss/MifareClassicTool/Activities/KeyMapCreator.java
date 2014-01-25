@@ -65,7 +65,7 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class CreateKeyMap extends BasicActivity {
+public class KeyMapCreator extends BasicActivity {
 
     // Input parameters.
     /**
@@ -118,7 +118,7 @@ public class CreateKeyMap extends BasicActivity {
     public static final int MAX_BLOCK_COUNT_PER_SECTOR = 16;
 
     private static final String LOG_TAG =
-            CreateKeyMap.class.getSimpleName();
+            KeyMapCreator.class.getSimpleName();
 
     private static final int DEFAULT_SECTOR_RANGE_FROM = 0;
     private static final int DEFAULT_SECTOR_RANGE_TO = 15;

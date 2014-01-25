@@ -139,7 +139,7 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Handle incoming results from {@link CreateKeyMap} or
+     * Handle incoming results from {@link KeyMapCreator} or
      * {@link FileChooser}.
      * @see #writeBlock()
      * @see #checkTag()
@@ -189,7 +189,7 @@ public class WriteTag extends BasicActivity {
             break;
         }
 
-        // Error handling for the return value of CreateKeyMap.
+        // Error handling for the return value of KeyMapCreator.
         switch (ckmError) {
         case 4:
             // Error. No keys found.
@@ -206,11 +206,11 @@ public class WriteTag extends BasicActivity {
 
     /**
      * Check the user input and (if correct) show the
-     * {@link CreateKeyMap} with predefined mapping range
+     * {@link KeyMapCreator} with predefined mapping range
      * (see {@link #createKeyMapForBlock(int)}).
      * @param view The View object that triggered the method
      * (in this case the write block button).
-     * @see CreateKeyMap
+     * @see KeyMapCreator
      * @see #createKeyMapForBlock(int)
      */
     public void onWriteBlock(View view) {
@@ -224,14 +224,14 @@ public class WriteTag extends BasicActivity {
         }
         final int sector = Integer.parseInt(mSectorText.getText().toString());
         final int block = Integer.parseInt(mBlockText.getText().toString());
-        if (sector > CreateKeyMap.MAX_SECTOR_COUNT-1
+        if (sector > KeyMapCreator.MAX_SECTOR_COUNT-1
                 || sector < 0) {
             // Error, sector is out of range for any Mifare tag.
             Toast.makeText(this, R.string.info_sector_out_of_range,
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (block > CreateKeyMap.MAX_BLOCK_COUNT_PER_SECTOR-1
+        if (block > KeyMapCreator.MAX_BLOCK_COUNT_PER_SECTOR-1
                 || block < 0) {
             // Error, block is out of range for any mifare tag.
             Toast.makeText(this, R.string.info_block_out_of_range,
@@ -357,21 +357,21 @@ public class WriteTag extends BasicActivity {
 
     /**
      * Helper function for {@link #onWriteBlock(View)} to show
-     * the {@link CreateKeyMap}.
+     * the {@link KeyMapCreator}.
      * @param sector The sector for the mapping range of
-     * {@link CreateKeyMap}
-     * @see CreateKeyMap
+     * {@link KeyMapCreator}
+     * @see KeyMapCreator
      * @see #onWriteBlock(View)
      */
     private void createKeyMapForBlock(int sector) {
-        Intent intent = new Intent(this, CreateKeyMap.class);
-        intent.putExtra(CreateKeyMap.EXTRA_KEYS_DIR,
+        Intent intent = new Intent(this, KeyMapCreator.class);
+        intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
                 + "/" + Common.KEYS_DIR);
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER, false);
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER_FROM, sector);
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER_TO, sector);
-        intent.putExtra(CreateKeyMap.EXTRA_BUTTON_TEXT,
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, sector);
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, sector);
+        intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_write_block));
         startActivityForResult(intent, CKM_WRTIE_BLOCK);
     }
@@ -430,7 +430,7 @@ public class WriteTag extends BasicActivity {
      * This method triggers the call chain: open {@link FileChooser}
      * (this method) -> read dump
      * ({@link #readDumpAndShowSectorChooserDialog(String)}) ->
-     * open {@link CreateKeyMap} ({@link #createKeyMapForDump()})
+     * open {@link KeyMapCreator} ({@link #createKeyMapForDump()})
      * -> run {@link #checkTag()} -> run
      * {@link #writeDump(HashMap, SparseArray)}.
      * @param view The View object that triggered the method
@@ -595,20 +595,20 @@ public class WriteTag extends BasicActivity {
 
     /**
      * Create a key map for the dump ({@link #mDumpWithPos}).
-     * @see CreateKeyMap
+     * @see KeyMapCreator
      */
     private void createKeyMapForDump() {
         // Show key map creator.
-        Intent intent = new Intent(this, CreateKeyMap.class);
-        intent.putExtra(CreateKeyMap.EXTRA_KEYS_DIR,
+        Intent intent = new Intent(this, KeyMapCreator.class);
+        intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
                 + "/" + Common.KEYS_DIR);
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER, false);
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER_FROM,
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM,
                 (int) Collections.min(mDumpWithPos.keySet()));
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER_TO,
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO,
                 (int) Collections.max(mDumpWithPos.keySet()));
-        intent.putExtra(CreateKeyMap.EXTRA_BUTTON_TEXT,
+        intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_write_dump));
         startActivityForResult(intent, CKM_WRTIE_DUMP);
     }
@@ -878,7 +878,7 @@ public class WriteTag extends BasicActivity {
      * of {@link MCReader#isWritableOnPositions(HashMap, SparseArray)}.<br />
      * Attention: This method does not any checking. The position and write
      * information must be checked by {@link #checkTag()}.
-     * @param keyMap A key map generated by {@link CreateKeyMap}.
+     * @param keyMap A key map generated by {@link KeyMapCreator}.
      */
     private void writeDump(
             final HashMap<Integer, HashMap<Integer, Integer>> writeOnPos,
@@ -977,16 +977,16 @@ public class WriteTag extends BasicActivity {
      * Open key map creator.
      * @param view The View object that triggered the method
      * (in this case the factory format button).
-     * @see CreateKeyMap
+     * @see KeyMapCreator
      */
     public void onFactoryFormat(View view) {
         // Show key map creator.
-        Intent intent = new Intent(this, CreateKeyMap.class);
-        intent.putExtra(CreateKeyMap.EXTRA_KEYS_DIR,
+        Intent intent = new Intent(this, KeyMapCreator.class);
+        intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
                 + "/" + Common.KEYS_DIR);
-        intent.putExtra(CreateKeyMap.EXTRA_SECTOR_CHOOSER, false);
-        intent.putExtra(CreateKeyMap.EXTRA_BUTTON_TEXT,
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
+        intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_factory_format));
         startActivityForResult(intent, CKM_FACTORY_FORMAT);
     }

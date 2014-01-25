@@ -60,7 +60,7 @@
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.CreateKeyMap"
+            android:name="de.syss.MifareClassicTool.Activities.KeyMapCreator"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/map_keys_to_sector"
             android:label="@string/title_activity_create_key_map" >

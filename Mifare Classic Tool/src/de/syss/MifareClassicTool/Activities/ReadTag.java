@@ -30,7 +30,7 @@ import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
 
 /**
- * Create a key map with the {@link CreateKeyMap} and then
+ * Create a key map with the {@link KeyMapCreator} and then
  * read the tag.
  * @author Gerhard Klostermeier
  */
@@ -43,7 +43,7 @@ public class ReadTag extends Activity {
 
     /**
      * Check for external storage, create {@link Common#KEYS_DIR} (if it
-     * not already exists) and show the {@link CreateKeyMap}.
+     * not already exists) and show the {@link KeyMapCreator}.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,11 @@ public class ReadTag extends Activity {
             return;
         }
 
-        Intent intent = new Intent(this, CreateKeyMap.class);
-        intent.putExtra(CreateKeyMap.EXTRA_KEYS_DIR,
+        Intent intent = new Intent(this, KeyMapCreator.class);
+        intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(
                         Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-        intent.putExtra(CreateKeyMap.EXTRA_BUTTON_TEXT,
+        intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_read));
         startActivityForResult(intent, KEY_MAP_CREATOR);
     }
