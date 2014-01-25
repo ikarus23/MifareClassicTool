@@ -277,6 +277,7 @@
         \nACs of data blocks have been updated.</string>
     <string name="info_strange_error">Error: A strange error occoured&#8230;
         and I don\'t know why :(\nPlease report this using the project page</string>
+    <string name="info_key_map_error">Error: Lost connection to the tag</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

@@ -24,6 +24,7 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -364,7 +365,7 @@ public class KeyMapCreator extends BasicActivity {
                 Toast.makeText(this, R.string.info_wait_key_map,
                         Toast.LENGTH_SHORT).show();
                 // Read as much as possible with given key file.
-                createKeyMap(reader);
+                createKeyMap(reader, this);
             }
         }
     }
@@ -378,7 +379,7 @@ public class KeyMapCreator extends BasicActivity {
      * @see #onCreateKeyMap(View)
      * @see #keyMapCreated(MCReader)
      */
-    private void createKeyMap(final MCReader reader) {
+    private void createKeyMap(final MCReader reader, final Context context) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -411,8 +412,11 @@ public class KeyMapCreator extends BasicActivity {
                                 && mProgressStatus != -1) {
                             keyMapCreated(reader);
                         } else {
+                            // Error during key map creation.
                             Common.setKeyMap(null);
                             Common.setKeyMapRange(-1, -1);
+                            Toast.makeText(context, R.string.info_key_map_error,
+                                    Toast.LENGTH_LONG).show();
                         }
                         mIsCreatingKeyMap = false;
                     }
