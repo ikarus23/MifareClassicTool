@@ -30,12 +30,14 @@
       </ul>
     </li>
     <li>
-      <a href="#edit_dump_file">5. Edit Tag Dump File</a>
+      <a href="#edit_dump_file">5. Edit/Analyse Tag Dump File</a>
       <ul>
         <li><a href="#share_dump">5.1 Share a Dump</a></li>
-        <li><a href="#display_ascii">5.1 Display Data as ASCII</a></li>
-        <li><a href="#display_ac">5.2 Display Access Conditions</a></li>
-        <li><a href="#display_vb">5.3 Display Value Blocks as Integer</a></li>
+        <li><a href="#display_ascii">5.2 Display Data as ASCII</a></li>
+        <li><a href="#display_ac">5.3 >5.3 Display Access Conditions</a></li>
+        <li><a href="#display_vb">5.4 Display Value Blocks as Integer</a></li>
+        <li><a href="#display_manuf_date">5.5 Display date of
+          manufacture</a></li>
       </ul>
     </li>
     <li><a href="#edit_key_file">6. Edit or Add Key File</a></li>
@@ -271,12 +273,12 @@
         <i>Write to Manufacturer Block:</i><br />
         The first block of the first sector of an <b>original</b>
         Mifare Classic tag is <u>read-only</u> i.e. not writable. But there are
-        <b>special</b> Mifare Classic tags that support writing to the manufacturer
-        block with a simple write command. This App is able to write to such tags
-        and can therefore create fully correct clones.
+        <b>special</b> Mifare Classic tags that support writing to the
+        manufacturer block with a simple write command. This App is able to
+        write to such tags and can therefore create fully correct clones.
         <br />However, some special tags require a special command sequence to
-        put them into the state where writing to the manufacturer block is possible.
-        These tags will not work.
+        put them into the state where writing to the manufacturer block is
+        possible. These tags will not work.
       </li>
     </ul>
   </p>
@@ -330,8 +332,8 @@
   <h3 id="display_ac">5.3 Display Access Conditions</h3>
   <p>
     From the dump editor you can display the Mifare Classic Access
-    Conditions as a table (via the menu). If you do not know what they are, you can
-    read chapter 8.6.3 and 8.7 (and subchapters) from the
+    Conditions as a table (via the menu). If you do not know what they are,
+    you can read chapter 8.6.3 and 8.7 (and subchapters) from the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
   </p>
@@ -344,6 +346,21 @@
     chapter 8.6.2.1 from the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
+  </p>
+
+  <h3 id="display_manuf_date">5.5 Display the date of manufacture</h3>
+  <p>
+    From the dump editor you can decode the date of manufacture (via the menu).
+    <br /><br />
+    The last 2 bytes of the manufacturer block (sector 0, block 0) are
+    representing the date of manufacture. They should be in binary
+    coded decimal format (BCD, only digits, no letters). The first byte
+    represents the week of manufacture and must be between 1 and 53.
+    The second byte represents the year of manufacture and must be between 0
+    and the current year (e.g. 12, meaning 2012).
+    <br /><br />
+    Some manufacturers don't stick to this. So it is possible that
+    MCT can't display the date of manufacture or display a wrong one.
   </p>
   <hr />
 
