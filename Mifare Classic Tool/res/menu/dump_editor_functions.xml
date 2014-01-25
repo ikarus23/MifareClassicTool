@@ -34,6 +34,8 @@
         android:title="@string/action_decode_ac" />
     <item android:id="@+id/menuDumpEditorValueBlocksAsInt"
         android:title="@string/action_show_value_blocks_as_int" />
+    <item android:id="@+id/menuDumpEditorDecodeDateOfManuf"
+        android:title="@string/action_decode_manuf_date" />
     <item android:id="@+id/menuDumpEditorOpenValueBLockTool"
         android:title="@string/action_show_vb_tool" />
     <item android:id="@+id/menuDumpEditorOpenAccessConditionTool"

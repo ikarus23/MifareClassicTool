@@ -19,7 +19,10 @@
 package de.syss.MifareClassicTool.Activities;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import android.app.AlertDialog;
@@ -227,6 +230,9 @@ public class DumpEditor extends BasicActivity {
             return true;
         case R.id.menuDumpEditorOpenAccessConditionTool:
             openAccessConditionTool();
+            return true;
+        case R.id.menuDumpEditorDecodeDateOfManuf:
+            decodeDateOfManuf();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -606,6 +612,66 @@ public class DumpEditor extends BasicActivity {
     private void openValueBlockTool() {
         Intent intent = new Intent(this, ValueBlockTool.class);
         startActivity(intent);
+    }
+
+    /**
+     * Decode the date of manufacture (using the last 2 bytes of the
+     * manufacturer block) and display the result as dialog.
+     * Both of this bytes must be in BCD format (only digits, no letters).
+     * The first byte (week of manufacture) must be between 1 and 52.
+     * The second byte (year of manufacture) must be between 0 and
+     * the current year.
+     */
+    private void decodeDateOfManuf() {
+        if (mLines[0].equals("+Sector: 0") && !mLines[1].contains("-")) {
+            int year;
+            int week;
+            SimpleDateFormat sdf = new SimpleDateFormat(
+                    "yy", Locale.getDefault());
+            CharSequence text;
+            try {
+                year = Integer.parseInt(mLines[1].substring(30, 32));
+                week = Integer.parseInt(mLines[1].substring(28, 30));
+                int now = Integer.parseInt(sdf.format(new Date()));
+                if (year >= 0 && year <= now && week > 0 && week < 53) {
+                    // Calculate the date of manufacture.
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.clear();
+                    calendar.set(Calendar.WEEK_OF_YEAR, week);
+                    // year + 2000: Yep, hardcoded. Hopefully MFC is dead
+                    // around year 3000. :)
+                    calendar.set(Calendar.YEAR, year + 2000);
+                    sdf.applyPattern("dd.MM.yyyy");
+                    String startDate = sdf.format(calendar.getTime());
+                    calendar.add(Calendar.DATE, 6);
+                    String endDate = sdf.format(calendar.getTime());
+
+                    text = getString(R.string.dialog_date_of_manuf,
+                            startDate, endDate);
+                } else {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                // Error. Tag has wrong data set as date of manufacture.
+                text = getText(R.string.dialog_date_of_manuf_error);
+            }
+            // Show dialog.
+            new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_date_of_manuf_title)
+                .setMessage(text)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_ok,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing.
+                    }
+                }).show();
+        } else {
+            // Error. There is no block 0.
+            Toast.makeText(this, R.string.info_block0_missing,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     /**

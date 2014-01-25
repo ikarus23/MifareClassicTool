@@ -197,13 +197,15 @@
     <string name="action_show_preferences">Preferences</string>
     <string name="action_show_about">About</string>
     <string name="action_rate_this_app">Rate this app</string>
+    <string name="action_decode_manuf_date">Decode date of manufacture</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
     <string name="info_no_external_storage">Error: External storage is not
         readable/writable</string>
     <string name="info_no_tag_found">Error: There is no Mifare Classic tag</string>
-    <string name="info_wait_key_map">Creating key map… Please wait…</string>
+    <string name="info_wait_key_map">Creating key map&#8230;
+        Please wait&#8230;</string>
     <string name="info_tag_removed_while_reading">Error: Tag removed
         during reading</string>
     <string name="info_no_vb_in_dump">There are no value blocks in this dump</string>
@@ -278,6 +280,8 @@
     <string name="info_strange_error">Error: A strange error occoured&#8230;
         and I don\'t know why :(\nPlease report this using the project page</string>
     <string name="info_key_map_error">Error: Lost connection to the tag</string>
+    <string name="info_block0_missing">Error: There is no manufacturer block
+        (block 0)</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -381,6 +385,18 @@
         process. However, it might also cause MCT to behave a bit weird.</b>
         \n\nKnown issues where this setting may help:\n
         &#8226; Special tags (e.g. smartMX)</string>
+    <string name="dialog_date_of_manuf_title">Date of manufacture</string>
+    <string name="dialog_date_of_manuf">The tag was manufacured between
+        %1$s and %2$s.
+        \n\n\n(This information might be wrong. See \'Help and Info\' for
+        more information.)</string>
+    <string name="dialog_date_of_manuf_error"><b>The date of manufacture
+        contains invalid data.</b>
+        \n\nThe last 2 bytes of the manufacturer block should be in binary
+        coded decimal format (only digits, no letters). The first byte
+        (week of manufacture) must be between 1 and 52. The second byte
+        (year of manufacture) must be between 0 and the current year.
+        \n\nMaybe the tag is not an original Mifare Classic tag.</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
