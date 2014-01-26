@@ -33,6 +33,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Html;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -628,7 +629,7 @@ public class DumpEditor extends BasicActivity {
             int week;
             SimpleDateFormat sdf = new SimpleDateFormat(
                     "yy", Locale.getDefault());
-            CharSequence text;
+            CharSequence styledText;
             try {
                 year = Integer.parseInt(mLines[1].substring(30, 32));
                 week = Integer.parseInt(mLines[1].substring(28, 30));
@@ -646,19 +647,20 @@ public class DumpEditor extends BasicActivity {
                     calendar.add(Calendar.DATE, 6);
                     String endDate = sdf.format(calendar.getTime());
 
-                    text = getString(R.string.dialog_date_of_manuf,
-                            startDate, endDate);
+                    styledText = Html.fromHtml(getString(
+                            R.string.dialog_date_of_manuf,
+                            startDate, endDate));
                 } else {
                     throw new NumberFormatException();
                 }
             } catch (NumberFormatException ex) {
                 // Error. Tag has wrong data set as date of manufacture.
-                text = getText(R.string.dialog_date_of_manuf_error);
+                styledText = getText(R.string.dialog_date_of_manuf_error);
             }
             // Show dialog.
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_date_of_manuf_title)
-                .setMessage(text)
+                .setMessage(styledText)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {

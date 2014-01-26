@@ -40,6 +40,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -448,10 +449,12 @@ public class MainMenu extends Activity {
      * Show the about dialog.
      */
     public void onShowAboutDialog() {
+        CharSequence styledText = Html.fromHtml(
+                getString(R.string.dialog_about_mct,
+                Common.getVersionCode()));
         AlertDialog ad = new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_about_mct_title)
-            .setMessage(getString(R.string.dialog_about_mct,
-                    Common.getVersionCode()))
+            .setMessage(styledText)
             .setIcon(R.drawable.ic_launcher)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
