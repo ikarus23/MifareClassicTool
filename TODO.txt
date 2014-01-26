@@ -6,7 +6,9 @@ TODO (Maybe outdated):
 
 
 
-(++)  Create key map for a list sectors (not for a range of sectors).
+(++) Save last selected key files (optional, as preference).
+
+(++) Create key map for a list sectors (not for a range of sectors).
 
 (+)  Quick read (and dump) tags.
      Choose key files -> Map keys to sectors of the first tag
@@ -19,6 +21,8 @@ TODO (Maybe outdated):
      for better reading.
 
 (+)  Test Application with Mifare Classic 2k Tags.
+
+()   A feature to compare two dumps.
 
 ()   Send raw ISO 14443A commands.
      (This can not be done easily! A custom patched libnfc-nxp is needed.)

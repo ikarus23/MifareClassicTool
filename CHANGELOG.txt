@@ -1,5 +1,15 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.7.2:
+ * New Feature: Display the date of manufacture.
+ * Added preference system.
+ * Added a preference for auto reconnection if tag gets lost during the
+   key mapping process. (Maybe useful if you encounter issues during
+   this phase. Thanks to xtay004.)
+ * Added a "about" dialog (including useful links).
+ * Show error message if tag gets lost during key mapping.
+ * Some minor bug fixes.
+
 Version 1.7.1:
  * Tried to fix the strange crash which occurs sometimes when starting
    the key mapper. I don't know why :(

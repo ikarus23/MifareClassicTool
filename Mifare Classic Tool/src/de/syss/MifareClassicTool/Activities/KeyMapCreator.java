@@ -271,12 +271,12 @@ public class KeyMapCreator extends BasicActivity {
     }
 
     /**
-     * Inform the worker thread from {@link #createKeyMap(MCReader)}
+     * Inform the worker thread from {@link #createKeyMap(MCReader, Context)}
      * to stop creating the key map. If the thread is already
      * informed or does not exists this button will finish the activity.
      * @param view The View object that triggered the method
      * (in this case the cancel button).
-     * @see #createKeyMap(MCReader)
+     * @see #createKeyMap(MCReader, Context)
      */
     public void onCancelCreateKeyMap(View view) {
         if (mIsCreatingKeyMap == true) {
@@ -290,10 +290,11 @@ public class KeyMapCreator extends BasicActivity {
      * Create a key map and save it to
      * {@link Common#setKeyMap(android.util.SparseArray)}.
      * For doing so it uses other methods (
-     * {@link #createKeyMap(MCReader)}, {@link #keyMapCreated(MCReader)}).
+     * {@link #createKeyMap(MCReader, Context)},
+     * {@link #keyMapCreated(MCReader)}).
      * @param view The View object that triggered the method
      * (in this case the map keys to sectors button).
-     * @see #createKeyMap(MCReader)
+     * @see #createKeyMap(MCReader, Context)
      * @see #keyMapCreated(MCReader)
      */
     public void onCreateKeyMap(View view) {
@@ -426,13 +427,13 @@ public class KeyMapCreator extends BasicActivity {
     }
 
     /**
-     * Triggered by {@link #createKeyMap(MCReader)}, this method
+     * Triggered by {@link #createKeyMap(MCReader, Context)}, this method
      * sets the result code to {@link Activity#RESULT_OK},
      * saves the created key map to
      * {@link Common#setKeyMap(android.util.SparseArray)}
      * and finishes this Activity.
      * @param reader A {@link MCReader}.
-     * @see #createKeyMap(MCReader)
+     * @see #createKeyMap(MCReader, Context)
      * @see #onCreateKeyMap(View)
      */
     private void keyMapCreated(MCReader reader) {
