@@ -41,7 +41,7 @@
             android:orientation="vertical" >
 
            <RelativeLayout
-                android:id="@+id/relativeLayoutPreferencesSaveLastUsedKeyFile"
+                android:id="@+id/relativeLayoutPreferencesSaveLastUsedKeyFiles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@xml/layout_border"
@@ -49,12 +49,12 @@
                 android:layout_marginBottom="5dp" >
 
                 <CheckBox
-                    android:id="@+id/checkBoxPreferencesSaveLastUsedKeyFile"
+                    android:id="@+id/checkBoxPreferencesSaveLastUsedKeyFiles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/action_save_last_key_file" />
+                    android:text="@string/action_save_last_key_files" />
 
             </RelativeLayout>
 

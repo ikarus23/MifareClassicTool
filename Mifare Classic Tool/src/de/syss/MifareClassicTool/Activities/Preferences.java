@@ -39,7 +39,8 @@ public class Preferences extends BasicActivity {
      * SharedPreferences.getBoolean(Pref.AutoReconnect.toString(), false)).
      */
     public enum Preference {
-        AutoReconnect("auto_reconnect");
+        AutoReconnect("auto_reconnect"),
+        SaveLastUsedKeyFiles("save_last_used_key_files");
         // Add more preferences here (comma separated).
 
         private final String text;
@@ -55,6 +56,7 @@ public class Preferences extends BasicActivity {
     }
 
     CheckBox mPrefAutoReconnect;
+    CheckBox mPrefSaveLastUsedKeyFiles;
 
     /**
      * Initialize the preferences with the last stored ones.
@@ -67,11 +69,15 @@ public class Preferences extends BasicActivity {
         // Get preferences (init. the member variables).
         mPrefAutoReconnect = (CheckBox) findViewById(
                 R.id.checkBoxPreferencesAutoReconnect);
+        mPrefSaveLastUsedKeyFiles = (CheckBox) findViewById(
+                R.id.checkBoxPreferencesSaveLastUsedKeyFiles);
 
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
         mPrefAutoReconnect.setChecked(pref.getBoolean(
                 Preference.AutoReconnect.toString(), false));
+        mPrefSaveLastUsedKeyFiles.setChecked(pref.getBoolean(
+                Preference.SaveLastUsedKeyFiles.toString(), true));
     }
 
     /**
@@ -104,6 +110,8 @@ public class Preferences extends BasicActivity {
         SharedPreferences.Editor edit = Common.getPreferences().edit();
         edit.putBoolean(Preference.AutoReconnect.toString(),
                 mPrefAutoReconnect.isChecked());
+        edit.putBoolean(Preference.SaveLastUsedKeyFiles.toString(),
+                mPrefSaveLastUsedKeyFiles.isChecked());
         edit.commit();
 
         // Exit the preferences view.
