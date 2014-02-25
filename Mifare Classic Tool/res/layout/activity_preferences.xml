@@ -40,6 +40,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+           <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesSaveLastUsedKeyFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesSaveLastUsedKeyFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/action_save_last_key_file" />
+
+            </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/relativeLayoutPreferencesAutoReconnect"
                 android:layout_width="match_parent"

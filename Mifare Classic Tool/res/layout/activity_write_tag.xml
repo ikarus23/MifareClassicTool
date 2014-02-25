@@ -225,7 +225,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@xml/layout_border"
-                        android:padding="2dp" >
+                        android:padding="2dp"
+                        android:layout_marginBottom="5dp" >
 
                         <CheckBox
                             android:id="@+id/checkBoxWriteTagDumpStaticAC"
