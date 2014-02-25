@@ -6,8 +6,6 @@ TODO (Maybe outdated):
 
 
 
-(++) Save last selected key files (optional, as preference).
-
 (++) Create key map for a list sectors (not for a range of sectors).
 
 (+)  Quick read (and dump) tags.
