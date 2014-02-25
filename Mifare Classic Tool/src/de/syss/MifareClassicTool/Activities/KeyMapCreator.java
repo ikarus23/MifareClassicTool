@@ -27,6 +27,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
@@ -46,6 +48,7 @@ import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
+import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 
 /**
  * Configure key map process and create key map.
@@ -198,7 +201,8 @@ public class KeyMapCreator extends BasicActivity {
     }
 
     /**
-     * List files from the {@link #EXTRA_KEYS_DIR}.
+     * List files from the {@link #EXTRA_KEYS_DIR} and select the last used
+     * ones if {@link Preference#SaveLastUsedKeyFiles} is enabled.
      */
     @Override
     public void onStart() {
@@ -230,13 +234,33 @@ public class KeyMapCreator extends BasicActivity {
             finish();
         }
 
-        // List key files.
+        // List key files and select last used (if corresponding
+        // setting is active).
+        boolean selectLastUsedKeyFiles = Common.getPreferences().getBoolean(
+                Preference.SaveLastUsedKeyFiles.toString(), true);
+        ArrayList<String> selectedFiles = null;
+        if (selectLastUsedKeyFiles) {
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            // All previously selected key files are stored in one string
+            // separated by "/".
+            String selectedFilesChain = sharedPref.getString(
+                    "last_used_key_files", null);
+            if (selectedFilesChain != null) {
+                selectedFiles = new ArrayList<String>(
+                        Arrays.asList(selectedFilesChain.split("/")));
+            }
+        }
         File[] keyFiles = mKeyDirPath.listFiles();
         Arrays.sort(keyFiles);
         mKeyFilesGroup.removeAllViews();
         for(File f : keyFiles) {
             CheckBox c = new CheckBox(this);
             c.setText(f.getName());
+            if (selectLastUsedKeyFiles && selectedFiles != null
+                    && selectedFiles.contains(f.getName())) {
+                // Select file.
+                c.setChecked(true);
+            }
             mKeyFilesGroup.addView(c);
         }
     }
@@ -292,13 +316,18 @@ public class KeyMapCreator extends BasicActivity {
      * For doing so it uses other methods (
      * {@link #createKeyMap(MCReader, Context)},
      * {@link #keyMapCreated(MCReader)}).
+     * If {@link Preference#SaveLastUsedKeyFiles} is active, this will also
+     * save the selected key files.
      * @param view The View object that triggered the method
      * (in this case the map keys to sectors button).
      * @see #createKeyMap(MCReader, Context)
      * @see #keyMapCreated(MCReader)
      */
     public void onCreateKeyMap(View view) {
-        // Check for checked chek boxes.
+        boolean saveLastUsedKeyFiles = Common.getPreferences().getBoolean(
+                Preference.SaveLastUsedKeyFiles.toString(), true);
+        String lastSelectedKeyFiles = "";
+        // Check for checked check boxes.
         ArrayList<String> fileNames = new ArrayList<String>();
         for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
             CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt(i);
@@ -312,7 +341,11 @@ public class KeyMapCreator extends BasicActivity {
             for (String fileName : fileNames) {
                 File keyFile = new File(mKeyDirPath, fileName);
                 if (keyFile.exists()) {
+                    // Add key file.
                     keyFiles.add(keyFile);
+                    if (saveLastUsedKeyFiles) {
+                        lastSelectedKeyFiles += fileName + "/";
+                    }
                 } else {
                     Log.d(LOG_TAG, "Key file "
                             + keyFile.getAbsolutePath()
@@ -320,6 +353,19 @@ public class KeyMapCreator extends BasicActivity {
                 }
             }
             if (keyFiles.size() > 0) {
+                // Save last selected key files as "/"-separated string
+                // (if corresponding setting is active).
+                if (saveLastUsedKeyFiles) {
+                    SharedPreferences sharedPref = getPreferences(
+                            Context.MODE_PRIVATE);
+                    Editor e = sharedPref.edit();
+                    e.putString("last_used_key_files",
+                            lastSelectedKeyFiles.substring(
+                                    0, lastSelectedKeyFiles.length() - 1));
+                    e.commit();
+                }
+
+                // Create reader.
                 MCReader reader = Common.checkForTagAndCreateReader(this);
                 if (reader == null) {
                     return;
