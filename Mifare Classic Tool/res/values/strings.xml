@@ -303,7 +303,14 @@
         &#8226; Google Nexus 5\n
         &#8226; Google Nexus 7 (2013)\n
         &#8226; Google Nexus 10\n
-        &#8226; Samsung Galaxy S4</string>
+        &#8226; Samsung Galaxy S4\n
+        &#8226; Samsung Galaxy Ace 3\n
+        &#8226; Samsung Galaxy Express 2\n
+        &#8226; Samsung Galaxy Mega\n
+        &#8226; Samsung Galaxy Note 3\n
+        &#8226; LG G2\n
+        &#8226; LG Optimus L7 II\n
+        &#8226; Motorola Moto X</string>
     <string name="dialog_no_mfc_support_tag_title">Not a Mifare Classic tag</string>
     <string name="dialog_no_mfc_support_tag">This tag is not compatible with
         the Mifare Classic technology! Notice that this App is designed for

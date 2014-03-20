@@ -77,6 +77,13 @@ Some important things are:
   * Google Nexus 7 (2013)
   * Google Nexus 10
   * Samsung Galaxy S4
+  * Samsung Galaxy Ace 3
+  * Samsung Galaxy Express 2
+  * Samsung Galaxy Mega
+  * Samsung Galaxy Note 3
+  * LG G2
+  * LG Optimus L7 II
+  * Motorola Moto X
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
