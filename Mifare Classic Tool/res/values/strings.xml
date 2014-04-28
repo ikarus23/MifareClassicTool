@@ -183,7 +183,7 @@
         sectors:</string>
     <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
         lost during the key mapping process</string>
-    <string name="action_save_last_key_files">Remenber the last selected key
+    <string name="action_save_last_key_files">Remember the last selected key
         files (key mapping dialog)</string>
     <string name="action_save">Save</string>
     <string name="action_share">Share</string>
@@ -394,9 +394,9 @@
     <string name="dialog_auto_reconnect">If the tag gets lost during
         the key mapping process (due to antenna issues, timeout, etc.),
         the app will try to reconnect to it (with a delay of 500ms)
-        until one attempt will succeed.
+        until one attempt succeeds.
         \n\n<b>This may help if you encounter issues during the key mapping
-        process. However, it might also cause MCT to behave a bit weird.</b>
+        process. However, it might also cause MCT to behave strangely.</b>
         \n\nKnown issues where this setting may help:\n
         &#8226; Special tags (e.g. smartMX)</string>
     <string name="dialog_date_of_manuf_title">Date of manufacture</string>
