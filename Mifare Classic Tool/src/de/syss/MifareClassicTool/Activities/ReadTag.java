@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -102,6 +103,7 @@ public class ReadTag extends Activity {
      * calls {@link #createTagDump(SparseArray)}.
      */
     private void readTag() {
+        final Context context = this;
         final MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             return;
@@ -110,10 +112,25 @@ public class ReadTag extends Activity {
             @Override
             public void run() {
                 // Get key map from glob. variable.
-                mRawDump = reader.readAsMuchAsPossible(
-                        Common.getKeyMap());
+                try {
+                    mRawDump = reader.readAsMuchAsPossible(
+                            Common.getKeyMap());
+                } catch (StringIndexOutOfBoundsException e) {
 
-                reader.close();
+                    // Due to strange crash reports on Google Play...
+                    // This exception came from readSector (MCReader).
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, R.string.info_strange_error,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
+
+                } finally {
+                    reader.close();
+                }
 
                 mHandler.post(new Runnable() {
                     @Override

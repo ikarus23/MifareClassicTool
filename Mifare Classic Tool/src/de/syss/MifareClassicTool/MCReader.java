@@ -102,7 +102,8 @@ public class MCReader {
      * @see #buildNextKeyMapPart()
      */
     public SparseArray<String[]> readAsMuchAsPossible(
-            SparseArray<byte[][]> keyMap) {
+            SparseArray<byte[][]> keyMap)
+                    throws StringIndexOutOfBoundsException {
         SparseArray<String[]> ret = null;
         if (keyMap != null && keyMap.size() > 0) {
             ret = new SparseArray<String[]>(keyMap.size());
@@ -175,8 +176,9 @@ public class MCReader {
      * @throws TagLostException When tag is lost.
      * @see #mergeSectorData(String[], String[])
      */
-    public String[] readSector(int sectorIndex, byte[] key, boolean useAsKeyB)
-            throws TagLostException {
+    public String[] readSector(int sectorIndex, byte[] key,
+            boolean useAsKeyB) throws TagLostException,
+                    StringIndexOutOfBoundsException {
         boolean auth = authenticate(sectorIndex, key, useAsKeyB);
         String[] ret = null;
         // Read sector.
@@ -211,6 +213,17 @@ public class MCReader {
             }
             ret = blocks.toArray(new String[blocks.size()]);
             int last = ret.length -1;
+
+            // Due to strange crash reports on Google Play...
+            // I don't know why ret[last].length() != 32... :(
+            // This exception will pass through readAsMuchAsPossible()
+            // and be cached by the thread of readTag() (ReadTag).
+            if (ret[last].length() != 32) {
+                throw new StringIndexOutOfBoundsException(
+                        "The last block was not 32 chars long...");
+            }
+
+
             // Merge key in last block (sector trailer).
             if (!useAsKeyB) {
                 if (isKeyBReadable(Common.hexStringToByteArray(
