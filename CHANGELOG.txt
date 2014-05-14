@@ -1,5 +1,11 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.7.4:
+ * Try to prevent the strange crash issue for S5 devices.
+   (I'm not sure what is causing this and I'm not a 100% sure if
+   this update will prevent MCT from crashing).
+ * Some minor bug fixes.
+
 Version 1.7.3:
  * Last used key files will be remembered.
    (This behaviour can be switched off in the preference dialog.)
