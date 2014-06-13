@@ -193,8 +193,14 @@ public class MCReader {
             }
             for (int i = firstBlock; i < lastBlock; i++) {
                 try {
-                    blocks.add(Common.byte2HexString(
-                            mMFC.readBlock(i)));
+                    byte blockBytes[] = mMFC.readBlock(i);
+                    // mMFC.readBlock(i) must return 16 bytes or throw an error.
+                    // On Samsung Galaxy S5 however, it returns < 16 bytes
+                    // if key A is used and key A is readable.
+                    if (blockBytes.length != 16) {
+                        throw new IOException();
+                    }
+                    blocks.add(Common.byte2HexString(blockBytes));
                 } catch (TagLostException e) {
                     throw e;
                 } catch (IOException e) {
