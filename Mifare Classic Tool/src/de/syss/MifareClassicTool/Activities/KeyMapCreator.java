@@ -64,8 +64,7 @@ import de.syss.MifareClassicTool.Activities.Preferences.Preference;
  * ({@link #EXTRA_KEYS_DIR})</li>
  * <li>3 - External Storage is not read/writable. This error is
  * displayed to the user via Toast.</li>
- * <li>4 - No key was found. {@link Common#getKeyMap()} will return "null".</li>
- * <li>5 - Directory from {@link #EXTRA_KEYS_DIR} is null.</li>
+ * <li>4 - Directory from {@link #EXTRA_KEYS_DIR} is null.</li>
  * </ul>
  * @author Gerhard Klostermeier
  */
@@ -217,7 +216,7 @@ public class KeyMapCreator extends BasicActivity {
             String path = getIntent().getStringExtra(EXTRA_KEYS_DIR);
             // Is path null?
             if (path == null) {
-                setResult(5);
+                setResult(4);
                 finish();
             }
             mKeyDirPath = new File(path);
@@ -486,15 +485,18 @@ public class KeyMapCreator extends BasicActivity {
         // LOW: Return key map in intent.
         if (reader.getKeyMap().size() == 0) {
             Common.setKeyMap(null);
-            setResult(4);
+            // Error. No valid key found.
+            Toast.makeText(this, R.string.info_no_key_found,
+                    Toast.LENGTH_LONG).show();
         } else {
             Common.setKeyMap(reader.getKeyMap());
 //            Intent intent = new Intent();
 //            intent.putExtra(EXTRA_KEY_MAP, mMCReader);
 //            setResult(Activity.RESULT_OK, intent);
             setResult(Activity.RESULT_OK);
+            finish();
         }
-        finish();
+
     }
 
     /**

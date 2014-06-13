@@ -190,13 +190,9 @@ public class WriteTag extends BasicActivity {
         }
 
         // Error handling for the return value of KeyMapCreator.
+        // So far, only error nr. 4 needs to be handled.
         switch (ckmError) {
         case 4:
-            // Error. No keys found.
-            Toast.makeText(this, R.string.info_no_key_found,
-                    Toast.LENGTH_LONG).show();
-            break;
-        case 5:
             // Error. Path from the calling intend was null.
             // (This is really strange and should not occur.)
             Toast.makeText(this, R.string.info_strange_error,

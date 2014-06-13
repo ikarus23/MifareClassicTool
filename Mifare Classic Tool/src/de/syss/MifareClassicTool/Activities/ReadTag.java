@@ -43,14 +43,12 @@ public class ReadTag extends Activity {
     private SparseArray<String[]> mRawDump;
 
     /**
-     * Check for external storage, create {@link Common#KEYS_DIR} (if it
-     * not already exists) and show the {@link KeyMapCreator}.
+     * Check for external storage and show the {@link KeyMapCreator}.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_tag);
-
 
         if (!Common.isExternalStorageWritableErrorToast(this)) {
             finish();
@@ -80,9 +78,6 @@ public class ReadTag extends Activity {
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
                 if (resultCode == 4) {
-                    Toast.makeText(this, R.string.info_no_key_found,
-                            Toast.LENGTH_LONG).show();
-                } else if (resultCode == 5) {
                     // Error. Path from the calling intend was null.
                     // (This is really strange and should not occur.)
                     Toast.makeText(this, R.string.info_strange_error,
