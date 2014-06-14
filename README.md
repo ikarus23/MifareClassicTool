@@ -68,6 +68,15 @@ Some important things are:
 * There will be **no &quot;brute-force&quot; attack**
   capability in this application. It is way too slow due
   to the protocol.
+* The first block of the first sector of an **original**
+  Mifare Classic tag is **read-only** i.e. not writable. But there
+  are **special** Mifare Classic tags that support writing to the
+  manufacturer block with a simple write command. This App is able to
+  write to such tags and can therefore create fully correct clones.
+  However, some special tags require a **special command sequence** to
+  put them into the state where writing to the manufacturer block is
+  possible. These tags will not work.  
+  Remember this when you are shopping for special tags!
 * This app will **not** work on the following devices because
   their hardware (NFC-controller) does not support Mifare Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
