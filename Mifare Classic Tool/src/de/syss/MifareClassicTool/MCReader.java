@@ -102,8 +102,7 @@ public class MCReader {
      * @see #buildNextKeyMapPart()
      */
     public SparseArray<String[]> readAsMuchAsPossible(
-            SparseArray<byte[][]> keyMap)
-                    throws StringIndexOutOfBoundsException {
+            SparseArray<byte[][]> keyMap) {
         SparseArray<String[]> ret = null;
         if (keyMap != null && keyMap.size() > 0) {
             ret = new SparseArray<String[]>(keyMap.size());
@@ -177,8 +176,7 @@ public class MCReader {
      * @see #mergeSectorData(String[], String[])
      */
     public String[] readSector(int sectorIndex, byte[] key,
-            boolean useAsKeyB) throws TagLostException,
-                    StringIndexOutOfBoundsException {
+            boolean useAsKeyB) throws TagLostException {
         boolean auth = authenticate(sectorIndex, key, useAsKeyB);
         String[] ret = null;
         // Read sector.
@@ -193,8 +191,15 @@ public class MCReader {
             }
             for (int i = firstBlock; i < lastBlock; i++) {
                 try {
-                    blocks.add(Common.byte2HexString(
-                            mMFC.readBlock(i)));
+                    byte blockBytes[] = mMFC.readBlock(i);
+                    // mMFC.readBlock(i) must return 16 bytes or throw an error.
+                    // At least this is what the documentation says.
+                    // On Samsungs Galaxy S5 however, it sometimes
+                    // returns < 16 bytes for unknown reasons.
+                    if (blockBytes.length != 16) {
+                        throw new IOException();
+                    }
+                    blocks.add(Common.byte2HexString(blockBytes));
                 } catch (TagLostException e) {
                     throw e;
                 } catch (IOException e) {
@@ -213,16 +218,6 @@ public class MCReader {
             }
             ret = blocks.toArray(new String[blocks.size()]);
             int last = ret.length -1;
-
-            // Due to strange crash reports on Google Play...
-            // I don't know why ret[last].length() != 32... :(
-            // This exception will pass through readAsMuchAsPossible()
-            // and be cached by the thread of readTag() (ReadTag).
-            if (ret[last].length() != 32) {
-                throw new StringIndexOutOfBoundsException(
-                        "The last block was not 32 chars long...");
-            }
-
 
             // Merge key in last block (sector trailer).
             if (!useAsKeyB) {
