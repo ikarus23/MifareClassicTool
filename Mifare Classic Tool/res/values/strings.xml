@@ -111,8 +111,8 @@
     <string name="text_sak">SAK</string>
     <string name="text_ats">ATS</string>
     <string name="text_tag_type_and_manuf">Tag Type and Manufacturer</string>
-    <string name="text_tag_type_guess">\'Tag Type and Manufacturer\' might be
-        wrong.\nSee \'Help and Info\' for more information.</string>
+    <string name="text_tag_type_guess">\"Tag Type and Manufacturer\" might be
+        wrong.\nSee \"Help and Info\" for more information.</string>
     <string name="text_mem_size">Memory Size</string>
     <string name="text_block_size">Block Size</string>
     <string name="text_sector_count">Number of Sectors</string>
@@ -351,10 +351,12 @@
     <string name="dialog_share_title">Send Dump File to…</string>
     <string name="dialog_block0_writing_title">Write Manufacturer Block</string>
     <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
-        is not supported on original Mifare Classic tags.</b>
+        is not possible on original Mifare Classic tags.</b>
         \n\nPlease make sure you are using a special tag that
         supports writing to the manufacturer block
-        (with a normal Mifare Classic write command).</string>
+        (with a normal Mifare Classic write command).
+        \n\n<b>Check out the \"Write Tag\" section from
+        \"Help and Info\" for more information.</b></string>
     <string name="dialog_static_ac_title">Use static Access Conditions</string>
     <string name="dialog_static_ac"><b>Replace all Access Conditions from the
         dump with the chosen ones.</b>
@@ -401,7 +403,7 @@
     <string name="dialog_date_of_manuf_title">Date of manufacture</string>
     <string name="dialog_date_of_manuf">The tag was manufacured between
         &lt;b>%1$s&lt;/b> and &lt;b>%2$s&lt;/b>.&lt;br />&lt;br />
-        (This information might be wrong. See \'Help and Info\' for
+        (This information might be wrong. See \"Help and Info\" for
         more information.)</string>
     <string name="dialog_date_of_manuf_error"><b>The date of manufacture
         contains invalid data.</b>
