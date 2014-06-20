@@ -274,11 +274,10 @@ public class DumpEditor extends BasicActivity {
     /**
      * Check if it is a valid dump ({@link #isValidDump()}),
      * ask user for a save name and then call
-     * {@link Common#saveFile(File, String[])}
-     * with {@link #mLines}.
+     * {@link #checkFileExistenceAndSave(File)}.
      * @see #isValidDump()
      * @see #isValidDumpErrorToast()
-     * @see Common#saveFile(File, String[])
+     * @see #checkFileExistenceAndSave(File)
      */
     private void saveDump() {
         if (isValidDumpErrorToast()) {
@@ -309,16 +308,7 @@ public class DumpEditor extends BasicActivity {
                                 && !input.getText().toString().equals("")) {
                             File file = new File(path.getPath(),
                                     input.getText().toString());
-                            if (Common.saveFile(file, mLines)) {
-                                Toast.makeText(cont,
-                                        R.string.info_save_successful,
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(cont,
-                                        R.string.info_save_error,
-                                        Toast.LENGTH_LONG).show();
-                            }
-                            onUpdateColors(null);
+                            checkFileExistenceAndSave(file);
                         } else {
                             // Empty name is not allowed.
                             Toast.makeText(cont, R.string.info_empty_file_name,
@@ -333,6 +323,66 @@ public class DumpEditor extends BasicActivity {
                         // Do nothing.
                     }
                 }).show();
+            onUpdateColors(null);
+        }
+    }
+
+    /**
+     * Check if the file already exists. If so, present a dialog to the user
+     * with the options: "Replace", "Append" and "Cancel".
+     * @param file File that will be written.
+     */
+    private void checkFileExistenceAndSave(final File file) {
+        final Context context = this;
+        if (file.exists()) {
+            // File already exists. Replace? Append? Cancel?
+            new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_save_conflict_title)
+            .setMessage(R.string.dialog_save_conflict)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(R.string.action_replace,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Replace.
+                    if (Common.saveFile(file, mLines, false)) {
+                        Toast.makeText(context, R.string.info_save_successful,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, R.string.info_save_error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+            .setNeutralButton(R.string.action_append,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Append.
+                    if (Common.saveFile(file, mLines, true)) {
+                        Toast.makeText(context, R.string.info_save_successful,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, R.string.info_save_error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+            .setNegativeButton(R.string.action_cancel,
+                     new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    // Cancel. Do  nothing.
+                }
+            }).show();
+        } else {
+            if (Common.saveFile(file, mLines, false)) {
+                Toast.makeText(context, R.string.info_save_successful,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, R.string.info_save_error,
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -708,7 +758,7 @@ public class DumpEditor extends BasicActivity {
         // Save file to tmp directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
-        Common.saveFile(file, mLines);
+        Common.saveFile(file, mLines, false);
 
         // Share file.
         Intent sendIntent = new Intent(Intent.ACTION_SEND);

@@ -200,6 +200,8 @@
     <string name="action_show_about">About</string>
     <string name="action_rate_this_app">Rate this app</string>
     <string name="action_decode_manuf_date">Decode date of manufacture</string>
+    <string name="action_replace">Replace</string>
+    <string name="action_append">Append</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -413,6 +415,9 @@
         The second byte (year of manufacture) must be between 0 and the
         current year (e.g. 12, meaning 2012).
         \n\nMaybe the tag is not an original Mifare Classic tag.</string>
+    <string name="dialog_save_conflict_title">File already exists</string>
+    <string name="dialog_save_conflict">This file already exists.
+        What do you want to do?</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

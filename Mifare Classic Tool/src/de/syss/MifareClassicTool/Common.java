@@ -252,23 +252,34 @@ public class Common extends Application {
 
     /**
      * Write an array of strings (each field is one line) to a given file.
-     * If the file already exists, it will be overwritten.
      * @param file The file to write to.
      * @param lines The lines to save.
+     * @param append Append to file (instead of replacing its content).
      * @return True if file writing was successful. False otherwise.
      */
-    public static boolean saveFile(File file, String[] lines) {
+    public static boolean saveFile(File file, String[] lines, boolean append) {
         boolean noError = true;
-        if (file != null) {
+        if (file != null && lines != null) {
+            if (append) {
+                // Append to a existing file.
+                String[] newLines = new String[lines.length + 4];
+                System.arraycopy(lines, 0, newLines, 4, lines.length);
+                newLines[0] = "";
+                newLines[1] = "";
+                newLines[2] = "# Append #######################";
+                newLines[3] = "";
+                lines = newLines;
+            }
+
             BufferedWriter bw = null;
             try {
-                bw = new BufferedWriter(new FileWriter(file));
+                bw = new BufferedWriter(new FileWriter(file, append));
                 int i;
-                for(i = 0; i < lines.length-1; i++){
+                for(i = 0; i < lines.length-1; i++) {
                     bw.write(lines[i]);
                     bw.newLine();
-               }
-               bw.write(lines[i]);
+                }
+                bw.write(lines[i]);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while writing to '"
                         + file.getName() + "' file.", e);
