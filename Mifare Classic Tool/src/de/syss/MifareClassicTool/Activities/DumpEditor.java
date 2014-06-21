@@ -386,12 +386,13 @@ public class DumpEditor extends BasicActivity {
         }
     }
 
+    // TODO: Rename, update due too Common.isValidDump, update doc.
     /**
-     * Check all blocks if they contain valid data. If all blocks are O.K.
+     * Check if all sectors contain valid data. If all blocks are O.K.
      * {@link #mLines} will be updated.
      * @return <ul>
      * <li>0 - All blocks are O.K.</li>
-     * <li>1 - At least one sector has not 4 blocks (lines).</li>
+     * <li>1 - At least one sector has not 4 or 16 blocks (lines).</li>
      * <li>2 - At least one block has invalid characters (not hex or "-" as
      * marker for no key/no data).</li>
      * <li>3 - At least one block has not 16 byte (32 chars).</li>
@@ -400,7 +401,7 @@ public class DumpEditor extends BasicActivity {
      */
     private int isValidDump() {
         ArrayList<String> checkedLines = new ArrayList<String>();
-        for(int i = 0; i < mLayout.getChildCount(); i++){
+        for(int i = 0; i < mLayout.getChildCount(); i++) {
             View child = mLayout.getChildAt(i);
             if (child instanceof EditText) {
                 String[] lines = ((EditText)child).getText().toString()
@@ -439,6 +440,7 @@ public class DumpEditor extends BasicActivity {
         return 0;
     }
 
+    // TODO: Move to Common and add the remaining error codes..
     /**
      * Check dump with {@link #isValidDump()} and show
      * a Toast message with error informations (if an error occurred).
@@ -459,6 +461,7 @@ public class DumpEditor extends BasicActivity {
         return err == 0;
     }
 
+    // TODO: Update due to Commons isValidDump, update doc.
     /**
      * Initialize the editor with the given lines. If the lines do not contain
      * a valid dump, an error Toast will be shown and the Activity exits.
@@ -469,7 +472,10 @@ public class DumpEditor extends BasicActivity {
      */
     private void initEditor(String[] lines) {
         boolean err = false;
-        if (lines != null && lines[0].startsWith("+")) {
+        if (Common.isValidDump(lines) != 0) {
+            err = true;
+        }
+        if (err == false) {
             // Parse dump and show it.
             mLayout.removeAllViews();
             boolean isFirstBlock = false;
@@ -558,7 +564,6 @@ public class DumpEditor extends BasicActivity {
             err = true;
         }
         if (err == true) {
-            mLayout.removeAllViews();
             Toast.makeText(this, R.string.info_editor_init_error,
                     Toast.LENGTH_LONG).show();
             finish();

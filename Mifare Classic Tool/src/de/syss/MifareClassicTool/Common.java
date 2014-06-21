@@ -778,6 +778,74 @@ public class Common extends Application {
     }
 
     /**
+     * Check if all blocks (lines) contain valid data.
+     * @param lines Blocks (incl. their sector header, e.g. "+Sector: 1").
+     * @return <ul>
+     * <li>0 - Everything is (most likely) O.K.</li>
+     * <li>1 - Found a sector that hat not 6 or 16 blocks.</li>
+     * <li>2 - Found a block that has invalid characters (not hex or "-" as
+     * marker for no key/no data).</li>
+     * <li>3 - Found a block that has not 16 bytes (32 chars).</li>
+     * <li>4 - A sector index is out of range.</li>
+     * <li>5 - Found two times the same sector number (index).
+     * Maybe this is a file containing multiple dumps
+     * (the dump editor->save->append function was used)</li>
+     * <li>6 - There are no lines (lines == null or len(lines) == 0).</li>
+     * </ul>
+     */
+    public static int isValidDump(String[] lines) {
+        ArrayList<Integer> knownSectors = new ArrayList<Integer>();
+        int blocksSinceLastSectorHeader = 4;
+        boolean is16BlockSector = false;
+        if (lines == null || lines.length == 0) {
+            // There are no lines.
+            return 6;
+        }
+        for(int i = 0; i < lines.length; i++) {
+            if ((is16BlockSector == false && blocksSinceLastSectorHeader == 4)
+                    || (is16BlockSector && blocksSinceLastSectorHeader == 16)) {
+                // A sector header is expected.
+                if (lines[i].matches("\\+Sector: [0-9]{1,2}") == false) {
+                    // Not a valid sector length or not a valid sector header.
+                    return 1;
+                }
+                int sector = -1;
+                try {
+                    sector = Integer.parseInt(lines[i].split(": ")[1]);
+                } catch (Exception ex) {
+                    // Not a valid sector header.
+                    // Should not occur due to the previous check (regex).
+                    return 1;
+                }
+                if (sector < 0 || sector > 39) {
+                    // Sector out of range.
+                    return 4;
+                }
+                if (knownSectors.contains(sector)) {
+                    // Two times the same sector number (index).
+                    // Maybe this is a file containing multiple dumps
+                    // (the dump editor->save->append function was used).
+                    return 5;
+                }
+                knownSectors.add(sector);
+                is16BlockSector = (sector >= 32) ? true : false;
+                blocksSinceLastSectorHeader = 0;
+                continue;
+            }
+            if (lines[i].matches("[0-9A-Fa-f-]+") == false) {
+                // Not pure hex (or NO_DATA).
+                return 2;
+            }
+            if (lines[i].length() != 32) {
+                    // Not 32 chars per line.
+                    return 3;
+            }
+            blocksSinceLastSectorHeader++;
+        }
+        return 0;
+    }
+
+    /**
      * Reverse a byte Array (e.g. Little Endian -> Big Endian).
      * Hmpf! Java has no Array.reverse(). And I don't want to use
      * Commons.Lang (ArrayUtils) form Apache....
