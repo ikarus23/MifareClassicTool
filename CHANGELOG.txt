@@ -1,5 +1,12 @@
 Changelog of MifareClassicTool (MCT):
 
+Verion 1.7.5:
+ * Fixed issues with Galaxy S5. Thanks to "mic".
+ * Motorola Moto X is (and always was) supported.
+   Thanks to Markus J. for reporting this.
+   Now it is unlocked on Google Play.
+ * Some minor bug fixes.
+
 Version 1.7.4:
  * Try to prevent the strange crash issue for S5 devices.
    (I'm not sure what is causing this and I'm not a 100% sure if
