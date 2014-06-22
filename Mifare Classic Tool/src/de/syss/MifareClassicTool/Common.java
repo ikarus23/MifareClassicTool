@@ -782,7 +782,7 @@ public class Common extends Application {
      * @param lines Blocks (incl. their sector header, e.g. "+Sector: 1").
      * @return <ul>
      * <li>0 - Everything is (most likely) O.K.</li>
-     * <li>1 - Found a sector that hat not 6 or 16 blocks.</li>
+     * <li>1 - Found a sector that hat not 4 or 16 blocks.</li>
      * <li>2 - Found a block that has invalid characters (not hex or "-" as
      * marker for no key/no data).</li>
      * <li>3 - Found a block that has not 16 bytes (32 chars).</li>
@@ -843,6 +843,41 @@ public class Common extends Application {
             blocksSinceLastSectorHeader++;
         }
         return 0;
+    }
+
+    /**
+     * Show a Toast message with error informations according to
+     * {@link #isValidDump(String[])}.
+     * @see #isValidDump(String[])
+     */
+    public static void isValidDumpErrorToast(int errorCode,
+            Context context) {
+        switch (errorCode) {
+        case 1:
+            Toast.makeText(context, R.string.info_valid_dump_not_4_or_16_lines,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 2:
+            Toast.makeText(context, R.string.info_valid_dump_not_hex,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 3:
+            Toast.makeText(context, R.string.info_valid_dump_not_16_bytes,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 4:
+            Toast.makeText(context, R.string.info_valid_dump_sector_range,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 5:
+            Toast.makeText(context, R.string.info_valid_dump_double_sector,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 6:
+            Toast.makeText(context, R.string.info_valid_dump_empty_dump,
+                    Toast.LENGTH_LONG).show();
+            break;
+        }
     }
 
     /**

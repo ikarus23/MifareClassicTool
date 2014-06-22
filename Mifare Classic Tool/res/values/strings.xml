@@ -216,9 +216,14 @@
     <string name="info_valid_dump_not_hex">Error: Some block(s) contain
         invalid data (not hex)</string>
     <string name="info_valid_dump_not_4_or_16_lines">Error: Some
-        sectors don\'t have 4 or 16 blocks (lines)</string>
+        sectors don\'thave 4 or 16 blocks (lines)</string>
     <string name="info_valid_dump_not_16_bytes">Error: Some blocks
         don\'t have 16 bytes (32 characters)</string>
+    <string name="info_valid_dump_sector_range">Error: Sector out of range
+        (&#60; 0 or &#62; 39)</string>
+    <string name="info_valid_dump_double_sector">Error: Multiple times the
+        same sector number</string>
+    <string name="info_valid_dump_empty_dump">Error: Empty dump</string>
     <string name="info_editor_init_error">Error: Data was not correct for this
         editor</string>
     <string name="info_no_dumps">There are no dumps.

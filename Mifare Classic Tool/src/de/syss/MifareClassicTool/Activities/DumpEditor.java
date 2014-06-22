@@ -93,7 +93,7 @@ public class DumpEditor extends BasicActivity {
     /**
      * All blocks containing valid data AND their headers (marked with "+"
      * e.g. "+Sector: 0") as strings.
-     * This will be updated with every {@link #isValidDump()}
+     * This will be updated with every {@link #checkDumpAndUpdateLines()}
      * check.
      */
     private String[] mLines;
@@ -242,89 +242,96 @@ public class DumpEditor extends BasicActivity {
 
     /**
      * Update the coloring. This method updates the colors if all
-     * data are valid {@link #isValidDumpErrorToast()}.
+     * data are valid {@link #checkDumpAndUpdateLines()}.
      * To do so, it reinitializes the whole editor... not quite beautiful.
      * @param view The View object that triggered the method
      * (in this case the update color text (color caption text)).
-     * @see #isValidDumpErrorToast()
+     * @see #checkDumpAndUpdateLines()
+     * @see Common#isValidDumpErrorToast(int, Context)
      * @see #initEditor(String[])
      */
     public void onUpdateColors(View view) {
-        if (isValidDumpErrorToast()) {
-            // Backup focused view.
-            View focused = mLayout.getFocusedChild();
-            int focusIndex = -1;
-            if (focused != null) {
-                focusIndex = mLayout.indexOfChild(focused);
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
+        // Backup focused view.
+        View focused = mLayout.getFocusedChild();
+        int focusIndex = -1;
+        if (focused != null) {
+            focusIndex = mLayout.indexOfChild(focused);
+        }
+        initEditor(mLines);
+        if (focusIndex != -1) {
+            // Restore focused view.
+            while (focusIndex >= 0
+                    && mLayout.getChildAt(focusIndex) == null) {
+                focusIndex--;
             }
-            initEditor(mLines);
-            if (focusIndex != -1) {
-                // Restore focused view.
-                while (focusIndex >= 0
-                        && mLayout.getChildAt(focusIndex) == null) {
-                    focusIndex--;
-                }
-                if (focusIndex >= 0) {
-                    mLayout.getChildAt(focusIndex).requestFocus();
-                }
+            if (focusIndex >= 0) {
+                mLayout.getChildAt(focusIndex).requestFocus();
             }
         }
     }
 
     /**
-     * Check if it is a valid dump ({@link #isValidDump()}),
+     * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
      * ask user for a save name and then call
      * {@link #checkFileExistenceAndSave(File)}.
-     * @see #isValidDump()
-     * @see #isValidDumpErrorToast()
+     * @see #checkDumpAndUpdateLines()
+     * @see Common#isValidDumpErrorToast(int, Context)
      * @see #checkFileExistenceAndSave(File)
      */
     private void saveDump() {
-        if (isValidDumpErrorToast()) {
-            if (!Common.isExternalStorageWritableErrorToast(this)) {
-                return;
-            }
-            final File path = new File(
-                    Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) +  "/" + Common.DUMPS_DIR);
-            final Context cont = this;
-            // Ask user for filename.
-            final EditText input = new EditText(this);
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-            input.setLines(1);
-            input.setHorizontallyScrolling(true);
-            input.setText(mFileName);
-            input.setSelection(input.getText().length());
-            new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_save_dump_title)
-                .setMessage(R.string.dialog_save_dump)
-                .setIcon(android.R.drawable.ic_menu_save)
-                .setView(input)
-                .setPositiveButton(R.string.action_save,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
-                            File file = new File(path.getPath(),
-                                    input.getText().toString());
-                            checkFileExistenceAndSave(file);
-                        } else {
-                            // Empty name is not allowed.
-                            Toast.makeText(cont, R.string.info_empty_file_name,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.action_cancel,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Do nothing.
-                    }
-                }).show();
-            onUpdateColors(null);
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
         }
+        if (!Common.isExternalStorageWritableErrorToast(this)) {
+            return;
+        }
+        final File path = new File(
+                Environment.getExternalStoragePublicDirectory(
+                Common.HOME_DIR) +  "/" + Common.DUMPS_DIR);
+        final Context cont = this;
+        // Ask user for filename.
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setLines(1);
+        input.setHorizontallyScrolling(true);
+        input.setText(mFileName);
+        input.setSelection(input.getText().length());
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_save_dump_title)
+            .setMessage(R.string.dialog_save_dump)
+            .setIcon(android.R.drawable.ic_menu_save)
+            .setView(input)
+            .setPositiveButton(R.string.action_save,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    if (input.getText() != null
+                            && !input.getText().toString().equals("")) {
+                        File file = new File(path.getPath(),
+                                input.getText().toString());
+                        checkFileExistenceAndSave(file);
+                    } else {
+                        // Empty name is not allowed.
+                        Toast.makeText(cont, R.string.info_empty_file_name,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+            .setNegativeButton(R.string.action_cancel,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // Do nothing.
+                }
+            }).show();
+        onUpdateColors(null);
     }
 
     /**
@@ -386,7 +393,6 @@ public class DumpEditor extends BasicActivity {
         }
     }
 
-    // TODO: Rename, update due too Common.isValidDump, update doc.
     /**
      * Check if all sectors contain valid data. If all blocks are O.K.
      * {@link #mLines} will be updated.
@@ -399,7 +405,7 @@ public class DumpEditor extends BasicActivity {
      * </ul>
      * @see #mLines
      */
-    private int isValidDump() {
+    private int checkDumpAndUpdateLines() {
         ArrayList<String> checkedLines = new ArrayList<String>();
         for(int i = 0; i < mLayout.getChildCount(); i++) {
             View child = mLayout.getChildAt(i);
@@ -440,224 +446,199 @@ public class DumpEditor extends BasicActivity {
         return 0;
     }
 
-    // TODO: Move to Common and add the remaining error codes..
-    /**
-     * Check dump with {@link #isValidDump()} and show
-     * a Toast message with error informations (if an error occurred).
-     * @return True if all blocks were O.K.. False otherwise.
-     */
-    private boolean isValidDumpErrorToast() {
-        int err = isValidDump();
-        if (err == 1) {
-            Toast.makeText(this, R.string.info_valid_dump_not_4_or_16_lines,
-                    Toast.LENGTH_LONG).show();
-        } else if (err == 2) {
-            Toast.makeText(this, R.string.info_valid_dump_not_hex,
-                    Toast.LENGTH_LONG).show();
-        } else if (err == 3) {
-            Toast.makeText(this, R.string.info_valid_dump_not_16_bytes,
-                    Toast.LENGTH_LONG).show();
-        }
-        return err == 0;
-    }
-
-    // TODO: Update due to Commons isValidDump, update doc.
     /**
      * Initialize the editor with the given lines. If the lines do not contain
      * a valid dump, an error Toast will be shown and the Activity exits.
      * @param lines Block data and header (e.g. "sector: 0"). Minimum is one
      * Sector (5 Lines, 1 Header + 4 Hex block data).
-     * @see #isValidDumpErrorToast()
-     * @see #isValidDump()
+     * @see Common#isValidDump(String[])
+     * @see Common#isValidDumpErrorToast(int, Context)
      */
     private void initEditor(String[] lines) {
-        boolean err = false;
-        if (Common.isValidDump(lines) != 0) {
-            err = true;
-        }
-        if (err == false) {
-            // Parse dump and show it.
-            mLayout.removeAllViews();
-            boolean isFirstBlock = false;
-            int blockCounter = 0;
-            EditText et = null;
-            ArrayList<SpannableString> blocks =
-                    new ArrayList<SpannableString>(4);
-            for (int i = 0; i < lines.length; i++) {
-                if (lines[i].startsWith("+")) {
-                    // Line is a header.
-                    isFirstBlock = lines[i].endsWith(" 0");
-                    String sectorNumber = lines[i].split(": ")[1];
-                    // Add sector header (TextView).
-                    TextView tv = new TextView(this);
-                    tv.setTextColor(
-                            getResources().getColor(R.color.blue));
-                    tv.setText(getString(R.string.text_sector) +
-                            ": " + sectorNumber);
-                    mLayout.addView(tv);
-                    // Add sector data (EditText) if not at the end and if the
-                    // next line is not an error line ("*").
-                    if (i+1 != lines.length && !lines[i+1].startsWith("*")) {
-                        // Add sector data (EditText).
-                        et = new EditText(this);
-                        et.setLayoutParams(new LayoutParams(
-                                LayoutParams.WRAP_CONTENT,
-                                LayoutParams.WRAP_CONTENT));
-                        et.setInputType(et.getInputType()
-                                |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                                |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                        et.setTypeface(Typeface.MONOSPACE);
-                        // Set text size of an EditText to the text size of
-                        // a TextView. (getTextSize() returns
-                        // pixels - unit is needed.)
-                        et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                                new TextView(this).getTextSize());
-                        mLayout.addView(et);
-                        // Tag headers of real sectors (sectors containing
-                        // data (EditText) and not errors ("*")).
-                        tv.setTag("real_header");
-                    }
-                } else if (lines[i].startsWith("*")){
-                    // Error Line: Line is a sector that could not be read.
-                    TextView tv = new TextView(this);
-                    tv.setTextColor(
-                            getResources().getColor(R.color.red));
-                    tv.setText("   " +  getString(
-                            R.string.text_no_key_io_error));
-                    tv.setTag("error");
-                    mLayout.addView(tv);
-                } else {
-                    // Line is a block.
-                    if (i+1 == lines.length || lines[i+1].startsWith("+")) {
-                        // Add sector trailer.
-                        blocks.add(colorSectorTrailer(lines[i]));
-                        blockCounter++;
-                        // Add sector data to the EditText, if there
-                        // are 4 or 16 blocks.
-                        if (blockCounter == 4 || blockCounter == 16) {
-                            CharSequence text = "";
-                            int j;
-                            for (j = 0; j < blocks.size()-1; j++) {
-                                text = TextUtils.concat(
-                                        text, blocks.get(j), "\n");
-                            }
-                            text = TextUtils.concat(text, blocks.get(j));
-                            et.setText(text, BufferType.SPANNABLE);
-                            blocks = new ArrayList<SpannableString>(4);
-                            blockCounter = 0;
-                        } else {
-                            err = true;
-                            break;
-                        }
-                    } else {
-                        // Add data block.
-                        blocks.add(colorDataBlock(lines[i], isFirstBlock));
-                        isFirstBlock = false;
-                        blockCounter++;
-                    }
-                }
-            }
-            if (!isValidDumpErrorToast()) {
-                err = true;
-            }
-        } else {
-            err = true;
-        }
-        if (err == true) {
+        int err = Common.isValidDump(lines);
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
             Toast.makeText(this, R.string.info_editor_init_error,
                     Toast.LENGTH_LONG).show();
             finish();
+        }
+
+        // Parse dump and show it.
+        mLayout.removeAllViews();
+        boolean isFirstBlock = false;
+        EditText et = null;
+        ArrayList<SpannableString> blocks =
+                new ArrayList<SpannableString>(4);
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].startsWith("+")) {
+                // Line is a header.
+                isFirstBlock = lines[i].endsWith(" 0");
+                String sectorNumber = lines[i].split(": ")[1];
+                // Add sector header (TextView).
+                TextView tv = new TextView(this);
+                tv.setTextColor(
+                        getResources().getColor(R.color.blue));
+                tv.setText(getString(R.string.text_sector) +
+                        ": " + sectorNumber);
+                mLayout.addView(tv);
+                // Add sector data (EditText) if not at the end and if the
+                // next line is not an error line ("*").
+                if (i+1 != lines.length && !lines[i+1].startsWith("*")) {
+                    // Add sector data (EditText).
+                    et = new EditText(this);
+                    et.setLayoutParams(new LayoutParams(
+                            LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT));
+                    et.setInputType(et.getInputType()
+                            |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                            |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+                    et.setTypeface(Typeface.MONOSPACE);
+                    // Set text size of an EditText to the text size of
+                    // a TextView. (getTextSize() returns
+                    // pixels - unit is needed.)
+                    et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                            new TextView(this).getTextSize());
+                    mLayout.addView(et);
+                    // Tag headers of real sectors (sectors containing
+                    // data (EditText) and not errors ("*")).
+                    tv.setTag("real_header");
+                }
+            } else if (lines[i].startsWith("*")){
+                // Error Line: Line is a sector that could not be read.
+                TextView tv = new TextView(this);
+                tv.setTextColor(
+                        getResources().getColor(R.color.red));
+                tv.setText("   " +  getString(
+                        R.string.text_no_key_io_error));
+                tv.setTag("error");
+                mLayout.addView(tv);
+            } else {
+                // Line is a block.
+                if (i+1 == lines.length || lines[i+1].startsWith("+")) {
+                    // Line is a sector trailer.
+                    blocks.add(colorSectorTrailer(lines[i]));
+                    // Add sector data to the EditText.
+                    CharSequence text = "";
+                    int j;
+                    for (j = 0; j < blocks.size()-1; j++) {
+                        text = TextUtils.concat(
+                                text, blocks.get(j), "\n");
+                    }
+                    text = TextUtils.concat(text, blocks.get(j));
+                    et.setText(text, BufferType.SPANNABLE);
+                    blocks = new ArrayList<SpannableString>(4);
+                } else {
+                    // Add data block.
+                    blocks.add(colorDataBlock(lines[i], isFirstBlock));
+                    isFirstBlock = false;
+                }
+            }
         }
     }
 
     /**
      * Display the the hex data as US-ASCII ({@link HexToAscii}).
      * @see HexToAscii
+     * @see #checkDumpAndUpdateLines()
+     * @see Common#isValidDumpErrorToast(int, Context)
      */
     private void showAscii() {
-        if (isValidDumpErrorToast()) {
-            String dump = "";
-            String s = System.getProperty("line.separator");
-            for (int i = 0; i < mLines.length-1; i++) {
-                if (i+1 == mLines.length
-                        || mLines[i+1].startsWith("+")) {
-                    // Skip Access Conditions.
-                    dump += s;
-                    continue;
-                }
-                dump += mLines[i] + s;
-            }
-            Intent intent = new Intent(this, HexToAscii.class);
-            intent.putExtra(EXTRA_DUMP, dump);
-            startActivity(intent);
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
         }
+        String dump = "";
+        String s = System.getProperty("line.separator");
+        for (int i = 0; i < mLines.length-1; i++) {
+            if (i+1 == mLines.length
+                    || mLines[i+1].startsWith("+")) {
+                // Skip Access Conditions.
+                dump += s;
+                continue;
+            }
+            dump += mLines[i] + s;
+        }
+        Intent intent = new Intent(this, HexToAscii.class);
+        intent.putExtra(EXTRA_DUMP, dump);
+        startActivity(intent);
     }
 
     /**
      * Display the access conditions {@link AccessConditionDecoder}.
      * @see AccessConditionDecoder
+     * @see #checkDumpAndUpdateLines()
+     * @see Common#isValidDumpErrorToast(int, Context)
      */
     private void showAC() {
-        if (isValidDumpErrorToast()) {
-            String ac = "";
-            int lastSectorHeader = 0;
-            String s = System.getProperty("line.separator");
-            for (int i = 0; i < mLines.length; i++) {
-                if (mLines[i].startsWith("+")) {
-                    // Header.
-                    ac += mLines[i] + s;
-                    lastSectorHeader = i;
-                } else if (i+1 == mLines.length
-                        || mLines[i+1].startsWith("+")) {
-                    // Access Condition.
-                    if (i - lastSectorHeader > 4) {
-                        // Access Conditions of a sector
-                        // with more than 4 blocks --> Mark ACs with "*".
-                        ac += "*";
-                    }
-                    ac += mLines[i].substring(12, 20) + s;
-                }
-            }
-            Intent intent = new Intent(this, AccessConditionDecoder.class);
-            intent.putExtra(AccessConditionDecoder.EXTRA_AC, ac);
-            startActivity(intent);
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
         }
+        String ac = "";
+        int lastSectorHeader = 0;
+        String s = System.getProperty("line.separator");
+        for (int i = 0; i < mLines.length; i++) {
+            if (mLines[i].startsWith("+")) {
+                // Header.
+                ac += mLines[i] + s;
+                lastSectorHeader = i;
+            } else if (i+1 == mLines.length
+                    || mLines[i+1].startsWith("+")) {
+                // Access Condition.
+                if (i - lastSectorHeader > 4) {
+                    // Access Conditions of a sector
+                    // with more than 4 blocks --> Mark ACs with "*".
+                    ac += "*";
+                }
+                ac += mLines[i].substring(12, 20) + s;
+            }
+        }
+        Intent intent = new Intent(this, AccessConditionDecoder.class);
+        intent.putExtra(AccessConditionDecoder.EXTRA_AC, ac);
+        startActivity(intent);
     }
 
     /**
      * Display the value blocks as integer ({@link ValueBlocksToInt}).
      * @see ValueBlocksToInt
+     * @see #checkDumpAndUpdateLines()
+     * @see Common#isValidDumpErrorToast(int, Context)
      */
     private void decodeValueBlocks() {
-        if (isValidDumpErrorToast()) {
-            String vb = "";
-            String header = "";
-            int blockCounter = 0;
-            String s = System.getProperty("line.separator");
-            for (int i = 0; i < mLines.length; i++) {
-                if (mLines[i].startsWith("+")) {
-                    header = mLines[i];
-                    blockCounter = 0;
-                    continue;
-                } else {
-                    if (Common.isValueBlock(mLines[i])) {
-                        // Header.
-                        vb += header + ", Block: " + blockCounter + s;
-                        // Value Block.
-                        vb += mLines[i] + s;
-                    }
-                    blockCounter++;
-                }
-            }
-            Intent intent = new Intent(this, ValueBlocksToInt.class);
-            if (!vb.equals("")) {
-                intent.putExtra(ValueBlocksToInt.EXTRA_VB, vb);
-                startActivity(intent);
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
+        String vb = "";
+        String header = "";
+        int blockCounter = 0;
+        String s = System.getProperty("line.separator");
+        for (int i = 0; i < mLines.length; i++) {
+            if (mLines[i].startsWith("+")) {
+                header = mLines[i];
+                blockCounter = 0;
+                continue;
             } else {
-                // No value blocks found.
-                Toast.makeText(this, R.string.info_no_vb_in_dump,
-                        Toast.LENGTH_LONG).show();
+                if (Common.isValueBlock(mLines[i])) {
+                    // Header.
+                    vb += header + ", Block: " + blockCounter + s;
+                    // Value Block.
+                    vb += mLines[i] + s;
+                }
+                blockCounter++;
             }
+        }
+        Intent intent = new Intent(this, ValueBlocksToInt.class);
+        if (!vb.equals("")) {
+            intent.putExtra(ValueBlocksToInt.EXTRA_VB, vb);
+            startActivity(intent);
+        } else {
+            // No value blocks found.
+            Toast.makeText(this, R.string.info_no_vb_in_dump,
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -745,7 +726,6 @@ public class DumpEditor extends BasicActivity {
      * The dump will be checked and stored in the {@link Common#TMP_DIR}
      * directory. After this, a dialog will be displayed in which the user
      * can choose between apps that are willing to handle the dump.
-     * @see #isValidDumpErrorToast()
      * @see Common#TMP_DIR
      */
     private void shareDump() {

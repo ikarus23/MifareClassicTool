@@ -161,8 +161,8 @@ public class KeyEditor extends BasicActivity {
      * Check if it is a valid key file
      * ({@link #isValidKeyFileErrorToast()}),
      * ask user for a save name and then call
-     * {@link Common#saveFile(File, String[])}
-     * @see Common#saveFile(File, String[])
+     * {@link Common#saveFile(File, String[], boolean)}
+     * @see Common#saveFile(File, String[], boolean)
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {
