@@ -484,8 +484,10 @@ public class WriteTag extends BasicActivity {
         // Read dump.
         File file = new File(pathToDump);
         String[] dump = Common.readFileLineByLine(file, false, this);
-        if (dump == null) {
+        int err = Common.isValidDump(dump);
+        if (err != 0) {
             // Error.
+            Common.isValidDumpErrorToast(err, this);
             return;
         }
         mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
