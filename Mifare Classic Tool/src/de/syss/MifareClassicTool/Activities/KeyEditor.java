@@ -142,7 +142,7 @@ public class KeyEditor extends BasicActivity {
             // Save file to tmp directory.
             File file = new File(Environment.getExternalStoragePublicDirectory(
                     Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
-            Common.saveFile(file, mLines);
+            Common.saveFile(file, mLines, false);
 
             // Share file.
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
@@ -161,8 +161,8 @@ public class KeyEditor extends BasicActivity {
      * Check if it is a valid key file
      * ({@link #isValidKeyFileErrorToast()}),
      * ask user for a save name and then call
-     * {@link Common#saveFile(File, String[])}
-     * @see Common#saveFile(File, String[])
+     * {@link Common#saveFile(File, String[], boolean)}
+     * @see Common#saveFile(File, String[], boolean)
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {
@@ -194,7 +194,7 @@ public class KeyEditor extends BasicActivity {
                                 && !input.getText().toString().equals("")) {
                             File file = new File(path.getPath(),
                                     input.getText().toString());
-                            if (Common.saveFile(file, mLines)) {
+                            if (Common.saveFile(file, mLines, false)) {
                                 Toast.makeText(cont,
                                         R.string.info_save_successful,
                                         Toast.LENGTH_LONG).show();

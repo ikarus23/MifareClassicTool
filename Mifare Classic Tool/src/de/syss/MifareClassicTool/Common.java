@@ -252,23 +252,34 @@ public class Common extends Application {
 
     /**
      * Write an array of strings (each field is one line) to a given file.
-     * If the file already exists, it will be overwritten.
      * @param file The file to write to.
      * @param lines The lines to save.
+     * @param append Append to file (instead of replacing its content).
      * @return True if file writing was successful. False otherwise.
      */
-    public static boolean saveFile(File file, String[] lines) {
+    public static boolean saveFile(File file, String[] lines, boolean append) {
         boolean noError = true;
-        if (file != null) {
+        if (file != null && lines != null) {
+            if (append) {
+                // Append to a existing file.
+                String[] newLines = new String[lines.length + 4];
+                System.arraycopy(lines, 0, newLines, 4, lines.length);
+                newLines[0] = "";
+                newLines[1] = "";
+                newLines[2] = "# Append #######################";
+                newLines[3] = "";
+                lines = newLines;
+            }
+
             BufferedWriter bw = null;
             try {
-                bw = new BufferedWriter(new FileWriter(file));
+                bw = new BufferedWriter(new FileWriter(file, append));
                 int i;
-                for(i = 0; i < lines.length-1; i++){
+                for(i = 0; i < lines.length-1; i++) {
                     bw.write(lines[i]);
                     bw.newLine();
-               }
-               bw.write(lines[i]);
+                }
+                bw.write(lines[i]);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while writing to '"
                         + file.getName() + "' file.", e);
@@ -764,6 +775,109 @@ public class Common extends Application {
             }
         }
         return false;
+    }
+
+    /**
+     * Check if all blocks (lines) contain valid data.
+     * @param lines Blocks (incl. their sector header, e.g. "+Sector: 1").
+     * @return <ul>
+     * <li>0 - Everything is (most likely) O.K.</li>
+     * <li>1 - Found a sector that hat not 4 or 16 blocks.</li>
+     * <li>2 - Found a block that has invalid characters (not hex or "-" as
+     * marker for no key/no data).</li>
+     * <li>3 - Found a block that has not 16 bytes (32 chars).</li>
+     * <li>4 - A sector index is out of range.</li>
+     * <li>5 - Found two times the same sector number (index).
+     * Maybe this is a file containing multiple dumps
+     * (the dump editor->save->append function was used)</li>
+     * <li>6 - There are no lines (lines == null or len(lines) == 0).</li>
+     * </ul>
+     */
+    public static int isValidDump(String[] lines) {
+        ArrayList<Integer> knownSectors = new ArrayList<Integer>();
+        int blocksSinceLastSectorHeader = 4;
+        boolean is16BlockSector = false;
+        if (lines == null || lines.length == 0) {
+            // There are no lines.
+            return 6;
+        }
+        for(int i = 0; i < lines.length; i++) {
+            if ((is16BlockSector == false && blocksSinceLastSectorHeader == 4)
+                    || (is16BlockSector && blocksSinceLastSectorHeader == 16)) {
+                // A sector header is expected.
+                if (lines[i].matches("\\+Sector: [0-9]{1,2}") == false) {
+                    // Not a valid sector length or not a valid sector header.
+                    return 1;
+                }
+                int sector = -1;
+                try {
+                    sector = Integer.parseInt(lines[i].split(": ")[1]);
+                } catch (Exception ex) {
+                    // Not a valid sector header.
+                    // Should not occur due to the previous check (regex).
+                    return 1;
+                }
+                if (sector < 0 || sector > 39) {
+                    // Sector out of range.
+                    return 4;
+                }
+                if (knownSectors.contains(sector)) {
+                    // Two times the same sector number (index).
+                    // Maybe this is a file containing multiple dumps
+                    // (the dump editor->save->append function was used).
+                    return 5;
+                }
+                knownSectors.add(sector);
+                is16BlockSector = (sector >= 32) ? true : false;
+                blocksSinceLastSectorHeader = 0;
+                continue;
+            }
+            if (lines[i].matches("[0-9A-Fa-f-]+") == false) {
+                // Not pure hex (or NO_DATA).
+                return 2;
+            }
+            if (lines[i].length() != 32) {
+                    // Not 32 chars per line.
+                    return 3;
+            }
+            blocksSinceLastSectorHeader++;
+        }
+        return 0;
+    }
+
+    /**
+     * Show a Toast message with error informations according to
+     * {@link #isValidDump(String[])}.
+     * @see #isValidDump(String[])
+     */
+    public static void isValidDumpErrorToast(int errorCode,
+            Context context) {
+        switch (errorCode) {
+        case 1:
+            Toast.makeText(context, R.string.info_valid_dump_not_4_or_16_lines,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 2:
+            Toast.makeText(context, R.string.info_valid_dump_not_hex,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 3:
+            Toast.makeText(context, R.string.info_valid_dump_not_16_bytes,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 4:
+            Toast.makeText(context, R.string.info_valid_dump_sector_range,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 5:
+            Toast.makeText(context, R.string.info_valid_dump_double_sector,
+                    Toast.LENGTH_LONG).show();
+            break;
+        case 6:
+            Toast.makeText(context, R.string.info_valid_dump_empty_dump,
+                    Toast.LENGTH_LONG).show();
+            break;
+        }
     }
 
     /**
