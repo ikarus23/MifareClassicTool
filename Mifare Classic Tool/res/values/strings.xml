@@ -422,7 +422,10 @@
         \n\nMaybe the tag is not an original Mifare Classic tag.</string>
     <string name="dialog_save_conflict_title">File already exists</string>
     <string name="dialog_save_conflict">This file already exists.
-        What do you want to do?</string>
+        What do you want to do?
+        \n\n<b>Note: Files containing multiple dumps (created by using
+        \"append\") can not be displayed, edited or written by
+        this app.</b></string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
