@@ -805,7 +805,7 @@ public class Common extends Application {
             if ((is16BlockSector == false && blocksSinceLastSectorHeader == 4)
                     || (is16BlockSector && blocksSinceLastSectorHeader == 16)) {
                 // A sector header is expected.
-                if (lines[i].matches("\\+Sector: [0-9]{1,2}") == false) {
+                if (lines[i].matches("^\\+Sector: [0-9]{1,2}$") == false) {
                     // Not a valid sector length or not a valid sector header.
                     return 1;
                 }

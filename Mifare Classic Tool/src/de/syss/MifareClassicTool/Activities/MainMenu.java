@@ -83,7 +83,7 @@ public class MainMenu extends Activity {
      * Check for NFC hardware, Mifare Classic support and for external storage.
      * If the directory structure and the std. keys files is not already there
      * it will be created. Also, at the first run of this App, a warning
-     * notice and a donate calling message will be displayed.
+     * notice and a donate message will be displayed.
      * @see #copyStdKeysFilesIfNecessary()
      */
     @Override
