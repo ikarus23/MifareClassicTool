@@ -202,6 +202,10 @@
     <string name="action_decode_manuf_date">Decode date of manufacture</string>
     <string name="action_replace">Replace</string>
     <string name="action_append">Append</string>
+    <string name="action_do_not_show_again">Do not show this message
+        again</string>
+    <string name="action_beer_sounds_fine">Beer sounds fine
+        (Donate via Google Play)</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -426,6 +430,11 @@
         \n\n<b>Note: Files containing multiple dumps (created by using
         \"append\") can not be displayed, edited or written by
         this app.</b></string>
+    <string name="dialog_donate_title">Donate</string>
+    <string name="dialog_donate"><b>Mifare Classic Tool has been updated!</b>
+        \n\nIf the new features, fixes or the app in general makes you happy,
+        please consider to make the developer happy. Buy him a beer! ;)
+    </string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

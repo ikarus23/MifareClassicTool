@@ -33,6 +33,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -50,6 +51,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
@@ -81,7 +83,7 @@ public class MainMenu extends Activity {
      * Check for NFC hardware, Mifare Classic support and for external storage.
      * If the directory structure and the std. keys files is not already there
      * it will be created. Also, at the first run of this App, a warning
-     * notice will be displayed.
+     * notice and a donate calling message will be displayed.
      * @see #copyStdKeysFilesIfNecessary()
      */
     @Override
@@ -204,11 +206,11 @@ public class MainMenu extends Activity {
 
         // Show first usage notice.
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        final Editor sharedEditor = sharedPref.edit();
         boolean isFirstRun = sharedPref.getBoolean("is_first_run", true);
         if (isFirstRun) {
-            Editor e = sharedPref.edit();
-            e.putBoolean("is_first_run", false);
-            e.commit();
+            sharedEditor.putBoolean("is_first_run", false);
+            sharedEditor.commit();
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -220,9 +222,81 @@ public class MainMenu extends Activity {
                         dialog.cancel();
                     }
                 })
+                .show();
+            mResume = false;
+        }
+
+        // Show donate dialog.
+        int currentVersion = 0;
+        try {
+            currentVersion = getPackageManager().getPackageInfo(
+                    getPackageName(), 0).versionCode;
+        } catch (NameNotFoundException e) {
+            Log.d(LOG_TAG, "Version not found.");
+        }
+        int lastVersion = sharedPref.getInt("mct_version", currentVersion - 1);
+        boolean showDonateDialog = sharedPref.getBoolean(
+                "show_donate_dialog", true);
+        if (lastVersion < currentVersion || showDonateDialog == true) {
+            // This is either a new version of MCT or the user wants to see
+            // the donate dialog.
+            if (lastVersion < currentVersion) {
+                // Update the version.
+                sharedEditor.putInt("mct_version", currentVersion);
+                sharedEditor.putBoolean("show_donate_dialog", true);
+                sharedEditor.commit();
+            }
+            // TODO: fix the warning.
+            View dialogLayout = getLayoutInflater().inflate(
+                    R.layout.dialog_donate, null);
+            final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
+                    .findViewById(R.id.checkBoxDonateDialog);
+            new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_donate_title)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setView(dialogLayout)
+                .setPositiveButton(R.string.action_beer_sounds_fine,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Open Google Play for the donate version of MCT.
+                        Uri uri = Uri.parse(
+                                "market://details?id=de."
+                                + "syss.MifareClassicToolDonate");
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store"
+                                            + "/apps/details?id=de.syss.Mifare"
+                                            + "ClassicToolDonate")));
+                        }
+                        if (showDonateDialogCheckBox.isChecked()) {
+                            // Do not show the donate dialog again.
+                            sharedEditor.putBoolean(
+                                    "show_donate_dialog", false);
+                            sharedEditor.commit();
+                        }
+                        mResume = true;
+                    }
+                })
+                .setNegativeButton(R.string.action_cancel,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
+                        if (showDonateDialogCheckBox.isChecked()) {
+                            // Do not show the donate dialog again.
+                            sharedEditor.putBoolean(
+                                    "show_donate_dialog", false);
+                            sharedEditor.commit();
+                        }
                         mResume = true;
                         checkNfc();
                     }
@@ -230,6 +304,7 @@ public class MainMenu extends Activity {
                 .show();
             mResume = false;
         }
+
     }
 
     /**
