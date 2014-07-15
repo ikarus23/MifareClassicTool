@@ -50,6 +50,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -246,9 +247,9 @@ public class MainMenu extends Activity {
                 sharedEditor.putBoolean("show_donate_dialog", true);
                 sharedEditor.commit();
             }
-            // TODO: fix the warning.
             View dialogLayout = getLayoutInflater().inflate(
-                    R.layout.dialog_donate, null);
+                    R.layout.dialog_donate,
+                    (ViewGroup)findViewById(android.R.id.content), false);
             final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
                     .findViewById(R.id.checkBoxDonateDialog);
             new AlertDialog.Builder(this)

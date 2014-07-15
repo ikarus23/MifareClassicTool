@@ -40,6 +40,7 @@ import android.os.Handler;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -524,7 +525,8 @@ public class WriteTag extends BasicActivity {
         // Create and show sector chooser dialog
         // (let the user select the sectors which will be written).
         View dialogLayout = getLayoutInflater().inflate(
-                R.layout.dialog_write_sectors, null);
+                R.layout.dialog_write_sectors,
+                (ViewGroup)findViewById(android.R.id.content), false);
         LinearLayout llCheckBoxes = (LinearLayout) dialogLayout.findViewById(
                 R.id.linearLayoutWriteSectorsCheckBoxes);
         Button selectAll = (Button) dialogLayout.findViewById(
