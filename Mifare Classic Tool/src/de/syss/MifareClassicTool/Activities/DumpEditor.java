@@ -211,6 +211,9 @@ public class DumpEditor extends BasicActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
+        case R.id.menuDumpEditorWrite:
+        	writeDump();
+        	return true;
         case R.id.menuDumpEditorSave:
             saveDump();
             return true;
@@ -274,6 +277,20 @@ public class DumpEditor extends BasicActivity {
             }
         }
     }
+    
+    /**
+     * Write dump directly to card
+     */
+	private void writeDump(){
+		 int err = checkDumpAndUpdateLines();
+	        if (err != 0) {
+	            Common.isValidDumpErrorToast(err, this);
+	            return;
+	        }
+		 Intent intent = new Intent(this, WriteTag.class);
+		 intent.putExtra("dump", mLines);
+	     startActivity(intent);
+	}
 
     /**
      * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
