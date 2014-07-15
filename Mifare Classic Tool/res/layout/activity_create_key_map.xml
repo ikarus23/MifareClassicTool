@@ -25,9 +25,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".KeyMapCreator"
-    android:columnCount="2"
-    android:orientation="horizontal"
-    android:rowCount="2" >
+    android:orientation="horizontal" >
 
     <LinearLayout
         android:id="@+id/linearLayoutCreateKeyMap"

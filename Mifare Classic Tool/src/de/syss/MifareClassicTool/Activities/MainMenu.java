@@ -211,7 +211,7 @@ public class MainMenu extends Activity {
         boolean isFirstRun = sharedPref.getBoolean("is_first_run", true);
         if (isFirstRun) {
             sharedEditor.putBoolean("is_first_run", false);
-            sharedEditor.commit();
+            sharedEditor.apply();
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -245,7 +245,7 @@ public class MainMenu extends Activity {
                 // Update the version.
                 sharedEditor.putInt("mct_version", currentVersion);
                 sharedEditor.putBoolean("show_donate_dialog", true);
-                sharedEditor.commit();
+                sharedEditor.apply();
             }
             View dialogLayout = getLayoutInflater().inflate(
                     R.layout.dialog_donate,
@@ -277,7 +277,7 @@ public class MainMenu extends Activity {
                             // Do not show the donate dialog again.
                             sharedEditor.putBoolean(
                                     "show_donate_dialog", false);
-                            sharedEditor.commit();
+                            sharedEditor.apply();
                         }
                         mResume = true;
                     }
@@ -296,7 +296,7 @@ public class MainMenu extends Activity {
                             // Do not show the donate dialog again.
                             sharedEditor.putBoolean(
                                     "show_donate_dialog", false);
-                            sharedEditor.commit();
+                            sharedEditor.apply();
                         }
                         mResume = true;
                         checkNfc();

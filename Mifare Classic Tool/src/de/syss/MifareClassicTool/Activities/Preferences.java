@@ -112,7 +112,7 @@ public class Preferences extends BasicActivity {
                 mPrefAutoReconnect.isChecked());
         edit.putBoolean(Preference.SaveLastUsedKeyFiles.toString(),
                 mPrefSaveLastUsedKeyFiles.isChecked());
-        edit.commit();
+        edit.apply();
 
         // Exit the preferences view.
         finish();

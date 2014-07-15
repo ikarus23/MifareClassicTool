@@ -361,7 +361,7 @@ public class KeyMapCreator extends BasicActivity {
                     e.putString("last_used_key_files",
                             lastSelectedKeyFiles.substring(
                                     0, lastSelectedKeyFiles.length() - 1));
-                    e.commit();
+                    e.apply();
                 }
 
                 // Create reader.
