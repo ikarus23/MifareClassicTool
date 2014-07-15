@@ -537,23 +537,6 @@ public class MainMenu extends Activity {
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing.
                 }
-            })
-            .setNeutralButton(R.string.action_rate_this_app,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Uri uri = Uri.parse(
-                            "market://details?id=de.syss.MifareClassicTool");
-                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                    try {
-                        startActivity(goToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("https://play.google.com/store/apps"
-                                        + "/details?id=de.syss.Mifare"
-                                        + "ClassicTool")));
-                    }
-                }
             }).create();
          ad.show();
          // Make links clickable.
