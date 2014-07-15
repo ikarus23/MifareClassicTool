@@ -111,7 +111,18 @@ public class WriteTag extends BasicActivity {
             if (s instanceof HashMap<?, ?>) {
                 mDumpWithPos = (HashMap<Integer, HashMap<Integer, byte[]>>) s;
             }
-        }
+        }else {
+			Bundle extras = this.getIntent().getExtras();
+			if (extras != null) {
+				if (extras.containsKey("dump")) {
+					String[] dump = extras.getStringArray("dump");
+					if (dump != null) {
+						readDumpAndShowSectorChooserDialog(dump);
+					}
+				}
+			}
+
+		}
     }
 
     /**
@@ -466,25 +477,46 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Triggered by {@link #onActivityResult(int, int, Intent)} after the
-     * dump was selected (by {@link FileChooser}), this method
-     * reads the dump (skipping all blocks with unknown data "-") and saves
-     * the data including its position in {@link #mDumpWithPos}.
-     * If the "use static Access Condition" option is enabled, all the ACs
-     * will be replaced by the static ones.
-     * After all this it will show a dialog in which the user can choose
-     * the sectors he wants to write. When the sectors are chosen, this
-     * method calls {@link #createKeyMapForDump()} to create
-     * a key map for the present tag.
-     * @param pathToDump path and filename of the dump
-     * (selected by {@link FileChooser}).
-     * @see #createKeyMapForDump()
-     */
-    private void readDumpAndShowSectorChooserDialog(String pathToDump) {
-        // Read dump.
-        File file = new File(pathToDump);
-        String[] dump = Common.readFileLineByLine(file, false, this);
-        int err = Common.isValidDump(dump);
+	 * Triggered by {@link #onActivityResult(int, int, Intent)} after the dump
+	 * was selected (by {@link FileChooser}), this method reads the dump
+	 * (skipping all blocks with unknown data "-") and saves the data including
+	 * its position in {@link #mDumpWithPos}. If the
+	 * "use static Access Condition" option is enabled, all the ACs will be
+	 * replaced by the static ones. After all this it will show a dialog in
+	 * which the user can choose the sectors he wants to write. When the sectors
+	 * are chosen, this method calls {@link #createKeyMapForDump()} to create a
+	 * key map for the present tag. Calls to
+	 * readDumpAndShowSectorChooserDialog(String[])
+	 * 
+	 * @param pathToDump
+	 *            path and filename of the dump (selected by {@link FileChooser}
+	 *            ).
+	 * @see #createKeyMapForDump()
+	 */
+	private void readDumpAndShowSectorChooserDialog(String pathToDump) {
+		File file = new File(pathToDump);
+		String[] dump = Common.readFileLineByLine(file, false, this);
+		readDumpAndShowSectorChooserDialog(dump);
+	}
+
+	/**
+	 * Triggered by {@link #onActivityResult(int, int, Intent)} after the dump
+	 * was selected (by {@link FileChooser}), this method reads the dump
+	 * (skipping all blocks with unknown data "-") and saves the data including
+	 * its position in {@link #mDumpWithPos}. If the
+	 * "use static Access Condition" option is enabled, all the ACs will be
+	 * replaced by the static ones. After all this it will show a dialog in
+	 * which the user can choose the sectors he wants to write. When the sectors
+	 * are chosen, this method calls {@link #createKeyMapForDump()} to create a
+	 * key map for the present tag. Calls to
+	 * readDumpAndShowSectorChooserDialog(String[])
+	 * 
+	 * @param dump
+	 *            Strings with the data (selected by {@link FileChooser}).
+	 * @see #createKeyMapForDump()
+	 */
+	private void readDumpAndShowSectorChooserDialog(String[] dump) {
+		int err = Common.isValidDump(dump);
         if (err != 0) {
             // Error.
             Common.isValidDumpErrorToast(err, this);
