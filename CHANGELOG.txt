@@ -1,6 +1,14 @@
 Changelog of MifareClassicTool (MCT):
 
-Verion 1.7.5:
+Version 1.7.6:
+ * Check dumps before writing.
+ * Save multiple dumps in one file.
+   (Files that contain more than one dump can not be
+   viewed or written using this app.)
+ * Show a donate notice at updates.
+ * Some minor bug fixes.
+
+Version 1.7.5:
  * Fixed issues with Galaxy S5. Thanks to "mic".
  * Motorola Moto X is (and always was) supported.
    Thanks to Markus J. for reporting this.
