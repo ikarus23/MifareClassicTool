@@ -223,10 +223,23 @@ public class MainMenu extends Activity {
                         dialog.cancel();
                     }
                 })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        if (Common.IS_DONATE_VERSION) {
+                            mResume = true;
+                            checkNfc();
+                        }
+                    }
+                 })
                 .show();
             mResume = false;
         }
 
+        if (Common.IS_DONATE_VERSION) {
+            // Do not show the donate dialog.
+            return;
+        }
         // Show donate dialog.
         int currentVersion = 0;
         try {
@@ -305,7 +318,6 @@ public class MainMenu extends Activity {
                 .show();
             mResume = false;
         }
-
     }
 
     /**

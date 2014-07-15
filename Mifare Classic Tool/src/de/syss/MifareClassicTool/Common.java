@@ -57,6 +57,10 @@ import android.widget.Toast;
 public class Common extends Application {
 
     /**
+     * True if this is the donate version of MCT.
+     */
+    public static final boolean IS_DONATE_VERSION = false;
+    /**
      * The directory name of the root directory of this app
      * (on external storage).
      */
