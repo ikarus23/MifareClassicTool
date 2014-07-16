@@ -660,6 +660,11 @@ public class DumpEditor extends BasicActivity {
      * the current year.
      */
     private void decodeDateOfManuf() {
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
         if (mLines[0].equals("+Sector: 0") && !mLines[1].contains("-")) {
             int year;
             int week;
