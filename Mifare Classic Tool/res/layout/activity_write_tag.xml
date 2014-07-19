@@ -176,7 +176,7 @@
                 android:gravity="center_horizontal"
                 android:onClick="onChangeWriteMode"
                 android:tag="write_dump"
-                android:text="@string/action_write_dump"
+                android:text="@string/action_write_dump_clone"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/blue" />
 
