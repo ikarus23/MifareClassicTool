@@ -784,6 +784,8 @@ public class Common extends Application {
     /**
      * Check if all blocks (lines) contain valid data.
      * @param lines Blocks (incl. their sector header, e.g. "+Sector: 1").
+     * @param ignoreAsterisk Ignore lines starting with "*" and move on
+     * to the next sector (header).
      * @return <ul>
      * <li>0 - Everything is (most likely) O.K.</li>
      * <li>1 - Found a sector that hat not 4 or 16 blocks.</li>
@@ -797,7 +799,7 @@ public class Common extends Application {
      * <li>6 - There are no lines (lines == null or len(lines) == 0).</li>
      * </ul>
      */
-    public static int isValidDump(String[] lines) {
+    public static int isValidDump(String[] lines, boolean ignoreAsterisk) {
         ArrayList<Integer> knownSectors = new ArrayList<Integer>();
         int blocksSinceLastSectorHeader = 4;
         boolean is16BlockSector = false;
@@ -836,13 +838,20 @@ public class Common extends Application {
                 blocksSinceLastSectorHeader = 0;
                 continue;
             }
+            if (lines[i].startsWith("*") && ignoreAsterisk) {
+                // Ignore line and move to the next sector.
+                // (The line was a "No keys found or dead sector" message.)
+                is16BlockSector = false;
+                blocksSinceLastSectorHeader = 4;
+                continue;
+            }
             if (lines[i].matches("[0-9A-Fa-f-]+") == false) {
                 // Not pure hex (or NO_DATA).
                 return 2;
             }
             if (lines[i].length() != 32) {
-                    // Not 32 chars per line.
-                    return 3;
+                // Not 32 chars per line.
+                return 3;
             }
             blocksSinceLastSectorHeader++;
         }
@@ -851,8 +860,8 @@ public class Common extends Application {
 
     /**
      * Show a Toast message with error informations according to
-     * {@link #isValidDump(String[])}.
-     * @see #isValidDump(String[])
+     * {@link #isValidDump(String[], boolean)}.
+     * @see #isValidDump(String[], boolean)
      */
     public static void isValidDumpErrorToast(int errorCode,
             Context context) {

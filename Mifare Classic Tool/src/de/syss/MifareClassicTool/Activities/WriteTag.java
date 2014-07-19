@@ -485,7 +485,7 @@ public class WriteTag extends BasicActivity {
         // Read dump.
         File file = new File(pathToDump);
         String[] dump = Common.readFileLineByLine(file, false, this);
-        int err = Common.isValidDump(dump);
+        int err = Common.isValidDump(dump, false);
         if (err != 0) {
             // Error.
             Common.isValidDumpErrorToast(err, this);

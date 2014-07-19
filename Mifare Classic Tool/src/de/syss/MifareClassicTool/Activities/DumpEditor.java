@@ -451,11 +451,11 @@ public class DumpEditor extends BasicActivity {
      * a valid dump, an error Toast will be shown and the Activity exits.
      * @param lines Block data and header (e.g. "sector: 0"). Minimum is one
      * Sector (5 Lines, 1 Header + 4 Hex block data).
-     * @see Common#isValidDump(String[])
+     * @see Common#isValidDump(String[], boolean)
      * @see Common#isValidDumpErrorToast(int, Context)
      */
     private void initEditor(String[] lines) {
-        int err = Common.isValidDump(lines);
+        int err = Common.isValidDump(lines, true);
         if (err != 0) {
             Common.isValidDumpErrorToast(err, this);
             Toast.makeText(this, R.string.info_editor_init_error,
