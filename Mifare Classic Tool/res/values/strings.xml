@@ -199,7 +199,6 @@
     <string name="action_remove_duplicates">Remove Duplicates</string>
     <string name="action_show_preferences">Preferences</string>
     <string name="action_show_about">About</string>
-    <string name="action_rate_this_app">Rate this app</string>
     <string name="action_decode_manuf_date">Decode date of manufacture</string>
     <string name="action_replace">Replace</string>
     <string name="action_append">Append</string>
