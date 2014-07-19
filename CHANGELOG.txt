@@ -1,5 +1,13 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.7.7:
+ * Write dumps directly from the dump editor.
+   Thanks to "ozcho".
+ * Fixed bug which prevented tags from being read/displayed
+   if there is a "No keys found (or dead sector)" message.
+ * Fixed crash that occurred if one uses the
+   "Decode date of manufacture" function.
+
 Version 1.7.6:
  * Check dumps before writing.
  * Save multiple dumps in one file.
