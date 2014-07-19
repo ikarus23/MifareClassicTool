@@ -77,9 +77,10 @@ public class DumpEditor extends BasicActivity {
     // (See http://stackoverflow.com/a/2141166)
 
     /**
-     * A dump separated by new lines. Headers (e.g. "Sector 01") are marked
-     * with a "+"-symbol (e.g. "+Sector 01"). Errors (e.g. "No keys found or
-     * dead sector") are marked with a "*"-symbol.
+     * The corresponding Intent will contain a dump separated by new lines.
+     * Headers (e.g. "Sector 01") are marked with a "+"-symbol
+     * (e.g. "+Sector 01"). Errors (e.g. "No keys found or dead sector")
+     * are marked with a "*"-symbol.
      */
     public final static String EXTRA_DUMP =
             "de.syss.MifareClassicTool.Activity.DUMP";
@@ -226,7 +227,7 @@ public class DumpEditor extends BasicActivity {
         case R.id.menuDumpEditorShare:
             shareDump();
             return true;
-        case R.id.menuDumpEditorOpenValueBLockTool:
+        case R.id.menuDumpEditorOpenValueBlockTool:
             openValueBlockTool();
             return true;
         case R.id.menuDumpEditorOpenAccessConditionTool:
@@ -234,6 +235,9 @@ public class DumpEditor extends BasicActivity {
             return true;
         case R.id.menuDumpEditorDecodeDateOfManuf:
             decodeDateOfManuf();
+            return true;
+        case R.id.menuDumpEditorWriteDump:
+            writeDump();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -643,15 +647,6 @@ public class DumpEditor extends BasicActivity {
     }
 
     /**
-     * Open the Value Block decoder/encoder ({@link ValueBlockTool}).
-     * @see ValueBlockTool
-     */
-    private void openValueBlockTool() {
-        Intent intent = new Intent(this, ValueBlockTool.class);
-        startActivity(intent);
-    }
-
-    /**
      * Decode the date of manufacture (using the last 2 bytes of the
      * manufacturer block) and display the result as dialog.
      * Both of this bytes must be in BCD format (only digits, no letters).
@@ -718,11 +713,35 @@ public class DumpEditor extends BasicActivity {
     }
 
     /**
+     * Open the Value Block decoder/encoder ({@link ValueBlockTool}).
+     * @see ValueBlockTool
+     */
+    private void openValueBlockTool() {
+        Intent intent = new Intent(this, ValueBlockTool.class);
+        startActivity(intent);
+    }
+
+    /**
      * Open the Access Condition decoder/encoder ({@link AccessConditionTool}).
      * @see AccessConditionTool
      */
     private void openAccessConditionTool() {
         Intent intent = new Intent(this, AccessConditionTool.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Write the currently displayed dump.
+     * @see WriteTag
+     */
+    private void writeDump() {
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
+        Intent intent = new Intent(this, WriteTag.class);
+        intent.putExtra(WriteTag.EXTRA_DUMP, mLines);
         startActivity(intent);
     }
 

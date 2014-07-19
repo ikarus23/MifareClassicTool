@@ -174,7 +174,8 @@
     <string name="action_decode">Decode</string>
     <string name="action_encode">Encode</string>
     <string name="action_wirte_block">Write Block</string>
-    <string name="action_write_dump">Write Dump (Clone)</string>
+    <string name="action_write_dump_clone">Write Dump (Clone)</string>
+    <string name="action_write_dump">Write Dump</string>
     <string name="action_factory_format">Factory Format</string>
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>

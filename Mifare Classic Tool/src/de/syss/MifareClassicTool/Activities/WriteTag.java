@@ -49,6 +49,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,13 @@ import de.syss.MifareClassicTool.R;
  */
 public class WriteTag extends BasicActivity {
 
+    /**
+     * The corresponding Intent will contain a dump. Headers
+     * (e.g. "Sector 01") are marked with a "+"-symbol (e.g. "+Sector 01").
+     */
+    public final static String EXTRA_DUMP =
+            "de.syss.MifareClassicTool.Activity.DUMP";
+
     private static final int FC_WRITE_DUMP = 1;
     private static final int CKM_WRTIE_DUMP = 2;
     private static final int CKM_WRTIE_BLOCK = 3;
@@ -77,10 +85,15 @@ public class WriteTag extends BasicActivity {
     private CheckBox mWriteManufBlock;
     private CheckBox mEnableStaticAC;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
+    private boolean mWriteDumpFromEditor = false;
+    private String[] mDumpFromEditor;
 
 
     /**
-     * Initialize the layout and some member variables.
+     * Initialize the layout and some member variables. If the Intent
+     * contains {@link #EXTRA_DUMP} (and therefore was send from
+     * {@link DumpEditor}), the write dump option will be adjusted
+     * accordingly.
      */
     // It is checked but the IDE don't get it.
     @SuppressWarnings("unchecked")
@@ -113,6 +126,27 @@ public class WriteTag extends BasicActivity {
                 mDumpWithPos = (HashMap<Integer, HashMap<Integer, byte[]>>) s;
             }
         }
+
+        Intent i = getIntent();
+        if (i.hasExtra(EXTRA_DUMP)) {
+            // Write dump directly from editor.
+            mDumpFromEditor = i.getStringArrayExtra(EXTRA_DUMP);
+            mWriteDumpFromEditor = true;
+            // Show "Write Dump" option and disable other write options.
+            RadioButton writeBlock = (RadioButton) findViewById(
+                    R.id.radioButtonWriteTagWriteBlock);
+            RadioButton factoryFormat = (RadioButton) findViewById(
+                    R.id.radioButtonWriteTagFactoryFormat);
+            RadioButton writeDump = (RadioButton) findViewById(
+                    R.id.radioButtonWriteTagWriteDump);
+            writeDump.performClick();
+            writeBlock.setEnabled(false);
+            factoryFormat.setEnabled(false);
+            // Update button text.
+            Button writeDumpButton = (Button) findViewById(
+                    R.id.buttonWriteTagDump);
+            writeDumpButton.setText(R.string.action_write_dump);
+        }
     }
 
     /**
@@ -144,7 +178,7 @@ public class WriteTag extends BasicActivity {
      * {@link FileChooser}.
      * @see #writeBlock()
      * @see #checkTag()
-     * @see #readDumpAndShowSectorChooserDialog(String)
+     * @see #checkDumpAndShowSectorChooserDialog(String[])
      * @see #createFactoryFormatedDump()
      */
     @Override
@@ -158,8 +192,8 @@ public class WriteTag extends BasicActivity {
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
             } else {
-                // Create keys.
-                readDumpAndShowSectorChooserDialog(data.getStringExtra(
+                // Read dump and create keys.
+                readDumpFromFile(data.getStringExtra(
                         FileChooser.EXTRA_CHOSEN_FILE));
             }
             break;
@@ -421,15 +455,20 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Open a file chooser ({@link FileChooser}) and wait for its
-     * result in {@link #onActivityResult(int, int, Intent)}.
-     * (Also check the static Access Conditions, if the option is enabled.)
+     * Regular behavior: Open a file chooser ({@link FileChooser}) to select
+     * a dump and wait for its result in
+     * {@link #onActivityResult(int, int, Intent)}.
      * This method triggers the call chain: open {@link FileChooser}
-     * (this method) -> read dump
-     * ({@link #readDumpAndShowSectorChooserDialog(String)}) ->
+     * (this method) -> read dump ({@link #readDumpFromFile(String)})
+     * -> check dump ({@link #checkDumpAndShowSectorChooserDialog(String[])}) ->
      * open {@link KeyMapCreator} ({@link #createKeyMapForDump()})
      * -> run {@link #checkTag()} -> run
-     * {@link #writeDump(HashMap, SparseArray)}.
+     * {@link #writeDump(HashMap, SparseArray)}.<br />
+     * Behavior if the dump is already there (from the {@link DumpEditor}):
+     * The same as before except the call chain will directly start from
+     * {@link #checkDumpAndShowSectorChooserDialog(String[])}.<br />
+     * (The static Access Conditions will be checked in any case, if the
+     * option is enabled.)
      * @param view The View object that triggered the method
      * (in this case the write full dump button).
      * @see FileChooser
@@ -452,24 +491,44 @@ public class WriteTag extends BasicActivity {
                 return;
             }
         }
-        // Show file chooser (chose dump).
-        Intent intent = new Intent(this, FileChooser.class);
-        intent.putExtra(FileChooser.EXTRA_DIR,
-                Environment.getExternalStoragePublicDirectory(
-                        Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
-        intent.putExtra(FileChooser.EXTRA_TITLE,
-                getString(R.string.text_open_dump_title));
-        intent.putExtra(FileChooser.EXTRA_CHOOSER_TEXT,
-                getString(R.string.text_choose_dump_to_write));
-        intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
-                getString(R.string.action_write_full_dump));
-        startActivityForResult(intent, FC_WRITE_DUMP);
+
+        if (mWriteDumpFromEditor) {
+            // Write dump directly from the dump editor.
+            // (Dump has already been chosen.)
+            checkDumpAndShowSectorChooserDialog(mDumpFromEditor);
+        } else {
+            // Show file chooser (chose dump).
+            Intent intent = new Intent(this, FileChooser.class);
+            intent.putExtra(FileChooser.EXTRA_DIR,
+                    Environment.getExternalStoragePublicDirectory(
+                            Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
+            intent.putExtra(FileChooser.EXTRA_TITLE,
+                    getString(R.string.text_open_dump_title));
+            intent.putExtra(FileChooser.EXTRA_CHOOSER_TEXT,
+                    getString(R.string.text_choose_dump_to_write));
+            intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
+                    getString(R.string.action_write_full_dump));
+            startActivityForResult(intent, FC_WRITE_DUMP);
+        }
     }
 
     /**
-     * Triggered by {@link #onActivityResult(int, int, Intent)} after the
-     * dump was selected (by {@link FileChooser}), this method
-     * reads the dump (skipping all blocks with unknown data "-") and saves
+     * Read the dump (skipping all blocks with unknown data "-") and
+     * call {@link #checkDumpAndShowSectorChooserDialog(String[])}.
+     * @param pathToDump path and filename of the dump
+     * (selected by {@link FileChooser}).
+     * @see #checkDumpAndShowSectorChooserDialog(String[])
+     */
+    private void readDumpFromFile(String pathToDump) {
+        // Read dump.
+        File file = new File(pathToDump);
+        String[] dump = Common.readFileLineByLine(file, false, this);
+        checkDumpAndShowSectorChooserDialog(dump);
+    }
+
+    /**
+     * Triggered after the dump was selected (by {@link FileChooser})
+     * and read (by {@link #readDumpFromFile(String)}), this method saves
      * the data including its position in {@link #mDumpWithPos}.
      * If the "use static Access Condition" option is enabled, all the ACs
      * will be replaced by the static ones.
@@ -477,14 +536,11 @@ public class WriteTag extends BasicActivity {
      * the sectors he wants to write. When the sectors are chosen, this
      * method calls {@link #createKeyMapForDump()} to create
      * a key map for the present tag.
-     * @param pathToDump path and filename of the dump
-     * (selected by {@link FileChooser}).
+     * @param dump Dump selected by {@link FileChooser} or directly
+     * from the {@link DumpEditor} (via an Intent with{@link #EXTRA_DUMP})).
      * @see #createKeyMapForDump()
      */
-    private void readDumpAndShowSectorChooserDialog(String pathToDump) {
-        // Read dump.
-        File file = new File(pathToDump);
-        String[] dump = Common.readFileLineByLine(file, false, this);
+    private void checkDumpAndShowSectorChooserDialog(String[] dump) {
         int err = Common.isValidDump(dump, false);
         if (err != 0) {
             // Error.
