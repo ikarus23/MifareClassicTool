@@ -94,6 +94,7 @@ Some important things are:
   * Samsung Galaxy Note 3
   * LG G2
   * LG Optimus L7 II
+  * Foxcon InFocus M320
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
