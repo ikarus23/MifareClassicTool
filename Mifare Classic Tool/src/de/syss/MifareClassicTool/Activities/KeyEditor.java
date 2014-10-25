@@ -161,8 +161,8 @@ public class KeyEditor extends BasicActivity {
      * Check if it is a valid key file
      * ({@link #isValidKeyFileErrorToast()}),
      * ask user for a save name and then call
-     * {@link Common#saveFile(File, String[], boolean)}
-     * @see Common#saveFile(File, String[], boolean)
+     * {@link Common#checkFileExistenceAndSave(File, String[], boolean, Context)}
+     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context)
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {
@@ -189,20 +189,14 @@ public class KeyEditor extends BasicActivity {
                 .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                    public void onClick(DialogInterface dialog,
+                            int whichButton) {
                         if (input.getText() != null
                                 && !input.getText().toString().equals("")) {
                             File file = new File(path.getPath(),
                                     input.getText().toString());
-                            if (Common.saveFile(file, mLines, false)) {
-                                Toast.makeText(cont,
-                                        R.string.info_save_successful,
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(cont,
-                                        R.string.info_save_error,
-                                        Toast.LENGTH_LONG).show();
-                            }
+                            Common.checkFileExistenceAndSave(file, mLines,
+                                    false, cont);
                         } else {
                             // Empty name is not allowed.
                             Toast.makeText(cont, R.string.info_empty_file_name,
@@ -213,7 +207,8 @@ public class KeyEditor extends BasicActivity {
                 .setNegativeButton(R.string.action_cancel,
                         new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                    public void onClick(DialogInterface dialog,
+                            int whichButton) {
                         // Do nothing.
                     }
                 }).show();

@@ -431,11 +431,13 @@
         current year (e.g. 12, meaning 2012).
         \n\nMaybe the tag is not an original Mifare Classic tag.</string>
     <string name="dialog_save_conflict_title">File already exists</string>
-    <string name="dialog_save_conflict">This file already exists.
+    <string name="dialog_save_conflict_dump">This file already exists.
         What do you want to do?
         \n\n<b>Note: Files containing multiple dumps (created by using
         \"append\") can not be displayed, edited or written by
         this app.</b></string>
+    <string name="dialog_save_conflict_keyfile">This file already exists.
+        What do you want to do?</string>
     <string name="dialog_donate_title">Donate</string>
     <string name="dialog_donate"><b>Mifare Classic Tool has been updated!</b>
         \n\nIf the new features, fixes or the app in general makes you happy,

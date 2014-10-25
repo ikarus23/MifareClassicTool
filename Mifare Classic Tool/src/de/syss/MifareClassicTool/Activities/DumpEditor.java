@@ -282,10 +282,10 @@ public class DumpEditor extends BasicActivity {
     /**
      * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
      * ask user for a save name and then call
-     * {@link #checkFileExistenceAndSave(File)}.
+     * {@link Common#checkFileExistenceAndSave(File, String[], boolean, Context)}
      * @see #checkDumpAndUpdateLines()
      * @see Common#isValidDumpErrorToast(int, Context)
-     * @see #checkFileExistenceAndSave(File)
+     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context)
      */
     private void saveDump() {
         int err = checkDumpAndUpdateLines();
@@ -320,7 +320,8 @@ public class DumpEditor extends BasicActivity {
                             && !input.getText().toString().equals("")) {
                         File file = new File(path.getPath(),
                                 input.getText().toString());
-                        checkFileExistenceAndSave(file);
+                        Common.checkFileExistenceAndSave(file, mLines,
+                                true, cont);
                     } else {
                         // Empty name is not allowed.
                         Toast.makeText(cont, R.string.info_empty_file_name,
@@ -336,65 +337,6 @@ public class DumpEditor extends BasicActivity {
                 }
             }).show();
         onUpdateColors(null);
-    }
-
-    /**
-     * Check if the file already exists. If so, present a dialog to the user
-     * with the options: "Replace", "Append" and "Cancel".
-     * @param file File that will be written.
-     */
-    private void checkFileExistenceAndSave(final File file) {
-        final Context context = this;
-        if (file.exists()) {
-            // File already exists. Replace? Append? Cancel?
-            new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_save_conflict_title)
-            .setMessage(R.string.dialog_save_conflict)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(R.string.action_replace,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Replace.
-                    if (Common.saveFile(file, mLines, false)) {
-                        Toast.makeText(context, R.string.info_save_successful,
-                                Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(context, R.string.info_save_error,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            })
-            .setNeutralButton(R.string.action_append,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Append.
-                    if (Common.saveFile(file, mLines, true)) {
-                        Toast.makeText(context, R.string.info_save_successful,
-                                Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(context, R.string.info_save_error,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            })
-            .setNegativeButton(R.string.action_cancel,
-                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // Cancel. Do  nothing.
-                }
-            }).show();
-        } else {
-            if (Common.saveFile(file, mLines, false)) {
-                Toast.makeText(context, R.string.info_save_successful,
-                        Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(context, R.string.info_save_error,
-                        Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     /**

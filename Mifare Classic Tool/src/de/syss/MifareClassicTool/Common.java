@@ -31,9 +31,11 @@ import java.util.Arrays;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -255,6 +257,97 @@ public class Common extends Application {
     }
 
     /**
+     * Check if the file already exists. If so, present a dialog to the user
+     * with the options: "Replace", "Append" and "Cancel".
+     * @param file File that will be written.
+     * @param lines The lines to save.
+     * @param isDump Set to True if file and lines are a dump file.
+     * @param context The Context in which the dialog and Toast will be shown.
+     * @see #saveFile(File, String[], boolean)
+     * @see #saveFileAppend(File, String[], boolean)
+     */
+    public static void checkFileExistenceAndSave(final File file,
+            final String[] lines, final boolean isDump, final Context context) {
+        if (file.exists()) {
+            // Save conflict for dump file or key file?
+            int message = R.string.dialog_save_conflict_keyfile;
+            if (isDump) {
+                message = R.string.dialog_save_conflict_dump;
+            }
+
+            // File already exists. Replace? Append? Cancel?
+            new AlertDialog.Builder(context)
+            .setTitle(R.string.dialog_save_conflict_title)
+            .setMessage(message)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(R.string.action_replace,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Replace.
+                    if (Common.saveFile(file, lines, false)) {
+                        Toast.makeText(context, R.string.info_save_successful,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, R.string.info_save_error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+            .setNeutralButton(R.string.action_append,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Append.
+                    if (Common.saveFileAppend(file, lines, isDump)) {
+                        Toast.makeText(context, R.string.info_save_successful,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, R.string.info_save_error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+            .setNegativeButton(R.string.action_cancel,
+                     new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    // Cancel. Do  nothing.
+                }
+            }).show();
+        } else {
+            if (Common.saveFile(file, lines, false)) {
+                Toast.makeText(context, R.string.info_save_successful,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, R.string.info_save_error,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    /**
+     * Append an array of strings (each field is one line) to a given file.
+     * @param file The file to write to.
+     * @param lines The lines to save.
+     * @param comment If true, add a comment before the appended section.
+     * @return True if file writing was successful. False otherwise.
+     */
+    public static boolean saveFileAppend(File file, String[] lines,
+            boolean comment) {
+        if (comment == true) {
+            // Append to a existing file.
+            String[] newLines = new String[lines.length + 4];
+            System.arraycopy(lines, 0, newLines, 4, lines.length);
+            newLines[1] = "";
+            newLines[2] = "# Append #######################";
+            newLines[3] = "";
+            lines = newLines;
+        }
+        return saveFile(file, lines, true);
+    }
+
+    /**
      * Write an array of strings (each field is one line) to a given file.
      * @param file The file to write to.
      * @param lines The lines to save.
@@ -264,20 +357,13 @@ public class Common extends Application {
     public static boolean saveFile(File file, String[] lines, boolean append) {
         boolean noError = true;
         if (file != null && lines != null) {
-            if (append) {
-                // Append to a existing file.
-                String[] newLines = new String[lines.length + 4];
-                System.arraycopy(lines, 0, newLines, 4, lines.length);
-                newLines[0] = "";
-                newLines[1] = "";
-                newLines[2] = "# Append #######################";
-                newLines[3] = "";
-                lines = newLines;
-            }
-
             BufferedWriter bw = null;
             try {
                 bw = new BufferedWriter(new FileWriter(file, append));
+                // Add new line before appending.
+                if (append == true) {
+                    bw.newLine();
+                }
                 int i;
                 for(i = 0; i < lines.length-1; i++) {
                     bw.write(lines[i]);
