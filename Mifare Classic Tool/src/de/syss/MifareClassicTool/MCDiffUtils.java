@@ -34,15 +34,17 @@ public class MCDiffUtils {
      * and not multiple dumps).
      * @param dump2 The second dump. The dump has to be clean (no comments
      * and not multiple dumps).
-     * @return First key is the sector number, second key is the block number
-     * and the array contains the indices of the position where the blocks
-     * were different.
+     * @return Indices where dump2 differs from dump1. The key represents
+     * the sector number. The first dimension of the value represents the
+     * block number and the second is a list of indices where dump2 is
+     * different from dump1. If the value is null then the sector only
+     * exists in dump2.
      */
-    public static SparseArray<SparseArray<Integer[]>> diffIndices(
+    public static SparseArray<Integer[][]> diffIndices(
             String[] dump1, String[] dump2) {
         // Convert dump1 and dump2 to the format the other
         // diffIndices() function likes (SparseArrays).
-
+        return diffIndices(convertDumpFormat(dump1), convertDumpFormat(dump2));
     }
 
     /**
@@ -105,6 +107,36 @@ public class MCDiffUtils {
             }
         }
 
+        return ret;
+    }
+
+    /**
+     * Convert the format of an dump.
+     * @param dump A dump in the same format a dump file is.
+     * (with no comments, not multiple dumps (appended) and validated by
+     * {@link Common#isValidDump(String[], boolean)})
+     * @return The dump in a key value pair format. The key is the sector
+     * number. The value is an String array. Each field of the array
+     * represents a block.
+     */
+    private static SparseArray<String[]> convertDumpFormat(String[] dump) {
+        SparseArray<String[]> ret = new SparseArray<String[]>();
+        int i = 0;
+        for (String line : dump) {
+            int sector = 0;
+            if (line.startsWith("+")) {
+                String[] tmp = line.split(": ");
+                sector = Integer.parseInt(tmp[tmp.length-1]);
+                i = 0;
+                if (sector < 32) {
+                    ret.put(sector, new String[4]);
+                } else {
+                    ret.put(sector, new String[16]);
+                }
+            } else {
+                ret.get(sector)[i++] = line;
+            }
+        }
         return ret;
     }
 
