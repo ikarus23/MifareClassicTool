@@ -18,6 +18,8 @@
 
 package de.syss.MifareClassicTool;
 
+import java.util.ArrayList;
+
 import android.util.SparseArray;
 
 /**
@@ -49,13 +51,61 @@ public class MCDiffUtils {
      * string array represents the blocks.
      * @param dump2 The second dump. The sector number is key and the
      * string array represents the blocks.
-     * @return First key is the sector number, second key is the block number
-     * and the array contains the indices of the position where the blocks
-     * were different.
+     * @return Indices where dump2 differs from dump1. The key represents
+     * the sector number. The first dimension of the value represents the
+     * block number and the second is a list of indices where dump2 is
+     * different from dump1. If the value is null then the sector only
+     * exists in dump2.
      */
-    public static SparseArray<SparseArray<Integer[]>> diffIndices(
+    public static SparseArray<Integer[][]> diffIndices(
             SparseArray<String[]> dump1, SparseArray<String[]> dump2) {
+        SparseArray<Integer[][]> ret =
+                new SparseArray<Integer[][]>();
+        // Walk through all sectors of dump1.
+        for (int i = 0; i < dump1.size(); i++) {
+            String[] sector1 = dump1.valueAt(i);
+            int sectorNr = dump1.keyAt(i);
+            String[] sector2 = dump2.get(sectorNr);
 
+            // Check if dump2 has the current sector of dump1.
+            if (sector2 == null) {
+                ret.put(sectorNr, null);
+                continue;
+            }
+
+            // Check the blocks.
+            Integer[][] diffSector = new Integer[sector1.length][];
+            // Walk through all blocks.
+            for (int j = 0; j < sector1.length; j++) {
+                ArrayList<Integer> diffIndices = new ArrayList<Integer>();
+                // Walk through all symbols.
+                for (int k = 0; k < sector1[j].length(); k++) {
+                    if (sector1[j].charAt(k) != sector2[j].charAt(k)) {
+                        // Found different symbol at index k.
+                        diffIndices.add(k);
+                    }
+                }
+                if (diffIndices.size() == 0) {
+                    // Block was identical.
+                    diffSector[j] = new Integer[0];
+                } else {
+                    diffSector[j] = diffIndices.toArray(
+                            new Integer[diffIndices.size()]);
+                }
+            }
+            ret.put(sectorNr, diffSector);
+        }
+
+        // Are there sectors that only occur in dump2?
+        for (int i = 0; i < dump2.size(); i++) {
+            int sectorNr = dump2.keyAt(i);
+            if (dump1.get(sectorNr) == null) {
+                // Sector only exists in dump2.
+                ret.put(sectorNr, null);
+            }
+        }
+
+        return ret;
     }
 
 }
