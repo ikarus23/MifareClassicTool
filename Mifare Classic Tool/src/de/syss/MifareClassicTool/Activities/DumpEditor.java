@@ -188,6 +188,10 @@ public class DumpEditor extends BasicActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dump_editor_functions, menu);
+        // Enable/Disable write dump function depending on NFC availability.
+        menu.findItem(R.id.menuDumpEditorWriteDump).setEnabled(
+                Common.getNfcAdapter() != null
+                && Common.getNfcAdapter().isEnabled());
         return true;
     }
 
