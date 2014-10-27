@@ -46,7 +46,8 @@
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Escoje algún fichero de claves:</string>
-    <string name="text_wait_read_tag">Leyendo etiqueta&#8230;\n(No quites la etiqueta)</string>
+    <string name="text_wait_read_tag">Leyendo etiqueta&#8230;\n(No quites
+        la etiqueta)</string>
     <string name="text_key_map_progress">Progreso del mapeo de claves:</string>
     <string name="text_sector">Sector</string>
     <string name="text_block">Bloque</string>
@@ -74,8 +75,9 @@
     <string name="text_sector_range_all">Todos</string>
     <string name="text_update_colors">Actualizar Colores</string>
     <string name="text_data">Datos:</string>
-    <string name="text_write_dump_info">Escribe un dumpeo (o algunos sectores de él) en una
-        a etiqueta. ¡Los blosques que contengan información desconocida (---) serán ignorados!</string>
+    <string name="text_write_dump_info">Escribe un dumpeo (o algunos sectores
+        de él) en una a etiqueta. ¡Los blosques que contengan información
+        desconocida (---) serán ignorados!</string>
     <string name="text_factory_format_info">Intenta formatear la etiqueta a
         estado de fábrica</string>
     <string name="text_starting_at_0">(Empezando por 0)</string>
@@ -98,7 +100,8 @@
     <string name="text_invalid_ac_or_sector_dead">Condiciones de Acceso No Válidas o
         sector muerto :(</string>
     <string name="text_strange_error">Algún error extraño ha ocurrido :(</string>
-    <string name="text_no_mfc_support_device">¡Este dispositivo no soporta MiFare Classic!</string>
+    <string name="text_no_mfc_support_device">¡Este dispositivo no soporta
+        MiFare Classic!</string>
     <string name="text_no_mfc_support_tag">¡No es una etiqueta Mifare Classic!</string>
     <string name="text_no_tag">No hay una etiqueta Mifare Classic presente</string>
     <string name="text_generic_info">Información Genérica</string>
@@ -109,7 +112,8 @@
     <string name="text_sak">SAK</string>
     <string name="text_ats">ATS</string>
     <string name="text_tag_type_and_manuf">Fabricante y tipo de etiqueta</string>
-    <string name="text_tag_type_guess">\"Fabricante y tipo de etiqueta\" Puede ser erróneo.\nMira en  \"Ayuda e Info\" para más información.</string>
+    <string name="text_tag_type_guess">\"Fabricante y tipo de etiqueta\" Puede
+        ser erróneo.\nMira en  \"Ayuda e Info\" para más información.</string>
     <string name="text_mem_size">Tamaño de la Memoria</string>
     <string name="text_block_size">Tamaño de Bloque</string>
     <string name="text_sector_count">Número de Sectores</string>
@@ -123,7 +127,8 @@
     <string name="text_share_subject_key_file">MCT Archivo de Claves</string>
     <string name="text_option_info">Info a Opciones</string>
     <string name="text_static_ac_default">08778F</string>
-    <string name="text_no_key_io_error">No se encontraron Claves (o sector muerto)</string>
+    <string name="text_no_key_io_error">No se encontraron Claves
+        (o sector muerto)</string>
     <string name="text_ac_label">ACs:</string>
     <string name="text_block_0">Bloque 0 (0-4):</string>
     <string name="text_block_1">Bloque 1 (5-9):</string>
@@ -143,7 +148,8 @@
     <string name="action_exit_app">Salir de la Aplicación</string>
     <string name="action_nfc">Ir a Ajustes NFC</string>
     <string name="action_create_key_map">Mapear Claves a Sectores</string>
-    <string name="action_create_key_map_and_read">Comenzar Mapeo y Leer Etiqueta</string>
+    <string name="action_create_key_map_and_read">Comenzar Mapeo y
+        Leer Etiqueta</string>
     <string name="action_help">Ayuda e Info</string>
     <string name="action_editor_only">Usar solo como Editor</string>
     <string name="action_ok">OK</string>
@@ -153,9 +159,12 @@
     <string name="action_change">Cambiar</string>
     <string name="action_read_all_sectors">Leer todos los sectores</string>
     <string name="action_write_block">Escribir Bloque</string>
-    <string name="action_create_key_map_and_write_block">Comenzar mapeo y escribir Bloque</string>
-    <string name="action_create_key_map_and_write_dump">Comenzar mapeo y escribir Dumpeo</string>
-    <string name="action_create_key_map_and_factory_format">Comenzar mapeo y formatear Etiqueta</string>
+    <string name="action_create_key_map_and_write_block">Comenzar mapeo y
+        escribir Bloque</string>
+    <string name="action_create_key_map_and_write_dump">Comenzar mapeo y
+        escribir Dumpeo</string>
+    <string name="action_create_key_map_and_factory_format">Comenzar mapeo y
+        formatear Etiqueta</string>
     <string name="action_write_full_dump">Seleccionar Dumpeo</string>
     <string name="action_i_know_what_i_am_doing">Sé lo que estoy haciendo</string>
     <string name="action_open_key_file">Abrir Fichero de Claves</string>
@@ -169,11 +178,15 @@
     <string name="action_wirte_block">Escribir Bloque</string>
     <string name="action_write_dump">Escribir Dumpeo (Clonar)</string>
     <string name="action_factory_format">Formateo de fábrica</string>
-    <string name="action_write_mfid">Avanzado: Habilitar escritura al bloque de fábrica</string>
+    <string name="action_write_mfid">Avanzado: Habilitar escritura al bloque
+        de fábrica</string>
     <string name="action_show_options">Mostrar Opciones</string>
-    <string name="action_static_ac">Usar estas condiciones de acceso para todos los sectores:</string>
-    <string name="action_auto_reconnect">Avanzado: Auto reconectar si se pierde la etiqueta durante el proceso de mapeo de claves</string>
-    <string name="action_save_last_key_files">Recordar los ficheros de claves seleccionados (diálogo de mapeo de claves)</string>
+    <string name="action_static_ac">Usar estas condiciones de acceso para
+        todos los sectores:</string>
+    <string name="action_auto_reconnect">Avanzado: Auto reconectar si se
+        pierde la etiqueta durante el proceso de mapeo de claves</string>
+    <string name="action_save_last_key_files">Recordar los ficheros de claves
+        seleccionados (diálogo de mapeo de claves)</string>
     <string name="action_save">Salvar</string>
     <string name="action_share">Compartir</string>
     <string name="action_data_as_ascii">Catos como ASCII</string>
@@ -181,40 +194,49 @@
     <string name="action_show_value_blocks_as_int">Value Blocks como Int.</string>
     <string name="action_show_tag_info">Mostrar Información de la Etiqueta</string>
     <string name="action_show_vb_tool">De-/Codificador de Value Block </string>
-    <string name="action_show_ac_tool">De-/Codificador de Condiciones de Acceso</string>
+    <string name="action_show_ac_tool">De-/Codificador de Condiciones
+        de Acceso</string>
     <string name="action_create_new_file">Crear Nuevo Fichero</string>
     <string name="action_delete_file">Eliminar Fichero</string>
     <string name="action_remove_duplicates">Quitar Duplicados</string>
     <string name="action_show_preferences">Preferencias</string>
     <string name="action_show_about">Sobre</string>
-    <string name="action_rate_this_app">Puntúa esta App</string>
     <string name="action_decode_manuf_date">Desacodificar fecha de fabricación</string>
     <string name="action_replace">Reemplazar</string>
     <string name="action_append">Combinar</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Encontrada nueva etiqueta</string>
-    <string name="info_no_external_storage">Error: sin acceso al almacenamiento externo</string>
+    <string name="info_no_external_storage">Error: sin acceso al
+        almacenamiento externo</string>
     <string name="info_no_tag_found">Error: no hay una etiqueta Mifare Classic</string>
     <string name="info_wait_key_map">Creando Mapa de Claves&#8230;
         Espere por favor&#8230;</string>
-    <string name="info_tag_removed_while_reading">Error: Tag quitada durante la lectura</string>
+    <string name="info_tag_removed_while_reading">Error: Tag quitada durante
+        la lectura</string>
     <string name="info_no_vb_in_dump">No hay value blocks en este dumpeo</string>
-    <string name="info_valid_dump_not_hex">Error: Algunos bloques no contienen datos válidos (no hex)</string>
-    <string name="info_valid_dump_not_4_or_16_lines">Error: Algunos sectores no tienen 4 o 16 bloques (lines)</string>
-    <string name="info_valid_dump_not_16_bytes">Error: algunos bloques no tienen 16 bytes (32 caracteres)</string>
+    <string name="info_valid_dump_not_hex">Error: Algunos bloques no contienen
+        datos válidos (no hex)</string>
+    <string name="info_valid_dump_not_4_or_16_lines">Error: Algunos sectores
+        no tienen 4 o 16 bloques (lines)</string>
+    <string name="info_valid_dump_not_16_bytes">Error: algunos bloques no
+        tienen 16 bytes (32 caracteres)</string>
     <string name="info_valid_dump_sector_range">Error: Sector out of range
         (&#60; 0 o &#62; 39)</string>
-    <string name="info_valid_dump_double_sector">Error: Más de una vez el mismo número de sector</string>
+    <string name="info_valid_dump_double_sector">Error: Más de una vez el
+        mismo número de sector</string>
     <string name="info_valid_dump_empty_dump">Error: Dumpeo vacío</string>
-    <string name="info_editor_init_error">Error: Datos incorrectos para este editor</string>
+    <string name="info_editor_init_error">Error: Datos incorrectos para
+        este editor</string>
     <string name="info_no_dumps">No hay dumpeos.
         Lee una etiqueta y salva el dumpeo</string>
     <string name="info_invalid_range">Error en rango de mapeo</string>
     <string name="info_mapping_sector_out_of_range">Error en rango de mapeo:
        Sector fuera de rango. Usa una etiqueta más grande.</string>
-    <string name="info_no_key_found">No se encontró clave válida en el fichero de claves</string>
-    <string name="info_data_location_not_set">Error: Bloque o sector no especificado</string>
+    <string name="info_no_key_found">No se encontró clave válida en
+        el fichero de claves</string>
+    <string name="info_data_location_not_set">Error: Bloque o sector
+        no especificado</string>
     <string name="info_sector_out_of_range">Error: Sector fuera de rango</string>
     <string name="info_block_out_of_range">Error: Bloque fuera de rango</string>
     <string name="info_not_hex_data">Error: Los datos han de estar en hexadecimal
@@ -222,34 +244,48 @@
     <string name="info_not_16_byte">Error: Los datos han de ser 16 bytes
         (32 caracteres) long</string>
     <string name="info_is_not_vb">Error: No es un value block.</string>
-    <string name="info_block_not_in_sector">Error: El sector no contiene el número de bloque especificado.</string>
+    <string name="info_block_not_in_sector">Error: El sector no contiene el
+        número de bloque especificado.</string>
     <string name="info_error_writing_block">Error: El bloque es de solo lectura
         o no escribible con las claves del fichero de claves</string>
     <string name="info_write_successful">Datos escritos con éxito</string>
-    <string name="info_none_key_valid_for_reading">Error: Ninguna de las claves es válida para lectura</string>
-    <string name="info_not_supported_now">Esta función no está soportada en esta versión
-        (Quizás en futuras versiones&#8230;)</string>
-    <string name="info_valid_keys_no_keys">Error: Debe haber al menos una clave</string>
-    <string name="info_valid_keys_not_hex">Error: Algunas claves contienen datos inválidos (no hex)</string>
-    <string name="info_valid_keys_not_6_byte"> Error: Algunas claves no tienen 6 bytes (12 caracteres)</string>
-    <string name="info_empty_file_name">Error: Los ficheros deben tener un nombre</string>
+    <string name="info_none_key_valid_for_reading">Error: Ninguna de las
+        claves es válida para lectura</string>
+    <string name="info_not_supported_now">Esta función no está soportada
+        en esta versión (Quizás en futuras versiones&#8230;)</string>
+    <string name="info_valid_keys_no_keys">Error: Debe haber al menos
+        una clave</string>
+    <string name="info_valid_keys_not_hex">Error: Algunas claves contienen
+        datos inválidos (no hex)</string>
+    <string name="info_valid_keys_not_6_byte"> Error: Algunas claves no
+        tienen 6 bytes (12 caracteres)</string>
+    <string name="info_empty_file_name">Error: Los ficheros deben tener
+        un nombre</string>
     <string name="info_save_successful">Datos salvados correctamente</string>
     <string name="info_save_error">Error: Error al salvar datos</string>
     <string name="info_file_already_exists">Error: Fichero ya existe</string>
-    <string name="info_tag_too_small">Error: La etiqueta es demasiado pequeña para el dumpeo seleccionado</string>
-    <string name="info_write_error">Error: Algún error ocurrió durante la escritura.\nPodría ser realmente malo.</string>
-    <string name="info_check_ac_error">Error: Etiqueta perdida mientras se comprobaban claves con acceso a escritura</string>
+    <string name="info_tag_too_small">Error: La etiqueta es demasiado pequeña
+        para el dumpeo seleccionado</string>
+    <string name="info_write_error">Error: Algún error ocurrió durante la
+        escritura.\nPodría ser realmente malo.</string>
+    <string name="info_check_ac_error">Error: Etiqueta perdida mientras se
+        comprobaban claves con acceso a escritura</string>
     <string name="info_nothing_to_write">No queda nada que escribir</string>
-    <string name="info_no_int_to_encode">Error: No existe un integer que codificar</string>
-    <string name="info_addr_not_hex_byte">Error: La dirección no es un byte hexadecimal
-        (0-9, A-F, 2 caracteres)</string>
+    <string name="info_no_int_to_encode">Error: No existe un integer que
+        codificar</string>
+    <string name="info_addr_not_hex_byte">Error: La dirección no es un
+        byte hexadecimal (0-9, A-F, 2 caracteres)</string>
     <string name="info_copied_to_clipboard">Copiado al portapapeles</string>
     <string name="info_invalid_int">No es un entero válido</string>
-    <string name="info_ac_not_hex">Error: Las Condiciones de Acceso no son hexadecimales (0-9, A-F)</string>
-    <string name="info_ac_not_3_byte">Error: Las Condiciones de Acceso han de ser de 3 bytes(6 caracteres) de largo</string>
-    <string name="info_file_to_big">Error: El fichero es demasiado grande (sin memoria)</string>
+    <string name="info_ac_not_hex">Error: Las Condiciones de Acceso no son
+        hexadecimales (0-9, A-F)</string>
+    <string name="info_ac_not_3_byte">Error: Las Condiciones de Acceso han
+        de ser de 3 bytes(6 caracteres) de largo</string>
+    <string name="info_file_to_big">Error: El fichero es demasiado grande
+        (sin memoria)</string>
     <string name="info_to_many_keys">Error: Demasiadas claves (sin memoria)</string>
-    <string name="info_ac_format_error">Error: Las Condiciones de Acceso son inválidas</string>
+    <string name="info_ac_format_error">Error: Las Condiciones de Acceso
+        son inválidas</string>
     <string name="info_ac_reset_keyb_readable">La clave B es legible.
         \nACs de los bloques de datos actualizados.</string>
     <string name="info_ac_reset_keyb_not_readable">La clave B no es legible.
@@ -261,15 +297,17 @@
         (bloque 0)</string>
 
     <!-- Dialog messages -->
-    <string name="dialog_no_nfc">Tu dispositivo no es compatible con NFC. ¡Necesitas un dispositivo con NFC para que esta aplicación funcione!</string>
+    <string name="dialog_no_nfc">Tu dispositivo no es compatible con NFC.
+        ¡Necesitas un dispositivo con NFC para que esta aplicación funcione!</string>
     <string name="dialog_nfc_not_enabled">El adaptador NFC no está habilitado.
         Por favor, ve a ajustes y habilítalo.</string>
     <string name="dialog_no_nfc_title">No hay hardware NFC</string>
     <string name="dialog_nfc_not_enabled_title">NFC No habilitado</string>
-    <string name="dialog_no_mfc_support_device_title">No hay soporte para Mifare Classic</string>
+    <string name="dialog_no_mfc_support_device_title">No hay soporte para
+        Mifare Classic</string>
     <string name="dialog_no_mfc_support_device">Tu dispositivo
-        (por razones de hardware) no soporta Mifare Classic! Lo único que se puede hacer
-        es mostrar el UID y alguna información general extra.
+        (por razones de hardware) no soporta Mifare Classic! Lo único que
+        se puede hacer es mostrar el UID y alguna información general extra.
         Las operaciones I/O no son posibles.
         \n\n<b>Más allá, esta aplicacion carece de uso en este dispositivo.</b>
         \n\nDispositivos conocidos SIN compatibilidad con Mifare Classic:\n
@@ -294,30 +332,35 @@
     <string name="dialog_save_dump_title">Salvar Dumpeo</string>
     <string name="dialog_save_dump">Introduce un nombre para el fichero:</string>
     <string name="dialog_mapping_range_title">Escoje rango</string>
-    <string name="dialog_mapping_range">Escoje el rango de sectores para el proceso de mapeo de claves\n(0 es el primer sector):</string>
-    <string name="dialog_sector_trailer_warning_title">Escribiendo Sector Trailer</string>
-    <string name="dialog_sector_trailer_warning">Estás a punto de escribir el sector de Trailer. Escribir datos incorrectos puede causar
-       daños irreparables en la etiqueta.</string>
+    <string name="dialog_mapping_range">Escoje el rango de sectores para el
+        proceso de mapeo de claves\n(0 es el primer sector):</string>
+    <string name="dialog_sector_trailer_warning_title">Escribiendo Sector
+        Trailer</string>
+    <string name="dialog_sector_trailer_warning">Estás a punto de escribir el
+        sector de Trailer. Escribir datos incorrectos puede causar
+        daños irreparables en la etiqueta.</string>
     <string name="dialog_save_keys_title">Salvar fichero de claves</string>
-    <string name="dialog_save_keys">Introduce un nombre para el archivo de claves:</string>
+    <string name="dialog_save_keys">Introduce un nombre para el archivo
+        de claves:</string>
     <string name="dialog_new_file_title">Nuevo Archivo:</string>
     <string name="dialog_new_file">Introduce un nombre para el nuevo fichero:</string>
     <string name="dialog_first_run_title">ADVERTENCIA</string>
     <string name="dialog_first_run">Esta aplicación está dedicada
-        a usuarios que tengan al menos una familiaridad básica con la 
+        a usuarios que tengan al menos una familiaridad básica con la
         tecnología Mifare Classic. Sus funcionalidades son básicas y
-        a  bajo nivel. Por otra parte casi todos los datos de entrada y salida serán en hexadecimal.
-        Es importante que entiendas lo que estás haciendo, e.j. si
-        escribes datos en una etiqueta. Escribir datos erróneos en ciertos
+        a  bajo nivel. Por otra parte casi todos los datos de entrada y salida
+        serán en hexadecimal. Es importante que entiendas lo que estás haciendo,
+        e.j. si escribes datos en una etiqueta. Escribir datos erróneos en ciertos
         bloques puede causar daños irreparables a la etiqueta.
         \n\n<b>PARA MÁS INFORMACIÓN Y AYUDA MIRA LA SECCIÓN
         \"Ayuda e Info\".</b></string>
     <string name="dialog_not_writable_title">Problemas de Escritura</string>
-    <string name="dialog_not_writable">¡Algunas partes no son escribibles! Comprueba la
-        lista de abajo AL COMPLETO.</string>
+    <string name="dialog_not_writable">¡Algunas partes no son escribibles!
+        Comprueba la lista de abajo AL COMPLETO.</string>
     <string name="dialog_tools_menu_title">Herramientas Disponibles</string>
     <string name="dialog_wait_write_tag_title">Escribiendo…</string>
-    <string name="dialog_wait_write_tag">Escribiendo etiqueta…\n(No quites la etiqueta)</string>
+    <string name="dialog_wait_write_tag">Escribiendo etiqueta…\n(No quites
+        la etiqueta)</string>
     <string name="dialog_share_title">Mandar fichero de Dumpeo a…</string>
     <string name="dialog_block0_writing_title">Escribir bloque de fábrica</string>
     <string name="dialog_block0_writing"><b>Escribir el primer bloque del sector 0
@@ -327,12 +370,14 @@
         (con un comando Mifare Classic normal).
         \n\n<b>Mira la sección \"Escribir etiqueta\" de
         \"Ayuda e Info\" para más información.</b></string>
-    <string name="dialog_static_ac_title">Usar Condiciones de Acceso estáticas</string>
+    <string name="dialog_static_ac_title">Usar Condiciones de Acceso
+        estáticas</string>
     <string name="dialog_static_ac"><b>Reemplazar todas las Condiciones de Acceso del
         dumpeo con las seleccionadas.</b>
         \n\nEsto es útil si el dumpeo contiene Condiciones de Acceso
         que serán permanentes para una etiqueta. En caso de que el lector no
-        las compruebe, puedes facilmente usar unas personalizadas para hacer la etiqueta reusable.
+        las compruebe, puedes facilmente usar unas personalizadas para hacer
+        la etiqueta reusable.
         \n\n<b>Advertencia: Escribir datos incorrectos puede causar
         daños a la etiqueta.</b></string>
     <string name="dialog_choose_ac_title">Escoger Condiciones de Acceso</string>
