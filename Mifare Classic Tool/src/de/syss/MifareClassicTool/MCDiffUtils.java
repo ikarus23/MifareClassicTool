@@ -23,13 +23,14 @@ import java.util.ArrayList;
 import android.util.SparseArray;
 
 /**
- * TODO: doc. & explain why own class (and not the java-diff-utils lib).
+ * Provides functions to compare two dumps.
  * @author Gerhard Klostermeier
  */
 public class MCDiffUtils {
 
     /**
-     * TODO doc.
+     * Compare two dumps and get a list of all indices where they differ
+     * from each other.
      * @param dump1 The first dump. The dump has to be clean (no comments
      * and not multiple dumps).
      * @param dump2 The second dump. The dump has to be clean (no comments
@@ -48,7 +49,8 @@ public class MCDiffUtils {
     }
 
     /**
-     * TODO: doc.
+     * Compare two dumps and get a list of all indices where they differ
+     * from each other.
      * @param dump1 The first dump. The sector number is key and the
      * string array represents the blocks.
      * @param dump2 The second dump. The sector number is key and the
