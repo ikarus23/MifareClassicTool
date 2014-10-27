@@ -22,15 +22,15 @@
 <lint>
 
     <issue id="UselessParent">
-        <!-- Non scroll table header -->
+        <!-- Non scroll table header. -->
         <ignore path="res/layout/activity_access_condition_decoder.xml" />
         <ignore path="res/layout/activity_value_blocks_to_int.xml" />
-        <!-- Only radio group in parent layout -->
+        <!-- Only radio group in parent layout. -->
         <ignore path="res/layout/activity_write_tag.xml" />
     </issue>
 
     <issue id="UselessLeaf">
-        <!-- Suppress edit text focus on startup -->
+        <!-- Suppress edit text focus on startup. -->
         <ignore path="res/layout/activity_value_block_tool.xml" />
         <ignore path="res/layout/activity_dump_editor.xml" />
         <ignore path="res/layout/activity_write_dump.xml" />
@@ -45,7 +45,7 @@
     </issue>
 
     <issue id="UnusedResources">
-        <!-- Resources are used dynamically -->
+        <!-- Resources are used dynamically. -->
         <ignore path="res/values/tag_type_list.xml" />
         <ignore path="res/values/access_conditions.xml" />
     </issue>
@@ -59,22 +59,37 @@
     </issue>
 
     <issue id="TypographyDashes">
-        <!-- This dashes are right the way they are -->
+        <!-- This dashes are right the way they are. -->
         <ignore path="res/values/strings.xml" />
+        <ignore path="res/values-es/strings.xml" />
     </issue>
 
     <issue id="SelectableText">
-        <!-- Text is set programmatically (but static) -->
+        <!-- Text is set programmatically (but static). -->
         <ignore path="res/layout/activity_dump_editor.xml" />
         <ignore path="res/layout/activity_hex_to_ascii.xml" />
     </issue>
 
-    <!-- Sparse Arrays are not really usefull for small collections -->
+    <!-- Sparse Arrays are not really usefull for small collections. -->
     <!-- http://www.programmingmobile.com/2012/07/android-performance-tweaking-parsearray.html -->
     <issue id="UseSparseArrays" severity="ignore" />
 
-    <!-- If icon is only in "drawable", it is suitable for all resolutions -->
+    <!-- If icon is only in "drawable", it is suitable for all resolutions. -->
     <issue id="IconLocation" severity="ignore" />
     <issue id="IconDensities" severity="ignore" />
 
+    <issue id="RtlHardcoded">
+        <!-- Ignore right-to-left layouts for now. -->
+        <ignore path="res/layout/*" />
+    </issue>
+    <issue id="RtlSymmetry">
+        <!-- Ignore right-to-left layouts for now. -->
+        <ignore path="res/layout/*" />
+    </issue>
+
+    <issue id="MissingTranslation">
+        <!-- Ignore missing translations. There is no real translation
+        process right now. -->
+        <ignore path="res/values/*" />
+    </issue>
 </lint>

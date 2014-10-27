@@ -35,7 +35,7 @@ import android.widget.Toast;
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 
 /**
- * Provide functions to read/write/analyze a Mifare Classic tag.
+ * Provides functions to read/write/analyze a Mifare Classic tag.
  * @author Gerhard Klostermeier
  */
 public class MCReader {
