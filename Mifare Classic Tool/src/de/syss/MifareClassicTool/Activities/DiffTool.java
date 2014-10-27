@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
- * Copyright 2013 Gerhard Klostermeier
+ * Copyright 2014 Gerhard Klostermeier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
--->
 
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuMainTagInfo"
-        android:title="@string/action_show_tag_info" />
-    <item android:id="@+id/menuMainValueBlockTool"
-        android:title="@string/action_show_vb_tool" />
-    <item android:id="@+id/menuMainAccessConditionTool"
-        android:title="@string/action_show_ac_tool" />
-    <item android:id="@+id/menuMainDiffTool"
-        android:title="@string/action_show_diff_tool" />
-</menu>
+package de.syss.MifareClassicTool.Activities;
+
+import android.os.Bundle;
+import de.syss.MifareClassicTool.R;
+
+public class DiffTool extends BasicActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_diff_tool);
+    }
+}

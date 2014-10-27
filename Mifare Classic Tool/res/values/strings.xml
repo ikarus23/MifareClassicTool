@@ -43,6 +43,7 @@
     <string name="title_activity_access_condition_tool">Access Condition
         Decoder &amp; Encode</string>
     <string name="title_activity_preferences">Preferences</string>
+    <string name="title_activity_diff_tool">Diff Tool</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -194,6 +195,7 @@
     <string name="action_show_tag_info">Display Tag Info</string>
     <string name="action_show_vb_tool">Value Block De-/Encoder</string>
     <string name="action_show_ac_tool">Access Condition De-/Encoder</string>
+    <string name="action_show_diff_tool">Diff Tool</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
     <string name="action_remove_duplicates">Remove Duplicates</string>
