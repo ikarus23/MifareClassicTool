@@ -376,7 +376,7 @@
         dumpeo con las seleccionadas.</b>
         \n\nEsto es útil si el dumpeo contiene Condiciones de Acceso
         que serán permanentes para una etiqueta. En caso de que el lector no
-        las compruebe, puedes facilmente usar unas personalizadas para hacer
+        las compruebe, puedes fácilmente usar unas personalizadas para hacer
         la etiqueta reusable.
         \n\n<b>Advertencia: Escribir datos incorrectos puede causar
         daños a la etiqueta.</b></string>
