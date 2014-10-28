@@ -137,6 +137,8 @@
         Choose ACs for Sector Trailer</string>
     <string name="text_step_2_data_blocks">Step 2:
         Choose ACs for Data Blocks</string>
+    <string name="text_dump_1">Dump 1:</string>
+    <string name="text_dump_2">Dump 2:</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -208,6 +210,7 @@
         again</string>
     <string name="action_beer_sounds_fine">Beer sounds fine
         (Donate via Google Play)</string>
+    <string name="action_chose_dump">Choose a Dump&#8230;</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
