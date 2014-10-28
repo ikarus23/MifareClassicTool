@@ -699,6 +699,11 @@ public class DumpEditor extends BasicActivity {
      * @see Common#TMP_DIR
      */
     private void shareDump() {
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
         // Save dump to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
         String fileName;
