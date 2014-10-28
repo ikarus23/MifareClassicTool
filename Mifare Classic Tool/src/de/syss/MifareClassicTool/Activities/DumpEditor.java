@@ -718,7 +718,11 @@ public class DumpEditor extends BasicActivity {
         // Save file to tmp directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
-        Common.saveFile(file, mLines, false);
+        if (Common.saveFile(file, mLines, false) == false) {
+            Toast.makeText(this, R.string.info_save_error,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // Share file.
         Intent sendIntent = new Intent(Intent.ACTION_SEND);

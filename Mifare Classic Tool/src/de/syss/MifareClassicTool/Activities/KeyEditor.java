@@ -125,36 +125,44 @@ public class KeyEditor extends BasicActivity {
      * in which the user can choose between apps that are willing to
      * handle the dump.
      * @see Common#TMP_DIR
+     * @see #isValidKeyFileErrorToast()
+     *
      */
     private void shareKeyFile() {
+        if (isValidKeyFileErrorToast() == false) {
+            return;
+        }
         // Save key file to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
         String fileName;
-        if (isValidKeyFileErrorToast()) {
-            if (mFileName.equals("")) {
-                // The key file has no name. Use date and time as name.
-                Time today = new Time(Time.getCurrentTimezone());
-                today.setToNow();
-                fileName = today.format("%Y-%m-%d-%H-%M-%S");
-            } else {
-                fileName = mFileName;
-            }
-            // Save file to tmp directory.
-            File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
-            Common.saveFile(file, mLines, false);
-
-            // Share file.
-            Intent sendIntent = new Intent(Intent.ACTION_SEND);
-            sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
-                    "file://" + file.getAbsolutePath()));
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT,
-                    getString(R.string.text_share_subject_key_file)
-                    + " (" + fileName + ")");
-            startActivity(Intent.createChooser(sendIntent,
-                    getText(R.string.dialog_share_title)));
+        if (mFileName.equals("")) {
+            // The key file has no name. Use date and time as name.
+            Time today = new Time(Time.getCurrentTimezone());
+            today.setToNow();
+            fileName = today.format("%Y-%m-%d-%H-%M-%S");
+        } else {
+            fileName = mFileName;
         }
+        // Save file to tmp directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
+        if (Common.saveFile(file, mLines, false) == false) {
+            Toast.makeText(this, R.string.info_save_error,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        // Share file.
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
+                "file://" + file.getAbsolutePath()));
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT,
+                getString(R.string.text_share_subject_key_file)
+                + " (" + fileName + ")");
+        startActivity(Intent.createChooser(sendIntent,
+                getText(R.string.dialog_share_title)));
     }
 
     /**
@@ -166,53 +174,51 @@ public class KeyEditor extends BasicActivity {
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {
-        if (isValidKeyFileErrorToast()) {
-            if (!Common.isExternalStorageWritableErrorToast(this)) {
-                return;
-            }
-            final File path = new File(
-                    Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-            final Context cont = this;
-            // Ask user for filename.
-            final EditText input = new EditText(this);
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-            input.setLines(1);
-            input.setHorizontallyScrolling(true);
-            input.setText(mFileName);
-            input.setSelection(input.getText().length());
-            new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_save_keys_title)
-                .setMessage(R.string.dialog_save_keys)
-                .setIcon(android.R.drawable.ic_menu_save)
-                .setView(input)
-                .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                            int whichButton) {
-                        if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
-                            File file = new File(path.getPath(),
-                                    input.getText().toString());
-                            Common.checkFileExistenceAndSave(file, mLines,
-                                    false, cont);
-                        } else {
-                            // Empty name is not allowed.
-                            Toast.makeText(cont, R.string.info_empty_file_name,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.action_cancel,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                            int whichButton) {
-                        // Do nothing.
-                    }
-                }).show();
+        if (isValidKeyFileErrorToast() == false) {
+            return;
         }
+        final File path = new File(
+                Environment.getExternalStoragePublicDirectory(
+                Common.HOME_DIR) + "/" + Common.KEYS_DIR);
+        final Context cont = this;
+        // Ask user for filename.
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setLines(1);
+        input.setHorizontallyScrolling(true);
+        input.setText(mFileName);
+        input.setSelection(input.getText().length());
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_save_keys_title)
+            .setMessage(R.string.dialog_save_keys)
+            .setIcon(android.R.drawable.ic_menu_save)
+            .setView(input)
+            .setPositiveButton(R.string.action_ok,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog,
+                        int whichButton) {
+                    if (input.getText() != null
+                            && !input.getText().toString().equals("")) {
+                        File file = new File(path.getPath(),
+                                input.getText().toString());
+                        Common.checkFileExistenceAndSave(file, mLines,
+                                false, cont);
+                    } else {
+                        // Empty name is not allowed.
+                        Toast.makeText(cont, R.string.info_empty_file_name,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+            .setNegativeButton(R.string.action_cancel,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog,
+                        int whichButton) {
+                    // Do nothing.
+                }
+            }).show();
     }
 
     /**

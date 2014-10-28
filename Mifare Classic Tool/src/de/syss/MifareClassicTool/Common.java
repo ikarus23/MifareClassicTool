@@ -186,12 +186,23 @@ public class Common extends Application {
      */
     public static boolean isExternalStorageWritableErrorToast(
             Context context) {
-        if (Environment.MEDIA_MOUNTED.equals(
-                Environment.getExternalStorageState())) {
+        if (isExternalStorageWritable() == true) {
             return true;
         }
         Toast.makeText(context, R.string.info_no_external_storage,
                 Toast.LENGTH_LONG).show();
+        return false;
+    }
+
+    /**
+     * Checks if external storage is available for read and write.
+     * @return True if external storage is writable. False otherwise.
+     */
+    public static boolean isExternalStorageWritable() {
+        if (Environment.MEDIA_MOUNTED.equals(
+                Environment.getExternalStorageState())) {
+            return true;
+        }
         return false;
     }
 
@@ -356,7 +367,7 @@ public class Common extends Application {
      */
     public static boolean saveFile(File file, String[] lines, boolean append) {
         boolean noError = true;
-        if (file != null && lines != null) {
+        if (file != null && lines != null && isExternalStorageWritable()) {
             BufferedWriter bw = null;
             try {
                 bw = new BufferedWriter(new FileWriter(file, append));
