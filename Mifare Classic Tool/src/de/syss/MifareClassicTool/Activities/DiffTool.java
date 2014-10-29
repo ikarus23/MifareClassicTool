@@ -86,8 +86,9 @@ public class DiffTool extends BasicActivity {
     }
 
     /**
-     * Read the chosen dump and run {@link #runDiff()}
-     * if file chooser result is O.K.
+     * Handle the {@link FileChooser} results from {@link #onChooseDump1(View)}
+     * and {@link #onChooseDump2(View)} by reading and checking the dump.
+     * Then {@link #runDiff()} will be called.
      * @see FileChooser
      * @see #runDiff()
      */
@@ -104,17 +105,32 @@ public class DiffTool extends BasicActivity {
                 File file = new File(path);
                 mDumpFileButton1.setText(file.getName());
                 mDump1 = Common.readFileLineByLine(file, false, this);
-                runDiff();
+                int err = Common.isValidDump(mDump1, false);
+                if (err != 0) {
+                    Common.isValidDumpErrorToast(err, this);
+                    mDump1 = null;
+                    return;
+                } else {
+                    runDiff();
+                }
             }
             break;
         case FILE_CHOOSER_DUMP_FILE_2:
             if (resultCode == Activity.RESULT_OK) {
+                // Dump 2 has been chosen.
                 String path = data.getStringExtra(
                         FileChooser.EXTRA_CHOSEN_FILE);
                 File file = new File(path);
                 mDumpFileButton2.setText(file.getName());
                 mDump2 = Common.readFileLineByLine(file, false, this);
-                runDiff();
+                int err = Common.isValidDump(mDump2, false);
+                if (err != 0) {
+                    Common.isValidDumpErrorToast(err, this);
+                    mDump2 = null;
+                    return;
+                } else {
+                    runDiff();
+                }
             }
             break;
         }
@@ -155,6 +171,8 @@ public class DiffTool extends BasicActivity {
     /**
      * Create an Intent that will open the {@link FileChooser} and
      * let the user select a dump file.
+     * This is a helper function for {@link #onChooseDump1(View)}
+     * and {@link #onChooseDump2(View)}.
      * @return An Intent for opening the {@link FileChooser}.
      */
     private Intent prepareFileChooserForDump() {
