@@ -139,6 +139,7 @@
         Choose ACs for Data Blocks</string>
     <string name="text_dump_1">Dump 1:</string>
     <string name="text_dump_2">Dump 2:</string>
+    <string name="text_dump_from_editor">Dump from Editor</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
