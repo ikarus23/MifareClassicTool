@@ -38,7 +38,7 @@ public class MCDiffUtils {
      * @return Indices where dump2 differs from dump1. The key represents
      * the sector number. The first dimension of the value represents the
      * block number and the second is a list of indices where dump2 is
-     * different from dump1. If the value is null then the sector only
+     * different from dump1. If the value is Integer[0][0] then the sector only
      * exists in dump2.
      */
     public static SparseArray<Integer[][]> diffIndices(
@@ -58,7 +58,7 @@ public class MCDiffUtils {
      * @return Indices where dump2 differs from dump1. The key represents
      * the sector number. The first dimension of the value represents the
      * block number and the second is a list of indices where dump2 is
-     * different from dump1. If the value is null then the sector only
+     * different from dump1. If the value is Integer[0][0] then the sector only
      * exists in dump2.
      */
     public static SparseArray<Integer[][]> diffIndices(
@@ -105,7 +105,7 @@ public class MCDiffUtils {
             int sectorNr = dump2.keyAt(i);
             if (dump1.get(sectorNr) == null) {
                 // Sector only exists in dump2.
-                ret.put(sectorNr, null);
+                ret.put(sectorNr, new Integer[0][0]);
             }
         }
 
@@ -124,8 +124,8 @@ public class MCDiffUtils {
     private static SparseArray<String[]> convertDumpFormat(String[] dump) {
         SparseArray<String[]> ret = new SparseArray<String[]>();
         int i = 0;
+        int sector = 0;
         for (String line : dump) {
-            int sector = 0;
             if (line.startsWith("+")) {
                 String[] tmp = line.split(": ");
                 sector = Integer.parseInt(tmp[tmp.length-1]);
