@@ -600,6 +600,10 @@ public class MainMenu extends Activity {
             intent = new Intent(this, AccessConditionTool.class);
             startActivity(intent);
             return true;
+        case R.id.menuMainDiffTool:
+            intent = new Intent(this, DiffTool.class);
+            startActivity(intent);
+            return true;
         default:
             return super.onContextItemSelected(item);
         }

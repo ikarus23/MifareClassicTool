@@ -129,8 +129,7 @@ public class TagInfoTool extends BasicActivity {
             headerGenericInfo.setTextAppearance(this,
                     android.R.style.TextAppearance_Large);
             headerGenericInfo.setGravity(Gravity.CENTER_HORIZONTAL);
-            final float scale = getResources().getDisplayMetrics().density;
-            int pad = (int) (5 * scale + 0.5f); // 5dp to px.
+            int pad = Common.dpToPx(5); // 5dp to px.
             headerGenericInfo.setPadding(pad, pad, pad, pad);
             mLayout.addView(headerGenericInfo);
             TextView genericInfo = new TextView(this);

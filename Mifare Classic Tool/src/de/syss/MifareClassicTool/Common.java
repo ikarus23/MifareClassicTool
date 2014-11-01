@@ -158,6 +158,7 @@ public class Common extends Application {
 
     private static NfcAdapter mNfcAdapter;
     private static Context mAppContext;
+    private static float mScale;
 
 // ############################################################################
 
@@ -169,6 +170,7 @@ public class Common extends Application {
     public void onCreate() {
         super.onCreate();
         mAppContext = getApplicationContext();
+        mScale = getResources().getDisplayMetrics().density;
 
         try {
             mVersionCode = getPackageManager().getPackageInfo(
@@ -1137,6 +1139,15 @@ public class Common extends Application {
         while((read = in.read(buffer)) != -1){
           out.write(buffer, 0, read);
         }
+    }
+
+    /**
+     * Convert Dips to pixels.
+     * @param dp Dips.
+     * @return Dips as px.
+     */
+    public static int dpToPx(int dp) {
+        return (int) (dp * mScale + 0.5f);
     }
 
     /**

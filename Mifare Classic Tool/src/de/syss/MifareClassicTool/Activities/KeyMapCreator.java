@@ -507,7 +507,8 @@ public class KeyMapCreator extends BasicActivity {
     public void onChangeSectorRange(View view) {
         // Build dialog elements.
         LinearLayout ll = new LinearLayout(this);
-        ll.setPadding(20, 20, 20, 20);
+        int pad = Common.dpToPx(10);
+        ll.setPadding(pad, pad, pad, pad);
         ll.setGravity(Gravity.CENTER);
         TextView tvFrom = new TextView(this);
         tvFrom.setText(getString(R.string.text_from) + ": ");

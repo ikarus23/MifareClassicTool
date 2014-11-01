@@ -43,6 +43,7 @@
     <string name="title_activity_access_condition_tool">Access Condition
         Decoder &amp; Encode</string>
     <string name="title_activity_preferences">Preferences</string>
+    <string name="title_activity_diff_tool">Diff Tool</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -136,6 +137,15 @@
         Choose ACs for Sector Trailer</string>
     <string name="text_step_2_data_blocks">Step 2:
         Choose ACs for Data Blocks</string>
+    <string name="text_dump_1">Dump 1 (A):</string>
+    <string name="text_dump_2">Dump 2 (B):</string>
+    <string name="text_a">A:</string>
+    <string name="text_b">B:</string>
+    <string name="text_dump_from_editor">Dump from Editor</string>
+    <!-- Has to be 32 chars long. The text should be centered. -->
+    <string name="text_identical_data">-----------Identical------------</string>
+    <string name="text_only_in_dump1">Sector occurs only in dump 1 (A)</string>
+    <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -194,6 +204,7 @@
     <string name="action_show_tag_info">Display Tag Info</string>
     <string name="action_show_vb_tool">Value Block De-/Encoder</string>
     <string name="action_show_ac_tool">Access Condition De-/Encoder</string>
+    <string name="action_show_diff_tool">Diff Tool</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
     <string name="action_remove_duplicates">Remove Duplicates</string>
@@ -206,6 +217,7 @@
         again</string>
     <string name="action_beer_sounds_fine">Beer sounds fine
         (Donate via Google Play)</string>
+    <string name="action_chose_dump">Choose a Dump&#8230;</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

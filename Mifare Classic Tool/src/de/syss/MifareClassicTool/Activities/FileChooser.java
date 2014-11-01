@@ -109,7 +109,13 @@ public class FileChooser extends BasicActivity {
      */
     public final static String EXTRA_CHOSEN_FILE =
             "de.syss.MifareClassicTool.Activity.CHOSEN_FILE";
-
+    /**
+     * The filename (without path) that will be passed via Intent
+     * to onActivityResult() method. The result code will be
+     * {@link Activity#RESULT_OK}.
+     */
+    public final static String EXTRA_CHOSEN_FILENAME =
+            "de.syss.MifareClassicTool.Activity.EXTRA_CHOSEN_FILENAME";
 
 
     private static final String LOG_TAG =
@@ -239,19 +245,21 @@ public class FileChooser extends BasicActivity {
 
     /**
      * Finish the Activity with an Intent containing
-     * {@link #EXTRA_CHOSEN_FILE} as result.
+     * {@link #EXTRA_CHOSEN_FILE} and {@link #EXTRA_CHOSEN_FILENAME} as result.
      * You can catch that result by overriding onActivityResult() in the
      * Activity that called the file chooser via startActitivtyForResult().
      * @param view The View object that triggered the function
      * (in this case the choose file button).
      * @see #EXTRA_CHOSEN_FILE
+     * @see #EXTRA_CHOSEN_FILENAME
      */
     public void onFileChosen(View view) {
         RadioButton selected = (RadioButton) findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_CHOSEN_FILE, new File(mDir.getPath(),
-                selected.getText().toString()).getPath());
+        File file = new File(mDir.getPath(), selected.getText().toString());
+        intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
+        intent.putExtra(EXTRA_CHOSEN_FILENAME, file.getName());
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
@@ -312,6 +320,7 @@ public class FileChooser extends BasicActivity {
             .setView(input)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
                     if (input.getText() != null
                             && !input.getText().toString().equals("")) {
@@ -336,6 +345,7 @@ public class FileChooser extends BasicActivity {
             })
             .setNegativeButton(R.string.action_cancel,
                     new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Do nothing.
                 }

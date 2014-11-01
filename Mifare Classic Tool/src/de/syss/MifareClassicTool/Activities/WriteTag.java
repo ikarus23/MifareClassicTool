@@ -865,7 +865,8 @@ public class WriteTag extends BasicActivity {
             // If the user skips all sectors/blocks that are not writable,
             // the writeTag() method will be called.
             LinearLayout ll = new LinearLayout(this);
-            ll.setPadding(10, 10, 10, 10);
+            int pad = Common.dpToPx(5);
+            ll.setPadding(pad, pad, pad, pad);
             ll.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(this);
             textView.setText(R.string.dialog_not_writable);
@@ -955,11 +956,13 @@ public class WriteTag extends BasicActivity {
 
         // Display don't remove warning.
         LinearLayout ll = new LinearLayout(this);
-        ll.setPadding(20, 20, 20, 20);
+        int pad = Common.dpToPx(10);
+        ll.setPadding(pad, pad, pad, pad);
         ll.setGravity(Gravity.CENTER);
         ProgressBar progressBar = new ProgressBar(this);
         progressBar.setIndeterminate(true);
-        progressBar.setPadding(0, 0, 10, 0);
+        pad = Common.dpToPx(5);
+        progressBar.setPadding(0, 0, pad, 0);
         TextView tv = new TextView(this);
         tv.setText(getString(R.string.dialog_wait_write_tag));
         tv.setTextSize(18);
