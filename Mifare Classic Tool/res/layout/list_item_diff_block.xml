@@ -28,7 +28,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:paddingRight="5dp"
-        android:text="@string/text_dump_1" />
+        android:text="@string/text_a" />
 
     <TextView
         android:id="@+id/textViewDiffBlockDump1"
@@ -44,6 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewDiffBlockDump1"
         android:layout_below="@+id/textViewDiffBlockDump1"
+        android:layout_marginTop="-6dp"
+        android:layout_marginBottom="-6dp"
         android:typeface="monospace" />
 
     <TextView
@@ -52,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewDiffBlockDiff"
-        android:text="@string/text_dump_2" />
+        android:text="@string/text_b" />
 
     <TextView
         android:id="@+id/textViewDiffBlockDump2"

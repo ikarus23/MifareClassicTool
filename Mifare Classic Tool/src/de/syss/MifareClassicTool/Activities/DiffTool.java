@@ -22,12 +22,20 @@ import java.io.File;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import de.syss.MifareClassicTool.Common;
+import de.syss.MifareClassicTool.MCDiffUtils;
 import de.syss.MifareClassicTool.R;
+import de.syss.MifareClassicTool.R.string;
 
 /**
  * A tool to show the difference between two dumps.
@@ -53,10 +61,11 @@ public class DiffTool extends BasicActivity {
     private final static int FILE_CHOOSER_DUMP_FILE_1 = 1;
     private final static int FILE_CHOOSER_DUMP_FILE_2 = 2;
 
+    private LinearLayout mDiffContent;
     private Button mDumpFileButton1;
     private Button mDumpFileButton2;
-    private String[] mDump1;
-    private String[] mDump2;
+    private SparseArray<String[]> mDump1;
+    private SparseArray<String[]> mDump2;
 
     /**
      * Process {@link #EXTRA_DUMP_1} and {@link #EXTRA_DUMP_2} if they are
@@ -67,18 +76,21 @@ public class DiffTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diff_tool);
 
+        mDiffContent = (LinearLayout) findViewById(R.id.linearLayoutDiffTool);
         mDumpFileButton1 = (Button) findViewById(R.id.buttonDiffToolDump1);
         mDumpFileButton2 = (Button) findViewById(R.id.buttonDiffToolDump2);
 
         // Check if one or both dumps are already chosen via Intent
         // (from DumpEitor).
         if (getIntent().hasExtra(EXTRA_DUMP_1)) {
-            mDump1 = getIntent().getStringArrayExtra(EXTRA_DUMP_1);
+            mDump1 = convertDumpFormat(
+                    getIntent().getStringArrayExtra(EXTRA_DUMP_1));
             mDumpFileButton1.setText(R.string.text_dump_from_editor);
             mDumpFileButton1.setEnabled(false);
         }
         if (getIntent().hasExtra(EXTRA_DUMP_2)) {
-            mDump2 = getIntent().getStringArrayExtra(EXTRA_DUMP_2);
+            mDump2 = convertDumpFormat(
+                    getIntent().getStringArrayExtra(EXTRA_DUMP_2));
             mDumpFileButton2.setText(R.string.text_dump_from_editor);
             mDumpFileButton2.setEnabled(false);
         }
@@ -87,10 +99,12 @@ public class DiffTool extends BasicActivity {
 
     /**
      * Handle the {@link FileChooser} results from {@link #onChooseDump1(View)}
-     * and {@link #onChooseDump2(View)} by reading and checking the dump.
+     * and {@link #onChooseDump2(View)} by calling
+     * {@link #processChosenDump(Intent)} and updating the UI and member vars.
      * Then {@link #runDiff()} will be called.
      * @see FileChooser
      * @see #runDiff()
+     * @see #processChosenDump(Intent)
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -100,49 +114,106 @@ public class DiffTool extends BasicActivity {
         case FILE_CHOOSER_DUMP_FILE_1:
             if (resultCode == Activity.RESULT_OK) {
                 // Dump 1 has been chosen.
-                String path = data.getStringExtra(
-                        FileChooser.EXTRA_CHOSEN_FILE);
-                File file = new File(path);
-                mDumpFileButton1.setText(file.getName());
-                mDump1 = Common.readFileLineByLine(file, false, this);
-                int err = Common.isValidDump(mDump1, false);
-                if (err != 0) {
-                    Common.isValidDumpErrorToast(err, this);
-                    mDump1 = null;
-                    return;
-                } else {
-                    runDiff();
-                }
+                String fileName = data.getStringExtra(
+                        FileChooser.EXTRA_CHOSEN_FILENAME);
+                mDumpFileButton1.setText(fileName);
+                mDump1 = processChosenDump(data);
+                runDiff();
             }
             break;
         case FILE_CHOOSER_DUMP_FILE_2:
             if (resultCode == Activity.RESULT_OK) {
                 // Dump 2 has been chosen.
-                String path = data.getStringExtra(
-                        FileChooser.EXTRA_CHOSEN_FILE);
-                File file = new File(path);
-                mDumpFileButton2.setText(file.getName());
-                mDump2 = Common.readFileLineByLine(file, false, this);
-                int err = Common.isValidDump(mDump2, false);
-                if (err != 0) {
-                    Common.isValidDumpErrorToast(err, this);
-                    mDump2 = null;
-                    return;
-                } else {
-                    runDiff();
-                }
+                String fileName = data.getStringExtra(
+                        FileChooser.EXTRA_CHOSEN_FILENAME);
+                mDumpFileButton2.setText(fileName);
+                mDump2 = processChosenDump(data);
+                runDiff();
             }
             break;
         }
     }
 
     /**
-     * TODO: doc.
+     * Run diff if there are two dumps and show the result in the GUI.
+     * @see MCDiffUtils#diffIndices(SparseArray, SparseArray)
      */
     private void runDiff() {
         // Check if both dumps are there.
         if (mDump1 != null && mDump2 != null) {
-            // TODO: implement.
+            mDiffContent.removeAllViews();
+            SparseArray<Integer[][]> diff = MCDiffUtils.diffIndices(
+                    mDump1, mDump2);
+            // Walk trough all possible sectors (this way the right
+            // order will be guaranteed).
+            for (int sector = 0; sector < 40; sector++) {
+                Integer[][] blocks = diff.get(sector);
+                if (blocks == null) {
+                    // No such sector.
+                    continue;
+                }
+
+                // Add sector header.
+                TextView header = new TextView(this);
+                header.setTextAppearance(
+                        this, android.R.style.TextAppearance_Medium);
+                header.setPadding(0, Common.dpToPx(20), 0, 0);
+                header.setTextColor(Color.WHITE);
+                header.setText(getString(string.text_sector) + ": " + sector);
+                mDiffContent.addView(header);
+
+                if (blocks.length == 0 || blocks.length == 1) {
+                    TextView tv = new TextView(this);
+                    if (blocks.length == 0) {
+                        // Sector exists only in dump1.
+                        tv.setText(getString(string.text_only_in_dump1));
+                    } else {
+                        // Sector exists only in dump2.
+                        tv.setText(getString(string.text_only_in_dump2));
+                    }
+                    mDiffContent.addView(tv);
+                    continue;
+                }
+
+                // Walk through all blocks.
+                for (int block = 0; block < blocks.length; block++) {
+                    // Initialize diff entry.
+                    RelativeLayout rl = (RelativeLayout)
+                            getLayoutInflater().inflate(
+                                    R.layout.list_item_diff_block,
+                                    (ViewGroup)findViewById(
+                                            android.R.id.content), false);
+                    TextView dump1 = (TextView) rl.findViewById(
+                            R.id.textViewDiffBlockDump1);
+                    TextView dump2 = (TextView) rl.findViewById(
+                            R.id.textViewDiffBlockDump2);
+                    TextView diffIndex = (TextView) rl.findViewById(
+                            R.id.textViewDiffBlockDiff);
+                    StringBuilder diffString = null;
+                    diffIndex.setTextColor(Color.RED);
+                    // Populate the blocks of the diff entry.
+                    dump1.setText(mDump1.get(sector)[block]);
+                    dump2.setText(mDump2.get(sector)[block]);
+
+                    if (blocks[block].length == 0) {
+                        // Set diff line for identical blocks.
+                        diffIndex.setTextColor(Color.GREEN);
+                        diffString = new StringBuilder(
+                                getString(R.string.text_identical_data));
+                    } else {
+                        diffString = new StringBuilder(
+                                "                                ");
+                        // Walk through all symbols to populate the diff line.
+                        for (int i : blocks[block]) {
+                            diffString.setCharAt(i, '█');
+
+                        }
+                    }
+                    // Add diff entry.
+                    diffIndex.setText(diffString);
+                    mDiffContent.addView(rl);
+                }
+            }
         }
     }
 
@@ -169,6 +240,36 @@ public class DiffTool extends BasicActivity {
     }
 
     /**
+     * Get the {@link FileChooser#EXTRA_CHOSEN_FILE} from the Intend,
+     * read the file, check it for errors using
+     * {@link Common#isValidDump(String[], boolean)} and convert its format
+     * using {@link #convertDumpFormat(String[])}.
+     * This is a helper function for
+     * {@link #onActivityResult(int, int, Intent)}.
+     * @param data The Intent returned by the {@link FileChooser}
+     * @return The chosen dump in a key value pair format. The key is the sector
+     * number. The value is an String array. Each field of the array
+     * represents a block. If the dump was not vaild null will be returned.
+     * @see Common#isValidDump(String[], boolean)
+     * @see Common#isValidDumpErrorToast(int, android.content.Context)
+     * @see Common#readFileLineByLine(File, boolean, android.content.Context)
+     * @see #convertDumpFormat(String[])
+     */
+    private SparseArray<String[]> processChosenDump(Intent data) {
+        String path = data.getStringExtra(
+                FileChooser.EXTRA_CHOSEN_FILE);
+        File file = new File(path);
+        String[] dump = Common.readFileLineByLine(file, false, this);
+        int err = Common.isValidDump(dump, false);
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return null;
+        } else {
+            return convertDumpFormat(dump);
+        }
+    }
+
+    /**
      * Create an Intent that will open the {@link FileChooser} and
      * let the user select a dump file.
      * This is a helper function for {@link #onChooseDump1(View)}
@@ -186,5 +287,35 @@ public class DiffTool extends BasicActivity {
                 getString(R.string.action_open_dump_file));
         intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
         return intent;
+    }
+
+    /**
+     * Convert the format of an dump.
+     * @param dump A dump in the same format a dump file is.
+     * (with no comments, not multiple dumps (appended) and validated by
+     * {@link Common#isValidDump(String[], boolean)})
+     * @return The dump in a key value pair format. The key is the sector
+     * number. The value is an String array. Each field of the array
+     * represents a block.
+     */
+    private static SparseArray<String[]> convertDumpFormat(String[] dump) {
+        SparseArray<String[]> ret = new SparseArray<String[]>();
+        int i = 0;
+        int sector = 0;
+        for (String line : dump) {
+            if (line.startsWith("+")) {
+                String[] tmp = line.split(": ");
+                sector = Integer.parseInt(tmp[tmp.length-1]);
+                i = 0;
+                if (sector < 32) {
+                    ret.put(sector, new String[4]);
+                } else {
+                    ret.put(sector, new String[16]);
+                }
+            } else {
+                ret.get(sector)[i++] = line;
+            }
+        }
+        return ret;
     }
 }

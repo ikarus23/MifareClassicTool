@@ -29,37 +29,18 @@ import android.util.SparseArray;
 public class MCDiffUtils {
 
     /**
-     * Compare two dumps and get a list of all indices where they differ
-     * from each other.
-     * @param dump1 The first dump. The dump has to be clean (no comments
-     * and not multiple dumps).
-     * @param dump2 The second dump. The dump has to be clean (no comments
-     * and not multiple dumps).
-     * @return Indices where dump2 differs from dump1. The key represents
-     * the sector number. The first dimension of the value represents the
-     * block number and the second is a list of indices where dump2 is
-     * different from dump1. If the value is Integer[0][0] then the sector only
-     * exists in dump2.
-     */
-    public static SparseArray<Integer[][]> diffIndices(
-            String[] dump1, String[] dump2) {
-        // Convert dump1 and dump2 to the format the other
-        // diffIndices() function likes (SparseArrays).
-        return diffIndices(convertDumpFormat(dump1), convertDumpFormat(dump2));
-    }
-
-    /**
-     * Compare two dumps and get a list of all indices where they differ
-     * from each other.
+     * Compare two dumps and get a list of all indices where
+     * they differ from each other.
      * @param dump1 The first dump. The sector number is key and the
      * string array represents the blocks.
      * @param dump2 The second dump. The sector number is key and the
      * string array represents the blocks.
-     * @return Indices where dump2 differs from dump1. The key represents
+     * @return Indices where the two dumps differ. The key represents
      * the sector number. The first dimension of the value represents the
      * block number and the second is a list of indices where dump2 is
-     * different from dump1. If the value is Integer[0][0] then the sector only
-     * exists in dump2.
+     * different from dump1. If the value is Integer[0][0] then the sector
+     * exists only in dump1. If the value is Integer[1][0] then the sector
+     * exists only in dump2.
      */
     public static SparseArray<Integer[][]> diffIndices(
             SparseArray<String[]> dump1, SparseArray<String[]> dump2) {
@@ -73,7 +54,7 @@ public class MCDiffUtils {
 
             // Check if dump2 has the current sector of dump1.
             if (sector2 == null) {
-                ret.put(sectorNr, null);
+                ret.put(sectorNr, new Integer[0][0]);
                 continue;
             }
 
@@ -100,45 +81,15 @@ public class MCDiffUtils {
             ret.put(sectorNr, diffSector);
         }
 
-        // Are there sectors that only occur in dump2?
+        // Are there sectors that occur only in dump2?
         for (int i = 0; i < dump2.size(); i++) {
             int sectorNr = dump2.keyAt(i);
             if (dump1.get(sectorNr) == null) {
                 // Sector only exists in dump2.
-                ret.put(sectorNr, new Integer[0][0]);
+                ret.put(sectorNr, new Integer[1][0]);
             }
         }
 
-        return ret;
-    }
-
-    /**
-     * Convert the format of an dump.
-     * @param dump A dump in the same format a dump file is.
-     * (with no comments, not multiple dumps (appended) and validated by
-     * {@link Common#isValidDump(String[], boolean)})
-     * @return The dump in a key value pair format. The key is the sector
-     * number. The value is an String array. Each field of the array
-     * represents a block.
-     */
-    private static SparseArray<String[]> convertDumpFormat(String[] dump) {
-        SparseArray<String[]> ret = new SparseArray<String[]>();
-        int i = 0;
-        int sector = 0;
-        for (String line : dump) {
-            if (line.startsWith("+")) {
-                String[] tmp = line.split(": ");
-                sector = Integer.parseInt(tmp[tmp.length-1]);
-                i = 0;
-                if (sector < 32) {
-                    ret.put(sector, new String[4]);
-                } else {
-                    ret.put(sector, new String[16]);
-                }
-            } else {
-                ret.get(sector)[i++] = line;
-            }
-        }
         return ret;
     }
 

@@ -137,9 +137,15 @@
         Choose ACs for Sector Trailer</string>
     <string name="text_step_2_data_blocks">Step 2:
         Choose ACs for Data Blocks</string>
-    <string name="text_dump_1">Dump 1:</string>
-    <string name="text_dump_2">Dump 2:</string>
+    <string name="text_dump_1">Dump 1 (A):</string>
+    <string name="text_dump_2">Dump 2 (B):</string>
+    <string name="text_a">A:</string>
+    <string name="text_b">B:</string>
     <string name="text_dump_from_editor">Dump from Editor</string>
+    <!-- Has to be 32 chars long. The text should be centered. -->
+    <string name="text_identical_data">-----------Identical------------</string>
+    <string name="text_only_in_dump1">Sector occurs only in dump 1 (A)</string>
+    <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
