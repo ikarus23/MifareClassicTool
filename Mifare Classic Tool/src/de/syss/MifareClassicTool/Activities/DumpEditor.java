@@ -78,8 +78,8 @@ public class DumpEditor extends BasicActivity {
 
     /**
      * The corresponding Intent will contain a dump separated by new lines.
-     * Headers (e.g. "Sector 01") are marked with a "+"-symbol
-     * (e.g. "+Sector 01"). Errors (e.g. "No keys found or dead sector")
+     * Headers (e.g. "Sector: 1") are marked with a "+"-symbol
+     * (e.g. "+Sector: 1"). Errors (e.g. "No keys found or dead sector")
      * are marked with a "*"-symbol.
      */
     public final static String EXTRA_DUMP =
@@ -242,6 +242,9 @@ public class DumpEditor extends BasicActivity {
             return true;
         case R.id.menuDumpEditorWriteDump:
             writeDump();
+            return true;
+        case R.id.menuDumpEditorDiffDump:
+            diffDump();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -690,6 +693,23 @@ public class DumpEditor extends BasicActivity {
         intent.putExtra(WriteTag.EXTRA_DUMP, mLines);
         startActivity(intent);
     }
+
+    /**
+     * Compare the currently displayed dump with another dump using
+     * the {@link DiffTool}.
+     * @see DiffTool
+     */
+    private void diffDump() {
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
+        Intent intent = new Intent(this, DiffTool.class);
+        intent.putExtra(DiffTool.EXTRA_DUMP_1, mLines);
+        startActivity(intent);
+    }
+
 
     /**
      * Share a dump as "file://" stream resource (e.g. as e-mail attachment).

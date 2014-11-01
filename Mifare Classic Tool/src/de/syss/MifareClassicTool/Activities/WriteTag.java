@@ -67,7 +67,7 @@ public class WriteTag extends BasicActivity {
 
     /**
      * The corresponding Intent will contain a dump. Headers
-     * (e.g. "Sector 01") are marked with a "+"-symbol (e.g. "+Sector 01").
+     * (e.g. "Sector: 1") are marked with a "+"-symbol (e.g. "+Sector: 1").
      */
     public final static String EXTRA_DUMP =
             "de.syss.MifareClassicTool.Activity.DUMP";

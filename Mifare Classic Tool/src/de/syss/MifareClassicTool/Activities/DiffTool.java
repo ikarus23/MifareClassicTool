@@ -45,15 +45,15 @@ public class DiffTool extends BasicActivity {
 
     /**
      * The corresponding Intent will contain a dump. Each field of the
-     * String Array is one line of the dump. Headers (e.g. "Sector 01")
-     * are marked with a "+"-symbol (e.g. "+Sector 01").
+     * String Array is one line of the dump. Headers (e.g. "Sector:1")
+     * are marked with a "+"-symbol (e.g. "+Sector: 1").
      */
     public final static String EXTRA_DUMP_1 =
             "de.syss.MifareClassicTool.Activity.DUMP_1";
     /**
      * The corresponding Intent will contain a dump. Each field of the
-     * String Array is one line of the dump. Headers (e.g. "Sector 01")
-     * are marked with a "+"-symbol (e.g. "+Sector 01").
+     * String Array is one line of the dump. Headers (e.g. "Sector: 1")
+     * are marked with a "+"-symbol (e.g. "+Sector: 1").
      */
     public final static String EXTRA_DUMP_2 =
             "de.syss.MifareClassicTool.Activity.DUMP_2";
