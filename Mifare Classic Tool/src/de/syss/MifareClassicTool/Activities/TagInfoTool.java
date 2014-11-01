@@ -254,6 +254,8 @@ public class TagInfoTool extends BasicActivity {
         } else {
             // There is no Tag.
             TextView text = new TextView(this);
+            int pad = Common.dpToPx(5);
+            text.setPadding(pad, pad, 0, 0);
             text.setTextAppearance(this, android.R.style.TextAppearance_Large);
             text.setText(getString(R.string.text_no_tag));
             mLayout.removeAllViews();
