@@ -188,7 +188,7 @@ public class Common extends Application {
      */
     public static boolean isExternalStorageWritableErrorToast(
             Context context) {
-        if (isExternalStorageWritable() == true) {
+        if (isExternalStorageMounted() == true) {
             return true;
         }
         Toast.makeText(context, R.string.info_no_external_storage,
@@ -200,7 +200,7 @@ public class Common extends Application {
      * Checks if external storage is available for read and write.
      * @return True if external storage is writable. False otherwise.
      */
-    public static boolean isExternalStorageWritable() {
+    public static boolean isExternalStorageMounted() {
         if (Environment.MEDIA_MOUNTED.equals(
                 Environment.getExternalStorageState())) {
             return true;
@@ -223,7 +223,7 @@ public class Common extends Application {
             Context context) {
         BufferedReader br = null;
         String[] ret = null;
-        if (file != null && file.exists()) {
+        if (file != null  && isExternalStorageMounted() && file.exists()) {
             try {
                 br = new BufferedReader(new FileReader(file));
 
@@ -369,7 +369,7 @@ public class Common extends Application {
      */
     public static boolean saveFile(File file, String[] lines, boolean append) {
         boolean noError = true;
-        if (file != null && lines != null && isExternalStorageWritable()) {
+        if (file != null && lines != null && isExternalStorageMounted()) {
             BufferedWriter bw = null;
             try {
                 bw = new BufferedWriter(new FileWriter(file, append));
