@@ -35,7 +35,6 @@ import android.widget.TextView;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCDiffUtils;
 import de.syss.MifareClassicTool.R;
-import de.syss.MifareClassicTool.R.string;
 
 /**
  * A tool to show the difference between two dumps.
@@ -159,17 +158,17 @@ public class DiffTool extends BasicActivity {
                         this, android.R.style.TextAppearance_Medium);
                 header.setPadding(0, Common.dpToPx(20), 0, 0);
                 header.setTextColor(Color.WHITE);
-                header.setText(getString(string.text_sector) + ": " + sector);
+                header.setText(getString(R.string.text_sector) + ": " + sector);
                 mDiffContent.addView(header);
 
                 if (blocks.length == 0 || blocks.length == 1) {
                     TextView tv = new TextView(this);
                     if (blocks.length == 0) {
                         // Sector exists only in dump1.
-                        tv.setText(getString(string.text_only_in_dump1));
+                        tv.setText(getString(R.string.text_only_in_dump1));
                     } else {
                         // Sector exists only in dump2.
-                        tv.setText(getString(string.text_only_in_dump2));
+                        tv.setText(getString(R.string.text_only_in_dump2));
                     }
                     mDiffContent.addView(tv);
                     continue;
