@@ -93,6 +93,7 @@ Some important things are:
   * Samsung Galaxy Express 2
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
+  * Samsung Galaxy Note 4
   * LG G2
   * LG Optimus L7 II
   * Foxcon InFocus M320
