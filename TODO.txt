@@ -20,8 +20,6 @@ TODO (Maybe outdated):
 
 (+)  Test Application with Mifare Classic 2k Tags.
 
-()   A feature to compare two dumps.
-
 ()   Send raw ISO 14443A commands.
      (This can not be done easily! A custom patched libnfc-nxp is needed.)
 
