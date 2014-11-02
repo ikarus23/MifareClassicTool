@@ -428,12 +428,6 @@
         El segundo byte (año de fabricación) debe estar entre 0 y el año actual
          (e.g. 12, queriendo decir 2012).
         \n\nQuizás la etiqueta no sea una Mifare Classic original.</string>
-    <string name="dialog_save_conflict_title">El fichero ya existe</string>
-    <string name="dialog_save_conflict">Este fichero ya existe.
-        ¿Qué quieres hacer?
-        \n\n<b>Nota: Los ficheros que contienen más de un dumpeo (creados usando
-        \"combinar\") no pueden ser mostrados, editados o escritos por
-        esta aplicación.</b></string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.j. 0A4F&#8230;)</string>
