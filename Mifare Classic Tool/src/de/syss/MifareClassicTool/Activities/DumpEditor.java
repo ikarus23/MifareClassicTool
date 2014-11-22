@@ -414,6 +414,7 @@ public class DumpEditor extends BasicActivity {
             Toast.makeText(this, R.string.info_editor_init_error,
                     Toast.LENGTH_LONG).show();
             finish();
+            return;
         }
 
         // Parse dump and show it.

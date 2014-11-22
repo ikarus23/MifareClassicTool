@@ -38,7 +38,7 @@ public class ReadTag extends Activity {
 
     private final static int KEY_MAP_CREATOR = 1;
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private SparseArray<String[]> mRawDump;
 
     /**
@@ -83,6 +83,7 @@ public class ReadTag extends Activity {
                             Toast.LENGTH_LONG).show();
                 }
                 finish();
+                return;
             } else {
                 // Read Tag.
                 readTag();

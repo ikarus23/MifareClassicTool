@@ -130,7 +130,7 @@ public class KeyMapCreator extends BasicActivity {
     private LinearLayout mKeyFilesGroup;
     private TextView mSectorRange;
     private Button mChangeSectorRange;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private int mProgressStatus;
     private ProgressBar mProgressBar;
     private boolean mIsCreatingKeyMap;
@@ -212,12 +212,14 @@ public class KeyMapCreator extends BasicActivity {
             if (!getIntent().hasExtra(EXTRA_KEYS_DIR)) {
                 setResult(2);
                 finish();
+                return;
             }
             String path = getIntent().getStringExtra(EXTRA_KEYS_DIR);
             // Is path null?
             if (path == null) {
                 setResult(4);
                 finish();
+                return;
             }
             mKeyDirPath = new File(path);
         }
@@ -226,11 +228,13 @@ public class KeyMapCreator extends BasicActivity {
         if (!Common.isExternalStorageWritableErrorToast(this)) {
             setResult(3);
             finish();
+            return;
         }
         // Does the directory exist?
         if (!mKeyDirPath.exists()) {
             setResult(1);
             finish();
+            return;
         }
 
         // List key files and select last used (if corresponding

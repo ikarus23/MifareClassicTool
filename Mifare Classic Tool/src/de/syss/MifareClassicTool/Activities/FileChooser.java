@@ -151,6 +151,7 @@ public class FileChooser extends BasicActivity {
         if (!Common.isExternalStorageWritableErrorToast(this)) {
             setResult(3);
             finish();
+            return;
         }
         mChooserText = (TextView) findViewById(
                 R.id.textViewFileChooser);
@@ -189,6 +190,7 @@ public class FileChooser extends BasicActivity {
                 if (!path.isDirectory()) {
                     setResult(4);
                     finish();
+                    return;
                 }
                 mDir = path;
                 mIsDirEmpty = updateFileIndex(path);
@@ -197,11 +199,13 @@ public class FileChooser extends BasicActivity {
                 Log.e(LOG_TAG, "Directory for FileChooser does not exist.");
                 setResult(1);
                 finish();
+                return;
             }
         } else {
             Log.d(LOG_TAG, "Directory for FileChooser was not in intent.");
             setResult(2);
             finish();
+            return;
         }
     }
 
