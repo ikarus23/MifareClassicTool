@@ -194,8 +194,8 @@ public class MCReader {
                     byte blockBytes[] = mMFC.readBlock(i);
                     // mMFC.readBlock(i) must return 16 bytes or throw an error.
                     // At least this is what the documentation says.
-                    // On Samsungs Galaxy S5 however, it sometimes
-                    // returns < 16 bytes for unknown reasons.
+                    // On Samsungs Galaxy S5 and Sonys Xperia Z2 however, it
+                    // sometimes returns < 16 bytes for unknown reasons.
                     if (blockBytes.length != 16) {
                         throw new IOException();
                     }
@@ -531,7 +531,15 @@ public class MCReader {
                         + mMFC.getBlockCountInSector(sector) -1;
                 try {
                     ac = mMFC.readBlock(acBlock);
-                } catch (IOException e) {
+                } catch (Exception e) {
+                    ret.put(sector, null);
+                    continue;
+                }
+                // mMFC.readBlock(i) must return 16 bytes or throw an error.
+                // At least this is what the documentation says.
+                // On Samsungs Galaxy S5 and Sonys Xperia Z2 however, it
+                // sometimes returns < 16 bytes for unknown reasons.
+                if (ac.length != 16) {
                     ret.put(sector, null);
                     continue;
                 }
