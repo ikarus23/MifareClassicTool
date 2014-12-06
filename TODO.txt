@@ -1,4 +1,5 @@
-TODO (Maybe outdated):
+TODO
+(Outdated, check the "Todo" milestone on github)
 
 ()   = Just a "todo"  (= LOW in source code)
 (+)  = Important      (= TODO in source code)
@@ -6,19 +7,10 @@ TODO (Maybe outdated):
 
 
 
-(++) Create key map for a list sectors (not for a range of sectors).
-
-(+)  Quick read (and dump) tags.
-     Choose key files -> Map keys to sectors of the first tag
-     -> Remember this key map for the next tags to read them
-     as quick as possible -> dump the tags with time stamp.
-
-(+)  Decode the Mifare Application Directory (MAD) of a tag.
-
-(+)  Display blanks between hexbytes in the dump editor view
+()   Display blanks between hexbytes in the dump editor view
      for better reading.
 
-(+)  Test Application with Mifare Classic 2k Tags.
+()   Test Application with Mifare Classic 2k Tags.
 
 ()   Send raw ISO 14443A commands.
      (This can not be done easily! A custom patched libnfc-nxp is needed.)
