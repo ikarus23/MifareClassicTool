@@ -143,6 +143,7 @@ public class DiffTool extends BasicActivity {
             mDiffContent.removeAllViews();
             SparseArray<Integer[][]> diff = MCDiffUtils.diffIndices(
                     mDump1, mDump2);
+
             // Walk trough all possible sectors (this way the right
             // order will be guaranteed).
             for (int sector = 0; sector < 40; sector++) {
@@ -204,7 +205,7 @@ public class DiffTool extends BasicActivity {
                                 "                                ");
                         // Walk through all symbols to populate the diff line.
                         for (int i : blocks[block]) {
-                            diffString.setCharAt(i, '█');
+                            diffString.setCharAt(i, 'X');
 
                         }
                     }

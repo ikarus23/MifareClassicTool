@@ -44,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewDiffBlockDump1"
         android:layout_below="@+id/textViewDiffBlockDump1"
-        android:layout_marginTop="-6dp"
-        android:layout_marginBottom="-6dp"
+        android:layout_marginTop="-7dp"
+        android:layout_marginBottom="-7dp"
         android:typeface="monospace" />
 
     <TextView
