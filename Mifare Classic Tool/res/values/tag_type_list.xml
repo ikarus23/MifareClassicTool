@@ -52,6 +52,7 @@
     <string name="tag_030428">JCOP31, IBM</string>
     <string name="tag_004820">JCOP, IBM</string>
     <string name="tag_000428">JCOP41, IBM</string>
+    <string name="tag_0F0101">TNP3xxx (MFC compatible), NXP</string>
 
     <!-- Without SAK+ATS (only ATQA) -->
     <string name="tag_0C00">Jewel, Innovision R&amp;T</string>
