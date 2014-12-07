@@ -1,5 +1,14 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.8.1:
+ * Fixed diff tool for devices with a default monospace font that
+   does not have the block symbol (replaced block with "X").
+ * Added more keys to the "extended-std.keys" file.
+   (Remove the old and restart MCT to get the new key file.)
+ * Added a new tag to the tag identification list (TNP3xxx).
+ * Fixed multiple crash issues.
+ * Samsung Galaxy Note 4 does not support Mifare Classic.
+
 Version 1.8.0:
  * New Feature: You can compare dumps using the Diff Tool.
  * Partial Spanish translation. Thanks to "ozcho".
