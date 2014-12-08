@@ -35,9 +35,6 @@ import de.syss.MifareClassicTool.R;
  */
 public class HexToAscii extends BasicActivity {
 
-    // LOW: Pass a better object then a stringblobb separated by new line.
-    // (See http://stackoverflow.com/a/2141166)
-
     private static final String LOG_TAG =
             HexToAscii.class.getSimpleName();
 
@@ -52,13 +49,12 @@ public class HexToAscii extends BasicActivity {
         setContentView(R.layout.activity_hex_to_ascii);
 
         if (getIntent().hasExtra(DumpEditor.EXTRA_DUMP)) {
-            String dump = getIntent().getStringExtra(
+            String[] dump = getIntent().getStringArrayExtra(
                     DumpEditor.EXTRA_DUMP);
-            if (!dump.equals("")) {
+            if (dump.length != 0) {
                 String s = System.getProperty("line.separator");
-                String[] data = dump.split(s);
                 CharSequence ascii = "";
-                for (String line : data) {
+                for (String line : dump) {
                     if (line.startsWith("+")) {
                         // Header.
                         String sectorNumber = line.split(": ")[1];

@@ -41,8 +41,6 @@ import de.syss.MifareClassicTool.R;
  */
 public class ValueBlocksToInt extends BasicActivity {
 
-    // LOW: Pass a better object then a stringblobb separated by new line.
-    // (See http://stackoverflow.com/a/2141166)
     public final static String EXTRA_VB =
             "de.syss.MifareClassicTool.Activity.VB";
 
@@ -65,10 +63,8 @@ public class ValueBlocksToInt extends BasicActivity {
         if (getIntent().hasExtra(EXTRA_VB)) {
             mLayout = (TableLayout) findViewById(
                     R.id.tableLayoutValueBlocksToInt);
-            String extra = getIntent().getStringExtra(EXTRA_VB);
-            if (!extra.equals("")) {
-                String[] valueBlocks = extra.split(
-                        System.getProperty("line.separator"));
+            String[] valueBlocks = getIntent().getStringArrayExtra(EXTRA_VB);
+            if (valueBlocks.length > 0) {
                 for (int i = 0; i < valueBlocks.length; i=i+2) {
                     String[] sectorAndBlock = valueBlocks[i].split(", ");
                     String sectorNumber = sectorAndBlock[0].split(": ")[1];
