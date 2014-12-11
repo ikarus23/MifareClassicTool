@@ -99,6 +99,7 @@ Some important things are:
   * Foxcon InFocus M320
 * This app **has been** known to work on the following devices - YMMV 
   * Samsung Galaxy S3 (SIII) i9300
+  * Samsung Galaxy S3 (SIII) Duo i9300i
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
