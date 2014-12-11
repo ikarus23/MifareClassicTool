@@ -270,7 +270,7 @@ public class WriteTag extends BasicActivity {
             return;
         }
         String data = mDataText.getText().toString();
-        if (Common.isHexAnd16Byte(data, this) == false) {
+        if (!Common.isHexAnd16Byte(data, this)) {
             return;
         }
 
@@ -478,7 +478,7 @@ public class WriteTag extends BasicActivity {
         // Check the static Access Condition option.
         if (mEnableStaticAC.isChecked()) {
             String ac = mStaticAC.getText().toString();
-            if (ac.matches("[0-9A-Fa-f]+") == false) {
+            if (!ac.matches("[0-9A-Fa-f]+")) {
                 // Error, not hex.
                 Toast.makeText(this, R.string.info_ac_not_hex,
                         Toast.LENGTH_LONG).show();

@@ -130,7 +130,7 @@ public class MainMenu extends Activity {
             // Create keys directory.
             File path = new File(Environment.getExternalStoragePublicDirectory(
                     Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-            if (path.exists() == false && !path.mkdirs()) {
+            if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
                         + "/" + Common.KEYS_DIR + "' directory.");
@@ -140,7 +140,7 @@ public class MainMenu extends Activity {
             // Create dumps directory.
             path = new File(Environment.getExternalStoragePublicDirectory(
                     Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
-            if (path.exists() == false && !path.mkdirs()) {
+            if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
                         + "/" + Common.DUMPS_DIR + "' directory.");
@@ -150,7 +150,7 @@ public class MainMenu extends Activity {
             // Create tmp directory.
             path = new File(Environment.getExternalStoragePublicDirectory(
                     Common.HOME_DIR) + "/" + Common.TMP_DIR);
-            if (path.exists() == false && !path.mkdirs()) {
+            if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
                         + Common.TMP_DIR + "' directory.");
@@ -251,7 +251,7 @@ public class MainMenu extends Activity {
         int lastVersion = sharedPref.getInt("mct_version", currentVersion - 1);
         boolean showDonateDialog = sharedPref.getBoolean(
                 "show_donate_dialog", true);
-        if (lastVersion < currentVersion || showDonateDialog == true) {
+        if (lastVersion < currentVersion || showDonateDialog) {
             // This is either a new version of MCT or the user wants to see
             // the donate dialog.
             if (lastVersion < currentVersion) {
@@ -379,7 +379,7 @@ public class MainMenu extends Activity {
             // Disable read/write tag options.
             mReadTag.setEnabled(false);
             mWriteTag.setEnabled(false);
-            return;
+            //return;
         } else {
             // NFC is enabled. Hide dialog and enable NFC
             // foreground dispatch.
