@@ -129,7 +129,7 @@ public class KeyEditor extends BasicActivity {
      *
      */
     private void shareKeyFile() {
-        if (isValidKeyFileErrorToast() == false) {
+        if (!isValidKeyFileErrorToast()) {
             return;
         }
         // Save key file to to a temporary file which will be
@@ -146,7 +146,7 @@ public class KeyEditor extends BasicActivity {
         // Save file to tmp directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
-        if (Common.saveFile(file, mLines, false) == false) {
+        if (!Common.saveFile(file, mLines, false)) {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();
             return;
@@ -174,7 +174,7 @@ public class KeyEditor extends BasicActivity {
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {
-        if (isValidKeyFileErrorToast() == false) {
+        if (!isValidKeyFileErrorToast()) {
             return;
         }
         final File path = new File(
@@ -274,7 +274,7 @@ public class KeyEditor extends BasicActivity {
         boolean keyFound = false;
         for (int i = 0; i < lines.length; i++) {
             if (!lines[i].startsWith("#") && !lines[i].equals("")
-                    && lines[i].matches("[0-9A-Fa-f]+") == false) {
+                    && !lines[i].matches("[0-9A-Fa-f]+")) {
                 // Not pure hex and not a comment.
                 return 2;
             }
@@ -291,7 +291,7 @@ public class KeyEditor extends BasicActivity {
                 keyFound = true;
             }
         }
-        if (keyFound == false) {
+        if (!keyFound) {
             // No key found.
             return 1;
         }

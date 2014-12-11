@@ -199,13 +199,13 @@ public class FileChooser extends BasicActivity {
                 Log.e(LOG_TAG, "Directory for FileChooser does not exist.");
                 setResult(1);
                 finish();
-                return;
+                //return;
             }
         } else {
             Log.d(LOG_TAG, "Directory for FileChooser was not in intent.");
             setResult(2);
             finish();
-            return;
+            //return;
         }
     }
 
@@ -221,7 +221,7 @@ public class FileChooser extends BasicActivity {
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
         // Only use the enable/disable system for the delete file menu item
         // if there is a least one file.
-        if (mIsDirEmpty == false) {
+        if (!mIsDirEmpty) {
             mDeleteFile.setEnabled(mDeleteFileEnabled);
         } else {
             mDeleteFile.setEnabled(false);
