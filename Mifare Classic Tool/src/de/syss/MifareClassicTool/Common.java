@@ -215,7 +215,7 @@ public class Common extends Application {
      * will be shown.
      * @return Array of strings representing the lines of the file.
      * If the file is empty or an error occurs "null" will be returned.
-     */
+     */ 
     public static String[] readFileLineByLine(File file, boolean readComments,
             Context context) {
         BufferedReader br = null;
