@@ -126,12 +126,9 @@ public class AccessConditionTool extends BasicActivity {
                 mACMatrix[2][3] = acBits [2];
                 // Rebuild the data block dialog based on the readability of
                 // key B.
-                if (position < 2 || position == 4) {
-                    // Key B is readable.
-                    mIsKeyBReadable = true;
-                } else {
-                    mIsKeyBReadable = false;
-                }
+                // Key B is readable.
+                //mIsKeyBReadable is set to true if either condition is true
+                mIsKeyBReadable = position < 2 || position == 4;
                 buildDataBlockDialog(true);
                 // Close dialog.
                 mSectorTrailerDialog.dismiss();
@@ -170,7 +167,7 @@ public class AccessConditionTool extends BasicActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (ac.matches("[0-9A-Fa-f]+") == false) {
+        if (!ac.matches("[0-9A-Fa-f]+")) {
             // Error. Not hex.
             Toast.makeText(this, R.string.info_ac_not_hex,
                     Toast.LENGTH_LONG).show();
@@ -186,11 +183,7 @@ public class AccessConditionTool extends BasicActivity {
             int rowNr = acBitsToACRowNr(acBits, true);
             if (rowNr != -1) {
                 // Check if key B is readable.
-                if (rowNr < 2 || rowNr == 4) {
-                    mIsKeyBReadable = true;
-                } else {
-                    mIsKeyBReadable = false;
-                }
+                mIsKeyBReadable = rowNr < 2 || rowNr == 4;
                 mBlockButtons[3].setText(getString(
                         getResourceForSectorTrailersByRowNr(rowNr)));
 

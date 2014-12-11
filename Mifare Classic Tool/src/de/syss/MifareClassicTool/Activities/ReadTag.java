@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -142,9 +143,12 @@ public class ReadTag extends Activity {
                     // Mark headers (sectors) with "+".
                     tmpDump.add("+Sector: " + i);
                     if (val != null ) {
+                        Collections.addAll(tmpDump, val);
+                        /*
                         for (int j = 0; j < val.length; j++) {
                             tmpDump.add(val[j]);
                         }
+                         */
                     } else {
                         // Mark sector as not readable ("*").
                         tmpDump.add("*No keys found or dead sector");

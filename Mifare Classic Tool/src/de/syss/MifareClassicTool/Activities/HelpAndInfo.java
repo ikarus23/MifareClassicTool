@@ -37,7 +37,7 @@ public class HelpAndInfo extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        // Init. help from local webseite.
+        // Init. help from local website.
         WebView wv = (WebView) findViewById(R.id.webViewHelpText);
         wv.loadUrl("file:///android_asset/help/help.html");
     }
