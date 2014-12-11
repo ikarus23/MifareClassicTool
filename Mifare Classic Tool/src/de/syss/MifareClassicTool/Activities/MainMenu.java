@@ -132,7 +132,7 @@ public class MainMenu extends Activity {
                     Common.HOME_DIR) + "/" + Common.KEYS_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
-                Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
                         + "/" + Common.KEYS_DIR + "' directory.");
                 return;
             }
@@ -142,7 +142,7 @@ public class MainMenu extends Activity {
                     Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
-                Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
                         + "/" + Common.DUMPS_DIR + "' directory.");
                 return;
             }
@@ -152,7 +152,7 @@ public class MainMenu extends Activity {
                     Common.HOME_DIR) + "/" + Common.TMP_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
-                Log.e(LOG_TAG, "Error while crating '" + Common.HOME_DIR
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
                         + Common.TMP_DIR + "' directory.");
                 return;
             }
