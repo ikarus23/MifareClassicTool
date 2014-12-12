@@ -250,7 +250,7 @@ public class DumpEditor extends BasicActivity {
     /**
      * Update the coloring. This method updates the colors if all
      * data are valid {@link #checkDumpAndUpdateLines()}.
-     * To do so, it reinitializes the whole editor... not quite beautiful.
+     * To do so, it re-initializes the whole editor... not quite beautiful.
      * @param view The View object that triggered the method
      * (in this case the update color text (color caption text)).
      * @see #checkDumpAndUpdateLines()
