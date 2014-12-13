@@ -233,7 +233,7 @@
     <string name="info_valid_dump_not_hex">Error: Some block(s) contain
         invalid data (not hex)</string>
     <string name="info_valid_dump_not_4_or_16_lines">Error: Some
-        sectors don\'thave 4 or 16 blocks (lines)</string>
+        sectors don\'t have 4 or 16 blocks (lines)</string>
     <string name="info_valid_dump_not_16_bytes">Error: Some blocks
         don\'t have 16 bytes (32 characters)</string>
     <string name="info_valid_dump_sector_range">Error: Sector out of range

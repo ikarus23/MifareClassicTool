@@ -59,11 +59,11 @@ public class ValueBlockTool extends BasicActivity {
      */
     public void onDecode(View view) {
         String data = mVB.getText().toString();
-        if (Common.isHexAnd16Byte(data, this) == false) {
+        if (!Common.isHexAnd16Byte(data, this)) {
             // Error. Not hex and 16 byte.
             return;
         }
-        if (Common.isValueBlock(data) == false) {
+        if (!Common.isValueBlock(data)) {
              // Error. No value block.
             Toast.makeText(this, R.string.info_is_not_vb,
                     Toast.LENGTH_LONG).show();
@@ -92,7 +92,7 @@ public class ValueBlockTool extends BasicActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (addrText.matches("[0-9A-Fa-f]{2}") == false) {
+        if (!addrText.matches("[0-9A-Fa-f]{2}")) {
             // Error. There is no valid value block addr.
             Toast.makeText(this, R.string.info_addr_not_hex_byte,
                     Toast.LENGTH_LONG).show();
@@ -118,12 +118,11 @@ public class ValueBlockTool extends BasicActivity {
         // Int. -> invert -> reverse -> byte array -> hex string.
         String vbInverted = Common.byte2HexString(ByteBuffer.allocate(4).putInt(
                 Integer.reverseBytes(~vbAsInt)).array());
-        String addr = addrText;
         String addrInverted = Integer.toHexString(
-                ~Integer.parseInt(addr, 16)).toUpperCase(
+                ~Integer.parseInt(addrText, 16)).toUpperCase(
                         Locale.getDefault()).substring(6, 8);
         mVB.setText(vb + vbInverted + vb
-                + addr + addrInverted + addr + addrInverted);
+                + addrText + addrInverted + addrText + addrInverted);
 
     }
 

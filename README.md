@@ -97,6 +97,9 @@ Some important things are:
   * LG G2
   * LG Optimus L7 II
   * Foxcon InFocus M320
+* This app **has been** known to work on the following devices
+  * Samsung Galaxy S3 (SIII) i9300
+  * Samsung Galaxy S3 (SIII) Duo i9300i
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
