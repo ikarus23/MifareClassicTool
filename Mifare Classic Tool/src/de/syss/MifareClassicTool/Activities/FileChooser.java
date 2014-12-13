@@ -221,7 +221,7 @@ public class FileChooser extends BasicActivity {
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
         // Only use the enable/disable system for the delete file menu item
         // if there is a least one file.
-        if (mIsDirEmpty == false) {
+        if (!mIsDirEmpty) {
             mDeleteFile.setEnabled(mDeleteFileEnabled);
         } else {
             mDeleteFile.setEnabled(false);

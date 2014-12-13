@@ -79,7 +79,7 @@ public class MCReader {
         MCReader mcr = null;
         if (tag != null) {
             mcr = new MCReader(tag);
-            if (mcr.isMifareClassic() == false) {
+            if (!mcr.isMifareClassic()) {
                 return null;
             }
         }
@@ -103,9 +103,9 @@ public class MCReader {
      */
     public SparseArray<String[]> readAsMuchAsPossible(
             SparseArray<byte[][]> keyMap) {
-        SparseArray<String[]> ret = null;
+        SparseArray<String[]> resultSparseArray = null;
         if (keyMap != null && keyMap.size() > 0) {
-            ret = new SparseArray<String[]>(keyMap.size());
+            resultSparseArray = new SparseArray<String[]>(keyMap.size());
             // For all entries in map do:
             for (int i = 0; i < keyMap.size(); i++) {
                 String[][] results = new String[2][];
@@ -125,13 +125,13 @@ public class MCReader {
                 }
                 // Merge results.
                 if (results[0] != null || results[1] != null) {
-                    ret.put(keyMap.keyAt(i), mergeSectorData(
+                    resultSparseArray.put(keyMap.keyAt(i), mergeSectorData(
                             results[0], results[1]));
                 }
             }
-            return ret;
+            return resultSparseArray;
         }
-        return ret;
+        return resultSparseArray;
     }
 
     /**
@@ -513,14 +513,14 @@ public class MCReader {
             int sector = keyMap.keyAt(i);
             if (pos.containsKey(sector)) {
                 byte[][] keys = keyMap.get(sector);
-                byte[] ac = null;
+                byte[] ac;
                 // Authenticate.
                 if (keys[0] != null) {
-                    if (authenticate(sector, keys[0], false) == false) {
+                    if (!authenticate(sector, keys[0], false)) {
                         return null;
                     }
                 } else if (keys[1] != null) {
-                    if (authenticate(sector, keys[1], true) == false) {
+                    if (!authenticate(sector, keys[1], true)) {
                         return null;
                     }
                 } else {
@@ -711,13 +711,10 @@ public class MCReader {
         byte c1 = (byte) ((ac[1] & 0x80) >>> 7);
         byte c2 = (byte) ((ac[2] & 0x08) >>> 3);
         byte c3 = (byte) ((ac[2] & 0x80) >>> 7);
-        if (c1 == 0
+        return c1 == 0
                 && (c2 == 0 && c3 == 0)
                 || (c2 == 1 && c3 == 0)
-                || (c2 == 0 && c3 == 1)) {
-            return true;
-        }
-        return false;
+                || (c2 == 0 && c3 == 1);
     }
 
     /**
@@ -740,10 +737,7 @@ public class MCReader {
     }
 
     public boolean isMifareClassic() {
-        if (mMFC == null) {
-            return false;
-        }
-        return true;
+        return mMFC != null;
     }
 
     /**

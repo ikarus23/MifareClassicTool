@@ -188,7 +188,7 @@ public class Common extends Application {
      */
     public static boolean isExternalStorageWritableErrorToast(
             Context context) {
-        if (isExternalStorageMounted() == true) {
+        if (isExternalStorageMounted()) {
             return true;
         }
         Toast.makeText(context, R.string.info_no_external_storage,
@@ -201,11 +201,8 @@ public class Common extends Application {
      * @return True if external storage is writable. False otherwise.
      */
     public static boolean isExternalStorageMounted() {
-        if (Environment.MEDIA_MOUNTED.equals(
-                Environment.getExternalStorageState())) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(
+                Environment.getExternalStorageState());
     }
 
     /**
@@ -348,7 +345,7 @@ public class Common extends Application {
      */
     public static boolean saveFileAppend(File file, String[] lines,
             boolean comment) {
-        if (comment == true) {
+        if (comment) {
             // Append to a existing file.
             String[] newLines = new String[lines.length + 4];
             System.arraycopy(lines, 0, newLines, 4, lines.length);
@@ -374,7 +371,7 @@ public class Common extends Application {
             try {
                 bw = new BufferedWriter(new FileWriter(file, append));
                 // Add new line before appending.
-                if (append == true) {
+                if (append) {
                     bw.newLine();
                 }
                 int i;
@@ -558,8 +555,6 @@ public class Common extends Application {
             if (!tagLost) {
                 return reader;
             }
-        } else {
-            tagLost = true;
         }
 
         // Error. The tag is gone.
@@ -727,13 +722,10 @@ public class Common extends Application {
      * @return True if key B is readable. False otherwise.
      */
     public static boolean isKeyBReadable(byte c1, byte c2, byte c3) {
-        if (c1 == 0
+        return c1 == 0
                 && (c2 == 0 && c3 == 0)
                 || (c2 == 1 && c3 == 0)
-                || (c2 == 0 && c3 == 1)) {
-            return true;
-        }
-        return false;
+                || (c2 == 0 && c3 == 1);
     }
 
     /**
@@ -837,7 +829,7 @@ public class Common extends Application {
      * @return True if sting is hex an 16 Bytes long, False otherwise.
      */
     public static boolean isHexAnd16Byte(String hexString, Context context) {
-        if (hexString.matches("[0-9A-Fa-f]+") == false) {
+        if (!hexString.matches("[0-9A-Fa-f]+")) {
             // Error, not hex.
             Toast.makeText(context, R.string.info_not_hex_data,
                     Toast.LENGTH_LONG).show();
@@ -906,17 +898,17 @@ public class Common extends Application {
             // There are no lines.
             return 6;
         }
-        for(int i = 0; i < lines.length; i++) {
+        for(String line : lines) {
             if ((is16BlockSector == false && blocksSinceLastSectorHeader == 4)
                     || (is16BlockSector && blocksSinceLastSectorHeader == 16)) {
                 // A sector header is expected.
-                if (lines[i].matches("^\\+Sector: [0-9]{1,2}$") == false) {
+                if (!line.matches("^\\+Sector: [0-9]{1,2}$")) {
                     // Not a valid sector length or not a valid sector header.
                     return 1;
                 }
                 int sector = -1;
                 try {
-                    sector = Integer.parseInt(lines[i].split(": ")[1]);
+                    sector = Integer.parseInt(line.split(": ")[1]);
                 } catch (Exception ex) {
                     // Not a valid sector header.
                     // Should not occur due to the previous check (regex).
@@ -937,18 +929,18 @@ public class Common extends Application {
                 blocksSinceLastSectorHeader = 0;
                 continue;
             }
-            if (lines[i].startsWith("*") && ignoreAsterisk) {
+            if (line.startsWith("*") && ignoreAsterisk) {
                 // Ignore line and move to the next sector.
                 // (The line was a "No keys found or dead sector" message.)
                 is16BlockSector = false;
                 blocksSinceLastSectorHeader = 4;
                 continue;
             }
-            if (lines[i].matches("[0-9A-Fa-f-]+") == false) {
+            if (!line.matches("[0-9A-Fa-f-]+")) {
                 // Not pure hex (or NO_DATA).
                 return 2;
             }
-            if (lines[i].length() != 32) {
+            if (line.length() != 32) {
                 // Not 32 chars per line.
                 return 3;
             }
@@ -1064,7 +1056,7 @@ public class Common extends Application {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     public static void copyToClipboard(String text, Context context) {
-        if (text.equals("") == false) {
+        if (!text.equals("")) {
             if (Build.VERSION.SDK_INT >= 11) {
                 // Android API level 11+.
                 android.content.ClipboardManager clipboard =

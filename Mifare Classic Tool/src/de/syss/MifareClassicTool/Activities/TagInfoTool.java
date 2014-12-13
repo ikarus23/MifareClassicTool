@@ -162,7 +162,7 @@ public class TagInfoTool extends BasicActivity {
             }
             // Identify tag type.
             int tagTypeResourceID = getTagIdentifier(atqa, sak, ats);
-            String tagType = "";
+            String tagType;
             if (tagTypeResourceID == R.string.tag_unknown && mMFCSupport > -2) {
                 tagType = getString(R.string.tag_unknown_mf_classic);
             } else {

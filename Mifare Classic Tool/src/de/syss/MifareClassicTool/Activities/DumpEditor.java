@@ -375,7 +375,7 @@ public class DumpEditor extends BasicActivity {
                 }
                 for (int j = 0; j < lines.length; j++) {
                     // Is hex or "-" == NO_KEY or NO_DATA.
-                    if (lines[j].matches("[0-9A-Fa-f-]+") == false) {
+                    if (!lines[j].matches("[0-9A-Fa-f-]+")) {
                         // Not pure hex.
                         return 2;
                     }
@@ -577,17 +577,16 @@ public class DumpEditor extends BasicActivity {
         ArrayList<String> tmpVBs = new ArrayList<String>();
         String header = "";
         int blockCounter = 0;
-        for (int i = 0; i < mLines.length; i++) {
-            if (mLines[i].startsWith("+")) {
-                header = mLines[i];
+        for (String line : mLines) {
+            if (line.startsWith("+")) {
+                header = line;
                 blockCounter = 0;
-                continue;
             } else {
-                if (Common.isValueBlock(mLines[i])) {
+                if (Common.isValueBlock(line)) {
                     // Header.
                     tmpVBs.add(header + ", Block: " + blockCounter);
                     // Value Block.
-                    tmpVBs.add(mLines[i]);
+                    tmpVBs.add(line);
                 }
                 blockCounter++;
             }
@@ -748,7 +747,7 @@ public class DumpEditor extends BasicActivity {
         // Save file to tmp directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
-        if (Common.saveFile(file, mLines, false) == false) {
+        if (!Common.saveFile(file, mLines, false)) {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();
             return;

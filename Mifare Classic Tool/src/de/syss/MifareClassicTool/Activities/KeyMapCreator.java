@@ -306,7 +306,7 @@ public class KeyMapCreator extends BasicActivity {
      * @see #createKeyMap(MCReader, Context)
      */
     public void onCancelCreateKeyMap(View view) {
-        if (mIsCreatingKeyMap == true) {
+        if (mIsCreatingKeyMap) {
             mIsCreatingKeyMap = false;
         } else {
             finish();
@@ -376,7 +376,7 @@ public class KeyMapCreator extends BasicActivity {
 
                 // Set key files.
                 File[] keys = keyFiles.toArray(new File[keyFiles.size()]);
-                if (reader.setKeyFile(keys, this) == false) {
+                if (!reader.setKeyFile(keys, this)) {
                     // Error.
                     reader.close();
                     return;
@@ -436,7 +436,7 @@ public class KeyMapCreator extends BasicActivity {
                 // Build key map parts and update the progress bar.
                 while (mProgressStatus < mLastSector) {
                     mProgressStatus = reader.buildNextKeyMapPart();
-                    if (mProgressStatus == -1 || mIsCreatingKeyMap == false) {
+                    if (mProgressStatus == -1 || !mIsCreatingKeyMap) {
                         // Error while building next key map part.
                         break;
                     }
@@ -458,8 +458,7 @@ public class KeyMapCreator extends BasicActivity {
                         mProgressBar.setProgress(0);
                         mCreateKeyMap.setEnabled(true);
                         reader.close();
-                        if (mIsCreatingKeyMap == true
-                                && mProgressStatus != -1) {
+                        if (mIsCreatingKeyMap && mProgressStatus != -1) {
                             keyMapCreated(reader);
                         } else {
                             // Error during key map creation.
