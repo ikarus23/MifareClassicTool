@@ -87,6 +87,7 @@ public class DumpEditor extends BasicActivity {
 
     private LinearLayout mLayout;
     private String mFileName = "";
+    private String mUID = "";
 
     /**
      * All blocks containing valid data AND their headers (marked with "+"
@@ -148,8 +149,8 @@ public class DumpEditor extends BasicActivity {
             String[] dump = getIntent().getStringArrayExtra(EXTRA_DUMP);
             // Set title with UID.
             if (Common.getUID() != null) {
-                setTitle(getTitle() + " (UID: " + Common.byte2HexString(
-                        Common.getUID())+ ")");
+                mUID = Common.byte2HexString(Common.getUID());
+                setTitle(getTitle() + " (UID: " + mUID+ ")");
             }
             initEditor(dump);
             setIntent(null);
@@ -303,6 +304,14 @@ public class DumpEditor extends BasicActivity {
                 Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) +  "/" + Common.DUMPS_DIR);
         final Context cont = this;
+        // Set a filename (UID + Date + Time) if there is none.
+        if (mFileName.equals("")) {
+            Time today = new Time(Time.getCurrentTimezone());
+            today.setToNow();
+            mFileName = "UID_" + mUID + "_"
+                    + today.format("%Y-%m-%d_%H-%M-%S") + ".txt";
+        }
+
         // Ask user for filename.
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
