@@ -86,8 +86,8 @@ public class DumpEditor extends BasicActivity {
             DumpEditor.class.getSimpleName();
 
     private LinearLayout mLayout;
-    private String mFileName = "";
-    private String mUID = "";
+    private String mFileName;
+    private String mUID;
 
     /**
      * All blocks containing valid data AND their headers (marked with "+"
@@ -166,9 +166,7 @@ public class DumpEditor extends BasicActivity {
         } else if (savedInstanceState != null) {
             // Recreated after kill by Android (due to low memory).
             mFileName = savedInstanceState.getString("file_name");
-            if (mFileName == null) {
-                mFileName = "";
-            } else {
+            if (mFileName != null) {
                 setTitle(getTitle() + " (" + mFileName + ")");
             }
             mLines = savedInstanceState.getStringArray("lines");
@@ -305,7 +303,7 @@ public class DumpEditor extends BasicActivity {
                 Common.HOME_DIR) +  "/" + Common.DUMPS_DIR);
         final Context cont = this;
         // Set a filename (UID + Date + Time) if there is none.
-        if (mFileName.equals("")) {
+        if (mFileName == null) {
             Time today = new Time(Time.getCurrentTimezone());
             today.setToNow();
             mFileName = "UID_" + mUID + "_"
@@ -334,6 +332,7 @@ public class DumpEditor extends BasicActivity {
                                 input.getText().toString());
                         Common.checkFileExistenceAndSave(file, mLines,
                                 true, cont);
+                        mFileName = file.getName();
                     } else {
                         // Empty name is not allowed.
                         Toast.makeText(cont, R.string.info_empty_file_name,
@@ -738,7 +737,7 @@ public class DumpEditor extends BasicActivity {
         // Save dump to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
         String fileName;
-        if (mFileName.equals("")) {
+        if (mFileName == null) {
             // The dump has no name. Use date and time as name.
             Time today = new Time(Time.getCurrentTimezone());
             today.setToNow();
