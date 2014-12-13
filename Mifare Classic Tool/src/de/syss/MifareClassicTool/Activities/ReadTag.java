@@ -18,6 +18,8 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -131,29 +133,27 @@ public class ReadTag extends Activity {
      * @see DumpEditor
      */
     private void createTagDump(SparseArray<String[]> rawDump) {
-        String dump = "";
-        String s = System.getProperty("line.separator");
+        ArrayList<String> tmpDump = new ArrayList<String>();
         if (rawDump != null) {
             if (rawDump.size() != 0) {
                 for (int i = Common.getKeyMapRangeFrom();
                         i <= Common.getKeyMapRangeTo(); i++) {
                     String[] val = rawDump.get(i);
                     // Mark headers (sectors) with "+".
-                    dump += "+Sector: " + i + s;
+                    tmpDump.add("+Sector: " + i);
                     if (val != null ) {
                         for (int j = 0; j < val.length; j++) {
-                            dump += val[j] + s;
+                            tmpDump.add(val[j]);
                         }
                     } else {
                         // Mark sector as not readable ("*").
-                        dump += "*No keys found or dead sector" + s;
+                        tmpDump.add("*No keys found or dead sector");
                     }
                 }
-                // UGLY: remove last "\n".
-                dump = dump.substring(0, dump.length() -1);
+                String[] dump = tmpDump.toArray(new String[tmpDump.size()]);
+
                 // Show Dump Editor Activity.
-                Intent intent = new Intent(this,
-                        DumpEditor.class);;
+                Intent intent = new Intent(this, DumpEditor.class);
                 intent.putExtra(DumpEditor.EXTRA_DUMP, dump);
                 startActivity(intent);
             } else {

@@ -69,7 +69,7 @@
         Read KeyA: Never\nWrite KeyA: B\nRead ACs: A|B\nWrite ACs: B
         \nRead KeyB: Never\nWrite KeyB: B</string>
     <string name="ac_sector_trailer_6">
-        Read KeyA: Never\nWrite KeyA: Never\nRead ACs: |B\nWrite ACs: B
+        Read KeyA: Never\nWrite KeyA: Never\nRead ACs: A|B\nWrite ACs: B
         \nRead KeyB: Never\nWrite KeyB: Never</string>
     <string name="ac_sector_trailer_7">
         Read KeyA: Never\nWrite KeyA: Never\nRead ACs: A|B\nWrite ACs: Never

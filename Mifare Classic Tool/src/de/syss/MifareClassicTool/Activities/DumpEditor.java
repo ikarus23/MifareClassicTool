@@ -73,9 +73,6 @@ import de.syss.MifareClassicTool.R;
  */
 public class DumpEditor extends BasicActivity {
 
-    // LOW: Pass a better object then a stringblobb separated by new line.
-    // (See http://stackoverflow.com/a/2141166)
-
     /**
      * The corresponding Intent will contain a dump separated by new lines.
      * Headers (e.g. "Sector: 1") are marked with a "+"-symbol
@@ -148,14 +145,13 @@ public class DumpEditor extends BasicActivity {
 
         if (getIntent().hasExtra(EXTRA_DUMP)) {
             // Called from ReadTag (init editor by intent).
-            String dump = getIntent().getStringExtra(EXTRA_DUMP);
+            String[] dump = getIntent().getStringArrayExtra(EXTRA_DUMP);
             // Set title with UID.
             if (Common.getUID() != null) {
                 setTitle(getTitle() + " (UID: " + Common.byte2HexString(
                         Common.getUID())+ ")");
             }
-            String[] lines = dump.split(System.getProperty("line.separator"));
-            initEditor(lines);
+            initEditor(dump);
             setIntent(null);
         } else if (getIntent().hasExtra(
                 FileChooser.EXTRA_CHOSEN_FILE)) {
@@ -502,17 +498,16 @@ public class DumpEditor extends BasicActivity {
             Common.isValidDumpErrorToast(err, this);
             return;
         }
-        String dump = "";
-        String s = System.getProperty("line.separator");
+        // Get all data blocks (skip all Access Conditions).
+        ArrayList<String> tmpDump = new ArrayList<String>();
         for (int i = 0; i < mLines.length-1; i++) {
-            if (i+1 == mLines.length
-                    || mLines[i+1].startsWith("+")) {
-                // Skip Access Conditions.
-                dump += s;
-                continue;
+            if (i+1 != mLines.length
+                    && !mLines[i+1].startsWith("+")) {
+                tmpDump.add(mLines[i]);
             }
-            dump += mLines[i] + s;
         }
+        String[] dump = tmpDump.toArray(new String[tmpDump.size()]);
+
         Intent intent = new Intent(this, HexToAscii.class);
         intent.putExtra(EXTRA_DUMP, dump);
         startActivity(intent);
@@ -530,13 +525,13 @@ public class DumpEditor extends BasicActivity {
             Common.isValidDumpErrorToast(err, this);
             return;
         }
-        String ac = "";
+        // Get all Access Conditions (skip Data).
+        ArrayList<String> tmpACs = new ArrayList<String>();
         int lastSectorHeader = 0;
-        String s = System.getProperty("line.separator");
         for (int i = 0; i < mLines.length; i++) {
             if (mLines[i].startsWith("+")) {
                 // Header.
-                ac += mLines[i] + s;
+                tmpACs.add(mLines[i]);
                 lastSectorHeader = i;
             } else if (i+1 == mLines.length
                     || mLines[i+1].startsWith("+")) {
@@ -544,11 +539,14 @@ public class DumpEditor extends BasicActivity {
                 if (i - lastSectorHeader > 4) {
                     // Access Conditions of a sector
                     // with more than 4 blocks --> Mark ACs with "*".
-                    ac += "*";
+                    tmpACs.add("*" + mLines[i].substring(12, 20));
+                } else {
+                    tmpACs.add(mLines[i].substring(12, 20));
                 }
-                ac += mLines[i].substring(12, 20) + s;
             }
         }
+        String[] ac = tmpACs.toArray(new String[tmpACs.size()]);
+
         Intent intent = new Intent(this, AccessConditionDecoder.class);
         intent.putExtra(AccessConditionDecoder.EXTRA_AC, ac);
         startActivity(intent);
@@ -566,10 +564,11 @@ public class DumpEditor extends BasicActivity {
             Common.isValidDumpErrorToast(err, this);
             return;
         }
-        String vb = "";
+
+        // Get all Value Blocks (skip other blocks).
+        ArrayList<String> tmpVBs = new ArrayList<String>();
         String header = "";
         int blockCounter = 0;
-        String s = System.getProperty("line.separator");
         for (int i = 0; i < mLines.length; i++) {
             if (mLines[i].startsWith("+")) {
                 header = mLines[i];
@@ -578,15 +577,17 @@ public class DumpEditor extends BasicActivity {
             } else {
                 if (Common.isValueBlock(mLines[i])) {
                     // Header.
-                    vb += header + ", Block: " + blockCounter + s;
+                    tmpVBs.add(header + ", Block: " + blockCounter);
                     // Value Block.
-                    vb += mLines[i] + s;
+                    tmpVBs.add(mLines[i]);
                 }
                 blockCounter++;
             }
         }
-        Intent intent = new Intent(this, ValueBlocksToInt.class);
-        if (!vb.equals("")) {
+
+        if (tmpVBs.size() > 0) {
+            String[] vb = tmpVBs.toArray(new String[tmpVBs.size()]);
+            Intent intent = new Intent(this, ValueBlocksToInt.class);
             intent.putExtra(ValueBlocksToInt.EXTRA_VB, vb);
             startActivity(intent);
         } else {

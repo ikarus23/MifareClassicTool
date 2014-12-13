@@ -41,9 +41,6 @@ import de.syss.MifareClassicTool.R;
  */
 public class AccessConditionDecoder extends BasicActivity {
 
-    // LOW: Pass a better object then a stringblobb separated by new line.
-    // (See http://stackoverflow.com/a/2141166)
-
     public final static String EXTRA_AC =
             "de.syss.MifareClassicTool.Activity.AC";
 
@@ -65,9 +62,8 @@ public class AccessConditionDecoder extends BasicActivity {
         if (getIntent().hasExtra(EXTRA_AC)) {
             mLayout = (TableLayout) findViewById(
                     R.id.tableLayoutAccessConditionDecoder);
-            String extra = getIntent().getStringExtra(EXTRA_AC);
-            String[] accessConditions = extra.split(
-                    System.getProperty("line.separator"));
+            String[] accessConditions =
+                getIntent().getStringArrayExtra(EXTRA_AC);
             for (int j = 0; j < accessConditions.length; j=j+2) {
                 boolean hasMoreThan4Blocks = false;
                 if (accessConditions[j+1].startsWith("*")) {
