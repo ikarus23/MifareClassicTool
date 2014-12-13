@@ -91,9 +91,9 @@ public class Common extends Application {
     /**
      * This file contains some standard Mifare keys.
      * <ul>
-     * <li>0xFFFFFFFFFFFF - Unformatted, factory fresh tags.</li>
+     * <li>0xFFFFFFFFFFFF - Un-formatted, factory fresh tags.</li>
      * <li>0xA0A1A2A3A4A5 - First sector of the tag (Mifare MAD).</li>
-     * <li>0xD3F7D3F7D3F7 - NDEF formated tags.</li>
+     * <li>0xD3F7D3F7D3F7 - NDEF formatted tags.</li>
      * </ul>
      */
     public static final String STD_KEYS = "std.keys";
@@ -536,8 +536,8 @@ public class Common extends Application {
 
     /**
      * Create a connected {@link MCReader} if there is a present Mifare Classic
-     * tag. If there is no Mifare Classic tag a error
-     * message will be displayed to toe user.
+     * tag. If there is no Mifare Classic tag an error
+     * message will be displayed to the user.
      * @param context The Context in which the error Toast will be shown.
      * @return A connected {@link MCReader} or "null" if no tag was present.
      */
@@ -864,7 +864,7 @@ public class Common extends Application {
         byte[] b = Common.hexStringToByteArray(hexString);
         if (b.length == 16) {
             // Google some NXP info PDFs about Mifare Classic to see how
-            // Value Blocks are formated.
+            // Value Blocks are formatted.
             // For better reading (~ = invert operator):
             // if (b0=b8 and b0=~b4) and (b1=b9 and b9=~b5) ...
             // ... and (b12=b14 and b13=b15 and b12=~b13) then
@@ -887,7 +887,7 @@ public class Common extends Application {
      * to the next sector (header).
      * @return <ul>
      * <li>0 - Everything is (most likely) O.K.</li>
-     * <li>1 - Found a sector that hat not 4 or 16 blocks.</li>
+     * <li>1 - Found a sector that has not 4 or 16 blocks.</li>
      * <li>2 - Found a block that has invalid characters (not hex or "-" as
      * marker for no key/no data).</li>
      * <li>3 - Found a block that has not 16 bytes (32 chars).</li>
@@ -958,7 +958,7 @@ public class Common extends Application {
     }
 
     /**
-     * Show a Toast message with error informations according to
+     * Show a Toast message with error information according to
      * {@link #isValidDump(String[], boolean)}.
      * @see #isValidDump(String[], boolean)
      */
@@ -995,7 +995,7 @@ public class Common extends Application {
     /**
      * Reverse a byte Array (e.g. Little Endian -> Big Endian).
      * Hmpf! Java has no Array.reverse(). And I don't want to use
-     * Commons.Lang (ArrayUtils) form Apache....
+     * Commons.Lang (ArrayUtils) from Apache....
      * @param array The array to reverse (in-place).
      */
     public static void reverseByteArrayInPlace(byte[] array) {
@@ -1057,7 +1057,7 @@ public class Common extends Application {
 
     /**
      * Copy a text to the Android clipboard.
-     * @param text The text that should be stored on the clipboard.
+     * @param text The text that should by stored on the clipboard.
      * @param context Context of the SystemService
      * (and the Toast message that will by shown).
      */

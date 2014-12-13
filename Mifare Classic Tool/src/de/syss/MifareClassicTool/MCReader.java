@@ -95,9 +95,9 @@ public class MCReader {
      * one block per field (index 0-3 or 0-15).
      * If a block is "null" it means that the block couldn't be
      * read with the given key information.<br />
-     * On Error "null" will be returned (tag was removed during reading or
-     * keyMap is null). If none of the keys in the key map is valid for reading
-     * and therefore no sector is read, an empty set (SparseArray.size() == 0)
+     * On Error, "null" will be returned (tag was removed during reading or
+     * keyMap is null). If none of the keys in the key map are valid for reading
+     * (and therefore no sector is read), an empty set (SparseArray.size() == 0)
      * will be returned.
      * @see #buildNextKeyMapPart()
      */
@@ -142,11 +142,11 @@ public class MCReader {
      * Also the mapping range must be specified before calling this method
      * (use {@link #setMappingRange(int, int)}).
      * Attention: This method builds a key map. Depending on the key count
-     * in the given key file, this could take up to minutes and more.
+     * in the given key file, this could take more than a few minutes.
      * The old key map from {@link #getKeyMap()} will be destroyed and
-     * the full new one is getable afterwards.
+     * the full new one is gettable afterwards.
      * @return A Key-Value Pair. Keys are the sector numbers, values
-     * are the tag data. This tag data (values) are arrays containing
+     * are the tag data. The tag data (values) are arrays containing
      * one block per field (index 0-3 or 0-15).
      * If a block is "null" it means that the block couldn't be
      * read with the given key information.
@@ -160,19 +160,19 @@ public class MCReader {
     }
 
     /**
-     * Read a as much as possible from a sector with the given key.
+     * Read as much as possible from a sector with the given key.
      * Best results are gained from a valid key B (except key B is marked as
      * readable in the access conditions).
      * @param sectorIndex Index of the Sector to read. (For Mifare Classic 1K:
      * 0-63)
-     * @param key Key for the authentication.
+     * @param key Key for authentication.
      * @param useAsKeyB If true, key will be treated as key B
      * for authentication.
      * @return Array of blocks (index 0-3 or 0-15). If a block or a key is
      * marked with {@link #NO_DATA} or {@link #NO_KEY}
-     * it means that this data could be read or found. On authentication error
+     * it means that this data could not be read or found. On authentication error
      * "null" will be returned.
-     * @throws TagLostException When tag is lost.
+     * @throws TagLostException When connection with/to tag is lost.
      * @see #mergeSectorData(String[], String[])
      */
     public String[] readSector(int sectorIndex, byte[] key,
@@ -194,7 +194,7 @@ public class MCReader {
                     byte blockBytes[] = mMFC.readBlock(i);
                     // mMFC.readBlock(i) must return 16 bytes or throw an error.
                     // At least this is what the documentation says.
-                    // On Samsungs Galaxy S5 and Sonys Xperia Z2 however, it
+                    // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
                     // sometimes returns < 16 bytes for unknown reasons.
                     if (blockBytes.length != 16) {
                         throw new IOException();
@@ -205,14 +205,14 @@ public class MCReader {
                 } catch (IOException e) {
                     // Could not read block.
                     // (Maybe due to key/authentication method.)
-                    Log.d(LOG_TAG, "Error while reading block "
+                    Log.d(LOG_TAG, "(Recoverable) Error while reading block "
                             + i + " from tag.");
                     blocks.add(NO_DATA);
                     if (!mMFC.isConnected()) {
                         throw new TagLostException(
                                 "Tag removed during readSector(...)");
                     }
-                    // After error reauthentication is needed.
+                    // After an error, a re-authentication is needed.
                     auth = authenticate(sectorIndex, key, useAsKeyB);
                 }
             }
@@ -259,7 +259,7 @@ public class MCReader {
      * <li>0 - Everything went fine.</li>
      * <li>1 - Sector index is out of range.</li>
      * <li>2 - Block index is out of range.</li>
-     * <li>3 - Data are not 16 byte.</li>
+     * <li>3 - Data are not 16 bytes.</li>
      * <li>4 - Authentication went wrong.</li>
      * <li>-1 - Error while writing to tag.</li>
      * </ul>
@@ -306,9 +306,9 @@ public class MCReader {
      * key map can be gained by calling this method as often as there are
      * sectors on the tag (See {@link #getSectorCount()}). If you call
      * this method once more after a full key map was created, it resets the
-     * key map an starts all over.
-     * @return The sector that was checked at the moment. On error it returns
-     * "-1" and resets the key map to "null".
+     * key map and starts all over.
+     * @return The sector that was just checked. On an error condition,
+     * it returns "-1" and resets the key map to "null".
      * @see #getKeyMap()
      * @see #setKeyFile(File[], Context)
      * @see #setMappingRange(int, int)
@@ -351,7 +351,7 @@ public class MCReader {
                     Log.d(LOG_TAG, "Error while building next key map part");
                     // Is auto reconnect enabled?
                     if (autoReconnect) {
-                        Log.d(LOG_TAG, "Auto recconect is enabled");
+                        Log.d(LOG_TAG, "Auto reconnect is enabled");
                         while (!isConnected()) {
                             // Sleep for 500ms.
                             try {
@@ -443,7 +443,7 @@ public class MCReader {
                         && !secondResult[i].equals(NO_DATA)) {
                     blocks.add(secondResult[i]);
                 } else {
-                    // Non of the results got the data for the block.
+                    // None of the results got the data form the block.
                     blocks.add(NO_DATA);
                 }
             }
@@ -474,7 +474,7 @@ public class MCReader {
 
     /**
      * This method checks if the present tag is writable with the provided keys
-     * on the given positions (sectors, blocks). This is done by authenticating
+     * at the given positions (sectors, blocks). This is done by authenticating
      * with one of the keys followed by reading and interpreting
      * ({@link Common#getOperationInfoForBlock(byte, byte, byte,
      * de.syss.MifareClassicTool.Common.Operations, boolean, boolean)}) of the
@@ -482,14 +482,14 @@ public class MCReader {
      * @param pos A map of positions (key = sector, value = Array of blocks).
      * For each of these positions you will get the write information
      * (see return values).
-     * @param keyMap A key map a generated by
+     * @param keyMap A key map generated by
      * {@link Activities.KeyMapCreator}.
      * @return A map within a map (all with type = Integer).
      * The key of the outer map is the sector number and the value is another
      * map with key = block number and value = write information.
      * The write information indicates which key is needed to write to the
-     * present tag on the given position.<br /><br />
-     * Write informations are:<br />
+     * present tag at the given position.<br /><br />
+     * Write return codes are:<br />
      * <ul>
      * <li>0 - Never</li>
      * <li>1 - Key A</li>
@@ -537,7 +537,7 @@ public class MCReader {
                 }
                 // mMFC.readBlock(i) must return 16 bytes or throw an error.
                 // At least this is what the documentation says.
-                // On Samsungs Galaxy S5 and Sonys Xperia Z2 however, it
+                // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
                 // sometimes returns < 16 bytes for unknown reasons.
                 if (ac.length != 16) {
                     ret.put(sector, null);
@@ -577,7 +577,7 @@ public class MCReader {
 
                         int result = keyABValue;
                         if (acValue == 0 && keyABValue != 0) {
-                            // Write key found, but ac-bits are not writable.
+                            // Write key found, but AC-bits are not writable.
                             result += 3;
                         } else if (acValue == 2 && keyABValue == 0) {
                             // Access Bits are writable with key B,
@@ -673,8 +673,8 @@ public class MCReader {
     }
 
     /**
-     * Authenticate to given sector of the tag.
-     * @param sectorIndex The sector to authenticate to.
+     * Authenticate with given sector of the tag.
+     * @param sectorIndex The sector with which to authenticate.
      * @param key Key for the authentication.
      * @param useAsKeyB If true, key will be treated as key B
      * for authentication.
@@ -691,7 +691,7 @@ public class MCReader {
                 return mMFC.authenticateSectorWithKeyB(sectorIndex, key);
             }
         } catch (IOException e) {
-            Log.d(LOG_TAG, "Error while authenticate with tag.");
+            Log.d(LOG_TAG, "Error authenticating with tag.");
         }
         return false;
     }
@@ -721,7 +721,7 @@ public class MCReader {
     }
 
     /**
-     * Get the key map build from {@link #buildNextKeyMapPart()} with
+     * Get the key map built from {@link #buildNextKeyMapPart()} with
      * the given key file ({@link #setKeyFile(File[], Context)}). If you want a
      * full key map, you have to call {@link #buildNextKeyMapPart()} as
      * often as there are sectors on the tag
@@ -729,8 +729,8 @@ public class MCReader {
      * @return A Key-Value Pair. Keys are the sector numbers,
      * values are the Mifare keys.
      * The Mifare keys are 2D arrays with key type (first dimension, 0-1,
-     * 0 = KeyA / 1 = KeyB) and key (second dimension, 0-6). If a key "null"
-     * it means that the key A or B (depending of first dimension) could not
+     * 0 = KeyA / 1 = KeyB) and key (second dimension, 0-6). If a key is "null"
+     * it means that the key A or B (depending in the first dimension) could not
      * be found.
      * @see #getSectorCount()
      * @see #buildNextKeyMapPart()
@@ -747,7 +747,7 @@ public class MCReader {
     }
 
     /**
-     * Return the size of the Mifare Classic tag in bit.
+     * Return the size of the Mifare Classic tag in bits.
      * (e.g. Mifare Classic 1k = 1024)
      * @return The size of the current tag.
      */
@@ -801,7 +801,7 @@ public class MCReader {
     }
 
     /**
-     * Close the connection between reader an tag.
+     * Close the connection between reader and tag.
      */
     public void close() {
         try {
