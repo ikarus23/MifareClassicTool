@@ -97,6 +97,12 @@ Some important things are:
   * LG G2
   * LG Optimus L7 II
   * Foxcon InFocus M320
+* This app **has been** known to work on the following devices.
+  * Asus (Google) Nexus 7 (2012)
+  * HTC HTC One
+  * Samsung (Google) Galaxy Nexus
+  * Samsung Galaxy S3 i9300
+  * Samsung Galaxy S3 Duo i9300i
 
 For further information about Mifare Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
