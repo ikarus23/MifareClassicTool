@@ -47,15 +47,8 @@ public class DiffTool extends BasicActivity {
      * String Array is one line of the dump. Headers (e.g. "Sector:1")
      * are marked with a "+"-symbol (e.g. "+Sector: 1").
      */
-    public final static String EXTRA_DUMP_1 =
-            "de.syss.MifareClassicTool.Activity.DUMP_1";
-    /**
-     * The corresponding Intent will contain a dump. Each field of the
-     * String Array is one line of the dump. Headers (e.g. "Sector: 1")
-     * are marked with a "+"-symbol (e.g. "+Sector: 1").
-     */
-    public final static String EXTRA_DUMP_2 =
-            "de.syss.MifareClassicTool.Activity.DUMP_2";
+    public final static String EXTRA_DUMP =
+            "de.syss.MifareClassicTool.Activity.DUMP";
 
     private final static int FILE_CHOOSER_DUMP_FILE_1 = 1;
     private final static int FILE_CHOOSER_DUMP_FILE_2 = 2;
@@ -67,8 +60,8 @@ public class DiffTool extends BasicActivity {
     private SparseArray<String[]> mDump2;
 
     /**
-     * Process {@link #EXTRA_DUMP_1} and {@link #EXTRA_DUMP_2} if they are
-     * part of the Intent and initialize some member variables.
+     * Process {@link #EXTRA_DUMP} if they are part of the Intent and
+     * initialize some member variables.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +74,12 @@ public class DiffTool extends BasicActivity {
 
         // Check if one or both dumps are already chosen via Intent
         // (from DumpEitor).
-        if (getIntent().hasExtra(EXTRA_DUMP_1)) {
+        if (getIntent().hasExtra(EXTRA_DUMP)) {
             mDump1 = convertDumpFormat(
-                    getIntent().getStringArrayExtra(EXTRA_DUMP_1));
+                    getIntent().getStringArrayExtra(EXTRA_DUMP));
             mDumpFileButton1.setText(R.string.text_dump_from_editor);
             mDumpFileButton1.setEnabled(false);
-        }
-        if (getIntent().hasExtra(EXTRA_DUMP_2)) {
-            mDump2 = convertDumpFormat(
-                    getIntent().getStringArrayExtra(EXTRA_DUMP_2));
-            mDumpFileButton2.setText(R.string.text_dump_from_editor);
-            mDumpFileButton2.setEnabled(false);
+            onChooseDump2(null);
         }
         runDiff();
     }

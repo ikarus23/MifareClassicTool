@@ -707,7 +707,7 @@ public class DumpEditor extends BasicActivity {
             return;
         }
         Intent intent = new Intent(this, DiffTool.class);
-        intent.putExtra(DiffTool.EXTRA_DUMP_1, mLines);
+        intent.putExtra(DiffTool.EXTRA_DUMP, mLines);
         startActivity(intent);
     }
 
