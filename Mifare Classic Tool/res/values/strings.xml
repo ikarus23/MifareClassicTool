@@ -219,6 +219,7 @@
     <string name="action_beer_sounds_fine">Beer sounds fine
         (Donate via Google Play)</string>
     <string name="action_chose_dump">Choose a Dump&#8230;</string>
+    <string name="action_continue">Continue</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -311,38 +312,35 @@
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
-        You need NFC in order to run this App.</string>
+        You need NFC in order to run this app.</string>
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
         Please go to your Settings and enable it.</string>
     <string name="dialog_no_nfc_title">No NFC Hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC Not Enabled</string>
     <string name="dialog_no_mfc_support_device_title">No Mifare Classic Support</string>
-    <string name="dialog_no_mfc_support_device">Your device
-        (due to hardware) does not support Mifare Classic! The only thing
-        possible is to display the UID and some other generic
+    <string name="dialog_no_mfc_support_device">
+        <![CDATA[
+        Your device (due to hardware) does not support Mifare Classic! The only
+        thing possible is to display the UID and some other generic
         information. Further I/O operations are impossible.
-        \n\n<b>Therefore, this App is pretty much useless for this device.</b>
-        \n\nKnown devices with no Mifare Classic support:\n
-        &#8226; Google Nexus 4\n
-        &#8226; Google Nexus 5\n
-        &#8226; Google Nexus 7 (2013)\n
-        &#8226; Google Nexus 10\n
-        &#8226; Samsung Galaxy S4\n
-        &#8226; Samsung Galaxy Ace 3\n
-        &#8226; Samsung Galaxy Express 2\n
-        &#8226; Samsung Galaxy Mega\n
-        &#8226; Samsung Galaxy Note 3\n
-        &#8226; Samsung Galaxy Note 4\n
-        &#8226; LG G2\n
-        &#8226; LG Optimus L7 II</string>
+        <br /><br /><b>Therefore, this app is pretty much useless for this device.</b>
+        <br /><br />You can view a list of known devices with no Mifare Classic
+        support at <a href="https://github.com/ikarus23/MifareClassicTool#general-information">github</a>.
+        If your device is not on that list, please write an
+        <a href="mailto:fooblubb@gmail.com">Email to developer</a>.
+        ]]>
+        </string>
     <string name="dialog_no_mfc_support_tag_title">Not a Mifare Classic tag</string>
-    <string name="dialog_no_mfc_support_tag">This tag is not compatible with
-        the Mifare Classic technology! Notice that this App is designed for
-        Mifare Classic tags only!
-        \n\n<b>Please use another tag.</b>
-        \n\n<small>(Notice: In some rare cases this message could be a false
-        positive caused by multiple tags in the reader field or strange
-        ATQA+SAK values.)</small></string>
+    <string name="dialog_no_mfc_support_tag">
+        <![CDATA[
+        This tag is not compatible with the Mifare Classic technology!
+        Notice that this app is designed for Mifare Classic tags only!
+        <br /><br /><b>Please use another tag.</b>
+        <br /><br /><small>(Notice: In some rare cases this message could be
+        a false positive caused by multiple tags in the reader field or strange
+        ATQA+SAK values.)</small>
+        ]]>
+        </string>
     <string name="dialog_save_dump_title">Save Dump</string>
     <string name="dialog_save_dump">Enter a file name for the dump:</string>
     <string name="dialog_mapping_range_title">Choose Range</string>

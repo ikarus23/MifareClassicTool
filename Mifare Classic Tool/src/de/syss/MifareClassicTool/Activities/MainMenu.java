@@ -126,6 +126,7 @@ public class MainMenu extends Activity {
             return;
         }
 
+        // Create the directories needed by MCT and clean out the tmp folder.
         if (Common.isExternalStorageWritableErrorToast(this)) {
             // Create keys directory.
             File path = new File(Environment.getExternalStoragePublicDirectory(
@@ -210,8 +211,6 @@ public class MainMenu extends Activity {
         final Editor sharedEditor = sharedPref.edit();
         boolean isFirstRun = sharedPref.getBoolean("is_first_run", true);
         if (isFirstRun) {
-            sharedEditor.putBoolean("is_first_run", false);
-            sharedEditor.apply();
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -230,6 +229,8 @@ public class MainMenu extends Activity {
                             mResume = true;
                             checkNfc();
                         }
+                        sharedEditor.putBoolean("is_first_run", false);
+                        sharedEditor.apply();
                     }
                  })
                 .show();
@@ -293,6 +294,7 @@ public class MainMenu extends Activity {
                             sharedEditor.apply();
                         }
                         mResume = true;
+                        checkNfc();
                     }
                 })
                 .setNegativeButton(R.string.action_cancel,
@@ -316,6 +318,42 @@ public class MainMenu extends Activity {
                     }
                  })
                 .show();
+            mResume = false;
+        }
+
+        // Check if there is Mifare Classic support.
+        if (!Common.hasMifareClassicSupport()) {
+            CharSequence styledText = Html.fromHtml(
+                    getString(R.string.dialog_no_mfc_support_device));
+            AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_no_mfc_support_device_title)
+                .setMessage(styledText)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_exit_app,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                 })
+                 .setNegativeButton(R.string.action_continue,
+                     new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        mResume = true;
+                        checkNfc();
+                    }
+                 })
+                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                 })
+                 .show();
+            // Make links clickable.
+            ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(
+                    LinkMovementMethod.getInstance());
             mResume = false;
         }
     }

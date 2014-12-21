@@ -481,6 +481,42 @@ public class Common extends Application {
     }
 
     /**
+     * Check if the device supports the Mifare Classic technologie.
+     * In order to do so, check if there are NFC libs with "brcm" in their
+     * names. "brcm" libs are for devices with Broadcom chips. Broadcom chips
+     * don't support Mifare Classic
+     * @return True if the device supports Mifare Classic. False otherwise.
+     */
+    public static boolean hasMifareClassicSupport() {
+        // Check for the MifareClassic class.
+        // It is most likely there on all NFC enabled phones.
+        // Therefore this check is not needed.
+        /*
+        try {
+            Class.forName("android.nfc.tech.MifareClassic");
+        } catch( ClassNotFoundException e ) {
+            // Class not found. Devices does not support Mifare Classic.
+            return false;
+        }
+        */
+
+        // Check if there are NFC libs with "brcm" in their names.
+        // "brcm" libs are for devices with Broadcom chips. Broadcom chips
+        // don't support Mifare Classic
+        File libsFolder = new File("/system/lib");
+        File[] libs = libsFolder.listFiles();
+        for (File lib : libs) {
+            if (lib.isFile()
+                    && lib.getName().startsWith("libnfc")
+                    && lib.getName().contains("brcm")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Check if the tag and the device support the Mifare Classic technology.
      * @param tag The tag to check.
      * @param context The context of the package manager.

@@ -27,7 +27,9 @@ import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -92,9 +94,11 @@ public class TagInfoTool extends BasicActivity {
             titleID = R.string.dialog_no_mfc_support_tag_title;
             messageID = R.string.dialog_no_mfc_support_tag;
         }
-        new AlertDialog.Builder(this)
+        CharSequence styledText = Html.fromHtml(
+                getString(messageID));
+        AlertDialog ad = new AlertDialog.Builder(this)
         .setTitle(titleID)
-        .setMessage(messageID)
+        .setMessage(styledText)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(R.string.action_ok,
                 new DialogInterface.OnClickListener() {
@@ -104,6 +108,9 @@ public class TagInfoTool extends BasicActivity {
             }
          })
          .show();
+        // Make links clickable.
+        ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(
+                LinkMovementMethod.getInstance());
     }
 
     /**
