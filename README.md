@@ -95,6 +95,9 @@ Some important things are:
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
   * LG G2
+  * LG G2 mini
+  * LG G3 S
+  * LG F60
   * LG Optimus L7 II
   * Foxcon InFocus M320
 * This app **has been** known to work on the following devices.
