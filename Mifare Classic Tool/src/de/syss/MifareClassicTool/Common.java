@@ -502,10 +502,17 @@ public class Common extends Application {
                 MifareClassic.class.getName())) {
             // Device and tag support Mifare Classic.
             return 0;
+
+        // This is no longer valid. There are some devices (e.g. LG's F60)
+        // that have this system feature but no Mifare Classic support.
+        // (The F60 has a Broadcom NFC controller.)
+        /*
         } else if (context.getPackageManager().hasSystemFeature(
                 "com.nxp.mifare")){
             // Tag does not support Mifare Classic.
             return -2;
+        */
+
         } else {
             // Check if device does not support Mifare Classic.
             // For doing so, check if the ATQA + SAK of the tag indicate that
