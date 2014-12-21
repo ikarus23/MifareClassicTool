@@ -393,33 +393,32 @@
     <string name="dialog_write_sectors">Select the sectors you
         want to write:</string>
     <string name="dialog_about_mct_title">About MCT</string>
-    <!--
-      A work around is needed for styled resources that use format strings.
-      Notice that the opening bracket is HTML-escaped, using the &lt; notation.
-      See: https://developer.android.com/guide/topics/resources/string-resource.html
-    -->
-    <string name="dialog_about_mct">&lt;b>MifareClassicTool (MCT)&lt;br />&lt;br />
-        &#8226; Version: %1$s&lt;br />
+    <string name="dialog_about_mct">
+        <![CDATA[
+        <b>MifareClassicTool (MCT)<br /><br />
+        &#8226; Version: %1$s<br />
         &#8226; License:
-        &lt;a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3&lt;/a>&lt;br />
+        <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />
         &#8226; Project Page:
-        &lt;a href="https://github.com/ikarus23/MifareClassicTool">MCT
-        on github&lt;/a>&lt;br />
+        <a href="https://github.com/ikarus23/MifareClassicTool">MCT
+        on github</a><br />
         &#8226; Rate this app:
-        &lt;a href="market://details?id=de.syss.MifareClassicTool">via
-        Google Play&lt;/a>&lt;br />
+        <a href="market://details?id=de.syss.MifareClassicTool">via
+        Google Play</a><br />
         &#8226; Donate:
-        &lt;a href="market://details?id=de.syss.MifareClassicToolDonate">via
-        Google Play&lt;/a>&lt;/b>&lt;br />&lt;br />
-        Useful information:&lt;br />
-        &#8226; &lt;a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
-        Tracker&lt;/a>&lt;br />
-        &#8226; &lt;a href="https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">Changelog
-        / Version History&lt;/a>&lt;br />
-        &#8226; &lt;a href="http://publications.icaria.de/mct/">Documentation,
-        APKs, etc.&lt;/a>&lt;br />
-        &#8226; &lt;a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread
-        at the Proxmark forum&lt;/a></string>
+        <a href="market://details?id=de.syss.MifareClassicToolDonate">via
+        Google Play</a></b><br /><br />
+        Useful information:<br />
+        &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
+        Tracker</a><br />
+        &#8226; <a href="https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">Changelog
+        / Version History</a><br />
+        &#8226; <a href="http://publications.icaria.de/mct/">Documentation,
+        APKs, etc.</a><br />
+        &#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread
+        at the Proxmark forum</a>
+        ]]>
+        </string>
     <string name="dialog_auto_reconnect_title">Auto Reconnect</string>
     <string name="dialog_auto_reconnect">If the tag gets lost during
         the key mapping process (due to antenna issues, timeout, etc.),
@@ -430,10 +429,14 @@
         \n\nKnown issues where this setting may help:\n
         &#8226; Special tags (e.g. smartMX)</string>
     <string name="dialog_date_of_manuf_title">Date of manufacture</string>
-    <string name="dialog_date_of_manuf">The tag was manufacured between
-        &lt;b>%1$s&lt;/b> and &lt;b>%2$s&lt;/b>.&lt;br />&lt;br />
+    <string name="dialog_date_of_manuf">
+        <![CDATA[
+        The tag was manufacured between <b>%1$s</b> and <b>%2$s</b>
+        <br /><br />
         (This information might be wrong. See \"Help and Info\" for
-        more information.)</string>
+        more information.)
+        ]]>
+        </string>
     <string name="dialog_date_of_manuf_error"><b>The date of manufacture
         contains invalid data.</b>
         \n\nThe last 2 bytes of the manufacturer block should be in binary
