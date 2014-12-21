@@ -84,22 +84,24 @@ Some important things are:
   their hardware (NFC-controller) does not support Mifare Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
   This list may be incomplete.
+  * Foxcon InFocus M320
   * Google Nexus 4
   * Google Nexus 5
   * Google Nexus 7 (2013)
   * Google Nexus 10
+  * LG F60
+  * LG G2
+  * LG G2 mini
+  * LG G3 S
+  * LG Optimus L7 II
   * Samsung Galaxy S4
   * Samsung Galaxy Ace 3
   * Samsung Galaxy Express 2
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
-  * LG G2
-  * LG G2 mini
-  * LG G3 S
-  * LG F60
-  * LG Optimus L7 II
-  * Foxcon InFocus M320
+  * Sony Xperia Z2
+  * Sony Xperia Z2 Tablet
 * This app **has been** known to work on the following devices.
   * Asus (Google) Nexus 7 (2012)
   * HTC HTC One
