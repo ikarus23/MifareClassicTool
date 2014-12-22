@@ -101,6 +101,8 @@ public class MainMenu extends Activity {
         Button tools = (Button) findViewById(R.id.buttonMainTools);
         registerForContextMenu(tools);
 
+        Common.setUseAsEditorOnly(false);
+
         // Check if there is an NFC hardware component.
         Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
         if (Common.getNfcAdapter() == null) {

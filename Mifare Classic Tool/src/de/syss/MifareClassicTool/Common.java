@@ -160,7 +160,7 @@ public class Common extends Application {
      * If NFC is disabled and the user chose to use MCT in editor only mode,
      * the choice is remembered here.
      */
-    private static boolean mUseAsEditorOnly;
+    private static boolean mUseAsEditorOnly = false;
 
     /**
      * 1 if the device does support Mifare Classic. -1 if it doesn't support
