@@ -194,7 +194,8 @@ public class MainMenu extends Activity {
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // Only use Editor. Do nothing.
+                    // Only use Editor.
+                    Common.setUseAsEditorOnly(true);
                 }
              })
              .setNegativeButton(R.string.action_exit_app,
@@ -323,6 +324,9 @@ public class MainMenu extends Activity {
 
         // Check if there is Mifare Classic support.
         if (!Common.hasMifareClassicSupport()) {
+            // Disable read/write tag options.
+            mReadTag.setEnabled(false);
+            mWriteTag.setEnabled(false);
             CharSequence styledText = Html.fromHtml(
                     getString(R.string.dialog_no_mfc_support_device));
             AlertDialog ad = new AlertDialog.Builder(this)
@@ -413,10 +417,13 @@ public class MainMenu extends Activity {
         if (Common.getNfcAdapter() != null
                 && !Common.getNfcAdapter().isEnabled()) {
             // NFC is disabled. Show dialog.
-            mEnableNfc.show();
-            // Disable read/write tag options.
-            mReadTag.setEnabled(false);
-            mWriteTag.setEnabled(false);
+            // Use as editor only?
+            if (!Common.useAsEditorOnly()) {
+                mEnableNfc.show();
+                // Disable read/write tag options.
+                mReadTag.setEnabled(false);
+                mWriteTag.setEnabled(false);
+            }
         } else {
             // NFC is enabled. Hide dialog and enable NFC
             // foreground dispatch.
@@ -431,9 +438,12 @@ public class MainMenu extends Activity {
                 mOldIntent = getIntent();
             }
             Common.enableNfcForegroundDispatch(this);
+            Common.setUseAsEditorOnly(false);
             mEnableNfc.hide();
-            mReadTag.setEnabled(true);
-            mWriteTag.setEnabled(true);
+            if (Common.hasMifareClassicSupport()) {
+                mReadTag.setEnabled(true);
+                mWriteTag.setEnabled(true);
+            }
         }
     }
 
