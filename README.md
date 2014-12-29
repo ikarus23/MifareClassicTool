@@ -100,8 +100,6 @@ Some important things are:
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
-  * Sony Xperia Z2
-  * Sony Xperia Z2 Tablet
 * This app **has been** known to work on the following devices.
   * Asus (Google) Nexus 7 (2012)
   * HTC HTC One
