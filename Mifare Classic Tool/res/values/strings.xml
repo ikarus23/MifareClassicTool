@@ -220,6 +220,7 @@
         (Donate via Google Play)</string>
     <string name="action_chose_dump">Choose a Dump&#8230;</string>
     <string name="action_continue">Continue</string>
+    <string name="action_dont_save">Don\'t Save</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
