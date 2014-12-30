@@ -283,7 +283,6 @@ public class Common extends Application {
         return ret;
     }
 
-    // TODO: Update doc.
     /**
      * Check if the file already exists. If so, present a dialog to the user
      * with the options: "Replace", "Append" and "Cancel".
@@ -291,7 +290,10 @@ public class Common extends Application {
      * @param lines The lines to save.
      * @param isDump Set to True if file and lines are a dump file.
      * @param context The Context in which the dialog and Toast will be shown.
-     * @param TODO
+     * @param activity An object (most likely an Activity) that implements the
+     * onSaveSuccessful() and onSaveFailure() methods. These methods will
+     * be called according to the save process. Also, onSaveFailure() will
+     * be called if the user hints cancel.
      * @see #saveFile(File, String[], boolean)
      * @see #saveFileAppend(File, String[], boolean)
      */

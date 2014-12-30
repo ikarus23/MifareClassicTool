@@ -107,7 +107,7 @@ public class DumpEditor extends BasicActivity
     private boolean mDumpChanged;
 
     /**
-     * If True, the editor will close after a successful save.
+     * If true, the editor will close after a successful save.
      * @see #onSaveSuccessful()
      */
     private boolean mCloseAfterSuccessfulSave;
@@ -297,7 +297,10 @@ public class DumpEditor extends BasicActivity
         }
     }
 
-    // TODO: doc.
+    /**
+     * Show a dialog in which the user can chose between "save", "don't save"
+     * and "cancel", if there are unsaved changes.
+     */
     @Override
     public void onBackPressed() {
         if (mDumpChanged) {
@@ -334,7 +337,11 @@ public class DumpEditor extends BasicActivity
         }
     }
 
-    // TODO: doc.
+    /**
+     * Set the state of {@link #mDumpChanged} to false and close the
+     * editor if {@link #mCloseAfterSuccessfulSave} is true (due to exiting
+     * with unsaved changes) after a successful save process.
+     */
     @Override
     public void onSaveSuccessful() {
         if (mCloseAfterSuccessfulSave) {
@@ -343,7 +350,10 @@ public class DumpEditor extends BasicActivity
         mDumpChanged = false;
     }
 
-    // TODO: doc.
+    /**
+     * Reset the state of {@link #mCloseAfterSuccessfulSave} to false if
+     * there was an error (or if the user hit cancel) during the save process.
+     */
     @Override
     public void onSaveFailure() {
         mCloseAfterSuccessfulSave = false;
@@ -352,10 +362,12 @@ public class DumpEditor extends BasicActivity
     /**
      * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
      * ask user for a save name and then call
-     * {@link Common#checkFileExistenceAndSave(File, String[], boolean, Context)}
+     * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
+     * Context, IActivityThatReactsToSave)}
      * @see #checkDumpAndUpdateLines()
      * @see Common#isValidDumpErrorToast(int, Context)
-     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context)
+     * @see Common#checkFileExistenceAndSave(File, String[], boolean,
+     * Context, IActivityThatReactsToSave)
      */
     private void saveDump() {
         int err = checkDumpAndUpdateLines();

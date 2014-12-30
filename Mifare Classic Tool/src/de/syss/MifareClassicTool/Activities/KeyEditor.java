@@ -63,7 +63,7 @@ public class KeyEditor extends BasicActivity
     private boolean mKeyChanged;
 
     /**
-     * If True, the editor will close after a successful save.
+     * If true, the editor will close after a successful save.
      * @see #onSaveSuccessful()
      */
     private boolean mCloseAfterSuccessfulSave;
@@ -149,7 +149,10 @@ public class KeyEditor extends BasicActivity
         }
     }
 
-    // TODO: doc.
+    /**
+     * Show a dialog in which the user can chose between "save", "don't save"
+     * and "cancel", if there are unsaved changes.
+     */
     @Override
     public void onBackPressed() {
         if (mKeyChanged) {
@@ -186,7 +189,11 @@ public class KeyEditor extends BasicActivity
         }
     }
 
-    // TODO: doc.
+    /**
+     * Set the state of {@link #mKeyChanged} to false and close the
+     * editor if {@link #mCloseAfterSuccessfulSave} is true (due to exiting
+     * with unsaved changes) after a successful save process.
+     */
     @Override
     public void onSaveSuccessful() {
         if (mCloseAfterSuccessfulSave) {
@@ -195,7 +202,10 @@ public class KeyEditor extends BasicActivity
         mKeyChanged = false;
     }
 
-    // TODO: doc.
+    /**
+     * Set the state of {@link #mCloseAfterSuccessfulSave} to false if
+     * there was an error (or if the user hit cancel) during the save process.
+     */
     @Override
     public void onSaveFailure() {
         mCloseAfterSuccessfulSave = false;
@@ -252,9 +262,10 @@ public class KeyEditor extends BasicActivity
      * Check if it is a valid key file
      * ({@link #isValidKeyFileErrorToast()}),
      * ask user for a save name and then call
-     * {@link Common#checkFileExistenceAndSave(File, String[], boolean, Context)}
-     * @param closeOnSuccess If true, close the editor after a successful save.
-     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context)
+     * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
+     * Context, IActivityThatReactsToSave)}
+     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context,
+     * IActivityThatReactsToSave)
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {

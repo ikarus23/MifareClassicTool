@@ -18,12 +18,25 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-// TODO: doc.
+import de.syss.MifareClassicTool.Common;
+
+/**
+ * Interface with callback functions for objects (most likely Activities) that
+ * want to use the {@link Common#checkFileExistenceAndSave(java.io.File,
+ * String[],boolean, android.content.Context, IActivityThatReactsToSave)}.
+ * @author Gerhard Klostermeier
+ */
 public interface IActivityThatReactsToSave {
 
-    // TODO: doc.
+    /**
+     * This method will be called after a successful save process.
+     */
     public abstract void onSaveSuccessful();
 
-    // TODO: doc.
+    /**
+     * This method will be called, if there was an error during the
+     * save process or it the user hits "cancel" in the "file allready exists"
+     * dialog.
+     */
     public abstract void onSaveFailure();
 }
