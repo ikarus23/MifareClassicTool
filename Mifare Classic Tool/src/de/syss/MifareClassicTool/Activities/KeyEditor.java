@@ -29,7 +29,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +44,8 @@ import de.syss.MifareClassicTool.R;
  * Show and edit key files.
  * @author Gerhard Klostermeier
  */
-public class KeyEditor extends BasicActivity {
+public class KeyEditor extends BasicActivity
+        implements IActivityThatReactsToSave{
 
     private EditText mKeys;
     private String mFileName;
@@ -52,6 +55,19 @@ public class KeyEditor extends BasicActivity {
      * {@link #isValidKeyFile()} check.
      */
     private String[] mLines;
+
+    /**
+     * True if the user made changes to the key file.
+     * Used by the "save before quitting" dialog.
+     */
+    private boolean mKeyChanged;
+
+    /**
+     * If true, the editor will close after a successful save.
+     * @see #onSaveSuccessful()
+     */
+    private boolean mCloseAfterSuccessfulSave;
+
 
     /**
      * Initialize the key editor with key data from intent.
@@ -79,6 +95,21 @@ public class KeyEditor extends BasicActivity {
                 }
                 setKeyArrayAsText(keyDump);
             }
+
+            mKeys.addTextChangedListener(new TextWatcher(){
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // Text was changed.
+                    mKeyChanged = true;
+                }
+                @Override
+                public void beforeTextChanged(CharSequence s,
+                        int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s,
+                        int start, int before, int count) {}
+            });
+
             setIntent(null);
         } else {
             finish();
@@ -116,6 +147,68 @@ public class KeyEditor extends BasicActivity {
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Show a dialog in which the user can chose between "save", "don't save"
+     * and "cancel", if there are unsaved changes.
+     */
+    @Override
+    public void onBackPressed() {
+        if (mKeyChanged) {
+            new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_save_before_quitting_title)
+            .setMessage(R.string.dialog_save_before_quitting)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(R.string.action_save,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Save.
+                    mCloseAfterSuccessfulSave = true;
+                    onSave();
+                }
+            })
+            .setNeutralButton(R.string.action_cancel,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Cancel. Do nothing.
+                }
+            })
+            .setNegativeButton(R.string.action_dont_save,
+                     new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    // Don't save.
+                    finish();
+                }
+            }).show();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Set the state of {@link #mKeyChanged} to false and close the
+     * editor if {@link #mCloseAfterSuccessfulSave} is true (due to exiting
+     * with unsaved changes) after a successful save process.
+     */
+    @Override
+    public void onSaveSuccessful() {
+        if (mCloseAfterSuccessfulSave) {
+            finish();
+        }
+        mKeyChanged = false;
+    }
+
+    /**
+     * Set the state of {@link #mCloseAfterSuccessfulSave} to false if
+     * there was an error (or if the user hit cancel) during the save process.
+     */
+    @Override
+    public void onSaveFailure() {
+        mCloseAfterSuccessfulSave = false;
     }
 
     /**
@@ -169,8 +262,10 @@ public class KeyEditor extends BasicActivity {
      * Check if it is a valid key file
      * ({@link #isValidKeyFileErrorToast()}),
      * ask user for a save name and then call
-     * {@link Common#checkFileExistenceAndSave(File, String[], boolean, Context)}
-     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context)
+     * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
+     * Context, IActivityThatReactsToSave)}
+     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context,
+     * IActivityThatReactsToSave)
      * @see #isValidKeyFileErrorToast()
      */
     private void onSave() {
@@ -181,6 +276,8 @@ public class KeyEditor extends BasicActivity {
                 Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) + "/" + Common.KEYS_DIR);
         final Context cont = this;
+        final IActivityThatReactsToSave activity =
+                this;
         // Ask user for filename.
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -203,7 +300,7 @@ public class KeyEditor extends BasicActivity {
                         File file = new File(path.getPath(),
                                 input.getText().toString());
                         Common.checkFileExistenceAndSave(file, mLines,
-                                false, cont);
+                                false, cont, activity);
                     } else {
                         // Empty name is not allowed.
                         Toast.makeText(cont, R.string.info_empty_file_name,
@@ -216,7 +313,7 @@ public class KeyEditor extends BasicActivity {
                 @Override
                 public void onClick(DialogInterface dialog,
                         int whichButton) {
-                    // Do nothing.
+                    mCloseAfterSuccessfulSave = false;
                 }
             }).show();
     }

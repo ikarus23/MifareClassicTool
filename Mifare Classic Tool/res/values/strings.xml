@@ -220,6 +220,7 @@
         (Donate via Google Play)</string>
     <string name="action_chose_dump">Choose a Dump&#8230;</string>
     <string name="action_continue">Continue</string>
+    <string name="action_dont_save">Don\'t Save</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -457,6 +458,10 @@
     <string name="dialog_donate"><b>Mifare Classic Tool has been updated!</b>
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
+    </string>
+    <string name="dialog_save_before_quitting_title">Unsaved Chnages</string>
+    <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
+        \nDo you want to save these changes?
     </string>
 
     <!-- Hints -->
