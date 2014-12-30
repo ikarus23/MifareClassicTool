@@ -1,5 +1,18 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 1.8.2:
+ * Improved Mifare Classic support check. Thanks to "domints".
+ * Show a dialog if there are unsaved changes (dump and key editor).
+ * File name suggestion for dumps.
+ * Reduced presses for comparing a dump via editor.
+   Thanks to "systemcrash".
+ * Fixed false positive results of the MF Classic support detection.
+   Thanks to "domints".
+ * Improved editor only mode.
+ * Some code cleanup. Thanks to "systemcrash".
+ * Some minor bug fixes.
+ * LG G2 mini, G3 S and F60 are not supported.
+
 Version 1.8.1:
  * Fixed diff tool for devices with a default monospace font that
    does not have the block symbol (replaced block with "X").
