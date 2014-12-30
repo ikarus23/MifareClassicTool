@@ -33,10 +33,12 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.format.Time;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -71,7 +73,8 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class DumpEditor extends BasicActivity {
+public class DumpEditor extends BasicActivity
+        implements IActivityThatReactsToSave {
 
     /**
      * The corresponding Intent will contain a dump separated by new lines.
@@ -96,6 +99,19 @@ public class DumpEditor extends BasicActivity {
      * check.
      */
     private String[] mLines;
+
+    /**
+     * True if the user made changes to the dump.
+     * Used by the "save before quitting" dialog.
+     */
+    private boolean mDumpChanged;
+
+    /**
+     * If True, the editor will close after a successful save.
+     * @see #onSaveSuccessful()
+     */
+    private boolean mCloseAfterSuccessfulSave;
+
 
     /**
      * Check whether to initialize the editor on a dump file or on
@@ -281,6 +297,58 @@ public class DumpEditor extends BasicActivity {
         }
     }
 
+    // TODO: doc.
+    @Override
+    public void onBackPressed() {
+        if (mDumpChanged) {
+            new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_save_before_quitting_title)
+            .setMessage(R.string.dialog_save_before_quitting)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(R.string.action_save,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Save.
+                    mCloseAfterSuccessfulSave = true;
+                    saveDump();
+                }
+            })
+            .setNeutralButton(R.string.action_cancel,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Cancel. Do nothing.
+                }
+            })
+            .setNegativeButton(R.string.action_dont_save,
+                     new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    // Don't save.
+                    finish();
+                }
+            }).show();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // TODO: doc.
+    @Override
+    public void onSaveSuccessful() {
+        if (mCloseAfterSuccessfulSave) {
+            finish();
+        }
+        mDumpChanged = false;
+    }
+
+    // TODO: doc.
+    @Override
+    public void onSaveFailure() {
+        mCloseAfterSuccessfulSave = false;
+    }
+
     /**
      * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
      * ask user for a save name and then call
@@ -301,7 +369,9 @@ public class DumpEditor extends BasicActivity {
         final File path = new File(
                 Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) +  "/" + Common.DUMPS_DIR);
-        final Context cont = this;
+        final Context context = this;
+        final IActivityThatReactsToSave activity =
+                this;
         // Set a filename (UID + Date + Time) if there is none.
         if (mFileName == null) {
             Time today = new Time(Time.getCurrentTimezone());
@@ -331,11 +401,11 @@ public class DumpEditor extends BasicActivity {
                         File file = new File(path.getPath(),
                                 input.getText().toString());
                         Common.checkFileExistenceAndSave(file, mLines,
-                                true, cont);
+                                true, context, activity);
                         mFileName = file.getName();
                     } else {
                         // Empty name is not allowed.
-                        Toast.makeText(cont, R.string.info_empty_file_name,
+                        Toast.makeText(context, R.string.info_empty_file_name,
                                 Toast.LENGTH_LONG).show();
                     }
                 }
@@ -344,7 +414,7 @@ public class DumpEditor extends BasicActivity {
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
-                    // Do nothing.
+                    mCloseAfterSuccessfulSave = false;
                 }
             }).show();
         onUpdateColors(null);
@@ -456,6 +526,20 @@ public class DumpEditor extends BasicActivity {
                     // pixels - unit is needed.)
                     et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                             new TextView(this).getTextSize());
+                    // Add a listener for changes to the text.
+                    et.addTextChangedListener(new TextWatcher(){
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            // Text was changed.
+                            mDumpChanged = true;
+                        }
+                        @Override
+                        public void beforeTextChanged(CharSequence s,
+                                int start, int count, int after) {}
+                        @Override
+                        public void onTextChanged(CharSequence s,
+                                int start, int before, int count) {}
+                    });
                     mLayout.addView(et);
                     // Tag headers of real sectors (sectors containing
                     // data (EditText) and not errors ("*")).

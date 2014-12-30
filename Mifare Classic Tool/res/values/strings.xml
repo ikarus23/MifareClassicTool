@@ -459,6 +459,10 @@
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
     </string>
+    <string name="dialog_save_before_quitting_title">Unsaved Chnages</string>
+    <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
+        \nDo you want to save these changes?
+    </string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

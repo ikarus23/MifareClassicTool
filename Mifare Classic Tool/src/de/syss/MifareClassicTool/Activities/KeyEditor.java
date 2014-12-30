@@ -22,7 +22,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -45,7 +44,8 @@ import de.syss.MifareClassicTool.R;
  * Show and edit key files.
  * @author Gerhard Klostermeier
  */
-public class KeyEditor extends BasicActivity {
+public class KeyEditor extends BasicActivity
+        implements IActivityThatReactsToSave{
 
     private EditText mKeys;
     private String mFileName;
@@ -61,6 +61,12 @@ public class KeyEditor extends BasicActivity {
      * Used by the "save before quitting" dialog.
      */
     private boolean mKeyChanged;
+
+    /**
+     * If True, the editor will close after a successful save.
+     * @see #onSaveSuccessful()
+     */
+    private boolean mCloseAfterSuccessfulSave;
 
 
     /**
@@ -97,9 +103,11 @@ public class KeyEditor extends BasicActivity {
                     mKeyChanged = true;
                 }
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+                public void beforeTextChanged(CharSequence s,
+                        int start, int count, int after) {}
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count){}
+                public void onTextChanged(CharSequence s,
+                        int start, int before, int count) {}
             });
 
             setIntent(null);
@@ -128,7 +136,7 @@ public class KeyEditor extends BasicActivity {
         // Handle item selection.
         switch (item.getItemId()) {
         case R.id.menuKeyEditorSave:
-            onSave(false);
+            onSave();
             return true;
         case R.id.menuKeyEditorShare:
             shareKeyFile();
@@ -145,17 +153,17 @@ public class KeyEditor extends BasicActivity {
     @Override
     public void onBackPressed() {
         if (mKeyChanged) {
-            // TODO: Create message and title.
             new AlertDialog.Builder(this)
-            .setTitle("foo")
-            .setMessage("foo")
+            .setTitle(R.string.dialog_save_before_quitting_title)
+            .setMessage(R.string.dialog_save_before_quitting)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_save,
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Save.
-                    onSave(true);
+                    mCloseAfterSuccessfulSave = true;
+                    onSave();
                 }
             })
             .setNeutralButton(R.string.action_cancel,
@@ -173,7 +181,24 @@ public class KeyEditor extends BasicActivity {
                     finish();
                 }
             }).show();
+        } else {
+            super.onBackPressed();
         }
+    }
+
+    // TODO: doc.
+    @Override
+    public void onSaveSuccessful() {
+        if (mCloseAfterSuccessfulSave) {
+            finish();
+        }
+        mKeyChanged = false;
+    }
+
+    // TODO: doc.
+    @Override
+    public void onSaveFailure() {
+        mCloseAfterSuccessfulSave = false;
     }
 
     /**
@@ -232,7 +257,7 @@ public class KeyEditor extends BasicActivity {
      * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context)
      * @see #isValidKeyFileErrorToast()
      */
-    private void onSave(final boolean closeOnSuccess) {
+    private void onSave() {
         if (!isValidKeyFileErrorToast()) {
             return;
         }
@@ -240,6 +265,8 @@ public class KeyEditor extends BasicActivity {
                 Environment.getExternalStoragePublicDirectory(
                 Common.HOME_DIR) + "/" + Common.KEYS_DIR);
         final Context cont = this;
+        final IActivityThatReactsToSave activity =
+                this;
         // Ask user for filename.
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -261,13 +288,8 @@ public class KeyEditor extends BasicActivity {
                             && !input.getText().toString().equals("")) {
                         File file = new File(path.getPath(),
                                 input.getText().toString());
-                        // TODO: find out if the save process was successful
-                        // (use a callback method).
                         Common.checkFileExistenceAndSave(file, mLines,
-                                false, cont);
-                        if (closeOnSuccess) {
-                            finish();
-                        }
+                                false, cont, activity);
                     } else {
                         // Empty name is not allowed.
                         Toast.makeText(cont, R.string.info_empty_file_name,
@@ -280,7 +302,7 @@ public class KeyEditor extends BasicActivity {
                 @Override
                 public void onClick(DialogInterface dialog,
                         int whichButton) {
-                    // Do nothing.
+                    mCloseAfterSuccessfulSave = false;
                 }
             }).show();
     }

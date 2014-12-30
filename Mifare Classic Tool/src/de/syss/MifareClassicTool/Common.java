@@ -29,6 +29,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -281,6 +283,7 @@ public class Common extends Application {
         return ret;
     }
 
+    // TODO: Update doc.
     /**
      * Check if the file already exists. If so, present a dialog to the user
      * with the options: "Replace", "Append" and "Cancel".
@@ -288,11 +291,13 @@ public class Common extends Application {
      * @param lines The lines to save.
      * @param isDump Set to True if file and lines are a dump file.
      * @param context The Context in which the dialog and Toast will be shown.
+     * @param TODO
      * @see #saveFile(File, String[], boolean)
      * @see #saveFileAppend(File, String[], boolean)
      */
     public static void checkFileExistenceAndSave(final File file,
-            final String[] lines, final boolean isDump, final Context context) {
+            final String[] lines, final boolean isDump, final Context context,
+            final IActivityThatReactsToSave activity) {
         if (file.exists()) {
             // Save conflict for dump file or key file?
             int message = R.string.dialog_save_conflict_keyfile;
@@ -313,9 +318,11 @@ public class Common extends Application {
                     if (Common.saveFile(file, lines, false)) {
                         Toast.makeText(context, R.string.info_save_successful,
                                 Toast.LENGTH_LONG).show();
+                        activity.onSaveSuccessful();
                     } else {
                         Toast.makeText(context, R.string.info_save_error,
                                 Toast.LENGTH_LONG).show();
+                        activity.onSaveFailure();
                     }
                 }
             })
@@ -327,9 +334,11 @@ public class Common extends Application {
                     if (Common.saveFileAppend(file, lines, isDump)) {
                         Toast.makeText(context, R.string.info_save_successful,
                                 Toast.LENGTH_LONG).show();
+                        activity.onSaveSuccessful();
                     } else {
                         Toast.makeText(context, R.string.info_save_error,
                                 Toast.LENGTH_LONG).show();
+                        activity.onSaveFailure();
                     }
                 }
             })
@@ -337,16 +346,19 @@ public class Common extends Application {
                      new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
-                    // Cancel. Do  nothing.
+                    // Cancel.
+                    activity.onSaveFailure();
                 }
             }).show();
         } else {
             if (Common.saveFile(file, lines, false)) {
                 Toast.makeText(context, R.string.info_save_successful,
                         Toast.LENGTH_LONG).show();
+                activity.onSaveSuccessful();
             } else {
                 Toast.makeText(context, R.string.info_save_error,
                         Toast.LENGTH_LONG).show();
+                activity.onSaveFailure();
             }
         }
     }
