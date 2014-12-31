@@ -504,6 +504,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Parse dump and show it.
+        boolean tmpDumpChanged = mDumpChanged;
         mLayout.removeAllViews();
         boolean isFirstBlock = false;
         EditText et = null;
@@ -588,6 +589,8 @@ public class DumpEditor extends BasicActivity
                 }
             }
         }
+        // Initialization of the editor is not a change.
+        mDumpChanged = tmpDumpChanged;
     }
 
     /**
