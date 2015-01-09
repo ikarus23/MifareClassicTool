@@ -101,6 +101,10 @@ public class MainMenu extends Activity {
         Button tools = (Button) findViewById(R.id.buttonMainTools);
         registerForContextMenu(tools);
 
+        // Find Read/Write buttons and bind them to member vars.
+        mReadTag = (Button) findViewById(R.id.buttonMainReadTag);
+        mWriteTag = (Button) findViewById(R.id.buttonMainWriteTag);
+
         Common.setUseAsEditorOnly(false);
 
         // Check if there is an NFC hardware component.
@@ -117,6 +121,16 @@ public class MainMenu extends Activity {
                         finish();
                     }
                  })
+                 .setNeutralButton(R.string.action_editor_only,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Only use Editor.
+                        Common.setUseAsEditorOnly(true);
+                        mReadTag.setEnabled(false);
+                        mWriteTag.setEnabled(false);
+                    }
+                 })
                  .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
@@ -125,7 +139,6 @@ public class MainMenu extends Activity {
                  })
                  .show();
             mResume = false;
-            return;
         }
 
         // Create the directories needed by MCT and clean out the tmp folder.
@@ -167,10 +180,6 @@ public class MainMenu extends Activity {
             // Create std. key file if there is none.
             copyStdKeysFilesIfNecessary();
         }
-
-        // Find Read/Write buttons and bind them to member vars.
-        mReadTag = (Button) findViewById(R.id.buttonMainReadTag);
-        mWriteTag = (Button) findViewById(R.id.buttonMainWriteTag);
 
         // Create a dialog that send user to NFC settings if NFC is off.
         // (Or let the user use the App in editor only mode / exit the App.)
@@ -325,7 +334,7 @@ public class MainMenu extends Activity {
         }
 
         // Check if there is Mifare Classic support.
-        if (!Common.hasMifareClassicSupport()) {
+        if (!Common.useAsEditorOnly() && !Common.hasMifareClassicSupport()) {
             // Disable read/write tag options.
             mReadTag.setEnabled(false);
             mWriteTag.setEnabled(false);
@@ -388,8 +397,7 @@ public class MainMenu extends Activity {
         inflater.inflate(R.menu.tools, menu);
         // Enable/Disable tag info tool depending on NFC availability.
         menu.findItem(R.id.menuMainTagInfo).setEnabled(
-                Common.getNfcAdapter() != null
-                && Common.getNfcAdapter().isEnabled());
+                !Common.useAsEditorOnly());
     }
 
     /**

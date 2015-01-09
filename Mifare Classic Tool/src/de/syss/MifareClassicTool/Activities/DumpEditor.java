@@ -201,8 +201,7 @@ public class DumpEditor extends BasicActivity
         getMenuInflater().inflate(R.menu.dump_editor_functions, menu);
         // Enable/Disable write dump function depending on NFC availability.
         menu.findItem(R.id.menuDumpEditorWriteDump).setEnabled(
-                Common.getNfcAdapter() != null
-                && Common.getNfcAdapter().isEnabled());
+                !Common.useAsEditorOnly());
         return true;
     }
 
