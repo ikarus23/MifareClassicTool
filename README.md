@@ -80,7 +80,7 @@ Some important things are:
   put them into the state where writing to the manufacturer block is
   possible. These tags will not work.  
   Remember this when you are shopping for special tags!
-* This app will **not** work on the following devices because
+* This app **will not work** on the following devices because
   their hardware (NFC-controller) does not support Mifare Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
   This list may be incomplete.
@@ -100,7 +100,7 @@ Some important things are:
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
-* This app **has been** known to work on the following devices.
+* This app **has been known to work** on the following devices.
   * Asus (Google) Nexus 7 (2012)
   * HTC HTC One
   * Samsung (Google) Galaxy Nexus
