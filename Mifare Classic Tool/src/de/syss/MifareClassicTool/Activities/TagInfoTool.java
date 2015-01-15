@@ -160,12 +160,24 @@ public class TagInfoTool extends BasicActivity {
             byte[] atqaBytes = nfca.getAtqa();
             atqaBytes = new byte[] {atqaBytes[1], atqaBytes[0]};
             String atqa = Common.byte2HexString(atqaBytes);
-            String sak = Common.byte2HexString(
-                    new byte[] {(byte)nfca.getSak()});
+            // SAK in big endian.
+            byte[] sakBytes = new byte[] {
+                    (byte)((nfca.getSak() >> 8) & 0xFF),
+                    (byte)(nfca.getSak() & 0xFF)};
+            String sak;
+            // Print the first SAK byte only if it is not 0.
+            if (sakBytes[0] != 0) {
+                sak = Common.byte2HexString(sakBytes);
+            } else {
+                sak = Common.byte2HexString(new byte[] {sakBytes[1]});
+            }
             String ats = "-";
             IsoDep iso = IsoDep.get(tag);
             if (iso != null ) {
-                ats = Common.byte2HexString(iso.getHistoricalBytes());
+                byte[] atsBytes = iso.getHistoricalBytes();
+                if (atsBytes != null && atsBytes.length > 0) {
+                    ats = Common.byte2HexString(atsBytes);
+                }
             }
             // Identify tag type.
             int tagTypeResourceID = getTagIdentifier(atqa, sak, ats);
