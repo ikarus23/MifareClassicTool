@@ -1,7 +1,7 @@
 # my stuff
-Mifare Classic Tool/doc
+Mifare Classic Tool/doc/
 
-#built application files
+# built application files
 *.apk
 *.ap_
 
@@ -18,13 +18,20 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 
-# OSX files
-.DS_Store
-
 # android studio files
-.gradle
-local.properties
-.idea
-# /.idea/workspace.xml
-# /.idea/libraries
-build
+.gradle/
+build/
+
+# User-specific configurations for android studio
+.idea/
+#.idea/libraries/
+#.idea/workspace.xml
+#.idea/tasks.xml
+#.idea/.name
+#.idea/compiler.xml
+#.idea/copyright/profiles_settings.xml
+#.idea/encodings.xml
+#.idea/misc.xml
+#.idea/modules.xml
+#.idea/scopes/scope_settings.xml
+#.idea/vcs.xml
