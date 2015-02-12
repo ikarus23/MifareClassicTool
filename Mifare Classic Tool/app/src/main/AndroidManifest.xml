@@ -19,13 +19,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.syss.MifareClassicTool"
-    android:versionCode="30"
-    android:versionName="1.8.3" >
-
-    <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="21" />
+    package="de.syss.MifareClassicTool" >
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
