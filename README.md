@@ -46,7 +46,7 @@ Features
 * Display the Mifare Classic Access Conditions as a table
 * Display Mifare Classic Value Blocks as integer
 * In-App (offline) help and information
-* It's open source. ;)
+* It's free software (open source). ;)
 
 
 
@@ -95,6 +95,7 @@ Some important things are:
   * LG G3 S
   * LG Optimus L7 II
   * Samsung Galaxy S4
+  * Samsung Galaxy S5 (900P, Sprint)
   * Samsung Galaxy Ace 3
   * Samsung Galaxy Express 2
   * Samsung Galaxy Mega
