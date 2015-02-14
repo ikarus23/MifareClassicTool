@@ -112,9 +112,10 @@ public class WriteTag extends BasicActivity {
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
         mWriteModeLayouts = new ArrayList<View>();
-        mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagWriteBlock));
+        mWriteModeLayouts.add(findViewById(R.id.relativeLayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
         mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagFactoryFormat));
+        mWriteModeLayouts.add(findViewById(R.id.relativeLayoutWriteTagValueBlock));
 
         // Restore mDumpWithPos and the "write to manufacturer block"-state.
         if (savedInstanceState != null) {
@@ -1115,5 +1116,10 @@ public class WriteTag extends BasicActivity {
         }
         mDumpWithPos.put(sectors - 1, lastSector);
         checkTag();
+    }
+
+    // TODO: doc.
+    public void onWriteNewValue(View view) {
+
     }
 }

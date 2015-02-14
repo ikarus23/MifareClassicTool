@@ -52,7 +52,7 @@
                 android:textColor="@color/blue" />
 
             <RelativeLayout
-                android:id="@+id/linearLayoutWriteTagWriteBlock"
+                android:id="@+id/relativeLayoutWriteTagWriteBlock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
@@ -191,7 +191,7 @@
                 android:visibility="gone" >
 
                 <TextView
-                    android:id="@+id/textViewWriteTagDump"
+                    android:id="@+id/textViewWriteTagDumpInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -324,7 +324,7 @@
                 android:visibility="gone" >
 
                 <TextView
-                    android:id="@+id/textViewWriteFactoryFormat"
+                    android:id="@+id/textViewWriteTatFactoryFormatInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -338,6 +338,168 @@
                     android:onClick="onFactoryFormat"
                     android:text="@string/action_factory_format" />
             </LinearLayout>
+
+            <!-- Seperator -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_margin="10dp"
+                android:background="@color/light_gray" />
+
+            <RadioButton
+                android:id="@+id/radioButtonWriteTagWriteValueBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_gray"
+                android:gravity="center_horizontal"
+                android:onClick="onChangeWriteMode"
+                android:tag="write_value_block"
+                android:text="@string/text_incr_decr_value_block"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutWriteTagValueBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:tag="write_value_block_layout"
+                android:visibility="gone" >
+
+                <!-- Dummy for preventing EditTexts to get focus on
+                Activity startup -->
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="0dip"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagValueBlockInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="5dp"
+                    android:text="@string/text_incr_decr_value_block_info"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagValueBlockSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/textViewWriteTagValueBlockInfo"
+                    android:layout_alignBaseline="@+id/editTextWriteTagValueBlockSector"
+                    android:padding="5dp"
+                    android:text="@string/text_sector"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagValueBlockSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@id/textViewWriteTagValueBlockInfo"
+                    android:layout_toRightOf="@id/textViewWriteTagValueBlockSector"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:minEms="3" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagHint3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/editTextWriteTagValueBlockSector"
+                    android:layout_toRightOf="@id/editTextWriteTagValueBlockSector"
+                    android:text="@string/text_starting_at_0"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagValueBlockBlock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editTextWriteTagValueBlockBlock"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/textViewWriteTagValueBlockSector"
+                    android:padding="5dp"
+                    android:text="@string/text_block"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagValueBlockBlock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editTextWriteTagValueBlockSector"
+                    android:layout_below="@id/editTextWriteTagValueBlockSector"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:minEms="3" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagHint4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/editTextWriteTagValueBlockBlock"
+                    android:layout_toRightOf="@id/editTextWriteTagValueBlockBlock"
+                    android:text="@string/text_starting_at_0"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textViewWriteTagValueBlockValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/editTextWriteTagValueBlockValue"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/editTextWriteTagValueBlockBlock"
+                    android:padding="5dp"
+                    android:text="@string/text_data"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagValueBlockValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editTextWriteTagValueBlockBlock"
+                    android:layout_below="@id/editTextWriteTagValueBlockBlock"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:minEms="7" />
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroupWriteTagValueBlock"
+                    android:layout_below="@id/textViewWriteTagValueBlockValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <RadioButton
+                        android:id="@+id/radioButtonWriteTagWriteValueBlockIncr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_increment"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonWriteTagWriteValueBlockDecr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_decrement" />
+
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/buttonWriteTagValueBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroupWriteTagValueBlock"
+                    android:onClick="onWriteNewValue"
+                    android:text="@string/action_write_new_value" />
+            </RelativeLayout>
         </RadioGroup>
     </LinearLayout>
 
