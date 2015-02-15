@@ -317,6 +317,9 @@
     <string name="info_key_map_error">Error: Lost connection to the tag</string>
     <string name="info_block0_missing">Error: There is no manufacturer block
         (block 0)</string>
+    <string name="info_not_vb">Error: Selected block is not a Value Block</string>
+    <string name="info_value_too_big_for_vb">Error: The value is too big
+        for a Value Block</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.

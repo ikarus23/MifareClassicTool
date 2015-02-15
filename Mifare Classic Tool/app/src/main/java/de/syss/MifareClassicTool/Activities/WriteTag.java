@@ -77,9 +77,13 @@ public class WriteTag extends BasicActivity {
     private static final int CKM_WRTIE_BLOCK = 3;
     private static final int CKM_FACTORY_FORMAT = 4;
 
-    private EditText mSectorText;
-    private EditText mBlockText;
+    private EditText mSectorTextBlock;
+    private EditText mBlockTextBlock;
     private EditText mDataText;
+    private EditText mSectorTextVB;
+    private EditText mBlockTextVB;
+    private EditText mNewValueTextVB;
+    private RadioButton mIncreaseVB;
     private EditText mStaticAC;
     private ArrayList<View> mWriteModeLayouts;
     private CheckBox mWriteManufBlock;
@@ -102,9 +106,17 @@ public class WriteTag extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_tag);
 
-        mSectorText = (EditText) findViewById(R.id.editTextWriteTagSector);
-        mBlockText = (EditText) findViewById(R.id.editTextWriteTagBlock);
+        mSectorTextBlock = (EditText) findViewById(R.id.editTextWriteTagSector);
+        mBlockTextBlock = (EditText) findViewById(R.id.editTextWriteTagBlock);
         mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
+        mSectorTextVB = (EditText) findViewById(
+                R.id.editTextWriteTagValueBlockSector);
+        mBlockTextVB = (EditText) findViewById(
+                R.id.editTextWriteTagValueBlockBlock);
+        mNewValueTextVB = (EditText) findViewById(
+                R.id.editTextWriteTagValueBlockValue);
+        mIncreaseVB = (RadioButton) findViewById(
+                R.id.radioButtonWriteTagWriteValueBlockIncr);
         mStaticAC = (EditText) findViewById(R.id.editTextWriteTagDumpStaticAC);
         mEnableStaticAC = (CheckBox) findViewById(
                 R.id.checkBoxWriteTagDumpStaticAC);
@@ -112,10 +124,13 @@ public class WriteTag extends BasicActivity {
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
         mWriteModeLayouts = new ArrayList<View>();
-        mWriteModeLayouts.add(findViewById(R.id.relativeLayoutWriteTagWriteBlock));
+        mWriteModeLayouts.add(findViewById(
+                R.id.relativeLayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
-        mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagFactoryFormat));
-        mWriteModeLayouts.add(findViewById(R.id.relativeLayoutWriteTagValueBlock));
+        mWriteModeLayouts.add(findViewById(
+                R.id.linearLayoutWriteTagFactoryFormat));
+        mWriteModeLayouts.add(findViewById(
+                R.id.relativeLayoutWriteTagValueBlock));
 
         // Restore mDumpWithPos and the "write to manufacturer block"-state.
         if (savedInstanceState != null) {
@@ -247,27 +262,7 @@ public class WriteTag extends BasicActivity {
      */
     public void onWriteBlock(View view) {
         // Check input.
-        if (mSectorText.getText().toString().equals("")
-                || mBlockText.getText().toString().equals("")) {
-            // Error, location not fully set.
-            Toast.makeText(this, R.string.info_data_location_not_set,
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-        final int sector = Integer.parseInt(mSectorText.getText().toString());
-        final int block = Integer.parseInt(mBlockText.getText().toString());
-        if (sector > KeyMapCreator.MAX_SECTOR_COUNT-1
-                || sector < 0) {
-            // Error, sector is out of range for any Mifare tag.
-            Toast.makeText(this, R.string.info_sector_out_of_range,
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (block > KeyMapCreator.MAX_BLOCK_COUNT_PER_SECTOR-1
-                || block < 0) {
-            // Error, block is out of range for any mifare tag.
-            Toast.makeText(this, R.string.info_block_out_of_range,
-                    Toast.LENGTH_LONG).show();
+        if (!checkSectorAndBlock(mSectorTextBlock, mBlockTextBlock)) {
             return;
         }
         String data = mDataText.getText().toString();
@@ -275,27 +270,31 @@ public class WriteTag extends BasicActivity {
             return;
         }
 
+        final int sector = Integer.parseInt(
+                mSectorTextBlock.getText().toString());
+        final int block = Integer.parseInt(
+                mBlockTextBlock.getText().toString());
         if (block == 3 || block == 15) {
             // Warning. This is a sector trailer.
             new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_sector_trailer_warning_title)
-            .setMessage(R.string.dialog_sector_trailer_warning)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setPositiveButton(R.string.action_i_know_what_i_am_doing,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Show key map creator.
-                    createKeyMapForBlock(sector);
-                }
-             })
-             .setNegativeButton(R.string.action_cancel,
-                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // Do nothing.
-                }
-             }).show();
+                .setTitle(R.string.dialog_sector_trailer_warning_title)
+                .setMessage(R.string.dialog_sector_trailer_warning)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_i_know_what_i_am_doing,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Show key map creator.
+                                createKeyMapForBlock(sector);
+                            }
+                        })
+                 .setNegativeButton(R.string.action_cancel,
+                         new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int id) {
+                                 // Do nothing.
+                             }
+                         }).show();
         } else if (sector == 0 && block == 0) {
             // Warning. Writing to manufacturer block.
             showWriteManufInfo(true);
@@ -303,6 +302,35 @@ public class WriteTag extends BasicActivity {
             createKeyMapForBlock(sector);
         }
     }
+
+    // TODO: doc.
+    private boolean checkSectorAndBlock(EditText sector, EditText block) {
+        if (sector.getText().toString().equals("")
+                || block.getText().toString().equals("")) {
+            // Error, location not fully set.
+            Toast.makeText(this, R.string.info_data_location_not_set,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        int sectorNr = Integer.parseInt(sector.getText().toString());
+        int blockNr = Integer.parseInt(block.getText().toString());
+        if (sectorNr > KeyMapCreator.MAX_SECTOR_COUNT-1
+                || sectorNr < 0) {
+            // Error, sector is out of range for any Mifare tag.
+            Toast.makeText(this, R.string.info_sector_out_of_range,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (blockNr > KeyMapCreator.MAX_BLOCK_COUNT_PER_SECTOR-1
+                || blockNr < 0) {
+            // Error, block is out of range for any mifare tag.
+            Toast.makeText(this, R.string.info_block_out_of_range,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * Show or hide the options section of write dump.
@@ -420,8 +448,8 @@ public class WriteTag extends BasicActivity {
         if (reader == null) {
             return;
         }
-        int sector = Integer.parseInt(mSectorText.getText().toString());
-        int block = Integer.parseInt(mBlockText.getText().toString());
+        int sector = Integer.parseInt(mSectorTextBlock.getText().toString());
+        int block = Integer.parseInt(mBlockTextBlock.getText().toString());
         byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
 
@@ -1120,6 +1148,26 @@ public class WriteTag extends BasicActivity {
 
     // TODO: doc.
     public void onWriteNewValue(View view) {
-
+        // Check input.
+        if (!checkSectorAndBlock(mSectorTextVB, mBlockTextVB)) {
+            return;
+        }
+        long value = Long.parseLong(mNewValueTextVB.getText().toString());
+        int sector = Integer.parseInt(mSectorTextVB.getText().toString());
+        int block = Integer.parseInt(mBlockTextVB.getText().toString());
+        if (block == 3 || block == 15 || (sector == 0 && block == 0)) {
+            // Error. Block can't be a Value Block.
+            Toast.makeText(this, R.string.info_not_vb,
+                    Toast.LENGTH_LONG).show();
+        } else if (value >= 4294967296L) {
+            // Error. Value is too big.
+            Toast.makeText(this, R.string.info_value_too_big_for_vb,
+                    Toast.LENGTH_LONG).show();
+        } else {
+            //createKeyMapForBlock(sector);
+            // TODO: After key map creation, check if selected block is a
+            // Value Block. Then check the value (too big/negative result).
+            // Then incr./decr. and transfer.
+        }
     }
 }
