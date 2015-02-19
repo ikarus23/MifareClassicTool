@@ -76,6 +76,7 @@ public class WriteTag extends BasicActivity {
     private static final int CKM_WRTIE_DUMP = 2;
     private static final int CKM_WRTIE_BLOCK = 3;
     private static final int CKM_FACTORY_FORMAT = 4;
+    private static final int CKM_WRITE_NEW_VALUE = 5;
 
     private EditText mSectorTextBlock;
     private EditText mBlockTextBlock;
@@ -196,6 +197,7 @@ public class WriteTag extends BasicActivity {
      * @see #checkTag()
      * @see #checkDumpAndShowSectorChooserDialog(String[])
      * @see #createFactoryFormatedDump()
+     * @see #checkValueBlockAndWrite()
      */
     @Override
     public void onActivityResult(int requestCode,
@@ -238,6 +240,16 @@ public class WriteTag extends BasicActivity {
                 writeBlock();
             }
             break;
+        case CKM_WRITE_NEW_VALUE:
+            if (resultCode != Activity.RESULT_OK) {
+                // Error.
+                ckmError = resultCode;
+            } else {
+                // Write block.
+                checkValueBlockAndWrite();
+            }
+            break;
+
         }
 
         // Error handling for the return value of KeyMapCreator.
@@ -254,11 +266,11 @@ public class WriteTag extends BasicActivity {
     /**
      * Check the user input and (if correct) show the
      * {@link KeyMapCreator} with predefined mapping range
-     * (see {@link #createKeyMapForBlock(int)}).
+     * (see {@link #createKeyMapForBlock(int, boolean)}).
      * @param view The View object that triggered the method
      * (in this case the write block button).
      * @see KeyMapCreator
-     * @see #createKeyMapForBlock(int)
+     * @see #createKeyMapForBlock(int, boolean)
      */
     public void onWriteBlock(View view) {
         // Check input.
@@ -285,7 +297,7 @@ public class WriteTag extends BasicActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Show key map creator.
-                                createKeyMapForBlock(sector);
+                                createKeyMapForBlock(sector, false);
                             }
                         })
                  .setNegativeButton(R.string.action_cancel,
@@ -299,7 +311,7 @@ public class WriteTag extends BasicActivity {
             // Warning. Writing to manufacturer block.
             showWriteManufInfo(true);
         } else {
-            createKeyMapForBlock(sector);
+            createKeyMapForBlock(sector, false);
         }
     }
 
@@ -361,8 +373,8 @@ public class WriteTag extends BasicActivity {
     /**
      * Display information about writing to the manufacturer block and
      * optionally create a key map for the first sector.
-     * @param createKeyMap If true {@link #createKeyMapForBlock(int)} will be
-     * triggered the time the user confirms the dialog. False otherwise.
+     * @param createKeyMap If true {@link #createKeyMapForBlock(int, boolean)}
+     * will be triggered the time the user confirms the dialog. False otherwise.
      */
     private void showWriteManufInfo(final boolean createKeyMap) {
         // Warning. Writing to the manufacturer block is not normal.
@@ -388,7 +400,7 @@ public class WriteTag extends BasicActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing or create a key map.
                     if (createKeyMap) {
-                        createKeyMapForBlock(0);
+                        createKeyMapForBlock(0, false);
                     }
                 }
              });
@@ -415,6 +427,7 @@ public class WriteTag extends BasicActivity {
          }).show();
     }
 
+    // TODO: update doc.
     /**
      * Helper function for {@link #onWriteBlock(View)} to show
      * the {@link KeyMapCreator}.
@@ -423,7 +436,7 @@ public class WriteTag extends BasicActivity {
      * @see KeyMapCreator
      * @see #onWriteBlock(View)
      */
-    private void createKeyMapForBlock(int sector) {
+    private void createKeyMapForBlock(int sector, boolean isValueBlock) {
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
@@ -431,9 +444,15 @@ public class WriteTag extends BasicActivity {
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, sector);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, sector);
-        intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
-                getString(R.string.action_create_key_map_and_write_block));
-        startActivityForResult(intent, CKM_WRTIE_BLOCK);
+        if (isValueBlock) {
+            intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT, getString(
+                    R.string.action_create_key_map_and_write_new_value));
+            startActivityForResult(intent, CKM_WRITE_NEW_VALUE);
+        } else {
+            intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT, getString(
+                    R.string.action_create_key_map_and_write_block));
+            startActivityForResult(intent, CKM_WRTIE_BLOCK);
+        }
     }
 
     /**
@@ -1164,10 +1183,24 @@ public class WriteTag extends BasicActivity {
             Toast.makeText(this, R.string.info_value_too_big_for_vb,
                     Toast.LENGTH_LONG).show();
         } else {
-            //createKeyMapForBlock(sector);
-            // TODO: After key map creation, check if selected block is a
-            // Value Block. Then check the value (too big/negative result).
-            // Then incr./decr. and transfer.
+            createKeyMapForBlock(sector, true);
         }
+    }
+
+    // TODO: doc.
+    public void checkValueBlockAndWrite() {
+        // Check if the selected block is a Value Block.
+        // TODO: implement.
+
+        if (mIncreaseVB.isChecked()) {
+            // Check if the current value + new value will be> 4294967296L.
+            // TODO: implement.
+        } else {
+            // Check if the current value - new value will be < 0.
+            // TODO: implement.
+        }
+
+        // Write the new value (incr./decr. + transfare).
+        // TODO: implement.
     }
 }
