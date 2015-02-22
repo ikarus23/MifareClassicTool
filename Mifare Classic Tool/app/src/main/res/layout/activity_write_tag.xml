@@ -498,7 +498,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/radioGroupWriteTagValueBlock"
                     android:onClick="onWriteValue"
-                    android:text="@string/action_write_new_value" />
+                    android:text="@string/action_write_value_block" />
             </RelativeLayout>
         </RadioGroup>
     </LinearLayout>

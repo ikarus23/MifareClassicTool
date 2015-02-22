@@ -180,8 +180,8 @@
         Write Dump</string>
     <string name="action_create_key_map_and_factory_format">Start Mapping and
         Format Tag</string>
-    <string name="action_create_key_map_and_write_new_value">Start Mapping and
-        Write new Value</string>
+    <string name="action_create_key_map_and_write_value_block">Start Mapping and
+        Write Value Block</string>
     <string name="action_write_full_dump">Select Dump</string>
     <string name="action_i_know_what_i_am_doing">I know what I\'m doing</string>
     <string name="action_open_key_file">Open Key File</string>
@@ -196,7 +196,7 @@
     <string name="action_write_dump_clone">Write Dump (Clone)</string>
     <string name="action_write_dump">Write Dump</string>
     <string name="action_factory_format">Factory Format</string>
-    <string name="action_write_new_value">Write new Value</string>
+    <string name="action_write_value_block">Write Value Block</string>
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
     <string name="action_show_options">Show Options</string>

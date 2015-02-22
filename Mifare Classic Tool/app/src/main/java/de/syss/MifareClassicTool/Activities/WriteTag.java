@@ -457,7 +457,7 @@ public class WriteTag extends BasicActivity {
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, sector);
         if (isValueBlock) {
             intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT, getString(
-                    R.string.action_create_key_map_and_write_new_value));
+                    R.string.action_create_key_map_and_write_value_block));
             startActivityForResult(intent, CKM_WRITE_NEW_VALUE);
         } else {
             intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT, getString(
