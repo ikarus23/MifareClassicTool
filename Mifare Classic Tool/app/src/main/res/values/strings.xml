@@ -75,7 +75,8 @@
     <string name="text_sector_range">Create Map for Sectors:</string>
     <string name="text_sector_range_all">All</string>
     <string name="text_update_colors">Update Colors</string>
-    <string name="text_data">Data:</string>
+    <string name="text_data">Data</string>
+    <string name="text_value">Value</string>
     <string name="text_write_dump_info">Write a dump (or some sectors of it) to
         a tag. Blocks containing unknown data (---) will be skipped!</string>
     <string name="text_factory_format_info">Try to format the tag to
@@ -273,6 +274,8 @@
         a block with the given number.</string>
     <string name="info_error_writing_block">Error: Block is read-only
         or not writable with keys from key file</string>
+    <string name="info_error_writing_value_block">Error: Not a Value Block,
+          rights or incorrect value</string>
     <string name="info_write_successful">Data successfully written</string>
     <string name="info_none_key_valid_for_reading">Error: None of the
         keys were valid for reading</string>
@@ -314,14 +317,13 @@
         \nACs of data blocks have been updated.</string>
     <string name="info_ac_reset_keyb_not_readable">Key B is not readable.
         \nACs of data blocks have been updated.</string>
-    <string name="info_strange_error">Error: A strange error occoured&#8230;
+    <string name="info_strange_error">Error: A strange error occurred&#8230;
         and I don\'t know why :(\nPlease report this using the project page</string>
     <string name="info_key_map_error">Error: Lost connection to the tag</string>
     <string name="info_block0_missing">Error: There is no manufacturer block
         (block 0)</string>
     <string name="info_not_vb">Error: Selected block is not a Value Block</string>
-    <string name="info_value_too_big_for_vb">Error: The value is too big
-        for a Value Block</string>
+    <string name="info_value_too_big">Error: The value is too big</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -471,7 +473,7 @@
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
     </string>
-    <string name="dialog_save_before_quitting_title">Unsaved chnages</string>
+    <string name="dialog_save_before_quitting_title">Unsaved changes</string>
     <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
         \nDo you want to save these changes?
     </string>

@@ -197,7 +197,7 @@ public class WriteTag extends BasicActivity {
      * @see #checkTag()
      * @see #checkDumpAndShowSectorChooserDialog(String[])
      * @see #createFactoryFormatedDump()
-     * @see #checkValueBlockAndWrite()
+     * @see #writeValueBlock()
      */
     @Override
     public void onActivityResult(int requestCode,
@@ -246,7 +246,7 @@ public class WriteTag extends BasicActivity {
                 ckmError = resultCode;
             } else {
                 // Write block.
-                checkValueBlockAndWrite();
+                writeValueBlock();
             }
             break;
 
@@ -267,6 +267,7 @@ public class WriteTag extends BasicActivity {
      * Check the user input and (if correct) show the
      * {@link KeyMapCreator} with predefined mapping range
      * (see {@link #createKeyMapForBlock(int, boolean)}).
+     * After a key map was created, {@link #writeBlock()} will be triggered.
      * @param view The View object that triggered the method
      * (in this case the write block button).
      * @see KeyMapCreator
@@ -315,7 +316,14 @@ public class WriteTag extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Check the user input of the sector and the block field. This is a
+     * helper function for {@link #onWriteBlock(android.view.View)} and
+     * {@link #onWriteValue(android.view.View)}.
+     * @param sector Sector input field.
+     * @param block Block input field.
+     * @return True if both values are okay. False otherwise.
+     */
     private boolean checkSectorAndBlock(EditText sector, EditText block) {
         if (sector.getText().toString().equals("")
                 || block.getText().toString().equals("")) {
@@ -427,14 +435,17 @@ public class WriteTag extends BasicActivity {
          }).show();
     }
 
-    // TODO: update doc.
     /**
-     * Helper function for {@link #onWriteBlock(View)} to show
+     * Helper function for {@link #onWriteBlock(View)} and
+     * {@link #onWriteValue(android.view.View)} to show
      * the {@link KeyMapCreator}.
      * @param sector The sector for the mapping range of
      * {@link KeyMapCreator}
+     * @param isValueBlock If true, the key map will be created for a Value
+     * Block ({@link #writeValueBlock()}).
      * @see KeyMapCreator
      * @see #onWriteBlock(View)
+     * @see #onWriteValue(android.view.View)
      */
     private void createKeyMapForBlock(int sector, boolean isValueBlock) {
         Intent intent = new Intent(this, KeyMapCreator.class);
@@ -458,7 +469,7 @@ public class WriteTag extends BasicActivity {
     /**
      * Called from {@link #onActivityResult(int, int, Intent)}
      * after a key map was created, this method tries to write the given
-     * data to the tag. An error will be displayed to the user via Toast.
+     * data to the tag. Possible errors are displayed to the user via Toast.
      * @see #onActivityResult(int, int, Intent)
      * @see #onWriteBlock(View)
      */
@@ -503,8 +514,8 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Regular behavior: Open a file chooser ({@link FileChooser}) to select
-     * a dump and wait for its result in
+     * Regular behavior: Check input, open a file chooser ({@link FileChooser})
+     * to select a dump and wait for its result in
      * {@link #onActivityResult(int, int, Intent)}.
      * This method triggers the call chain: open {@link FileChooser}
      * (this method) -> read dump ({@link #readDumpFromFile(String)})
@@ -1165,42 +1176,85 @@ public class WriteTag extends BasicActivity {
         checkTag();
     }
 
-    // TODO: doc.
-    public void onWriteNewValue(View view) {
+    /**
+     * Check the user input and (if correct) show the
+     * {@link KeyMapCreator} with predefined mapping range
+     * (see {@link #createKeyMapForBlock(int, boolean)}).
+     * After a key map was created {@link #writeValueBlock()} will be triggered.
+     * @param view The View object that triggered the method
+     * (in this case the write Value Block button).
+     * @see KeyMapCreator
+     * @see #checkSectorAndBlock(android.widget.EditText,
+     * android.widget.EditText)
+     */
+    public void onWriteValue(View view) {
         // Check input.
         if (!checkSectorAndBlock(mSectorTextVB, mBlockTextVB)) {
             return;
         }
-        long value = Long.parseLong(mNewValueTextVB.getText().toString());
+        int value = Integer.parseInt(mNewValueTextVB.getText().toString());
         int sector = Integer.parseInt(mSectorTextVB.getText().toString());
         int block = Integer.parseInt(mBlockTextVB.getText().toString());
         if (block == 3 || block == 15 || (sector == 0 && block == 0)) {
             // Error. Block can't be a Value Block.
             Toast.makeText(this, R.string.info_not_vb,
                     Toast.LENGTH_LONG).show();
-        } else if (value >= 4294967296L) {
+        } else if (value > Integer.MAX_VALUE) {
             // Error. Value is too big.
-            Toast.makeText(this, R.string.info_value_too_big_for_vb,
+            Toast.makeText(this, R.string.info_value_too_big,
                     Toast.LENGTH_LONG).show();
         } else {
             createKeyMapForBlock(sector, true);
         }
     }
 
-    // TODO: doc.
-    public void checkValueBlockAndWrite() {
-        // Check if the selected block is a Value Block.
-        // TODO: implement.
-
-        if (mIncreaseVB.isChecked()) {
-            // Check if the current value + new value will be> 4294967296L.
-            // TODO: implement.
-        } else {
-            // Check if the current value - new value will be < 0.
-            // TODO: implement.
-        }
-
+    /**
+     * Called from {@link #onActivityResult(int, int, Intent)}
+     * after a key map was created, this method tries to increment or
+     * decrement the Value Block. Possible errors are displayed to the
+     * user via Toast.
+     * @see #onActivityResult(int, int, Intent)
+     * @see #onWriteValue(android.view.View)
+     */
+    private void writeValueBlock() {
         // Write the new value (incr./decr. + transfare).
-        // TODO: implement.
+        MCReader reader = Common.checkForTagAndCreateReader(this);
+        if (reader == null) {
+            return;
+        }
+        int value = Integer.parseInt(mNewValueTextVB.getText().toString());
+        int sector = Integer.parseInt(mSectorTextVB.getText().toString());
+        int block = Integer.parseInt(mBlockTextVB.getText().toString());
+        byte[][] keys = Common.getKeyMap().get(sector);
+        int result = -1;
+
+        if (keys[1] != null) {
+            result = reader.writeValueBlock(sector, block, value,
+                    mIncreaseVB.isChecked(),
+                    keys[1], true);
+        }
+        // Error while writing? Maybe tag has default factory settings ->
+        // try to write with key a (if there is one).
+        if (result == -1 && keys[0] != null) {
+            result = reader.writeValueBlock(sector, block, value,
+                    mIncreaseVB.isChecked(),
+                    keys[0], false);
+        }
+        reader.close();
+
+        // Error handling.
+        switch (result) {
+            case 2:
+                Toast.makeText(this, R.string.info_block_not_in_sector,
+                        Toast.LENGTH_LONG).show();
+                return;
+            case -1:
+                Toast.makeText(this, R.string.info_error_writing_value_block,
+                        Toast.LENGTH_LONG).show();
+                return;
+        }
+        Toast.makeText(this, R.string.info_write_successful,
+                Toast.LENGTH_LONG).show();
+        finish();
     }
 }

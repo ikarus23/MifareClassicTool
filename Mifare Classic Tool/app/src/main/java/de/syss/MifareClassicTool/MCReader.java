@@ -291,6 +291,53 @@ public class MCReader {
     }
 
     /**
+     * Increase or decrease a Value Block.
+     * @param sectorIndex The sector to where the data should be written
+     * @param blockIndex The block to where the data should be written
+     * @param value Increase or decrease Value Block by this value.
+     * @param increment If true, increment Value Block by value. Decrement
+     * if false.
+     * @param key The Mifare Classic key for the given sector.
+     * @param useAsKeyB If true, key will be treated as key B
+     * for authentication.
+     * @return The return codes are:<br />
+     * <ul>
+     * <li>0 - Everything went fine.</li>
+     * <li>1 - Sector index is out of range.</li>
+     * <li>2 - Block index is out of range.</li>
+     * <li>3 - Authentication went wrong.</li>
+     * <li>-1 - Error while writing to tag.</li>
+     * </ul>
+     * @see #authenticate(int, byte[], boolean)
+     */
+    public int writeValueBlock(int sectorIndex, int blockIndex, int value,
+                          boolean increment, byte[] key, boolean useAsKeyB) {
+        if (mMFC.getSectorCount()-1 < sectorIndex) {
+            return 1;
+        }
+        if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
+            return 2;
+        }
+        if (!authenticate(sectorIndex, key, useAsKeyB)) {
+            return 3;
+        }
+        // Write Value Block.
+        int block = mMFC.sectorToBlock(sectorIndex) + blockIndex;
+        try {
+            if (increment) {
+                mMFC.increment(block, value);
+            } else {
+                mMFC.decrement(block, value);
+            }
+            mMFC.transfer(block);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error while writing Value Block to tag.", e);
+            return -1;
+        }
+        return 0;
+    }
+
+    /**
      * Build Key-Value Pairs in which keys represent the sector and
      * values are one or both of the Mifare keys (A/B).
      * The Mifare key information must be set before calling this method

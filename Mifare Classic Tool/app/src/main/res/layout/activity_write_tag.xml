@@ -457,7 +457,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/editTextWriteTagValueBlockBlock"
                     android:padding="5dp"
-                    android:text="@string/text_data"
+                    android:text="@string/text_value"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
@@ -497,7 +497,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/radioGroupWriteTagValueBlock"
-                    android:onClick="onWriteNewValue"
+                    android:onClick="onWriteValue"
                     android:text="@string/action_write_new_value" />
             </RelativeLayout>
         </RadioGroup>
