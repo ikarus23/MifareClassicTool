@@ -28,6 +28,7 @@
       <li><a href="#write_block">4.1 Write Block</a></li>
       <li><a href="#write_dump">4.2 Write Dump (Clone)</a></li>
       <li><a href="#factory_format">4.3 Factory Format</a></li>
+      <li><a href="#write_value_block">4.4 Incr./Decr. Value Block</a></li>
       </ul>
     </li>
     <li>
@@ -230,7 +231,7 @@
     Technically speaking, reading an RFID-Tag is done in two steps:
     <ul>
       <li>
-        <b>Choose a key file.</b><br />
+        <i>Choose a key file</i><br />
         Press &quot;Read Tag&quot; in the main menu. Now select
         key files which (perhaps) contain the keys for the tag.
         You can also specify the range of sectors you want to read.
@@ -238,7 +239,7 @@
         But: For large key files this could take quite some time!
       </li>
       <li>
-        <b>Read tag.</b><br />
+        <i>Read tag</i><br />
         After the keys are mapped to sectors based on a kind of
         dictionary-attack, the application will instantly start
         to read the tag. The result will be displayed in a
@@ -282,7 +283,7 @@
     <b>Options:</b>
     <ul>
       <li>
-        <i>Use static (custom) Access Conditions:</i><br />
+        <i>Use static (custom) Access Conditions</i><br />
         By enabling this option, all Access Conditions from the dump
         will be replaced with the chosen ones.
         <br />This is useful if the dump contains Access Conditions
@@ -290,7 +291,7 @@
         them, you can easily use custom ones to make the tag reusable.
       </li>
       <li>
-        <i>Write to Manufacturer Block:</i><br />
+        <i>Write to Manufacturer Block</i><br />
         The first block of the first sector of an <b>original</b>
         Mifare Classic tag is <u>read-only</u> i.e. not writable. But there are
         <b>special</b> Mifare Classic tags that support writing to the
@@ -309,6 +310,31 @@
     state, all data block bytes are 0x00 and the sector trailers contain
     0xFFFFFFFFFFFF as key A/B and 0xFF078000 as access conditions.
   </p>
+
+  <h3 id="write_value_block">4.4 Incr./Decr. Value Block</h3>
+  <p>
+    With this method you can increment or decrement a Value Block. If an
+    increment or decrement fails, it is due to one of the following reasons:
+    <ul>
+      <li>
+        The selected target block is not a Value Block.
+      </li>
+      <li>
+        The Access Conditions don't allow to increment or decrement the
+        Value Block.
+      </li>
+      <li>
+        The provided value is incorrect. This happens if you try to increment
+        a Value Block to a value above the upper limit (2,147,483,647) or if
+        you try to decrement it to a value under the lower limit
+        (-2,147,483,648).
+      </li>
+    </ul>
+    If you don't know what a Mifare Classic Value Block is, you should read
+    chapter 8.6.2.1 of the
+    <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
+    Mifare Classic (1k) Datasheet</a> (PDF).
+  </p>
   <hr />
 
 
@@ -318,12 +344,12 @@
     This editor can be accessed by two different ways:
     <ul>
       <li>
-        Read a tag.<br />
+        <i>Read a tag</i><br />
         After reading a tag the result is displayed in this
         editor (See chapter <a href="#read_tag">Read Tag</a>.)
       </li>
       <li>
-        Open a saved tag.<br />
+        <i>Open a saved tag</i><br />
         You can edit a saved dump via &quot;Edit Tag Dump&quot; from
         main menu.
       </li>
@@ -403,11 +429,11 @@
   <p>
     There are two ways to create a key file:
     <ul>
-      <li><b>This Application</b><br />
+      <li><i>This Application</i><br />
         You can create a new key file via
         &quot;Edit/Add Key File&quot; from main menu.
       </li>
-      <li><b>On your Computer</b><br />
+      <li><i>On your Computer</i><br />
         You can create a simple text file on your computer and
         transmit it to <b>MifareClassicTool/key-files/</b> on the phone's
         external storage.
