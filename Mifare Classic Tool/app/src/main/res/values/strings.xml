@@ -275,7 +275,7 @@
     <string name="info_error_writing_block">Error: Block is read-only
         or not writable with keys from key file</string>
     <string name="info_error_writing_value_block">Error: Not a Value Block,
-          rights or incorrect value</string>
+          insufficient rights or incorrect value</string>
     <string name="info_write_successful">Data successfully written</string>
     <string name="info_none_key_valid_for_reading">Error: None of the
         keys were valid for reading</string>
