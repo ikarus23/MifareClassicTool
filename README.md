@@ -89,6 +89,7 @@ Some important things are:
   * Google Nexus 5
   * Google Nexus 7 (2013)
   * Google Nexus 10
+  * Huawei G620S
   * LG F60
   * LG G2
   * LG G2 mini
@@ -101,10 +102,11 @@ Some important things are:
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
+  * Xiaomi MI 3
 * This app **has been known to work** on the following devices.
-  * Asus (Google) Nexus 7 (2012)
+  * Google Nexus 7 (2012)
   * HTC HTC One
-  * Samsung (Google) Galaxy Nexus
+  * Samsung Galaxy Nexus
   * Samsung Galaxy S3 i9300
   * Samsung Galaxy S3 Duo i9300i
 
