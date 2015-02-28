@@ -251,7 +251,7 @@ public class FileChooser extends BasicActivity {
      * Finish the Activity with an Intent containing
      * {@link #EXTRA_CHOSEN_FILE} and {@link #EXTRA_CHOSEN_FILENAME} as result.
      * You can catch that result by overriding onActivityResult() in the
-     * Activity that called the file chooser via startActitivtyForResult().
+     * Activity that called the file chooser via startActivityForResult().
      * @param view The View object that triggered the function
      * (in this case the choose file button).
      * @see #EXTRA_CHOSEN_FILE

@@ -585,7 +585,7 @@ public class MainMenu extends Activity {
     /**
      * Show the {@link Preferences}.
      */
-    public void onShowPreferences() {
+    private void onShowPreferences() {
         Intent intent = new Intent(this, Preferences.class);
         startActivity(intent);
     }
@@ -593,7 +593,7 @@ public class MainMenu extends Activity {
     /**
      * Show the about dialog.
      */
-    public void onShowAboutDialog() {
+    private void onShowAboutDialog() {
         CharSequence styledText = Html.fromHtml(
                 getString(R.string.dialog_about_mct,
                 Common.getVersionCode()));
@@ -643,7 +643,7 @@ public class MainMenu extends Activity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        Intent intent = null;
+        Intent intent;
         switch (item.getItemId()) {
         case R.id.menuMainTagInfo:
             intent = new Intent(this, TagInfoTool.class);

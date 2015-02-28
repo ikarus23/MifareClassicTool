@@ -73,8 +73,8 @@ public class WriteTag extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.DUMP";
 
     private static final int FC_WRITE_DUMP = 1;
-    private static final int CKM_WRTIE_DUMP = 2;
-    private static final int CKM_WRTIE_BLOCK = 3;
+    private static final int CKM_WRITE_DUMP = 2;
+    private static final int CKM_WRITE_BLOCK = 3;
     private static final int CKM_FACTORY_FORMAT = 4;
     private static final int CKM_WRITE_NEW_VALUE = 5;
 
@@ -196,7 +196,7 @@ public class WriteTag extends BasicActivity {
      * @see #writeBlock()
      * @see #checkTag()
      * @see #checkDumpAndShowSectorChooserDialog(String[])
-     * @see #createFactoryFormatedDump()
+     * @see #createFactoryFormattedDump()
      * @see #writeValueBlock()
      */
     @Override
@@ -207,15 +207,13 @@ public class WriteTag extends BasicActivity {
 
         switch(requestCode) {
         case FC_WRITE_DUMP:
-            if (resultCode != Activity.RESULT_OK) {
-                // Error.
-            } else {
+            if (resultCode == Activity.RESULT_OK) {
                 // Read dump and create keys.
                 readDumpFromFile(data.getStringExtra(
                         FileChooser.EXTRA_CHOSEN_FILE));
             }
             break;
-        case CKM_WRTIE_DUMP:
+        case CKM_WRITE_DUMP:
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
                 ckmError = resultCode;
@@ -228,10 +226,10 @@ public class WriteTag extends BasicActivity {
                 // Error.
                 ckmError = resultCode;
             } else {
-                createFactoryFormatedDump();
+                createFactoryFormattedDump();
             }
             break;
-        case CKM_WRTIE_BLOCK:
+        case CKM_WRITE_BLOCK:
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
                 ckmError = resultCode;
@@ -462,7 +460,7 @@ public class WriteTag extends BasicActivity {
         } else {
             intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT, getString(
                     R.string.action_create_key_map_and_write_block));
-            startActivityForResult(intent, CKM_WRTIE_BLOCK);
+            startActivityForResult(intent, CKM_WRITE_BLOCK);
         }
     }
 
@@ -725,7 +723,7 @@ public class WriteTag extends BasicActivity {
                 (int) Collections.max(mDumpWithPos.keySet()));
         intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_write_dump));
-        startActivityForResult(intent, CKM_WRTIE_DUMP);
+        startActivityForResult(intent, CKM_WRITE_DUMP);
     }
 
     /**
@@ -762,7 +760,7 @@ public class WriteTag extends BasicActivity {
         }
 
         // Check if tag is writable on needed blocks.
-        // Reformat for reader.isWritabeOnPosition(...).
+        // Reformat for reader.isWritableOnPosition(...).
         final SparseArray<byte[][]> keyMap  =
                 Common.getKeyMap();
         HashMap<Integer, int[]> dataPos =
@@ -1110,14 +1108,14 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Create an factory formated, empty dump with a size matching
+     * Create an factory formatted, empty dump with a size matching
      * the current tag size and then call {@link #checkTag()}.
      * Factory (default) Mifare Classic Access Conditions are: 0xFF0780XX
      * XX = General purpose byte (GPB): Most of the time 0x69. At the end of
      * an Tag XX = 0xBC.
      * @see #checkTag()
      */
-    private void createFactoryFormatedDump() {
+    private void createFactoryFormattedDump() {
         // This function is directly called after a key map was created.
         // So Common.getTag() will return den current present tag
         // (and its size/sector count).
@@ -1144,7 +1142,7 @@ public class WriteTag extends BasicActivity {
         }
         empty16BlockSector.put(15, normalSectorTrailer);
         // Last sector.
-        HashMap<Integer, byte[]> lastSector = null;
+        HashMap<Integer, byte[]> lastSector;
 
         // Sector 0.
         HashMap<Integer, byte[]> firstSector =
@@ -1192,20 +1190,26 @@ public class WriteTag extends BasicActivity {
         if (!checkSectorAndBlock(mSectorTextVB, mBlockTextVB)) {
             return;
         }
-        int value = Integer.parseInt(mNewValueTextVB.getText().toString());
+
         int sector = Integer.parseInt(mSectorTextVB.getText().toString());
         int block = Integer.parseInt(mBlockTextVB.getText().toString());
         if (block == 3 || block == 15 || (sector == 0 && block == 0)) {
             // Error. Block can't be a Value Block.
             Toast.makeText(this, R.string.info_not_vb,
                     Toast.LENGTH_LONG).show();
-        } else if (value > Integer.MAX_VALUE) {
+            return;
+        }
+
+        try {
+            Integer.parseInt(mNewValueTextVB.getText().toString());
+        } catch (Exception e) {
             // Error. Value is too big.
             Toast.makeText(this, R.string.info_value_too_big,
                     Toast.LENGTH_LONG).show();
-        } else {
-            createKeyMapForBlock(sector, true);
+            return;
         }
+
+        createKeyMapForBlock(sector, true);
     }
 
     /**
@@ -1217,7 +1221,7 @@ public class WriteTag extends BasicActivity {
      * @see #onWriteValue(android.view.View)
      */
     private void writeValueBlock() {
-        // Write the new value (incr./decr. + transfare).
+        // Write the new value (incr./decr. + transfer).
         MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             return;

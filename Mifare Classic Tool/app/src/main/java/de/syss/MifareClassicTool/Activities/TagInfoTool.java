@@ -51,7 +51,7 @@ public class TagInfoTool extends BasicActivity {
     int mMFCSupport;
 
     /**
-     * Calls {@link #updateTagInfos(Tag)} (and initialize some member
+     * Calls {@link #updateTagInfo(Tag)} (and initialize some member
      * variables).
      */
     @Override
@@ -62,18 +62,18 @@ public class TagInfoTool extends BasicActivity {
         mLayout = (LinearLayout) findViewById(R.id.linearLayoutTagInfoTool);
         mErrorMessage = (TextView) findViewById(
                 R.id.textTagInfoToolErrorMessage);
-        updateTagInfos(Common.getTag());
+        updateTagInfo(Common.getTag());
     }
 
     /**
      * Calls {@link Common#treatAsNewTag(Intent, android.content.Context)} and
-     * then calls {@link #updateTagInfos(Tag)}
+     * then calls {@link #updateTagInfo(Tag)}
      */
     @Override
     public void onNewIntent(Intent intent) {
         Common.treatAsNewTag(intent, this);
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
-            updateTagInfos(Common.getTag());
+            updateTagInfo(Common.getTag());
         }
     }
 
@@ -118,7 +118,7 @@ public class TagInfoTool extends BasicActivity {
      * If there is no Mifare Classic support, a warning will be shown.
      * @param tag A Tag from an NFC Intent.
      */
-    private void updateTagInfos(Tag tag) {
+    private void updateTagInfo(Tag tag) {
 
         if (tag != null) {
             // Check for Mifare Classic support.
@@ -194,7 +194,7 @@ public class TagInfoTool extends BasicActivity {
                     "\n", uid, "\n",
                     Common.colorString(getString(
                             R.string.text_rf_tech) + ":", hc),
-                    // Tech is always ISO 14443a due to NFC Intet filter.
+                    // Tech is always ISO 14443a due to NFC Intent filter.
                     "\n", getString(R.string.text_rf_tech_14a), "\n",
                     Common.colorString(getString(R.string.text_atqa) + ":", hc),
                     "\n", atqa, "\n",

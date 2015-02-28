@@ -426,7 +426,7 @@ public class AccessConditionTool extends BasicActivity {
      * @see #mIsKeyBReadable
      */
     private void buildDataBlockDialog(boolean resetBlockACs) {
-        String[] items = null;
+        String[] items;
         if (mIsKeyBReadable && !mWasKeyBReadable) {
             // Rebuild dialog (because key B is now readable).
             items = new String[4];
@@ -455,7 +455,7 @@ public class AccessConditionTool extends BasicActivity {
                 mACMatrix[1][i] = 0;
                 mACMatrix[2][i] = 0;
             }
-            int r = 0;
+            int r;
             if (mIsKeyBReadable) {
                 r = R.string.info_ac_reset_keyb_readable;
             } else {

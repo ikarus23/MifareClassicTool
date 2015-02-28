@@ -73,7 +73,7 @@ public class DiffTool extends BasicActivity {
         mDumpFileButton2 = (Button) findViewById(R.id.buttonDiffToolDump2);
 
         // Check if one or both dumps are already chosen via Intent
-        // (from DumpEitor).
+        // (from DumpEditor).
         if (getIntent().hasExtra(EXTRA_DUMP)) {
             mDump1 = convertDumpFormat(
                     getIntent().getStringArrayExtra(EXTRA_DUMP));
@@ -177,7 +177,7 @@ public class DiffTool extends BasicActivity {
                             R.id.textViewDiffBlockDump2);
                     TextView diffIndex = (TextView) rl.findViewById(
                             R.id.textViewDiffBlockDiff);
-                    StringBuilder diffString = null;
+                    StringBuilder diffString;
                     diffIndex.setTextColor(Color.RED);
                     // Populate the blocks of the diff entry.
                     dump1.setText(mDump1.get(sector)[block]);
@@ -237,7 +237,7 @@ public class DiffTool extends BasicActivity {
      * @param data The Intent returned by the {@link FileChooser}
      * @return The chosen dump in a key value pair format. The key is the sector
      * number. The value is an String array. Each field of the array
-     * represents a block. If the dump was not vaild null will be returned.
+     * represents a block. If the dump was not valid null will be returned.
      * @see Common#isValidDump(String[], boolean)
      * @see Common#isValidDumpErrorToast(int, android.content.Context)
      * @see Common#readFileLineByLine(File, boolean, android.content.Context)

@@ -58,7 +58,6 @@
   <hr />
 
   <h2 id="general_information">1. General Information</h2>
-  <p>
     This tool provides several features to interact with (and only with)
     Mifare Classic RFID-Tags. It is designed for users who have at least
     basic familiarity with the Mifare Classic technology.
@@ -118,10 +117,8 @@
     <a href="#license">License</a>. The source code is available on
     <a href="https://github.com/ikarus23/MifareClassicTool">
       github</a>.
-  </p>
 
   <h3 id="features">1.1 Features</h3>
-  <p>
     <ul>
       <li>Read Mifare Classic tags</li>
       <li>Save, edit and share the tag data you read</li>
@@ -148,10 +145,8 @@
       <li>In-App (offline) help and information</li>
       <li>It's open source ;)</li>
     </ul>
-  </p>
 
   <h3 id="license">1.2 License</h3>
-  <p>
     This application was originally developed by
     Gerhard Klostermeier in cooperation with SySS GmbH
     (<a href="http://www.syss.de/">www.syss.de</a>) and Aalen
@@ -176,12 +171,10 @@
       </li>
     </ul>
     MIFARE is a registered trademark of NXP Semiconductors.
-  </p>
   <hr />
 
 
   <h2 id="getting_started">2. Getting Started</h2>
-  <p>
     First of all, you need the keys for the tag you want to read.
     Due to some weaknesses in Mifare Classic, you can retrieve
     all the keys (A and B) of a tag with tools like the
@@ -222,12 +215,10 @@
     This dictionary-attack based mapping process
     (keys &lt;-&gt; sectors) makes it easy for you to read as much as
     possible with the keys you know!
-  </p>
   <hr />
 
 
   <h2 id="read_tag">3. Read Tag</h2>
-  <p>
     Technically speaking, reading an RFID-Tag is done in two steps:
     <ul>
       <li>
@@ -247,19 +238,15 @@
         <a href="#edit_dump_file">Edit Tag Dump File</a>.)
       </li>
     </ul>
-  </p>
   <hr />
 
 
   <h2 id="write_tag">4. Write Tag</h2>
-  <p>
     If you want to write data to a Mifare Classic tag, it is important
     that you understand what you are doing. Writing the wrong data
     to certain blocks may cause irreparable damage to the tag.
-  </p>
 
   <h3 id="write_block">4.1 Write Block</h3>
-  <p>
     First you have to specify to which block you want to write to.
     Typical (Mifare Classic 1k) ranges are: sector 0-15, block 0-3.
     The second step is to enter the data you want to write. This is
@@ -267,10 +254,8 @@
     After pressing the button, the last step is to chose key files
     which (possibly) contain the key with privilege to write for this
     sector/block.
-  </p>
 
   <h3 id="write_dump">4.2 Write Dump (Clone)</h3>
-  <p>
     With this method you can write a dump (or some sectors of it) to a tag.
     If you want to clone a tag, you first have to read and then dump
     the original tag. The second step is to restore the dumped data on another
@@ -302,17 +287,13 @@
         possible. These tags will not work.
       </li>
     </ul>
-  </p>
 
   <h3 id="factory_format">4.3 Factory Format</h3>
-  <p>
     This will try to format the tag back to factory/delivery state. In this
     state, all data block bytes are 0x00 and the sector trailers contain
     0xFFFFFFFFFFFF as key A/B and 0xFF078000 as access conditions.
-  </p>
 
   <h3 id="write_value_block">4.4 Incr./Decr. Value Block</h3>
-  <p>
     With this method you can increment or decrement a Value Block. If an
     increment or decrement fails, it is due to one of the following reasons:
     <ul>
@@ -334,12 +315,10 @@
     chapter 8.6.2.1 of the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
-  </p>
   <hr />
 
 
   <h2 id="edit_dump_file">5. Edit Tag Dump File</h2>
-  <p>
     The tag editor is a simple hex-editor with some highlighting.
     This editor can be accessed by two different ways:
     <ul>
@@ -357,45 +336,35 @@
     You can save a dump into a file by pressing the save toolbar button
     (or menu item). The dumps will be saved in the
     <b>MifareClassicTool/dump-files/</b> directory (on external storage).
-  </p>
 
   <h3 id="share_dump">5.1 Share a Dump</h3>
-  <p>
     From the dump editor you can share a dump (via toolbar or menu item).
     You can choose between Apps that are willing to process the dump file.
     Note that some Apps fail to process the dump.<br />
     Apps which are known to work with MCT: Gmail, Bluetooth, etc.
-  </p>
 
   <h3 id="display_ascii">5.2 Display Data as ASCII</h3>
-  <p>
     From the dump editor you can display the data in 7-Bit US-ASCII (via menu).
     Non printable characters are replaced with a dot (".").
     The last block of a sector, the sector trailer, will not be
     translated to ASCII.
-  </p>
 
   <h3 id="display_ac">5.3 Display Access Conditions</h3>
-  <p>
     From the dump editor you can display the Mifare Classic Access
     Conditions as a table (via the menu). If you do not know what they are,
     you can read chapter 8.6.3 and 8.7 (and subchapters) from the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
-  </p>
 
   <h3 id="display_vb">5.4 Display Value Blocks as Integers</h3>
-  <p>
     From the dump editor you can decode blocks formatted as
     Mifare Classic Value Block to integer format (via the menu).
     For further information regarding Value Blocks read/see
     chapter 8.6.2.1 from the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
-  </p>
 
   <h3 id="display_manuf_date">5.5 Display the date of manufacture</h3>
-  <p>
     From the dump editor you can decode the date of manufacture (via the menu).
     <br /><br />
     The last 2 bytes of the manufacturer block (sector 0, block 0) are
@@ -408,25 +377,19 @@
     This is not a standard. Some manufacturers don't stick to this.
     So it is possible that MCT can't display the date of manufacture
     or display a wrong one.
-  </p>
 
   <h3 id="write_dump_from_editor">5.6 Write Dump</h3>
-  <p>
     You can write dumps directly from the dump editor. For writing dumps
     see <a href="#write_dump">Write Dump (Clone)</a>
-  </p>
 
   <h3 id="compare_dump_from_editor">5.7 Compare Dump</h3>
-  <p>
     You can compare the current dump to another dump directly from the
     dump editor. For comaring dumps see
     <a href="#diff_tool">Diff Tool (Compare Dumps)</a>
-  </p>
   <hr />
 
 
   <h2 id="edit_key_file">6. Edit or Add Key File</h2>
-  <p>
     There are two ways to create a key file:
     <ul>
       <li><i>This Application</i><br />
@@ -457,17 +420,13 @@
     For other advantages see chapter
     <a href="#getting_started">Getting Started</a>, section
     &quot;Advantages of the key files concept&quot;.
-  </p>
   <hr />
 
 
   <h2 id="tools">7. Tools</h2>
-  <p>
     This section provides some general tools to work with Mifare Classic.
-  </p>
 
   <h3 id="tag_info_tool">7.1 Display Tag Info</h3>
-  <p>
     In this view you can see some generic information
     (like UID, ATQA, SAK, Tag size, etc.) about the RFID-Tag.
     <br /><br />
@@ -490,10 +449,8 @@
       <li>The Tag has a customized ATS</li>
       <li>There are multiple tags in the reader field</li>
     </ul>
-  </p>
 
   <h3 id="value_block_tool">7.2 Value Block Decoder/Encoder</h3>
-  <p>
     This tool is capable of decoding Mifare Classic Blocks into integer
     and the other way around (encode integer to a Mifare Classic Value Block).
     If you don't know what a Mifare Classic Value Block is, you should read
@@ -505,10 +462,8 @@
     because it is not used. However, according to NXP it<br />
     &quot;can be used to save the storage address of a
     block, when implementing a powerful backup management.&quot;.
-  </p>
 
   <h3 id="ac_tool">7.3 Access Condition Decoder/Encoder</h3>
-  <p>
     This tool is capable of decoding Mifare Classic Access Conditions into a
     more human readable format and the other way around (encode to
     Mifare Classic Access Conditions).
@@ -516,14 +471,11 @@
     chapter 8.7 of the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">
     Mifare Classic (1k) Datasheet</a> (PDF).
-  </p>
 
   <h3 id="diff_tool">7.4 Diff Tool (Compare Dumps)</h3>
-  <p>
     This tool is capable of showing you the difference between two dumps.
     Just select the dumps you want to compare and tool will highlight all
     the sections where the two dumps differ from each other.
-  </p>
 
   </font>
 </body>

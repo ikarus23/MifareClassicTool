@@ -64,7 +64,7 @@ public class HexToAscii extends BasicActivity {
                                 getResources().getColor(R.color.blue)), s);
                     } else {
                         // Data.
-                        // Replace non printable ACSII with ".".
+                        // Replace non printable ASCII with ".".
                         byte[] hex = Common.hexStringToByteArray(line);
                         for(int i = 0; i < hex.length; i++) {
                             if (hex[i] < (byte)0x20 || hex[i] == (byte)0x7F) {

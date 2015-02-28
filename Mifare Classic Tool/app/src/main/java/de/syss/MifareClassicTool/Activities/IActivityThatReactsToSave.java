@@ -35,7 +35,7 @@ public interface IActivityThatReactsToSave {
 
     /**
      * This method will be called, if there was an error during the
-     * save process or it the user hits "cancel" in the "file allready exists"
+     * save process or it the user hits "cancel" in the "file already exists"
      * dialog.
      */
     public abstract void onSaveFailure();

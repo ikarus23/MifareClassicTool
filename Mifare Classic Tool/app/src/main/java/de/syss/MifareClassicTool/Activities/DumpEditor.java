@@ -871,7 +871,7 @@ public class DumpEditor extends BasicActivity
      * @return A full colored string.
      */
     private SpannableString colorDataBlock(String data, boolean hasUID) {
-        SpannableString ret = null;
+        SpannableString ret;
         if (hasUID) {
             // First block (UID, manuf. data).
             ret = new SpannableString(TextUtils.concat(

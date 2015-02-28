@@ -83,7 +83,7 @@ public class KeyMapCreator extends BasicActivity {
      * user to change the key mapping range.
      */
     public final static String EXTRA_SECTOR_CHOOSER =
-            "de.syss.MifareClassicTool.Activity.ECTOR_CHOOSER";
+            "de.syss.MifareClassicTool.Activity.SECTOR_CHOOSER";
     /**
      * An integer value that represents the number of the
      * first sector for the key mapping process.
@@ -129,7 +129,6 @@ public class KeyMapCreator extends BasicActivity {
     private Button mCreateKeyMap;
     private LinearLayout mKeyFilesGroup;
     private TextView mSectorRange;
-    private Button mChangeSectorRange;
     private final Handler mHandler = new Handler();
     private int mProgressStatus;
     private ProgressBar mProgressBar;
@@ -150,8 +149,6 @@ public class KeyMapCreator extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_key_map);
         mCreateKeyMap = (Button) findViewById(R.id.buttonCreateKeyMap);
-        mChangeSectorRange = (Button) findViewById(
-                R.id.buttonCreateKeyMapChangeRange);
         mSectorRange = (TextView) findViewById(R.id.textViewCreateKeyMapFromTo);
         mKeyFilesGroup = (LinearLayout) findViewById(
                 R.id.linearLayoutCreateKeyMapKeyFiles);
@@ -160,8 +157,10 @@ public class KeyMapCreator extends BasicActivity {
         // Init. sector range.
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_SECTOR_CHOOSER)) {
+            Button changeSectorRange = (Button) findViewById(
+                    R.id.buttonCreateKeyMapChangeRange);
             boolean value = intent.getBooleanExtra(EXTRA_SECTOR_CHOOSER, true);
-            mChangeSectorRange.setEnabled(value);
+            changeSectorRange.setEnabled(value);
         }
         int from = DEFAULT_SECTOR_RANGE_FROM;
         int to = DEFAULT_SECTOR_RANGE_TO;

@@ -141,7 +141,7 @@ public class AccessConditionDecoder extends BasicActivity {
             byte c3 = acMatrix[2][i];
             // Create row and header.
             TableRow tr = new TableRow(this);
-            String blockHeader = "";
+            String blockHeader;
             if (hasMoreThan4Blocks) {
                 blockHeader = getString(R.string.text_block)
                         + ": " + (i*4+i) + "-" + (i*4+4+i);
