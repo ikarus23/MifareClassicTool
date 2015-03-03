@@ -23,6 +23,7 @@ import java.io.File;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.SparseArray;
@@ -177,6 +178,16 @@ public class DiffTool extends BasicActivity {
                             R.id.textViewDiffBlockDump2);
                     TextView diffIndex = (TextView) rl.findViewById(
                             R.id.textViewDiffBlockDiff);
+
+                    // This is a (ugly) fix for a bug in Android 5.0+
+                    // https://code.google.com/p/android-developer-preview
+                    //    /issues/detail?id=110
+                    // (All three TextViews have the monospace typeface
+                    // property set via XML. But Android ignores it...)
+                    dump1.setTypeface(Typeface.MONOSPACE);
+                    dump2.setTypeface(Typeface.MONOSPACE);
+                    diffIndex.setTypeface(Typeface.MONOSPACE);
+
                     StringBuilder diffString;
                     diffIndex.setTextColor(Color.RED);
                     // Populate the blocks of the diff entry.
