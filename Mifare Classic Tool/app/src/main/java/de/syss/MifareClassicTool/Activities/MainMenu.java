@@ -600,7 +600,7 @@ public class MainMenu extends Activity {
         AlertDialog ad = new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_about_mct_title)
             .setMessage(styledText)
-            .setIcon(R.drawable.ic_launcher)
+            .setIcon(R.mipmap.ic_launcher)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
                 @Override

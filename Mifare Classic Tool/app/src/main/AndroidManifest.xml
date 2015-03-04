@@ -31,7 +31,7 @@
     <application
         android:name="de.syss.MifareClassicTool.Common"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name" >
         <activity
             android:name="de.syss.MifareClassicTool.Activities.MainMenu"
