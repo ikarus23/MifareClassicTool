@@ -1,5 +1,15 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.0:
+ * New Feature: Increment/Decrement Value Blocks.
+ * New Logo. Thanks to Beneke Traub (http://www.beneketraub.com/).
+ * MCT can be used in "offline" mode on devices with no NFC
+ * Fixed the monospace font issue of the diff tool for Android 5.0+..
+ * Fixed representation of SAK and ATS in the tag info tool.
+ * Major (cosmetic) code cleanup & typo fixes.
+ * Some minor bug fixes.
+ * Samsung Galaxy S5 900P, Huawei G620S and Xiaomi MI 3 are not supported.
+
 Version 1.8.3:
  * Bugfix: Show the "unsaved changes" dialog only if the user
    edited a dump and not just looked at it. Thanks to "systemcrash".
