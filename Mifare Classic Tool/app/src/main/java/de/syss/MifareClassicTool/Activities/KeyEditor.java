@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -81,6 +82,15 @@ public class KeyEditor extends BasicActivity
         if (intent != null && intent.hasExtra(
                 FileChooser.EXTRA_CHOSEN_FILE)) {
             mKeys = (EditText) findViewById(R.id.editTextKeyEditorKeys);
+
+            // This is a (ugly) fix for a bug in Android 5.0+
+            // https://code.google.com/p/android-developer-preview
+            //    /issues/detail?id=110
+            // (The EditText has the monospace typeface
+            // property set via XML. But Android ignores it...)
+            mKeys.setTypeface(Typeface.MONOSPACE);
+
+
             File keyFile = new File(getIntent().getStringExtra(
                     FileChooser.EXTRA_CHOSEN_FILE));
             mFileName = keyFile.getName();
