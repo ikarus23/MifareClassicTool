@@ -194,9 +194,16 @@ public class MCReader {
                     // At least this is what the documentation says.
                     // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
                     // sometimes returns < 16 bytes for unknown reasons.
-                    if (blockBytes.length != 16) {
+                    // Update: Aaand sometimes it returns more than 16 bytes...
+                    // The appended byte(s) are 0x00.
+                    if (blockBytes.length < 16) {
                         throw new IOException();
                     }
+                    if (blockBytes.length > 16) {
+                        byte[] blockBytesTmp = Arrays.copyOf(blockBytes,16);
+                        blockBytes = blockBytesTmp;
+                    }
+
                     blocks.add(Common.byte2HexString(blockBytes));
                 } catch (TagLostException e) {
                     throw e;
@@ -584,10 +591,13 @@ public class MCReader {
                 // At least this is what the documentation says.
                 // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
                 // sometimes returns < 16 bytes for unknown reasons.
-                if (ac.length != 16) {
+                // Update: Aaand sometimes it returns more than 16 bytes...
+                // The appended byte(s) are 0x00.
+                if (ac.length < 16) {
                     ret.put(sector, null);
                     continue;
                 }
+
                 ac = Arrays.copyOfRange(ac, 6, 9);
                 byte[][] acMatrix = Common.acBytesToACMatrix(ac);
                 if (acMatrix == null) {
