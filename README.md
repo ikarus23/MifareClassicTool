@@ -98,6 +98,7 @@ Some important things are:
   * Samsung Galaxy S4
   * Samsung Galaxy S5 (900P, Sprint)
   * Samsung Galaxy Ace 3
+  * Samsung Galaxy Ace 4
   * Samsung Galaxy Express 2
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
