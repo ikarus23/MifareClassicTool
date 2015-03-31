@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
         minSdkVersion 10
-        targetSdkVersion 21
-        versionCode 31
-        versionName '2.0.0'
+        targetSdkVersion 22
+        versionCode 32
+        versionName '2.0.1'
     }
 
     buildTypes {
@@ -20,5 +20,5 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.+'
+    compile 'com.android.support:support-v4:22.+'
 }

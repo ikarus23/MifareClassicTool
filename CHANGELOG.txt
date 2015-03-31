@@ -1,5 +1,10 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.1:
+ * Fixed bug causing to show dashes on Samsung Galaxy S5 devices.
+   Thanks to "andake".
+ * Samsung's Galaxy Ace 4 is not supported
+
 Version 2.0.0:
  * New Feature: Increment/Decrement Value Blocks.
  * New Logo. Thanks to Beneke Traub (http://www.beneketraub.com/).
