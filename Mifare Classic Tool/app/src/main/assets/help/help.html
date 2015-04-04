@@ -297,8 +297,8 @@
     0xFFFFFFFFFFFF as key A/B and 0xFF078000 as access conditions.
 
   <h3 id="write_value_block">4.4 Incr./Decr. Value Block</h3>
-    With this method you can increment or decrement a Value Block. If an
-    increment or decrement fails, it is due to one of the following reasons:
+    With this method you can increment or decrement and than transfer a Value Block.
+    If an increment or decrement fails, it is due to one of the following reasons:
     <ul>
       <li>
         The selected target block is not a Value Block.
@@ -314,6 +314,9 @@
         (-2,147,483,648).
       </li>
     </ul>
+    If a increment or decrement fails due to an interrupted and therefore
+    incomplete transaction, the Value Block could become unusable.<br /></br>
+
     If you don't know what a Mifare Classic Value Block is, you should read
     chapter 8.6.2.1 of the
     <a href="http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf">

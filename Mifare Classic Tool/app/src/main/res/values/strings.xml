@@ -82,8 +82,8 @@
     <string name="text_factory_format_info">Try to format the tag to
         factory/delivery state.</string>
     <string name="text_incr_decr_value_block_info">Increment or decrement
-        a Value Block. (If you don\'t know what Value Blocks are, checkout
-        \"Help and Info\".) </string>
+        and than transfer a Value Block. (If you don\'t know what Value Blocks are,
+        check out \"Help and Info\".) </string>
     <string name="text_starting_at_0">(Starting at 0)</string>
     <string name="text_open_key_file_title">Open or Create a Key File</string>
     <string name="text_choose_dump_to_write">Choose the dump to be written:</string>
