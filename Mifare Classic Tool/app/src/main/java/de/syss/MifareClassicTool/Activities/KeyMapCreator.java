@@ -42,6 +42,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,19 +163,28 @@ public class KeyMapCreator extends BasicActivity {
             boolean value = intent.getBooleanExtra(EXTRA_SECTOR_CHOOSER, true);
             changeSectorRange.setEnabled(value);
         }
-        int from = DEFAULT_SECTOR_RANGE_FROM;
-        int to = DEFAULT_SECTOR_RANGE_TO;
         boolean custom = false;
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String from = sharedPref.getString("default_mapping_range_from", "");
+        String to = sharedPref.getString("default_mapping_range_to", "");
+        // Are there default values?
+        if (!from.equals("")) {
+            custom = true;
+        }
+        if (!to.equals("")) {
+            custom = true;
+        }
+        // Are there given values?
         if (intent.hasExtra(EXTRA_SECTOR_CHOOSER_FROM)) {
-            from = intent.getIntExtra(EXTRA_SECTOR_CHOOSER_FROM, 0);
+            from = "" + intent.getIntExtra(EXTRA_SECTOR_CHOOSER_FROM, 0);
             custom = true;
         }
         if (intent.hasExtra(EXTRA_SECTOR_CHOOSER_TO)) {
-            to = intent.getIntExtra(EXTRA_SECTOR_CHOOSER_TO, 15);
+            to = "" + intent.getIntExtra(EXTRA_SECTOR_CHOOSER_TO, 15);
             custom = true;
         }
         if (custom) {
-            mSectorRange.setText((from) + " - " + (to));
+            mSectorRange.setText(from + " - " + to);
         }
 
         // Init. title and button text.
@@ -503,14 +513,19 @@ public class KeyMapCreator extends BasicActivity {
 
     /**
      * Show a dialog which lets the user choose the key mapping range.
+     * If intended, save the mapping range as default
+     * (using {@link #saveMappingRange(String, String)}).
      * @param view The View object that triggered the method
      * (in this case the change button).
      */
     public void onChangeSectorRange(View view) {
         // Build dialog elements.
         LinearLayout ll = new LinearLayout(this);
+        LinearLayout llv = new LinearLayout(this);
         int pad = Common.dpToPx(10);
-        ll.setPadding(pad, pad, pad, pad);
+        llv.setPadding(pad, pad, pad, pad);
+        llv.setOrientation(LinearLayout.VERTICAL);
+        llv.setGravity(Gravity.CENTER);
         ll.setGravity(Gravity.CENTER);
         TextView tvFrom = new TextView(this);
         tvFrom.setText(getString(R.string.text_from) + ": ");
@@ -518,6 +533,14 @@ public class KeyMapCreator extends BasicActivity {
         TextView tvTo = new TextView(this);
         tvTo.setText(" " + getString(R.string.text_to) + ": ");
         tvTo.setTextSize(18);
+
+        final CheckBox saveAsDefault = new CheckBox(this);
+        saveAsDefault.setLayoutParams(new LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        saveAsDefault.setText(R.string.action_save_as_default);
+        saveAsDefault.setTextSize(18);
+        tvFrom.setTextColor(saveAsDefault.getCurrentTextColor());
+        tvTo.setTextColor(saveAsDefault.getCurrentTextColor());
 
         InputFilter[] f = new InputFilter[1];
         f[0] = new InputFilter.LengthFilter(2);
@@ -542,34 +565,51 @@ public class KeyMapCreator extends BasicActivity {
         ll.addView(from);
         ll.addView(tvTo);
         ll.addView(to);
+        llv.addView(ll);
+        llv.addView(saveAsDefault);
         final Toast err = Toast.makeText(this,
                 R.string.info_invalid_range, Toast.LENGTH_LONG);
         // Build dialog and show him.
         new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_mapping_range_title)
             .setMessage(R.string.dialog_mapping_range)
-            .setView(ll)
+            .setView(llv)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
                     // Read from x to y.
-                    String txtFrom = "" + (DEFAULT_SECTOR_RANGE_FROM);
-                    String txtTo = "" + (DEFAULT_SECTOR_RANGE_TO);
+                    String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
+                    String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
+                    boolean noFrom = false;
                     if (!from.getText().toString().equals("")) {
                         txtFrom = from.getText().toString();
+                    } else {
+                        noFrom = true;
                     }
                     if (!to.getText().toString().equals("")) {
                         txtTo = to.getText().toString();
+                    } else if (noFrom) {
+                        // No values provided. Read all sectors.
+                        mSectorRange.setText(
+                                getString(R.string.text_sector_range_all));
+                        if (saveAsDefault.isChecked()) {
+                            saveMappingRange("", "");
+                        }
+                        return;
                     }
                     int intFrom = Integer.parseInt(txtFrom);
                     int intTo = Integer.parseInt(txtTo);
                     if (intFrom > intTo || intFrom < 0
-                            || intTo > MAX_SECTOR_COUNT-1) {
+                            || intTo > MAX_SECTOR_COUNT - 1) {
                         // Error.
                         err.show();
                     } else {
                         mSectorRange.setText(txtFrom + " - " + txtTo);
+                        if (saveAsDefault.isChecked()) {
+                            // Save as default.
+                            saveMappingRange(txtFrom, txtTo);
+                        }
                     }
                 }
             })
@@ -580,6 +620,10 @@ public class KeyMapCreator extends BasicActivity {
                     // Read all sectors.
                     mSectorRange.setText(
                             getString(R.string.text_sector_range_all));
+                    if (saveAsDefault.isChecked()) {
+                        // Save as default.
+                        saveMappingRange("", "");
+                    }
                 }
             })
             .setNegativeButton(R.string.action_cancel,
@@ -589,5 +633,18 @@ public class KeyMapCreator extends BasicActivity {
                     // Cancel dialog (do nothing).
                 }
             }).show();
+    }
+
+    /**
+     * Helper method to save the mapping rage as default.
+     * @param from Start of the mapping range.
+     * @param to End of the mapping range.
+     */
+    private void saveMappingRange(String from, String to) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        Editor sharedEditor = sharedPref.edit();
+        sharedEditor.putString("default_mapping_range_from", from);
+        sharedEditor.putString("default_mapping_range_to", to);
+        sharedEditor.apply();
     }
 }
