@@ -599,7 +599,8 @@ public class Common extends Application {
                      atqa[0] == 2 || atqa[0] == (byte)0x42)) {
                 // ATQA says it is most likely a Mifare Classic tag.
                 byte sak = (byte)nfca.getSak();
-                if (sak == 8 || sak == 9 || sak == (byte)0x18) {
+                if (sak == 8 || sak == 9 || sak == (byte)0x18 ||
+                                            sak == (byte)0x88) {
                     // SAK says it is most likely a Mifare Classic tag.
                     // --> Device does not support Mifare Classic.
                     return -1;
