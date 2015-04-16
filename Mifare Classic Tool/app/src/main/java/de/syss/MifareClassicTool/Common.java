@@ -512,6 +512,7 @@ public class Common extends Application {
         return -4;
     }
 
+    // TODO: update doc.
     /**
      * Check if the device supports the Mifare Classic technology.
      * In order to do so, check if there are NFC libs with "brcm" in their
@@ -536,15 +537,35 @@ public class Common extends Application {
         }
         */
 
+        // Check if there are NFC device starting with "bcm".
+        // This could fail because on a lot of devices apps don't have
+        // the permission to list the files in "/dev".
+        // "bcm" means there is a NFC device with a Broadcom chips.
+        // Broadcom chips don't support Mifare Classic.
+        File devFolder = new File("/dev");
+        File[] devices = devFolder.listFiles();
+        for (File dev : devices) {
+            if (dev.isFile() // TODO: Are devces files?
+                    && dev.getName().startsWith("bcm")) {
+                    // TODO: Do other Broadcom devices also start with "bcm"?
+                    // Maybe use "bcm2079x" instead to be sure.
+                mHasMifareClassicSupport = -1;
+                return false;
+            }
+        }
+
         // Check if there are NFC libs with "brcm" in their names.
         // "brcm" libs are for devices with Broadcom chips. Broadcom chips
-        // don't support Mifare Classic
+        // don't support Mifare Classic.
         File libsFolder = new File("/system/lib");
         File[] libs = libsFolder.listFiles();
         for (File lib : libs) {
             if (lib.isFile()
                     && lib.getName().startsWith("libnfc")
-                    && lib.getName().contains("brcm")) {
+                    && lib.getName().contains("brcm")
+                    // TODO: Or contain "nci"?!
+                    // Is it possible to interact with MFC via NCI compliant chips?
+                    ) {
                 mHasMifareClassicSupport = -1;
                 return false;
             }
