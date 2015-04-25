@@ -512,6 +512,7 @@ public class Common extends Application {
         return -4;
     }
 
+    // TODO: update doc.
     /**
      * Check if the device supports the Mifare Classic technology.
      * In order to do so, check if there are NFC libs with "brcm" in their
@@ -536,15 +537,36 @@ public class Common extends Application {
         }
         */
 
+        // Check if there is the NFC device "bcm2079x-i2c".
+        // Chips by Broadcom don't support Mifare Classic.
+        // This could fail because on a lot of devices apps don't have
+        // the sufficient permissions.
+        File device = new File("/dev/bcm2079x-i2c");
+        if (device.exists()) {
+            mHasMifareClassicSupport = -1;
+            return false;
+        }
+
+        // Check if there is the NFC device "pn544".
+        // The PN544 NFC chip is manufactured by NXP.
+        // Chips by NXP support Mifare Classic.
+        device = new File("/dev/pn544");
+        if (device.exists()) {
+            mHasMifareClassicSupport = 1;
+            return true;
+        }
+
         // Check if there are NFC libs with "brcm" in their names.
         // "brcm" libs are for devices with Broadcom chips. Broadcom chips
-        // don't support Mifare Classic
+        // don't support Mifare Classic.
         File libsFolder = new File("/system/lib");
         File[] libs = libsFolder.listFiles();
         for (File lib : libs) {
             if (lib.isFile()
                     && lib.getName().startsWith("libnfc")
-                    && lib.getName().contains("brcm")) {
+                    && lib.getName().contains("brcm")
+                    // Add here other non NXP NFC libraries.
+                    ) {
                 mHasMifareClassicSupport = -1;
                 return false;
             }
