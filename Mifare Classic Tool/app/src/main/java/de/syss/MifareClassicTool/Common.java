@@ -169,7 +169,7 @@ public class Common extends Application {
 
     /**
      * 1 if the device does support Mifare Classic. -1 if it doesn't support
-     * it. 0 if the support check was not yet performt.
+     * it. 0 if the support check was not yet performed.
      * Checking for Mifare Classic support is really expensive. Therefore
      * remember the result here.
      */
@@ -512,13 +512,14 @@ public class Common extends Application {
         return -4;
     }
 
-    // TODO: update doc.
     /**
      * Check if the device supports the Mifare Classic technology.
-     * In order to do so, check if there are NFC libs with "brcm" in their
-     * names. "brcm" libs are for devices with Broadcom chips. Broadcom chips
-     * don't support Mifare Classic
+     * In order to do so, check if there are files like "/dev/bcm2079x-i2c" or
+     * "/system/lib/libnfc-bcrm*". Files like these are indicators for a
+     * NFC controller manufactured by Broadcom. Broadcom chips don't support
+     * Mifare Classic.
      * @return True if the device supports Mifare Classic. False otherwise.
+     * @see #mHasMifareClassicSupport
      */
     public static boolean hasMifareClassicSupport() {
         if (mHasMifareClassicSupport != 0) {
