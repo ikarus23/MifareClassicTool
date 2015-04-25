@@ -537,21 +537,23 @@ public class Common extends Application {
         }
         */
 
-        // Check if there are NFC device starting with "bcm".
+        // Check if there is the NFC device "bcm2079x-i2c".
+        // Chips by Broadcom don't support Mifare Classic.
         // This could fail because on a lot of devices apps don't have
-        // the permission to list the files in "/dev".
-        // "bcm" means there is a NFC device with a Broadcom chips.
-        // Broadcom chips don't support Mifare Classic.
-        File devFolder = new File("/dev");
-        File[] devices = devFolder.listFiles();
-        for (File dev : devices) {
-            if (dev.isFile() // TODO: Are devces files?
-                    && dev.getName().startsWith("bcm")) {
-                    // TODO: Do other Broadcom devices also start with "bcm"?
-                    // Maybe use "bcm2079x" instead to be sure.
-                mHasMifareClassicSupport = -1;
-                return false;
-            }
+        // the sufficient permissions.
+        File device = new File("/dev/bcm2079x-i2c");
+        if (device.exists()) {
+            mHasMifareClassicSupport = -1;
+            return false;
+        }
+
+        // Check if there is the NFC device "pn544".
+        // The PN544 NFC chip is manufactured by NXP.
+        // Chips by NXP support Mifare Classic.
+        device = new File("/dev/pn544");
+        if (device.exists()) {
+            mHasMifareClassicSupport = 1;
+            return true;
         }
 
         // Check if there are NFC libs with "brcm" in their names.
@@ -563,8 +565,7 @@ public class Common extends Application {
             if (lib.isFile()
                     && lib.getName().startsWith("libnfc")
                     && lib.getName().contains("brcm")
-                    // TODO: Or contain "nci"?!
-                    // Is it possible to interact with MFC via NCI compliant chips?
+                    // Add here other non NXP NFC libraries.
                     ) {
                 mHasMifareClassicSupport = -1;
                 return false;
