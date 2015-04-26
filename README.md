@@ -103,6 +103,7 @@ Some important things are:
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
+  * Sony Xperia Z3 (SOL26)
   * Xiaomi MI 3
 * This app **has been known to work** on the following devices.
   * Google Nexus 7 (2012)

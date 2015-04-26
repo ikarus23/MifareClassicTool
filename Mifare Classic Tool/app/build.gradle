@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 32
-        versionName '2.0.1'
+        versionCode 33
+        versionName '2.0.2'
     }
 
     buildTypes {
