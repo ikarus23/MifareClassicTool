@@ -95,14 +95,15 @@ Some important things are:
   * LG G2 mini
   * LG G3 S
   * LG Optimus L7 II
-  * Samsung Galaxy S4
-  * Samsung Galaxy S5 (900P, Sprint)
   * Samsung Galaxy Ace 3
   * Samsung Galaxy Ace 4
+  * Samsung Galaxy Alpha
   * Samsung Galaxy Express 2
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
+  * Samsung Galaxy S4
+  * Samsung Galaxy S5 (900P, Sprint)
   * Sony Xperia Z3 (SOL26)
   * Xiaomi MI 3
 * This app **has been known to work** on the following devices.
