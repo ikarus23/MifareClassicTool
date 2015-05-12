@@ -5,7 +5,6 @@
 # anders@4zm.org
 # https://github.com/4ZM/slurp
 # (Duplicates removed)
-
 # Standard keys
 FFFFFFFFFFFF
 A0A1A2A3A4A5
@@ -115,6 +114,26 @@ EEEEEEEEEEEE
 A00000000000
 B00000000000
 
-# Keys from:
+# Key from:
 # ladyada.net
 ABCDEF123456
+
+# Key from:
+# http://irq5.io/2013/04/13/decoding-bcard-conference-badges/
+F4A9EF2AFC6D
+
+# Keys from:
+# https://github.com/iceman1001/proxmark
+4B0B20107CCB
+569369C5A0E5
+632193BE1C3C
+644672BD4AFE
+8FE644038790
+9DE89E070277
+B5FF67CBA951
+EFF603E1EFE9
+F14EE7CAE863
+44AB09010845
+85FED980EA5A
+314B49474956
+564C505F4D41
