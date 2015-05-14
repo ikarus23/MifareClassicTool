@@ -871,9 +871,10 @@ public class DumpEditor extends BasicActivity
         String fileName;
         if (mDumpName == null) {
             // The dump has no name. Use date and time as name.
-            Time today = new Time(Time.getCurrentTimezone());
-            today.setToNow();
-            fileName = today.format("%Y-%m-%d-%H-%M-%S");
+            GregorianCalendar calendar = new GregorianCalendar();
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            fmt.setCalendar(calendar);
+            fileName = fmt.format(calendar.getTime());
         } else {
             fileName = mDumpName;
         }

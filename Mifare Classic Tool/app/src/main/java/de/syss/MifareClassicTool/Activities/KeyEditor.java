@@ -18,10 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Locale;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,11 +29,17 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -240,9 +242,10 @@ public class KeyEditor extends BasicActivity
         String fileName;
         if (mFileName.equals("")) {
             // The key file has no name. Use date and time as name.
-            Time today = new Time(Time.getCurrentTimezone());
-            today.setToNow();
-            fileName = today.format("%Y-%m-%d-%H-%M-%S");
+            GregorianCalendar calendar = new GregorianCalendar();
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            fmt.setCalendar(calendar);
+            fileName = fmt.format(calendar.getTime());
         } else {
             fileName = mFileName;
         }
