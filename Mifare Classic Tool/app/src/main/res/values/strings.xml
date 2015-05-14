@@ -232,6 +232,7 @@
     <string name="action_continue">Continue</string>
     <string name="action_dont_save">Don\'t Save</string>
     <string name="action_save_as_default">Save as default</string>
+    <string name="action_save_keys">Save keys</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

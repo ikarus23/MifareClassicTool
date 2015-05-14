@@ -18,13 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,7 +45,18 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Locale;
+
 import de.syss.MifareClassicTool.Common;
+import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
 
 /**
@@ -89,7 +93,8 @@ public class DumpEditor extends BasicActivity
             DumpEditor.class.getSimpleName();
 
     private LinearLayout mLayout;
-    private String mFileName;
+    private String mDumpName;
+    private String mKeysName;
     private String mUID;
 
     /**
@@ -175,15 +180,15 @@ public class DumpEditor extends BasicActivity
             // Called form FileChooser (init editor by file).
             File file = new File(getIntent().getStringExtra(
                     FileChooser.EXTRA_CHOSEN_FILE));
-            mFileName = file.getName();
-            setTitle(getTitle() + " (" + mFileName + ")");
+            mDumpName = file.getName();
+            setTitle(getTitle() + " (" + mDumpName + ")");
             initEditor(Common.readFileLineByLine(file, false, this));
             setIntent(null);
         } else if (savedInstanceState != null) {
             // Recreated after kill by Android (due to low memory).
-            mFileName = savedInstanceState.getString("file_name");
-            if (mFileName != null) {
-                setTitle(getTitle() + " (" + mFileName + ")");
+            mDumpName = savedInstanceState.getString("file_name");
+            if (mDumpName != null) {
+                setTitle(getTitle() + " (" + mDumpName + ")");
             }
             mLines = savedInstanceState.getStringArray("lines");
             if (mLines != null) {
@@ -206,12 +211,12 @@ public class DumpEditor extends BasicActivity
     }
 
     /**
-     * Save {@link #mLines} and {@link #mFileName}.
+     * Save {@link #mLines} and {@link #mDumpName}.
      */
     @Override
     public void onSaveInstanceState (Bundle outState) {
         outState.putStringArray("lines", mLines);
-        outState.putString("file_name", mFileName);
+        outState.putString("file_name", mDumpName);
     }
 
     /**
@@ -255,6 +260,9 @@ public class DumpEditor extends BasicActivity
             return true;
         case R.id.menuDumpEditorDiffDump:
             diffDump();
+            return true;
+        case R.id.menuDumpEditorSaveKeys:
+            saveKeys();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -360,13 +368,10 @@ public class DumpEditor extends BasicActivity
 
     /**
      * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
-     * ask user for a save name and then call
-     * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
-     * Context, IActivityThatReactsToSave)}
+     * create a file name suggestion and call
+     * {@link #saveFile(String[], String, boolean, int, int)}.
      * @see #checkDumpAndUpdateLines()
-     * @see Common#isValidDumpErrorToast(int, Context)
-     * @see Common#checkFileExistenceAndSave(File, String[], boolean,
-     * Context, IActivityThatReactsToSave)
+     * @see #saveFile(String[], String, boolean, int, int)
      */
     private void saveDump() {
         int err = checkDumpAndUpdateLines();
@@ -374,60 +379,90 @@ public class DumpEditor extends BasicActivity
             Common.isValidDumpErrorToast(err, this);
             return;
         }
+
+        // Set a filename (UID + Date + Time) if there is none.
+        if (mDumpName == null) {
+            GregorianCalendar calendar = new GregorianCalendar();
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            fmt.setCalendar(calendar);
+            String dateFormatted = fmt.format(calendar.getTime());
+            mDumpName = "UID_" + mUID + "_" + dateFormatted;
+        }
+
+        saveFile(mLines, mDumpName, false, R.string.dialog_save_dump_title,
+                R.string.dialog_save_dump);
+    }
+
+    /**
+     * Check if the external storage is writable
+     * {@link Common#isExternalStorageWritableErrorToast(Context)},
+     * ask user for a save name and then call
+     * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
+     * Context, IActivityThatReactsToSave)}.
+     * This is a helper function for {@link #saveDump()}
+     * and {@link #saveKeys()}.
+     * @param data Data to save.
+     * @param fileName Name of the file.
+     * @param isDump True if data contains a dump. False if data contains keys.
+     * @param titleId Resource ID for the title of the dialog.
+     * @param messageId Resource ID for the message of the dialog.
+     * @see Common#isExternalStorageWritableErrorToast(Context)
+     * @see Common#checkFileExistenceAndSave(File, String[], boolean,
+     * Context, IActivityThatReactsToSave)
+     */
+    private void saveFile(final String[] data, final String fileName,
+            final boolean isDump, int titleId, int messageId) {
         if (!Common.isExternalStorageWritableErrorToast(this)) {
             return;
         }
+        String targetDir = (isDump) ? Common.DUMPS_DIR : Common.KEYS_DIR;
         final File path = new File(
                 Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) +  "/" + Common.DUMPS_DIR);
+                        Common.HOME_DIR) +  "/" + targetDir);
         final Context context = this;
-        final IActivityThatReactsToSave activity =
-                this;
-        // Set a filename (UID + Date + Time) if there is none.
-        if (mFileName == null) {
-            Time today = new Time(Time.getCurrentTimezone());
-            today.setToNow();
-            mFileName = "UID_" + mUID + "_"
-                    + today.format("%Y-%m-%d_%H-%M-%S") + ".txt";
-        }
+        final IActivityThatReactsToSave activity = this;
 
         // Ask user for filename.
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setLines(1);
         input.setHorizontallyScrolling(true);
-        input.setText(mFileName);
+        input.setText(fileName);
         input.setSelection(input.getText().length());
         new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_save_dump_title)
-            .setMessage(R.string.dialog_save_dump)
+            .setTitle(titleId)
+            .setMessage(messageId)
             .setIcon(android.R.drawable.ic_menu_save)
             .setView(input)
             .setPositiveButton(R.string.action_save,
                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    if (input.getText() != null
-                            && !input.getText().toString().equals("")) {
-                        File file = new File(path.getPath(),
-                                input.getText().toString());
-                        Common.checkFileExistenceAndSave(file, mLines,
-                                true, context, activity);
-                        mFileName = file.getName();
-                    } else {
-                        // Empty name is not allowed.
-                        Toast.makeText(context, R.string.info_empty_file_name,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            })
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            if (input.getText() != null
+                                    && !input.getText().toString().equals("")) {
+                                File file = new File(path.getPath(),
+                                        input.getText().toString());
+                                Common.checkFileExistenceAndSave(file, data,
+                                        isDump, context, activity);
+                                if (isDump) {
+                                    mDumpName = file.getName();
+                                } else {
+                                    mKeysName = file.getName();
+                                }
+                            } else {
+                                // Empty name is not allowed.
+                                Toast.makeText(context, R.string.info_empty_file_name,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
             .setNegativeButton(R.string.action_cancel,
                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    mCloseAfterSuccessfulSave = false;
-                }
-            }).show();
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            mCloseAfterSuccessfulSave = false;
+                        }
+                    }).show();
         onUpdateColors(null);
     }
 
@@ -834,13 +869,13 @@ public class DumpEditor extends BasicActivity
         // Save dump to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
         String fileName;
-        if (mFileName == null) {
+        if (mDumpName == null) {
             // The dump has no name. Use date and time as name.
             Time today = new Time(Time.getCurrentTimezone());
             today.setToNow();
             fileName = today.format("%Y-%m-%d-%H-%M-%S");
         } else {
-            fileName = mFileName;
+            fileName = mDumpName;
         }
         // Save file to tmp directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
@@ -861,6 +896,50 @@ public class DumpEditor extends BasicActivity
                 + " (" + fileName + ")");
         startActivity(Intent.createChooser(sendIntent,
                 getText(R.string.dialog_share_title)));
+    }
+
+    /**
+     * Check if it is a valid dump ({@link #checkDumpAndUpdateLines()}),
+     * extract all keys from the current dump, create a file name suggestion
+     * and call {@link #saveFile(String[], String, boolean, int, int)}.
+     * @see #checkDumpAndUpdateLines()
+     * @see #saveFile(String[], String, boolean, int, int)
+     */
+    private void saveKeys() {
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
+
+        // Get all keys (skip Data and ACs).
+        HashSet<String> tmpKeys = new HashSet<String>();
+        for (int i = 0; i < mLines.length; i++) {
+           if (i+1 == mLines.length || mLines[i+1].startsWith("+")) {
+                // Sector trailer.
+               String keyA = mLines[i].substring(0,12).toUpperCase();
+               String keyB = mLines[i].substring(20).toUpperCase();
+               if (!keyA.equals(MCReader.NO_KEY)) {
+                   tmpKeys.add(keyA);
+               }
+               if (!keyB.equals(MCReader.NO_KEY)) {
+                   tmpKeys.add(keyB);
+               }
+            }
+        }
+        String[] keys = tmpKeys.toArray(new String[tmpKeys.size()]);
+
+        // Set the filename to the UID if there is none.
+        if (mKeysName == null) {
+            if (mDumpName == null) {
+                mKeysName = "UID_" + mUID;
+            } else {
+                mKeysName = new String(mDumpName);
+            }
+        }
+
+        saveFile(keys, mKeysName, false, R.string.dialog_save_keys_title,
+                R.string.dialog_save_keys);
     }
 
     /**

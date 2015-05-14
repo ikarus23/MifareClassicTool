@@ -44,11 +44,11 @@ public class MCReader {
     /**
      * Placeholder for not found keys.
      */
-    private static final String NO_KEY = "------------";
+    public static final String NO_KEY = "------------";
     /**
      * Placeholder for unreadable blocks.
      */
-    private static final String NO_DATA = "--------------------------------";
+    public static final String NO_DATA = "--------------------------------";
 
     private final MifareClassic mMFC;
     private SparseArray<byte[][]> mKeyMap = new SparseArray<byte[][]>();

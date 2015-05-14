@@ -40,6 +40,8 @@
         android:title="@string/action_compare_dump" />
     <item android:id="@+id/menuDumpEditorWriteDump"
         android:title="@string/action_write_dump" />
+    <item android:id="@+id/menuDumpEditorSaveKeys"
+          android:title="@string/action_save_keys" />
     <item android:id="@+id/menuDumpEditorOpenValueBlockTool"
         android:title="@string/action_show_vb_tool" />
     <item android:id="@+id/menuDumpEditorOpenAccessConditionTool"
