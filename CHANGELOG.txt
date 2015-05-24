@@ -1,5 +1,21 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.3:
+ * Fixed crash issue for HTC One (m7/m8) with Android 5.x.
+   Thanks to "bildin" and many others for helping to find
+   a workaround for this. The real issue is still there and
+   has to be fixed by HTC.
+ * It's now possible to create a key file from the currently
+   viewed dump using the Editor.
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
+ * Samsung's Galaxy A3 and Galaxy Alpha are not supported.
+ * Added scripts to convert .eml to MCT dump files (and vice versa).
+   (Python script, not part of the Android app.)
+ * Added scripts to convert .eml to .mfd files (and vice versa).
+   (Python script, not part of the Android app.)
+ * Some minor code improvements.
+
 Version 2.0.2:
  * It's now possible to save the mapping range as default.
  * Improved Mifare Classic support check. Thanks to Kirill Elagin.
