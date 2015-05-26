@@ -389,7 +389,7 @@ public class DumpEditor extends BasicActivity
             mDumpName = "UID_" + mUID + "_" + dateFormatted;
         }
 
-        saveFile(mLines, mDumpName, false, R.string.dialog_save_dump_title,
+        saveFile(mLines, mDumpName, true, R.string.dialog_save_dump_title,
                 R.string.dialog_save_dump);
     }
 
