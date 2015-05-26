@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.4:
+ * Bugfix: Don't save dumps as key files.
+   Thanks to Oliver H. for reporting this.
+
 Version 2.0.3:
  * Fixed crash issue for HTC One (m7/m8) with Android 5.x.
    Thanks to "bildin" and many others for helping to find
