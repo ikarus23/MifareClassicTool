@@ -83,7 +83,8 @@ Some important things are:
 * This app **will not work** on the following devices because
   their hardware (NFC-controller) does not support Mifare Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
-  This list may be incomplete.
+  This list may be incomplete. Have a look at
+  [this list](http://www.shopnfc.it/en/content/7-nfc-device-compatibility) too.
   * Foxcon InFocus M320
   * Google Nexus 4
   * Google Nexus 5
@@ -105,6 +106,8 @@ Some important things are:
   * Samsung Galaxy Note 4
   * Samsung Galaxy S4
   * Samsung Galaxy S5 (900P, Sprint)
+  * Samsung Galaxy S6
+  * Samsung Galaxy S6 Edge
   * Sony Xperia Z3 (SOL26)
   * Xiaomi MI 3
 * This app **has been known to work** on the following devices.
