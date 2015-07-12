@@ -474,6 +474,7 @@ public class Common extends Application {
         }
     }
 
+    // TODO: Update doc.
     /**
      * For Activities which want to treat new Intents as Intents with a new
      * Tag attached. If the given Intent has a Tag extra, the
@@ -499,6 +500,7 @@ public class Common extends Application {
         // Check if Intent has a NFC Tag.
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            tag = MCReader.patchTag(tag);
             setTag(tag);
 
             // Show Toast message with UID.

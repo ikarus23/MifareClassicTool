@@ -61,20 +61,24 @@ public class MCReader {
     private int mFirstSector = 0;
     private ArrayList<byte[]> mKeysWithOrder;
 
+    // TODO: Clean up, update doc.
     /**
      * Initialize a Mifare Classic reader for the given tag.
      * @param tag The tag to operate on.
      */
     private MCReader(Tag tag) {
-        MifareClassic tmpMFC;
+        MifareClassic tmpMFC = null;
         try {
             tmpMFC = MifareClassic.get(tag);
-        } catch (NullPointerException e) {
-            tmpMFC = MifareClassic.get(patchTag(tag));
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Could not create Mifare Classic reader for the"
+                    + "provided tag (even after patching it).");
+            throw e;
         }
         mMFC = tmpMFC;
     }
 
+    // TODO: Update doc.
     /**
      * Patch the broken Tag object of HTC One (m7/m8) devices with Android 5.x.
      * "It seems, the reason of this bug is TechExtras of NfcA is null.
@@ -82,19 +86,17 @@ public class MCReader {
      * This patch will fix this. For more information please refer to
      * https://github.com/ikarus23/MifareClassicTool/issues/52
      * This patch was provided by bildin (https://github.com/bildin).
-     * @param tag The broken tag.
+     * @param tag The possibly broken tag.
      * @return The fixed tag.
      */
-    private Tag patchTag(Tag tag)
-    {
+    public static Tag patchTag(Tag tag) {
         if (tag == null) {
             return null;
         }
 
-        String[] sTechList = tag.getTechList();
-        Parcel oldParcel;
-        Parcel newParcel;
-        oldParcel = Parcel.obtain();
+        String[] techList = tag.getTechList();
+
+        Parcel oldParcel = Parcel.obtain();
         tag.writeToParcel(oldParcel, 0);
         oldParcel.setDataPosition(0);
 
@@ -117,23 +119,49 @@ public class MCReader {
         }
         oldParcel.recycle();
 
-        int nfcaIdx=-1;
-        int mcIdx=-1;
-        for(int idx = 0; idx < sTechList.length; idx++) {
-            if(sTechList[idx].equals(NfcA.class.getName())) {
-                nfcaIdx = idx;
-            } else if(sTechList[idx].equals(MifareClassic.class.getName())) {
-                mcIdx = idx;
+        int nfcaIdx = -1;
+        int mcIdx = -1;
+        short sak = 0;
+        boolean isFirstSak = true;
+
+        for (int i = 0; i < techList.length; i++) {
+            if (techList[i].equals(NfcA.class.getName())) {
+                if (nfcaIdx == -1) {
+                    nfcaIdx = i;
+                }
+                if (oldTechExtras[i] != null
+                        && oldTechExtras[i].containsKey("sak")) {
+                    sak = (short) (sak
+                            | oldTechExtras[i].getShort("sak"));
+                    isFirstSak = (nfcaIdx == i) ? true : false;
+                }
+            } else if (techList[i].equals(MifareClassic.class.getName())) {
+                mcIdx = i;
             }
         }
 
-        if(nfcaIdx>=0&&mcIdx>=0&&oldTechExtras[mcIdx]==null) {
+        boolean modified = false;
+
+        // Patch the double NfcA issue (with different SAK) for
+        // Sony Z3 devices.
+        if (!isFirstSak) {
+            oldTechExtras[nfcaIdx].putShort("sak", sak);
+            modified = true;
+        }
+
+        // Patch the wrong index issue for HTC One devices.
+        if (nfcaIdx != -1 && mcIdx != -1 && oldTechExtras[mcIdx] == null) {
             oldTechExtras[mcIdx] = oldTechExtras[nfcaIdx];
-        } else {
+            modified = true;
+        }
+
+        if (!modified) {
+            // Old tag was not modivied. Return the old one.
             return tag;
         }
 
-        newParcel = Parcel.obtain();
+        // Old tag was modified. Create a new tag with the new data.
+        Parcel newParcel = Parcel.obtain();
         newParcel.writeInt(id.length);
         newParcel.writeByteArray(id);
         newParcel.writeInt(oldTechList.length);
@@ -141,7 +169,7 @@ public class MCReader {
         newParcel.writeTypedArray(oldTechExtras, 0);
         newParcel.writeInt(serviceHandle);
         newParcel.writeInt(isMock);
-        if(isMock == 0) {
+        if (isMock == 0) {
             newParcel.writeStrongBinder(tagService);
         }
         newParcel.setDataPosition(0);
