@@ -85,9 +85,11 @@ Some important things are:
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
   This list may be incomplete. Have a look at
   [this list](http://www.shopnfc.it/en/content/7-nfc-device-compatibility) too.
+  * Asus Zenfone 2
   * Foxcon InFocus M320
   * Google Nexus 4
   * Google Nexus 5
+  * Google Nexus 6
   * Google Nexus 7 (2013)
   * Google Nexus 10
   * Huawei G620S
