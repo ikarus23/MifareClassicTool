@@ -98,6 +98,7 @@ Some important things are:
   * LG G2 mini
   * LG G3 S
   * LG Optimus L7 II
+  * Motorola Moto X (2014, 2ed gen.)
   * Samsung Galaxy A3
   * Samsung Galaxy Ace 3
   * Samsung Galaxy Ace 4
