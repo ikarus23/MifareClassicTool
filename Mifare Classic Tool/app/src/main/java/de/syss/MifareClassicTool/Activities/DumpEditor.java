@@ -872,7 +872,7 @@ public class DumpEditor extends BasicActivity
         if (mDumpName == null) {
             // The dump has no name. Use date and time as name.
             GregorianCalendar calendar = new GregorianCalendar();
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.getDefault());
             fmt.setCalendar(calendar);
             fileName = fmt.format(calendar.getTime());
         } else {
