@@ -243,7 +243,8 @@ public class KeyEditor extends BasicActivity
         if (mFileName.equals("")) {
             // The key file has no name. Use date and time as name.
             GregorianCalendar calendar = new GregorianCalendar();
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
+                    Locale.getDefault());
             fmt.setCalendar(calendar);
             fileName = fmt.format(calendar.getTime());
         } else {

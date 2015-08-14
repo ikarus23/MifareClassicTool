@@ -383,8 +383,8 @@ public class DumpEditor extends BasicActivity
         // Set a filename (UID + Date + Time) if there is none.
         if (mDumpName == null) {
             GregorianCalendar calendar = new GregorianCalendar();
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.getDefault());
-            
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
+                    Locale.getDefault());
             fmt.setCalendar(calendar);
             String dateFormatted = fmt.format(calendar.getTime());
             mDumpName = "UID_" + mUID + "_" + dateFormatted;
@@ -873,7 +873,8 @@ public class DumpEditor extends BasicActivity
         if (mDumpName == null) {
             // The dump has no name. Use date and time as name.
             GregorianCalendar calendar = new GregorianCalendar();
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HHmmss", Locale.getDefault());
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
+                    Locale.getDefault());
             fmt.setCalendar(calendar);
             fileName = fmt.format(calendar.getTime());
         } else {
