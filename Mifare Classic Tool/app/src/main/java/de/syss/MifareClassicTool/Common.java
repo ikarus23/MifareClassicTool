@@ -474,14 +474,14 @@ public class Common extends Application {
         }
     }
 
-    // TODO: Update doc.
     /**
      * For Activities which want to treat new Intents as Intents with a new
-     * Tag attached. If the given Intent has a Tag extra, the
-     * {@link #mTag} and {@link #mUID} will be updated and a Toast
-     * message will be shown in the calling Context (Activity).
-     * This method will also check if the device/tag supports Mifare Classic
-     * (see return values and {@link #checkMifareClassicSupport(Tag, Context)}).
+     * Tag attached. If the given Intent has a Tag extra, it will be patched
+     * by {@link MCReader#patchTag(Tag)} and  {@link #mTag} as well as
+     * {@link #mUID} will be updated. A Toast message will be shown in the
+     * Context of the calling Activity. This method will also check if the
+     * device/tag supports Mifare Classic (see return values and
+     * {@link #checkMifareClassicSupport(Tag, Context)}).
      * @param intent The Intent which should be checked for a new Tag.
      * @param context The Context in which the Toast will be shown.
      * @return

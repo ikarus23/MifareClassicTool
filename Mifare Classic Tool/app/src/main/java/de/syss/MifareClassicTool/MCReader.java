@@ -61,7 +61,6 @@ public class MCReader {
     private int mFirstSector = 0;
     private ArrayList<byte[]> mKeysWithOrder;
 
-    // TODO: Clean up, update doc.
     /**
      * Initialize a Mifare Classic reader for the given tag.
      * @param tag The tag to operate on.
@@ -78,14 +77,28 @@ public class MCReader {
         mMFC = tmpMFC;
     }
 
-    // TODO: Update doc.
     /**
-     * Patch the broken Tag object of HTC One (m7/m8) devices with Android 5.x.
-     * "It seems, the reason of this bug is TechExtras of NfcA is null.
+     * Patch a possibly broken Tag object of HTC One (m7/m8) or Sony
+     * Xperia Z3 devices (with Android 5.x.)
+     *
+     * HTC One: "It seems, the reason of this bug is TechExtras of NfcA is null.
      * However, TechList contains MifareClassic." -- bildin.
-     * This patch will fix this. For more information please refer to
+     * This method will fix this. For more information please refer to
      * https://github.com/ikarus23/MifareClassicTool/issues/52
      * This patch was provided by bildin (https://github.com/bildin).
+     *
+     * Sony Xperia Z3 (+ emmulated Mifare Classic tag): The buggy tag has
+     * two NfcA in the TechList with different SAK values and a MifareClassic
+     * (with the Extra of the second NfcA). Both, the second NfcA and the
+     * MifareClassic technique, have a SAK of 0x20. According to NXP's
+     * guidelines on identifying Mifare tags (Page 11), this a Mifare Plus or
+     * Mifare DESFire tag. This method creates a new Extra with the SAK
+     * values of both NfcA occurrences ORed (as mentioned in NXP's
+     * Mifare type identification procedure guide) and replace the Extra of
+     * the first NfcA with the new one. For more information please refer to
+     * https://github.com/ikarus23/MifareClassicTool/issues/64
+     * This patch was provided by bildin (https://github.com/bildin).
+     *
      * @param tag The possibly broken tag.
      * @return The fixed tag.
      */
