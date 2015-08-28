@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23"
 
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
         minSdkVersion 10
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 35
         versionName '2.0.4'
     }
@@ -20,5 +20,5 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.+'
+    compile 'com.android.support:support-v4:23.+'
 }
