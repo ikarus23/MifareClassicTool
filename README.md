@@ -91,15 +91,19 @@ Some important things are:
   * Google Nexus 5
   * Google Nexus 6
   * Google Nexus 7 (2013)
+  * Google Nexus 9
   * Google Nexus 10
   * Huawei G620S
+  * Jiayu S3
   * LG F60
   * LG G2
   * LG G2 mini
   * LG G3 S
+  * LG G4
   * LG Optimus L7 II
   * Motorola Moto X (2014, 2ed gen.)
   * Samsung Galaxy A3
+  * Samsung Galaxy A5
   * Samsung Galaxy Ace 3
   * Samsung Galaxy Ace 4
   * Samsung Galaxy Alpha
@@ -113,6 +117,7 @@ Some important things are:
   * Samsung Galaxy S6 Edge
   * Sony Xperia Z3 (SOL26)
   * Xiaomi MI 3
+  * ZTE Nubia Z7 Max(NX505J)
 * This app **has been known to work** on the following devices.
   * Google Nexus 7 (2012)
   * HTC HTC One
