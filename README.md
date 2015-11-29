@@ -102,6 +102,7 @@ Some important things are:
   * LG G4
   * LG Optimus L7 II
   * Motorola Moto X (2014, 2ed gen.)
+  * OnePlus One
   * Samsung Galaxy A3
   * Samsung Galaxy A5
   * Samsung Galaxy Ace 3
@@ -111,10 +112,13 @@ Some important things are:
   * Samsung Galaxy Mega
   * Samsung Galaxy Note 3
   * Samsung Galaxy Note 4
+  * Samsung Galaxy Grand Prime
   * Samsung Galaxy S4
   * Samsung Galaxy S5 (900P, Sprint)
+  * Samsung Galaxy S5 mini
   * Samsung Galaxy S6
   * Samsung Galaxy S6 Edge
+  * Sony Xperia Z2 (some models)
   * Sony Xperia Z3 (SOL26)
   * Xiaomi MI 3
   * ZTE Nubia Z7 Max(NX505J)
