@@ -1,5 +1,17 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.5:
+ * Bugfix: Don't save key files with bad characters.
+   Thanks to Pascal for fixing this issue.
+ * Fixed SAK issue of Sony's Xperia Z3 in combination with emulated tags.
+   Thanks again to "bildin" and to "moscowneversleeping" for reporting,
+   testing and patching this issue.
+ * OnePlus One, Samsung Galaxy Grand Prime, Samsung Galaxy S5 mini,
+   Sony Xperia Z2 (some models), Google Nexus 9, Jiayu S3,
+   LG G4, Samsung Galaxy A5, ZTE Nubia Z7 Max (NX505J),
+   Samsung Galaxy S6, Samsung Galaxy S6 Edge, Asus Zenfone 2,
+   Google Nexus 6, Motorola's Moto X (2014, 2ed gen.) are not supported.
+
 Version 2.0.4:
  * Bugfix: Don't save dumps as key files.
    Thanks to Oliver H. for reporting this.
