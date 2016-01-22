@@ -181,43 +181,6 @@ public class MainMenu extends Activity {
             copyStdKeysFilesIfNecessary();
         }
 
-        // Create a dialog that send user to NFC settings if NFC is off.
-        // (Or let the user use the App in editor only mode / exit the App.)
-        mEnableNfc = new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_nfc_not_enabled_title)
-            .setMessage(R.string.dialog_nfc_not_enabled)
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .setPositiveButton(R.string.action_nfc,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                @SuppressLint("InlinedApi")
-                public void onClick(DialogInterface dialog, int which) {
-                    // Goto NFC Settings.
-                    if (Build.VERSION.SDK_INT >= 16) {
-                        startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
-                    } else {
-                        startActivity(new Intent(
-                                Settings.ACTION_WIRELESS_SETTINGS));
-                    }
-                }
-             })
-             .setNeutralButton(R.string.action_editor_only,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Only use Editor.
-                    Common.setUseAsEditorOnly(true);
-                }
-             })
-             .setNegativeButton(R.string.action_exit_app,
-                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // Exit the App.
-                    finish();
-                }
-             }).create();
-
         // Show first usage notice.
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         final Editor sharedEditor = sharedPref.edit();
@@ -429,6 +392,9 @@ public class MainMenu extends Activity {
             // NFC is disabled. Show dialog.
             // Use as editor only?
             if (!Common.useAsEditorOnly()) {
+                if (mEnableNfc == null) {
+                    createNfcEnableDialog();
+                }
                 mEnableNfc.show();
                 // Disable read/write tag options.
                 mReadTag.setEnabled(false);
@@ -449,12 +415,58 @@ public class MainMenu extends Activity {
             }
             Common.enableNfcForegroundDispatch(this);
             Common.setUseAsEditorOnly(false);
+            if (mEnableNfc == null) {
+                createNfcEnableDialog();
+            }
             mEnableNfc.hide();
             if (Common.hasMifareClassicSupport()) {
                 mReadTag.setEnabled(true);
                 mWriteTag.setEnabled(true);
             }
         }
+    }
+
+    /**
+     * Create a dialog that send user to NFC settings if NFC is off (and save
+     * the dialog in {@link #mEnableNfc}). Alternatively the user can choos to
+     * use the App in editor only mode or exit the App.
+     */
+    private void createNfcEnableDialog() {
+        mEnableNfc = new AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_nfc_not_enabled_title)
+            .setMessage(R.string.dialog_nfc_not_enabled)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(R.string.action_nfc,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    @SuppressLint("InlinedApi")
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Goto NFC Settings.
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            startActivity(new Intent(
+                                    Settings.ACTION_NFC_SETTINGS));
+                        } else {
+                            startActivity(new Intent(
+                                    Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    }
+                })
+            .setNeutralButton(R.string.action_editor_only,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Only use Editor.
+                        Common.setUseAsEditorOnly(true);
+                    }
+                })
+            .setNegativeButton(R.string.action_exit_app,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Exit the App.
+                        finish();
+                    }
+            }).create();
     }
 
     /**
