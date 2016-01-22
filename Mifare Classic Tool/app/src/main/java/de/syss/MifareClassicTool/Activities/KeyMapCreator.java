@@ -18,10 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,6 +25,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
@@ -37,19 +35,17 @@ import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.WindowManager;
+import android.widget.*;
+import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
-import de.syss.MifareClassicTool.Activities.Preferences.Preference;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Configure key map process and create key map.
@@ -138,6 +134,8 @@ public class KeyMapCreator extends BasicActivity {
     private int mFirstSector;
     private int mLastSector;
 
+    //init switch
+    private Switch mEnableReaderMode;
     /**
      * Set layout, set the mapping range
      * and initialize some member variables.
@@ -195,6 +193,32 @@ public class KeyMapCreator extends BasicActivity {
             ((Button) findViewById(R.id.buttonCreateKeyMap)).setText(
                     intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
+
+        //enable reader mode
+        mEnableReaderMode = (Switch)findViewById(R.id.switchEnableReaderMode);
+        mEnableReaderMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                if (b)
+                {
+                    Common.getNfcAdapter().enableReaderMode(KeyMapCreator.this, new NfcAdapter.ReaderCallback()
+                    {
+                        @Override
+                        public void onTagDiscovered(Tag tag)
+                        {
+                            Common.setTag(tag);
+                        }
+                    }, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_V | NfcAdapter.FLAG_READER_NFC_B | NfcAdapter.FLAG_READER_NFC_F, null);
+                }
+                else
+                {
+                    Common.getNfcAdapter().disableReaderMode(KeyMapCreator.this);
+                }
+            }
+        });
+
     }
 
     /**

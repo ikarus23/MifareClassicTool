@@ -186,6 +186,7 @@
     <string name="action_i_know_what_i_am_doing">I know what I\'m doing</string>
     <string name="action_open_key_file">Open Key File</string>
     <string name="action_select_all">Select All</string>
+    <string name="action_switch_enable_reader_mode">Enable Reader Mode</string>
     <string name="action_select_none">Select None</string>
     <string name="action_cancel_all">Cancel Writing</string>
     <string name="action_skip_blocks">Write as Much as Possible</string>

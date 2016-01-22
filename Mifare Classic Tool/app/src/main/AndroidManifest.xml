@@ -27,7 +27,7 @@
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
-
+    <uses-sdk android:minSdkVersion="19"/>
     <application
         android:name="de.syss.MifareClassicTool.Common"
         android:allowBackup="true"
