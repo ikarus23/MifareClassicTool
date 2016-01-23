@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.6:
+ * Bugfix: Fixed crash which occurred instantly after
+   starting (on some devices).
+
 Version 2.0.5:
  * Bugfix: Don't save key files with bad characters.
    Thanks to Pascal for fixing this issue.
