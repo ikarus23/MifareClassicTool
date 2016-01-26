@@ -18,12 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -41,6 +37,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -55,6 +53,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -74,11 +79,15 @@ public class MainMenu extends Activity {
 
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
+    public static final int REQUEST_WRITE_STORAGE_CODE = 112;
     private AlertDialog mEnableNfc;
     private Button mReadTag;
     private Button mWriteTag;
+    private Button btnKeyEditor;
+    private Button btnDumpEditor;
     private boolean mResume = true;
     private Intent mOldIntent = null;
+    private boolean hasWritePermission = false;
 
     /**
      * Check for NFC hardware, Mifare Classic support and for external storage.
@@ -101,9 +110,22 @@ public class MainMenu extends Activity {
         Button tools = (Button) findViewById(R.id.buttonMainTools);
         registerForContextMenu(tools);
 
-        // Find Read/Write buttons and bind them to member vars.
+        // Bind main layout buttons
         mReadTag = (Button) findViewById(R.id.buttonMainReadTag);
         mWriteTag = (Button) findViewById(R.id.buttonMainWriteTag);
+        btnKeyEditor = (Button) findViewById(R.id.buttonMainEditKeyDump);
+        btnDumpEditor = (Button) findViewById(R.id.buttonMainEditCardDump);
+
+        checkWritePermission();
+
+        if (!hasWritePermission) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE_CODE);
+            mReadTag.setEnabled(false);
+            btnKeyEditor.setEnabled(false);
+            btnDumpEditor.setEnabled(false);
+        } else {
+            initFolders();
+        }
 
         Common.setUseAsEditorOnly(false);
 
@@ -139,46 +161,6 @@ public class MainMenu extends Activity {
                  })
                  .show();
             mResume = false;
-        }
-
-        // Create the directories needed by MCT and clean out the tmp folder.
-        if (Common.isExternalStorageWritableErrorToast(this)) {
-            // Create keys directory.
-            File path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + "/" + Common.KEYS_DIR + "' directory.");
-                return;
-            }
-
-            // Create dumps directory.
-            path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + "/" + Common.DUMPS_DIR + "' directory.");
-                return;
-            }
-
-            // Create tmp directory.
-            path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.TMP_DIR);
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + Common.TMP_DIR + "' directory.");
-                return;
-            }
-            // Clean up tmp directory.
-            for (File file : path.listFiles()) {
-                file.delete();
-            }
-
-            // Create std. key file if there is none.
-            copyStdKeysFilesIfNecessary();
         }
 
         // Show first usage notice.
@@ -336,6 +318,76 @@ public class MainMenu extends Activity {
         }
     }
 
+    private void checkWritePermission() {
+        // check for write permissions. Ff permission isn't granted, ask the user for permission
+        hasWritePermission = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) ==
+                PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void initFolders() {
+        // Create the directories needed by MCT and clean out the tmp folder.
+        if (Common.isExternalStorageWritableErrorToast(this)) {
+            // Create keys directory.
+            File path = new File(Environment.getExternalStoragePublicDirectory(
+                    Common.HOME_DIR) + "/" + Common.KEYS_DIR);
+
+            if (!path.exists() && !path.mkdirs()) {
+                // Could not create directory.
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                        + "/" + Common.KEYS_DIR + "' directory.");
+                return;
+            }
+
+            // Create dumps directory.
+            path = new File(Environment.getExternalStoragePublicDirectory(
+                    Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
+            if (!path.exists() && !path.mkdirs()) {
+                // Could not create directory.
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                        + "/" + Common.DUMPS_DIR + "' directory.");
+                return;
+            }
+
+            // Create tmp directory.
+            path = new File(Environment.getExternalStoragePublicDirectory(
+                    Common.HOME_DIR) + "/" + Common.TMP_DIR);
+            if (!path.exists() && !path.mkdirs()) {
+                // Could not create directory.
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                        + Common.TMP_DIR + "' directory.");
+                return;
+            }
+            // Clean up tmp directory.
+            for (File file : path.listFiles()) {
+                file.delete();
+            }
+
+            // Create std. key file if there is none.
+            copyStdKeysFilesIfNecessary();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_WRITE_STORAGE_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    initFolders();
+
+                    mReadTag.setEnabled(true);
+                    btnKeyEditor.setEnabled(true);
+                    btnDumpEditor.setEnabled(true);
+
+                    hasWritePermission = true;
+                } else {
+                    Toast.makeText(MainMenu.this, getResources().getString(R.string.info_write_permission), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
     /**
      * Add a menu with "preferences", "about", etc. to the Activity.
      */
@@ -377,6 +429,8 @@ public class MainMenu extends Activity {
         if (mResume) {
             checkNfc();
         }
+
+        checkWritePermission();
     }
 
     /**
@@ -420,7 +474,10 @@ public class MainMenu extends Activity {
             }
             mEnableNfc.hide();
             if (Common.hasMifareClassicSupport()) {
-                mReadTag.setEnabled(true);
+                if (hasWritePermission) {
+                    mReadTag.setEnabled(true);
+                }
+
                 mWriteTag.setEnabled(true);
             }
         }
@@ -670,6 +727,11 @@ public class MainMenu extends Activity {
             startActivity(intent);
             return true;
         case R.id.menuMainDiffTool:
+            if (!hasWritePermission) {
+                Toast.makeText(MainMenu.this, "No write permission.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;
