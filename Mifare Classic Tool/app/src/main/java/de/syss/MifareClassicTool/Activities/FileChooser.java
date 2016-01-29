@@ -262,10 +262,6 @@ public class FileChooser extends BasicActivity {
         RadioButton selected = (RadioButton) findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
 
-        if (selected == null) {
-
-        }
-
         Intent intent = new Intent();
         File file = new File(mDir.getPath(), selected.getText().toString());
         intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
