@@ -18,9 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -38,6 +35,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.Arrays;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -260,6 +261,11 @@ public class FileChooser extends BasicActivity {
     public void onFileChosen(View view) {
         RadioButton selected = (RadioButton) findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
+
+        if (selected == null) {
+
+        }
+
         Intent intent = new Intent();
         File file = new File(mDir.getPath(), selected.getText().toString());
         intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
@@ -276,10 +282,12 @@ public class FileChooser extends BasicActivity {
      */
     private boolean updateFileIndex(File path) {
         File[] files = path.listFiles();
-        Arrays.sort(files);
-        mGroupOfFiles.removeAllViews();
+
         // Refresh file list.
-        if (files.length > 0) {
+        if (files != null && files.length > 0) {
+            Arrays.sort(files);
+            mGroupOfFiles.removeAllViews();
+
             for(File f : files) {
                 RadioButton r = new RadioButton(this);
                 r.setText(f.getName());

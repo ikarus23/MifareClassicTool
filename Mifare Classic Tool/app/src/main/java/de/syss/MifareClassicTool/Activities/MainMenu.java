@@ -38,7 +38,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -62,6 +61,7 @@ import java.io.OutputStream;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
+import de.syss.MifareClassicTool.helpers.PermissionChecker;
 
 /**
  * Main App entry point showing the main menu.
@@ -87,7 +87,6 @@ public class MainMenu extends Activity {
     private Button btnDumpEditor;
     private boolean mResume = true;
     private Intent mOldIntent = null;
-    private boolean hasWritePermission = false;
 
     /**
      * Check for NFC hardware, Mifare Classic support and for external storage.
@@ -116,9 +115,7 @@ public class MainMenu extends Activity {
         btnKeyEditor = (Button) findViewById(R.id.buttonMainEditKeyDump);
         btnDumpEditor = (Button) findViewById(R.id.buttonMainEditCardDump);
 
-        checkWritePermission();
-
-        if (!hasWritePermission) {
+        if (!PermissionChecker.hasWritePermission(this)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE_CODE);
             mReadTag.setEnabled(false);
             btnKeyEditor.setEnabled(false);
@@ -318,12 +315,6 @@ public class MainMenu extends Activity {
         }
     }
 
-    private void checkWritePermission() {
-        // check for write permissions. Ff permission isn't granted, ask the user for permission
-        hasWritePermission = (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) ==
-                PackageManager.PERMISSION_GRANTED;
-    }
-
     private void initFolders() {
         // Create the directories needed by MCT and clean out the tmp folder.
         if (Common.isExternalStorageWritableErrorToast(this)) {
@@ -379,8 +370,6 @@ public class MainMenu extends Activity {
                     mReadTag.setEnabled(true);
                     btnKeyEditor.setEnabled(true);
                     btnDumpEditor.setEnabled(true);
-
-                    hasWritePermission = true;
                 } else {
                     Toast.makeText(MainMenu.this, getResources().getString(R.string.info_write_permission), Toast.LENGTH_SHORT).show();
                 }
@@ -430,7 +419,11 @@ public class MainMenu extends Activity {
             checkNfc();
         }
 
-        checkWritePermission();
+        if (PermissionChecker.hasWritePermission(this)) {
+            mReadTag.setEnabled(true);
+            btnKeyEditor.setEnabled(true);
+            btnDumpEditor.setEnabled(true);
+        }
     }
 
     /**
@@ -474,7 +467,7 @@ public class MainMenu extends Activity {
             }
             mEnableNfc.hide();
             if (Common.hasMifareClassicSupport()) {
-                if (hasWritePermission) {
+                if (PermissionChecker.hasWritePermission(this)) {
                     mReadTag.setEnabled(true);
                 }
 
@@ -727,8 +720,8 @@ public class MainMenu extends Activity {
             startActivity(intent);
             return true;
         case R.id.menuMainDiffTool:
-            if (!hasWritePermission) {
-                Toast.makeText(MainMenu.this, "No write permission.", Toast.LENGTH_SHORT).show();
+            if (!PermissionChecker.hasWritePermission(this)) {
+                Toast.makeText(MainMenu.this, getResources().getString(R.string.info_write_permission), Toast.LENGTH_SHORT).show();
                 return false;
             }
 

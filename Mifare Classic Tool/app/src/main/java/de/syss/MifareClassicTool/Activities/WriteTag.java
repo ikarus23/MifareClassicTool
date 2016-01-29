@@ -18,16 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -40,8 +30,8 @@ import android.os.Handler;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -53,6 +43,17 @@ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
@@ -449,7 +450,7 @@ public class WriteTag extends BasicActivity {
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + "/" + Common.KEYS_DIR);
+                        + "/" + Common.KEYS_DIR);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, sector);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, sector);
