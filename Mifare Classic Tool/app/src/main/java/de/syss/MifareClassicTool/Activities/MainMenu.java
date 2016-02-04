@@ -61,7 +61,6 @@ import java.io.OutputStream;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
-import de.syss.MifareClassicTool.helpers.PermissionChecker;
 
 /**
  * Main App entry point showing the main menu.
@@ -79,7 +78,7 @@ public class MainMenu extends Activity {
 
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
-    public static final int REQUEST_WRITE_STORAGE_CODE = 112;
+    private static final int REQUEST_WRITE_STORAGE_CODE = 1;
     private AlertDialog mEnableNfc;
     private Button mReadTag;
     private Button mWriteTag;
@@ -109,54 +108,30 @@ public class MainMenu extends Activity {
         Button tools = (Button) findViewById(R.id.buttonMainTools);
         registerForContextMenu(tools);
 
-        // Bind main layout buttons
+        // Bind main layout buttons.
         mReadTag = (Button) findViewById(R.id.buttonMainReadTag);
         mWriteTag = (Button) findViewById(R.id.buttonMainWriteTag);
         btnKeyEditor = (Button) findViewById(R.id.buttonMainEditKeyDump);
         btnDumpEditor = (Button) findViewById(R.id.buttonMainEditCardDump);
 
-        if (!PermissionChecker.hasWritePermission(this)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE_CODE);
-            mReadTag.setEnabled(false);
-            btnKeyEditor.setEnabled(false);
-            btnDumpEditor.setEnabled(false);
-        } else {
+        // Check if the user granted the app write permissions.
+        if (Common.hasWritePermissionToExternalStorage(this)) {
             initFolders();
+        } else {
+            enableMenuButtons(false);
+            // Request the permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE_CODE);
         }
-
-        Common.setUseAsEditorOnly(false);
 
         // Check if there is an NFC hardware component.
         Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
         if (Common.getNfcAdapter() == null) {
-            new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_no_nfc_title)
-                .setMessage(R.string.dialog_no_nfc)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.action_exit_app,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                 })
-                 .setNeutralButton(R.string.action_editor_only,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Only use Editor.
-                        Common.setUseAsEditorOnly(true);
-                        mReadTag.setEnabled(false);
-                        mWriteTag.setEnabled(false);
-                    }
-                 })
-                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                 })
-                 .show();
+            createNfcEnableDialog();
+            mEnableNfc.show();
+            mReadTag.setEnabled(false);
+            mWriteTag.setEnabled(false);
             mResume = false;
         }
 
@@ -315,8 +290,10 @@ public class MainMenu extends Activity {
         }
     }
 
+    /**
+     * Create the directories needed by MCT and clean out the tmp folder.
+     */
     private void initFolders() {
-        // Create the directories needed by MCT and clean out the tmp folder.
         if (Common.isExternalStorageWritableErrorToast(this)) {
             // Create keys directory.
             File path = new File(Environment.getExternalStoragePublicDirectory(
@@ -358,25 +335,6 @@ public class MainMenu extends Activity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST_WRITE_STORAGE_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    initFolders();
-
-                    mReadTag.setEnabled(true);
-                    btnKeyEditor.setEnabled(true);
-                    btnDumpEditor.setEnabled(true);
-                } else {
-                    Toast.makeText(MainMenu.this, getResources().getString(R.string.info_write_permission), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
     /**
      * Add a menu with "preferences", "about", etc. to the Activity.
      */
@@ -393,7 +351,7 @@ public class MainMenu extends Activity {
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenuInfo menuInfo) {
+                ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         menu.setHeaderTitle(R.string.dialog_tools_menu_title);
@@ -402,6 +360,9 @@ public class MainMenu extends Activity {
         // Enable/Disable tag info tool depending on NFC availability.
         menu.findItem(R.id.menuMainTagInfo).setEnabled(
                 !Common.useAsEditorOnly());
+        // Enable/Disable diff tool depending on write permissions.
+        menu.findItem(R.id.menuMainDiffTool).setEnabled(
+                Common.hasWritePermissionToExternalStorage(this));
     }
 
     /**
@@ -415,14 +376,14 @@ public class MainMenu extends Activity {
     public void onResume() {
         super.onResume();
 
-        if (mResume) {
-            checkNfc();
+        if (Common.hasWritePermissionToExternalStorage(this)) {
+            enableMenuButtons(true);
+        } else {
+            enableMenuButtons(false);
         }
 
-        if (PermissionChecker.hasWritePermission(this)) {
-            mReadTag.setEnabled(true);
-            btnKeyEditor.setEnabled(true);
-            btnDumpEditor.setEnabled(true);
+        if (mResume) {
+            checkNfc();
         }
     }
 
@@ -436,17 +397,18 @@ public class MainMenu extends Activity {
         // Check if the NFC hardware is enabled.
         if (Common.getNfcAdapter() != null
                 && !Common.getNfcAdapter().isEnabled()) {
-            // NFC is disabled. Show dialog.
+            // NFC is disabled.
             // Use as editor only?
             if (!Common.useAsEditorOnly()) {
+                //  Show dialog.
                 if (mEnableNfc == null) {
                     createNfcEnableDialog();
                 }
                 mEnableNfc.show();
-                // Disable read/write tag options.
-                mReadTag.setEnabled(false);
-                mWriteTag.setEnabled(false);
             }
+            // Disable read/write tag options.
+            mReadTag.setEnabled(false);
+            mWriteTag.setEnabled(false);
         } else {
             // NFC is enabled. Hide dialog and enable NFC
             // foreground dispatch.
@@ -466,11 +428,9 @@ public class MainMenu extends Activity {
                 createNfcEnableDialog();
             }
             mEnableNfc.hide();
-            if (Common.hasMifareClassicSupport()) {
-                if (PermissionChecker.hasWritePermission(this)) {
-                    mReadTag.setEnabled(true);
-                }
-
+            if (Common.hasMifareClassicSupport() &&
+                    Common.hasWritePermissionToExternalStorage(this)) {
+                mReadTag.setEnabled(true);
                 mWriteTag.setEnabled(true);
             }
         }
@@ -544,6 +504,43 @@ public class MainMenu extends Activity {
             Intent i = new Intent(this, TagInfoTool.class);
             startActivity(i);
         }
+    }
+
+    /**
+     * Handle answered permission requests. Until now, the app only asks for
+     * the permission to access the external storage.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+            String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode,
+                permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_WRITE_STORAGE_CODE:
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    initFolders();
+                    enableMenuButtons(true);
+                } else {
+                    Toast.makeText(this, R.string.info_write_permission,
+                            Toast.LENGTH_LONG).show();
+                }
+                break;
+
+        }
+    }
+
+    /**
+     * Enable or disable all menu buttons which provide functionality that
+     * uses the external storage.
+     * @param enable True to enable the buttons. False to disable them.
+     */
+    private void enableMenuButtons(boolean enable) {
+        mWriteTag.setEnabled(enable);
+        mReadTag.setEnabled(enable);
+        btnKeyEditor.setEnabled(enable);
+        btnDumpEditor.setEnabled(enable);
     }
 
     /**
@@ -720,11 +717,6 @@ public class MainMenu extends Activity {
             startActivity(intent);
             return true;
         case R.id.menuMainDiffTool:
-            if (!PermissionChecker.hasWritePermission(this)) {
-                Toast.makeText(MainMenu.this, getResources().getString(R.string.info_write_permission), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;

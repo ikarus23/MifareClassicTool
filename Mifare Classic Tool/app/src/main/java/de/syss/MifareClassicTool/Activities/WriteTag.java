@@ -450,7 +450,7 @@ public class WriteTag extends BasicActivity {
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                        + "/" + Common.KEYS_DIR);
+                + "/" + Common.KEYS_DIR);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, sector);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, sector);

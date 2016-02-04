@@ -31,6 +31,7 @@ import java.util.Arrays;
 
 import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,6 +41,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -48,6 +50,7 @@ import android.nfc.tech.NfcA;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -198,6 +201,17 @@ public class Common extends Application {
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
         }
+    }
+
+    /**
+     * Check if the user granted read/write permissions to the external storage.
+     * @param context The Context to check the permissions for.
+     * @return True if granted the permissions. False otherwise.
+     */
+    public static boolean hasWritePermissionToExternalStorage(Context context) {
+        return ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED;
     }
 
     /**
