@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.0.7:
+ * Bugfix: Request permissions on Android 6.x devices to read/write
+   the external storage. Thanks to Mislav Jurinić.
+
 Version 2.0.6:
  * Bugfix: Fixed crash which occurred instantly after
    starting (on some devices).
