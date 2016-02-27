@@ -80,12 +80,6 @@
         android:onClick="onSelectAll"
         android:text="@string/action_select_all" />
 
-    <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_switch_enable_reader_mode"
-            android:id="@+id/switchEnableReaderMode" android:layout_below="@+id/textViewCreateKeyMapChooseKeyFile"
-            android:layout_toEndOf="@+id/textViewCreateKeyMapChooseKeyFile"/>
     <Button
         android:id="@+id/buttonCreateKeyMapSelectNone"
         style="?android:attr/buttonStyleSmall"
@@ -97,6 +91,12 @@
         android:onClick="onSelectNone"
         android:text="@string/action_select_none" />
 
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_switch_enable_reader_mode"
+            android:id="@+id/switchEnableReaderMode" android:layout_below="@+id/textViewCreateKeyMapChooseKeyFile"
+            android:layout_toEndOf="@+id/textViewCreateKeyMapChooseKeyFile"/>
     <ScrollView
         android:id="@+id/scrollViewCreateKeyMap"
         android:layout_width="match_parent"
