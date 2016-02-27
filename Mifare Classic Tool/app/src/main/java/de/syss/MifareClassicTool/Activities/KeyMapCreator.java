@@ -63,9 +63,11 @@ import java.util.Arrays;
  * displayed to the user via Toast.</li>
  * <li>4 - Directory from {@link #EXTRA_KEYS_DIR} is null.</li>
  * </ul>
+ *
  * @author Gerhard Klostermeier
  */
-public class KeyMapCreator extends BasicActivity {
+public class KeyMapCreator extends BasicActivity
+{
 
     // Input parameters.
     /**
@@ -118,7 +120,7 @@ public class KeyMapCreator extends BasicActivity {
     public static final int MAX_BLOCK_COUNT_PER_SECTOR = 16;
 
     private static final String LOG_TAG =
-            KeyMapCreator.class.getSimpleName();
+            KeyMapCreator.class.getSimpleName ();
 
     private static final int DEFAULT_SECTOR_RANGE_FROM = 0;
     private static final int DEFAULT_SECTOR_RANGE_TO = 15;
@@ -126,7 +128,7 @@ public class KeyMapCreator extends BasicActivity {
     private Button mCreateKeyMap;
     private LinearLayout mKeyFilesGroup;
     private TextView mSectorRange;
-    private final Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler ();
     private int mProgressStatus;
     private ProgressBar mProgressBar;
     private boolean mIsCreatingKeyMap;
@@ -135,100 +137,131 @@ public class KeyMapCreator extends BasicActivity {
     private int mLastSector;
 
     //init switch
-    private Switch mEnableReaderMode;
+    private CheckBox mEnableReaderMode;
+
     /**
      * Set layout, set the mapping range
      * and initialize some member variables.
+     *
      * @see #EXTRA_SECTOR_CHOOSER
      * @see #EXTRA_SECTOR_CHOOSER_FROM
      * @see #EXTRA_SECTOR_CHOOSER_TO
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_key_map);
-        mCreateKeyMap = (Button) findViewById(R.id.buttonCreateKeyMap);
-        mSectorRange = (TextView) findViewById(R.id.textViewCreateKeyMapFromTo);
-        mKeyFilesGroup = (LinearLayout) findViewById(
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate (savedInstanceState);
+        setContentView (R.layout.activity_create_key_map);
+        mCreateKeyMap = (Button) findViewById (R.id.buttonCreateKeyMap);
+        mSectorRange = (TextView) findViewById (R.id.textViewCreateKeyMapFromTo);
+        mKeyFilesGroup = (LinearLayout) findViewById (
                 R.id.linearLayoutCreateKeyMapKeyFiles);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBarCreateKeyMap);
+        mProgressBar = (ProgressBar) findViewById (R.id.progressBarCreateKeyMap);
 
         // Init. sector range.
-        Intent intent = getIntent();
-        if (intent.hasExtra(EXTRA_SECTOR_CHOOSER)) {
-            Button changeSectorRange = (Button) findViewById(
+        Intent intent = getIntent ();
+        if (intent.hasExtra (EXTRA_SECTOR_CHOOSER))
+        {
+            Button changeSectorRange = (Button) findViewById (
                     R.id.buttonCreateKeyMapChangeRange);
-            boolean value = intent.getBooleanExtra(EXTRA_SECTOR_CHOOSER, true);
-            changeSectorRange.setEnabled(value);
+            boolean value = intent.getBooleanExtra (EXTRA_SECTOR_CHOOSER, true);
+            changeSectorRange.setEnabled (value);
         }
         boolean custom = false;
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String from = sharedPref.getString("default_mapping_range_from", "");
-        String to = sharedPref.getString("default_mapping_range_to", "");
+        SharedPreferences sharedPref = getPreferences (Context.MODE_PRIVATE);
+        String from = sharedPref.getString ("default_mapping_range_from", "");
+        String to = sharedPref.getString ("default_mapping_range_to", "");
         // Are there default values?
-        if (!from.equals("")) {
+        if (!from.equals (""))
+        {
             custom = true;
         }
-        if (!to.equals("")) {
+        if (!to.equals (""))
+        {
             custom = true;
         }
         // Are there given values?
-        if (intent.hasExtra(EXTRA_SECTOR_CHOOSER_FROM)) {
-            from = "" + intent.getIntExtra(EXTRA_SECTOR_CHOOSER_FROM, 0);
+        if (intent.hasExtra (EXTRA_SECTOR_CHOOSER_FROM))
+        {
+            from = "" + intent.getIntExtra (EXTRA_SECTOR_CHOOSER_FROM, 0);
             custom = true;
         }
-        if (intent.hasExtra(EXTRA_SECTOR_CHOOSER_TO)) {
-            to = "" + intent.getIntExtra(EXTRA_SECTOR_CHOOSER_TO, 15);
+        if (intent.hasExtra (EXTRA_SECTOR_CHOOSER_TO))
+        {
+            to = "" + intent.getIntExtra (EXTRA_SECTOR_CHOOSER_TO, 15);
             custom = true;
         }
-        if (custom) {
-            mSectorRange.setText(from + " - " + to);
+        if (custom)
+        {
+            mSectorRange.setText (from + " - " + to);
         }
 
         // Init. title and button text.
-        if (intent.hasExtra(EXTRA_TITLE)) {
-            setTitle(intent.getStringExtra(EXTRA_TITLE));
+        if (intent.hasExtra (EXTRA_TITLE))
+        {
+            setTitle (intent.getStringExtra (EXTRA_TITLE));
         }
-        if (intent.hasExtra(EXTRA_BUTTON_TEXT)) {
-            ((Button) findViewById(R.id.buttonCreateKeyMap)).setText(
-                    intent.getStringExtra(EXTRA_BUTTON_TEXT));
+        if (intent.hasExtra (EXTRA_BUTTON_TEXT))
+        {
+            ((Button) findViewById (R.id.buttonCreateKeyMap)).setText (
+                    intent.getStringExtra (EXTRA_BUTTON_TEXT));
         }
 
+        //set SharedPreferences for reader mode check box.
+        SharedPreferences spEnableReaderMode = getPreferences (Context.MODE_PRIVATE);
+        SharedPreferences.Editor speEnableReaderMode = spEnableReaderMode.edit ();
+        final String ENABLE_READER_MODE = "EnableReaderMode";
+
         //enable reader mode
-        mEnableReaderMode = (Switch)findViewById(R.id.switchEnableReaderMode);
-        mEnableReaderMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        boolean isEnableReaderMode = spEnableReaderMode.getBoolean (ENABLE_READER_MODE,false);
+        mEnableReaderMode = (CheckBox) findViewById (R.id.switchEnableReaderMode);
+
+        mEnableReaderMode.setChecked (isEnableReaderMode);
+        KeyMapCreator.this.enableNFCReaderMode (isEnableReaderMode);
+        mEnableReaderMode.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener ()
         {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
             {
-                if (b)
-                {
-                    Common.getNfcAdapter().enableReaderMode(KeyMapCreator.this, new NfcAdapter.ReaderCallback()
-                    {
-                        @Override
-                        public void onTagDiscovered(Tag tag)
-                        {
-                            Common.setTag(tag);
-                        }
-                    }, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_V | NfcAdapter.FLAG_READER_NFC_B | NfcAdapter.FLAG_READER_NFC_F, null);
-                }
-                else
-                {
-                    Common.getNfcAdapter().disableReaderMode(KeyMapCreator.this);
-                }
+                speEnableReaderMode.putBoolean (ENABLE_READER_MODE, isChecked);
+                speEnableReaderMode.commit ();
+                KeyMapCreator.this.enableNFCReaderMode (isChecked);
             }
         });
 
+
     }
 
+    private void enableNFCReaderMode(boolean isEnableReaderMode)
+    {
+        if (isEnableReaderMode)
+        {
+            Common.getNfcAdapter ().enableReaderMode (KeyMapCreator.this, new NfcAdapter.ReaderCallback ()
+                                                      {
+                                                          @Override
+                                                          public void onTagDiscovered(Tag tag)
+                                                          {
+                                                              Common.setTag (tag);
+                                                          }
+                                                      },
+                                                      NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_V | NfcAdapter.FLAG_READER_NFC_B | NfcAdapter.FLAG_READER_NFC_F,
+                                                      null);
+        }
+        else
+        {
+            Common.getNfcAdapter ().disableReaderMode (KeyMapCreator.this);
+        }
+    }
     /**
      * Cancel the mapping process and disable NFC foreground dispatch system.
      * This method is not called, if screen orientation changes.
+     *
      * @see Common#disableNfcForegroundDispatch(Activity)
      */
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onPause()
+    {
+        super.onPause ();
         mIsCreatingKeyMap = false;
     }
 
@@ -237,96 +270,116 @@ public class KeyMapCreator extends BasicActivity {
      * ones if {@link Preference#SaveLastUsedKeyFiles} is enabled.
      */
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onStart()
+    {
+        super.onStart ();
 
-        if (mKeyDirPath == null) {
+        if (mKeyDirPath == null)
+        {
             // Is there a key directory in the Intent?
-            if (!getIntent().hasExtra(EXTRA_KEYS_DIR)) {
-                setResult(2);
-                finish();
+            if (!getIntent ().hasExtra (EXTRA_KEYS_DIR))
+            {
+                setResult (2);
+                finish ();
                 return;
             }
-            String path = getIntent().getStringExtra(EXTRA_KEYS_DIR);
+            String path = getIntent ().getStringExtra (EXTRA_KEYS_DIR);
             // Is path null?
-            if (path == null) {
-                setResult(4);
-                finish();
+            if (path == null)
+            {
+                setResult (4);
+                finish ();
                 return;
             }
-            mKeyDirPath = new File(path);
+            mKeyDirPath = new File (path);
         }
 
         // Is external storage writable?
-        if (!Common.isExternalStorageWritableErrorToast(this)) {
-            setResult(3);
-            finish();
+        if (!Common.isExternalStorageWritableErrorToast (this))
+        {
+            setResult (3);
+            finish ();
             return;
         }
         // Does the directory exist?
-        if (!mKeyDirPath.exists()) {
-            setResult(1);
-            finish();
+        if (!mKeyDirPath.exists ())
+        {
+            setResult (1);
+            finish ();
             return;
         }
 
         // List key files and select last used (if corresponding
         // setting is active).
-        boolean selectLastUsedKeyFiles = Common.getPreferences().getBoolean(
-                Preference.SaveLastUsedKeyFiles.toString(), true);
+        boolean selectLastUsedKeyFiles = Common.getPreferences ().getBoolean (
+                Preference.SaveLastUsedKeyFiles.toString (), true);
         ArrayList<String> selectedFiles = null;
-        if (selectLastUsedKeyFiles) {
-            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        if (selectLastUsedKeyFiles)
+        {
+            SharedPreferences sharedPref = getPreferences (Context.MODE_PRIVATE);
             // All previously selected key files are stored in one string
             // separated by "/".
-            String selectedFilesChain = sharedPref.getString(
+            String selectedFilesChain = sharedPref.getString (
                     "last_used_key_files", null);
-            if (selectedFilesChain != null) {
-                selectedFiles = new ArrayList<String>(
-                        Arrays.asList(selectedFilesChain.split("/")));
+            if (selectedFilesChain != null)
+            {
+                selectedFiles = new ArrayList<String> (
+                        Arrays.asList (selectedFilesChain.split ("/")));
             }
         }
-        File[] keyFiles = mKeyDirPath.listFiles();
-        Arrays.sort(keyFiles);
-        mKeyFilesGroup.removeAllViews();
-        for(File f : keyFiles) {
-            CheckBox c = new CheckBox(this);
-            c.setText(f.getName());
+        File[] keyFiles = mKeyDirPath.listFiles ();
+        Arrays.sort (keyFiles);
+        mKeyFilesGroup.removeAllViews ();
+        for (File f : keyFiles)
+        {
+            CheckBox c = new CheckBox (this);
+            c.setText (f.getName ());
             if (selectLastUsedKeyFiles && selectedFiles != null
-                    && selectedFiles.contains(f.getName())) {
+                && selectedFiles.contains (f.getName ()))
+            {
                 // Select file.
-                c.setChecked(true);
+                c.setChecked (true);
             }
-            mKeyFilesGroup.addView(c);
+            mKeyFilesGroup.addView (c);
         }
     }
 
     /**
      * Select all of the key files.
-     * @param view The View object that triggered the method
-     * (in this case the select all button).
+     *
+     * @param view
+     *         The View object that triggered the method
+     *         (in this case the select all button).
      */
-    public void onSelectAll(View view) {
-        selectKeyFiles(true);
+    public void onSelectAll(View view)
+    {
+        selectKeyFiles (true);
     }
 
     /**
      * Select none of the key files.
-     * @param view The View object that triggered the method
-     * (in this case the select none button).
+     *
+     * @param view
+     *         The View object that triggered the method
+     *         (in this case the select none button).
      */
-    public void onSelectNone(View view) {
-        selectKeyFiles(false);
+    public void onSelectNone(View view)
+    {
+        selectKeyFiles (false);
     }
 
     /**
      * Select or deselect all key files.
-     * @param allOrNone True for selecting all, False for none.
+     *
+     * @param allOrNone
+     *         True for selecting all, False for none.
      */
-    private void selectKeyFiles(boolean allOrNone) {
-        for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
-            CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt(i);
-            c.setChecked(allOrNone);
+    private void selectKeyFiles(boolean allOrNone)
+    {
+        for (int i = 0; i < mKeyFilesGroup.getChildCount (); i++)
+        {
+            CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt (i);
+            c.setChecked (allOrNone);
         }
     }
 
@@ -334,15 +387,21 @@ public class KeyMapCreator extends BasicActivity {
      * Inform the worker thread from {@link #createKeyMap(MCReader, Context)}
      * to stop creating the key map. If the thread is already
      * informed or does not exists this button will finish the activity.
-     * @param view The View object that triggered the method
-     * (in this case the cancel button).
+     *
+     * @param view
+     *         The View object that triggered the method
+     *         (in this case the cancel button).
      * @see #createKeyMap(MCReader, Context)
      */
-    public void onCancelCreateKeyMap(View view) {
-        if (mIsCreatingKeyMap) {
+    public void onCancelCreateKeyMap(View view)
+    {
+        if (mIsCreatingKeyMap)
+        {
             mIsCreatingKeyMap = false;
-        } else {
-            finish();
+        }
+        else
+        {
+            finish ();
         }
     }
 
@@ -354,101 +413,120 @@ public class KeyMapCreator extends BasicActivity {
      * {@link #keyMapCreated(MCReader)}).
      * If {@link Preference#SaveLastUsedKeyFiles} is active, this will also
      * save the selected key files.
-     * @param view The View object that triggered the method
-     * (in this case the map keys to sectors button).
+     *
+     * @param view
+     *         The View object that triggered the method
+     *         (in this case the map keys to sectors button).
      * @see #createKeyMap(MCReader, Context)
      * @see #keyMapCreated(MCReader)
      */
-    public void onCreateKeyMap(View view) {
-        boolean saveLastUsedKeyFiles = Common.getPreferences().getBoolean(
-                Preference.SaveLastUsedKeyFiles.toString(), true);
+    public void onCreateKeyMap(View view)
+    {
+        boolean saveLastUsedKeyFiles = Common.getPreferences ().getBoolean (
+                Preference.SaveLastUsedKeyFiles.toString (), true);
         String lastSelectedKeyFiles = "";
         // Check for checked check boxes.
-        ArrayList<String> fileNames = new ArrayList<String>();
-        for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
-            CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt(i);
-            if (c.isChecked()) {
-                fileNames.add(c.getText().toString());
+        ArrayList<String> fileNames = new ArrayList<String> ();
+        for (int i = 0; i < mKeyFilesGroup.getChildCount (); i++)
+        {
+            CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt (i);
+            if (c.isChecked ())
+            {
+                fileNames.add (c.getText ().toString ());
             }
         }
-        if (fileNames.size() > 0) {
+        if (fileNames.size () > 0)
+        {
             // Check if key files still exists.
-            ArrayList<File> keyFiles = new ArrayList<File>();
-            for (String fileName : fileNames) {
-                File keyFile = new File(mKeyDirPath, fileName);
-                if (keyFile.exists()) {
+            ArrayList<File> keyFiles = new ArrayList<File> ();
+            for (String fileName : fileNames)
+            {
+                File keyFile = new File (mKeyDirPath, fileName);
+                if (keyFile.exists ())
+                {
                     // Add key file.
-                    keyFiles.add(keyFile);
-                    if (saveLastUsedKeyFiles) {
+                    keyFiles.add (keyFile);
+                    if (saveLastUsedKeyFiles)
+                    {
                         lastSelectedKeyFiles += fileName + "/";
                     }
-                } else {
-                    Log.d(LOG_TAG, "Key file "
-                            + keyFile.getAbsolutePath()
-                            + "doesn't exists anymore.");
+                }
+                else
+                {
+                    Log.d (LOG_TAG, "Key file "
+                                    + keyFile.getAbsolutePath ()
+                                    + "doesn't exists anymore.");
                 }
             }
-            if (keyFiles.size() > 0) {
+            if (keyFiles.size () > 0)
+            {
                 // Save last selected key files as "/"-separated string
                 // (if corresponding setting is active).
-                if (saveLastUsedKeyFiles) {
-                    SharedPreferences sharedPref = getPreferences(
+                if (saveLastUsedKeyFiles)
+                {
+                    SharedPreferences sharedPref = getPreferences (
                             Context.MODE_PRIVATE);
-                    Editor e = sharedPref.edit();
-                    e.putString("last_used_key_files",
-                            lastSelectedKeyFiles.substring(
-                                    0, lastSelectedKeyFiles.length() - 1));
-                    e.apply();
+                    Editor e = sharedPref.edit ();
+                    e.putString ("last_used_key_files",
+                                 lastSelectedKeyFiles.substring (
+                                         0, lastSelectedKeyFiles.length () - 1));
+                    e.apply ();
                 }
 
                 // Create reader.
-                MCReader reader = Common.checkForTagAndCreateReader(this);
-                if (reader == null) {
+                MCReader reader = Common.checkForTagAndCreateReader (this);
+                if (reader == null)
+                {
                     return;
                 }
 
                 // Set key files.
-                File[] keys = keyFiles.toArray(new File[keyFiles.size()]);
-                if (!reader.setKeyFile(keys, this)) {
+                File[] keys = keyFiles.toArray (new File[keyFiles.size ()]);
+                if (!reader.setKeyFile (keys, this))
+                {
                     // Error.
-                    reader.close();
+                    reader.close ();
                     return;
                 }
                 // Don't turn screen of while mapping.
-                getWindow().addFlags(
+                getWindow ().addFlags (
                         WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 // Get key map range.
-                if (mSectorRange.getText().toString().equals(
-                        getString(R.string.text_sector_range_all))) {
+                if (mSectorRange.getText ().toString ().equals (
+                        getString (R.string.text_sector_range_all)))
+                {
                     // Read all.
                     mFirstSector = 0;
-                    mLastSector = reader.getSectorCount()-1;
-                } else {
-                    String[] fromAndTo = mSectorRange.getText()
-                            .toString().split(" ");
-                    mFirstSector = Integer.parseInt(fromAndTo[0]);
-                    mLastSector = Integer.parseInt(fromAndTo[2]);
+                    mLastSector = reader.getSectorCount () - 1;
+                }
+                else
+                {
+                    String[] fromAndTo = mSectorRange.getText ()
+                                                     .toString ().split (" ");
+                    mFirstSector = Integer.parseInt (fromAndTo[0]);
+                    mLastSector = Integer.parseInt (fromAndTo[2]);
                 }
                 // Set map creation range.
-                if (!reader.setMappingRange(
-                        mFirstSector, mLastSector)) {
+                if (!reader.setMappingRange (
+                        mFirstSector, mLastSector))
+                {
                     // Error.
-                    Toast.makeText(this,
-                            R.string.info_mapping_sector_out_of_range,
-                            Toast.LENGTH_LONG).show();
-                    reader.close();
+                    Toast.makeText (this,
+                                    R.string.info_mapping_sector_out_of_range,
+                                    Toast.LENGTH_LONG).show ();
+                    reader.close ();
                     return;
                 }
-                Common.setKeyMapRange(mFirstSector, mLastSector);
+                Common.setKeyMapRange (mFirstSector, mLastSector);
                 // Init. GUI elements.
                 mProgressStatus = -1;
-                mProgressBar.setMax((mLastSector-mFirstSector)+1);
-                mCreateKeyMap.setEnabled(false);
+                mProgressBar.setMax ((mLastSector - mFirstSector) + 1);
+                mCreateKeyMap.setEnabled (false);
                 mIsCreatingKeyMap = true;
-                Toast.makeText(this, R.string.info_wait_key_map,
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText (this, R.string.info_wait_key_map,
+                                Toast.LENGTH_SHORT).show ();
                 // Read as much as possible with given key file.
-                createKeyMap(reader, this);
+                createKeyMap (reader, this);
             }
         }
     }
@@ -458,53 +536,67 @@ public class KeyMapCreator extends BasicActivity {
      * method starts a worker thread that first creates a key map and then
      * calls {@link #keyMapCreated(MCReader)}.
      * It also updates the progress bar in the UI thread.
-     * @param reader A connected {@link MCReader}.
+     *
+     * @param reader
+     *         A connected {@link MCReader}.
      * @see #onCreateKeyMap(View)
      * @see #keyMapCreated(MCReader)
      */
-    private void createKeyMap(final MCReader reader, final Context context) {
-        new Thread(new Runnable() {
+    private void createKeyMap(final MCReader reader, final Context context)
+    {
+        new Thread (new Runnable ()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 // Build key map parts and update the progress bar.
-                while (mProgressStatus < mLastSector) {
-                    mProgressStatus = reader.buildNextKeyMapPart();
-                    if (mProgressStatus == -1 || !mIsCreatingKeyMap) {
+                while (mProgressStatus < mLastSector)
+                {
+                    mProgressStatus = reader.buildNextKeyMapPart ();
+                    if (mProgressStatus == -1 || !mIsCreatingKeyMap)
+                    {
                         // Error while building next key map part.
                         break;
                     }
 
-                    mHandler.post(new Runnable() {
+                    mHandler.post (new Runnable ()
+                    {
                         @Override
-                        public void run() {
-                            mProgressBar.setProgress(
+                        public void run()
+                        {
+                            mProgressBar.setProgress (
                                     (mProgressStatus - mFirstSector) + 1);
                         }
                     });
                 }
 
-                mHandler.post(new Runnable() {
+                mHandler.post (new Runnable ()
+                {
                     @Override
-                    public void run() {
-                        getWindow().clearFlags(
+                    public void run()
+                    {
+                        getWindow ().clearFlags (
                                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                        mProgressBar.setProgress(0);
-                        mCreateKeyMap.setEnabled(true);
-                        reader.close();
-                        if (mIsCreatingKeyMap && mProgressStatus != -1) {
-                            keyMapCreated(reader);
-                        } else {
+                        mProgressBar.setProgress (0);
+                        mCreateKeyMap.setEnabled (true);
+                        reader.close ();
+                        if (mIsCreatingKeyMap && mProgressStatus != -1)
+                        {
+                            keyMapCreated (reader);
+                        }
+                        else
+                        {
                             // Error during key map creation.
-                            Common.setKeyMap(null);
-                            Common.setKeyMapRange(-1, -1);
-                            Toast.makeText(context, R.string.info_key_map_error,
-                                    Toast.LENGTH_LONG).show();
+                            Common.setKeyMap (null);
+                            Common.setKeyMapRange (-1, -1);
+                            Toast.makeText (context, R.string.info_key_map_error,
+                                            Toast.LENGTH_LONG).show ();
                         }
                         mIsCreatingKeyMap = false;
                     }
                 });
             }
-        }).start();
+        }).start ();
     }
 
     /**
@@ -513,24 +605,30 @@ public class KeyMapCreator extends BasicActivity {
      * saves the created key map to
      * {@link Common#setKeyMap(android.util.SparseArray)}
      * and finishes this Activity.
-     * @param reader A {@link MCReader}.
+     *
+     * @param reader
+     *         A {@link MCReader}.
      * @see #createKeyMap(MCReader, Context)
      * @see #onCreateKeyMap(View)
      */
-    private void keyMapCreated(MCReader reader) {
+    private void keyMapCreated(MCReader reader)
+    {
         // LOW: Return key map in intent.
-        if (reader.getKeyMap().size() == 0) {
-            Common.setKeyMap(null);
+        if (reader.getKeyMap ().size () == 0)
+        {
+            Common.setKeyMap (null);
             // Error. No valid key found.
-            Toast.makeText(this, R.string.info_no_key_found,
-                    Toast.LENGTH_LONG).show();
-        } else {
-            Common.setKeyMap(reader.getKeyMap());
+            Toast.makeText (this, R.string.info_no_key_found,
+                            Toast.LENGTH_LONG).show ();
+        }
+        else
+        {
+            Common.setKeyMap (reader.getKeyMap ());
 //            Intent intent = new Intent();
 //            intent.putExtra(EXTRA_KEY_MAP, mMCReader);
 //            setResult(Activity.RESULT_OK, intent);
-            setResult(Activity.RESULT_OK);
-            finish();
+            setResult (Activity.RESULT_OK);
+            finish ();
         }
 
     }
@@ -539,136 +637,161 @@ public class KeyMapCreator extends BasicActivity {
      * Show a dialog which lets the user choose the key mapping range.
      * If intended, save the mapping range as default
      * (using {@link #saveMappingRange(String, String)}).
-     * @param view The View object that triggered the method
-     * (in this case the change button).
+     *
+     * @param view
+     *         The View object that triggered the method
+     *         (in this case the change button).
      */
-    public void onChangeSectorRange(View view) {
+    public void onChangeSectorRange(View view)
+    {
         // Build dialog elements.
-        LinearLayout ll = new LinearLayout(this);
-        LinearLayout llv = new LinearLayout(this);
-        int pad = Common.dpToPx(10);
-        llv.setPadding(pad, pad, pad, pad);
-        llv.setOrientation(LinearLayout.VERTICAL);
-        llv.setGravity(Gravity.CENTER);
-        ll.setGravity(Gravity.CENTER);
-        TextView tvFrom = new TextView(this);
-        tvFrom.setText(getString(R.string.text_from) + ": ");
-        tvFrom.setTextSize(18);
-        TextView tvTo = new TextView(this);
-        tvTo.setText(" " + getString(R.string.text_to) + ": ");
-        tvTo.setTextSize(18);
+        LinearLayout ll = new LinearLayout (this);
+        LinearLayout llv = new LinearLayout (this);
+        int pad = Common.dpToPx (10);
+        llv.setPadding (pad, pad, pad, pad);
+        llv.setOrientation (LinearLayout.VERTICAL);
+        llv.setGravity (Gravity.CENTER);
+        ll.setGravity (Gravity.CENTER);
+        TextView tvFrom = new TextView (this);
+        tvFrom.setText (getString (R.string.text_from) + ": ");
+        tvFrom.setTextSize (18);
+        TextView tvTo = new TextView (this);
+        tvTo.setText (" " + getString (R.string.text_to) + ": ");
+        tvTo.setTextSize (18);
 
-        final CheckBox saveAsDefault = new CheckBox(this);
-        saveAsDefault.setLayoutParams(new LayoutParams(
+        final CheckBox saveAsDefault = new CheckBox (this);
+        saveAsDefault.setLayoutParams (new LayoutParams (
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        saveAsDefault.setText(R.string.action_save_as_default);
-        saveAsDefault.setTextSize(18);
-        tvFrom.setTextColor(saveAsDefault.getCurrentTextColor());
-        tvTo.setTextColor(saveAsDefault.getCurrentTextColor());
+        saveAsDefault.setText (R.string.action_save_as_default);
+        saveAsDefault.setTextSize (18);
+        tvFrom.setTextColor (saveAsDefault.getCurrentTextColor ());
+        tvTo.setTextColor (saveAsDefault.getCurrentTextColor ());
 
         InputFilter[] f = new InputFilter[1];
-        f[0] = new InputFilter.LengthFilter(2);
-        final EditText from = new EditText(this);
-        from.setEllipsize(TruncateAt.END);
-        from.setMaxLines(1);
-        from.setSingleLine();
-        from.setInputType(InputType.TYPE_CLASS_NUMBER);
-        from.setMinimumWidth(60);
-        from.setFilters(f);
-        from.setGravity(Gravity.CENTER_HORIZONTAL);
-        final EditText to = new EditText(this);
-        to.setEllipsize(TruncateAt.END);
-        to.setMaxLines(1);
-        to.setSingleLine();
-        to.setInputType(InputType.TYPE_CLASS_NUMBER);
-        to.setMinimumWidth(60);
-        to.setFilters(f);
-        to.setGravity(Gravity.CENTER_HORIZONTAL);
+        f[0] = new InputFilter.LengthFilter (2);
+        final EditText from = new EditText (this);
+        from.setEllipsize (TruncateAt.END);
+        from.setMaxLines (1);
+        from.setSingleLine ();
+        from.setInputType (InputType.TYPE_CLASS_NUMBER);
+        from.setMinimumWidth (60);
+        from.setFilters (f);
+        from.setGravity (Gravity.CENTER_HORIZONTAL);
+        final EditText to = new EditText (this);
+        to.setEllipsize (TruncateAt.END);
+        to.setMaxLines (1);
+        to.setSingleLine ();
+        to.setInputType (InputType.TYPE_CLASS_NUMBER);
+        to.setMinimumWidth (60);
+        to.setFilters (f);
+        to.setGravity (Gravity.CENTER_HORIZONTAL);
 
-        ll.addView(tvFrom);
-        ll.addView(from);
-        ll.addView(tvTo);
-        ll.addView(to);
-        llv.addView(ll);
-        llv.addView(saveAsDefault);
-        final Toast err = Toast.makeText(this,
-                R.string.info_invalid_range, Toast.LENGTH_LONG);
+        ll.addView (tvFrom);
+        ll.addView (from);
+        ll.addView (tvTo);
+        ll.addView (to);
+        llv.addView (ll);
+        llv.addView (saveAsDefault);
+        final Toast err = Toast.makeText (this,
+                                          R.string.info_invalid_range, Toast.LENGTH_LONG);
         // Build dialog and show him.
-        new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_mapping_range_title)
-            .setMessage(R.string.dialog_mapping_range)
-            .setView(llv)
-            .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Read from x to y.
-                    String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
-                    String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
-                    boolean noFrom = false;
-                    if (!from.getText().toString().equals("")) {
-                        txtFrom = from.getText().toString();
-                    } else {
-                        noFrom = true;
-                    }
-                    if (!to.getText().toString().equals("")) {
-                        txtTo = to.getText().toString();
-                    } else if (noFrom) {
-                        // No values provided. Read all sectors.
-                        mSectorRange.setText(
-                                getString(R.string.text_sector_range_all));
-                        if (saveAsDefault.isChecked()) {
-                            saveMappingRange("", "");
-                        }
-                        return;
-                    }
-                    int intFrom = Integer.parseInt(txtFrom);
-                    int intTo = Integer.parseInt(txtTo);
-                    if (intFrom > intTo || intFrom < 0
-                            || intTo > MAX_SECTOR_COUNT - 1) {
-                        // Error.
-                        err.show();
-                    } else {
-                        mSectorRange.setText(txtFrom + " - " + txtTo);
-                        if (saveAsDefault.isChecked()) {
-                            // Save as default.
-                            saveMappingRange(txtFrom, txtTo);
-                        }
-                    }
-                }
-            })
-            .setNeutralButton(R.string.action_read_all_sectors,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Read all sectors.
-                    mSectorRange.setText(
-                            getString(R.string.text_sector_range_all));
-                    if (saveAsDefault.isChecked()) {
-                        // Save as default.
-                        saveMappingRange("", "");
-                    }
-                }
-            })
-            .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Cancel dialog (do nothing).
-                }
-            }).show();
+        new AlertDialog.Builder (this)
+                .setTitle (R.string.dialog_mapping_range_title)
+                .setMessage (R.string.dialog_mapping_range)
+                .setView (llv)
+                .setPositiveButton (R.string.action_ok,
+                                    new DialogInterface.OnClickListener ()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int whichButton)
+                                        {
+                                            // Read from x to y.
+                                            String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
+                                            String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
+                                            boolean noFrom = false;
+                                            if (!from.getText ().toString ().equals (""))
+                                            {
+                                                txtFrom = from.getText ().toString ();
+                                            }
+                                            else
+                                            {
+                                                noFrom = true;
+                                            }
+                                            if (!to.getText ().toString ().equals (""))
+                                            {
+                                                txtTo = to.getText ().toString ();
+                                            }
+                                            else if (noFrom)
+                                            {
+                                                // No values provided. Read all sectors.
+                                                mSectorRange.setText (
+                                                        getString (R.string.text_sector_range_all));
+                                                if (saveAsDefault.isChecked ())
+                                                {
+                                                    saveMappingRange ("", "");
+                                                }
+                                                return;
+                                            }
+                                            int intFrom = Integer.parseInt (txtFrom);
+                                            int intTo = Integer.parseInt (txtTo);
+                                            if (intFrom > intTo || intFrom < 0
+                                                || intTo > MAX_SECTOR_COUNT - 1)
+                                            {
+                                                // Error.
+                                                err.show ();
+                                            }
+                                            else
+                                            {
+                                                mSectorRange.setText (txtFrom + " - " + txtTo);
+                                                if (saveAsDefault.isChecked ())
+                                                {
+                                                    // Save as default.
+                                                    saveMappingRange (txtFrom, txtTo);
+                                                }
+                                            }
+                                        }
+                                    })
+                .setNeutralButton (R.string.action_read_all_sectors,
+                                   new DialogInterface.OnClickListener ()
+                                   {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int whichButton)
+                                       {
+                                           // Read all sectors.
+                                           mSectorRange.setText (
+                                                   getString (R.string.text_sector_range_all));
+                                           if (saveAsDefault.isChecked ())
+                                           {
+                                               // Save as default.
+                                               saveMappingRange ("", "");
+                                           }
+                                       }
+                                   })
+                .setNegativeButton (R.string.action_cancel,
+                                    new DialogInterface.OnClickListener ()
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int whichButton)
+                                        {
+                                            // Cancel dialog (do nothing).
+                                        }
+                                    }).show ();
     }
 
     /**
      * Helper method to save the mapping rage as default.
-     * @param from Start of the mapping range.
-     * @param to End of the mapping range.
+     *
+     * @param from
+     *         Start of the mapping range.
+     * @param to
+     *         End of the mapping range.
      */
-    private void saveMappingRange(String from, String to) {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        Editor sharedEditor = sharedPref.edit();
-        sharedEditor.putString("default_mapping_range_from", from);
-        sharedEditor.putString("default_mapping_range_to", to);
-        sharedEditor.apply();
+    private void saveMappingRange(String from, String to)
+    {
+        SharedPreferences sharedPref = getPreferences (Context.MODE_PRIVATE);
+        Editor sharedEditor = sharedPref.edit ();
+        sharedEditor.putString ("default_mapping_range_from", from);
+        sharedEditor.putString ("default_mapping_range_to", to);
+        sharedEditor.apply ();
     }
 }

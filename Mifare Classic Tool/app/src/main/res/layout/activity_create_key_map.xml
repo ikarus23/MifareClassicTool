@@ -80,15 +80,12 @@
         android:onClick="onSelectAll"
         android:text="@string/action_select_all" />
 
-    <Switch
+    <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_switch_enable_reader_mode"
-            android:id="@+id/switchEnableReaderMode" android:layout_above="@+id/scrollViewCreateKeyMap"
-            android:layout_alignEnd="@+id/progressBarCreateKeyMap"
-            android:layout_toEndOf="@+id/buttonCreateKeyMapSelectNone"
-            android:layout_below="@+id/textViewCreateKeyMapChooseKeyFile"/>
-
+            android:id="@+id/switchEnableReaderMode" android:layout_below="@+id/textViewCreateKeyMapChooseKeyFile"
+            android:layout_toEndOf="@+id/textViewCreateKeyMapChooseKeyFile"/>
     <Button
         android:id="@+id/buttonCreateKeyMapSelectNone"
         style="?android:attr/buttonStyleSmall"
