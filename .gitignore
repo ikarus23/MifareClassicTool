@@ -1,6 +1,13 @@
 # my stuff
 Mifare Classic Tool/doc/
 
+# Andoird Studio stuff
+Mifare Classic Tool/**/*.iml
+Mifare Classic Tool/.gradle
+Mifare Classic Tool/local.properties
+Mifare Classic Tool/.idea/
+Mifare Classic Tool/**/build
+
 # built application files
 *.apk
 *.ap_
@@ -12,26 +19,9 @@ Mifare Classic Tool/doc/
 *.class
 
 # generated files
-bin/
-gen/
+**/bin
+**/gen
 
-# Local configuration file (sdk path, etc)
-local.properties
+# OS specific
+**/.DS_Store
 
-# android studio files
-.gradle/
-build/
-
-# User-specific configurations for android studio
-.idea/
-#.idea/libraries/
-#.idea/workspace.xml
-#.idea/tasks.xml
-#.idea/.name
-#.idea/compiler.xml
-#.idea/copyright/profiles_settings.xml
-#.idea/encodings.xml
-#.idea/misc.xml
-#.idea/modules.xml
-#.idea/scopes/scope_settings.xml
-#.idea/vcs.xml
