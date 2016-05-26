@@ -639,7 +639,7 @@ public class Common extends Application {
                 // ATQA says it is most likely a Mifare Classic tag.
                 byte sak = (byte)nfca.getSak();
                 if (sak == 8 || sak == 9 || sak == (byte)0x18 ||
-                                            sak == (byte)0x88) {
+                                            sak == (byte)0x88 || sak == (byte)0x28) { // emulated cards
                     // SAK says it is most likely a Mifare Classic tag.
                     // --> Device does not support Mifare Classic.
                     return -1;
