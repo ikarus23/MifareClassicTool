@@ -631,6 +631,7 @@ public class Common extends Application {
             // it's a Mifare Classic tag.
             // See: http://www.nxp.com/documents/application_note/AN10833.pdf
             // (Table 5 and 6)
+            // 0x28 is for some emulated tags.
             NfcA nfca = NfcA.get(tag);
             byte[] atqa = nfca.getAtqa();
             if (atqa[1] == 0 &&
@@ -639,7 +640,8 @@ public class Common extends Application {
                 // ATQA says it is most likely a Mifare Classic tag.
                 byte sak = (byte)nfca.getSak();
                 if (sak == 8 || sak == 9 || sak == (byte)0x18 ||
-                                            sak == (byte)0x88 || sak == (byte)0x28) { // emulated cards
+                                            sak == (byte)0x88 ||
+                                            sak == (byte)0x28) {
                     // SAK says it is most likely a Mifare Classic tag.
                     // --> Device does not support Mifare Classic.
                     return -1;

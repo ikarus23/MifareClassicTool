@@ -147,8 +147,8 @@ Due to some weaknesses in Mifare Classic, you can retrieve
 all the keys (A and B) of a tag with tools like the
 [Proxmark3](http://www.proxmark.org/) or
 normal RFID-Readers and some special software
-([mfcuk](https://code.google.com/p/mfcuk/),
-[mfoc](http://code.google.com/p/mfoc/)).
+([mfcuk](https://github.com/nfc-tools/mfcuk),
+[mfoc](https://github.com/nfc-tools/mfoc)).
 
 The application comes with standard key files called
 *std.keys* and *extended-std.keys*, which contains the
