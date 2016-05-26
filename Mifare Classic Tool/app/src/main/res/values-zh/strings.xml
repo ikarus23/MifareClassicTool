@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mifare经典工具</string>
+    <string name="action_append">附加</string>
+    <string name="ac_data_block_no_keyb_1"></string>
+    <string name="action_auto_reconnect">高级: 在密钥映射时卡片丢失自动重连</string>
+    <string name="action_beer_sounds_fine">听着不错(去捐赠)</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_cancel_all">取消写入</string>
+    <string name="action_change">更改</string>
+    <string name="action_choose_file">选定选择的文件</string>
+    <string name="action_chose_dump">选定一个转储…</string>
+    <string name="action_compare_dump">比较转储</string>
+    <string name="action_continue">继续</string>
+    <string name="action_create_key_map">映射密钥到扇区</string>
+    <string name="action_create_key_map_and_factory_format">启动映射并格式化标签</string>
+    <string name="action_create_key_map_and_read">启动映射并读取标签</string>
+    <string name="action_create_key_map_and_write_block">启动映射并写块数据</string>
+    <string name="action_create_key_map_and_write_dump">启动映射并写转储数据</string>
+    <string name="action_create_key_map_and_write_value_block">启动映射并写值块数据</string>
+    <string name="action_create_new_file">创建新文件</string>
+    <string name="action_data_as_ascii">数据是ASCII</string>
+    <string name="action_decode">解码</string>
+    <string name="action_decode_ac">解码访问条件</string>
+    <string name="action_decode_manuf_date">解码制造日期</string>
+    <string name="action_delete_file">删除文件</string>
+    <string name="action_do_not_show_again">以后不显示这个信息</string>
+    <string name="action_dont_save">不保存</string>
+    <string name="action_edit_key_dump">编辑/增加密钥文件</string>
+    <string name="action_edit_tag_dump">编辑/分析转储文件</string>
+    <string name="action_editor_only">使用离线模式</string>
+    <string name="action_encode">编码</string>
+    <string name="action_exit_app">退出</string>
+    <string name="action_factory_format">工厂格式化</string>
+    <string name="action_help">帮助和信息</string>
+    <string name="action_i_know_what_i_am_doing">我知道我在做什么</string>
+    <string name="action_more">读更多…</string>
+    <string name="action_nfc">转到NFC设置</string>
+    <string name="action_ok">好的</string>
+    <string name="action_open_dump_file">打开转储文件</string>
+    <string name="action_open_key_file">打开密钥文件</string>
+    <string name="action_read_all_sectors">读全部扇区</string>
+    <string name="action_read_tag">读标签</string>
+    <string name="action_remove_duplicates">删除重复项</string>
+    <string name="action_replace">替换</string>
+    <string name="action_save_as_default">保存为默认值</string>
+    <string name="action_save">保存</string>
+    <string name="action_save_keys">保存密钥</string>
+    <string name="action_save_last_key_files">记住最后选定的密钥文件（密钥映射对话框）</string>
+    <string name="action_select_all">全选</string>
+    <string name="action_select_none">不选</string>
+    <string name="action_share">分享</string>
+    <string name="action_show_about">关于</string>
+    <string name="action_show_ac_tool">访问条件编/解码</string>
+    <string name="action_show_diff_tool">差异工具(比较转储文件)</string>
+    <string name="action_show_options">显示选项</string>
+    <string name="action_show_preferences">首选项</string>
+    <string name="action_show_tag_info">显示标签信息</string>
+    <string name="action_show_value_blocks_as_int">值块是整数</string>
+    <string name="action_show_vb_tool">值块编/解码</string>
+    <string name="action_skip_blocks">尽可能多写</string>
+    <string name="action_static_ac">应用这些访问条件到所有扇区</string>
+    <string name="action_tools">工具</string>
+    <string name="action_wirte_block">写块</string>
+    <string name="action_write_block">写块</string>
+    <string name="action_write_dump">写转储</string>
+    <string name="action_write_dump_clone">写转储(克隆)</string>
+    <string name="action_write_full_dump">选择转储</string>
+    <string name="action_write_mfid">高级:使能厂商块写入</string>
+    <string name="action_write_tag">写标签</string>
+    <string name="action_write_value_block">写值块</string>
+    <string name="app_version">版本</string><string name="dialog_about_mct"><![CDATA[
+        <b>MifareClassicTool (MCT)<br /><br />
+        &#8226; 版本: %1$s<br />
+        &#8226; 许可证:
+        <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />
+        &#8226; 项目主页:
+        <a href="https://github.com/ikarus23/MifareClassicTool">MCT on github</a><br />
+        &#8226; 应用评分:
+        <a href="market://details?id=de.syss.MifareClassicTool">去谷歌商店</a><br />
+        &#8226; 捐赠:
+        <a href="market://details?id=de.syss.MifareClassicToolDonate">去谷歌商店</a></b><br /><br />
+        有用信息:<br />
+        &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">错误跟踪器</a><br />
+        &#8226; <a href="https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">更改日志/历史版本</a><br />
+        &#8226; <a href="http://publications.icaria.de/mct/">文档,程序,等.</a><br />
+        &#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Proxmark 论坛主题</a>
+]]></string>
+    <string name="dialog_about_mct_title">关于MCT</string><string name="dialog_auto_reconnect">        密钥映射过程中, 如果标签丢失(天线问题, 超时, 等.),
+        该应用程序将尝试重新连接到它 (延时 500ms)
+        直到尝试成功一次.\n\n
+        <b>如果在密钥映射过程中遇到问题, 这也许有用.
+        然而, 可能导致 MCT 怪异的行为.</b>\n\n
+        这是已知问题, 这个设置也许有用:\n
+        • 特殊标签 (例如 smartMX)</string>
+    <string name="dialog_auto_reconnect_title">自动重连</string><string name="dialog_block0_writing"><b>Mifare Classic 标签
+        扇区0首块是不可能写入的.</b>\n\n
+        请确保您使用的是一个特殊的标签，以支持写入到制造商块
+        (同标准 Mifare Classic 写命令).\n\n
+        <b>查看\"帮助和信息\" - \"写标签\" 节 获取更多信息.</b></string>
+    <string name="dialog_block0_writing_title">写厂商块</string>
+    <string name="dialog_choose_ac_title">选定访问条件</string>
+    <string name="dialog_date_of_manuf_title">制造日期</string>
+    <string name="dialog_donate_title">捐赠</string>
+    <string name="dialog_first_run_title">警告通知</string>
+    <string name="dialog_mapping_range">选定密钥映射的扇区范围\n(首扇区从0起):</string><string name="dialog_donate">        <b> Mifare经典工具已更新！</b>\n\n
+        如果新特性, 修复或这个程序让你高兴,
+        请考虑让开发者也高兴。给他买一瓶啤酒！ ;)</string>
+    <string name="dialog_mapping_range_title">选定范围</string>
+    <string name="dialog_new_file">输入新文件名</string>
+    <string name="dialog_new_file_title">新文件</string>
+    <string name="dialog_nfc_not_enabled">NFC适配器没启用。请到设置中启用。</string>
+    <string name="dialog_nfc_not_enabled_title">NFC没有启用</string>
+    <string name="dialog_no_mfc_support_device_title">没Mifare Classic支持</string>
+    <string name="dialog_no_mfc_support_tag_title">没有Mifare Classic标签</string>
+    <string name="dialog_no_nfc">没有在你的设备发现NFC硬件。你需要一个NFC功能的设备才能正确运行这个程序。</string>
+    <string name="dialog_no_nfc_title">没有NFC硬件</string>
+    <string name="dialog_not_writable">有些部分是不可写的！检查下面列表。</string>
+    <string name="dialog_not_writable_title">写有问题</string><string name="dialog_save_before_quitting"><b>有未保存的更改!</b>
+\n要保存这些更改吗?</string>
+    <string name="dialog_save_before_quitting_title">未保存更改</string><string name="dialog_save_conflict_dump">这个文件已经存在。
+        你想做什么？\n\n
+        <b>注：包含多个转储文件的文件（使用\"追加\"创建）不能显示、编辑或写入。</b></string><string name="dialog_save_conflict_keyfile">这个文件已经存在。
+你要做什么？</string>
+    <string name="dialog_save_conflict_title">文件已经存在</string>
+    <string name="dialog_save_dump">输入转储文件名</string>
+    <string name="dialog_save_dump_title">保存转储</string>
+    <string name="dialog_save_keys">输入密钥文件名</string>
+    <string name="dialog_save_keys_title">保存密钥文件</string>
+    <string name="dialog_sector_trailer_warning_title">写入扇区尾部</string><string name="dialog_sector_trailer_warning">关于写入扇区尾部。
+写错误数据可能导致无法弥补的标签损坏。</string>
+    <string name="dialog_share_title">发送转储文件到...</string>
+    <string name="dialog_static_ac_title">使用静态访问条件</string>
+    <string name="dialog_tools_menu_title">可用工具</string>
+    <string name="dialog_wait_write_tag">写标签…\n
+(不要移除标签)</string>
+    <string name="dialog_wait_write_tag_title">写入中…</string>
+    <string name="dialog_write_sectors">选择你想写的扇区：</string>
+    <string name="dialog_write_sectors_title">写扇区</string>
+    <string name="info_ac_format_error">错误：访问条件无效</string>
+    <string name="info_ac_not_3_byte">错误：访问条件必须是3字节（6个字符）长</string>
+    <string name="info_ac_not_hex">错误：访问条件不是十六进制（0-9，A-F）</string>
+    <string name="info_ac_reset_keyb_not_readable">Key B不可读。\nACs数据块已更新。</string>
+    <string name="info_ac_reset_keyb_readable">Key B可读。\nACs数据块已更新。</string>
+    <string name="info_addr_not_hex_byte">错误：地址是不是一个十六进制字节（0-9，A-F，2个字符）</string>
+    <string name="info_block0_missing">错误：没有制造商的块（块0）</string>
+    <string name="info_block_not_in_sector">错误：该扇区不包含给定数的块。</string>
+    <string name="info_block_out_of_range">错误：该块不在范围内</string>
+    <string name="info_copied_to_clipboard">复制到剪贴板</string>
+    <string name="info_data_location_not_set">错误：未指定块或扇区</string>
+    <string name="info_editor_init_error">错误：编辑器中的数据不正确。</string>
+    <string name="info_empty_file_name">错误：文件必须有名称</string>
+    <string name="info_error_writing_block">错误：块是只读或密钥没有写入权限</string>
+    <string name="info_error_writing_value_block">错误：不是值块，权限不足或不正确的值</string>
+    <string name="info_file_already_exists">错误：文件已存在</string>
+    <string name="info_file_to_big">错误：文件太大（内存不够）</string>
+    <string name="info_invalid_int">不是一个有效的整数</string>
+    <string name="info_invalid_range">映射范围错误</string>
+    <string name="info_is_not_vb">错误：不是值块。</string>
+    <string name="info_key_map_error">错误：标签连接丢失</string>
+    <string name="info_mapping_sector_out_of_range">映射范围错误：扇区超出范围。使用更大的标签。</string>
+    <string name="info_new_tag_found">发现新标签</string>
+    <string name="info_no_dumps">缺少转储。读取标签并保存转储。</string>
+    <string name="info_no_external_storage">错误：外部存储器不可读/可写</string>
+    <string name="info_no_int_to_encode">错误：没有整数来编码</string>
+    <string name="info_no_key_found">没有在选定的密钥文件中发现有效的密钥</string>
+    <string name="info_no_tag_found">错误：没有发现 Mifare Classic 标签</string>
+    <string name="info_no_vb_in_dump">这个转储中没有值块</string>
+    <string name="info_none_key_valid_for_reading">错误：没有读到一个有效的密钥</string>
+    <string name="info_not_16_byte">错误：数据必须是16字节（32个字符）长</string>
+    <string name="info_not_hex_data">错误：数据必须是十六进制（0-9和A-F）</string><string name="info_not_supported_now">此版本不支持此功能。
+（也许会在未来的版本…）</string>
+    <string name="info_not_vb">错误：选择的块不是值块</string>
+    <string name="info_nothing_to_write">什么也没写</string>
+    <string name="info_save_error">错误：保存数据时出错</string>
+    <string name="info_save_successful">数据保存成功</string>
+    <string name="info_sector_out_of_range">错误：该扇区不在范围内</string>
+    <string name="info_tag_removed_while_reading">错误：在读的过程中标签移除</string>
+    <string name="info_tag_too_small">错误：标签小于选定的转储</string>
+    <string name="info_to_many_keys">错误：太多的密钥(内存不够)</string>
+    <string name="info_valid_dump_empty_dump">错误：空的转储</string>
+    <string name="text_ac_incr">增值:</string>
+    <string name="text_ac_pos">位置:</string>
+    <string name="text_ac_read">读块:</string>
+    <string name="text_ac_read_only">访问条件为只读</string>
+    <string name="text_ac_write">写块:</string>
+    <string name="text_addr">地址:</string>
+    <string name="text_block_0">块 0 (0-4):</string>
+    <string name="text_block_1">块 1 (5-9):</string>
+    <string name="text_block_2">块 2 (10-14):</string>
+    <string name="text_block_3">块 3 (15) - 扇区尾:</string>
+    <string name="text_block_count">块数</string>
+    <string name="text_block_read_only">块是只读的</string>
+    <string name="text_block_size">块大小</string>
+    <string name="text_caption_title">标题</string>
+    <string name="text_choose_dump_to_write">选定要写的转储：</string>
+    <string name="text_choose_key_file">选择一些密钥文件：</string>
+    <string name="text_chooser_info_text">选定一个文件:</string>
+    <string name="text_copy">复制</string>
+    <string name="text_data">数据</string>
+    <string name="text_decrement">减值</string>
+    <string name="text_dump_1">转储 1 (A):</string>
+    <string name="text_dump_2">转储 2 (B):</string>
+    <string name="text_dump_from_editor">转储编辑器</string>
+    <string name="text_factory_format_info">尝试将标签格式化为工厂/交付状态。</string>
+    <string name="text_from">从</string>
+    <string name="text_generic_info">通用信息</string>
+    <string name="text_identical_data">--------------相同--------------</string>
+    <string name="text_incr_decr_value_block">增/减 值块</string>
+    <string name="text_incr_decr_value_block_info">增值或减值并传输值块（如果你不知道什么是值块,查看\"帮助和信息\".）</string>
+    <string name="text_increment">增值</string>
+    <string name="text_invalid_ac_or_sector_dead">无效的访问条件或死扇区:(</string>
+    <string name="text_key_map_progress">密钥映射中:</string>
+    <string name="text_keys_not_known">Keys (A and B) 未知</string>
+    <string name="text_keys_read_only">Keys (A and B) 只读</string>
+    <string name="text_mem_size">内存大小</string>
+    <string name="text_mf_info">Mifare Classic 信息</string>
+    <string name="text_never">永不</string>
+    <string name="text_no_files_in_chooser">没发现文件</string>
+    <string name="text_no_key_io_error">没密钥发现(或死扇区)</string>
+    <string name="text_no_mfc_support_device">此设备不支持Mifare Classic！</string>
+    <string name="text_no_mfc_support_tag">不是Mifare Classic标签！</string>
+    <string name="text_no_tag">这不是Mifare Classic标签！</string>
+    <string name="text_open_dump_title">打开标签转储</string>
+    <string name="text_open_key_file_title">打开或创建一个密钥文件</string>
+    <string name="text_option_info">信息选项</string>
+    <string name="text_paste">粘贴</string>
+    <string name="text_rf_tech">RF 技术</string>
+    <string name="text_sector">扇区</string>
+    <string name="text_sector_count">扇区数</string>
+    <string name="text_sector_range">创建扇区映射：</string>
+    <string name="text_sector_range_all">全部</string>
+    <string name="text_value">值</string>
+    <string name="text_valueblock">值块</string>
+    <string name="text_vb_as_int_decoded">整数:</string>
+    <string name="text_vb_orig">原始:</string>
+    <string name="text_vb_value">值:</string>
+    <string name="title_activity_read_tag">读标签</string>
+    <string name="title_activity_tag_info">标签信息</string>
+    <string name="title_activity_value_block_tool"><![CDATA[值块解码&编码]]></string>
+    <string name="title_activity_value_blocks">值块是整数</string>
+    <string name="title_activity_write_tag">写标签</string>
+    <string name="title_activity_key_editor">密钥编辑</string>
+    <string name="title_activity_main">Mifare 经典工具</string>
+    <string name="title_activity_hex_to_ascii">数据是ASCII</string>
+    <string name="title_activity_help">帮助和信息</string>
+    <string name="title_activity_file_chooser">文件选择器</string>
+    <string name="title_activity_dump_editor">转储编辑器</string>
+    <string name="title_activity_diff_tool">差异工具</string>
+    <string name="title_activity_create_key_map">映射密钥到扇区</string>
+    <string name="title_activity_access_conditions">访问条件</string>
+    <string name="title_activity_preferences">首选项</string>
+    <string name="text_vb_what">在哪里:</string>
+    <string name="text_wait_read_tag">读标签中…\n(不要移开标签)</string>
+    <string name="title_activity_access_condition_tool"><![CDATA[访问条件解码&编码]]></string>
+    <string name="text_update_colors">更新配色</string>
+    <string name="text_uid_and_manuf"><![CDATA[UID & 厂家信息]]></string>
+    <string name="text_to">到</string>
+    <string name="text_tag_type_and_manuf">标签类型和厂商</string>
+    <string name="text_strange_error">发生了一些奇怪的错误:(</string>
+    <string name="text_step_2_data_blocks">步骤2: 选定数据块访问条件</string>
+    <string name="text_step_1_sector_trailer">步骤1: 选定扇区尾部访问条件</string>
+    <string name="text_starting_at_0">(从0开始)</string>
+    <string name="text_share_subject_key_file">MCT 密钥文件</string>
+    <string name="text_share_subject_dump">MCT 转储</string>
+    <string name="text_block">块</string>
+    <string name="text_ac_error">错误: 这个配置是未知的</string>
+    <string name="info_valid_dump_double_sector">错误：多次相同的扇区数</string>
+    <string name="info_valid_dump_not_16_bytes">错误：一些块没有16字节(32字符)</string>
+    <string name="info_valid_dump_not_4_or_16_lines">错误：一些扇区没有4或16块(行)</string>
+    <string name="info_valid_dump_not_hex">错误：一些块包含无效数据(不是十六进制)</string>
+    <string name="info_valid_dump_sector_range"><![CDATA[错误：扇区超出范围 (< 0 or > 39)]]></string>
+    <string name="info_valid_keys_no_keys">错误：必须至少有一个密钥</string>
+    <string name="info_valid_keys_not_6_byte">错误：一些密钥没有6字节(12字符)</string>
+    <string name="info_valid_keys_not_hex">错误：一些密钥包含无效数据(不是十六进制)</string>
+    <string name="info_value_too_big">错误：这个值太大</string>
+    <string name="info_wait_key_map">创建密钥映射中… 请稍等…</string>
+    <string name="info_write_successful">数据写入完成</string>
+    <string name="info_write_permission">写权限需要正常工作</string>
+    <string name="info_write_error">错误：写入发生错误.\n这可能非常糟糕.</string>
+    <string name="text_write_key_a_not_known">写访问密钥(A)未知</string>
+    <string name="text_write_key_b_not_known">写访问密钥(B)未知</string><string name="info_strange_error">错误：一个奇怪的错误…并且我不知道为什么 :(\n
+请使用项目页面报告</string>
+    <string name="text_tag_type_guess">\"标签类型和制造商\" 可能是错的.\n查看 \"帮助和信息\" 获取更多信息.</string><string name="dialog_date_of_manuf"><![CDATA[
+        标签是这期间生产 <b>%1$s</b> 和 <b>%2$s</b>
+        <br /><br />
+        (这些信息可能是错误的. 查看 \"帮助和信息\" 获取更多信息.)
+        ]]></string><string name="dialog_first_run">        此应用程序是专门为那些有至少基本熟悉MifareClassic技术的用户。
+        其特点是基本的并在底层。
+        因此，几乎所有的数据输入和输出是十六进制。
+        同样重要的是，你明白自己在做什么，例如。如果将数据写入标签。
+        将错误数据写入特定的块，可能会对标签造成不可修复的损坏。
+        \n\n
+        <b>更多的信息和帮助 查看
+        \"帮助和信息\" 节.</b></string>
+    <string name="info_check_ac_error">错误：标记丢失，同时检查带有写入权限的密钥</string>
+    <string name="text_ac_decr">减值/转移/恢复</string>
+    <string name="text_vb">值块数据:</string>
+    <string name="text_vb_as_int">整数值</string>
+</resources>
