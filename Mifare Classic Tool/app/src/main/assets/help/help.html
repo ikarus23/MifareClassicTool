@@ -299,13 +299,15 @@
       <li>
         <i>Write to Manufacturer Block</i><br />
         The first block of the first sector of an <b>original</b>
-        Mifare Classic tag is <u>read-only</u> i.e. not writable. But there are
+        Mifare Classic tag is read-only i.e. not writable. But there are
         <b>special</b> Mifare Classic tags that support writing to the
         manufacturer block with a simple write command. This App is able to
         write to such tags and can therefore create fully correct clones.
         <br />However, some special tags require a special command sequence to
         put them into the state where writing to the manufacturer block is
-        possible. These tags will not work.
+        possible. These tags will not work. Also, make sure the the BCC value is
+        correct. The BCC is the first byte after the UID. It is calculated by
+        XOR-ing all bytes of the UID.
       </li>
     </ul>
 
