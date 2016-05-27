@@ -78,10 +78,11 @@ Some important things are:
   write to such tags and can therefore create fully correct clones.
   However, some special tags require a **special command sequence** to
   put them into the state where writing to the manufacturer block is
-  possible. These tags will not work.  Also, make sure the the BCC
-  value is correct. The BCC is the first byte after the UID. It is
-  calculated by XOR-ing all bytes of the UID.
-  Remember this when you are shopping for special tags!
+  possible. These tags will not work.  
+  Remember this when you are shopping for special tags!  
+  Also, make sure the the BCC value is correct before writing. The BCC
+  is the first byte after the UID. It is calculated by XOR-ing all
+  bytes of the UID.
 * This app **will not work** on the following devices because
   their hardware (NFC-controller) does not support Mifare Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
