@@ -263,13 +263,15 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Check the user input and (if correct) show the
-     * {@link KeyMapCreator} with predefined mapping range
-     * (see {@link #createKeyMapForBlock(int, boolean)}).
+     * Check the user input and, if necessary, the BCC value
+     * ({@link #checkBCC(boolean)}). If everythin is O.K., show the
+     * {@link KeyMapCreator} with predefined mapping range (se
+     * {@link #createKeyMapForBlock(int, boolean)}).
      * After a key map was created, {@link #writeBlock()} will be triggered.
      * @param view The View object that triggered the method
      * (in this case the write block button).
      * @see KeyMapCreator
+     * @see #checkBCC(boolean)
      * @see #createKeyMapForBlock(int, boolean)
      */
     public void onWriteBlock(View view) {
@@ -308,8 +310,11 @@ public class WriteTag extends BasicActivity {
                              }
                          }).show();
         } else if (sector == 0 && block == 0) {
-            // Warning. Writing to manufacturer block.
-            showWriteManufInfo(true);
+            // Is the BCC valid?
+            if (checkBCC(true) == 0) {
+                // Warning. Writing to manufacturer block.
+                showWriteManufInfo(true);
+            }
         } else {
             createKeyMapForBlock(sector, false);
         }
@@ -381,7 +386,7 @@ public class WriteTag extends BasicActivity {
      * Display information about writing to the manufacturer block and
      * optionally create a key map for the first sector.
      * @param createKeyMap If true {@link #createKeyMapForBlock(int, boolean)}
-     * will be triggered the time the user confirms the dialog. False otherwise.
+     * will be triggered the time the user confirms the dialog.
      */
     private void showWriteManufInfo(final boolean createKeyMap) {
         // Warning. Writing to the manufacturer block is not normal.
@@ -412,6 +417,68 @@ public class WriteTag extends BasicActivity {
                 }
              });
         dialog.show();
+    }
+
+    /**
+     * Check if the provided BCC is valid for the provided UID and
+     * show a error message if needed..
+     * @param isWriteBlock If Ture, the UID and BCC are taken from
+     * the {@link #mDataText} input field. If False, the UID and BCC
+     * is taken from the provided dump file.
+     * @return <ul>
+     * <li>0 - Everything is O.K.</li>
+     * <li>1 - There is no tag.</li>
+     * <li>2 - Dump does not contain the first sector.</li>
+     * <li>3 - Dump does not contain the block 0.</li>
+     * <li>4 - BCC is not valid.</li>
+     * </ul>
+     */
+    private int checkBCC(boolean isWriteBlock) {
+        MCReader reader = Common.checkForTagAndCreateReader(this);
+        if (reader == null) {
+            return 1;
+        }
+        reader.close();
+        byte bcc;
+        byte[] uid;
+        // The length of UID of the dump or the block 0 is expected to match
+        // the UID length of the current tag.
+        int bccIndex = Common.getUID().length;
+
+        if (isWriteBlock) {
+            bcc = Common.hexStringToByteArray(
+                    mDataText.getText().toString()
+                    .substring(bccIndex * 2, bccIndex * 2 + 2))[0];
+            uid = Common.hexStringToByteArray(
+                    mDataText.getText().toString()
+                    .substring(0, bccIndex * 2));
+        } else {
+            // Has to be called after mDumpWithPos is properly initialized.
+            // (After checkDumpAndShowSectorChooserDialog().)
+            HashMap<Integer, byte[]> sector0 = mDumpWithPos.get(0);
+            if (sector0 == null) {
+                // There is no sector 0 in this dump. Checking the BCC
+                // is therefore irrelevant.
+                return 2;
+            }
+            byte[] block0 = sector0.get(0);
+            if (block0 == null) {
+                // There is no block 0 in sector 0. Checking the BCC is
+                // therefore irrelevant.
+                return 3;
+            }
+            bcc = block0[0];
+            uid = new byte[bccIndex-1];
+            System.arraycopy(block0, 0, uid, 0, bccIndex-1);
+        }
+
+        if (!Common.isValidBCC(uid, bcc)) {
+            // BCC is not valid. Show error message.
+            Toast.makeText(this, R.string.info_bcc_not_valid,
+                    Toast.LENGTH_LONG).show();
+            return 4;
+        }
+        return 0;
     }
 
     /**
@@ -589,14 +656,16 @@ public class WriteTag extends BasicActivity {
      * and read (by {@link #readDumpFromFile(String)}), this method saves
      * the data including its position in {@link #mDumpWithPos}.
      * If the "use static Access Condition" option is enabled, all the ACs
-     * will be replaced by the static ones.
-     * After all this it will show a dialog in which the user can choose
-     * the sectors he wants to write. When the sectors are chosen, this
-     * method calls {@link #createKeyMapForDump()} to create
-     * a key map for the present tag.
+     * will be replaced by the static ones. Also, the BCC value is
+     * check if necessary ({@link #checkBCC(boolean)}). After all this it
+     * will show a dialog in which the user can choose the sectors he wants
+     * to write. When the sectors are chosen, this method calls
+     * {@link #createKeyMapForDump()} to create a key map for the present tag.
      * @param dump Dump selected by {@link FileChooser} or directly
      * from the {@link DumpEditor} (via an Intent with{@link #EXTRA_DUMP})).
+     * @see KeyMapCreator
      * @see #createKeyMapForDump()
+     * @see #checkBCC(boolean)
      */
     private void checkDumpAndShowSectorChooserDialog(String[] dump) {
         int err = Common.isValidDump(dump, false);
@@ -672,7 +741,7 @@ public class WriteTag extends BasicActivity {
         selectAll.setOnClickListener(listener);
         selectNone.setOnClickListener(listener);
 
-        new AlertDialog.Builder(this)
+        final AlertDialog dialog = new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_write_sectors_title)
             .setIcon(android.R.drawable.ic_menu_edit)
             .setView(dialogLayout)
@@ -680,21 +749,10 @@ public class WriteTag extends BasicActivity {
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // Remove unwanted sectors.
-                    for (CheckBox box : sectorBoxes) {
-                        if (!box.isChecked()) {
-                            mDumpWithPos.remove(
-                                    Integer.parseInt(box.getTag().toString()));
-                        }
-                    }
-                    if (mDumpWithPos.size() == 0) {
-                        // Error. There is nothing to write.
-                        Toast.makeText(context, R.string.info_nothing_to_write,
-                                Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    // Create key map.
-                    createKeyMapForDump();
+                    //Do nothing here because we override this button later
+                    // to change the close behaviour. However, we still need
+                    // this because on older versions of Android unless we
+                    // pass a handler the button doesn't get instantiated
                 }
             })
             .setNegativeButton(R.string.action_cancel,
@@ -704,7 +762,36 @@ public class WriteTag extends BasicActivity {
                     // Do nothing.
                 }
             })
-            .show();
+            .create();
+        dialog.show();
+
+        // Override/define behavior for positiv button click.
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+                new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Remove unwanted sectors.
+                for (CheckBox box : sectorBoxes) {
+                    if (!box.isChecked()) {
+                        mDumpWithPos.remove(
+                                Integer.parseInt(box.getTag().toString()));
+                    }
+                }
+                if (mDumpWithPos.size() == 0) {
+                    // Error. There is nothing to write.
+                    Toast.makeText(context, R.string.info_nothing_to_write,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                // Is BCC valid?
+                int bccCheck = checkBCC(false);
+                if (bccCheck == 0 || bccCheck == 2 || bccCheck == 3) {
+                    // Create key map.
+                    createKeyMapForDump();
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
     /**

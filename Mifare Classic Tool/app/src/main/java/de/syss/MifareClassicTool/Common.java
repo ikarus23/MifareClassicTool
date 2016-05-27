@@ -1363,6 +1363,33 @@ public class Common extends Application {
     }
 
     /**
+     * Check whether the provided BCC is valid for the UID or not. The BCC
+     * is the first byte after the UID in the manufacturers block. It
+     * is calculated by XOR-ing all bytes of the UID.
+     * @param uid The UID to calculate the BCC from.
+     * @param bcc The BCC the calculated BCC gets compared with.
+     * @return True if the BCC if valid for the UID. False otherwise.
+     */
+    public static boolean isValidBCC(byte[] uid, byte bcc) {
+        return calcBCC(uid) == bcc;
+    }
+
+    /**
+     * Calculate the BCC of a given UID. The BCC is the first byte after
+     * the UID in the manufacturers block. It is calculated by XOR-ing all
+     * bytes of the UID.
+     * @param uid The UID of which the BCC should be calculated.
+     * @return The BCC of the given UID.
+     */
+    private static byte calcBCC(byte[] uid) {
+        byte bcc = uid[0];
+        for(int i = 1; i < uid.length; i++) {
+            bcc = (byte)(bcc ^ uid[i]);
+        }
+        return bcc;
+    }
+
+    /**
      * Get the version code.
      * @return The version code.
      */

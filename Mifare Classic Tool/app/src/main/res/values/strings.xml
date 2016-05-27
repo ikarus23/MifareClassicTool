@@ -327,6 +327,7 @@
     <string name="info_not_vb">Error: Selected block is not a Value Block</string>
     <string name="info_value_too_big">Error: The value is too big</string>
     <string name="info_write_permission">Write permission is needed to work properly</string>
+    <string name="info_bcc_not_valid">Error: BCC of block 0 is not valid</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
