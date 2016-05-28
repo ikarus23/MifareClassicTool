@@ -530,12 +530,15 @@ public class Common extends Application {
 
     /**
      * Check if the device supports the Mifare Classic technology.
-     * In order to do so, check if there are files like "/dev/bcm2079x-i2c" or
-     * "/system/lib/libnfc-bcrm*". Files like these are indicators for a
-     * NFC controller manufactured by Broadcom. Broadcom chips don't support
-     * Mifare Classic.
+     * In order to do so, there is a first check ensure the device actually has
+     * a NFC hardware (if not, {@link #mUseAsEditorOnly} is set to true).
+     * After this, this function will check if there are files
+     * like "/dev/bcm2079x-i2c" or "/system/lib/libnfc-bcrm*". Files like
+     * these are indicators for a NFC controller manufactured by Broadcom.
+     * Broadcom chips don't support Mifare Classic.
      * @return True if the device supports Mifare Classic. False otherwise.
      * @see #mHasMifareClassicSupport
+     * @see #mUseAsEditorOnly
      */
     public static boolean hasMifareClassicSupport() {
         if (mHasMifareClassicSupport != 0) {
@@ -553,6 +556,13 @@ public class Common extends Application {
             return false;
         }
         */
+
+        // Check if ther is any NFC hardware at all.
+        if (NfcAdapter.getDefaultAdapter(mAppContext) == null) {
+            mUseAsEditorOnly = true;
+            mHasMifareClassicSupport = -1;
+            return false;
+        }
 
         // Check if there is the NFC device "bcm2079x-i2c".
         // Chips by Broadcom don't support Mifare Classic.
@@ -588,6 +598,7 @@ public class Common extends Application {
                 return false;
             }
         }
+
         mHasMifareClassicSupport = 1;
         return true;
     }
