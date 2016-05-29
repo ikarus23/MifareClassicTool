@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright 2013 Gerhard Klostermeier
+ * Copyright 2015 Gerhard Klostermeier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,11 @@
 -->
 
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuMainTagInfo"
-        android:title="@string/action_show_tag_info" />
-    <item android:id="@+id/menuMainValueBlockTool"
-        android:title="@string/action_show_vb_tool" />
-    <item android:id="@+id/menuMainAccessConditionTool"
-        android:title="@string/action_show_ac_tool" />
-    <item android:id="@+id/menuMainDiffTool"
-        android:title="@string/action_show_diff_tool" />
-    <item android:id="@+id/menuMainBccTool"
-          android:title="@string/action_show_bcc_tool" />
-</menu>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/relativeLayoutValueBlockTool"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="de.syss.MifareClassicTool.Activities.ValueBlockTool" >
+
+</RelativeLayout>
