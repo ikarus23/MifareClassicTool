@@ -53,6 +53,7 @@
         <li><a href="#value_block_tool">7.2 Value Block Decoder/Encoder</a></li>
         <li><a href="#ac_tool">7.3 Access Condition Decoder/Encoder</a></li>
         <li><a href="#diff_tool">7.4 Diff Tool (Compare Dumps)</a></li>
+        <li><a href="#bcc_tool">7.5 BCC Calculator</a></li>
       </ul>
     </li>
   </ul>
@@ -306,8 +307,7 @@
         <br />However, some special tags require a special command sequence to
         put them into the state where writing to the manufacturer block is
         possible. These tags will not work. Also, make sure the the BCC value is
-        correct. The BCC is the first byte after the UID. It is calculated by
-        XOR-ing all bytes of the UID.
+        correct (see <a href="#bcc_tool">BCC Calculator</a>).
       </li>
     </ul>
 
@@ -507,6 +507,15 @@
     This tool is capable of showing you the difference between two dumps.
     Just select the dumps you want to compare and tool will highlight all
     the sections where the two dumps differ from each other.
+
+  <h3 id="bcc_tool">7.5 BCC Calculator</h3>
+    This tool can calculate the Bit Count Check (BCC) value. For Mifare
+    Classic tags with a 4 byte UID, the BCC must be the 5th byte of the very
+    first block (manufacturers block).
+    <br /><br />
+    More information about calculating the BCC and how it is used during
+    the anti-collision phase can be found in
+    <a href="http://cache.nxp.com/documents/application_note/AN10927.pdf">NXP's AN10927</a>.
 
   </font>
 </body>
