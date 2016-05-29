@@ -154,7 +154,7 @@
     <string name="text_identical_data">-----------Identical------------</string>
     <string name="text_only_in_dump1">Sector occurs only in dump 1 (A)</string>
     <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
-    <string name="text_uid_with_colon">UID:</string>
+    <string name="text_uid_part">UID (part):</string>
     <string name="text_bcc">BCC:</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
@@ -491,7 +491,7 @@
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
-    <string name="hint_hex_4_7_10_byte">HEX, 4, 7 or 10 bytes</string>
+    <string name="hint_hex_4_byte">HEX, 4 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
 

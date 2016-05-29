@@ -49,17 +49,17 @@ public class BccTool extends BasicActivity {
     }
 
     /**
-     * Calculate the BCC value of the given UID. This is done calling
-     * {@link Common#calcBCC(byte[])} after some input checks (has the
-     * given UID a valid length, are there only hex symbols).
+     * Calculate the BCC value of the given UID (part). This is done calling
+     * {@link Common#calcBCC(byte[])} after some input checks (is the length
+     * of the given UID valid; are there only hex symbols).
      * @param view The View object that triggered the method
      * (in this case the calculate BCC button).
      * @see Common#calcBCC(byte[])
      */
     public void onCalculate(View view) {
         String data = mUid.getText().toString();
-        if (data.length() != 8 && data.length() != 14 && data.length() != 20) {
-            // Error. UIDs are 4, 7 or 10 bytes long.
+        if (data.length() != 8) {
+            // Error. UID (parts) are 4 bytes long.
             Toast.makeText(this, R.string.info_invalid_uid_length,
                     Toast.LENGTH_LONG).show();
             return;

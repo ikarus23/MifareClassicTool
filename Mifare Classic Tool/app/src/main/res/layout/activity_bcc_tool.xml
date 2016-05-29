@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
-            android:text="@string/text_uid_with_colon"
+            android:text="@string/text_uid_part"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
@@ -54,10 +54,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/hint_hex_4_7_10_byte"
+            android:hint="@string/hint_hex_4_byte"
             android:imeOptions="actionDone"
             android:inputType="textCapCharacters|textNoSuggestions"
-            android:maxLength="20" />
+            android:maxLength="8" />
 
         <ImageButton
             android:id="@+id/imageButtonBccToolPaste"
