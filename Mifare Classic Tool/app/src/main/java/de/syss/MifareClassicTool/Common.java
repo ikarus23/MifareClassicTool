@@ -1392,7 +1392,7 @@ public class Common extends Application {
      * @param uid The UID of which the BCC should be calculated.
      * @return The BCC of the given UID.
      */
-    private static byte calcBCC(byte[] uid) {
+    public static byte calcBCC(byte[] uid) {
         byte bcc = uid[0];
         for(int i = 1; i < uid.length; i++) {
             bcc = (byte)(bcc ^ uid[i]);
