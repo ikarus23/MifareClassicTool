@@ -57,7 +57,7 @@ This list may be incomplete. You might also want to have a look at
 This app **has been known to work** on the following devices.
 
 * Google Nexus 7 (2012)
-* HTC HTC One
+* HTC One
 * Huawei Ascend Mate7
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
