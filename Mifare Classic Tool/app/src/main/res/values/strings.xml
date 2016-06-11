@@ -44,6 +44,7 @@
         Decoder &amp; Encode</string>
     <string name="title_activity_preferences">Preferences</string>
     <string name="title_activity_diff_tool">Diff Tool</string>
+    <string name="title_activity_bcc_tool">BCC Calculator</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -153,6 +154,8 @@
     <string name="text_identical_data">-----------Identical------------</string>
     <string name="text_only_in_dump1">Sector occurs only in dump 1 (A)</string>
     <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
+    <string name="text_uid_part">UID (part):</string>
+    <string name="text_bcc">BCC:</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -215,6 +218,7 @@
     <string name="action_show_vb_tool">Value Block De-/Encoder</string>
     <string name="action_show_ac_tool">Access Condition De-/Encoder</string>
     <string name="action_show_diff_tool">Diff Tool (Compare Dumps)</string>
+    <string name="action_show_bcc_tool">BCC Calculator</string>
     <string name="action_compare_dump">Compare Dump</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
@@ -231,8 +235,9 @@
     <string name="action_chose_dump">Choose a Dump&#8230;</string>
     <string name="action_continue">Continue</string>
     <string name="action_dont_save">Don\'t Save</string>
-    <string name="action_save_as_default">Save as default</string>
-    <string name="action_save_keys">Save keys</string>
+    <string name="action_save_as_default">Save as Default</string>
+    <string name="action_save_keys">Save Keys</string>
+    <string name="action_calc_bcc">Calculate BCC</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -328,6 +333,7 @@
     <string name="info_value_too_big">Error: The value is too big</string>
     <string name="info_write_permission">Write permission is needed to work properly</string>
     <string name="info_bcc_not_valid">Error: BCC of block 0 is not valid</string>
+    <string name="info_invalid_uid_length">Error: Invlaid UID length</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -485,6 +491,7 @@
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
+    <string name="hint_hex_4_byte">HEX, 4 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
 

@@ -727,6 +727,10 @@ public class MainMenu extends Activity {
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;
+            case R.id.menuMainBccTool:
+                intent = new Intent(this, BccTool.class);
+                startActivity(intent);
+                return true;
         default:
             return super.onContextItemSelected(item);
         }
