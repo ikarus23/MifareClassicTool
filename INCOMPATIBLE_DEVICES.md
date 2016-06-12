@@ -41,10 +41,8 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Note 6
 * Samsung Galaxy Grand Prime
 * Samsung Galaxy S4
-* Samsung Galaxy S5 (900P, Sprint)
 * Samsung Galaxy S5 mini
 * Samsung Galaxy S6
-* Samsung Galaxy S6 Edge
 * Samsung Galaxy S6 Edge Plus
 * Samsung Galaxy S7
 * Samsung Galaxy S7 Edge
