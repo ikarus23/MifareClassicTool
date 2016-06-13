@@ -82,8 +82,8 @@ public class MainMenu extends Activity {
     private AlertDialog mEnableNfc;
     private Button mReadTag;
     private Button mWriteTag;
-    private Button btnKeyEditor;
-    private Button btnDumpEditor;
+    private Button mKeyEditor;
+    private Button mDumpEditor;
     private boolean mResume = true;
     private Intent mOldIntent = null;
 
@@ -111,8 +111,8 @@ public class MainMenu extends Activity {
         // Bind main layout buttons.
         mReadTag = (Button) findViewById(R.id.buttonMainReadTag);
         mWriteTag = (Button) findViewById(R.id.buttonMainWriteTag);
-        btnKeyEditor = (Button) findViewById(R.id.buttonMainEditKeyDump);
-        btnDumpEditor = (Button) findViewById(R.id.buttonMainEditCardDump);
+        mKeyEditor = (Button) findViewById(R.id.buttonMainEditKeyDump);
+        mDumpEditor = (Button) findViewById(R.id.buttonMainEditCardDump);
 
         // Check if the user granted the app write permissions.
         if (Common.hasWritePermissionToExternalStorage(this)) {
@@ -359,6 +359,7 @@ public class MainMenu extends Activity {
         inflater.inflate(R.menu.tools, menu);
         // Enable/Disable tag info tool depending on NFC availability.
         menu.findItem(R.id.menuMainTagInfo).setEnabled(
+                Common.hasMifareClassicSupport() &&
                 !Common.useAsEditorOnly());
         // Enable/Disable diff tool depending on write permissions.
         menu.findItem(R.id.menuMainDiffTool).setEnabled(
@@ -377,7 +378,12 @@ public class MainMenu extends Activity {
         super.onResume();
 
         if (Common.hasWritePermissionToExternalStorage(this)) {
-            enableMenuButtons(true);
+            if (!Common.hasMifareClassicSupport() || Common.useAsEditorOnly()) {
+                mDumpEditor.setEnabled(true);
+                mKeyEditor.setEnabled(true);
+            } else {
+                enableMenuButtons(true);
+            }
         } else {
             enableMenuButtons(false);
         }
@@ -521,7 +527,8 @@ public class MainMenu extends Activity {
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     initFolders();
-                    enableMenuButtons(true);
+                    mDumpEditor.setEnabled(true);
+                    mKeyEditor.setEnabled(true);
                 } else {
                     Toast.makeText(this, R.string.info_write_permission,
                             Toast.LENGTH_LONG).show();
@@ -539,8 +546,8 @@ public class MainMenu extends Activity {
     private void enableMenuButtons(boolean enable) {
         mWriteTag.setEnabled(enable);
         mReadTag.setEnabled(enable);
-        btnKeyEditor.setEnabled(enable);
-        btnDumpEditor.setEnabled(enable);
+        mKeyEditor.setEnabled(enable);
+        mDumpEditor.setEnabled(enable);
     }
 
     /**
@@ -720,6 +727,10 @@ public class MainMenu extends Activity {
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;
+            case R.id.menuMainBccTool:
+                intent = new Intent(this, BccTool.class);
+                startActivity(intent);
+                return true;
         default:
             return super.onContextItemSelected(item);
         }

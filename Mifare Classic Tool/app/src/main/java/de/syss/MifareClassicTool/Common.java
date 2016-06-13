@@ -530,12 +530,15 @@ public class Common extends Application {
 
     /**
      * Check if the device supports the Mifare Classic technology.
-     * In order to do so, check if there are files like "/dev/bcm2079x-i2c" or
-     * "/system/lib/libnfc-bcrm*". Files like these are indicators for a
-     * NFC controller manufactured by Broadcom. Broadcom chips don't support
-     * Mifare Classic.
+     * In order to do so, there is a first check ensure the device actually has
+     * a NFC hardware (if not, {@link #mUseAsEditorOnly} is set to true).
+     * After this, this function will check if there are files
+     * like "/dev/bcm2079x-i2c" or "/system/lib/libnfc-bcrm*". Files like
+     * these are indicators for a NFC controller manufactured by Broadcom.
+     * Broadcom chips don't support Mifare Classic.
      * @return True if the device supports Mifare Classic. False otherwise.
      * @see #mHasMifareClassicSupport
+     * @see #mUseAsEditorOnly
      */
     public static boolean hasMifareClassicSupport() {
         if (mHasMifareClassicSupport != 0) {
@@ -553,6 +556,13 @@ public class Common extends Application {
             return false;
         }
         */
+
+        // Check if ther is any NFC hardware at all.
+        if (NfcAdapter.getDefaultAdapter(mAppContext) == null) {
+            mUseAsEditorOnly = true;
+            mHasMifareClassicSupport = -1;
+            return false;
+        }
 
         // Check if there is the NFC device "bcm2079x-i2c".
         // Chips by Broadcom don't support Mifare Classic.
@@ -588,6 +598,7 @@ public class Common extends Application {
                 return false;
             }
         }
+
         mHasMifareClassicSupport = 1;
         return true;
     }
@@ -631,6 +642,7 @@ public class Common extends Application {
             // it's a Mifare Classic tag.
             // See: http://www.nxp.com/documents/application_note/AN10833.pdf
             // (Table 5 and 6)
+            // 0x28 is for some emulated tags.
             NfcA nfca = NfcA.get(tag);
             byte[] atqa = nfca.getAtqa();
             if (atqa[1] == 0 &&
@@ -639,7 +651,8 @@ public class Common extends Application {
                 // ATQA says it is most likely a Mifare Classic tag.
                 byte sak = (byte)nfca.getSak();
                 if (sak == 8 || sak == 9 || sak == (byte)0x18 ||
-                                            sak == (byte)0x88) {
+                                            sak == (byte)0x88 ||
+                                            sak == (byte)0x28) {
                     // SAK says it is most likely a Mifare Classic tag.
                     // --> Device does not support Mifare Classic.
                     return -1;
@@ -1358,6 +1371,33 @@ public class Common extends Application {
      */
     public static byte[] getUID() {
         return mUID;
+    }
+
+    /**
+     * Check whether the provided BCC is valid for the UID or not. The BCC
+     * is the first byte after the UID in the manufacturers block. It
+     * is calculated by XOR-ing all bytes of the UID.
+     * @param uid The UID to calculate the BCC from.
+     * @param bcc The BCC the calculated BCC gets compared with.
+     * @return True if the BCC if valid for the UID. False otherwise.
+     */
+    public static boolean isValidBCC(byte[] uid, byte bcc) {
+        return calcBCC(uid) == bcc;
+    }
+
+    /**
+     * Calculate the BCC of a given UID. The BCC is the first byte after
+     * the UID in the manufacturers block. It is calculated by XOR-ing all
+     * bytes of the UID.
+     * @param uid The UID of which the BCC should be calculated.
+     * @return The BCC of the given UID.
+     */
+    public static byte calcBCC(byte[] uid) {
+        byte bcc = uid[0];
+        for(int i = 1; i < uid.length; i++) {
+            bcc = (byte)(bcc ^ uid[i]);
+        }
+        return bcc;
     }
 
     /**

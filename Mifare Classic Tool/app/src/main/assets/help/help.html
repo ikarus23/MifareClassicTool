@@ -53,6 +53,7 @@
         <li><a href="#value_block_tool">7.2 Value Block Decoder/Encoder</a></li>
         <li><a href="#ac_tool">7.3 Access Condition Decoder/Encoder</a></li>
         <li><a href="#diff_tool">7.4 Diff Tool (Compare Dumps)</a></li>
+        <li><a href="#bcc_tool">7.5 BCC Calculator</a></li>
       </ul>
     </li>
   </ul>
@@ -114,12 +115,15 @@
           <li>Samsung Galaxy Mega</li>
           <li>Samsung Galaxy Note 3</li>
           <li>Samsung Galaxy Note 4</li>
+          <li>Samsung Galaxy Note 5</li>
+          <li>Samsung Galaxy Note 6</li>
           <li>Samaung Galaxy Grand Prime</li>
           <li>Samsung Galaxy S4</li>
-          <li>Samsung Galaxy S5 (900P, Sprint)</li>
           <li>Samsung Galaxy S5 mini</li>
           <li>Samsung Galaxy S6</li>
-          <li>Samsung Galaxy S6 Edge</li>
+          <li>Samsung Galaxy S6 Edge Plus</li>
+          <li>Samsung Galaxy S7</li>
+          <li>Samsung Galaxy S7 Edge</li>
           <li>Sony Xperia Z2 (some models)</li>
           <li>Sony Xperia Z3 (SOL26)</li>
           <li>Xiaomi MI 3</li>
@@ -201,8 +205,8 @@
     all the keys (A and B) of a tag with tools like the
     <a href="http://www.proxmark.org/">Proxmark3</a> or
     normal RFID-Readers and some special software
-    (<a href="https://code.google.com/p/mfcuk/">mfcuk</a>,
-    <a href="http://code.google.com/p/mfoc/">mfoc</a>).
+    (<a href="https://github.com/nfc-tools/mfcuk">mfcuk</a>,
+    <a href="https://github.com/nfc-tools/mfoc">mfoc</a>).
     <br /><br />
     The application comes with standard key files called
     <i>std.keys</i> and <i>extended-std.keys</i>, which contains the
@@ -299,13 +303,14 @@
       <li>
         <i>Write to Manufacturer Block</i><br />
         The first block of the first sector of an <b>original</b>
-        Mifare Classic tag is <u>read-only</u> i.e. not writable. But there are
+        Mifare Classic tag is read-only i.e. not writable. But there are
         <b>special</b> Mifare Classic tags that support writing to the
         manufacturer block with a simple write command. This App is able to
         write to such tags and can therefore create fully correct clones.
         <br />However, some special tags require a special command sequence to
         put them into the state where writing to the manufacturer block is
-        possible. These tags will not work.
+        possible. These tags will not work. Also, make sure the the BCC value is
+        correct (see <a href="#bcc_tool">BCC Calculator</a>).
       </li>
     </ul>
 
@@ -505,6 +510,15 @@
     This tool is capable of showing you the difference between two dumps.
     Just select the dumps you want to compare and tool will highlight all
     the sections where the two dumps differ from each other.
+
+  <h3 id="bcc_tool">7.5 BCC Calculator</h3>
+    This tool can calculate the Bit Count Check (BCC) value. For Mifare
+    Classic tags with a 4 byte UID, the BCC must be the 5th byte of the very
+    first block (manufacturers block).
+    <br /><br />
+    More information about calculating the BCC and how it is used during
+    the anti-collision phase can be found in
+    <a href="http://cache.nxp.com/documents/application_note/AN10927.pdf">NXP's AN10927</a>.
 
   </font>
 </body>

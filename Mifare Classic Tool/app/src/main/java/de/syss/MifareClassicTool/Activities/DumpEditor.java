@@ -226,6 +226,13 @@ public class DumpEditor extends BasicActivity
      * @see #showAscii()
      * @see #showAC()
      * @see #decodeValueBlocks()
+     * @see #openValueBlockTool()
+     * @see #openAccessConditionTool()
+     * @see #openBccTool()
+     * @see #decodeDateOfManuf()
+     * @see #writeDump()
+     * @see #diffDump()
+     * @see #saveKeys()
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -251,6 +258,9 @@ public class DumpEditor extends BasicActivity
             return true;
         case R.id.menuDumpEditorOpenAccessConditionTool:
             openAccessConditionTool();
+            return true;
+        case R.id.menuDumpEditorOpenBccTool:
+            openBccTool();
             return true;
         case R.id.menuDumpEditorDecodeDateOfManuf:
             decodeDateOfManuf();
@@ -819,6 +829,15 @@ public class DumpEditor extends BasicActivity
      */
     private void openAccessConditionTool() {
         Intent intent = new Intent(this, AccessConditionTool.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Open the BCC calculator ({@link BccTool}).
+     * @see BccTool
+     */
+    private void openBccTool() {
+        Intent intent = new Intent(this, BccTool.class);
         startActivity(intent);
     }
 

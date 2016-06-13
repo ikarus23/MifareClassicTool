@@ -28,4 +28,6 @@
         android:title="@string/action_show_ac_tool" />
     <item android:id="@+id/menuMainDiffTool"
         android:title="@string/action_show_diff_tool" />
+    <item android:id="@+id/menuMainBccTool"
+          android:title="@string/action_show_bcc_tool" />
 </menu>

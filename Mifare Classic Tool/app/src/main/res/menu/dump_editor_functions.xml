@@ -46,4 +46,6 @@
         android:title="@string/action_show_vb_tool" />
     <item android:id="@+id/menuDumpEditorOpenAccessConditionTool"
         android:title="@string/action_show_ac_tool" />
+    <item android:id="@+id/menuDumpEditorOpenBccTool"
+          android:title="@string/action_show_bcc_tool" />
 </menu>

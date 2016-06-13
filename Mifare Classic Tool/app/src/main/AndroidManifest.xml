@@ -142,6 +142,12 @@
             android:icon="@drawable/diff_tool"
             android:label="@string/title_activity_diff_tool" >
         </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activities.BccTool"
+            android:configChanges="orientation|screenSize"
+            android:icon="@drawable/bcc_tool"
+            android:label="@string/title_activity_bcc_tool" >
+        </activity>
     </application>
 
 </manifest>
