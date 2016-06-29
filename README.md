@@ -148,6 +148,8 @@ It is free software and licensed under the
 [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 Icons used in this application:
+* Logo: [Beneke Traub](http://www.beneketraub.com/)  
+  ([Creative Commons 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/))
 * Oxygen Icons: [www.oxygen-icons.org](http://www.oxygen-icons.org/)  
   ([GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html))
 * RFID Tag: [www.nfc-tag.de](http://www.nfc-tag.de/)  
