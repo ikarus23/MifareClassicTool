@@ -2,9 +2,9 @@
 # MIFARE CLASSIC TOOL DUMP TO PROXMARK EMULATOR - Clone initializer    #
 ########################################################################
 
-The script "mct-dump2prox-emu" initializes the Mifare Classic emulator
+The script "mct-dump2prox-emu" initializes the MIFARE Classic emulator
 of the Proxmark3 with the data of a dump like the MCT-App generates.
-It is an easy way to create a real clone (with UID) of the Mifare
+It is an easy way to create a real clone (with UID) of the MIFARE
 Classic tag you read with the MCT-App.
 
 Dependencies:

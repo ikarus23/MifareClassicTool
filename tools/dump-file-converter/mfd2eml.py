@@ -25,7 +25,7 @@ from binascii import hexlify
 
 
 def main():
-  """ Convert a .mfd file (MiFare Drump) to a .eml file (Proxmark3 emulator). """
+  """ Convert a .mfd file (MIFARE Drump) to a .eml file (Proxmark3 emulator). """
   # Are there enouth arguments?
   if len(argv) is not 3:
     usage()
