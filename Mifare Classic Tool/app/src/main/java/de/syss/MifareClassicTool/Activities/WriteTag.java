@@ -311,7 +311,8 @@ public class WriteTag extends BasicActivity {
                          }).show();
         } else if (sector == 0 && block == 0) {
             // Is the BCC valid?
-            if (checkBCC(true) == 0) {
+            int bccCheck = checkBCC(true);
+            if (bccCheck == 0 || bccCheck >= 2) {
                 // Warning. Writing to manufacturer block.
                 showWriteManufInfo(true);
             }
@@ -420,64 +421,80 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Check if the provided BCC is valid for the provided UID and
-     * show a error message if needed..
+     * Check if the BCC of the dump ({@link #mDumpWithPos}) or of the block
+     * ({@link #mDataText}) is valid and show a error message if needed.
+     * This check is only for 4 byte UIDs.
      * @param isWriteBlock If Ture, the UID and BCC are taken from
      * the {@link #mDataText} input field. If False, the UID and BCC
-     * is taken from the provided dump file.
+     * is taken from the {@link #mDumpWithPos} dump.
      * @return <ul>
      * <li>0 - Everything is O.K.</li>
-     * <li>1 - There is no tag.</li>
-     * <li>2 - Dump does not contain the first sector.</li>
-     * <li>3 - Dump does not contain the block 0.</li>
-     * <li>4 - BCC is not valid.</li>
+     * <li>1 - BCC is not valid.</li>
+     * <li>2 - There is no tag.</li>
+     * <li>3 - UID is not 4 bytes long.</li>
+     * <li>4 - Dump does not contain the first sector.</li>
+     * <li>5 - Dump does not contain the block 0.</li>
      * </ul>
      */
     private int checkBCC(boolean isWriteBlock) {
         MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
-            return 1;
+            // Error. There is no tag.
+            return 2;
         }
         reader.close();
+
+        int uidLen = Common.getUID().length;
+        if (uidLen != 4) {
+            // Error. UID is not 4 bytes long.
+            return 3;
+        }
+
         byte bcc;
         byte[] uid;
         // The length of UID of the dump or the block 0 is expected to match
-        // the UID length of the current tag.
-        int bccIndex = Common.getUID().length;
-
+        // the UID length of the current tag. In this case 4 byte.
         if (isWriteBlock) {
             bcc = Common.hexStringToByteArray(
                     mDataText.getText().toString()
-                    .substring(bccIndex * 2, bccIndex * 2 + 2))[0];
+                    .substring(8, 10))[0];
             uid = Common.hexStringToByteArray(
                     mDataText.getText().toString()
-                    .substring(0, bccIndex * 2));
+                    .substring(0, 8));
         } else {
             // Has to be called after mDumpWithPos is properly initialized.
             // (After checkDumpAndShowSectorChooserDialog().)
             HashMap<Integer, byte[]> sector0 = mDumpWithPos.get(0);
             if (sector0 == null) {
-                // There is no sector 0 in this dump. Checking the BCC
+                // Error. There is no sector 0 in this dump. Checking the BCC
                 // is therefore irrelevant.
-                return 2;
+                return 4;
             }
             byte[] block0 = sector0.get(0);
             if (block0 == null) {
-                // There is no block 0 in sector 0. Checking the BCC is
+                // Error. There is no block 0 in sector 0. Checking the BCC is
                 // therefore irrelevant.
-                return 3;
+                return 5;
             }
-            bcc = block0[0];
-            uid = new byte[bccIndex-1];
-            System.arraycopy(block0, 0, uid, 0, bccIndex-1);
+            bcc = block0[4];
+            uid = new byte[uidLen];
+            System.arraycopy(block0, 0, uid, 0, uidLen);
         }
-
-        if (!Common.isValidBCC(uid, bcc)) {
-            // BCC is not valid. Show error message.
+        boolean isValidBcc;
+        try {
+            isValidBcc = Common.isValidBCC(uid, bcc);
+        } catch (IllegalArgumentException e) {
+            // This should never happen, because we already know that the
+            // length of the UID is 4 byte.
+            return 3;
+        }
+        if (!isValidBcc) {
+            // Error. BCC is not valid. Show error message.
             Toast.makeText(this, R.string.info_bcc_not_valid,
                     Toast.LENGTH_LONG).show();
-            return 4;
+            return 1;
         }
+        // Everything was O.K.
         return 0;
     }
 
@@ -667,43 +684,15 @@ public class WriteTag extends BasicActivity {
      * @see #createKeyMapForDump()
      * @see #checkBCC(boolean)
      */
-    private void checkDumpAndShowSectorChooserDialog(String[] dump) {
+    private void checkDumpAndShowSectorChooserDialog(final String[] dump) {
         int err = Common.isValidDump(dump, false);
         if (err != 0) {
             // Error.
             Common.isValidDumpErrorToast(err, this);
             return;
         }
-        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
-        int sector = 0;
-        int block = 0;
 
-        // Transform the simple dump array into a structure (mDumpWithPos)
-        // where the sector and block information are known additionally.
-        // Blocks containing unknown data ("-") are dropped.
-        for (int i = 0; i < dump.length; i++) {
-            if (dump[i].startsWith("+")) {
-                String[] tmp = dump[i].split(": ");
-                sector = Integer.parseInt(tmp[tmp.length-1]);
-                block = 0;
-                mDumpWithPos.put(sector, new HashMap<Integer, byte[]>());
-            } else if (!dump[i].contains("-")) {
-                // Use static Access Conditions for all sectors?
-                if (mEnableStaticAC.isChecked()
-                        && (i+1 == dump.length || dump[i+1].startsWith("+"))) {
-                    // This is a Sector Trailer. Replace its ACs
-                    // with the static ones.
-                    String newBlock = dump[i].substring(0, 12)
-                            + mStaticAC.getText().toString()
-                            + dump[i].substring(18, dump[i].length());
-                    dump[i] = newBlock;
-                }
-                mDumpWithPos.get(sector).put(block++,
-                        Common.hexStringToByteArray(dump[i]));
-            } else {
-                block++;
-            }
-        }
+        initDumpWithPosFromDump(dump);
 
         // Create and show sector chooser dialog
         // (let the user select the sectors which will be written).
@@ -749,7 +738,7 @@ public class WriteTag extends BasicActivity {
                     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //Do nothing here because we override this button later
+                    // Do nothing here because we override this button later
                     // to change the close behaviour. However, we still need
                     // this because on older versions of Android unless we
                     // pass a handler the button doesn't get instantiated
@@ -765,33 +754,88 @@ public class WriteTag extends BasicActivity {
             .create();
         dialog.show();
 
-        // Override/define behavior for positiv button click.
+        // Override/define behavior for positive button click.
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Remove unwanted sectors.
+                // Re-Init mDumpWithPos in order to remove unwanted sectors.
+                initDumpWithPosFromDump(dump);
+                boolean writeBlock0 = false;
                 for (CheckBox box : sectorBoxes) {
+                    int sector = Integer.parseInt(box.getTag().toString());
                     if (!box.isChecked()) {
-                        mDumpWithPos.remove(
-                                Integer.parseInt(box.getTag().toString()));
+                        mDumpWithPos.remove(sector);
+                    } else if (sector == 0 && box.isChecked()
+                            && mWriteManufBlock.isChecked() ) {
+                        writeBlock0 = true;
                     }
                 }
+
                 if (mDumpWithPos.size() == 0) {
                     // Error. There is nothing to write.
                     Toast.makeText(context, R.string.info_nothing_to_write,
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-                // Is BCC valid?
-                int bccCheck = checkBCC(false);
-                if (bccCheck == 0 || bccCheck == 2 || bccCheck == 3) {
-                    // Create key map.
-                    createKeyMapForDump();
-                    dialog.dismiss();
+
+                // Do a BCC check if sector 0 is chosen and writing to
+                // the manufacturer block was enabled.
+                if (writeBlock0) {
+                    int bccCheck = checkBCC(false);
+                    if (bccCheck >= 2) {
+                        // Error. Redo.
+                        return;
+                    } else if (bccCheck == 1) {
+                        // Error in BCC. Exit.
+                        dialog.dismiss();
+                        return;
+                    }
                 }
+                // Create key map.
+                createKeyMapForDump();
+                dialog.dismiss();
             }
         });
+    }
+
+    /**
+     * Initialize {@link #mDumpWithPos} with the data from a dump.
+     * Transform the simple dump array into a structure (mDumpWithPos)
+     * where the sector and block information are known additionally.
+     * Blocks containing unknown data ("-") are dropped.
+     * @param dump The dump to initialize the mDumpWithPos with.
+     */
+    private void initDumpWithPosFromDump(String[] dump) {
+        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
+        int sector = 0;
+        int block = 0;
+        // Transform the simple dump array into a structure (mDumpWithPos)
+        // where the sector and block information are known additionally.
+        // Blocks containing unknown data ("-") are dropped.
+        for (int i = 0; i < dump.length; i++) {
+            if (dump[i].startsWith("+")) {
+                String[] tmp = dump[i].split(": ");
+                sector = Integer.parseInt(tmp[tmp.length-1]);
+                block = 0;
+                mDumpWithPos.put(sector, new HashMap<Integer, byte[]>());
+            } else if (!dump[i].contains("-")) {
+                // Use static Access Conditions for all sectors?
+                if (mEnableStaticAC.isChecked()
+                        && (i+1 == dump.length || dump[i+1].startsWith("+"))) {
+                    // This is a Sector Trailer. Replace its ACs
+                    // with the static ones.
+                    String newBlock = dump[i].substring(0, 12)
+                            + mStaticAC.getText().toString()
+                            + dump[i].substring(18, dump[i].length());
+                    dump[i] = newBlock;
+                }
+                mDumpWithPos.get(sector).put(block++,
+                        Common.hexStringToByteArray(dump[i]));
+            } else {
+                block++;
+            }
+        }
     }
 
     /**

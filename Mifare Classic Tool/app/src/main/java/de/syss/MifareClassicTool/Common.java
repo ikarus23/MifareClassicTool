@@ -1386,13 +1386,18 @@ public class Common extends Application {
     }
 
     /**
-     * Calculate the BCC of a given UID. The BCC is the first byte after
-     * the UID in the manufacturers block. It is calculated by XOR-ing all
-     * bytes of the UID.
+     * Calculate the BCC of a 4 byte UID. For tags with a 4 byte UID the
+     * BCC is the first byte after the UID in the manufacturers block.
+     * It is calculated by XOR-ing the 4 bytes of the UID.
      * @param uid The UID of which the BCC should be calculated.
+     * @exception IllegalArgumentException Thrown if the uid parameter
+     * has not 4 bytes.
      * @return The BCC of the given UID.
      */
-    public static byte calcBCC(byte[] uid) {
+    public static byte calcBCC(byte[] uid) throws IllegalArgumentException {
+        if (uid.length != 4) {
+            throw new IllegalArgumentException("UID length is not 4 bytes.");
+        }
         byte bcc = uid[0];
         for(int i = 1; i < uid.length; i++) {
             bcc = (byte)(bcc ^ uid[i]);
