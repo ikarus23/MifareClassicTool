@@ -36,6 +36,7 @@ import android.os.Parcel;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 
 /**
@@ -936,6 +937,13 @@ public class MCReader {
      * @return The sector count of the current tag.
      */
     public int getSectorCount() {
+        boolean useCustomSectorCount = Common.getPreferences().getBoolean(
+                Preference.UseCustomSectorCount.toString(), false);
+        if (useCustomSectorCount) {
+            int customSectorCount = Common.getPreferences().getInt(
+                    Preference.CustomSectorCount.toString(), 16);
+            return customSectorCount;
+        }
         return mMFC.getSectorCount();
     }
 
