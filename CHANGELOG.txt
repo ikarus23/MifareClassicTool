@@ -42,7 +42,7 @@ Version 2.0.3:
 
 Version 2.0.2:
  * It's now possible to save the mapping range as default.
- * Improved Mifare Classic support check. Thanks to Kirill Elagin.
+ * Improved MIFARE Classic support check. Thanks to Kirill Elagin.
  * Sony Xperia Z3 (SOL26) is not supported.
 
 Version 2.0.1:
@@ -65,7 +65,7 @@ Version 1.8.3:
    edited a dump and not just looked at it. Thanks to "systemcrash".
 
 Version 1.8.2:
- * Improved Mifare Classic support check. Thanks to "domints".
+ * Improved MIFARE Classic support check. Thanks to "domints".
  * Show a dialog if there are unsaved changes (dump and key editor).
  * File name suggestion for dumps.
  * Reduced presses for comparing a dump via editor.
@@ -84,7 +84,7 @@ Version 1.8.1:
    (Remove the old and restart MCT to get the new key file.)
  * Added a new tag to the tag identification list (TNP3xxx).
  * Fixed multiple crash issues.
- * Samsung Galaxy Note 4 does not support Mifare Classic.
+ * Samsung Galaxy Note 4 does not support MIFARE Classic.
 
 Version 1.8.0:
  * New Feature: You can compare dumps using the Diff Tool.
@@ -153,17 +153,17 @@ Version 1.7.0:
  * Some minor bug fixes.
  * Fixed some spelling (thanks to "systemcrash").
  * Updated support list.
-   Googles Nexus 5 does not support Mifare Classic.
+   Googles Nexus 5 does not support MIFARE Classic.
 
 Version 1.6.0:
- * New Feature: Decode & Encode Mifare Classic Access Conditions.
+ * New Feature: Decode & Encode MIFARE Classic Access Conditions.
    (Access the new tool via "Tools" form main menu or
    form the dump editor menu.)
 
 Version 1.5.3:
- * Improved Mifare Classic support check.
+ * Improved MIFARE Classic support check.
    (The app tells you now whether it is your device or the tag that does not
-   support Mifare Classic.)
+   support MIFARE Classic.)
  * Fixed crash issue for too big/many key files.
  * Some bug fixes.
 
@@ -181,7 +181,7 @@ Version 1.5.1:
  * Fixed crash issue on some rare "tag lost"-events.
  * Updated support list.
    The new Nexus 7 (2013) is not able to read/write
-   Mifare Classic (due to hardware).
+   MIFARE Classic (due to hardware).
  * Some bug fixes.
 
 Version 1.5.0:
@@ -221,7 +221,7 @@ Version 1.3.1:
  * Some minor bug fixes.
 
 Version 1.3.0:
- * Added new tool: Decode & Encode Mifare Classic Value Blocks.
+ * Added new tool: Decode & Encode MIFARE Classic Value Blocks.
  * Added script to convert MCT dumps to RAW dumps.
  * Added script to convert RAW dumps to MCT dumps.
  * Display the UID length (and the CL) in tag info tool.
@@ -239,7 +239,7 @@ Version 1.2.1:
 
 Version 1.2.0:
  * Added new tool: Display tag information.
- * New system to check for Mifare Classic support.
+ * New system to check for MIFARE Classic support.
  * Updated footer (version - licence - project page).
  * Some minor bug fixes.
 
