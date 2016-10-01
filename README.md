@@ -155,4 +155,4 @@ Icons used in this application:
 * RFID Tag: [www.nfc-tag.de](http://www.nfc-tag.de/)  
   ([Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/))
 
-MIFARE is a registered trademark of NXP Semiconductors.
+MIFARE® is a registered trademark of NXP Semiconductors.
