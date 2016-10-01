@@ -32,7 +32,7 @@ import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
 /**
- * Decode Mifare Classic Access Conditions from their hex format
+ * Decode MIFARE Classic Access Conditions from their hex format
  * to a more human readable format and vice versa.
  * @author Gerhard Klostermeier
  */
@@ -257,7 +257,7 @@ public class AccessConditionTool extends BasicActivity {
     }
 
     /**
-     * Copy the Mifare Classic Access Conditions to the Android clipboard.
+     * Copy the MIFARE Classic Access Conditions to the Android clipboard.
      * @param view The View object that triggered the method
      * (in this case the copy button).
      */

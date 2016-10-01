@@ -22,11 +22,11 @@
 <resources>
 
     <!-- Common stuff -->
-    <string name="app_name">Mifare Classic Tool</string>
+    <string name="app_name">MIFARE Classic Tool</string>
     <string name="app_version">Versión</string>
 
     <!-- Activity titles -->
-    <string name="title_activity_main">Mifare Classic Tool</string>
+    <string name="title_activity_main">MIFARE Classic Tool</string>
     <string name="title_activity_read_tag">Leer Etiqueta</string>
     <string name="title_activity_dump_editor">Editor de Dumpeos</string>
     <string name="title_activity_access_conditions">Condiciones de Acceso</string>
@@ -101,11 +101,11 @@
         sector muerto :(</string>
     <string name="text_strange_error">Algún error extraño ha ocurrido :(</string>
     <string name="text_no_mfc_support_device">¡Este dispositivo no soporta
-        MiFare Classic!</string>
-    <string name="text_no_mfc_support_tag">¡No es una etiqueta Mifare Classic!</string>
-    <string name="text_no_tag">No hay una etiqueta Mifare Classic presente</string>
+        MIFARE Classic!</string>
+    <string name="text_no_mfc_support_tag">¡No es una etiqueta MIFARE Classic!</string>
+    <string name="text_no_tag">No hay una etiqueta MIFARE Classic presente</string>
     <string name="text_generic_info">Información Genérica</string>
-    <string name="text_mf_info">Mifare Classic Info</string>
+    <string name="text_mf_info">MIFARE Classic Info</string>
     <string name="text_rf_tech">Tecnología RF</string>
     <string name="text_rf_tech_14a">ISO/IEC 14443, Type A</string>
     <string name="text_atqa">ATQA</string>
@@ -209,7 +209,7 @@
     <string name="info_new_tag_found">Encontrada nueva etiqueta</string>
     <string name="info_no_external_storage">Error: sin acceso al
         almacenamiento externo</string>
-    <string name="info_no_tag_found">Error: no hay una etiqueta Mifare Classic</string>
+    <string name="info_no_tag_found">Error: no hay una etiqueta MIFARE Classic</string>
     <string name="info_wait_key_map">Creando Mapa de Claves&#8230;
         Espere por favor&#8230;</string>
     <string name="info_tag_removed_while_reading">Error: Tag quitada durante
@@ -304,13 +304,13 @@
     <string name="dialog_no_nfc_title">No hay hardware NFC</string>
     <string name="dialog_nfc_not_enabled_title">NFC No habilitado</string>
     <string name="dialog_no_mfc_support_device_title">No hay soporte para
-        Mifare Classic</string>
+        MIFARE Classic</string>
     <string name="dialog_no_mfc_support_device">Tu dispositivo
-        (por razones de hardware) no soporta Mifare Classic! Lo único que
+        (por razones de hardware) no soporta MIFARE Classic! Lo único que
         se puede hacer es mostrar el UID y alguna información general extra.
         Las operaciones I/O no son posibles.
         \n\n<b>Más allá, esta aplicacion carece de uso en este dispositivo.</b>
-        \n\nDispositivos conocidos SIN compatibilidad con Mifare Classic:\n
+        \n\nDispositivos conocidos SIN compatibilidad con MIFARE Classic:\n
         &#8226; Google Nexus 4\n
         &#8226; Google Nexus 5\n
         &#8226; Google Nexus 7 (2013)\n
@@ -323,9 +323,9 @@
         &#8226; Samsung Galaxy Note 4\n
         &#8226; LG G2\n
         &#8226; LG Optimus L7 II</string>
-    <string name="dialog_no_mfc_support_tag_title">No es una etiqueta Mifare Classic</string>
+    <string name="dialog_no_mfc_support_tag_title">No es una etiqueta MIFARE Classic</string>
     <string name="dialog_no_mfc_support_tag">Esta etiqueta no es compatible con la
-        tecnología Mifare Classic! Esta aplicación solo está diseñada para Mifare Classic!
+        tecnología MIFARE Classic! Esta aplicación solo está diseñada para MIFARE Classic!
         \n\n<b>Por favor, utiliza otra etiqueta.</b>
         \n\n<small>(Advertencia: En algunos casos este mensaje puede ser un falso
         positivo causado por más de una etiqueta en el campo del lector o valores
@@ -348,7 +348,7 @@
     <string name="dialog_first_run_title">ADVERTENCIA</string>
     <string name="dialog_first_run">Esta aplicación está dedicada
         a usuarios que tengan al menos una familiaridad básica con la
-        tecnología Mifare Classic. Sus funcionalidades son básicas y
+        tecnología MIFARE Classic. Sus funcionalidades son básicas y
         a  bajo nivel. Por otra parte casi todos los datos de entrada y salida
         serán en hexadecimal. Es importante que entiendas lo que estás haciendo,
         e.j. si escribes datos en una etiqueta. Escribir datos erróneos en ciertos
@@ -365,10 +365,10 @@
     <string name="dialog_share_title">Mandar fichero de Dumpeo a…</string>
     <string name="dialog_block0_writing_title">Escribir bloque de fábrica</string>
     <string name="dialog_block0_writing"><b>Escribir el primer bloque del sector 0
-        no es posible en etiquetas Mifare Classic originales.</b>
+        no es posible en etiquetas MIFARE Classic originales.</b>
         \n\nPor favor asegurate de que estas usando una etiqueta especial que
         soporte escritura en el bloque de fábrica
-        (con un comando Mifare Classic normal).
+        (con un comando MIFARE Classic normal).
         \n\n<b>Mira la sección \"Escribir etiqueta\" de
         \"Ayuda e Info\" para más información.</b></string>
     <string name="dialog_static_ac_title">Usar Condiciones de Acceso
@@ -428,7 +428,7 @@
         (semana de fabricación) debe estar entre 1 y 53 (e.j. 28).
         El segundo byte (año de fabricación) debe estar entre 0 y el año actual
          (e.g. 12, queriendo decir 2012).
-        \n\nQuizás la etiqueta no sea una Mifare Classic original.</string>
+        \n\nQuizás la etiqueta no sea una MIFARE Classic original.</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.j. 0A4F&#8230;)</string>

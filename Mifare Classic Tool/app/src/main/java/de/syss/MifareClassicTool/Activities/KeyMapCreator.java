@@ -116,7 +116,7 @@ public class KeyMapCreator extends BasicActivity {
 //            "de.syss.MifareClassicTool.Activity.KEY_MAP";
 
 
-    // Sector count of the biggest Mifare Classic tag (4K Tag)
+    // Sector count of the biggest MIFARE Classic tag (4K Tag)
     public static final int MAX_SECTOR_COUNT = 40;
     // Block count of the biggest sector (4K Tag, Sector 32-39)
     public static final int MAX_BLOCK_COUNT_PER_SECTOR = 16;

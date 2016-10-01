@@ -33,7 +33,7 @@ import de.syss.MifareClassicTool.R;
 /**
  * Display value blocks in a way a user can read easily (as integer).
  * NXP has PDFs describing what value blocks are.
- * Google something like "nxp mifare classic value blocks",
+ * Google something like "nxp MIFARE classic value blocks",
  * if you want to have a closer look.
  * This Activity will be shown from the {@link DumpEditor}, if the user
  * clicks the corresponding menu item.

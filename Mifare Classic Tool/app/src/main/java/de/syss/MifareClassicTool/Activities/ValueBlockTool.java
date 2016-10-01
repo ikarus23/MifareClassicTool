@@ -29,7 +29,7 @@ import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
 /**
- * Decode Mifare Classic Value Blocks from their hex format
+ * Decode MIFARE Classic Value Blocks from their hex format
  * to an integer and vice versa.
  * @author Gerhard Klostermeier
  */
@@ -53,7 +53,7 @@ public class ValueBlockTool extends BasicActivity {
     }
 
     /**
-     * Decode a Mifare Classic Value Block into an integer and the Addr value.
+     * Decode a MIFARE Classic Value Block into an integer and the Addr value.
      * @param view The View object that triggered the method
      * (in this case the decode button).
      */
@@ -79,7 +79,7 @@ public class ValueBlockTool extends BasicActivity {
     }
 
     /**
-     * Encode a integer (and addr.) into a Mifare Classic Value Block.
+     * Encode a integer (and addr.) into a MIFARE Classic Value Block.
      * @param view The View object that triggered the method
      * (in this case the encode button).
      */
@@ -127,7 +127,7 @@ public class ValueBlockTool extends BasicActivity {
     }
 
     /**
-     * Copy the Mifare Classic Value Block to the Android clipboard.
+     * Copy the MIFARE Classic Value Block to the Android clipboard.
      * @param view The View object that triggered the method
      * (in this case the copy button).
      */

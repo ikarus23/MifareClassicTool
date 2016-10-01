@@ -93,10 +93,10 @@
         然而, 可能导致 MCT 怪异的行为.</b>\n\n
         这是已知问题, 这个设置也许有用:\n
         • 特殊标签 (例如 smartMX)</string>
-    <string name="dialog_auto_reconnect_title">自动重连</string><string name="dialog_block0_writing"><b>Mifare Classic 标签
+    <string name="dialog_auto_reconnect_title">自动重连</string><string name="dialog_block0_writing"><b>MIFARE Classic 标签
         扇区0首块是不可能写入的.</b>\n\n
         请确保您使用的是一个特殊的标签，以支持写入到制造商块
-        (同标准 Mifare Classic 写命令).\n\n
+        (同标准 MIFARE Classic 写命令).\n\n
         <b>查看\"帮助和信息\" - \"写标签\" 节 获取更多信息.</b></string>
     <string name="dialog_block0_writing_title">写厂商块</string>
     <string name="dialog_choose_ac_title">选定访问条件</string>
@@ -111,8 +111,8 @@
     <string name="dialog_new_file_title">新文件</string>
     <string name="dialog_nfc_not_enabled">NFC适配器没启用。请到设置中启用。</string>
     <string name="dialog_nfc_not_enabled_title">NFC没有启用</string>
-    <string name="dialog_no_mfc_support_device_title">没Mifare Classic支持</string>
-    <string name="dialog_no_mfc_support_tag_title">没有Mifare Classic标签</string>
+    <string name="dialog_no_mfc_support_device_title">没MIFARE Classic支持</string>
+    <string name="dialog_no_mfc_support_tag_title">没有MIFARE Classic标签</string>
     <string name="dialog_no_nfc">没有在你的设备发现NFC硬件。你需要一个NFC功能的设备才能正确运行这个程序。</string>
     <string name="dialog_no_nfc_title">没有NFC硬件</string>
     <string name="dialog_not_writable">有些部分是不可写的！检查下面列表。</string>
@@ -164,7 +164,7 @@
     <string name="info_no_external_storage">错误：外部存储器不可读/可写</string>
     <string name="info_no_int_to_encode">错误：没有整数来编码</string>
     <string name="info_no_key_found">没有在选定的密钥文件中发现有效的密钥</string>
-    <string name="info_no_tag_found">错误：没有发现 Mifare Classic 标签</string>
+    <string name="info_no_tag_found">错误：没有发现 MIFARE Classic 标签</string>
     <string name="info_no_vb_in_dump">这个转储中没有值块</string>
     <string name="info_none_key_valid_for_reading">错误：没有读到一个有效的密钥</string>
     <string name="info_not_16_byte">错误：数据必须是16字节（32个字符）长</string>
@@ -214,13 +214,13 @@
     <string name="text_keys_not_known">Keys (A and B) 未知</string>
     <string name="text_keys_read_only">Keys (A and B) 只读</string>
     <string name="text_mem_size">内存大小</string>
-    <string name="text_mf_info">Mifare Classic 信息</string>
+    <string name="text_mf_info">MIFARE Classic 信息</string>
     <string name="text_never">永不</string>
     <string name="text_no_files_in_chooser">没发现文件</string>
     <string name="text_no_key_io_error">没密钥发现(或死扇区)</string>
-    <string name="text_no_mfc_support_device">此设备不支持Mifare Classic！</string>
-    <string name="text_no_mfc_support_tag">不是Mifare Classic标签！</string>
-    <string name="text_no_tag">这不是Mifare Classic标签！</string>
+    <string name="text_no_mfc_support_device">此设备不支持MIFARE Classic！</string>
+    <string name="text_no_mfc_support_tag">不是MIFARE Classic标签！</string>
+    <string name="text_no_tag">这不是MIFARE Classic标签！</string>
     <string name="text_open_dump_title">打开标签转储</string>
     <string name="text_open_key_file_title">打开或创建一个密钥文件</string>
     <string name="text_option_info">信息选项</string>
@@ -241,7 +241,7 @@
     <string name="title_activity_value_blocks">值块是整数</string>
     <string name="title_activity_write_tag">写标签</string>
     <string name="title_activity_key_editor">密钥编辑</string>
-    <string name="title_activity_main">Mifare 经典工具</string>
+    <string name="title_activity_main">MIFARE 经典工具</string>
     <string name="title_activity_hex_to_ascii">数据是ASCII</string>
     <string name="title_activity_help">帮助和信息</string>
     <string name="title_activity_file_chooser">文件选择器</string>

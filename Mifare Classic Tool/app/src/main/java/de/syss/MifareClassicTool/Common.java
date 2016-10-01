@@ -95,10 +95,10 @@ public class Common extends Application {
     public static final String TMP_DIR = "tmp";
 
     /**
-     * This file contains some standard Mifare keys.
+     * This file contains some standard MIFARE keys.
      * <ul>
      * <li>0xFFFFFFFFFFFF - Un-formatted, factory fresh tags.</li>
-     * <li>0xA0A1A2A3A4A5 - First sector of the tag (Mifare MAD).</li>
+     * <li>0xA0A1A2A3A4A5 - First sector of the tag (MIFARE MAD).</li>
      * <li>0xD3F7D3F7D3F7 - NDEF formatted tags.</li>
      * </ul>
      */
@@ -112,7 +112,7 @@ public class Common extends Application {
     public static final String STD_KEYS_EXTENDED = "extended-std.keys";
 
     /**
-     * Possible operations the on a Mifare Classic Tag.
+     * Possible operations the on a MIFARE Classic Tag.
      */
     public enum Operations {
         Read, Write, Increment, DecTransRest, ReadKeyA, ReadKeyB, ReadAC,
@@ -171,9 +171,9 @@ public class Common extends Application {
     private static boolean mUseAsEditorOnly = false;
 
     /**
-     * 1 if the device does support Mifare Classic. -1 if it doesn't support
+     * 1 if the device does support MIFARE Classic. -1 if it doesn't support
      * it. 0 if the support check was not yet performed.
-     * Checking for Mifare Classic support is really expensive. Therefore
+     * Checking for MIFARE Classic support is really expensive. Therefore
      * remember the result here.
      */
     private static int mHasMifareClassicSupport = 0;
@@ -494,15 +494,15 @@ public class Common extends Application {
      * by {@link MCReader#patchTag(Tag)} and  {@link #mTag} as well as
      * {@link #mUID} will be updated. A Toast message will be shown in the
      * Context of the calling Activity. This method will also check if the
-     * device/tag supports Mifare Classic (see return values and
+     * device/tag supports MIFARE Classic (see return values and
      * {@link #checkMifareClassicSupport(Tag, Context)}).
      * @param intent The Intent which should be checked for a new Tag.
      * @param context The Context in which the Toast will be shown.
      * @return
      * <ul>
-     * <li>0 - The device/tag supports Mifare Classic</li>
-     * <li>-1 - Device does not support Mifare Classic.</li>
-     * <li>-2 - Tag does not support Mifare Classic.</li>
+     * <li>0 - The device/tag supports MIFARE Classic</li>
+     * <li>-1 - Device does not support MIFARE Classic.</li>
+     * <li>-2 - Tag does not support MIFARE Classic.</li>
      * <li>-3 - Error (tag or context is null).</li>
      * <li>-4 - Wrong Intent (action is not "ACTION_TECH_DISCOVERED").</li>
      * </ul>
@@ -529,14 +529,14 @@ public class Common extends Application {
     }
 
     /**
-     * Check if the device supports the Mifare Classic technology.
+     * Check if the device supports the MIFARE Classic technology.
      * In order to do so, there is a first check ensure the device actually has
      * a NFC hardware (if not, {@link #mUseAsEditorOnly} is set to true).
      * After this, this function will check if there are files
      * like "/dev/bcm2079x-i2c" or "/system/lib/libnfc-bcrm*". Files like
      * these are indicators for a NFC controller manufactured by Broadcom.
-     * Broadcom chips don't support Mifare Classic.
-     * @return True if the device supports Mifare Classic. False otherwise.
+     * Broadcom chips don't support MIFARE Classic.
+     * @return True if the device supports MIFARE Classic. False otherwise.
      * @see #mHasMifareClassicSupport
      * @see #mUseAsEditorOnly
      */
@@ -552,7 +552,7 @@ public class Common extends Application {
         try {
             Class.forName("android.nfc.tech.MifareClassic");
         } catch( ClassNotFoundException e ) {
-            // Class not found. Devices does not support Mifare Classic.
+            // Class not found. Devices does not support MIFARE Classic.
             return false;
         }
         */
@@ -565,7 +565,7 @@ public class Common extends Application {
         }
 
         // Check if there is the NFC device "bcm2079x-i2c".
-        // Chips by Broadcom don't support Mifare Classic.
+        // Chips by Broadcom don't support MIFARE Classic.
         // This could fail because on a lot of devices apps don't have
         // the sufficient permissions.
         File device = new File("/dev/bcm2079x-i2c");
@@ -576,7 +576,7 @@ public class Common extends Application {
 
         // Check if there is the NFC device "pn544".
         // The PN544 NFC chip is manufactured by NXP.
-        // Chips by NXP support Mifare Classic.
+        // Chips by NXP support MIFARE Classic.
         device = new File("/dev/pn544");
         if (device.exists()) {
             mHasMifareClassicSupport = 1;
@@ -585,7 +585,7 @@ public class Common extends Application {
 
         // Check if there are NFC libs with "brcm" in their names.
         // "brcm" libs are for devices with Broadcom chips. Broadcom chips
-        // don't support Mifare Classic.
+        // don't support MIFARE Classic.
         File libsFolder = new File("/system/lib");
         File[] libs = libsFolder.listFiles();
         for (File lib : libs) {
@@ -604,14 +604,14 @@ public class Common extends Application {
     }
 
     /**
-     * Check if the tag and the device support the Mifare Classic technology.
+     * Check if the tag and the device support the MIFARE Classic technology.
      * @param tag The tag to check.
      * @param context The context of the package manager.
      * @return
      * <ul>
-     * <li>0 - Device and tag support Mifare Classic.</li>
-     * <li>-1 - Device does not support Mifare Classic.</li>
-     * <li>-2 - Tag does not support Mifare Classic.</li>
+     * <li>0 - Device and tag support MIFARE Classic.</li>
+     * <li>-1 - Device does not support MIFARE Classic.</li>
+     * <li>-2 - Tag does not support MIFARE Classic.</li>
      * <li>-3 - Error (tag or context is null).</li>
      * </ul>
      */
@@ -623,23 +623,23 @@ public class Common extends Application {
 
         if (Arrays.asList(tag.getTechList()).contains(
                 MifareClassic.class.getName())) {
-            // Device and tag support Mifare Classic.
+            // Device and tag support MIFARE Classic.
             return 0;
 
         // This is no longer valid. There are some devices (e.g. LG's F60)
-        // that have this system feature but no Mifare Classic support.
+        // that have this system feature but no MIFARE Classic support.
         // (The F60 has a Broadcom NFC controller.)
         /*
         } else if (context.getPackageManager().hasSystemFeature(
                 "com.nxp.mifare")){
-            // Tag does not support Mifare Classic.
+            // Tag does not support MIFARE Classic.
             return -2;
         */
 
         } else {
-            // Check if device does not support Mifare Classic.
+            // Check if device does not support MIFARE Classic.
             // For doing so, check if the ATQA + SAK of the tag indicate that
-            // it's a Mifare Classic tag.
+            // it's a MIFARE Classic tag.
             // See: http://www.nxp.com/documents/application_note/AN10833.pdf
             // (Table 5 and 6)
             // 0x28 is for some emulated tags.
@@ -648,25 +648,25 @@ public class Common extends Application {
             if (atqa[1] == 0 &&
                     (atqa[0] == 4 || atqa[0] == (byte)0x44 ||
                      atqa[0] == 2 || atqa[0] == (byte)0x42)) {
-                // ATQA says it is most likely a Mifare Classic tag.
+                // ATQA says it is most likely a MIFARE Classic tag.
                 byte sak = (byte)nfca.getSak();
                 if (sak == 8 || sak == 9 || sak == (byte)0x18 ||
                                             sak == (byte)0x88 ||
                                             sak == (byte)0x28) {
-                    // SAK says it is most likely a Mifare Classic tag.
-                    // --> Device does not support Mifare Classic.
+                    // SAK says it is most likely a MIFARE Classic tag.
+                    // --> Device does not support MIFARE Classic.
                     return -1;
                 }
             }
             // Nope, it's not the device (most likely).
-            // The tag does not support Mifare Classic.
+            // The tag does not support MIFARE Classic.
             return -2;
         }
     }
 
     /**
-     * Create a connected {@link MCReader} if there is a present Mifare Classic
-     * tag. If there is no Mifare Classic tag an error
+     * Create a connected {@link MCReader} if there is a present MIFARE Classic
+     * tag. If there is no MIFARE Classic tag an error
      * message will be displayed to the user.
      * @param context The Context in which the error Toast will be shown.
      * @return A connected {@link MCReader} or "null" if no tag was present.
@@ -700,7 +700,7 @@ public class Common extends Application {
      * Depending on the provided Access Conditions this method will return
      * with which key you can achieve the operation ({@link Operations})
      * you asked for.<br />
-     * This method contains the table from the NXP Mifare Classic Datasheet.
+     * This method contains the table from the NXP MIFARE Classic Datasheet.
      * @param c1 Access Condition byte "C!".
      * @param c2 Access Condition byte "C2".
      * @param c3 Access Condition byte "C3".
@@ -980,7 +980,7 @@ public class Common extends Application {
     /**
      * Check if the given block (hex string) is a value block.
      * NXP has PDFs describing what value blocks are. Google something
-     * like "nxp mifare classic value block" if you want to have a
+     * like "nxp MIFARE classic value block" if you want to have a
      * closer look.
      * @param hexString Block data as hex string.
      * @return True if it is a value block. False otherwise.
@@ -988,7 +988,7 @@ public class Common extends Application {
     public static boolean isValueBlock(String hexString) {
         byte[] b = Common.hexStringToByteArray(hexString);
         if (b.length == 16) {
-            // Google some NXP info PDFs about Mifare Classic to see how
+            // Google some NXP info PDFs about MIFARE Classic to see how
             // Value Blocks are formatted.
             // For better reading (~ = invert operator):
             // if (b0=b8 and b0=~b4) and (b1=b9 and b9=~b5) ...
@@ -1198,7 +1198,7 @@ public class Common extends Application {
                                 Context.CLIPBOARD_SERVICE);
                 android.content.ClipData clip =
                         android.content.ClipData.newPlainText(
-                                "mifare classic tool data", text);
+                                "MIFARE classic tool data", text);
                 clipboard.setPrimaryClip(clip);
             } else {
                 // Android API level 10.

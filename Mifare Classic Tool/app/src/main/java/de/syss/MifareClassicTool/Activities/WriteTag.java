@@ -341,14 +341,14 @@ public class WriteTag extends BasicActivity {
         int blockNr = Integer.parseInt(block.getText().toString());
         if (sectorNr > KeyMapCreator.MAX_SECTOR_COUNT-1
                 || sectorNr < 0) {
-            // Error, sector is out of range for any Mifare tag.
+            // Error, sector is out of range for any MIFARE tag.
             Toast.makeText(this, R.string.info_sector_out_of_range,
                     Toast.LENGTH_LONG).show();
             return false;
         }
         if (blockNr > KeyMapCreator.MAX_BLOCK_COUNT_PER_SECTOR-1
                 || blockNr < 0) {
-            // Error, block is out of range for any mifare tag.
+            // Error, block is out of range for any MIFARE tag.
             Toast.makeText(this, R.string.info_block_out_of_range,
                     Toast.LENGTH_LONG).show();
             return false;
@@ -955,7 +955,7 @@ public class WriteTag extends BasicActivity {
                     // Block 0 is read-only. This is normal.
                     // Do not add an entry to the dialog and skip the
                     // "write info" check (except for some
-                    // special (non-original) Mifare tags).
+                    // special (non-original) MIFARE tags).
                     continue;
                 }
                 String position = getString(R.string.text_sector) + ": "
@@ -1242,7 +1242,7 @@ public class WriteTag extends BasicActivity {
     /**
      * Create an factory formatted, empty dump with a size matching
      * the current tag size and then call {@link #checkTag()}.
-     * Factory (default) Mifare Classic Access Conditions are: 0xFF0780XX
+     * Factory (default) MIFARE Classic Access Conditions are: 0xFF0780XX
      * XX = General purpose byte (GPB): Most of the time 0x69. At the end of
      * an Tag XX = 0xBC.
      * @see #checkTag()
@@ -1290,7 +1290,7 @@ public class WriteTag extends BasicActivity {
         // Sector 32 - 39.
         if (sectors == 40) {
             // Add the large sectors (containing 16 blocks)
-            // of a Mifare Classic 4k tag.
+            // of a MIFARE Classic 4k tag.
             for (int i = 32; i < sectors && i < 39; i++) {
                 mDumpWithPos.put(i, empty16BlockSector);
             }
