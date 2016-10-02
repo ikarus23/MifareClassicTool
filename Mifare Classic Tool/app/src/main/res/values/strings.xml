@@ -300,8 +300,8 @@
     <string name="info_save_successful">Data successfully saved</string>
     <string name="info_save_error">Error: Error while saving data</string>
     <string name="info_file_already_exists">Error: File already exists</string>
-    <string name="info_tag_too_small">Error: Tag is too small for the
-        chosen dump</string>
+    <string name="info_tag_too_small">Error: Tag is too small
+        (sector out of range)</string>
     <string name="info_write_error">Error: Some error occurred while
         writing.\nThis could be really bad.</string>
     <string name="info_check_ac_error">Error: Tag lost while checking for keys
