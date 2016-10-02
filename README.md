@@ -83,8 +83,8 @@ Some important things are:
   Also, make sure the the BCC value is correct before writing. The BCC
   is the first byte after the UID. It is calculated by XOR-ing all
   bytes of the UID.
-* This app **will not work** on the following devices because
-  their hardware (NFC-controller) does not support MIFARE Classic
+* This app **will not work** on some devices because their hardware
+  (NFC-controller) does not support MIFARE Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
   **You can find a list of incompatible devices
   [here](https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md)**.
