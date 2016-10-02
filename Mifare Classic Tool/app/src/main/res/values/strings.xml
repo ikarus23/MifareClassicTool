@@ -420,7 +420,7 @@
     <string name="dialog_about_mct_title">About MCT</string>
     <string name="dialog_about_mct">
         <![CDATA[
-        <b>MifareClassicTool (MCT)<br /><br />
+        <b>MIFARE Classic Tool (MCT)<br /><br />
         &#8226; Version: %1$s<br />
         &#8226; License:
         <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />
