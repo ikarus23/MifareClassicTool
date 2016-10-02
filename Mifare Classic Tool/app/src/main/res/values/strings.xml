@@ -267,7 +267,7 @@
         Read a tag and save the dump</string>
     <string name="info_invalid_range">Error in mapping range</string>
     <string name="info_mapping_sector_out_of_range">Error in mapping range:
-        Sector out of range. Use a bigger tag.</string>
+        Sector out of range.</string>
     <string name="info_no_key_found">No valid key found in chosen key file</string>
     <string name="info_data_location_not_set">Error: Block or sector is not
         specified</string>

@@ -404,12 +404,6 @@ public class KeyMapCreator extends BasicActivity {
                             .toString().split(" ");
                     mFirstSector = Integer.parseInt(fromAndTo[0]);
                     mLastSector = Integer.parseInt(fromAndTo[2]);
-                    // Is last sector out of range?
-                    if (mLastSector > reader.getSectorCount()-1) {
-                        // TODO: Show error message?
-                        mLastSector = reader.getSectorCount() - 1;
-
-                    }
                 }
                 // Set map creation range.
                 if (!reader.setMappingRange(
