@@ -36,6 +36,7 @@ import android.os.Parcel;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 
 /**
@@ -399,7 +400,7 @@ public class MCReader {
      */
     public int writeBlock(int sectorIndex, int blockIndex, byte[] data,
             byte[] key, boolean useAsKeyB) {
-        if (mMFC.getSectorCount()-1 < sectorIndex) {
+        if (getSectorCount()-1 < sectorIndex) {
             return 1;
         }
         if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
@@ -444,7 +445,7 @@ public class MCReader {
      */
     public int writeValueBlock(int sectorIndex, int blockIndex, int value,
                           boolean increment, byte[] key, boolean useAsKeyB) {
-        if (mMFC.getSectorCount()-1 < sectorIndex) {
+        if (getSectorCount()-1 < sectorIndex) {
             return 1;
         }
         if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
@@ -843,7 +844,7 @@ public class MCReader {
      * @return True if range parameters were correct. False otherwise.
      */
     public boolean setMappingRange(int firstSector, int lastSector) {
-        if (firstSector >= 0 && lastSector < mMFC.getSectorCount()
+        if (firstSector >= 0 && lastSector < getSectorCount()
                 && firstSector <= lastSector) {
             mFirstSector = firstSector;
             mLastSector = lastSector;
@@ -936,6 +937,13 @@ public class MCReader {
      * @return The sector count of the current tag.
      */
     public int getSectorCount() {
+        boolean useCustomSectorCount = Common.getPreferences().getBoolean(
+                Preference.UseCustomSectorCount.toString(), false);
+        if (useCustomSectorCount) {
+            int customSectorCount = Common.getPreferences().getInt(
+                    Preference.CustomSectorCount.toString(), 16);
+            return customSectorCount;
+        }
         return mMFC.getSectorCount();
     }
 

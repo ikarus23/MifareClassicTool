@@ -288,6 +288,11 @@ public class WriteTag extends BasicActivity {
                 mSectorTextBlock.getText().toString());
         final int block = Integer.parseInt(
                 mBlockTextBlock.getText().toString());
+
+        if (!isSectorInRage(this, true)) {
+            return;
+        }
+
         if (block == 3 || block == 15) {
             // Warning. This is a sector trailer.
             new AlertDialog.Builder(this)
@@ -753,6 +758,7 @@ public class WriteTag extends BasicActivity {
             })
             .create();
         dialog.show();
+        final Context con = this;
 
         // Override/define behavior for positive button click.
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
@@ -771,11 +777,15 @@ public class WriteTag extends BasicActivity {
                         writeBlock0 = true;
                     }
                 }
-
                 if (mDumpWithPos.size() == 0) {
                     // Error. There is nothing to write.
                     Toast.makeText(context, R.string.info_nothing_to_write,
                             Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // Check if last sector is out of range.
+                if (!isSectorInRage(con, false)) {
                     return;
                 }
 
@@ -797,6 +807,40 @@ public class WriteTag extends BasicActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    /**
+     * Check if the chosen sector or last sector of a dump is in the
+     * range of valid sectors (according to {@link Preferences}).
+     * @param context The context in error messages are displayed.
+     * @return True if the sector is in range, False if not. Also,
+     * if there was no tag False will be returned.
+     */
+    private boolean isSectorInRage(Context context, boolean isWriteBlock) {
+        MCReader reader = Common.checkForTagAndCreateReader(this);
+        if (reader == null) {
+            return false;
+        }
+        int lastValidSector = reader.getSectorCount() - 1;
+        int lastSector;
+        reader.close();
+        // Initialize last sector.
+        if (isWriteBlock) {
+            lastSector = Integer.parseInt(
+                    mSectorTextBlock.getText().toString());
+        } else {
+            lastSector = Collections.max(mDumpWithPos.keySet());
+        }
+
+        // Is last sector in range?
+        if (lastSector > lastValidSector) {
+            // Error. Tag too small for dump.
+            Toast.makeText(context, R.string.info_tag_too_small,
+                    Toast.LENGTH_LONG).show();
+            reader.close();
+            return false;
+        }
+        return true;
     }
 
     /**
