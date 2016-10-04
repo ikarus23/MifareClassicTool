@@ -62,6 +62,7 @@ This app **has been known to work** on the following devices.
 * Google Nexus 7 (2012)
 * HTC One
 * Huawei Ascend Mate7
+* Philips Xenium I908
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
 * Samsung Galaxy S3 Duo i9300i
