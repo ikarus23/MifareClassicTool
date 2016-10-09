@@ -1,5 +1,16 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.1.0:
+ * Set custom sector count (read/write MIFARE Classic 2k).
+ * Check BCC before writing.
+ * Added BCC calculator tool.
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
+ * Added Chinese translation.
+ * Changed "Mifare" to "MIFARE" to comply with NXP's registered trademark.
+ * Added multiple devices to the list of incompatible devices.
+ * Some minor bug fixes.
+
 Version 2.0.7:
  * Bugfix: Request permissions on Android 6.x devices to read/write
    the external storage. Thanks to Mislav Jurinić.
