@@ -1,9 +1,9 @@
 Incompatible Devices
 ====================
 
-This is a list of Android devices which are incomplatible to Mifare Classic Tool.
+This is a list of Android devices which are incomplatible to MIFARE Classic Tool.
 This app **will not work** on the following devices because their hardware
-(NFC-controller) does not support Mifare Classic
+(NFC-controller) does not support MIFARE Classic
 ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
 
 
@@ -20,16 +20,21 @@ This list may be incomplete. You might also want to have a look at
 * Google Nexus 10
 * Huawei G620S
 * Jiayu S3
-* LG F60
-* LG G2
-* LG G2 mini
-* LG G3 S
-* LG G4
-* LG Optimus L7 II
+* LGE LG F60
+* LGE LG G2
+* LGE LG G2 mini
+* LGE LG G3 S
+* LGE LG G4
+* LEG LG Optimus L7 II
+* LEG V10
 * Motorola Moto X (2014, 2ed gen.)
+* Motorola Moto Style
+* Motorola Moto Maxx
 * OnePlus One
 * Samsung Galaxy A3
 * Samsung Galaxy A5
+* Samsung Galaxy A7 (2016)
+* Samsung Galaxy A9 (2016)
 * Samsung Galaxy Ace 3
 * Samsung Galaxy Ace 4
 * Samsung Galaxy Alpha
@@ -57,6 +62,7 @@ This app **has been known to work** on the following devices.
 * Google Nexus 7 (2012)
 * HTC One
 * Huawei Ascend Mate7
+* Philips Xenium I908
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
 * Samsung Galaxy S3 Duo i9300i

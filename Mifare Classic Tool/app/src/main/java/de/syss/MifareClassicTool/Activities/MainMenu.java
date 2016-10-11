@@ -88,7 +88,7 @@ public class MainMenu extends Activity {
     private Intent mOldIntent = null;
 
     /**
-     * Check for NFC hardware, Mifare Classic support and for external storage.
+     * Check for NFC hardware, MIFARE Classic support and for external storage.
      * If the directory structure and the std. keys files is not already there
      * it will be created. Also, at the first run of this App, a warning
      * notice and a donate message will be displayed.
@@ -250,7 +250,7 @@ public class MainMenu extends Activity {
             mResume = false;
         }
 
-        // Check if there is Mifare Classic support.
+        // Check if there is MIFARE Classic support.
         if (!Common.useAsEditorOnly() && !Common.hasMifareClassicSupport()) {
             // Disable read/write tag options.
             mReadTag.setEnabled(false);
@@ -421,7 +421,7 @@ public class MainMenu extends Activity {
             if (mOldIntent != getIntent()) {
                 int typeCheck = Common.treatAsNewTag(getIntent(), this);
                 if (typeCheck == -1 || typeCheck == -2) {
-                    // Device or tag does not support Mifare Classic.
+                    // Device or tag does not support MIFARE Classic.
                     // Run the only thing that is possible: The tag info tool.
                     Intent i = new Intent(this, TagInfoTool.class);
                     startActivity(i);
@@ -497,7 +497,7 @@ public class MainMenu extends Activity {
 
     /**
      * Handle new Intent as a new tag Intent and if the tag/device does not
-     * support Mifare Classic, then run {@link TagInfoTool}.
+     * support MIFARE Classic, then run {@link TagInfoTool}.
      * @see Common#treatAsNewTag(Intent, android.content.Context)
      * @see TagInfoTool
      */
@@ -505,7 +505,7 @@ public class MainMenu extends Activity {
     public void onNewIntent(Intent intent) {
         int typeCheck = Common.treatAsNewTag(intent, this);
         if (typeCheck == -1 || typeCheck == -2) {
-            // Device or tag does not support Mifare Classic.
+            // Device or tag does not support MIFARE Classic.
             // Run the only thing that is possible: The tag info tool.
             Intent i = new Intent(this, TagInfoTool.class);
             startActivity(i);

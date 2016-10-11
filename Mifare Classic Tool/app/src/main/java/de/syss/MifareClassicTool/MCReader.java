@@ -36,10 +36,11 @@ import android.os.Parcel;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 
 /**
- * Provides functions to read/write/analyze a Mifare Classic tag.
+ * Provides functions to read/write/analyze a MIFARE Classic tag.
  * @author Gerhard Klostermeier
  */
 public class MCReader {
@@ -62,7 +63,7 @@ public class MCReader {
     private ArrayList<byte[]> mKeysWithOrder;
 
     /**
-     * Initialize a Mifare Classic reader for the given tag.
+     * Initialize a MIFARE Classic reader for the given tag.
      * @param tag The tag to operate on.
      */
     private MCReader(Tag tag) {
@@ -70,7 +71,7 @@ public class MCReader {
         try {
             tmpMFC = MifareClassic.get(tag);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Could not create Mifare Classic reader for the"
+            Log.e(LOG_TAG, "Could not create MIFARE Classic reader for the"
                     + "provided tag (even after patching it).");
             throw e;
         }
@@ -87,14 +88,14 @@ public class MCReader {
      * https://github.com/ikarus23/MifareClassicTool/issues/52
      * This patch was provided by bildin (https://github.com/bildin).
      *
-     * Sony Xperia Z3 (+ emmulated Mifare Classic tag): The buggy tag has
+     * Sony Xperia Z3 (+ emmulated MIFARE Classic tag): The buggy tag has
      * two NfcA in the TechList with different SAK values and a MifareClassic
      * (with the Extra of the second NfcA). Both, the second NfcA and the
      * MifareClassic technique, have a SAK of 0x20. According to NXP's
-     * guidelines on identifying Mifare tags (Page 11), this a Mifare Plus or
-     * Mifare DESFire tag. This method creates a new Extra with the SAK
+     * guidelines on identifying MIFARE tags (Page 11), this a MIFARE Plus or
+     * MIFARE DESFire tag. This method creates a new Extra with the SAK
      * values of both NfcA occurrences ORed (as mentioned in NXP's
-     * Mifare type identification procedure guide) and replace the Extra of
+     * MIFARE type identification procedure guide) and replace the Extra of
      * the first NfcA with the new one. For more information please refer to
      * https://github.com/ikarus23/MifareClassicTool/issues/64
      * This patch was provided by bildin (https://github.com/bildin).
@@ -194,11 +195,11 @@ public class MCReader {
 
     /**
      * Get new instance of {@link MCReader}.
-     * If the tag is "null" or if it is not a Mifare Classic tag, "null"
+     * If the tag is "null" or if it is not a MIFARE Classic tag, "null"
      * will be returned.
      * @param tag The tag to operate on.
      * @return {@link MCReader} object or "null" if tag is "null" or tag is
-     * not Mifare Classic.
+     * not MIFARE Classic.
      */
     public static MCReader get(Tag tag) {
         MCReader mcr = null;
@@ -288,7 +289,7 @@ public class MCReader {
      * Read as much as possible from a sector with the given key.
      * Best results are gained from a valid key B (except key B is marked as
      * readable in the access conditions).
-     * @param sectorIndex Index of the Sector to read. (For Mifare Classic 1K:
+     * @param sectorIndex Index of the Sector to read. (For MIFARE Classic 1K:
      * 0-63)
      * @param key Key for authentication.
      * @param useAsKeyB If true, key will be treated as key B
@@ -383,7 +384,7 @@ public class MCReader {
      * @param sectorIndex The sector to where the data should be written
      * @param blockIndex The block to where the data should be written
      * @param data 16 byte of data.
-     * @param key The Mifare Classic key for the given sector.
+     * @param key The MIFARE Classic key for the given sector.
      * @param useAsKeyB If true, key will be treated as key B
      * for authentication.
      * @return The return codes are:<br />
@@ -399,7 +400,7 @@ public class MCReader {
      */
     public int writeBlock(int sectorIndex, int blockIndex, byte[] data,
             byte[] key, boolean useAsKeyB) {
-        if (mMFC.getSectorCount()-1 < sectorIndex) {
+        if (getSectorCount()-1 < sectorIndex) {
             return 1;
         }
         if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
@@ -429,7 +430,7 @@ public class MCReader {
      * @param value Increase or decrease Value Block by this value.
      * @param increment If true, increment Value Block by value. Decrement
      * if false.
-     * @param key The Mifare Classic key for the given sector.
+     * @param key The MIFARE Classic key for the given sector.
      * @param useAsKeyB If true, key will be treated as key B
      * for authentication.
      * @return The return codes are:<br />
@@ -444,7 +445,7 @@ public class MCReader {
      */
     public int writeValueBlock(int sectorIndex, int blockIndex, int value,
                           boolean increment, byte[] key, boolean useAsKeyB) {
-        if (mMFC.getSectorCount()-1 < sectorIndex) {
+        if (getSectorCount()-1 < sectorIndex) {
             return 1;
         }
         if (mMFC.getBlockCountInSector(sectorIndex)-1 < blockIndex) {
@@ -471,8 +472,8 @@ public class MCReader {
 
     /**
      * Build Key-Value Pairs in which keys represent the sector and
-     * values are one or both of the Mifare keys (A/B).
-     * The Mifare key information must be set before calling this method
+     * values are one or both of the MIFARE keys (A/B).
+     * The MIFARE key information must be set before calling this method
      * (use {@link #setKeyFile(File[], Context)}).
      * Also the mapping range must be specified before calling this method
      * (use {@link #setMappingRange(int, int)}).<br /><br />
@@ -705,7 +706,7 @@ public class MCReader {
                 } else {
                     return null;
                 }
-                // Read Mifare Access Conditions.
+                // Read MIFARE Access Conditions.
                 int acBlock = mMFC.sectorToBlock(sector)
                         + mMFC.getBlockCountInSector(sector) -1;
                 try {
@@ -770,7 +771,7 @@ public class MCReader {
                     } else {
                         // Data block.
                         int acBitsForBlock = block;
-                        // Handle Mifare Classic 4k Tags.
+                        // Handle MIFARE Classic 4k Tags.
                         if (sector >= 32) {
                             if (block >= 0 && block <= 4) {
                                 acBitsForBlock = 0;
@@ -843,7 +844,7 @@ public class MCReader {
      * @return True if range parameters were correct. False otherwise.
      */
     public boolean setMappingRange(int firstSector, int lastSector) {
-        if (firstSector >= 0 && lastSector < mMFC.getSectorCount()
+        if (firstSector >= 0 && lastSector < getSectorCount()
                 && firstSector <= lastSector) {
             mFirstSector = firstSector;
             mLastSector = lastSector;
@@ -906,8 +907,8 @@ public class MCReader {
      * often as there are sectors on the tag
      * (See {@link #getSectorCount()}).
      * @return A Key-Value Pair. Keys are the sector numbers,
-     * values are the Mifare keys.
-     * The Mifare keys are 2D arrays with key type (first dimension, 0-1,
+     * values are the MIFARE keys.
+     * The MIFARE keys are 2D arrays with key type (first dimension, 0-1,
      * 0 = KeyA / 1 = KeyB) and key (second dimension, 0-6). If a key is "null"
      * it means that the key A or B (depending in the first dimension) could not
      * be found.
@@ -923,8 +924,8 @@ public class MCReader {
     }
 
     /**
-     * Return the size of the Mifare Classic tag in bits.
-     * (e.g. Mifare Classic 1k = 1024)
+     * Return the size of the MIFARE Classic tag in bits.
+     * (e.g. MIFARE Classic 1k = 1024)
      * @return The size of the current tag.
      */
     public int getSize() {
@@ -932,15 +933,22 @@ public class MCReader {
     }
 
     /**
-     * Return the sector count of the Mifare Classic tag.
+     * Return the sector count of the MIFARE Classic tag.
      * @return The sector count of the current tag.
      */
     public int getSectorCount() {
+        boolean useCustomSectorCount = Common.getPreferences().getBoolean(
+                Preference.UseCustomSectorCount.toString(), false);
+        if (useCustomSectorCount) {
+            int customSectorCount = Common.getPreferences().getInt(
+                    Preference.CustomSectorCount.toString(), 16);
+            return customSectorCount;
+        }
         return mMFC.getSectorCount();
     }
 
     /**
-     * Return the block count of the Mifare Classic tag.
+     * Return the block count of the MIFARE Classic tag.
      * @return The block count of the current tag.
      */
     public int getBlockCount() {

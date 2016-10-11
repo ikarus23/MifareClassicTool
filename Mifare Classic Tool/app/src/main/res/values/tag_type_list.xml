@@ -27,7 +27,7 @@
     -->
     <!-- Special tag types -->
     <string name="tag_unknown">Unknown</string>
-    <string name="tag_unknown_mf_classic">Mifare Classic, Unknown</string>
+    <string name="tag_unknown_mf_classic">MIFARE Classic, Unknown</string>
 
     <!-- With ATS -->
     <string name="tag_0344207577810280">MIFARE DESFire or

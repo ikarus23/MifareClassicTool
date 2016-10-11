@@ -3,7 +3,7 @@
 ########################################################################
 
 The script "prox-keys2mct-keys.sh" converts the output of
-a Proxmark3 which cracked a Mifare Classic Tag using the nested
+a Proxmark3 which cracked a MIFARE Classic Tag using the nested
 attack, into a key file suitable for the MCT-App.
 
 Dependencies:

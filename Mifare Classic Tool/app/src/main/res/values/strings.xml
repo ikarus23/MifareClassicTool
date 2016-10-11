@@ -22,11 +22,11 @@
 <resources>
 
     <!-- Common stuff -->
-    <string name="app_name">Mifare Classic Tool</string>
+    <string name="app_name">MIFARE Classic Tool</string>
     <string name="app_version">App Version</string>
 
     <!-- Activity titles -->
-    <string name="title_activity_main">Mifare Classic Tool</string>
+    <string name="title_activity_main">MIFARE Classic Tool</string>
     <string name="title_activity_read_tag">Read Tag</string>
     <string name="title_activity_dump_editor">Dump Editor</string>
     <string name="title_activity_access_conditions">Access Conditions</string>
@@ -106,11 +106,11 @@
         dead sector :(</string>
     <string name="text_strange_error">Some strange error occurred :(</string>
     <string name="text_no_mfc_support_device">This device does not
-        support Mifare Classic!</string>
-    <string name="text_no_mfc_support_tag">Not a Mifare Classic tag!</string>
-    <string name="text_no_tag">There is no Mifare Classic tag.</string>
+        support MIFARE Classic!</string>
+    <string name="text_no_mfc_support_tag">Not a MIFARE Classic tag!</string>
+    <string name="text_no_tag">There is no MIFARE Classic tag.</string>
     <string name="text_generic_info">Generic Info</string>
-    <string name="text_mf_info">Mifare Classic Info</string>
+    <string name="text_mf_info">MIFARE Classic Info</string>
     <string name="text_rf_tech">RF Technology</string>
     <string name="text_rf_tech_14a">ISO/IEC 14443, Type A</string>
     <string name="text_atqa">ATQA</string>
@@ -209,6 +209,7 @@
         lost during the key mapping process</string>
     <string name="action_save_last_key_files">Remember the last selected key
         files (key mapping dialog)</string>
+    <string name="action_use_custom_sector_count">Use custom sector count</string>
     <string name="action_save">Save</string>
     <string name="action_share">Share</string>
     <string name="action_data_as_ascii">Data as ASCII</string>
@@ -243,7 +244,7 @@
     <string name="info_new_tag_found">New tag found</string>
     <string name="info_no_external_storage">Error: External storage is not
         readable/writable</string>
-    <string name="info_no_tag_found">Error: There is no Mifare Classic tag</string>
+    <string name="info_no_tag_found">Error: There is no MIFARE Classic tag</string>
     <string name="info_wait_key_map">Creating key map&#8230;
         Please wait&#8230;</string>
     <string name="info_tag_removed_while_reading">Error: Tag removed
@@ -266,7 +267,7 @@
         Read a tag and save the dump</string>
     <string name="info_invalid_range">Error in mapping range</string>
     <string name="info_mapping_sector_out_of_range">Error in mapping range:
-        Sector out of range. Use a bigger tag.</string>
+        Sector out of range.</string>
     <string name="info_no_key_found">No valid key found in chosen key file</string>
     <string name="info_data_location_not_set">Error: Block or sector is not
         specified</string>
@@ -299,8 +300,8 @@
     <string name="info_save_successful">Data successfully saved</string>
     <string name="info_save_error">Error: Error while saving data</string>
     <string name="info_file_already_exists">Error: File already exists</string>
-    <string name="info_tag_too_small">Error: Tag is too small for the
-        chosen dump</string>
+    <string name="info_tag_too_small">Error: Tag is too small
+        (sector out of range)</string>
     <string name="info_write_error">Error: Some error occurred while
         writing.\nThis could be really bad.</string>
     <string name="info_check_ac_error">Error: Tag lost while checking for keys
@@ -334,6 +335,7 @@
     <string name="info_write_permission">Write permission is needed to work properly</string>
     <string name="info_bcc_not_valid">Error: BCC of block 0 is not valid</string>
     <string name="info_invalid_uid_length">Error: Invlaid UID length</string>
+    <string name="info_sector_count_error">Error: Sector count must be between 1 and 40</string>
 
     <!-- Dialog messages -->
     <string name="dialog_no_nfc">No NFC hardware was found on your device.
@@ -342,24 +344,24 @@
         Please go to your Settings and enable it.</string>
     <string name="dialog_no_nfc_title">No NFC hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC not enabled</string>
-    <string name="dialog_no_mfc_support_device_title">No Mifare Classic support</string>
+    <string name="dialog_no_mfc_support_device_title">No MIFARE Classic support</string>
     <string name="dialog_no_mfc_support_device">
         <![CDATA[
-        Your device (due to hardware) does not support Mifare Classic! The only
+        Your device (due to hardware) does not support MIFARE Classic! The only
         thing possible is to display the UID and some other generic
         information. Further I/O operations are impossible.
         <br /><br /><b>Therefore, this app is pretty much useless for this device.</b>
-        <br /><br />You can view a list of known devices with no Mifare Classic
+        <br /><br />You can view a list of known devices with no MIFARE Classic
         support at <a href="https://github.com/ikarus23/MifareClassicTool#general-information">github</a>.
         If your device is not on that list, please write an
         <a href="mailto:fooblubb@gmail.com">Email to developer</a>.
         ]]>
         </string>
-    <string name="dialog_no_mfc_support_tag_title">Not a Mifare Classic tag</string>
+    <string name="dialog_no_mfc_support_tag_title">Not a MIFARE Classic tag</string>
     <string name="dialog_no_mfc_support_tag">
         <![CDATA[
-        This tag is not compatible with the Mifare Classic technology!
-        Notice that this app is designed for Mifare Classic tags only!
+        This tag is not compatible with the MIFARE Classic technology!
+        Notice that this app is designed for MIFARE Classic tags only!
         <br /><br /><b>Please use another tag.</b>
         <br /><br /><small>(Notice: In some rare cases this message could be
         a false positive caused by multiple tags in the reader field or strange
@@ -383,7 +385,7 @@
     <string name="dialog_first_run_title">WARNING NOTICE</string>
     <string name="dialog_first_run">This application is dedicated
         to users who have at least basic familiarity with the
-        Mifare Classic technology. Its features are basic and at a low
+        MIFARE Classic technology. Its features are basic and at a low
         level. Therefore nearly all data input and output will be hexadecimal.
         It is also important that you understand what you are doing, e.g. if
         you write data to a tag. Writing the wrong data to certain
@@ -399,10 +401,10 @@
     <string name="dialog_share_title">Send dump file to…</string>
     <string name="dialog_block0_writing_title">Write manufacturer block</string>
     <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
-        is not possible on original Mifare Classic tags.</b>
+        is not possible on original MIFARE Classic tags.</b>
         \n\nPlease make sure you are using a special tag that
         supports writing to the manufacturer block
-        (with a normal Mifare Classic write command).
+        (with a normal MIFARE Classic write command).
         \n\n<b>Check out the \"Write Tag\" section from
         \"Help and Info\" for more information.</b></string>
     <string name="dialog_static_ac_title">Use static Access Conditions</string>
@@ -420,7 +422,7 @@
     <string name="dialog_about_mct_title">About MCT</string>
     <string name="dialog_about_mct">
         <![CDATA[
-        <b>MifareClassicTool (MCT)<br /><br />
+        <b>MIFARE Classic Tool (MCT)<br /><br />
         &#8226; Version: %1$s<br />
         &#8226; License:
         <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />
@@ -441,7 +443,8 @@
         &#8226; <a href="http://publications.icaria.de/mct/">Documentation,
         APKs, etc.</a><br />
         &#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread
-        at the Proxmark forum</a>
+        at the Proxmark forum</a><br /><br />
+        MIFARE&reg; is a registered trademark of NXP Semiconductors.
         ]]>
         </string>
     <string name="dialog_auto_reconnect_title">Auto reconnect</string>
@@ -453,6 +456,10 @@
         process. However, it might also cause MCT to behave strangely.</b>
         \n\nKnown issues where this setting may help:\n
         &#8226; Special tags (e.g. smartMX)</string>
+    <string name="dialog_custom_sector_count_title">Custom Sector Count</string>
+    <string name="dialog_custom_sector_count">Fore a custom sector count
+        and ignore the sector count detected by Android. This can be usefull
+        for tags with 2K memory.</string>
     <string name="dialog_date_of_manuf_title">Date of manufacture</string>
     <string name="dialog_date_of_manuf">
         <![CDATA[
@@ -469,7 +476,7 @@
         (week of manufacture) must be between 1 and 53 (e.g. 28).
         The second byte (year of manufacture) must be between 0 and the
         current year (e.g. 12, meaning 2012).
-        \n\nMaybe the tag is not an original Mifare Classic tag.</string>
+        \n\nMaybe the tag is not an original MIFARE Classic tag.</string>
     <string name="dialog_save_conflict_title">File already exists</string>
     <string name="dialog_save_conflict_dump">This file already exists.
         What do you want to do?
@@ -479,7 +486,7 @@
     <string name="dialog_save_conflict_keyfile">This file already exists.
         What do you want to do?</string>
     <string name="dialog_donate_title">Donate</string>
-    <string name="dialog_donate"><b>Mifare Classic Tool has been updated!</b>
+    <string name="dialog_donate"><b>MIFARE Classic Tool has been updated!</b>
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
     </string>
@@ -494,5 +501,6 @@
     <string name="hint_hex_4_byte">HEX, 4 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
+    <string name="hint_custom_sector_count">e.g. 16 for 1K</string>
 
 </resources>

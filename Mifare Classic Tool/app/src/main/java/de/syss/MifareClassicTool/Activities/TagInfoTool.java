@@ -41,7 +41,7 @@ import de.syss.MifareClassicTool.R;
 /**
  * Display tag info like technology, size, sector count, etc.
  * This is the only thing a user can do with a device that does not support
- * Mifare Classic.
+ * MIFARE Classic.
  * @author Gerhard Klostermeier
  */
 public class TagInfoTool extends BasicActivity {
@@ -86,11 +86,11 @@ public class TagInfoTool extends BasicActivity {
         int titleID = 0;
         int messageID = 0;
         if (mMFCSupport == -1) {
-            // Device does not support Mifare Classic.
+            // Device does not support MIFARE Classic.
             titleID = R.string.dialog_no_mfc_support_device_title;
             messageID = R.string.dialog_no_mfc_support_device;
         } else if (mMFCSupport == -2) {
-            // Tag does not support Mifare Classic.
+            // Tag does not support MIFARE Classic.
             titleID = R.string.dialog_no_mfc_support_tag_title;
             messageID = R.string.dialog_no_mfc_support_tag;
         }
@@ -115,13 +115,13 @@ public class TagInfoTool extends BasicActivity {
 
     /**
      * Update and display the tag information.
-     * If there is no Mifare Classic support, a warning will be shown.
+     * If there is no MIFARE Classic support, a warning will be shown.
      * @param tag A Tag from an NFC Intent.
      */
     private void updateTagInfo(Tag tag) {
 
         if (tag != null) {
-            // Check for Mifare Classic support.
+            // Check for MIFARE Classic support.
             mMFCSupport = Common.checkMifareClassicSupport(tag, this);
 
             mLayout.removeAllViews();
@@ -218,9 +218,9 @@ public class TagInfoTool extends BasicActivity {
 
             LinearLayout layout = (LinearLayout) findViewById(
                     R.id.linearLayoutTagInfoToolSupport);
-            // Check for Mifare Classic support.
+            // Check for MIFARE Classic support.
             if (mMFCSupport == 0) {
-                // Display Mifare Classic info.
+                // Display MIFARE Classic info.
                 // Create views and add them to the layout.
                 TextView headerMifareInfo = new TextView(this);
                 headerMifareInfo.setText(Common.colorString(
@@ -239,7 +239,7 @@ public class TagInfoTool extends BasicActivity {
                         android.R.style.TextAppearance_Medium);
                 mLayout.addView(mifareInfo);
 
-                // Get Mifare info and set these as text.
+                // Get MIFARE info and set these as text.
                 MifareClassic mfc = MifareClassic.get(tag);
                 String size = "" + mfc.getSize();
                 String sectorCount = "" + mfc.getSectorCount();
@@ -250,7 +250,7 @@ public class TagInfoTool extends BasicActivity {
                         "\n", size, " byte\n",
                         Common.colorString(getString(
                                 R.string.text_block_size) + ":", hc),
-                        // Block size is always 16 byte on Mifare Classic Tags.
+                        // Block size is always 16 byte on MIFARE Classic Tags.
                         "\n", "" + MifareClassic.BLOCK_SIZE, " byte\n",
                         Common.colorString(getString(
                                 R.string.text_sector_count) + ":", hc),
@@ -260,12 +260,12 @@ public class TagInfoTool extends BasicActivity {
                         "\n", blockCount));
                 layout.setVisibility(View.GONE);
             } else if (mMFCSupport == -1) {
-                // No Mifare Classic Support (due to the device hardware).
+                // No MIFARE Classic Support (due to the device hardware).
                 // Set error message.
                 mErrorMessage.setText(R.string.text_no_mfc_support_device);
                 layout.setVisibility(View.VISIBLE);
             } else if (mMFCSupport == -2) {
-                // The tag does not support Mifare Classic.
+                // The tag does not support MIFARE Classic.
                 // Set error message.
                 mErrorMessage.setText(R.string.text_no_mfc_support_tag);
                 layout.setVisibility(View.VISIBLE);
