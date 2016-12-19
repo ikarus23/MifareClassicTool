@@ -67,5 +67,6 @@ This app **has been known to work** on the following devices.
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
 * Samsung Galaxy S3 Duo i9300i
+* Samsung Galaxy S5 (also opensource CM14.1 -> https://review.cyanogenmod.org/#/c/176519 )
 * Sony Xperia M4 Aqua
 * Sony Xperia V
