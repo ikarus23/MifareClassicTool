@@ -46,6 +46,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Note 6
 * Samsung Galaxy Grand Prime
 * Samsung Galaxy S4
+* Samsung Galaxy S4 Mini
 * Samsung Galaxy S5 mini
 * Samsung Galaxy S6
 * Samsung Galaxy S6 Edge Plus
