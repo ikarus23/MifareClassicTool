@@ -11,6 +11,7 @@ This list may be incomplete. You might also want to have a look at
 [this list](http://www.shopnfc.it/en/content/7-nfc-device-compatibility).
 
 * Asus Zenfone 2
+* BQ Aquaris X5 Plus
 * Foxcon InFocus M320
 * Google Nexus 4
 * Google Nexus 5
@@ -38,6 +39,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Ace 3
 * Samsung Galaxy Ace 4
 * Samsung Galaxy Alpha
+* Samsung Galaxy E7
 * Samsung Galaxy Express 2
 * Samsung Galaxy Mega
 * Samsung Galaxy Note 3
@@ -47,11 +49,14 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Grand Prime
 * Samsung Galaxy S4
 * Samsung Galaxy S4 Mini
-* Samsung Galaxy S5 mini
+* Samsung Galaxy S5 Mini
+* Samsung Galaxy S5 Neo
 * Samsung Galaxy S6
+* Samsung Galaxy S6 Edge
 * Samsung Galaxy S6 Edge Plus
 * Samsung Galaxy S7
 * Samsung Galaxy S7 Edge
+* Samsung Galaxy Xcover 3
 * Sony Xperia Z2 (some models)
 * Sony Xperia Z3 (SOL26)
 * Xiaomi MI 3
@@ -63,6 +68,8 @@ This app **has been known to work** on the following devices.
 * Google Nexus 7 (2012)
 * HTC One
 * Huawei Ascend Mate7
+* OnePlus 3
+* OnePlus 3T
 * Philips Xenium I908
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
