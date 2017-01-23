@@ -352,7 +352,7 @@
         information. Further I/O operations are impossible.
         <br /><br /><b>Therefore, this app is pretty much useless for this device.</b>
         <br /><br />You can view a list of known devices with no MIFARE Classic
-        support at <a href="https://github.com/ikarus23/MifareClassicTool#general-information">github</a>.
+        support at <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">github</a>.
         If your device is not on that list, please write an
         <a href="mailto:fooblubb@gmail.com">Email to developer</a>.
         ]]>
