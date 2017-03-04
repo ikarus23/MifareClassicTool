@@ -45,7 +45,8 @@ public class Preferences extends BasicActivity {
         AutoReconnect("auto_reconnect"),
         SaveLastUsedKeyFiles("save_last_used_key_files"),
         UseCustomSectorCount("use_custom_sector_count"),
-        CustomSectorCount("custom_sector_count");
+        CustomSectorCount("custom_sector_count"),
+        UseInternalStorage("use_internal_storage");
         // Add more preferences here (comma separated).
 
         private final String text;
@@ -63,6 +64,7 @@ public class Preferences extends BasicActivity {
     CheckBox mPrefAutoReconnect;
     CheckBox mPrefSaveLastUsedKeyFiles;
     CheckBox mUseCustomSectorCount;
+    CheckBox mUseInternalStorage;
     EditText mCustomSectorCount;
 
     /**
@@ -82,6 +84,8 @@ public class Preferences extends BasicActivity {
                 R.id.checkBoxPreferencesUseCustomSectorCount);
         mCustomSectorCount = (EditText) findViewById(
                 R.id.editTextPreferencesCustomSectorCount);
+        mUseInternalStorage = (CheckBox) findViewById(
+                R.id.checkBoxPreferencesUseInternalStorage);
 
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
@@ -94,6 +98,8 @@ public class Preferences extends BasicActivity {
         mCustomSectorCount.setEnabled(mUseCustomSectorCount.isChecked());
         mCustomSectorCount.setText("" + pref.getInt(
                 Preference.CustomSectorCount.toString(), 16));
+        mUseInternalStorage.setChecked(pref.getBoolean(
+                Preference.UseInternalStorage.toString(), false));
     }
 
     /**
@@ -108,10 +114,10 @@ public class Preferences extends BasicActivity {
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_ok,
                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing.
-                }
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                             // Do nothing.
+                        }
             }).show();
     }
 
@@ -132,8 +138,27 @@ public class Preferences extends BasicActivity {
      */
     public void onShowCustomSectorCountInfo(View view) {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_custom_sector_count_title)
-                .setMessage(R.string.dialog_custom_sector_count)
+            .setTitle(R.string.dialog_custom_sector_count_title)
+            .setMessage(R.string.dialog_custom_sector_count)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton(R.string.action_ok,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing.
+                        }
+            }).show();
+    }
+
+    /**
+     * Show information on the "use internal storage" preference.
+     * @param view The View object that triggered the method
+     * (in this case the info on use internal storage button).
+     */
+    public void onShowUseInternalStorageInfo(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_use_internal_storage_title)
+                .setMessage(R.string.dialog_use_internal_storage)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
                         new DialogInterface.OnClickListener() {
@@ -168,6 +193,8 @@ public class Preferences extends BasicActivity {
                 mPrefSaveLastUsedKeyFiles.isChecked());
         edit.putBoolean(Preference.UseCustomSectorCount.toString(),
                 mUseCustomSectorCount.isChecked());
+        edit.putBoolean(Preference.UseInternalStorage.toString(),
+                mUseInternalStorage.isChecked());
         edit.putInt(Preference.CustomSectorCount.toString(),
                 customSectorCount);
         edit.apply();

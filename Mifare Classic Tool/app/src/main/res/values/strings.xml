@@ -205,6 +205,8 @@
     <string name="action_show_options">Show Options</string>
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
+    <string name="action_use_internal_storage">Save dump and key files
+        to the internal storage</string>
     <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
         lost during the key mapping process</string>
     <string name="action_save_last_key_files">Remember the last selected key
@@ -456,6 +458,13 @@
         process. However, it might also cause MCT to behave strangely.</b>
         \n\nKnown issues where this setting may help:\n
         &#8226; Special tags (e.g. smartMX)</string>
+    <string name="dialog_use_internal_storage_title">Use Internal Storage</string>
+    <string name="dialog_use_internal_storage">Android commonly has two places to store
+        files: The internal and the external memory.\n\nThe internal memory is only
+        readable by the app and will be deleted once the app gets uninstalled.\n\nThe
+        external storage, in many cases the SD card, is readable by every app with
+        sufficient rights. Data stored on the external memory will survive an
+        uninstall of the app.</string>
     <string name="dialog_custom_sector_count_title">Custom Sector Count</string>
     <string name="dialog_custom_sector_count">Fore a custom sector count
         and ignore the sector count detected by Android. This can be usefull
