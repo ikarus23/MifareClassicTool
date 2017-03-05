@@ -18,9 +18,9 @@
 
 package de.syss.MifareClassicTool;
 
-import java.util.ArrayList;
-
 import android.util.SparseArray;
+
+import java.util.ArrayList;
 
 /**
  * Provides functions to compare two dumps.

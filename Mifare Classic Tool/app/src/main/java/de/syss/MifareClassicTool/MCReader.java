@@ -18,13 +18,6 @@
 
 package de.syss.MifareClassicTool;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import android.content.Context;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
@@ -36,6 +29,13 @@ import android.os.Parcel;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 

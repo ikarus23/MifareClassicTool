@@ -26,6 +26,7 @@ import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.Common.Operations;
 import de.syss.MifareClassicTool.R;

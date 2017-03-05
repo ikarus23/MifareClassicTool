@@ -18,8 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.nio.ByteBuffer;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TableLayout;
@@ -27,6 +25,9 @@ import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
+
+import java.nio.ByteBuffer;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 

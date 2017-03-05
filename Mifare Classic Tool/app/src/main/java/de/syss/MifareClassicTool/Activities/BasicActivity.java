@@ -20,6 +20,7 @@ package de.syss.MifareClassicTool.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import de.syss.MifareClassicTool.Common;
 
 /**

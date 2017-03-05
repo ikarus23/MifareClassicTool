@@ -18,13 +18,13 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import de.syss.MifareClassicTool.Common;
-import de.syss.MifareClassicTool.R;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import de.syss.MifareClassicTool.Common;
+import de.syss.MifareClassicTool.R;
 
 
 /**

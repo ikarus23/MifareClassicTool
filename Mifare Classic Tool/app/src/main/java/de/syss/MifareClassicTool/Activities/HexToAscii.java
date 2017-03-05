@@ -18,12 +18,13 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.UnsupportedEncodingException;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
+
+import java.io.UnsupportedEncodingException;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 

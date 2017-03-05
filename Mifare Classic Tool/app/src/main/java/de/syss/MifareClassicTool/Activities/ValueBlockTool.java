@@ -18,13 +18,14 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.nio.ByteBuffer;
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.nio.ByteBuffer;
+import java.util.Locale;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 

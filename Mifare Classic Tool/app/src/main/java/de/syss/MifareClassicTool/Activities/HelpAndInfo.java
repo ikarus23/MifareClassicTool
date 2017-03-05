@@ -20,6 +20,7 @@ package de.syss.MifareClassicTool.Activities;
 
 import android.os.Bundle;
 import android.webkit.WebView;
+
 import de.syss.MifareClassicTool.R;
 
 /**
