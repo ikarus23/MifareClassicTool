@@ -18,19 +18,21 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.SparseArray;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
+
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
  * Create a key map with the {@link KeyMapCreator} and then
@@ -52,15 +54,16 @@ public class ReadTag extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_tag);
 
-        if (!Common.isExternalStorageWritableErrorToast(this)) {
+        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
+                false) && !Common.isExternalStorageWritableErrorToast(this)) {
             finish();
             return;
         }
 
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
-                Environment.getExternalStoragePublicDirectory(
-                        Common.HOME_DIR) + "/" + Common.KEYS_DIR);
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_read));
         startActivityForResult(intent, KEY_MAP_CREATOR);

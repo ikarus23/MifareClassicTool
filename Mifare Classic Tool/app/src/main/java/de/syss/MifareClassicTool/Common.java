@@ -18,19 +18,6 @@
 
 package de.syss.MifareClassicTool;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -56,6 +43,21 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
+
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
  * Common functions and variables for all Activities.
@@ -237,6 +239,30 @@ public class Common extends Application {
     public static boolean isExternalStorageMounted() {
         return Environment.MEDIA_MOUNTED.equals(
                 Environment.getExternalStorageState());
+    }
+
+    /**
+     * Create a File object with a path that consists of its storage
+     * (internal/external according to its preference) and the relative
+     * path.
+     * @param relativePath The relative path that gets appended to the
+     * internal or external storage path part
+     * @return A File object with the absolute path of the storage and the
+     * relative component given by the parameter.
+     */
+    public static File getFileFromStorage(String relativePath) {
+        File file = null;
+        boolean isUseInternalStorage = getPreferences().getBoolean(
+                UseInternalStorage.toString(), false);
+        if (isUseInternalStorage) {
+            // Use internal storage.
+            file = new File(mAppContext.getFilesDir() + relativePath);
+        } else {
+            // Use external storage (default).
+            file = new File(Environment.getExternalStorageDirectory() +
+                    relativePath);
+        }
+        return file;
     }
 
     /**
@@ -446,6 +472,8 @@ public class Common extends Application {
         }
         return noError;
     }
+
+
 
     /**
      * Get the shared preferences with application context for saving

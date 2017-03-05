@@ -464,7 +464,8 @@
         readable by the app and will be deleted once the app gets uninstalled.\n\nThe
         external storage, in many cases the SD card, is readable by every app with
         sufficient rights. Data stored on the external memory will survive an
-        uninstall of the app.</string>
+        uninstall of the app.\n\nBy using this option you can switch between the two
+        storages. Dump and key files will not be copied between them.</string>
     <string name="dialog_custom_sector_count_title">Custom Sector Count</string>
     <string name="dialog_custom_sector_count">Fore a custom sector count
         and ignore the sector count detected by Android. This can be usefull

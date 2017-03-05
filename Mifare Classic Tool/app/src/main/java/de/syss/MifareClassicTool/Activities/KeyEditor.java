@@ -251,8 +251,8 @@ public class KeyEditor extends BasicActivity
             fileName = mFileName;
         }
         // Save file to tmp directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + "/" + Common.TMP_DIR, fileName);
+        File file = Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                Common.TMP_DIR + "/" + fileName);
         if (!Common.saveFile(file, mLines, false)) {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();
@@ -286,9 +286,8 @@ public class KeyEditor extends BasicActivity
         if (!isValidKeyFileErrorToast()) {
             return;
         }
-        final File path = new File(
-                Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + "/" + Common.KEYS_DIR);
+        final File path = Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                Common.KEYS_DIR);
         final Context cont = this;
         final IActivityThatReactsToSave activity =
                 this;

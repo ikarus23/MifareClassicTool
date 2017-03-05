@@ -538,8 +538,8 @@ public class WriteTag extends BasicActivity {
     private void createKeyMapForBlock(int sector, boolean isValueBlock) {
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
-                Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + "/" + Common.KEYS_DIR);
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, sector);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, sector);
@@ -647,8 +647,8 @@ public class WriteTag extends BasicActivity {
             // Show file chooser (chose dump).
             Intent intent = new Intent(this, FileChooser.class);
             intent.putExtra(FileChooser.EXTRA_DIR,
-                    Environment.getExternalStoragePublicDirectory(
-                            Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
+                    Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                            Common.DUMPS_DIR).getAbsolutePath());
             intent.putExtra(FileChooser.EXTRA_TITLE,
                     getString(R.string.text_open_dump_title));
             intent.putExtra(FileChooser.EXTRA_CHOOSER_TEXT,
@@ -890,8 +890,8 @@ public class WriteTag extends BasicActivity {
         // Show key map creator.
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
-                Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + "/" + Common.KEYS_DIR);
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM,
                 (int) Collections.min(mDumpWithPos.keySet()));
@@ -1275,8 +1275,8 @@ public class WriteTag extends BasicActivity {
         // Show key map creator.
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
-                Environment.getExternalStoragePublicDirectory(Common.HOME_DIR)
-                + "/" + Common.KEYS_DIR);
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
         intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_factory_format));

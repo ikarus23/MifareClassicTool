@@ -18,14 +18,11 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +30,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.File;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCDiffUtils;
 import de.syss.MifareClassicTool.R;
@@ -278,8 +278,8 @@ public class DiffTool extends BasicActivity {
     private Intent prepareFileChooserForDump() {
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
-                Environment.getExternalStoragePublicDirectory(
-                        Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.DUMPS_DIR).getAbsolutePath());
         intent.putExtra(FileChooser.EXTRA_TITLE,
                 getString(R.string.text_open_dump_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,

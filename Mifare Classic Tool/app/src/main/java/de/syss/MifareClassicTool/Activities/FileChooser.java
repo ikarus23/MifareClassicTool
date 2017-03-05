@@ -42,6 +42,8 @@ import java.util.Arrays;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
+
 /**
  * A simple generic file chooser that lets the user choose a file from
  * a given directory. Optionally, it is also possible to delete files or to
@@ -149,7 +151,8 @@ public class FileChooser extends BasicActivity {
     public void onStart() {
         super.onStart();
 
-        if (!Common.isExternalStorageWritableErrorToast(this)) {
+        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
+                false) && !Common.isExternalStorageWritableErrorToast(this)) {
             setResult(3);
             finish();
             return;

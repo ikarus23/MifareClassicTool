@@ -35,7 +35,6 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.Html;
@@ -61,6 +60,8 @@ import java.io.OutputStream;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
+
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
  * Main App entry point showing the main menu.
@@ -293,11 +294,21 @@ public class MainMenu extends Activity {
     /**
      * Create the directories needed by MCT and clean out the tmp folder.
      */
+    @SuppressLint("ApplySharedPref")
     private void initFolders() {
-        if (Common.isExternalStorageWritableErrorToast(this)) {
+        boolean isUseInternalStorage = Common.getPreferences().getBoolean(
+                UseInternalStorage.toString(), false);
+
+        // Run twice and init the folders on the internal and external storage.
+        for (int i = 0; i < 2; i++) {
+            if (!isUseInternalStorage &&
+                    !Common.isExternalStorageWritableErrorToast(this)) {
+                continue;
+            }
+
             // Create keys directory.
-            File path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.KEYS_DIR);
+            File path = Common.getFileFromStorage(
+                    Common.HOME_DIR + "/" + Common.KEYS_DIR);
 
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
@@ -307,8 +318,8 @@ public class MainMenu extends Activity {
             }
 
             // Create dumps directory.
-            path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.DUMPS_DIR);
+            path = Common.getFileFromStorage(
+                    Common.HOME_DIR + "/" + Common.DUMPS_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
@@ -317,8 +328,8 @@ public class MainMenu extends Activity {
             }
 
             // Create tmp directory.
-            path = new File(Environment.getExternalStoragePublicDirectory(
-                    Common.HOME_DIR) + "/" + Common.TMP_DIR);
+            path = Common.getFileFromStorage(
+                    Common.HOME_DIR + "/" + Common.TMP_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
@@ -332,7 +343,17 @@ public class MainMenu extends Activity {
 
             // Create std. key file if there is none.
             copyStdKeysFilesIfNecessary();
+
+            // Change the storage for the second run.
+            Common.getPreferences().edit().putBoolean(
+                    UseInternalStorage.toString(),
+                    !isUseInternalStorage).commit();
         }
+        // Restore the storage preference.
+        Common.getPreferences().edit().putBoolean(
+                UseInternalStorage.toString(),
+                isUseInternalStorage).commit();
+
     }
 
     /**
@@ -603,24 +624,25 @@ public class MainMenu extends Activity {
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenTagDumpEditor(View view) {
-        String dumpsDir = Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + "/" + Common.DUMPS_DIR;
-        if (Common.isExternalStorageWritableErrorToast(this)) {
-            File file = new File(dumpsDir);
-            if (file.isDirectory() && (file.listFiles() == null
-                    || file.listFiles().length == 0)) {
-                Toast.makeText(this, R.string.info_no_dumps,
-                    Toast.LENGTH_LONG).show();
-            }
-            Intent intent = new Intent(this, FileChooser.class);
-            intent.putExtra(FileChooser.EXTRA_DIR, dumpsDir);
-            intent.putExtra(FileChooser.EXTRA_TITLE,
-                    getString(R.string.text_open_dump_title));
-            intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
-                    getString(R.string.action_open_dump_file));
-            intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
-            startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE);
+        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
+                false) && !Common.isExternalStorageWritableErrorToast(this)) {
+            return;
         }
+        File file = Common.getFileFromStorage(
+            Common.HOME_DIR + "/" + Common.DUMPS_DIR);
+        if (file.isDirectory() && (file.listFiles() == null
+                || file.listFiles().length == 0)) {
+            Toast.makeText(this, R.string.info_no_dumps,
+                Toast.LENGTH_LONG).show();
+        }
+        Intent intent = new Intent(this, FileChooser.class);
+        intent.putExtra(FileChooser.EXTRA_DIR, file.getAbsolutePath());
+        intent.putExtra(FileChooser.EXTRA_TITLE,
+                getString(R.string.text_open_dump_title));
+        intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
+                getString(R.string.action_open_dump_file));
+        intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
+        startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE);
     }
 
     /**
@@ -633,19 +655,21 @@ public class MainMenu extends Activity {
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenKeyEditor(View view) {
-        if (Common.isExternalStorageWritableErrorToast(this)) {
-            Intent intent = new Intent(this, FileChooser.class);
-            intent.putExtra(FileChooser.EXTRA_DIR,
-                    Environment.getExternalStoragePublicDirectory(
-                            Common.HOME_DIR) + "/" + Common.KEYS_DIR);
-            intent.putExtra(FileChooser.EXTRA_TITLE,
-                    getString(R.string.text_open_key_file_title));
-            intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
-                    getString(R.string.action_open_key_file));
-            intent.putExtra(FileChooser.EXTRA_ENABLE_NEW_FILE, true);
-            intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
-            startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
+        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
+                false) && !Common.isExternalStorageWritableErrorToast(this)) {
+            return;
         }
+        Intent intent = new Intent(this, FileChooser.class);
+        intent.putExtra(FileChooser.EXTRA_DIR,
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR).getAbsolutePath());
+        intent.putExtra(FileChooser.EXTRA_TITLE,
+                getString(R.string.text_open_key_file_title));
+        intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
+                getString(R.string.action_open_key_file));
+        intent.putExtra(FileChooser.EXTRA_ENABLE_NEW_FILE, true);
+        intent.putExtra(FileChooser.EXTRA_ENABLE_DELETE_FILE, true);
+        startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
     }
 
     /**
@@ -782,11 +806,10 @@ public class MainMenu extends Activity {
      * @see Common#copyFile(InputStream, OutputStream)
      */
     private void copyStdKeysFilesIfNecessary() {
-        File std = new File(Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + "/" + Common.KEYS_DIR, Common.STD_KEYS);
-        File extended = new File(Environment.getExternalStoragePublicDirectory(
-                Common.HOME_DIR) + "/" + Common.KEYS_DIR,
-                Common.STD_KEYS_EXTENDED);
+        File std = Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                Common.KEYS_DIR + "/" + Common.STD_KEYS);
+        File extended = Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
         AssetManager assetManager = getAssets();
 
         if (!std.exists()) {

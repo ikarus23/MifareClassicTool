@@ -18,10 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,19 +33,26 @@ import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
-import de.syss.MifareClassicTool.Activities.Preferences.Preference;
+
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
  * Configure key map process and create key map.
@@ -234,7 +237,8 @@ public class KeyMapCreator extends BasicActivity {
         }
 
         // Is external storage writable?
-        if (!Common.isExternalStorageWritableErrorToast(this)) {
+        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
+                false) && !Common.isExternalStorageWritableErrorToast(this)) {
             setResult(3);
             finish();
             return;
