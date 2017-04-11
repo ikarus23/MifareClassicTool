@@ -76,3 +76,4 @@ This app **has been known to work** on the following devices.
 * Samsung Galaxy S3 Duo i9300i
 * Sony Xperia M4 Aqua
 * Sony Xperia V
+* Xiaomi Mi 5
