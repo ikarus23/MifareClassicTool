@@ -3,21 +3,14 @@ MIFARE Classic Tool (MCT)
 
 An Android NFC-App for reading, writing, analyzing, etc. MIFARE Classic RFID-Tags.
 
-* **[MIFARE Classic Tool on Google Play]
-  (https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)**
-* **[MIFARE Classic Tool (Donate Version) on Google Play]
-  (https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)**
-* **[MIFARE Classic Tool on F-Droid]
-  (https://f-droid.org/repository/browse/?fdfilter=mifare&fdid=de.syss.MifareClassicTool)**
-* **[Download MIFARE Classic Tool (APK file)]
-  (http://publications.icaria.de/mct/releases/)**
-* **[Screenshots]
-  (http://publications.icaria.de/mct/screenshots/)**
+* **[MIFARE Classic Tool on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)**
+* **[MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)**
+* **[MIFARE Classic Tool on F-Droid](https://f-droid.org/repository/browse/?fdfilter=mifare&fdid=de.syss.MifareClassicTool)**
+* **[Download MIFARE Classic Tool (APK file)](http://publications.icaria.de/mct/releases/)**
+* **[Screenshots](http://publications.icaria.de/mct/screenshots/)**
   (outdated, check Google Play)
-* **[Additional stuff]
-  (http://publications.icaria.de/mct/)** (Documentation, etc.)
-* **[Thread at the Proxmark forum]
-  (http://www.proxmark.org/forum/viewtopic.php?id=1535)**
+* **[Additional stuff](http://publications.icaria.de/mct/)** (Documentation, etc.)
+* **[Thread at the Proxmark forum](http://www.proxmark.org/forum/viewtopic.php?id=1535)**
 
 
 
