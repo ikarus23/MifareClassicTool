@@ -65,6 +65,7 @@ This list may be incomplete. You might also want to have a look at
 
 This app **has been known to work** on the following devices.
 
+* Asus Pegasus 2 (X550)
 * Google Nexus 7 (2012)
 * HTC One
 * Huawei Ascend Mate7
@@ -74,6 +75,8 @@ This app **has been known to work** on the following devices.
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
 * Samsung Galaxy S3 Duo i9300i
+* Samsung Galaxy S5
 * Sony Xperia M4 Aqua
 * Sony Xperia V
 * Xiaomi Mi 5
+* Yota Phone (YD201, YD206)
