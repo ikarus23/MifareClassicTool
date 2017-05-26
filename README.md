@@ -108,7 +108,7 @@ well known keys and some standard keys from a short Google search.
 You can try to read a tag with this key file using
 &quot;Read Tag&quot; from main menu.
 
-Once you know some keys, you cam to put them into a simple text
+Once you know some keys, you can put them into a simple text
 file (one key per line). You can do this on your PC and transfer
 the file to the *MifareClassicTool/key-files/*
 directory (on external storage), or you can create a new key file via
