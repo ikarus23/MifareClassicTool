@@ -55,7 +55,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S6 Edge
 * Samsung Galaxy S6 Edge Plus
 * Samsung Galaxy S7
-* Samsung Galaxy S7 Edge
+* Samsung Galaxy S7 Edge (some Versions)
 * Samsung Galaxy Xcover 3
 * Sony Xperia Z2 (some models)
 * Sony Xperia Z3 (SOL26)
@@ -76,6 +76,7 @@ This app **has been known to work** on the following devices.
 * Samsung Galaxy S3 i9300
 * Samsung Galaxy S3 Duo i9300i
 * Samsung Galaxy S5
+* Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
 * Sony Xperia M4 Aqua
 * Sony Xperia V
 * Xiaomi Mi 5
