@@ -21,6 +21,7 @@ package de.syss.MifareClassicTool;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -692,9 +693,37 @@ public class Common extends Application {
         }
     }
 
-    // TODO: implementation and doc.
-    public static boolean isExternalNfcServiceRunning() {
-        return  false;
+    /**
+     * Open another app.
+     * @param context current Context, like Activity, App, or Service
+     * @param packageName the full package name of the app to open
+     * @return true if likely successful, false if unsuccessful
+     */
+    public static boolean openApp(Context context, String packageName) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            Intent i = manager.getLaunchIntentForPackage(packageName);
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(i);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // TODO: doc.
+    public static boolean isExternalNfcServiceRunning(Context context) {
+        ActivityManager manager =
+                (ActivityManager) context.getSystemService(
+                        Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service
+                : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if ("eu.dedb.nfc.service.NfcService".equals(
+                    service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // TODO: doc.

@@ -242,6 +242,7 @@
     <string name="action_save_keys">Save Keys</string>
     <string name="action_calc_bcc">Calculate BCC</string>
     <string name="action_install_external_nfc">Install \"External NFC\"</string>
+    <string name="action_start_external_nfc">Goto \"External NFC\"</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -512,6 +513,11 @@
         external NFC reader to your Android device.
         \n\nMifare Classic Tool should work together with the \"External NFC\" app,
         which supports several USB based NFC readers. There might be some limitations though.
+    </string>
+    <string name="dialog_start_external_nfc_title">External NFC Service</string>
+    <string name="dialog_start_external_nfc">The service of \"External NFC\" is not running.
+        Please enable the service in order to use Mifare Classic Tool with an external
+        NFC reader.
     </string>
 
     <!-- Hints -->
