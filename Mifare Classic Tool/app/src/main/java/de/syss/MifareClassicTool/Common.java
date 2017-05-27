@@ -692,6 +692,27 @@ public class Common extends Application {
         }
     }
 
+    // TODO: implementation and doc.
+    public static boolean isExternalNfcServiceRunning() {
+        return  false;
+    }
+
+    // TODO: doc.
+    public static boolean hasExternalNfcInstalled(Context context) {
+        return Common.isAppInstalled("eu.dedb.nfc.service", context);
+    }
+
+    // TODO: doc.
+    public static boolean isAppInstalled(String uri, Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return false;
+    }
+
     /**
      * Create a connected {@link MCReader} if there is a present MIFARE Classic
      * tag. If there is no MIFARE Classic tag an error

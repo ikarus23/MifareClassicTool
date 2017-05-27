@@ -177,10 +177,15 @@ public class MainMenu extends Activity {
                 }
                 break;
             case HasExternalNfc:
-                // TODO: implement this.
+                if (!Common.hasExternalNfcInstalled(this)) {
+                    createInstallExternalNfcDialog().show();
+                } else {
+                    runSartupNode(StartupNode.ExternalNfcServiceRunning);
+                }
                 break;
             case ExternalNfcServiceRunning:
                 // TODO: implement this.
+                runSartupNode(StartupNode.DonateDilaog);
                 break;
             case DonateDilaog:
                 // Check if the  donate dialog has to be shown.
@@ -339,7 +344,63 @@ public class MainMenu extends Activity {
                     public void onCancel(DialogInterface dialog) {
                         finish();
                     }
-                }).create();
+                })
+                .create();
+    }
+
+    // TODO: doc.
+    private AlertDialog createInstallExternalNfcDialog() {
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_no_nfc_support_title)
+                .setMessage(R.string.dialog_no_nfc_support)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_install_external_nfc,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        useAsEditorOnly(true);
+                        // Open Google Play for the donate version of MCT.
+                        Uri uri = Uri.parse(
+                                "market://details?id=eu.dedb.nfc.service");
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store"
+                                            + "/apps/details?id=eu.dedb.nfc"
+                                            + ".servicel")));
+                        }
+                    }
+                })
+                .setNeutralButton(R.string.action_editor_only,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Only use Editor.
+                        useAsEditorOnly(true);
+                        // Showing the Donate Dialog every time someone
+                        // is using MCT only as editor is not worth it...
+                        // runSartupNode(StartupNode.DonateDilaog);
+                    }
+                })
+                .setNegativeButton(R.string.action_exit_app,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Exit the App.
+                        finish();
+                    }
+                })
+                .setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .create();
+        return ad;
     }
 
     // TODO: doc.
@@ -416,6 +477,9 @@ public class MainMenu extends Activity {
         } else {
             enableMenuButtons(false);
         }
+
+        // TODO: It is most likely the best idea to run the full
+        // startup system after a onResume().
 
         // Check if the NFC hardware is enabled.
         if (Common.getNfcAdapter() != null
