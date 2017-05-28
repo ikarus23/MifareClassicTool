@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
+import de.syss.MifareClassicTool.Common.Operations;
 
 /**
  * Provides functions to read/write/analyze a MIFARE Classic tag.
@@ -747,7 +748,7 @@ public class MCReader {
                                 acMatrix[0][3],
                                 acMatrix[1][3],
                                 acMatrix[2][3],
-                                Common.Operations.WriteAC,
+                                Operations.WriteAC,
                                 true, isKeyBReadable);
                         // Is key A writable? (If so, key B will be writable
                         // with the same key.)
@@ -755,7 +756,7 @@ public class MCReader {
                                 acMatrix[0][3],
                                 acMatrix[1][3],
                                 acMatrix[2][3],
-                                Common.Operations.WriteKeyA,
+                                Operations.WriteKeyA,
                                 true, isKeyBReadable);
 
                         int result = keyABValue;
@@ -786,7 +787,7 @@ public class MCReader {
                                         acMatrix[0][acBitsForBlock],
                                         acMatrix[1][acBitsForBlock],
                                         acMatrix[2][acBitsForBlock],
-                                        Common.Operations.Write,
+                                        Operations.Write,
                                         false, isKeyBReadable));
                     }
 
