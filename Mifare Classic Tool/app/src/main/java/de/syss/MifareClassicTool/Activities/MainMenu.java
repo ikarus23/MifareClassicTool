@@ -59,6 +59,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import de.syss.MifareClassicTool.Common;
+import de.syss.MifareClassicTool.Common.StartupNode;
 import de.syss.MifareClassicTool.R;
 
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
@@ -85,12 +86,7 @@ public class MainMenu extends Activity {
     private Button mWriteTag;
     private Button mKeyEditor;
     private Button mDumpEditor;
-    private Intent mOldIntent = null;
-
-    private enum StartupNode {
-        FirstUseDialog, DonateDilaog, HasNfc, HasMifareClassicSupport,
-        HasNfcEnabled, HasExternalNfc, ExternalNfcServiceRunning
-    }
+    private Intent mOldIntent = null; // TODO: Remove if not used.
 
     /**
      * Check for NFC hardware, MIFARE Classic support and for external storage.
@@ -131,8 +127,6 @@ public class MainMenu extends Activity {
     }
 
     // TODO: doc.
-    // TODO: Only show interesting dialogs when recovering from a real resume.
-    // (Dialogs that have not been seen before.)
     private void runSartupNode(StartupNode nextOperation) {
         SharedPreferences sharedPref =
                 getPreferences(Context.MODE_PRIVATE);
@@ -143,7 +137,11 @@ public class MainMenu extends Activity {
                 boolean isFirstRun = sharedPref.getBoolean(
                         "is_first_run", true);
                 if (isFirstRun) {
-                    createFirstUseDialog().show();
+                    if (Common.getLastStartupNode() !=
+                            StartupNode.FirstUseDialog) {
+                        Common.setLastStartupNode(StartupNode.FirstUseDialog);
+                        createFirstUseDialog().show();
+                    }
                 } else {
                     runSartupNode(StartupNode.HasNfc);
                 }
@@ -159,7 +157,12 @@ public class MainMenu extends Activity {
                 break;
             case HasMifareClassicSupport:
                 if (!Common.hasMifareClassicSupport()) {
-                    createHasNoMifareClassicSupportDialog().show();
+                    if (Common.getLastStartupNode() !=
+                            StartupNode.HasMifareClassicSupport) {
+                        Common.setLastStartupNode(
+                                StartupNode.HasMifareClassicSupport);
+                        createHasNoMifareClassicSupportDialog().show();
+                    }
                 } else {
                     runSartupNode(StartupNode.HasNfcEnabled);
                 }
@@ -168,10 +171,14 @@ public class MainMenu extends Activity {
                 // Check if NFC is enabled.
                 Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
                 if (!Common.getNfcAdapter().isEnabled()) {
-                    if (mEnableNfc == null) {
-                        createNfcEnableDialog();
+                    if (Common.getLastStartupNode() !=
+                            StartupNode.HasNfcEnabled) {
+                        Common.setLastStartupNode(StartupNode.HasNfcEnabled);
+                        if (mEnableNfc == null) {
+                            createNfcEnableDialog();
+                        }
+                        mEnableNfc.show();
                     }
-                    mEnableNfc.show();
                 } else {
                     useAsEditorOnly(false);
                     runSartupNode(StartupNode.DonateDilaog);
@@ -179,20 +186,33 @@ public class MainMenu extends Activity {
                 break;
             case HasExternalNfc:
                 if (!Common.hasExternalNfcInstalled(this)) {
-                    createInstallExternalNfcDialog().show();
+                    if (Common.getLastStartupNode() != StartupNode.HasExternalNfc) {
+                        Common.setLastStartupNode(StartupNode.HasExternalNfc);
+                        createInstallExternalNfcDialog().show();
+                    }
                 } else {
                     runSartupNode(StartupNode.ExternalNfcServiceRunning);
                 }
                 break;
             case ExternalNfcServiceRunning:
                 if (!Common.isExternalNfcServiceRunning(this)) {
-                    createStartExternalNfcServiceDialog().show();
+                    if (Common.getLastStartupNode() !=
+                            StartupNode.ExternalNfcServiceRunning) {
+                        Common.setLastStartupNode(
+                                StartupNode.ExternalNfcServiceRunning);
+                        createStartExternalNfcServiceDialog().show();
+                    }
                 } else {
                     useAsEditorOnly(false);
                     runSartupNode(StartupNode.DonateDilaog);
                 }
                 break;
             case DonateDilaog:
+                if (Common.getLastStartupNode() == StartupNode.DonateDilaog) {
+                    // Do nothing.
+                    break;
+                }
+                Common.setLastStartupNode(StartupNode.DonateDilaog);
                 // Check if the  donate dialog has to be shown.
                 if (Common.IS_DONATE_VERSION) {
                     // Do not run any further checks.
@@ -607,13 +627,10 @@ public class MainMenu extends Activity {
                 Common.hasWritePermissionToExternalStorage(this));
     }
 
-    // TODO: update doc.
     /**
-     * If resuming is allowed because all dependencies from
-     * {@link #onCreate(Bundle)} are satisfied, call
-     * {@link #recoverFromResume()}
-     * @see #onCreate(Bundle)
-     * @see #recoverFromResume()
+     * Resume by triggering MCT's startup system
+     * ({@link #runSartupNode(StartupNode)}).
+     * @see Common#mLastStartupNode
      */
     @Override
     public void onResume() {

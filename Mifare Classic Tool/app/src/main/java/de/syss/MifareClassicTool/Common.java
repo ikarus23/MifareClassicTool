@@ -122,6 +122,16 @@ public class Common extends Application {
         WriteKeyA, WriteKeyB, WriteAC
     }
 
+
+    /**
+     * Nodes (stats) MCT passes through during its startup.
+     *
+     */
+    public enum StartupNode {
+        FirstUseDialog, DonateDilaog, HasNfc, HasMifareClassicSupport,
+        HasNfcEnabled, HasExternalNfc, ExternalNfcServiceRunning
+    }
+
     private static final String LOG_TAG = Common.class.getSimpleName();
 
     /**
@@ -180,6 +190,11 @@ public class Common extends Application {
      * remember the result here.
      */
     private static int mHasMifareClassicSupport = 0;
+
+    /**
+     * The last node (state) MCT reached during its startup.
+     */
+    private static StartupNode mLastStartupNode = StartupNode.FirstUseDialog;
 
 
     private static NfcAdapter mNfcAdapter;
@@ -1440,6 +1455,22 @@ public class Common extends Application {
      */
     public static void setKeyMap(SparseArray<byte[][]> value) {
         mKeyMap = value;
+    }
+
+    /**
+     * Set the the last reached {@link StartupNode}.
+     * @param node A startup node.
+     */
+    public static void setLastStartupNode(StartupNode node) {
+        mLastStartupNode = node;
+    }
+
+    /**
+     * Get the the last reached startup node.
+     * @return The last reached startup node.
+     */
+    public static StartupNode getLastStartupNode() {
+        return mLastStartupNode;
     }
 
     /**
