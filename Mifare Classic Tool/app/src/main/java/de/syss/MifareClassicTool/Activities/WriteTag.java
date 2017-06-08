@@ -316,7 +316,7 @@ public class WriteTag extends BasicActivity {
         } else if (sector == 0 && block == 0) {
             // Is the BCC valid?
             int bccCheck = checkBCC(true);
-            if (bccCheck == 0 || bccCheck >= 2) {
+            if (bccCheck == 0 || bccCheck > 2) {
                 // Warning. Writing to manufacturer block.
                 showWriteManufInfo(true);
             }
@@ -450,7 +450,8 @@ public class WriteTag extends BasicActivity {
 
         int uidLen = Common.getUID().length;
         if (uidLen != 4) {
-            // Error. UID is not 4 bytes long.
+            // UID is not 4 bytes long. The BCC does not matter for
+            // tags with 7 byte UIDs.
             return 3;
         }
 
@@ -792,7 +793,7 @@ public class WriteTag extends BasicActivity {
                 // the manufacturer block was enabled.
                 if (writeBlock0) {
                     int bccCheck = checkBCC(false);
-                    if (bccCheck >= 2) {
+                    if (bccCheck == 2) {
                         // Error. Redo.
                         return;
                     } else if (bccCheck == 1) {
