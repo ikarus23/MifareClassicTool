@@ -46,7 +46,8 @@ public class Preferences extends BasicActivity {
         SaveLastUsedKeyFiles("save_last_used_key_files"),
         UseCustomSectorCount("use_custom_sector_count"),
         CustomSectorCount("custom_sector_count"),
-        UseInternalStorage("use_internal_storage");
+        UseInternalStorage("use_internal_storage"),
+        RetryAuthentication("retry_authentication");
         // Add more preferences here (comma separated).
 
         private final String text;
@@ -64,6 +65,7 @@ public class Preferences extends BasicActivity {
     CheckBox mPrefAutoReconnect;
     CheckBox mPrefSaveLastUsedKeyFiles;
     CheckBox mUseCustomSectorCount;
+    CheckBox mRetryAuthentication;
     CheckBox mUseInternalStorage;
     EditText mCustomSectorCount;
 
@@ -86,6 +88,8 @@ public class Preferences extends BasicActivity {
                 R.id.editTextPreferencesCustomSectorCount);
         mUseInternalStorage = (CheckBox) findViewById(
                 R.id.checkBoxPreferencesUseInternalStorage);
+        mRetryAuthentication = (CheckBox) findViewById(
+                R.id.checkBoxPreferencesRetryAuthentication);
 
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
@@ -100,6 +104,8 @@ public class Preferences extends BasicActivity {
                 Preference.CustomSectorCount.toString(), 16));
         mUseInternalStorage.setChecked(pref.getBoolean(
                 Preference.UseInternalStorage.toString(), false));
+        mRetryAuthentication.setChecked(pref.getBoolean(
+                Preference.RetryAuthentication.toString(), true));
     }
 
     /**
@@ -170,6 +176,25 @@ public class Preferences extends BasicActivity {
     }
 
     /**
+     * Show information on the "retry authentication" preference.
+     * @param view The View object that triggered the method
+     * (in this case the info on use internal storage button).
+     */
+    public void onShowRetryAuthenticationInfo(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_retry_authentication_title)
+                .setMessage(R.string.dialog_retry_authentication)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do nothing.
+                            }
+                        }).show();
+    }
+
+    /**
      * Save the preferences (to the application context,
      * {@link Common#getPreferences()}).
      * @param view The View object that triggered the method
@@ -193,6 +218,8 @@ public class Preferences extends BasicActivity {
                 mPrefSaveLastUsedKeyFiles.isChecked());
         edit.putBoolean(Preference.UseCustomSectorCount.toString(),
                 mUseCustomSectorCount.isChecked());
+        edit.putBoolean(Preference.RetryAuthentication.toString(),
+                mRetryAuthentication.isChecked());
         edit.putBoolean(Preference.UseInternalStorage.toString(),
                 mUseInternalStorage.isChecked());
         edit.putInt(Preference.CustomSectorCount.toString(),

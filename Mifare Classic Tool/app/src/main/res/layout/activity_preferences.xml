@@ -106,6 +106,33 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesRetryAuthentication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesRetryAuthentication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/imageButtonPreferencesRetryAuthentication"
+                    android:text="@string/action_retry_authentication" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonPreferencesRetryAuthentication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowRetryAuthenticationInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/relativeLayoutPreferencesUseInternalStorage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
