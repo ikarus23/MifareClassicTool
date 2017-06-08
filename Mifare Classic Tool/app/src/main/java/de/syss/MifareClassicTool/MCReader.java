@@ -506,26 +506,44 @@ public class MCReader {
             // Get auto reconnect setting.
             boolean autoReconnect = Common.getPreferences().getBoolean(
                     Preference.AutoReconnect.toString(), false);
+            // Get retry authentication option.
+            boolean retryAuth = Common.getPreferences().getBoolean(
+                    Preference.RetryAuthentication.toString(), true);
 
             byte[][] keys = new byte[2][];
             boolean[] foundKeys = new boolean[] {false, false};
+            boolean auth;
 
             // Check next sector against all keys (lines) with
             // authentication method A and B.
             for (int i = 0; i < mKeysWithOrder.size();) {
                 byte[] key = mKeysWithOrder.get(i);
                 try {
-                    if (!foundKeys[0] &&
-                            mMFC.authenticateSectorWithKeyA(
-                                    mKeyMapStatus, key)) {
-                        keys[0] = key;
-                        foundKeys[0] = true;
+                    if (!foundKeys[0]) {
+                        auth = mMFC.authenticateSectorWithKeyA(
+                                mKeyMapStatus, key);
+                        if (retryAuth && !auth) {
+                            // Retry.
+                            auth = mMFC.authenticateSectorWithKeyA(
+                                    mKeyMapStatus, key);
+                        }
+                        if (auth) {
+                            keys[0] = key;
+                            foundKeys[0] = true;
+                        }
                     }
-                    if (!foundKeys[1] &&
-                            mMFC.authenticateSectorWithKeyB(
-                                    mKeyMapStatus, key)) {
-                        keys[1] = key;
-                        foundKeys[1] = true;
+                    if (!foundKeys[1]) {
+                        auth = mMFC.authenticateSectorWithKeyB(
+                                mKeyMapStatus, key);
+                        if (retryAuth && !auth) {
+                            // Retry.
+                            auth = mMFC.authenticateSectorWithKeyB(
+                                    mKeyMapStatus, key);
+                        }
+                        if (auth) {
+                            keys[1] = key;
+                            foundKeys[1] = true;
+                        }
                     }
                 } catch (Exception e) {
                     Log.d(LOG_TAG, "Error while building next key map part");
@@ -855,6 +873,11 @@ public class MCReader {
         return false;
     }
 
+    // TODO: Make this a function with three return values.
+    // 0 = Auth. successful.
+    // 1 = Auth. not successful.
+    // 2 = Error. Most likely tag lost.
+    // Once done, update the code of buildNextKeyMapPart().
     /**
      * Authenticate with given sector of the tag.
      * @param sectorIndex The sector with which to authenticate.
@@ -865,18 +888,31 @@ public class MCReader {
      */
     private boolean authenticate(int sectorIndex, byte[] key,
             boolean useAsKeyB) {
+        // Fetch the retry authentication option. Some tags have strange
+        // issues and need a retry in order to work...
+        // Info: https://github.com/ikarus23/MifareClassicTool/issues/134
+        boolean retryAuth = Common.getPreferences().getBoolean(
+                Preference.RetryAuthentication.toString(), true);
+        boolean ret;
         try {
             if (!useAsKeyB) {
                 // Key A.
-                return mMFC.authenticateSectorWithKeyA(sectorIndex, key);
+                ret = mMFC.authenticateSectorWithKeyA(sectorIndex, key);
+                if (retryAuth && !ret) {
+                    ret = mMFC.authenticateSectorWithKeyA(sectorIndex, key);
+                }
             } else {
                 // Key B.
-                return mMFC.authenticateSectorWithKeyB(sectorIndex, key);
+                ret = mMFC.authenticateSectorWithKeyB(sectorIndex, key);
+                if (retryAuth && !ret) {
+                    ret = mMFC.authenticateSectorWithKeyB(sectorIndex, key);
+                }
             }
         } catch (IOException e) {
             Log.d(LOG_TAG, "Error authenticating with tag.");
+            return false;
         }
-        return false;
+        return ret;
     }
 
     /**
