@@ -196,6 +196,13 @@ public class Common extends Application {
      */
     private static StartupNode mLastStartupNode = StartupNode.FirstUseDialog;
 
+    /**
+     * This value is false if this app should use the foreground dispatch
+     * system or true it should use the "External NFC" app as tag Intent
+     * provider (BroadcastReceiver).
+     */
+    private static boolean mIsUsingExternalNfc = false;
+
 
     private static NfcAdapter mNfcAdapter;
     private static Context mAppContext;
@@ -1472,6 +1479,27 @@ public class Common extends Application {
     public static StartupNode getLastStartupNode() {
         return mLastStartupNode;
     }
+
+    /**
+     * Returns whether this app is using "External NFC" (BroadcastProvider)
+     * or the foreground dispatch system to discover tags.
+     * @return True if the "External NFC" app is used to discover tags.
+     * False otherwise.
+     */
+    public static boolean isUsingExternalNfc() {
+        return mIsUsingExternalNfc;
+    }
+
+    /**
+     * Set if this app should use the foreground dispatch system or
+     * the "External NFC" app as tag Intent provider.
+     * @param value True if the "External NFC" app is used to provide
+     * Intents with new tags to MCT (BroadcastReceiver).
+     */
+    public static void setUsingExternalNfc(boolean value) {
+        mIsUsingExternalNfc = value;
+    }
+
 
     /**
      * Get the UID of the current tag.

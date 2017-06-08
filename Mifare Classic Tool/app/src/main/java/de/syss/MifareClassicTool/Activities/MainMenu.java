@@ -86,7 +86,7 @@ public class MainMenu extends Activity {
     private Button mWriteTag;
     private Button mKeyEditor;
     private Button mDumpEditor;
-    private Intent mOldIntent = null; // TODO: Remove if not used.
+    private Intent mOldIntent = null;
 
     /**
      * Check for NFC hardware, MIFARE Classic support and for external storage.
@@ -181,6 +181,8 @@ public class MainMenu extends Activity {
                     }
                 } else {
                     useAsEditorOnly(false);
+                    // TODO: be careful to not override the global setting.
+                    Common.setUsingExternalNfc(false);
                     runSartupNode(StartupNode.DonateDilaog);
                 }
                 break;
@@ -204,6 +206,7 @@ public class MainMenu extends Activity {
                     }
                 } else {
                     useAsEditorOnly(false);
+                    Common.setUsingExternalNfc(true);
                     runSartupNode(StartupNode.DonateDilaog);
                 }
                 break;
@@ -620,7 +623,6 @@ public class MainMenu extends Activity {
         inflater.inflate(R.menu.tools, menu);
         // Enable/Disable tag info tool depending on NFC availability.
         menu.findItem(R.id.menuMainTagInfo).setEnabled(
-                Common.hasMifareClassicSupport() &&
                 !Common.useAsEditorOnly());
         // Enable/Disable diff tool depending on write permissions.
         menu.findItem(R.id.menuMainDiffTool).setEnabled(
@@ -639,6 +641,30 @@ public class MainMenu extends Activity {
         if (Common.hasWritePermissionToExternalStorage(this)) {
             mKeyEditor.setEnabled(true);
             mDumpEditor.setEnabled(true);
+
+            // TODO: Handle new tags the right way and only if needed.
+            if (mOldIntent != getIntent()) {
+                int typeCheck = Common.treatAsNewTag(getIntent(), this);
+                if (typeCheck == -1 || typeCheck == -2) {
+                    // Device or tag does not support MIFARE Classic.
+                    // Run the only thing that is possible: The tag info tool.
+                    Intent i = new Intent(this, TagInfoTool.class);
+                    startActivity(i);
+                }
+                mOldIntent = getIntent();
+            }
+
+            // TODO: use the forground dispatch system only if there
+            // is no external reader.
+//            Common.enableNfcForegroundDispatch(this);
+//            if (mEnableNfc == null) {
+//                createNfcEnableDialog();
+//            }
+
+            // TODO: Disable the intent-filter from the manifest if the app
+            // is running and an external reader is used.
+            // https://stackoverflow.com/questions/40505357/disable-the-intent-filter-from-android-manifest-programatically
+
             runSartupNode(StartupNode.FirstUseDialog);
         } else {
             enableMenuButtons(false);
