@@ -21,6 +21,7 @@ This list may be incomplete. You might also want to have a look at
 * Google Nexus 10
 * Huawei G620S
 * Jiayu S3
+* Lenovo P2
 * LGE LG F60
 * LGE LG G2
 * LGE LG G2 mini
@@ -56,6 +57,8 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S6 Edge Plus
 * Samsung Galaxy S7
 * Samsung Galaxy S7 Edge (some Versions)
+* Samsung Galaxy S8
+* Samsung Galaxy S8 Plus
 * Samsung Galaxy Xcover 3
 * Sony Xperia Z2 (some models)
 * Sony Xperia Z3 (SOL26)
@@ -67,6 +70,7 @@ This app **has been known to work** on the following devices.
 
 * Asus Pegasus 2 (X550)
 * Google Nexus 7 (2012)
+* Google Pixel
 * HTC One
 * Huawei Ascend Mate7
 * OnePlus 3
@@ -79,5 +83,6 @@ This app **has been known to work** on the following devices.
 * Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
 * Sony Xperia M4 Aqua
 * Sony Xperia V
+* Sony Z5 Compact
 * Xiaomi Mi 5
 * Yota Phone (YD201, YD206)
