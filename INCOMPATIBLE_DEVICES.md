@@ -70,11 +70,15 @@ This app **has been known to work** on the following devices.
 
 * Asus Pegasus 2 (X550)
 * Google Nexus 7 (2012)
+* Google Nexus 6P
 * Google Pixel
 * HTC One
 * Huawei Ascend Mate7
+* Huawei P10 (partially working)
+* LG G5
 * OnePlus 3
 * OnePlus 3T
+* OnePlus 5
 * Philips Xenium I908
 * Samsung Galaxy Nexus
 * Samsung Galaxy S3 i9300
