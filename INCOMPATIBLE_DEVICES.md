@@ -11,6 +11,7 @@ This list may be incomplete. You might also want to have a look at
 [this list](http://www.shopnfc.it/en/content/7-nfc-device-compatibility).
 
 * Asus Zenfone 2
+* Blackberry Priv
 * BQ Aquaris X5 Plus
 * Foxcon InFocus M320
 * Google Nexus 4
@@ -19,16 +20,20 @@ This list may be incomplete. You might also want to have a look at
 * Google Nexus 7 (2013)
 * Google Nexus 9
 * Google Nexus 10
+* HTC One M8
 * Huawei G620S
 * Jiayu S3
 * Lenovo P2
+* Lenovo Vibe P1
 * LGE LG F60
 * LGE LG G2
 * LGE LG G2 mini
 * LGE LG G3 S
 * LGE LG G4
-* LEG LG Optimus L7 II
-* LEG V10
+* LGE LG K10
+* LGE LG Optimus L7 II
+* LGE LG Phoenix 2
+* LGE LG V10
 * Motorola Moto X (2014, 2ed gen.)
 * Motorola Moto Style
 * Motorola Moto Maxx
@@ -42,11 +47,14 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Alpha
 * Samsung Galaxy E7
 * Samsung Galaxy Express 2
+* Samsung Galaxy J3
+* Samsung Galaxy J7
 * Samsung Galaxy Mega
 * Samsung Galaxy Note 3
 * Samsung Galaxy Note 4
 * Samsung Galaxy Note 5
 * Samsung Galaxy Note 6
+* Samsung Galaxy Note 8
 * Samsung Galaxy Grand Prime
 * Samsung Galaxy S4
 * Samsung Galaxy S4 Mini
@@ -73,6 +81,9 @@ This app **has been known to work** on the following devices.
 * Google Pixel
 * HTC One
 * Huawei Ascend Mate7
+* Huawei P9
+* LGE LG G6 (H870)
+* OnePlus One (CM/LineageOS)
 * OnePlus 3
 * OnePlus 3T
 * Philips Xenium I908
