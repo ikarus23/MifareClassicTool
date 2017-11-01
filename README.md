@@ -11,6 +11,7 @@ An Android NFC-App for reading, writing, analyzing, etc. MIFARE Classic RFID-Tag
   (outdated, check Google Play)
 * **[Additional stuff](http://publications.icaria.de/mct/)** (Documentation, etc.)
 * **[Thread at the Proxmark forum](http://www.proxmark.org/forum/viewtopic.php?id=1535)**
+* **[Donate with Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW)** [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW)
 
 
 
