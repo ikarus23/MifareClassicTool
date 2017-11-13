@@ -39,7 +39,7 @@ This list may be incomplete. You might also want to have a look at
 * Motorola Moto Maxx
 * OnePlus One
 * Samsung Galaxy A3
-* Samsung Galaxy A5
+* Samsung Galaxy A5 (2016)
 * Samsung Galaxy A7 (2016)
 * Samsung Galaxy A9 (2016)
 * Samsung Galaxy Ace 3
@@ -47,8 +47,9 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Alpha
 * Samsung Galaxy E7
 * Samsung Galaxy Express 2
-* Samsung Galaxy J3
-* Samsung Galaxy J7
+* Samsung Galaxy J3 (2016)
+* Samsung Galaxy J5 (2017)
+* Samsung Galaxy J7 (2016, 2017)
 * Samsung Galaxy Mega
 * Samsung Galaxy Note 3
 * Samsung Galaxy Note 4
