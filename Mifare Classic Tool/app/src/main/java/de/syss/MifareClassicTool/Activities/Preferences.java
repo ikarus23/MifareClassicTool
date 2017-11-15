@@ -47,7 +47,6 @@ public class Preferences extends BasicActivity {
         UseCustomSectorCount("use_custom_sector_count"),
         CustomSectorCount("custom_sector_count"),
         UseInternalStorage("use_internal_storage");
-        // TODO: add a setting to force the use of an external reader.
         // Add more preferences here (comma separated).
 
         private final String text;

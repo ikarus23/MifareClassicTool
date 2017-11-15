@@ -19,11 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.NfcAdapter;
 
 import de.syss.MifareClassicTool.Common;
 
@@ -38,8 +34,6 @@ import de.syss.MifareClassicTool.Common;
  */
 public abstract class BasicActivity extends Activity {
 
-    private BroadcastReceiver mReceiver = null;
-
     /**
      * Enable NFC foreground dispatch system.
      * @see Common#disableNfcForegroundDispatch(Activity)
@@ -47,19 +41,7 @@ public abstract class BasicActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if (Common.isUsingExternalNfc()) {
-            mReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    onNewIntent(intent);
-                }
-            };
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(NfcAdapter.ACTION_TECH_DISCOVERED);
-            registerReceiver(mReceiver, filter);
-        } else {
-            Common.enableNfcForegroundDispatch(this);
-        }
+        Common.enableNfcForegroundDispatch(this);
     }
 
     /**
@@ -69,15 +51,9 @@ public abstract class BasicActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        if(Common.isUsingExternalNfc() && mReceiver != null) {
-            unregisterReceiver(mReceiver);
-        } else {
-            Common.disableNfcForegroundDispatch(this);
-        }
+        Common.disableNfcForegroundDispatch(this);
     }
 
-    // TODO: What if "isUsingExternalNfc" is false but the device
-    // dose not support Mifare Classic?
     /**
      * Handle new Intent as a new tag Intent and if the tag/device does not
      * support MIFARE Classic, then run {@link TagInfoTool}.
@@ -87,8 +63,7 @@ public abstract class BasicActivity extends Activity {
     @Override
     public void onNewIntent(Intent intent) {
         int typeCheck = Common.treatAsNewTag(intent, this);
-        if (!Common.isUsingExternalNfc() &&
-                typeCheck == -1 || typeCheck == -2) {
+        if (typeCheck == -1 || typeCheck == -2) {
             // Device or tag does not support MIFARE Classic.
             // Run the only thing that is possible: The tag info tool.
             Intent i = new Intent(this, TagInfoTool.class);
