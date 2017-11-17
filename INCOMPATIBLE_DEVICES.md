@@ -23,7 +23,6 @@ This list may be incomplete. You might also want to have a look at
 * HTC One M8
 * Huawei G620S
 * Jiayu S3
-* Lenovo P2
 * Lenovo Vibe P1
 * LGE LG F60
 * LGE LG G2
@@ -74,27 +73,3 @@ This list may be incomplete. You might also want to have a look at
 * Xiaomi MI 3
 * ZTE Nubia Z7 Max(NX505J)
 
-
-This app **has been known to work** on the following devices.
-
-* Asus Pegasus 2 (X550)
-* Google Nexus 7 (2012)
-* Google Pixel
-* HTC One
-* Huawei Ascend Mate7
-* Huawei P9
-* LGE LG G6 (H870)
-* OnePlus One (CM/LineageOS)
-* OnePlus 3
-* OnePlus 3T
-* Philips Xenium I908
-* Samsung Galaxy Nexus
-* Samsung Galaxy S3 i9300
-* Samsung Galaxy S3 Duo i9300i
-* Samsung Galaxy S5
-* Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
-* Sony Xperia M4 Aqua
-* Sony Xperia V
-* Sony Z5 Compact
-* Xiaomi Mi 5
-* Yota Phone (YD201, YD206)
