@@ -596,8 +596,14 @@ public class Common extends Application {
         // Chips by Broadcom don't support MIFARE Classic.
         // This could fail because on a lot of devices apps don't have
         // the sufficient permissions.
+        // Another exception:
+        // The Lenovo P2 has a device at "/dev/bcm2079x-i2c" but is still
+        // able of reading/writing MIFARE Classic tags. I don't know why...
+        // https://github.com/ikarus23/MifareClassicTool/issues/152
+        boolean isLenovoP2 = Build.MANUFACTURER.equals("LENOVO")
+                && Build.MODEL.equals("P2a42");
         File device = new File("/dev/bcm2079x-i2c");
-        if (device.exists()) {
+        if (!isLenovoP2 && device.exists()) {
             mHasMifareClassicSupport = -1;
             return false;
         }
