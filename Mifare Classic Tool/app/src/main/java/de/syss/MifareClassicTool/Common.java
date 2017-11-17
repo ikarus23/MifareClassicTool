@@ -601,7 +601,7 @@ public class Common extends Application {
         // able of reading/writing MIFARE Classic tags. I don't know why...
         // https://github.com/ikarus23/MifareClassicTool/issues/152
         boolean isLenovoP2 = Build.MANUFACTURER.equals("LENOVO")
-                && Build.MODEL.equals("P2a42");
+                && Build.MODEL.equals("Lenovo P2a42");
         File device = new File("/dev/bcm2079x-i2c");
         if (!isLenovoP2 && device.exists()) {
             mHasMifareClassicSupport = -1;
