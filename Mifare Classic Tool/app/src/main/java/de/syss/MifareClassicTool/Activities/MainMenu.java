@@ -80,6 +80,7 @@ public class MainMenu extends Activity {
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
     private static final int REQUEST_WRITE_STORAGE_CODE = 1;
+    private boolean mDonateDialogWasShown = false;
     private Button mReadTag;
     private Button mWriteTag;
     private Button mKeyEditor;
@@ -202,11 +203,18 @@ public class MainMenu extends Activity {
                 } else {
                     // NOTE: Use MCT with External NFC.
                     useAsEditorOnly(false);
-                    Common.setPendingActivity(null);
                     runSartUpNode(StartUpNode.DonateDialog);
                 }
                 break;
             case DonateDialog:
+                if (Common.IS_DONATE_VERSION) {
+                    runSartUpNode(StartUpNode.HandleNewIntent);
+                    break;
+                }
+                if (mDonateDialogWasShown) {
+                    runSartUpNode(StartUpNode.HandleNewIntent);
+                    break;
+                }
                 int currentVersion = 0;
                 try {
                     currentVersion = getPackageManager().getPackageInfo(
@@ -220,10 +228,6 @@ public class MainMenu extends Activity {
                         "show_donate_dialog", true);
 
                 if (lastVersion < currentVersion || showDonateDialog) {
-                    if (Common.IS_DONATE_VERSION) {
-                        runSartUpNode(StartUpNode.HandleNewIntent);
-                    }
-
                     // This is either a new version of MCT or the user
                     // wants to see the donate dialog.
                     if (lastVersion < currentVersion) {
@@ -233,11 +237,13 @@ public class MainMenu extends Activity {
                         sharedEditor.apply();
                     }
                     createDonateDialog().show();
+                    mDonateDialogWasShown = true;
                 } else {
                     runSartUpNode(StartUpNode.HandleNewIntent);
                 }
                 break;
             case HandleNewIntent:
+                Common.setPendingActivity(null);
                 Intent intent = getIntent();
                 boolean isIntentWithTag = intent.getAction().equals(
                         NfcAdapter.ACTION_TECH_DISCOVERED);
@@ -665,8 +671,6 @@ public class MainMenu extends Activity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        // TODO: Route new intent to pending activity only if the new intent
-        // was send by External NFC.
         if(Common.getPendingActivity() != null) {
             intent.setComponent(Common.getPendingActivity().getComponentName());
             startActivity(intent);
