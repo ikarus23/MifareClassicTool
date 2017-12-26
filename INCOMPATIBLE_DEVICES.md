@@ -36,7 +36,7 @@ This list may be incomplete. You might also want to have a look at
 * Motorola Moto X (2014, 2ed gen.)
 * Motorola Moto Style
 * Motorola Moto Maxx
-* OnePlus One
+* OnePlus One (works with recent versions of LineageOS/OmniROM)
 * Samsung Galaxy A3
 * Samsung Galaxy A5 (2016)
 * Samsung Galaxy A7 (2016)
