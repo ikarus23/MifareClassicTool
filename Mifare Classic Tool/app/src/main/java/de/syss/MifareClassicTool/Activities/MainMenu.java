@@ -134,12 +134,20 @@ public class MainMenu extends Activity {
         }
     }
 
-    // TODO: doc.
-    private void runSartUpNode(StartUpNode nextOperation) {
+    /**
+     * Each phase of the MCTs startup is called "node" (see {@link StartUpNode})
+     * and can be started by this function. The following nodes will be
+     * started automatically (e.g. if the "has NFC support?" node is triggered
+     * the "has MIFARE classic support?" node will be run automatically
+     * after that).
+     * @param startUpNode The node of the startup checks chain.
+     * @see StartUpNode
+     */
+    private void runSartUpNode(StartUpNode startUpNode) {
         SharedPreferences sharedPref =
                 getPreferences(Context.MODE_PRIVATE);
         Editor sharedEditor = sharedPref.edit();
-        switch (nextOperation) {
+        switch (startUpNode) {
             case FirstUseDialog:
                 boolean isFirstRun = sharedPref.getBoolean(
                         "is_first_run", true);
@@ -261,14 +269,24 @@ public class MainMenu extends Activity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Set whether to use the app in editor only mode or not.
+     * @param useAsEdtiorOnly True if the app should be used in editor
+     * only mode.
+     */
     private void useAsEditorOnly(boolean useAsEdtiorOnly) {
         Common.setUseAsEditorOnly(useAsEdtiorOnly);
         mReadTag.setEnabled(!useAsEdtiorOnly);
         mWriteTag.setEnabled(!useAsEdtiorOnly);
     }
 
-    // TODO: doc.
+    /**
+     * Create the dialog which is displayed once the app was started for the
+     * first time. After showing the dialog, {@link #runSartUpNode(StartUpNode)}
+     * with {@link StartUpNode#HasNfc} will be called.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
     private AlertDialog createFirstUseDialog() {
         AlertDialog ad = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
@@ -298,7 +316,14 @@ public class MainMenu extends Activity {
         return ad;
     }
 
-    // TODO: doc.
+    /**
+     * Create the dialog which is displayed if the device does not have
+     * MIFARE classic support. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with {@link StartUpNode#DonateDialog}
+     * will be called or the app will be exited.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
     private AlertDialog createHasNoMifareClassicSupportDialog() {
         CharSequence styledText = Html.fromHtml(
                 getString(R.string.dialog_no_mfc_support_device));
@@ -335,6 +360,7 @@ public class MainMenu extends Activity {
      * Create a dialog that send user to NFC settings if NFC is off.
      * Alternatively the user can chose to use the App in editor only
      * mode or exit the App.
+     * @return The created alert dialog.
      * @see #runSartUpNode(StartUpNode)
      */
     private AlertDialog createNfcEnableDialog() {
@@ -385,7 +411,15 @@ public class MainMenu extends Activity {
         return ad;
     }
 
-    // TODO: doc.
+    /**
+     * Create the dialog which is displayed if the device has not "External NFC"
+     * installed. After showing the dialog, {@link #runSartUpNode(StartUpNode)}
+     * with {@link StartUpNode#DonateDialog} will be called or MCT will
+     * redirect the user to the play store page of "External NFC"  or
+     * the app will be exited.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
     private AlertDialog createInstallExternalNfcDialog() {
         AlertDialog ad = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_no_nfc_support_title)
@@ -437,7 +471,15 @@ public class MainMenu extends Activity {
         return ad;
     }
 
-    // TODO: doc.
+    /**
+     * Create the dialog which is displayed if the "External NFC" service is
+     * not running. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with {@link StartUpNode#DonateDialog}
+     * will be called or MCT will redirect the user to the settings of
+     * "External NFC" or the app will be exited.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
     private AlertDialog createStartExternalNfcServiceDialog() {
         final Context context = this;
         AlertDialog ad = new AlertDialog.Builder(this)
@@ -480,7 +522,13 @@ public class MainMenu extends Activity {
         return ad;
     }
 
-    // TODO: doc.
+    /**
+     * Create the donate dialog. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with
+     * {@link StartUpNode#HandleNewIntent} will be called.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
     private AlertDialog createDonateDialog() {
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_donate,

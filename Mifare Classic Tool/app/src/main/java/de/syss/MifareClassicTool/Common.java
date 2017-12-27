@@ -181,7 +181,10 @@ public class Common extends Application {
      */
     private static int mHasMifareClassicSupport = 0;
 
-    // TODO: doc.
+    /**
+     * The activity that is in foreground and should receive the new
+     * detected tag object by an external reader.
+     */
     private static Activity mPendingActivity = null;
 
 
@@ -714,7 +717,11 @@ public class Common extends Application {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Check whether the service of the "External NFC" app is running or not.
+     * @param context The context for the system service.
+     * @return True if the service is running. False otherwise.
+     */
     public static boolean isExternalNfcServiceRunning(Context context) {
         ActivityManager manager =
                 (ActivityManager) context.getSystemService(
@@ -729,12 +736,21 @@ public class Common extends Application {
         return false;
     }
 
-    // TODO: doc.
+    /**
+     * Find out whether the "External NFC" app is installed or not.
+     * @param context The context for the package manager.
+     * @return True if "External NFC" is installed. False otherwise.
+     */
     public static boolean hasExternalNfcInstalled(Context context) {
         return Common.isAppInstalled("eu.dedb.nfc.service", context);
     }
 
-    // TODO: doc.
+    /**
+     * Check whether an app is installed or not.
+     * @param uri The URI (package name) of the app.
+     * @param context The context for the package manager.
+     * @return True if the app is installed. False otherwise.
+     */
     public static boolean isAppInstalled(String uri, Context context) {
         PackageManager pm = context.getPackageManager();
         try {
@@ -1445,12 +1461,20 @@ public class Common extends Application {
         mKeyMap = value;
     }
 
-    // TODO: doc.
+    /**
+     * Set a new pending activity.
+     * @param pendingActivity The new pending activity.
+     * @see #mPendingActivity
+     */
     public static void setPendingActivity(Activity pendingActivity) {
         mPendingActivity = pendingActivity;
     }
 
-    // TODO: doc.
+    /**
+     * Get the current pending activity.
+     * @return The current pending activity.
+     * @see #mPendingActivity
+     */
     public static Activity getPendingActivity() {
         return mPendingActivity;
     }
