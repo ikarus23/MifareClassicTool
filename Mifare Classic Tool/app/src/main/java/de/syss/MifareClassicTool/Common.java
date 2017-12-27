@@ -679,11 +679,55 @@ public class Common extends Application {
 
         } else {
             // Check if device does not support MIFARE Classic.
-            // For doing so, check if the ATQA + SAK of the tag indicate that
+            // For doing so, check if the SAK of the tag indicate that
             // it's a MIFARE Classic tag.
+            // See: http://www.nxp.com/documents/application_note/130830.pdf
+            NfcA nfca = NfcA.get(tag);
+            byte sak = (byte)nfca.getSak();
+            if ((sak>>1 & 1) == 1) {
+                // RFU.
+                return -2;
+            } else {
+                if ((sak>>3 & 1) == 1) {
+                    if((sak>>4 & 1) == 1) {
+                        // MIFARE 4k.
+                        return -1;
+                    } else {
+                        if ((sak & 1) == 1) {
+                            // MIFARE Mini.
+                            return -1;
+                        } else {
+                            // MIFARE 1k.
+                            return -1;
+                        }
+                    }
+                } else {
+                    if ((sak>>4 & 1) == 1) {
+                        if ((sak & 1) == 1) {
+                            // MIFARE Plus 4k SL2.
+                            return -2;
+                        } else {
+                            // MIFARE Plus 2k SL2.
+                            return -2;
+                        }
+                    } else {
+                        if ((sak>>5 & 1) == 1) {
+                            // RATS + PSS if required -> ISO 14443-4 card.
+                            return -2;
+                        } else {
+                            // MIFARE UL.
+                            return -2;
+                        }
+                    }
+                }
+            }
+
+            // Old MIFARE Classic support check. No longer valid.
+            // Check if the ATQA + SAK of the tag indicate that it's a MIFARE Classic tag.
             // See: http://www.nxp.com/documents/application_note/AN10833.pdf
             // (Table 5 and 6)
             // 0x28 is for some emulated tags.
+            /*
             NfcA nfca = NfcA.get(tag);
             byte[] atqa = nfca.getAtqa();
             if (atqa[1] == 0 &&
@@ -702,6 +746,7 @@ public class Common extends Application {
             // Nope, it's not the device (most likely).
             // The tag does not support MIFARE Classic.
             return -2;
+            */
         }
     }
 
