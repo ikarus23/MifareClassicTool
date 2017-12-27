@@ -80,13 +80,21 @@ public class MainMenu extends Activity {
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
     private static final int REQUEST_WRITE_STORAGE_CODE = 1;
-    private AlertDialog mEnableNfc;
+    private boolean mDonateDialogWasShown = false;
     private Button mReadTag;
     private Button mWriteTag;
     private Button mKeyEditor;
     private Button mDumpEditor;
-    private boolean mResume = true;
     private Intent mOldIntent = null;
+
+    /**
+     * Nodes (stats) MCT passes through during its startup.
+     */
+    private enum StartUpNode {
+        FirstUseDialog, DonateDialog, HasNfc, HasMifareClassicSupport,
+        HasNfcEnabled, HasExternalNfc, ExternalNfcServiceRunning,
+        HandleNewIntent
+    }
 
     /**
      * Check for NFC hardware, MIFARE Classic support and for external storage.
@@ -119,95 +127,426 @@ public class MainMenu extends Activity {
         if (Common.hasWritePermissionToExternalStorage(this)) {
             initFolders();
         } else {
-            enableMenuButtons(false);
             // Request the permission.
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_WRITE_STORAGE_CODE);
         }
+    }
 
-        // Check if there is an NFC hardware component.
-        Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
-        if (Common.getNfcAdapter() == null) {
-            createNfcEnableDialog();
-            mEnableNfc.show();
-            mReadTag.setEnabled(false);
-            mWriteTag.setEnabled(false);
-            mResume = false;
+    /**
+     * Each phase of the MCTs startup is called "node" (see {@link StartUpNode})
+     * and can be started by this function. The following nodes will be
+     * started automatically (e.g. if the "has NFC support?" node is triggered
+     * the "has MIFARE classic support?" node will be run automatically
+     * after that).
+     * @param startUpNode The node of the startup checks chain.
+     * @see StartUpNode
+     */
+    private void runSartUpNode(StartUpNode startUpNode) {
+        SharedPreferences sharedPref =
+                getPreferences(Context.MODE_PRIVATE);
+        Editor sharedEditor = sharedPref.edit();
+        switch (startUpNode) {
+            case FirstUseDialog:
+                boolean isFirstRun = sharedPref.getBoolean(
+                        "is_first_run", true);
+                if (isFirstRun) {
+                    createFirstUseDialog().show();
+                } else {
+                    runSartUpNode(StartUpNode.HasNfc);
+                }
+                break;
+            case HasNfc:
+                Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
+                if (Common.getNfcAdapter() == null) {
+                    runSartUpNode(StartUpNode.HasExternalNfc);
+                } else {
+                    runSartUpNode(StartUpNode.HasMifareClassicSupport);
+                }
+                break;
+            case HasMifareClassicSupport:
+                if (!Common.hasMifareClassicSupport()
+                        && !Common.useAsEditorOnly()) {
+                    AlertDialog ad = createHasNoMifareClassicSupportDialog();
+                    ad.show();
+                    // Make links clickable.
+                    ((TextView) ad.findViewById(android.R.id.message))
+                            .setMovementMethod(
+                                    LinkMovementMethod.getInstance());
+                } else {
+                    runSartUpNode(StartUpNode.HasNfcEnabled);
+                }
+                break;
+            case HasNfcEnabled:
+                Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
+                if (!Common.getNfcAdapter().isEnabled()) {
+                    if (!Common.useAsEditorOnly()) {
+                        createNfcEnableDialog().show();
+                    } else {
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
+                } else {
+                    // NOTE: Use MCT with internal NFC controller.
+                    useAsEditorOnly(false);
+                    Common.enableNfcForegroundDispatch(this);
+                    runSartUpNode(StartUpNode.DonateDialog);
+                }
+                break;
+            case HasExternalNfc:
+                if (!Common.hasExternalNfcInstalled(this)
+                        && !Common.useAsEditorOnly()) {
+                    createInstallExternalNfcDialog().show();
+                } else {
+                    runSartUpNode(StartUpNode.ExternalNfcServiceRunning);
+                }
+                break;
+            case ExternalNfcServiceRunning:
+                if (!Common.isExternalNfcServiceRunning(this)) {
+                    if (!Common.useAsEditorOnly()) {
+                        createStartExternalNfcServiceDialog().show();
+                    } else {
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
+                } else {
+                    // NOTE: Use MCT with External NFC.
+                    useAsEditorOnly(false);
+                    runSartUpNode(StartUpNode.DonateDialog);
+                }
+                break;
+            case DonateDialog:
+                if (Common.IS_DONATE_VERSION) {
+                    runSartUpNode(StartUpNode.HandleNewIntent);
+                    break;
+                }
+                if (mDonateDialogWasShown) {
+                    runSartUpNode(StartUpNode.HandleNewIntent);
+                    break;
+                }
+                int currentVersion = 0;
+                try {
+                    currentVersion = getPackageManager().getPackageInfo(
+                            getPackageName(), 0).versionCode;
+                } catch (NameNotFoundException e) {
+                    Log.d(LOG_TAG, "Version not found.");
+                }
+                int lastVersion = sharedPref.getInt("mct_version",
+                        currentVersion - 1);
+                boolean showDonateDialog = sharedPref.getBoolean(
+                        "show_donate_dialog", true);
+
+                if (lastVersion < currentVersion || showDonateDialog) {
+                    // This is either a new version of MCT or the user
+                    // wants to see the donate dialog.
+                    if (lastVersion < currentVersion) {
+                        // Update the version.
+                        sharedEditor.putInt("mct_version", currentVersion);
+                        sharedEditor.putBoolean("show_donate_dialog", true);
+                        sharedEditor.apply();
+                    }
+                    createDonateDialog().show();
+                    mDonateDialogWasShown = true;
+                } else {
+                    runSartUpNode(StartUpNode.HandleNewIntent);
+                }
+                break;
+            case HandleNewIntent:
+                Common.setPendingActivity(null);
+                Intent intent = getIntent();
+                boolean isIntentWithTag = intent.getAction().equals(
+                        NfcAdapter.ACTION_TECH_DISCOVERED);
+                if (isIntentWithTag && intent != mOldIntent) {
+                    // If MCT was called by another app or the dispatch
+                    // system with a tag delivered by intent, handle it as
+                    // new tag intent.
+                    mOldIntent = intent;
+                    onNewIntent(getIntent());
+                } else {
+                    // Last node. Do nothing.
+                    break;
+                }
+                break;
         }
+    }
 
-        // Show first usage notice.
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        final Editor sharedEditor = sharedPref.edit();
-        boolean isFirstRun = sharedPref.getBoolean("is_first_run", true);
-        if (isFirstRun) {
-            new AlertDialog.Builder(this)
+    /**
+     * Set whether to use the app in editor only mode or not.
+     * @param useAsEdtiorOnly True if the app should be used in editor
+     * only mode.
+     */
+    private void useAsEditorOnly(boolean useAsEdtiorOnly) {
+        Common.setUseAsEditorOnly(useAsEdtiorOnly);
+        mReadTag.setEnabled(!useAsEdtiorOnly);
+        mWriteTag.setEnabled(!useAsEdtiorOnly);
+    }
+
+    /**
+     * Create the dialog which is displayed once the app was started for the
+     * first time. After showing the dialog, {@link #runSartUpNode(StartUpNode)}
+     * with {@link StartUpNode#HasNfc} will be called.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createFirstUseDialog() {
+        AlertDialog ad = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(R.string.dialog_first_run)
                 .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 })
+                .setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SharedPreferences sharedPref =
+                                getPreferences(Context.MODE_PRIVATE);
+                        Editor sharedEditor = sharedPref.edit();
+                        sharedEditor.putBoolean("is_first_run", false);
+                        sharedEditor.apply();
+                        // Continue with "has NFC" check.
+                        runSartUpNode(StartUpNode.HasNfc);
+                    }
+                })
+                .create();
+        return ad;
+    }
+
+    /**
+     * Create the dialog which is displayed if the device does not have
+     * MIFARE classic support. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with {@link StartUpNode#DonateDialog}
+     * will be called or the app will be exited.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createHasNoMifareClassicSupportDialog() {
+        CharSequence styledText = Html.fromHtml(
+                getString(R.string.dialog_no_mfc_support_device));
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_no_mfc_support_device_title)
+                .setMessage(styledText)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_exit_app,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.action_editor_only,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        useAsEditorOnly(true);
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
+                })
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        if (Common.IS_DONATE_VERSION) {
-                            mResume = true;
-                            checkNfc();
-                        }
-                        sharedEditor.putBoolean("is_first_run", false);
-                        sharedEditor.apply();
+                        finish();
                     }
-                 })
-                .show();
-            mResume = false;
-        }
+                })
+                .create();
+        return ad;
+    }
 
-        if (Common.IS_DONATE_VERSION) {
-            // Do not show the donate dialog.
-            return;
-        }
-        // Show donate dialog.
-        int currentVersion = 0;
-        try {
-            currentVersion = getPackageManager().getPackageInfo(
-                    getPackageName(), 0).versionCode;
-        } catch (NameNotFoundException e) {
-            Log.d(LOG_TAG, "Version not found.");
-        }
-        int lastVersion = sharedPref.getInt("mct_version", currentVersion - 1);
-        boolean showDonateDialog = sharedPref.getBoolean(
-                "show_donate_dialog", true);
-        if (lastVersion < currentVersion || showDonateDialog) {
-            // This is either a new version of MCT or the user wants to see
-            // the donate dialog.
-            if (lastVersion < currentVersion) {
-                // Update the version.
-                sharedEditor.putInt("mct_version", currentVersion);
-                sharedEditor.putBoolean("show_donate_dialog", true);
-                sharedEditor.apply();
-            }
-            View dialogLayout = getLayoutInflater().inflate(
-                    R.layout.dialog_donate,
-                    (ViewGroup)findViewById(android.R.id.content), false);
-            final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
-                    .findViewById(R.id.checkBoxDonateDialog);
-            new AlertDialog.Builder(this)
+    /**
+     * Create a dialog that send user to NFC settings if NFC is off.
+     * Alternatively the user can chose to use the App in editor only
+     * mode or exit the App.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createNfcEnableDialog() {
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_nfc_not_enabled_title)
+                .setMessage(R.string.dialog_nfc_not_enabled)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_nfc,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    @SuppressLint("InlinedApi")
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Goto NFC Settings.
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            startActivity(new Intent(
+                                    Settings.ACTION_NFC_SETTINGS));
+                        } else {
+                            startActivity(new Intent(
+                                    Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    }
+                })
+                .setNeutralButton(R.string.action_editor_only,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Only use Editor.
+                        useAsEditorOnly(true);
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
+                })
+                .setNegativeButton(R.string.action_exit_app,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Exit the App.
+                        finish();
+                    }
+                })
+                .setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .create();
+        return ad;
+    }
+
+    /**
+     * Create the dialog which is displayed if the device has not "External NFC"
+     * installed. After showing the dialog, {@link #runSartUpNode(StartUpNode)}
+     * with {@link StartUpNode#DonateDialog} will be called or MCT will
+     * redirect the user to the play store page of "External NFC"  or
+     * the app will be exited.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createInstallExternalNfcDialog() {
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_no_nfc_support_title)
+                .setMessage(R.string.dialog_no_nfc_support)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_install_external_nfc,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Open Google Play for the donate version of MCT.
+                        Uri uri = Uri.parse(
+                                "market://details?id=eu.dedb.nfc.service");
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store"
+                                            + "/apps/details?id=eu.dedb.nfc"
+                                            + ".service")));
+                        }
+                    }
+                })
+                .setNeutralButton(R.string.action_editor_only,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Only use Editor.
+                        useAsEditorOnly(true);
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
+                })
+                .setNegativeButton(R.string.action_exit_app,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Exit the App.
+                        finish();
+                    }
+                })
+                .setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .create();
+        return ad;
+    }
+
+    /**
+     * Create the dialog which is displayed if the "External NFC" service is
+     * not running. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with {@link StartUpNode#DonateDialog}
+     * will be called or MCT will redirect the user to the settings of
+     * "External NFC" or the app will be exited.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createStartExternalNfcServiceDialog() {
+        final Context context = this;
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_start_external_nfc_title)
+                .setMessage(R.string.dialog_start_external_nfc)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_start_external_nfc,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        useAsEditorOnly(true);
+                        Common.openApp(context, "eu.dedb.nfc.service");
+                    }
+                })
+                .setNeutralButton(R.string.action_editor_only,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Only use Editor.
+                        useAsEditorOnly(true);
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
+                })
+                .setNegativeButton(R.string.action_exit_app,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Exit the App.
+                        finish();
+                    }
+                })
+                .setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                })
+                .create();
+        return ad;
+    }
+
+    /**
+     * Create the donate dialog. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with
+     * {@link StartUpNode#HandleNewIntent} will be called.
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createDonateDialog() {
+        View dialogLayout = getLayoutInflater().inflate(
+                R.layout.dialog_donate,
+                (ViewGroup)findViewById(android.R.id.content), false);
+        final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
+                .findViewById(R.id.checkBoxDonateDialog);
+        AlertDialog ad = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_donate_title)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setView(dialogLayout)
                 .setPositiveButton(R.string.action_beer_sounds_fine,
-                        new DialogInterface.OnClickListener() {
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Open Google Play for the donate version of MCT.
                         Uri uri = Uri.parse(
                                 "market://details?id=de."
-                                + "syss.MifareClassicToolDonate");
+                                        + "syss.MifareClassicToolDonate");
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                         try {
                             startActivity(goToMarket);
@@ -217,78 +556,34 @@ public class MainMenu extends Activity {
                                             + "/apps/details?id=de.syss.Mifare"
                                             + "ClassicToolDonate")));
                         }
-                        if (showDonateDialogCheckBox.isChecked()) {
-                            // Do not show the donate dialog again.
-                            sharedEditor.putBoolean(
-                                    "show_donate_dialog", false);
-                            sharedEditor.apply();
-                        }
-                        mResume = true;
-                        checkNfc();
+                        dialog.cancel();
                     }
                 })
                 .setNegativeButton(R.string.action_cancel,
-                        new DialogInterface.OnClickListener() {
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                .setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         if (showDonateDialogCheckBox.isChecked()) {
                             // Do not show the donate dialog again.
+                            SharedPreferences sharedPref =
+                                    getPreferences(Context.MODE_PRIVATE);
+                            Editor sharedEditor = sharedPref.edit();
                             sharedEditor.putBoolean(
                                     "show_donate_dialog", false);
                             sharedEditor.apply();
                         }
-                        mResume = true;
-                        checkNfc();
+                        runSartUpNode(StartUpNode.HandleNewIntent);
                     }
-                 })
-                .show();
-            mResume = false;
-        }
-
-        // Check if there is MIFARE Classic support.
-        if (!Common.useAsEditorOnly() && !Common.hasMifareClassicSupport()) {
-            // Disable read/write tag options.
-            mReadTag.setEnabled(false);
-            mWriteTag.setEnabled(false);
-            CharSequence styledText = Html.fromHtml(
-                    getString(R.string.dialog_no_mfc_support_device));
-            AlertDialog ad = new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_no_mfc_support_device_title)
-                .setMessage(styledText)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.action_exit_app,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                 })
-                 .setNegativeButton(R.string.action_continue,
-                     new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mResume = true;
-                        checkNfc();
-                    }
-                 })
-                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                 })
-                 .show();
-            // Make links clickable.
-            ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(
-                    LinkMovementMethod.getInstance());
-            mResume = false;
-        }
+                })
+                .create();
+        return ad;
     }
 
     /**
@@ -380,7 +675,6 @@ public class MainMenu extends Activity {
         inflater.inflate(R.menu.tools, menu);
         // Enable/Disable tag info tool depending on NFC availability.
         menu.findItem(R.id.menuMainTagInfo).setEnabled(
-                Common.hasMifareClassicSupport() &&
                 !Common.useAsEditorOnly());
         // Enable/Disable diff tool depending on write permissions.
         menu.findItem(R.id.menuMainDiffTool).setEnabled(
@@ -388,122 +682,23 @@ public class MainMenu extends Activity {
     }
 
     /**
-     * If resuming is allowed because all dependencies from
-     * {@link #onCreate(Bundle)} are satisfied, call
-     * {@link #checkNfc()}
-     * @see #onCreate(Bundle)
-     * @see #checkNfc()
+     * Resume by triggering MCT's startup system
+     * ({@link #runSartUpNode(StartUpNode)}).
+     * @see #runSartUpNode(StartUpNode)
      */
     @Override
     public void onResume() {
         super.onResume();
 
         if (Common.hasWritePermissionToExternalStorage(this)) {
-            if (!Common.hasMifareClassicSupport() || Common.useAsEditorOnly()) {
-                mDumpEditor.setEnabled(true);
-                mKeyEditor.setEnabled(true);
-            } else {
-                enableMenuButtons(true);
-            }
+            mKeyEditor.setEnabled(true);
+            mDumpEditor.setEnabled(true);
+            useAsEditorOnly(Common.useAsEditorOnly());
+            runSartUpNode(StartUpNode.FirstUseDialog);
         } else {
+            Common.setUseAsEditorOnly(true);
             enableMenuButtons(false);
         }
-
-        if (mResume) {
-            checkNfc();
-        }
-    }
-
-    /**
-     * Check if NFC adapter is enabled. If not, show the user a dialog and let
-     * him choose between "Goto NFC Setting", "Use Editor Only" and "Exit App".
-     * Also enable NFC foreground dispatch system.
-     * @see Common#enableNfcForegroundDispatch(Activity)
-     */
-    private void checkNfc() {
-        // Check if the NFC hardware is enabled.
-        if (Common.getNfcAdapter() != null
-                && !Common.getNfcAdapter().isEnabled()) {
-            // NFC is disabled.
-            // Use as editor only?
-            if (!Common.useAsEditorOnly()) {
-                //  Show dialog.
-                if (mEnableNfc == null) {
-                    createNfcEnableDialog();
-                }
-                mEnableNfc.show();
-            }
-            // Disable read/write tag options.
-            mReadTag.setEnabled(false);
-            mWriteTag.setEnabled(false);
-        } else {
-            // NFC is enabled. Hide dialog and enable NFC
-            // foreground dispatch.
-            if (mOldIntent != getIntent()) {
-                int typeCheck = Common.treatAsNewTag(getIntent(), this);
-                if (typeCheck == -1 || typeCheck == -2) {
-                    // Device or tag does not support MIFARE Classic.
-                    // Run the only thing that is possible: The tag info tool.
-                    Intent i = new Intent(this, TagInfoTool.class);
-                    startActivity(i);
-                }
-                mOldIntent = getIntent();
-            }
-            Common.enableNfcForegroundDispatch(this);
-            Common.setUseAsEditorOnly(false);
-            if (mEnableNfc == null) {
-                createNfcEnableDialog();
-            }
-            mEnableNfc.hide();
-            if (Common.hasMifareClassicSupport() &&
-                    Common.hasWritePermissionToExternalStorage(this)) {
-                mReadTag.setEnabled(true);
-                mWriteTag.setEnabled(true);
-            }
-        }
-    }
-
-    /**
-     * Create a dialog that send user to NFC settings if NFC is off (and save
-     * the dialog in {@link #mEnableNfc}). Alternatively the user can choos to
-     * use the App in editor only mode or exit the App.
-     */
-    private void createNfcEnableDialog() {
-        mEnableNfc = new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_nfc_not_enabled_title)
-            .setMessage(R.string.dialog_nfc_not_enabled)
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .setPositiveButton(R.string.action_nfc,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    @SuppressLint("InlinedApi")
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Goto NFC Settings.
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            startActivity(new Intent(
-                                    Settings.ACTION_NFC_SETTINGS));
-                        } else {
-                            startActivity(new Intent(
-                                    Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    }
-                })
-            .setNeutralButton(R.string.action_editor_only,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Only use Editor.
-                        Common.setUseAsEditorOnly(true);
-                    }
-                })
-            .setNegativeButton(R.string.action_exit_app,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Exit the App.
-                        finish();
-                    }
-            }).create();
     }
 
     /**
@@ -524,12 +719,17 @@ public class MainMenu extends Activity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        int typeCheck = Common.treatAsNewTag(intent, this);
-        if (typeCheck == -1 || typeCheck == -2) {
-            // Device or tag does not support MIFARE Classic.
-            // Run the only thing that is possible: The tag info tool.
-            Intent i = new Intent(this, TagInfoTool.class);
-            startActivity(i);
+        if(Common.getPendingActivity() != null) {
+            intent.setComponent(Common.getPendingActivity().getComponentName());
+            startActivity(intent);
+        } else {
+            int typeCheck = Common.treatAsNewTag(intent, this);
+            if (typeCheck == -1 || typeCheck == -2) {
+                // Device or tag does not support MIFARE Classic.
+                // Run the only thing that is possible: The tag info tool.
+                Intent i = new Intent(this, TagInfoTool.class);
+                startActivity(i);
+            }
         }
     }
 
@@ -548,11 +748,11 @@ public class MainMenu extends Activity {
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     initFolders();
-                    mDumpEditor.setEnabled(true);
-                    mKeyEditor.setEnabled(true);
                 } else {
                     Toast.makeText(this, R.string.info_write_permission,
                             Toast.LENGTH_LONG).show();
+                    enableMenuButtons(false);
+
                 }
                 break;
 

@@ -169,7 +169,7 @@
     <string name="action_create_key_map_and_read">Start Mapping and
         Read Tag</string>
     <string name="action_help">Help and Info</string>
-    <string name="action_editor_only">Use App in \"Offline\" Mode</string>
+    <string name="action_editor_only">\"Offline\" Mode</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_choose_file">Choose Selected File</string>
@@ -242,6 +242,8 @@
     <string name="action_save_as_default">Save as Default</string>
     <string name="action_save_keys">Save Keys</string>
     <string name="action_calc_bcc">Calculate BCC</string>
+    <string name="action_install_external_nfc">Install \"External NFC\"</string>
+    <string name="action_start_external_nfc">Goto \"External NFC\"</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -510,6 +512,19 @@
     <string name="dialog_save_before_quitting_title">Unsaved changes</string>
     <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
         \nDo you want to save these changes?
+    </string>
+    <string name="dialog_no_nfc_support_title">No NFC Support</string>
+    <string name="dialog_no_nfc_support">Your device doesn\'t have a NFC
+        reader. Therefore you can\'t read or write to NFC tags.
+        \n\nIf your device supports USB-OTG you might be able to connect an
+        external NFC reader to your Android device.
+        \n\nMifare Classic Tool should work together with the \"External NFC\" app,
+        which supports several USB based NFC readers. There might be some limitations though.
+    </string>
+    <string name="dialog_start_external_nfc_title">External NFC Service</string>
+    <string name="dialog_start_external_nfc">The service of \"External NFC\" is not running.
+        Please enable the service in order to use Mifare Classic Tool with an external
+        NFC reader.
     </string>
 
     <!-- Hints -->

@@ -21,6 +21,7 @@ package de.syss.MifareClassicTool;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -179,6 +180,12 @@ public class Common extends Application {
      * remember the result here.
      */
     private static int mHasMifareClassicSupport = 0;
+
+    /**
+     * The activity that is in foreground and should receive the new
+     * detected tag object by an external reader.
+     */
+    private static Activity mPendingActivity = null;
 
 
     private static NfcAdapter mNfcAdapter;
@@ -696,6 +703,68 @@ public class Common extends Application {
             // The tag does not support MIFARE Classic.
             return -2;
         }
+    }
+
+    /**
+     * Open another app.
+     * @param context current Context, like Activity, App, or Service
+     * @param packageName the full package name of the app to open
+     * @return true if likely successful, false if unsuccessful
+     */
+    public static boolean openApp(Context context, String packageName) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            Intent i = manager.getLaunchIntentForPackage(packageName);
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(i);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check whether the service of the "External NFC" app is running or not.
+     * @param context The context for the system service.
+     * @return True if the service is running. False otherwise.
+     */
+    public static boolean isExternalNfcServiceRunning(Context context) {
+        ActivityManager manager =
+                (ActivityManager) context.getSystemService(
+                        Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service
+                : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if ("eu.dedb.nfc.service.NfcService".equals(
+                    service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Find out whether the "External NFC" app is installed or not.
+     * @param context The context for the package manager.
+     * @return True if "External NFC" is installed. False otherwise.
+     */
+    public static boolean hasExternalNfcInstalled(Context context) {
+        return Common.isAppInstalled("eu.dedb.nfc.service", context);
+    }
+
+    /**
+     * Check whether an app is installed or not.
+     * @param uri The URI (package name) of the app.
+     * @param context The context for the package manager.
+     * @return True if the app is installed. False otherwise.
+     */
+    public static boolean isAppInstalled(String uri, Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return false;
     }
 
     /**
@@ -1396,6 +1465,24 @@ public class Common extends Application {
      */
     public static void setKeyMap(SparseArray<byte[][]> value) {
         mKeyMap = value;
+    }
+
+    /**
+     * Set a new pending activity.
+     * @param pendingActivity The new pending activity.
+     * @see #mPendingActivity
+     */
+    public static void setPendingActivity(Activity pendingActivity) {
+        mPendingActivity = pendingActivity;
+    }
+
+    /**
+     * Get the current pending activity.
+     * @return The current pending activity.
+     * @see #mPendingActivity
+     */
+    public static Activity getPendingActivity() {
+        return mPendingActivity;
     }
 
     /**
