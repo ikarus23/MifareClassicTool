@@ -19,7 +19,6 @@
 package de.syss.MifareClassicTool;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -1334,28 +1333,16 @@ public class Common extends Application {
      * @param context Context of the SystemService
      * (and the Toast message that will by shown).
      */
-    @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public static void copyToClipboard(String text, Context context) {
         if (!text.equals("")) {
-            if (Build.VERSION.SDK_INT >= 11) {
-                // Android API level 11+.
-                android.content.ClipboardManager clipboard =
-                        (android.content.ClipboardManager)
-                        context.getSystemService(
-                                Context.CLIPBOARD_SERVICE);
-                android.content.ClipData clip =
-                        android.content.ClipData.newPlainText(
-                                "MIFARE classic tool data", text);
-                clipboard.setPrimaryClip(clip);
-            } else {
-                // Android API level 10.
-                android.text.ClipboardManager clipboard =
-                        (android.text.ClipboardManager)
-                        context.getSystemService(
-                                Context.CLIPBOARD_SERVICE);
-                clipboard.setText(text);
-            }
+            android.content.ClipboardManager clipboard =
+                    (android.content.ClipboardManager)
+                    context.getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip =
+                    android.content.ClipData.newPlainText(
+                            "MIFARE classic tool data", text);
+            clipboard.setPrimaryClip(clip);
             Toast.makeText(context, R.string.info_copied_to_clipboard,
                     Toast.LENGTH_SHORT).show();
         }
@@ -1368,31 +1355,17 @@ public class Common extends Application {
      * (clipboard empty, clipboard content not plain text, etc.) null will
      * be returned.
      */
-    @SuppressLint("NewApi")
-    @SuppressWarnings("deprecation")
     public static String getFromClipboard(Context context) {
-        if (Build.VERSION.SDK_INT >= 11) {
-            // Android API level 11+.
-            android.content.ClipboardManager clipboard =
-                    (android.content.ClipboardManager)
-                    context.getSystemService(
-                            Context.CLIPBOARD_SERVICE);
-            if (clipboard.getPrimaryClip() != null
-                    && clipboard.getPrimaryClip().getItemCount() > 0
-                    && clipboard.getPrimaryClipDescription().hasMimeType(
-                        android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                return clipboard.getPrimaryClip()
-                        .getItemAt(0).getText().toString();
-            }
-        } else {
-            // Android API level 10.
-            android.text.ClipboardManager clipboard =
-                    (android.text.ClipboardManager)
-                    context.getSystemService(
-                            Context.CLIPBOARD_SERVICE);
-            if (clipboard.hasText()) {
-                return clipboard.getText().toString();
-            }
+        android.content.ClipboardManager clipboard =
+                (android.content.ClipboardManager)
+                context.getSystemService(
+                        Context.CLIPBOARD_SERVICE);
+        if (clipboard.getPrimaryClip() != null
+                && clipboard.getPrimaryClip().getItemCount() > 0
+                && clipboard.getPrimaryClipDescription().hasMimeType(
+                    android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+            return clipboard.getPrimaryClip()
+                    .getItemAt(0).getText().toString();
         }
 
         // Error.
@@ -1403,7 +1376,7 @@ public class Common extends Application {
      * Copy file.
      * @param in Input file (source).
      * @param out Output file (destination).
-     * @throws IOException
+     * @throws IOException Error upon coping.
      */
     public static void copyFile(InputStream in, OutputStream out)
             throws IOException {
