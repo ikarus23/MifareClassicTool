@@ -477,7 +477,7 @@
         storages. Dump and key files will not be copied between them.</string>
     <string name="dialog_custom_sector_count_title">Custom Sector Count</string>
     <string name="dialog_custom_sector_count">Fore a custom sector count
-        and ignore the sector count detected by Android. This can be usefull
+        and ignore the sector count detected by Android. This can be useful
         for tags with 2K memory.</string>
     <string name="dialog_date_of_manuf_title">Date of manufacture</string>
     <string name="dialog_date_of_manuf">
