@@ -30,6 +30,9 @@ Features
   See chapter [Getting Started](#getting-started).)
 * Format a tag back to the factory/delivery state
 * Write the manufacturer block of special MIFARE Classic tags
+* Use external NFC readers like ACR 122U  
+  (See the [Help & Info section](https://publications.icaria.de/mct/help-and-info/#external_nfc)
+  for more information.)
 * Create, edit, save and share key files (dictionaries)
 * Decode & Encode MIFARE Classic Value Blocks
 * Decode & Encode MIFARE Classic Access Conditions
