@@ -105,7 +105,7 @@ public class Preferences extends BasicActivity {
         mUseInternalStorage.setChecked(pref.getBoolean(
                 Preference.UseInternalStorage.toString(), false));
         mRetryAuthentication.setChecked(pref.getBoolean(
-                Preference.RetryAuthentication.toString(), true));
+                Preference.RetryAuthentication.toString(), false));
     }
 
     /**
