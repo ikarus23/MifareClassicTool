@@ -56,6 +56,7 @@
         <li><a href="#bcc_tool">7.5 BCC Calculator</a></li>
       </ul>
     </li>
+    <li><a href="#external_nfc">8. External NFC</a></li>
   </ul>
   <hr />
 
@@ -119,6 +120,8 @@
       </li>
       <li>Format a tag back to the factory/delivery state</li>
       <li>Write the manufacturer block of special MIFARE Classic tags</li>
+      <li>Use external NFC readers like ACR 122U<br />
+        (See chapter <a href="#external_nfc">External NFC</a>)</li>
       <li>Create, edit, save and share key files (dictionaries)</li>
       <li>Decode &amp; Encode MIFARE Classic Value Blocks</li>
       <li>Decode &amp; Encode MIFARE Classic Access Conditions</li>
@@ -479,6 +482,26 @@
     More information about calculating the BCC and how it is used during
     the anti-collision phase can be found in
     <a href="http://cache.nxp.com/documents/application_note/AN10927.pdf">NXP's AN10927</a>.
+  <hr />
+
+
+  <h2 id="external_nfc">8. External NFC</h2>
+    MCT can be used with
+    <a href="https://play.google.com/store/apps/details?id=eu.dedb.nfc.service">External NFC</a>.
+    This app allows you to connect an external USB-based RFID reader to
+    your Android device. Not every RFID reader is supported by External
+    NFC and your Android device must be USB-OTG enabled.<br /><br />
+
+    Readers which should work:
+    <ul>
+      <li>ACR 122U</li>
+      <li>MFRC522 via USB-UART adapters</li>
+    </ul>
+
+    For questions regarding the External NFC app please have a look at its
+    <a href="https://play.google.com/store/apps/details?id=eu.dedb.nfc.service">Play Store</a>
+    page and/or contact its developer.
+
 
   </font>
 </body>
