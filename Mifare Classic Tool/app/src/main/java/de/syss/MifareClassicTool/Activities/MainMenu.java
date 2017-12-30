@@ -533,33 +533,16 @@ public class MainMenu extends Activity {
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_donate,
                 (ViewGroup)findViewById(android.R.id.content), false);
+        TextView textView = (TextView) dialogLayout.findViewById(
+                R.id.textViewDonateDialog);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
         final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
                 .findViewById(R.id.checkBoxDonateDialog);
         AlertDialog ad = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_donate_title)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setView(dialogLayout)
-                .setPositiveButton(R.string.action_beer_sounds_fine,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Open Google Play for the donate version of MCT.
-                        Uri uri = Uri.parse(
-                                "market://details?id=de."
-                                        + "syss.MifareClassicToolDonate");
-                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                        try {
-                            startActivity(goToMarket);
-                        } catch (ActivityNotFoundException e) {
-                            startActivity(new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("https://play.google.com/store"
-                                            + "/apps/details?id=de.syss.Mifare"
-                                            + "ClassicToolDonate")));
-                        }
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton(R.string.action_cancel,
+                .setPositiveButton(R.string.action_ok,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
