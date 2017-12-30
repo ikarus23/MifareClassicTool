@@ -305,7 +305,12 @@ public class FileChooser extends BasicActivity {
             if (mDeleteFile != null) {
                 mDeleteFile.setEnabled(false);
             }
-            mChooserText.setText(mChooserText.getText()
+            Intent intent = getIntent();
+            String chooserText = "";
+            if (intent.hasExtra(EXTRA_CHOOSER_TEXT)) {
+                chooserText = intent.getStringExtra(EXTRA_CHOOSER_TEXT);
+            }
+            mChooserText.setText(chooserText
                     + "\n   --- "
                     + getString(R.string.text_no_files_in_chooser)
                     + " ---");
