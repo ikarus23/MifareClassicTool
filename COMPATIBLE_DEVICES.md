@@ -27,6 +27,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
 * Sony Xperia M4 Aqua
 * Sony Xperia V
+* Sony Xperia XZ
 * Sony Z5 Compact
 * Xiaomi Mi 5
 * Yota Phone (YD201, YD206)
