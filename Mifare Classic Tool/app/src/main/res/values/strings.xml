@@ -234,8 +234,6 @@
     <string name="action_append">Append</string>
     <string name="action_do_not_show_again">Do not show this message
         again</string>
-    <string name="action_beer_sounds_fine">Beer sounds fine
-        (Donate via Google Play)</string>
     <string name="action_chose_dump">Choose a Dump&#8230;</string>
     <string name="action_continue">Continue</string>
     <string name="action_dont_save">Don\'t Save</string>
@@ -343,11 +341,8 @@
     <string name="info_sector_count_error">Error: Sector count must be between 1 and 40</string>
 
     <!-- Dialog messages -->
-    <string name="dialog_no_nfc">No NFC hardware was found on your device.
-        You need an NFC enabled device in order to run this app properly.</string>
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
         Please go to your Settings and enable it.</string>
-    <string name="dialog_no_nfc_title">No NFC hardware</string>
     <string name="dialog_nfc_not_enabled_title">NFC not enabled</string>
     <string name="dialog_no_mfc_support_device_title">No MIFARE Classic support</string>
     <string name="dialog_no_mfc_support_device">
