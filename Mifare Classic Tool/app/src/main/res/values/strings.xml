@@ -460,7 +460,8 @@
     <string name="dialog_retry_authentication_title">Retry authentication</string>
     <string name="dialog_retry_authentication">Retry the authentication (to access a block) once
         if it fails.\n\nSome tags need this in order to work well (e.g. block 0 writable tags
-        with a 7 byte UID).\n\nKeep in mind that this might slow down reading, writing
+        with a 7 byte UID). Also, some users reported it would help for some devices (e.g.
+        Huawei P10).\n\nKeep in mind that this might slow down reading, writing
         or even key mapping. You should be save to disable this option if you use original
         MIFARE Classic tags.</string>
     <string name="dialog_use_internal_storage_title">Use Internal Storage</string>
@@ -472,7 +473,7 @@
         uninstall of the app.\n\nBy using this option you can switch between the two
         storages. Dump and key files will not be copied between them.</string>
     <string name="dialog_custom_sector_count_title">Custom Sector Count</string>
-    <string name="dialog_custom_sector_count">Fore a custom sector count
+    <string name="dialog_custom_sector_count">Force a custom sector count
         and ignore the sector count detected by Android. This can be useful
         for tags with 2K memory.</string>
     <string name="dialog_date_of_manuf_title">Date of manufacture</string>
