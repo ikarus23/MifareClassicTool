@@ -41,7 +41,7 @@ public abstract class BasicActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        Common.setPendingActivity(this);
+        Common.setPendingComponentName(this.getComponentName());
         Common.enableNfcForegroundDispatch(this);
     }
 

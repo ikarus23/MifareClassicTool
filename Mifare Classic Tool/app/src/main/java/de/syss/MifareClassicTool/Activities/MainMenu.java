@@ -251,7 +251,7 @@ public class MainMenu extends Activity {
                 }
                 break;
             case HandleNewIntent:
-                Common.setPendingActivity(null);
+                Common.setPendingComponentName(null);
                 Intent intent = getIntent();
                 boolean isIntentWithTag = intent.getAction().equals(
                         NfcAdapter.ACTION_TECH_DISCOVERED);
@@ -702,8 +702,8 @@ public class MainMenu extends Activity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        if(Common.getPendingActivity() != null) {
-            intent.setComponent(Common.getPendingActivity().getComponentName());
+        if(Common.getPendingComponentName() != null) {
+            intent.setComponent(Common.getPendingComponentName());
             startActivity(intent);
         } else {
             int typeCheck = Common.treatAsNewTag(intent, this);

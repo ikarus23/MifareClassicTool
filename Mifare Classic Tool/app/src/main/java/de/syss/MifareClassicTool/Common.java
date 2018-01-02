@@ -24,6 +24,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -181,10 +182,10 @@ public class Common extends Application {
     private static int mHasMifareClassicSupport = 0;
 
     /**
-     * The activity that is in foreground and should receive the new
-     * detected tag object by an external reader.
+     * The component name of the activity that is in foreground and
+     * should receive the new detected tag object by an external reader.
      */
-    private static Activity mPendingActivity = null;
+    private static ComponentName mPendingComponentName = null;
 
 
     private static NfcAdapter mNfcAdapter;
@@ -1486,21 +1487,21 @@ public class Common extends Application {
     }
 
     /**
-     * Set a new pending activity.
-     * @param pendingActivity The new pending activity.
-     * @see #mPendingActivity
+     * Set the compnent name of a new pending activity.
+     * @param pendingActivity The new pending activities component name.
+     * @see #mPendingComponentName
      */
-    public static void setPendingActivity(Activity pendingActivity) {
-        mPendingActivity = pendingActivity;
+    public static void setPendingComponentName(ComponentName pendingActivity) {
+        mPendingComponentName = pendingActivity;
     }
 
     /**
-     * Get the current pending activity.
-     * @return The current pending activity.
-     * @see #mPendingActivity
+     * Get the component name of the current pending activity.
+     * @return The compnent name of the current pending activity.
+     * @see #mPendingComponentName
      */
-    public static Activity getPendingActivity() {
-        return mPendingActivity;
+    public static ComponentName getPendingComponentName() {
+        return mPendingComponentName;
     }
 
     /**
