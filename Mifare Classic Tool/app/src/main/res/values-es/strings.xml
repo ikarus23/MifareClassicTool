@@ -297,11 +297,8 @@
         (bloque 0)</string>
 
     <!-- Dialog messages -->
-    <string name="dialog_no_nfc">Tu dispositivo no es compatible con NFC.
-        ¡Necesitas un dispositivo con NFC para que esta aplicación funcione!</string>
     <string name="dialog_nfc_not_enabled">El adaptador NFC no está habilitado.
         Por favor, ve a ajustes y habilítalo.</string>
-    <string name="dialog_no_nfc_title">No hay hardware NFC</string>
     <string name="dialog_nfc_not_enabled_title">NFC No habilitado</string>
     <string name="dialog_no_mfc_support_device_title">No hay soporte para
         MIFARE Classic</string>

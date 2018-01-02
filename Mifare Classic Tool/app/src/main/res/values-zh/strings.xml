@@ -4,7 +4,6 @@
     <string name="action_append">附加</string>
     <string name="ac_data_block_no_keyb_1"></string>
     <string name="action_auto_reconnect">高级: 在密钥映射时卡片丢失自动重连</string>
-    <string name="action_beer_sounds_fine">听着不错(去捐赠)</string>
     <string name="action_cancel">取消</string>
     <string name="action_cancel_all">取消写入</string>
     <string name="action_change">更改</string>
@@ -113,8 +112,6 @@
     <string name="dialog_nfc_not_enabled_title">NFC没有启用</string>
     <string name="dialog_no_mfc_support_device_title">没MIFARE Classic支持</string>
     <string name="dialog_no_mfc_support_tag_title">没有MIFARE Classic标签</string>
-    <string name="dialog_no_nfc">没有在你的设备发现NFC硬件。你需要一个NFC功能的设备才能正确运行这个程序。</string>
-    <string name="dialog_no_nfc_title">没有NFC硬件</string>
     <string name="dialog_not_writable">有些部分是不可写的！检查下面列表。</string>
     <string name="dialog_not_writable_title">写有问题</string><string name="dialog_save_before_quitting"><b>有未保存的更改!</b>
 \n要保存这些更改吗?</string>
