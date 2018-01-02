@@ -342,7 +342,7 @@ public class KeyMapCreator extends BasicActivity {
     public void onCreateKeyMap(View view) {
         boolean saveLastUsedKeyFiles = Common.getPreferences().getBoolean(
                 Preference.SaveLastUsedKeyFiles.toString(), true);
-        String lastSelectedKeyFiles = "";
+        StringBuilder lastSelectedKeyFiles = new StringBuilder();
         // Check for checked check boxes.
         ArrayList<String> fileNames = new ArrayList<String>();
         for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
@@ -360,7 +360,8 @@ public class KeyMapCreator extends BasicActivity {
                     // Add key file.
                     keyFiles.add(keyFile);
                     if (saveLastUsedKeyFiles) {
-                        lastSelectedKeyFiles += fileName + "/";
+                        lastSelectedKeyFiles.append(fileName);
+                        lastSelectedKeyFiles.append("/");
                     }
                 } else {
                     Log.d(LOG_TAG, "Key file "

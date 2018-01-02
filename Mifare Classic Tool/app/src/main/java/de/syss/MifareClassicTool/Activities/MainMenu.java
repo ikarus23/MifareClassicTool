@@ -288,7 +288,7 @@ public class MainMenu extends Activity {
      * @see #runSartUpNode(StartUpNode)
      */
     private AlertDialog createFirstUseDialog() {
-        AlertDialog ad = new AlertDialog.Builder(this)
+        return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_first_run_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(R.string.dialog_first_run)
@@ -313,7 +313,6 @@ public class MainMenu extends Activity {
                     }
                 })
                 .create();
-        return ad;
     }
 
     /**
@@ -327,7 +326,7 @@ public class MainMenu extends Activity {
     private AlertDialog createHasNoMifareClassicSupportDialog() {
         CharSequence styledText = Html.fromHtml(
                 getString(R.string.dialog_no_mfc_support_device));
-        AlertDialog ad = new AlertDialog.Builder(this)
+        return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_no_mfc_support_device_title)
                 .setMessage(styledText)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -353,7 +352,6 @@ public class MainMenu extends Activity {
                     }
                 })
                 .create();
-        return ad;
     }
 
     /**
@@ -364,7 +362,7 @@ public class MainMenu extends Activity {
      * @see #runSartUpNode(StartUpNode)
      */
     private AlertDialog createNfcEnableDialog() {
-        AlertDialog ad = new AlertDialog.Builder(this)
+        return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_nfc_not_enabled_title)
                 .setMessage(R.string.dialog_nfc_not_enabled)
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -408,7 +406,6 @@ public class MainMenu extends Activity {
                     }
                 })
                 .create();
-        return ad;
     }
 
     /**
@@ -421,7 +418,7 @@ public class MainMenu extends Activity {
      * @see #runSartUpNode(StartUpNode)
      */
     private AlertDialog createInstallExternalNfcDialog() {
-        AlertDialog ad = new AlertDialog.Builder(this)
+        return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_no_nfc_support_title)
                 .setMessage(R.string.dialog_no_nfc_support)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -468,7 +465,6 @@ public class MainMenu extends Activity {
                     }
                 })
                 .create();
-        return ad;
     }
 
     /**
@@ -482,7 +478,7 @@ public class MainMenu extends Activity {
      */
     private AlertDialog createStartExternalNfcServiceDialog() {
         final Context context = this;
-        AlertDialog ad = new AlertDialog.Builder(this)
+        return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_start_external_nfc_title)
                 .setMessage(R.string.dialog_start_external_nfc)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -519,7 +515,6 @@ public class MainMenu extends Activity {
                     }
                 })
                 .create();
-        return ad;
     }
 
     /**
@@ -538,7 +533,7 @@ public class MainMenu extends Activity {
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
                 .findViewById(R.id.checkBoxDonateDialog);
-        AlertDialog ad = new AlertDialog.Builder(this)
+        return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_donate_title)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setView(dialogLayout)
@@ -566,7 +561,6 @@ public class MainMenu extends Activity {
                     }
                 })
                 .create();
-        return ad;
     }
 
     /**

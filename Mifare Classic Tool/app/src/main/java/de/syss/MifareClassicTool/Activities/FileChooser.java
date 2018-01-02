@@ -203,13 +203,11 @@ public class FileChooser extends BasicActivity {
                 Log.e(LOG_TAG, "Directory for FileChooser does not exist.");
                 setResult(1);
                 finish();
-                return;
             }
         } else {
             Log.d(LOG_TAG, "Directory for FileChooser was not in intent.");
             setResult(2);
             finish();
-            return;
         }
     }
 

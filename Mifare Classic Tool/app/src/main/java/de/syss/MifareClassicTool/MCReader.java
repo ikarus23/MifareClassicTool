@@ -68,7 +68,7 @@ public class MCReader {
      * @param tag The tag to operate on.
      */
     private MCReader(Tag tag) {
-        MifareClassic tmpMFC = null;
+        MifareClassic tmpMFC;
         try {
             tmpMFC = MifareClassic.get(tag);
         } catch (Exception e) {
@@ -148,7 +148,7 @@ public class MCReader {
                         && oldTechExtras[i].containsKey("sak")) {
                     sak = (short) (sak
                             | oldTechExtras[i].getShort("sak"));
-                    isFirstSak = (nfcaIdx == i) ? true : false;
+                    isFirstSak = nfcaIdx == i;
                 }
             } else if (techList[i].equals(MifareClassic.class.getName())) {
                 mcIdx = i;
@@ -329,8 +329,7 @@ public class MCReader {
                         throw new IOException();
                     }
                     if (blockBytes.length > 16) {
-                        byte[] blockBytesTmp = Arrays.copyOf(blockBytes,16);
-                        blockBytes = blockBytesTmp;
+                        blockBytes = Arrays.copyOf(blockBytes,16);
                     }
 
                     blocks.add(Common.byte2HexString(blockBytes));
@@ -977,9 +976,9 @@ public class MCReader {
         boolean useCustomSectorCount = Common.getPreferences().getBoolean(
                 Preference.UseCustomSectorCount.toString(), false);
         if (useCustomSectorCount) {
-            int customSectorCount = Common.getPreferences().getInt(
+            return Common.getPreferences().getInt(
                     Preference.CustomSectorCount.toString(), 16);
-            return customSectorCount;
+
         }
         return mMFC.getSectorCount();
     }

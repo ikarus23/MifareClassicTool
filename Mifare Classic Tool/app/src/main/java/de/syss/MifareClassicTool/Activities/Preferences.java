@@ -62,12 +62,12 @@ public class Preferences extends BasicActivity {
         }
     }
 
-    CheckBox mPrefAutoReconnect;
-    CheckBox mPrefSaveLastUsedKeyFiles;
-    CheckBox mUseCustomSectorCount;
-    CheckBox mRetryAuthentication;
-    CheckBox mUseInternalStorage;
-    EditText mCustomSectorCount;
+    private CheckBox mPrefAutoReconnect;
+    private CheckBox mPrefSaveLastUsedKeyFiles;
+    private CheckBox mUseCustomSectorCount;
+    private CheckBox mRetryAuthentication;
+    private CheckBox mUseInternalStorage;
+    private EditText mCustomSectorCount;
 
     /**
      * Initialize the preferences with the last stored ones.

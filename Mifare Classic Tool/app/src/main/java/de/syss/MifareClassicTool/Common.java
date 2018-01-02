@@ -231,12 +231,12 @@ public class Common extends Application {
      */
     public static boolean isExternalStorageWritableErrorToast(
             Context context) {
-        if (isExternalStorageMounted()) {
-            return true;
+        if (!isExternalStorageMounted()) {
+            Toast.makeText(context, R.string.info_no_external_storage,
+                    Toast.LENGTH_LONG).show();
+            return false;
         }
-        Toast.makeText(context, R.string.info_no_external_storage,
-                Toast.LENGTH_LONG).show();
-        return false;
+        return true;
     }
 
     /**
@@ -258,7 +258,7 @@ public class Common extends Application {
      * relative component given by the parameter.
      */
     public static File getFileFromStorage(String relativePath) {
-        File file = null;
+        File file;
         boolean isUseInternalStorage = getPreferences().getBoolean(
                 UseInternalStorage.toString(), false);
         if (isUseInternalStorage) {
@@ -808,8 +808,8 @@ public class Common extends Application {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -1285,13 +1285,13 @@ public class Common extends Application {
      * @return The bytes in hex string format.
      */
     public static String byte2HexString(byte[] bytes) {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         if (bytes != null) {
             for (Byte b : bytes) {
-                ret += String.format("%02X", b.intValue() & 0xFF);
+                ret.append(String.format("%02X", b.intValue() & 0xFF));
             }
         }
-        return ret;
+        return ret.toString();
     }
 
     /**

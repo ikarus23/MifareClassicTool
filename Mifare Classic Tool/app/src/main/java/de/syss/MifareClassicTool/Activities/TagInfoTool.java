@@ -47,9 +47,9 @@ import de.syss.MifareClassicTool.R;
  */
 public class TagInfoTool extends BasicActivity {
 
-    LinearLayout mLayout;
-    TextView mErrorMessage;
-    int mMFCSupport;
+    private LinearLayout mLayout;
+    private TextView mErrorMessage;
+    private int mMFCSupport;
 
     /**
      * Calls {@link #updateTagInfo(Tag)} (and initialize some member

@@ -122,9 +122,9 @@ public class AccessConditionTool extends BasicActivity {
                         getResourceForSectorTrailersByRowNr(position)));
                 // Set Access Condition bits for sector trailer.
                 byte[] acBits = acRowNrToACBits(position, true);
-                mACMatrix[0][3] = acBits [0];
-                mACMatrix[1][3] = acBits [1];
-                mACMatrix[2][3] = acBits [2];
+                mACMatrix[0][3] = acBits[0];
+                mACMatrix[1][3] = acBits[1];
+                mACMatrix[2][3] = acBits[2];
                 // Rebuild the data block dialog based on the readability of
                 // key B.
                 mIsKeyBReadable = position < 2 || position == 4;

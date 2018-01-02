@@ -357,12 +357,13 @@ public class KeyEditor extends BasicActivity
      * @param lines The lines to set for the keys edit text.
      */
     private void setKeyArrayAsText(String[] lines) {
-        String keyText = "";
+        StringBuilder keyText = new StringBuilder();
         String s = System.getProperty("line.separator");
         for (int i = 0; i < lines.length-1; i++) {
-            keyText += lines[i] + s;
+            keyText.append(lines[i]);
+            keyText.append(s);
         }
-        keyText += lines[lines.length-1];
+        keyText.append(lines[lines.length-1]);
 
         mKeys.setText(keyText);
     }
