@@ -508,7 +508,7 @@ public class MCReader {
                     Preference.AutoReconnect.toString(), false);
             // Get retry authentication option.
             boolean retryAuth = Common.getPreferences().getBoolean(
-                    Preference.RetryAuthentication.toString(), true);
+                    Preference.RetryAuthentication.toString(), false);
 
             byte[][] keys = new byte[2][];
             boolean[] foundKeys = new boolean[] {false, false};
@@ -892,7 +892,7 @@ public class MCReader {
         // issues and need a retry in order to work...
         // Info: https://github.com/ikarus23/MifareClassicTool/issues/134
         boolean retryAuth = Common.getPreferences().getBoolean(
-                Preference.RetryAuthentication.toString(), true);
+                Preference.RetryAuthentication.toString(), false);
         boolean ret;
         try {
             if (!useAsKeyB) {
