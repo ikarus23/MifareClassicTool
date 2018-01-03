@@ -17,7 +17,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Lenovo P2
 * LGE LG G5
 * LGE LG G6 (H870)
-* OnePlus One (CM/LineageOS)
+* OnePlus One (with recent version of OmniROM/LineageOS)
 * OnePlus 3/3T
 * OnePlus 5/5T
 * Philips Xenium I908
