@@ -14,6 +14,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * HTC One
 * Huawei Ascend Mate7
 * Huawei P9
+* Huawei P10 Lite
 * Lenovo P2
 * LGE LG G5
 * LGE LG G6 (H870)
