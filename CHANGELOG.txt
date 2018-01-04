@@ -1,5 +1,19 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.0:
+ * Use external NFC readers like ACR 122U.
+   (See corresponding help & info section for more information.)
+ * Added preference for retrying the authentication.
+   (Might fix issues for some tags and/or Android devices.)
+ * Added a preference to store files (keys and dumps) internally.
+ * Added fix/workaround for Lenovo's P2.
+ * Bugfix: Ignore the BCC check if the UID is 7 bytes long.
+   Thanks to "maxben14"
+ * Improved MIFARE Classic support check.
+ * Set the default theme to dark holo.
+ * Updated the list of compatible and incompatible devices.
+ * Some minor bug fixes.
+
 Version 2.1.0:
  * Set custom sector count (read/write MIFARE Classic 2k).
  * Check BCC before writing.
