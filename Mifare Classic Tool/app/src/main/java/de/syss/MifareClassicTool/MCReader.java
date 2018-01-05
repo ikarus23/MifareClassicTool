@@ -560,7 +560,7 @@ public class MCReader {
                             // Try to reconnect.
                             try {
                                 connect();
-                            } catch (IOException ex) {
+                            } catch (IOException | IllegalStateException ex) {
                                 // Do nothing.
                             }
                         }
@@ -1010,13 +1010,15 @@ public class MCReader {
 
     /**
      * Connect the reader to the tag.
+     * @throws IOException Thrown if the blocked call has be canceled.
+     * @throws IllegalStateException I'm not sure when and why exactly.
      */
     public void connect() throws IOException {
         try {
             mMFC.connect();
-        } catch (IOException e) {
+        } catch (IOException | IllegalStateException ex) {
             Log.d(LOG_TAG, "Error while connecting to tag.");
-            throw e;
+            throw ex;
         }
     }
 
