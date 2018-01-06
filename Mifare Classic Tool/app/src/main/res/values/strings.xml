@@ -398,7 +398,7 @@
     <string name="dialog_tools_menu_title">Available tools</string>
     <string name="dialog_wait_write_tag_title">Writing&#8230;</string>
     <string name="dialog_wait_write_tag">Writing tag&#8230;\n(Don\'t remove tag)</string>
-    <string name="dialog_share_title">Send dump file to…</string>
+    <string name="dialog_share_title">Send file to…</string>
     <string name="dialog_block0_writing_title">Write manufacturer block</string>
     <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
         is not possible on original MIFARE Classic tags.</b>

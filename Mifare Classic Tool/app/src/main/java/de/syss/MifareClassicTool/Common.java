@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
@@ -39,6 +40,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -1371,6 +1373,26 @@ public class Common extends Application {
 
         // Error.
         return null;
+    }
+
+    /**
+     * Share a file from the "tmp" directory as attachment.
+     * @param context The context the FileProvider and the share intent.
+     * @param file The file to share (from the "tmp" directory).
+     * @see #TMP_DIR
+     */
+    public static void shareTmpFile(Context context, File file) {
+        // Share file.
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uri = FileProvider.getUriForFile(
+                context, context.getPackageName()+".fileprovider",
+                file);
+        intent.setDataAndType(uri, "text/plain");
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        context.startActivity(Intent.createChooser(intent,
+                context.getText(R.string.dialog_share_title)));
     }
 
     /**

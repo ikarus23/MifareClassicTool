@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -909,15 +908,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Share file.
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(
-                "file://" + file.getAbsolutePath()));
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT,
-                getString(R.string.text_share_subject_dump)
-                + " (" + fileName + ")");
-        startActivity(Intent.createChooser(sendIntent,
-                getText(R.string.dialog_share_title)));
+        Common.shareTmpFile(this, file);
     }
 
     /**
