@@ -51,8 +51,8 @@ public abstract class BasicActivity extends Activity {
      */
     @Override
     public void onPause() {
-        super.onPause();
         Common.disableNfcForegroundDispatch(this);
+        super.onPause();
     }
 
     /**
