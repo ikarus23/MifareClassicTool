@@ -9,6 +9,7 @@ hardware (NFC-controller) does support MIFARE Classic
 
 * Asus Pegasus 2 (X550)
 * Google Nexus 7 (2012)
+* Google Nexus 6P
 * Google Pixel
 * Google Pixel 2
 * HTC One
