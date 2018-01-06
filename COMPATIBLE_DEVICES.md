@@ -12,6 +12,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Google Nexus 6P
 * Google Pixel
 * Google Pixel 2
+* Honor 9
 * HTC One
 * Huawei Ascend Mate7
 * Huawei P9
@@ -34,3 +35,4 @@ hardware (NFC-controller) does support MIFARE Classic
 * Sony Z5 Compact
 * Xiaomi Mi 5
 * Yota Phone (YD201, YD206)
+* ZTE Axxon 7
