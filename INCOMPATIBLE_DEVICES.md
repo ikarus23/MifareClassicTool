@@ -12,6 +12,7 @@ This list may be incomplete. You might also want to have a look at
 
 * Asus Zenfone 2
 * Blackberry Priv
+* Blackview BV8000 Pro
 * BQ Aquaris X5 Plus
 * Foxcon InFocus M320
 * Google Nexus 4
@@ -33,9 +34,10 @@ This list may be incomplete. You might also want to have a look at
 * LGE LG Optimus L7 II
 * LGE LG Phoenix 2
 * LGE LG V10
-* Motorola Moto X (2014, 2ed gen.)
-* Motorola Moto Style
 * Motorola Moto Maxx
+* Motorola Moto Style
+* Motorola Moto X (2014, 2ed gen.)
+* Motorola Moto X Play
 * Samsung Galaxy A3 (2015, 2017)
 * Samsung Galaxy A5 (2016)
 * Samsung Galaxy A7 (2016, 2017)
