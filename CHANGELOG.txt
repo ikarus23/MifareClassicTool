@@ -1,5 +1,11 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.1:
+ * Bugfix: Crash when sharing keys/dumps on Android 7+.
+ * Bugfix: Crash when using auto reconnect.
+ * Bugfix: Crash when pausing the app.
+ * Updated the list of compatible and incompatible devices.
+
 Version 2.2.0:
  * Use external NFC readers like ACR 122U.
    (See corresponding help & info section for more information.)
