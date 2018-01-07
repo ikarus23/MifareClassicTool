@@ -38,7 +38,7 @@ This list may be incomplete. You might also want to have a look at
 * Motorola Moto Maxx
 * Samsung Galaxy A3 (2015, 2017)
 * Samsung Galaxy A5 (2016)
-* Samsung Galaxy A7 (2016)
+* Samsung Galaxy A7 (2016, 2017)
 * Samsung Galaxy A9 (2016)
 * Samsung Galaxy Ace 3
 * Samsung Galaxy Ace 4
