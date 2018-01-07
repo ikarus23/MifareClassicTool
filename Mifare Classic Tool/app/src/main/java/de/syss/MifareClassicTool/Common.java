@@ -683,44 +683,35 @@ public class Common extends Application {
             // Check if device does not support MIFARE Classic.
             // For doing so, check if the SAK of the tag indicate that
             // it's a MIFARE Classic tag.
-            // See: http://www.nxp.com/documents/application_note/130830.pdf
+            // See: https://www.nxp.com/docs/en/application-note/AN10834.pdf
             NfcA nfca = NfcA.get(tag);
             byte sak = (byte)nfca.getSak();
             if ((sak>>1 & 1) == 1) {
                 // RFU.
                 return -2;
             } else {
-                if ((sak>>3 & 1) == 1) {
-                    if((sak>>4 & 1) == 1) {
-                        // MIFARE 4k.
+                if ((sak>>3 & 1) == 1) { // SAK bit 4 = 1?
+                    if((sak>>4 & 1) == 1) { // SAK bit 5 = 1?
+                        // MIFARE Classic 4k
+                        // MIFARE SmartMX 4K
+                        // MIFARE PlusS 4K SL1
+                        // MIFARE PlusX 4K SL1
                         return -1;
                     } else {
-                        if ((sak & 1) == 1) {
-                            // MIFARE Mini.
+                        if ((sak & 1) == 1) { // SAK bit 1 = 1?
+                            // MIFARE Mini
                             return -1;
                         } else {
-                            // MIFARE 1k.
+                            // MIFARE Classic 1k
+                            // MIFARE SmartMX 1k
+                            // MIFARE PlusS 2K SL1
+                            // MIFARE PlusX 2K SL2
                             return -1;
                         }
                     }
                 } else {
-                    if ((sak>>4 & 1) == 1) {
-                        if ((sak & 1) == 1) {
-                            // MIFARE Plus 4k SL2.
-                            return -2;
-                        } else {
-                            // MIFARE Plus 2k SL2.
-                            return -2;
-                        }
-                    } else {
-                        if ((sak>>5 & 1) == 1) {
-                            // RATS + PSS if required -> ISO 14443-4 card.
-                            return -2;
-                        } else {
-                            // MIFARE UL.
-                            return -2;
-                        }
-                    }
+                    // Some MIFARE tag, but not Classic or Classic compatible.
+                    return -2;
                 }
             }
 
