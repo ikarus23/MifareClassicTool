@@ -1379,9 +1379,15 @@ public class Common extends Application {
         // Share file.
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        Uri uri = FileProvider.getUriForFile(
-                context, context.getPackageName()+".fileprovider",
-                file);
+        Uri uri;
+        try {
+            uri = FileProvider.getUriForFile(context,
+                    context.getPackageName() + ".fileprovider", file);
+        } catch (IllegalArgumentException ex) {
+            Toast.makeText(context, R.string.info_share_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         intent.setDataAndType(uri, "text/plain");
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_STREAM, uri);

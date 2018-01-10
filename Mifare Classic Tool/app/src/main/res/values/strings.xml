@@ -339,6 +339,7 @@
     <string name="info_bcc_not_valid">Error: BCC of block 0 is not valid</string>
     <string name="info_invalid_uid_length">Error: Invlaid UID length</string>
     <string name="info_sector_count_error">Error: Sector count must be between 1 and 40</string>
+    <string name="info_share_error">Error: Sharing file failed</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
