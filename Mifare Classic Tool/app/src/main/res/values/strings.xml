@@ -160,11 +160,11 @@
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
     <string name="action_write_tag">Write Tag</string>
-    <string name="action_edit_tag_dump">Edit/Analyse Dump File</string>
+    <string name="action_edit_tag_dump">Edit/Analyze Dump File</string>
     <string name="action_edit_key_dump">Edit/Add Key File</string>
     <string name="action_tools">Tools</string>
     <string name="action_exit_app">Exit App</string>
-    <string name="action_nfc">Goto NFC Settings</string>
+    <string name="action_nfc">Go to NFC Settings</string>
     <string name="action_create_key_map">Map Keys to Sectors</string>
     <string name="action_create_key_map_and_read">Start Mapping and
         Read Tag</string>
@@ -241,7 +241,7 @@
     <string name="action_save_keys">Save Keys</string>
     <string name="action_calc_bcc">Calculate BCC</string>
     <string name="action_install_external_nfc">Install \"External NFC\"</string>
-    <string name="action_start_external_nfc">Goto \"External NFC\"</string>
+    <string name="action_start_external_nfc">Go to \"External NFC\"</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -337,7 +337,7 @@
     <string name="info_value_too_big">Error: The value is too big</string>
     <string name="info_write_permission">Write permission is needed to work properly</string>
     <string name="info_bcc_not_valid">Error: BCC of block 0 is not valid</string>
-    <string name="info_invalid_uid_length">Error: Invlaid UID length</string>
+    <string name="info_invalid_uid_length">Error: Invalid UID length</string>
     <string name="info_sector_count_error">Error: Sector count must be between 1 and 40</string>
     <string name="info_share_error">Error: Sharing file failed</string>
 
