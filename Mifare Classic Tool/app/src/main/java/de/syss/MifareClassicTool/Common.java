@@ -1357,9 +1357,12 @@ public class Common extends Application {
         if (clipboard.getPrimaryClip() != null
                 && clipboard.getPrimaryClip().getItemCount() > 0
                 && clipboard.getPrimaryClipDescription().hasMimeType(
-                    android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-            return clipboard.getPrimaryClip()
-                    .getItemAt(0).getText().toString();
+                    android.content.ClipDescription.MIMETYPE_TEXT_PLAIN)
+                && clipboard.getPrimaryClip().getItemAt(0) != null
+                && clipboard.getPrimaryClip().getItemAt(0)
+                    .getText() != null) {
+            return clipboard.getPrimaryClip().getItemAt(0)
+                    .getText().toString();
         }
 
         // Error.
