@@ -461,9 +461,9 @@ public class Common extends Application {
                     bw.newLine();
                 }
                 bw.write(lines[i]);
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException ex) {
                 Log.e(LOG_TAG, "Error while writing to '"
-                        + file.getName() + "' file.", e);
+                        + file.getName() + "' file.", ex);
                 noError = false;
 
             } finally {
