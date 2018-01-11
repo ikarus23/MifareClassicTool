@@ -266,18 +266,20 @@ public class KeyMapCreator extends BasicActivity {
                         Arrays.asList(selectedFilesChain.split("/")));
             }
         }
-        File[] keyFiles = mKeyDirPath.listFiles();
-        Arrays.sort(keyFiles);
         mKeyFilesGroup.removeAllViews();
-        for(File f : keyFiles) {
-            CheckBox c = new CheckBox(this);
-            c.setText(f.getName());
-            if (selectLastUsedKeyFiles && selectedFiles != null
-                    && selectedFiles.contains(f.getName())) {
-                // Select file.
-                c.setChecked(true);
+        File[] keyFiles = mKeyDirPath.listFiles();
+        if (keyFiles != null) {
+            Arrays.sort(keyFiles);
+            for (File f : keyFiles) {
+                CheckBox c = new CheckBox(this);
+                c.setText(f.getName());
+                if (selectLastUsedKeyFiles && selectedFiles != null
+                        && selectedFiles.contains(f.getName())) {
+                    // Select file.
+                    c.setChecked(true);
+                }
+                mKeyFilesGroup.addView(c);
             }
-            mKeyFilesGroup.addView(c);
         }
     }
 
