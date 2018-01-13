@@ -205,8 +205,14 @@ public class MCReader {
     public static MCReader get(Tag tag) {
         MCReader mcr = null;
         if (tag != null) {
-            mcr = new MCReader(tag);
-            if (!mcr.isMifareClassic()) {
+            try {
+                mcr = new MCReader(tag);
+                if (!mcr.isMifareClassic()) {
+                    return null;
+                }
+            } catch (RuntimeException ex) {
+                // Should not happen. However, it did happen for OnePlus5T
+                // user according to Google Play crash reports.
                 return null;
             }
         }
