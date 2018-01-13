@@ -205,7 +205,7 @@
     <string name="action_show_options">Show Options</string>
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
-    <string name="action_retry_authentication">Retry the authentication once if it fails</string>
+    <string name="action_retry_authentication">Retry the authentication if it fails</string>
     <string name="action_use_internal_storage">Save dump and key files
         to the internal storage</string>
     <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
@@ -340,6 +340,8 @@
     <string name="info_invalid_uid_length">Error: Invalid UID length</string>
     <string name="info_sector_count_error">Error: Sector count must be between 1 and 40</string>
     <string name="info_share_error">Error: Sharing file failed</string>
+    <string name="info_retry_authentication_count_error">Error: Retries must be between
+        1 and 1000</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
@@ -459,12 +461,12 @@
         \n\nKnown issues where this setting may help:\n
         &#8226; Special tags (e.g. smartMX)</string>
     <string name="dialog_retry_authentication_title">Retry authentication</string>
-    <string name="dialog_retry_authentication">Retry the authentication (to access a block) once
-        if it fails.\n\nSome tags need this in order to work well (e.g. block 0 writable tags
-        with a 7 byte UID). Also, some users reported it would help for some devices (e.g.
-        Huawei P10).\n\nKeep in mind that this might slow down reading, writing
-        or even key mapping. You should be save to disable this option if you use original
-        MIFARE Classic tags.</string>
+    <string name="dialog_retry_authentication">Retry the authentication (to access a sector/block)
+        X times if it fails.\n\nSome tags need this in order to work well (e.g. some block 0
+        writable tags with 7 bytes UID). Also, might help to get some devices to work more
+        consistent (e.g. the Google Nexus 5X or the Huawei P10).\n\nKeep in mind that this
+        might slow down reading, writing or even key mapping. In most cases you should leave
+        this option disabled.</string>
     <string name="dialog_use_internal_storage_title">Use Internal Storage</string>
     <string name="dialog_use_internal_storage">Android commonly has two places to store
         files: The internal and the external memory.\n\nThe internal memory is only
@@ -537,5 +539,6 @@
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
     <string name="hint_custom_sector_count">e.g. 16 for 1K</string>
+    <string name="hint_custom_retry_authentication_count">Number of retries</string>
 
 </resources>

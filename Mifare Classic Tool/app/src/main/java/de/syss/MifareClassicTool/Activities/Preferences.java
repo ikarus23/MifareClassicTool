@@ -47,7 +47,8 @@ public class Preferences extends BasicActivity {
         UseCustomSectorCount("use_custom_sector_count"),
         CustomSectorCount("custom_sector_count"),
         UseInternalStorage("use_internal_storage"),
-        RetryAuthentication("retry_authentication");
+        UseRetryAuthentication("use_retry_authentication"),
+        RetryAuthenticationCount("retry_authentication_count");
         // Add more preferences here (comma separated).
 
         private final String text;
@@ -65,9 +66,10 @@ public class Preferences extends BasicActivity {
     private CheckBox mPrefAutoReconnect;
     private CheckBox mPrefSaveLastUsedKeyFiles;
     private CheckBox mUseCustomSectorCount;
-    private CheckBox mRetryAuthentication;
+    private CheckBox mUseRetryAuthentication;
     private CheckBox mUseInternalStorage;
     private EditText mCustomSectorCount;
+    private EditText mRetryAuthenticationCount;
 
     /**
      * Initialize the preferences with the last stored ones.
@@ -88,8 +90,10 @@ public class Preferences extends BasicActivity {
                 R.id.editTextPreferencesCustomSectorCount);
         mUseInternalStorage = (CheckBox) findViewById(
                 R.id.checkBoxPreferencesUseInternalStorage);
-        mRetryAuthentication = (CheckBox) findViewById(
-                R.id.checkBoxPreferencesRetryAuthentication);
+        mUseRetryAuthentication = (CheckBox) findViewById(
+                R.id.checkBoxPreferencesUseRetryAuthentication);
+        mRetryAuthenticationCount = (EditText) findViewById(
+                R.id.editTextPreferencesRetryAuthenticationCount);
 
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
@@ -104,8 +108,12 @@ public class Preferences extends BasicActivity {
                 Preference.CustomSectorCount.toString(), 16));
         mUseInternalStorage.setChecked(pref.getBoolean(
                 Preference.UseInternalStorage.toString(), false));
-        mRetryAuthentication.setChecked(pref.getBoolean(
-                Preference.RetryAuthentication.toString(), false));
+        mUseRetryAuthentication.setChecked(pref.getBoolean(
+                Preference.UseRetryAuthentication.toString(), false));
+        mRetryAuthenticationCount.setEnabled(
+                mUseRetryAuthentication.isChecked());
+        mRetryAuthenticationCount.setText("" + pref.getInt(
+                Preference.RetryAuthenticationCount.toString(), 1));
     }
 
     /**
@@ -129,13 +137,25 @@ public class Preferences extends BasicActivity {
 
     /**
      * Enable or disable the custom sector count text box according to the
-     * checkbox state..
+     * checkbox state.
      * @param view The View object that triggered the method
      * (in this case the use custom sector count checkbox).
      */
     public void onUseCustomSectorCountChanged(View view) {
         mCustomSectorCount.setEnabled(mUseCustomSectorCount.isChecked());
     }
+
+    /**
+     * Enable or disable the retry authentication count text box according
+     * to the checkbox state.
+     * @param view The View object that triggered the method
+     * (in this case the use retry authentication checkbox).
+     */
+    public void onUseRetryAuthenticationChanged(View view) {
+        mRetryAuthenticationCount.setEnabled(
+                mUseRetryAuthentication.isChecked());
+    }
+
 
     /**
      * Show information on the "use custom sector count" preference.
@@ -209,6 +229,15 @@ public class Preferences extends BasicActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
+        int retryAuthenticationCount = Integer.parseInt(
+                mRetryAuthenticationCount.getText().toString());
+        if (retryAuthenticationCount > 1000 || retryAuthenticationCount <= 0) {
+            Toast.makeText(this,
+                    R.string.info_retry_authentication_count_error,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
 
         // Save preferences.
         SharedPreferences.Editor edit = Common.getPreferences().edit();
@@ -218,12 +247,14 @@ public class Preferences extends BasicActivity {
                 mPrefSaveLastUsedKeyFiles.isChecked());
         edit.putBoolean(Preference.UseCustomSectorCount.toString(),
                 mUseCustomSectorCount.isChecked());
-        edit.putBoolean(Preference.RetryAuthentication.toString(),
-                mRetryAuthentication.isChecked());
         edit.putBoolean(Preference.UseInternalStorage.toString(),
                 mUseInternalStorage.isChecked());
+        edit.putBoolean(Preference.UseRetryAuthentication.toString(),
+                mUseRetryAuthentication.isChecked());
         edit.putInt(Preference.CustomSectorCount.toString(),
                 customSectorCount);
+        edit.putInt(Preference.RetryAuthenticationCount.toString(),
+                retryAuthenticationCount);
         edit.apply();
 
         // Exit the preferences view.

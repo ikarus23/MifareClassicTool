@@ -508,7 +508,9 @@ public class MCReader {
                     Preference.AutoReconnect.toString(), false);
             // Get retry authentication option.
             boolean retryAuth = Common.getPreferences().getBoolean(
-                    Preference.RetryAuthentication.toString(), false);
+                    Preference.UseRetryAuthentication.toString(), false);
+            int retryAuthCount = Common.getPreferences().getInt(
+                    Preference.RetryAuthenticationCount.toString(), 1);
 
             byte[][] keys = new byte[2][];
             boolean[] foundKeys = new boolean[] {false, false};
@@ -516,66 +518,67 @@ public class MCReader {
 
             // Check next sector against all keys (lines) with
             // authentication method A and B.
-            for (int i = 0; i < mKeysWithOrder.size();) {
+            keysloop:
+            for (int i = 0; i < mKeysWithOrder.size(); i++) {
                 byte[] key = mKeysWithOrder.get(i);
-                try {
-                    if (!foundKeys[0]) {
-                        auth = mMFC.authenticateSectorWithKeyA(
-                                mKeyMapStatus, key);
-                        if (retryAuth && !auth) {
-                            // Retry.
+                for (int j = 0; j < retryAuthCount+1;) {
+                    try {
+                        if (!foundKeys[0]) {
                             auth = mMFC.authenticateSectorWithKeyA(
                                     mKeyMapStatus, key);
+                            if (auth) {
+                                keys[0] = key;
+                                foundKeys[0] = true;
+                            }
                         }
-                        if (auth) {
-                            keys[0] = key;
-                            foundKeys[0] = true;
-                        }
-                    }
-                    if (!foundKeys[1]) {
-                        auth = mMFC.authenticateSectorWithKeyB(
-                                mKeyMapStatus, key);
-                        if (retryAuth && !auth) {
-                            // Retry.
+                        if (!foundKeys[1]) {
                             auth = mMFC.authenticateSectorWithKeyB(
                                     mKeyMapStatus, key);
+                            if (auth) {
+                                keys[1] = key;
+                                foundKeys[1] = true;
+                            }
                         }
-                        if (auth) {
-                            keys[1] = key;
-                            foundKeys[1] = true;
+                    } catch (Exception e) {
+                        Log.d(LOG_TAG,
+                                "Error while building next key map part");
+                        // Is auto reconnect enabled?
+                        if (autoReconnect) {
+                            Log.d(LOG_TAG, "Auto reconnect is enabled");
+                            while (!isConnected()) {
+                                // Sleep for 500ms.
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException ex) {
+                                    // Do nothing.
+                                }
+                                // Try to reconnect.
+                                try {
+                                    connect();
+                                } catch (IOException
+                                        | IllegalStateException ex) {
+                                    // Do nothing.
+                                }
+                            }
+                            // Repeat last loop (do not incr. j).
+                            continue;
+                        } else {
+                            error = true;
+                            break keysloop;
                         }
                     }
-                } catch (Exception e) {
-                    Log.d(LOG_TAG, "Error while building next key map part");
-                    // Is auto reconnect enabled?
-                    if (autoReconnect) {
-                        Log.d(LOG_TAG, "Auto reconnect is enabled");
-                        while (!isConnected()) {
-                            // Sleep for 500ms.
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException ex) {
-                                // Do nothing.
-                            }
-                            // Try to reconnect.
-                            try {
-                                connect();
-                            } catch (IOException | IllegalStateException ex) {
-                                // Do nothing.
-                            }
-                        }
-                        // Repeat last loop (do not incr. i).
-                        continue;
-                    } else {
-                        error = true;
+                    // Retry?
+                    if((foundKeys[0] && foundKeys[1]) || !retryAuth) {
+                        // Both keys found or no retry wanted. Stop retrying.
                         break;
                     }
+                    j++;
                 }
-                if (foundKeys[0] && foundKeys[1]) {
-                    // Both keys found. Continue with next sector.
+                // Next key?
+                if ((foundKeys[0] && foundKeys[1])) {
+                    // Both keys found. Stop searching for keys.
                     break;
                 }
-                i++;
             }
             if (!error && (foundKeys[0] || foundKeys[1])) {
                 // At least one key found. Add key(s).
@@ -888,29 +891,32 @@ public class MCReader {
      */
     private boolean authenticate(int sectorIndex, byte[] key,
             boolean useAsKeyB) {
-        // Fetch the retry authentication option. Some tags have strange
-        // issues and need a retry in order to work...
+        // Fetch the retry authentication option. Some tags and
+        // devices have strange issues and need a retry in order to work...
         // Info: https://github.com/ikarus23/MifareClassicTool/issues/134
+        // and https://github.com/ikarus23/MifareClassicTool/issues/106
         boolean retryAuth = Common.getPreferences().getBoolean(
-                Preference.RetryAuthentication.toString(), false);
-        boolean ret;
-        try {
-            if (!useAsKeyB) {
-                // Key A.
-                ret = mMFC.authenticateSectorWithKeyA(sectorIndex, key);
-                if (retryAuth && !ret) {
+                Preference.UseRetryAuthentication.toString(), false);
+        int retryCount = Common.getPreferences().getInt(
+                Preference.RetryAuthenticationCount.toString(), 1);
+        boolean ret = false;
+        for (int i = 0; i < retryCount+1; i++) {
+            try {
+                if (!useAsKeyB) {
+                    // Key A.
                     ret = mMFC.authenticateSectorWithKeyA(sectorIndex, key);
-                }
-            } else {
-                // Key B.
-                ret = mMFC.authenticateSectorWithKeyB(sectorIndex, key);
-                if (retryAuth && !ret) {
+                } else {
+                    // Key B.
                     ret = mMFC.authenticateSectorWithKeyB(sectorIndex, key);
                 }
+            } catch (IOException e) {
+                Log.d(LOG_TAG, "Error authenticating with tag.");
+                return false;
             }
-        } catch (IOException e) {
-            Log.d(LOG_TAG, "Error authenticating with tag.");
-            return false;
+            // Retry?
+            if (ret || !retryAuth) {
+                break;
+            }
         }
         return ret;
     }
