@@ -608,9 +608,12 @@ public class MainMenu extends Activity {
                         + Common.TMP_DIR + "' directory.");
                 return;
             }
-            // Clean up tmp directory.
-            for (File file : path.listFiles()) {
-                file.delete();
+            // Try to clean up tmp directory.
+            File[] tmpFiles = path.listFiles();
+            if (tmpFiles != null) {
+                for (File file : tmpFiles) {
+                    file.delete();
+                }
             }
 
             // Create std. key file if there is none.
