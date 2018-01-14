@@ -1,5 +1,12 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.2:
+ * Made number of authentication retries customisable.
+ * Bugfix: Crash while saving files.
+ * Bugfix: Crash on sorting key files.
+ * Bugfix: Crash when sharing dump/key files.
+ * Bugfix: Crash when pasting from clipboard.
+
 Version 2.2.1:
  * Bugfix: Crash when sharing keys/dumps on Android 7+.
  * Bugfix: Crash when using auto reconnect.
