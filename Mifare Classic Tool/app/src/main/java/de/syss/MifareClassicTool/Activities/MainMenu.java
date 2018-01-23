@@ -253,17 +253,19 @@ public class MainMenu extends Activity {
             case HandleNewIntent:
                 Common.setPendingComponentName(null);
                 Intent intent = getIntent();
-                boolean isIntentWithTag = intent.getAction().equals(
-                        NfcAdapter.ACTION_TECH_DISCOVERED);
-                if (isIntentWithTag && intent != mOldIntent) {
-                    // If MCT was called by another app or the dispatch
-                    // system with a tag delivered by intent, handle it as
-                    // new tag intent.
-                    mOldIntent = intent;
-                    onNewIntent(getIntent());
-                } else {
-                    // Last node. Do nothing.
-                    break;
+                if (intent != null) {
+                    boolean isIntentWithTag = intent.getAction().equals(
+                            NfcAdapter.ACTION_TECH_DISCOVERED);
+                    if (isIntentWithTag && intent != mOldIntent) {
+                        // If MCT was called by another app or the dispatch
+                        // system with a tag delivered by intent, handle it as
+                        // new tag intent.
+                        mOldIntent = intent;
+                        onNewIntent(getIntent());
+                    } else {
+                        // Last node. Do nothing.
+                        break;
+                    }
                 }
                 break;
         }
