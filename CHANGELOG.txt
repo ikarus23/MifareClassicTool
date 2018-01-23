@@ -1,5 +1,10 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.3:
+ * Bugfix: Crash when clearing tmp directory.
+ * Bugfix: Crash when resuming the main menu without intent.
+ * Fixed gradle build. Thanks to Bruno Pagani.
+
 Version 2.2.2:
  * Made number of authentication retries customisable.
  * Bugfix: Crash while saving files.
