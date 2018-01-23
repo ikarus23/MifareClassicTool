@@ -15,9 +15,12 @@ hardware (NFC-controller) does support MIFARE Classic
 * Honor 9
 * HTC One
 * Huawei Ascend Mate7
+* Huawei P8 Lite 2017
 * Huawei P9
 * Huawei P10 Lite
 * Lenovo P2
+* LGE LG G3
+* LGE LG G4 (H815)
 * LGE LG G5
 * LGE LG G6 (H870)
 * OnePlus One (with recent version of OmniROM/LineageOS)
@@ -31,8 +34,9 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
 * Sony Xperia M4 Aqua
 * Sony Xperia V
+* Sony Xperia Z3
+* Sony Xperia Z5 Compact
 * Sony Xperia XZ
-* Sony Z5 Compact
 * Xiaomi Mi 5
 * Yota Phone (YD201, YD206)
 * ZTE Axxon 7

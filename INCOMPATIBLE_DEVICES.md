@@ -29,7 +29,7 @@ This list may be incomplete. You might also want to have a look at
 * LGE LG G2
 * LGE LG G2 mini
 * LGE LG G3 S
-* LGE LG G4
+* LGE LG G4 Beat
 * LGE LG K10
 * LGE LG Optimus L7 II
 * LGE LG Phoenix 2
