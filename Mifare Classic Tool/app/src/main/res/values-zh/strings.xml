@@ -294,8 +294,8 @@
     <string name="text_ac_decr">减值/转移/恢复</string>
     <string name="text_vb">值块数据:</string>
     <string name="text_vb_as_int">整数值</string>
-    <string name="action_calc_bcc">BBC计算器</string>
-    <string name="action_show_bcc_tool">BBC计算器</string>
+    <string name="action_calc_bcc">BCC计算器</string>
+    <string name="action_show_bcc_tool">BCC计算器</string>
     <string name="action_use_custom_sector_count">使用自定义扇区数</string>
     <string name="dialog_custom_sector_count">忽略安卓检测到的扇区数并使用自定义的扇区数，这样可以使用全部的2K内存。</string>
     <string name="dialog_custom_sector_count_title">自定义扇区数</string>
@@ -319,7 +319,7 @@
     <string name="text_key_b">密钥 B</string>
     <string name="text_key_ab">密钥 A|B</string>
     <string name="text_key_a">密钥 A</string>
-    <string name="text_bcc">BBC:</string>
+    <string name="text_bcc">BCC:</string>
     <string name="text_b">B:</string>
     <string name="text_ats">ATS</string>
     <string name="text_atqa">ATQA</string>
