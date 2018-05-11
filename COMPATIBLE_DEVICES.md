@@ -23,6 +23,8 @@ hardware (NFC-controller) does support MIFARE Classic
 * LGE LG G4 (H815)
 * LGE LG G5
 * LGE LG G6 (H870)
+* Motorola Photon Q
+* Nokia 8
 * OnePlus One (with recent version of OmniROM/LineageOS)
 * OnePlus 3/3T
 * OnePlus 5/5T

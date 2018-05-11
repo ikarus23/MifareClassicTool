@@ -25,6 +25,7 @@ This list may be incomplete. You might also want to have a look at
 * Huawei G620S
 * Jiayu S3
 * Lenovo Vibe P1
+* Lenovo Vibe P2
 * LGE LG F60
 * LGE LG G2
 * LGE LG G2 mini
@@ -34,13 +35,18 @@ This list may be incomplete. You might also want to have a look at
 * LGE LG Optimus L7 II
 * LGE LG Phoenix 2
 * LGE LG V10
+* Motorola Droid Turbo
 * Motorola Moto Maxx
 * Motorola Moto Style
 * Motorola Moto X (2014, 2ed gen.)
+* Motorola Moto X Force
 * Motorola Moto X Play
+* Motorola Moto X Style
 * Samsung Galaxy A3 (2015, 2017)
-* Samsung Galaxy A5 (2016)
+* Samsung Galaxy A5 (2016, 2017)
 * Samsung Galaxy A7 (2016, 2017)
+* Samsung Galaxy A8 (2018)
+* Samsung Galaxy A8 Plus (2018)
 * Samsung Galaxy A9 (2016)
 * Samsung Galaxy Ace 3
 * Samsung Galaxy Ace 4
