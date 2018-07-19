@@ -30,6 +30,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * OnePlus 5/5T
 * Philips Xenium I908
 * Samsung Galaxy Nexus
+* Samsung Galaxy Note 2 
 * Samsung Galaxy S3 i9300
 * Samsung Galaxy S3 Duo i9300i
 * Samsung Galaxy S5
