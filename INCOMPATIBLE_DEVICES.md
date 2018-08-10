@@ -42,8 +42,8 @@ This list may be incomplete. You might also want to have a look at
 * Motorola Moto X Force
 * Motorola Moto X Play
 * Motorola Moto X Style
-* Samsung Galaxy A3 (2015, 2017)
-* Samsung Galaxy A5 (2016, 2017)
+* Samsung Galaxy A3 (2015)
+* Samsung Galaxy A5 (2016)
 * Samsung Galaxy A7 (2016, 2017)
 * Samsung Galaxy A8 (2018)
 * Samsung Galaxy A8 Plus (2018)
