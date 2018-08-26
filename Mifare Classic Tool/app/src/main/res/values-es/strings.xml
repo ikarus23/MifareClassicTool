@@ -185,6 +185,7 @@
         todos los sectores:</string>
     <string name="action_auto_reconnect">Avanzado: Auto reconectar si se
         pierde la etiqueta durante el proceso de mapeo de claves</string>
+    <string name="action_auto_copy_uid">Auto copiar UID en el portapapeles</string>
     <string name="action_save_last_key_files">Recordar los ficheros de claves
         seleccionados (diálogo de mapeo de claves)</string>
     <string name="action_save">Salvar</string>

@@ -4,6 +4,7 @@
     <string name="action_append">附加</string>
     <string name="ac_data_block_no_keyb_1"></string>
     <string name="action_auto_reconnect">高级: 在密钥映射时卡片丢失自动重连</string>
+    <string name="action_auto_copy_uid">UID复制到剪贴板</string>
     <string name="action_cancel">取消</string>
     <string name="action_cancel_all">取消写入</string>
     <string name="action_change">更改</string>
