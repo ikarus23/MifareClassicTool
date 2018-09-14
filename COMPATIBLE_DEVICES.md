@@ -23,6 +23,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * LGE LG G4 (H815)
 * LGE LG G5
 * LGE LG G6 (H870)
+* Motorola G5 Plus
 * Motorola Photon Q
 * Nokia 8
 * OnePlus One (with recent version of OmniROM/LineageOS)
@@ -31,6 +32,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Philips Xenium I908
 * Samsung Galaxy A3 (2017, Android 8.0)
 * Samsung Galaxy A5 (2017, Android 8.0)
+* Samsung Galaxy A8 Plus
 * Samsung Galaxy Nexus
 * Samsung Galaxy Note 2 
 * Samsung Galaxy S3 i9300

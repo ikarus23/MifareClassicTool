@@ -46,7 +46,6 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy A5 (2016)
 * Samsung Galaxy A7 (2016, 2017)
 * Samsung Galaxy A8 (2018)
-* Samsung Galaxy A8 Plus (2018)
 * Samsung Galaxy A9 (2016)
 * Samsung Galaxy Ace 3
 * Samsung Galaxy Ace 4
@@ -56,6 +55,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy J3 (2016)
 * Samsung Galaxy J5 (2017)
 * Samsung Galaxy J7 (2016, 2017)
+* Samsung Galaxy J7 Pro
 * Samsung Galaxy Mega
 * Samsung Galaxy Note 3
 * Samsung Galaxy Note 4
@@ -74,7 +74,9 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S7 Edge (some Versions)
 * Samsung Galaxy S8
 * Samsung Galaxy S8 Plus
+* Samsung Galaxy Tab Active 2
 * Samsung Galaxy Xcover 3
+* Sharp Disney Mobile on DoCoMo SH-02G
 * Sony Xperia Z2 (some models)
 * Sony Xperia Z3 (SOL26)
 * Xiaomi MI 3
