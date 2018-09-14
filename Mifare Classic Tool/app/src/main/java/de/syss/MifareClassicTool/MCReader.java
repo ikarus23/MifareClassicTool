@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
 import de.syss.MifareClassicTool.Common.Operations;
@@ -561,8 +562,7 @@ public class MCReader {
                                 // Try to reconnect.
                                 try {
                                     connect();
-                                } catch (IOException
-                                        | IllegalStateException ex) {
+                                } catch (Exception ex) {
                                     // Do nothing.
                                 }
                             }
@@ -1021,16 +1021,42 @@ public class MCReader {
     }
 
     /**
-     * Connect the reader to the tag.
-     * @throws IOException Thrown if the blocked call has be canceled.
-     * @throws IllegalStateException I'm not sure when and why exactly.
+     * Connect the reader to the tag. If the reader is already connected the
+     * "connect" will be skipped. If "connect" will block for more than 500ms
+     * then connecting will be aborted.
+     * @throws Exception Something went wrong while connecting to the tag.
      */
-    public void connect() throws IOException {
+    public void connect() throws Exception {
+        final AtomicBoolean error = new AtomicBoolean(false);
+
+        // Do not connect if already connected.
+        if (isConnected()) {
+            return;
+        }
+
+        // Connect in a worker thread. (connect() might be blocking).
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    mMFC.connect();
+                } catch (IOException | IllegalStateException ex) {
+                    error.set(true);
+                }
+            }
+        });
+        t.start();
+
+        // Wait for the connection (max 500millis).
         try {
-            mMFC.connect();
-        } catch (IOException | IllegalStateException ex) {
+            t.join(500);
+        } catch (InterruptedException ex) {
+            error.set(true);
+        }
+
+        // If there was an error log it and throw an exception.
+        if (error.get()) {
             Log.d(LOG_TAG, "Error while connecting to tag.");
-            throw ex;
+            throw new Exception("Error while connecting to tag.");
         }
     }
 
