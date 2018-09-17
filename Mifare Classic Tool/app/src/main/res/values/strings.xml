@@ -210,6 +210,7 @@
         to the internal storage</string>
     <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
         lost during the key mapping process</string>
+    <string name="action_auto_copy_uid">Automatically copy new tag UID to clipboard</string>
     <string name="action_save_last_key_files">Remember the last selected key
         files (key mapping dialog)</string>
     <string name="action_use_custom_sector_count">Use custom sector count</string>

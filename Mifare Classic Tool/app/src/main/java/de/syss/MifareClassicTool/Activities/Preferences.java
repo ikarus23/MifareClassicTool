@@ -25,6 +25,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import de.syss.MifareClassicTool.Common;
@@ -43,6 +46,8 @@ public class Preferences extends BasicActivity {
      */
     public enum Preference {
         AutoReconnect("auto_reconnect"),
+        AutoCopyUID("auto_copy_uid"),
+        UIDFormat("uid_format"),
         SaveLastUsedKeyFiles("save_last_used_key_files"),
         UseCustomSectorCount("use_custom_sector_count"),
         CustomSectorCount("custom_sector_count"),
@@ -64,12 +69,15 @@ public class Preferences extends BasicActivity {
     }
 
     private CheckBox mPrefAutoReconnect;
+    private CheckBox mPrefAutoCopyUID;
     private CheckBox mPrefSaveLastUsedKeyFiles;
     private CheckBox mUseCustomSectorCount;
     private CheckBox mUseRetryAuthentication;
     private CheckBox mUseInternalStorage;
     private EditText mCustomSectorCount;
     private EditText mRetryAuthenticationCount;
+    private RelativeLayout mUIDFormat;
+    private RadioGroup mUIDFormatRadioGroup;
 
     /**
      * Initialize the preferences with the last stored ones.
@@ -82,6 +90,8 @@ public class Preferences extends BasicActivity {
         // Get preferences (init. the member variables).
         mPrefAutoReconnect = (CheckBox) findViewById(
                 R.id.checkBoxPreferencesAutoReconnect);
+        mPrefAutoCopyUID = (CheckBox) findViewById(
+                R.id.checkBoxPreferencesCopyUID);
         mPrefSaveLastUsedKeyFiles = (CheckBox) findViewById(
                 R.id.checkBoxPreferencesSaveLastUsedKeyFiles);
         mUseCustomSectorCount = (CheckBox) findViewById(
@@ -99,6 +109,9 @@ public class Preferences extends BasicActivity {
         SharedPreferences pref = Common.getPreferences();
         mPrefAutoReconnect.setChecked(pref.getBoolean(
                 Preference.AutoReconnect.toString(), false));
+        mPrefAutoCopyUID.setChecked(pref.getBoolean(
+                Preference.AutoCopyUID.toString(), false));
+        setUIDFormatBySequence(pref.getInt(Preference.UIDFormat.toString(),0));
         mPrefSaveLastUsedKeyFiles.setChecked(pref.getBoolean(
                 Preference.SaveLastUsedKeyFiles.toString(), true));
         mUseCustomSectorCount.setChecked(pref.getBoolean(
@@ -114,6 +127,13 @@ public class Preferences extends BasicActivity {
                 mUseRetryAuthentication.isChecked());
         mRetryAuthenticationCount.setText("" + pref.getInt(
                 Preference.RetryAuthenticationCount.toString(), 1));
+
+        // UID Format Options (hide/show)
+        mUIDFormat = (RelativeLayout) findViewById(
+                R.id.relativeLayoutPreferencesUIDFormat);
+        mUIDFormatRadioGroup = (RadioGroup) findViewById(
+                R.id.radioGroupUIDFormat);
+        toggleUIDFormat(mPrefAutoCopyUID);
     }
 
     /**
@@ -133,6 +153,58 @@ public class Preferences extends BasicActivity {
                              // Do nothing.
                         }
             }).show();
+    }
+
+    /**
+     * Toggle the radio group for the copy UID format options
+     * @param view The View object that triggered the method
+     * (in this case the info on auto copy UID button).
+     */
+    public void toggleUIDFormat(View view) {
+        if (mPrefAutoCopyUID.isChecked()) {
+            mUIDFormat.setVisibility(View.VISIBLE);
+        } else {
+            mUIDFormat.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Convenience method for converting selected radio item to an int
+     * @return the sequence number of the radio button (0=Hex; 1=DecBE; 2=DecLE)
+     * Defaults to 0 (Hex) if all else fails!
+     */
+    private int getUIDFormatSequence() {
+        switch(mUIDFormatRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.radioButtonHex:
+                return 0;
+            case R.id.radioButtonDecBE:
+                return 1;
+            case R.id.radioButtonDecLE:
+                return 2;
+        }
+        return 0;
+    }
+
+    /**
+     * Sets the correct radio, reverse of getUIDFormatSequence
+     * @param seq the radio button sequence to select (0=Hex; 1=DecBE; 2=DecLE)
+     * Defaults to 0 (Hex) if all else fails!
+     */
+    private void setUIDFormatBySequence(int seq) {
+        RadioButton selectRadioButton;
+        int rBID;
+        switch(seq) {
+            case 2:
+                rBID = R.id.radioButtonDecLE;
+                break;
+            case 1:
+                rBID = R.id.radioButtonDecBE;
+                break;
+            default:
+                rBID = R.id.radioButtonHex;
+        }
+        selectRadioButton = (RadioButton) findViewById(rBID);
+        selectRadioButton.toggle();
     }
 
     /**
@@ -243,6 +315,9 @@ public class Preferences extends BasicActivity {
         SharedPreferences.Editor edit = Common.getPreferences().edit();
         edit.putBoolean(Preference.AutoReconnect.toString(),
                 mPrefAutoReconnect.isChecked());
+        edit.putBoolean(Preference.AutoCopyUID.toString(),
+                mPrefAutoCopyUID.isChecked());
+        edit.putInt(Preference.UIDFormat.toString(),getUIDFormatSequence());
         edit.putBoolean(Preference.SaveLastUsedKeyFiles.toString(),
                 mPrefSaveLastUsedKeyFiles.isChecked());
         edit.putBoolean(Preference.UseCustomSectorCount.toString(),

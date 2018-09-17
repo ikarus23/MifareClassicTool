@@ -57,9 +57,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.math.BigInteger;
 
 import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
 
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.AutoCopyUID;
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UIDFormat;
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
@@ -554,12 +557,33 @@ public class Common extends Application {
             tag = MCReader.patchTag(tag);
             setTag(tag);
 
-            // Show Toast message with UID.
-            String id = context.getResources().getString(
-                    R.string.info_new_tag_found) + " (UID: ";
-            id += byte2HexString(tag.getId());
-            id += ")";
-            Toast.makeText(context, id, Toast.LENGTH_LONG).show();
+            boolean isCopyUID = getPreferences().getBoolean(
+                    AutoCopyUID.toString(), false);
+            if (isCopyUID) {
+                int format = getPreferences().getInt(
+                        UIDFormat.toString(), 0);
+                String fmtUID = byte2FmtString(tag.getId(),format);
+                // Show Toast with copy message.
+                Toast.makeText(context,
+                        "UID "+context.getResources().getString(
+                                R.string.info_copied_to_clipboard).toLowerCase()+" ("+fmtUID+")",
+                        Toast.LENGTH_SHORT).show();
+                android.content.ClipboardManager clipboard =
+                        (android.content.ClipboardManager)
+                                context.getSystemService(
+                                        Context.CLIPBOARD_SERVICE);
+                android.content.ClipData clip =
+                        android.content.ClipData.newPlainText(
+                                "MIFARE classic tool data", fmtUID);
+                clipboard.setPrimaryClip(clip);
+            } else {
+                // Show Toast message with UID.
+                String id = context.getResources().getString(
+                        R.string.info_new_tag_found) + " (UID: ";
+                id += byte2HexString(tag.getId());
+                id += ")";
+                Toast.makeText(context, id, Toast.LENGTH_LONG).show();
+            }
             return checkMifareClassicSupport(tag, context);
         }
         return -4;
@@ -1270,6 +1294,45 @@ public class Common extends Application {
             array[i] = array[array.length - i - 1];
             array[array.length - i - 1] = temp;
         }
+    }
+
+
+    /**
+     * Convert byte array to a string of the specified format.
+     * Format value corresponds to the pref radio button sequence.
+     * @param bytes Bytes to convert.
+     * @param fmt Format (0=Hex; 1=DecBE; 2=DecLE).
+     * @return The bytes in the specified format.
+     */
+    public static String byte2FmtString(byte[] bytes, int fmt) {
+        switch(fmt) {
+            case 2:
+                byte[] revBytes = bytes.clone();
+                reverseByteArrayInPlace(revBytes);
+                return hex2Dec(byte2HexString(revBytes));
+            case 1:
+                return hex2Dec(byte2HexString(bytes));
+        }
+        return byte2HexString(bytes);
+    }
+
+    /**
+     * Convert a hexadecimal string to a decimal string.
+     * Uses BigInteger only if the hexadecimal string is longer than 7 bytes.
+     * @param hexString The hexadecimal value to convert.
+     * @return String representation of the decimal value of hexString.
+     */
+    public static String hex2Dec(String hexString) {
+        String ret;
+        if (hexString == null || hexString.isEmpty()) {
+            ret = "0";
+        } else if (hexString.length() <= 14) {
+            ret = Long.toString(Long.parseLong(hexString, 16));
+        } else {
+            BigInteger bigInteger = new BigInteger(hexString , 16);
+            ret = bigInteger.toString();
+        }
+        return ret;
     }
 
     /**
