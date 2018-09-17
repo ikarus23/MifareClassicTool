@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -76,7 +75,6 @@ public class Preferences extends BasicActivity {
     private CheckBox mUseInternalStorage;
     private EditText mCustomSectorCount;
     private EditText mRetryAuthenticationCount;
-    private RelativeLayout mUIDFormat;
     private RadioGroup mUIDFormatRadioGroup;
 
     /**
@@ -129,11 +127,9 @@ public class Preferences extends BasicActivity {
                 Preference.RetryAuthenticationCount.toString(), 1));
 
         // UID Format Options (hide/show)
-        mUIDFormat = (RelativeLayout) findViewById(
-                R.id.relativeLayoutPreferencesUIDFormat);
         mUIDFormatRadioGroup = (RadioGroup) findViewById(
                 R.id.radioGroupUIDFormat);
-        toggleUIDFormat(mPrefAutoCopyUID);
+        toggleUIDFormat(null);
     }
 
     /**
@@ -161,10 +157,9 @@ public class Preferences extends BasicActivity {
      * (in this case the info on auto copy UID button).
      */
     public void toggleUIDFormat(View view) {
-        if (mPrefAutoCopyUID.isChecked()) {
-            mUIDFormat.setVisibility(View.VISIBLE);
-        } else {
-            mUIDFormat.setVisibility(View.GONE);
+        for (int i = 0; i < mUIDFormatRadioGroup.getChildCount(); i++) {
+            mUIDFormatRadioGroup.getChildAt(i).setEnabled(
+                    mPrefAutoCopyUID.isChecked());
         }
     }
 

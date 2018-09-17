@@ -263,7 +263,7 @@ public class AccessConditionTool extends BasicActivity {
      * (in this case the copy button).
      */
     public void onCopyToClipboard(View view) {
-        Common.copyToClipboard(mAC.getText().toString(), this);
+        Common.copyToClipboard(mAC.getText().toString(), this, true);
     }
 
     /**

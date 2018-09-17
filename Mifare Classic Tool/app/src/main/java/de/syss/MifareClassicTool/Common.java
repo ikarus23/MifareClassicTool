@@ -565,17 +565,11 @@ public class Common extends Application {
                 String fmtUID = byte2FmtString(tag.getId(),format);
                 // Show Toast with copy message.
                 Toast.makeText(context,
-                        "UID "+context.getResources().getString(
-                                R.string.info_copied_to_clipboard).toLowerCase()+" ("+fmtUID+")",
+                        "UID " + context.getResources().getString(
+                                R.string.info_copied_to_clipboard)
+                                .toLowerCase() + " (" + fmtUID + ")",
                         Toast.LENGTH_SHORT).show();
-                android.content.ClipboardManager clipboard =
-                        (android.content.ClipboardManager)
-                                context.getSystemService(
-                                        Context.CLIPBOARD_SERVICE);
-                android.content.ClipData clip =
-                        android.content.ClipData.newPlainText(
-                                "MIFARE classic tool data", fmtUID);
-                clipboard.setPrimaryClip(clip);
+                copyToClipboard(fmtUID, context, false);
             } else {
                 // Show Toast message with UID.
                 String id = context.getResources().getString(
@@ -1389,8 +1383,10 @@ public class Common extends Application {
      * @param text The text that should by stored on the clipboard.
      * @param context Context of the SystemService
      * (and the Toast message that will by shown).
+     * @param showMsg Show a "Copied to clipboard" message.
      */
-    public static void copyToClipboard(String text, Context context) {
+    public static void copyToClipboard(String text, Context context,
+                                       boolean showMsg) {
         if (!text.equals("")) {
             android.content.ClipboardManager clipboard =
                     (android.content.ClipboardManager)
@@ -1400,8 +1396,10 @@ public class Common extends Application {
                     android.content.ClipData.newPlainText(
                             "MIFARE classic tool data", text);
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(context, R.string.info_copied_to_clipboard,
-                    Toast.LENGTH_SHORT).show();
+            if (showMsg) {
+                Toast.makeText(context, R.string.info_copied_to_clipboard,
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

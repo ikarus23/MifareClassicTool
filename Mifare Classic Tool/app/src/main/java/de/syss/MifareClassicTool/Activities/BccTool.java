@@ -82,7 +82,7 @@ public class BccTool extends BasicActivity {
      * (in this case the copy button).
      */
     public void onCopyToClipboard(View view) {
-        Common.copyToClipboard(mBcc.getText().toString(), this);
+        Common.copyToClipboard(mBcc.getText().toString(), this, true);
     }
 
     /**

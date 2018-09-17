@@ -133,7 +133,7 @@ public class ValueBlockTool extends BasicActivity {
      * (in this case the copy button).
      */
     public void onCopyToClipboard(View view) {
-        Common.copyToClipboard(mVB.getText().toString(), this);
+        Common.copyToClipboard(mVB.getText().toString(), this, true);
     }
 
     /**

@@ -221,22 +221,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:onClick="toggleUIDFormat"
                     android:text="@string/action_auto_copy_uid" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeLayoutPreferencesUIDFormat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@xml/layout_border"
-                android:padding="2dp"
-                android:layout_marginBottom="5dp">
 
                 <RadioGroup
                     android:id="@+id/radioGroupUIDFormat"
                     android:orientation="horizontal"
+                    android:layout_below="@+id/checkBoxPreferencesCopyUID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp">
@@ -265,7 +258,6 @@
                 </RadioGroup>
 
             </RelativeLayout>
-
 
         </LinearLayout>
 
