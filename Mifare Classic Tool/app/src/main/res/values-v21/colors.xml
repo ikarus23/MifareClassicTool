@@ -20,15 +20,5 @@
 
 
 <resources>
-    <color name="blue">@android:color/holo_blue_light</color>
-    <color name="light_green">#66FF66</color>
-    <color name="dark_green">#338800</color>
-    <color name="orange">#FF6600</color>
-    <color name="purple">#9933FF</color>
-    <color name="yellow">#CCCC00</color>
-    <color name="red">#FF0000</color>
-    <color name="light_gray">#DDDDDD</color>
-    <color name="middle_gray">#444444</color>
-    <color name="dark_gray">#222222</color>
-    <color name="white">#FFFFFF</color>
+    <color name="blue">#80CBC4</color> <!-- colorAccent of Material theme -->
 </resources>

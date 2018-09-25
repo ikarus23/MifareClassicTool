@@ -131,9 +131,7 @@ public class TagInfoTool extends BasicActivity {
             TextView headerGenericInfo = new TextView(this);
             headerGenericInfo.setText(Common.colorString(
                     getString(R.string.text_generic_info),
-                    getResources().getColor(R.color.blue)));
-            headerGenericInfo.setBackgroundColor(
-                    getResources().getColor(R.color.dark_gray));
+                    getResources().getColor(R.color.blue)));;
             headerGenericInfo.setTextAppearance(this,
                     android.R.style.TextAppearance_Large);
             headerGenericInfo.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -189,7 +187,7 @@ public class TagInfoTool extends BasicActivity {
                 tagType = getString(tagTypeResourceID);
             }
 
-            int hc = getResources().getColor(R.color.light_green);
+            int hc = getResources().getColor(R.color.blue);
             genericInfo.setText(TextUtils.concat(
                     Common.colorString(getString(R.string.text_uid) + ":", hc),
                     "\n", uid, "\n",
@@ -227,12 +225,10 @@ public class TagInfoTool extends BasicActivity {
                 headerMifareInfo.setText(Common.colorString(
                         getString(R.string.text_mf_info),
                         getResources().getColor(R.color.blue)));
-                headerMifareInfo.setBackgroundColor(
-                        getResources().getColor(R.color.dark_gray));
                 headerMifareInfo.setTextAppearance(
                         this, android.R.style.TextAppearance_Large);
                 headerMifareInfo.setGravity(Gravity.CENTER_HORIZONTAL);
-                headerMifareInfo.setPadding(pad, pad, pad, pad);
+                headerMifareInfo.setPadding(pad, pad * 2, pad, pad);
                 mLayout.addView(headerMifareInfo);
                 TextView mifareInfo = new TextView(this);
                 mifareInfo.setPadding(pad, pad, pad, pad);
