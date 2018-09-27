@@ -61,7 +61,6 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Note 4
 * Samsung Galaxy Note 5
 * Samsung Galaxy Note 6
-* Samsung Galaxy Note 8
 * Samsung Galaxy Grand Prime
 * Samsung Galaxy S4
 * Samsung Galaxy S4 Mini
@@ -70,13 +69,12 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S6
 * Samsung Galaxy S6 Edge
 * Samsung Galaxy S6 Edge Plus
-* Samsung Galaxy S7
 * Samsung Galaxy S7 Edge (some Versions)
-* Samsung Galaxy S8
 * Samsung Galaxy S8 Plus
 * Samsung Galaxy Tab Active 2
 * Samsung Galaxy Xcover 3
 * Sharp Disney Mobile on DoCoMo SH-02G
+* Sony Xperia X Compact
 * Sony Xperia Z2 (some models)
 * Sony Xperia Z3 (SOL26)
 * Xiaomi MI 3
