@@ -72,7 +72,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S6 Edge Plus
 * Samsung Galaxy S7
 * Samsung Galaxy S7 Edge (some Versions)
-* Samsung Galaxy S8
+* Samsung Galaxy S8 (before update to Android 8)
 * Samsung Galaxy S8 Plus
 * Samsung Galaxy Tab Active 2
 * Samsung Galaxy Xcover 3
