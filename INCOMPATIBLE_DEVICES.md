@@ -22,7 +22,6 @@ This list may be incomplete. You might also want to have a look at
 * Google Nexus 9
 * Google Nexus 10
 * HTC One M8
-* Huawei G620S
 * Jiayu S3
 * Lenovo Vibe P1
 * Lenovo Vibe P2
