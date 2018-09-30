@@ -1,5 +1,17 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.4:
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
+ * Added a preference to automatically save UIDs to the Clipboard.
+   Thanks to "samscode".
+ * Set the default theme to dark material or dark holo depending
+   on the Android version.
+ * Bugfix: Hangup on Google Pixel devices with Android 9.
+ * Switched to an adaptive icon.
+ * Updated the list of compatible and incompatible devices.
+ * Some minor bug fixes.
+
 Version 2.2.3:
  * Bugfix: Crash when clearing tmp directory.
  * Bugfix: Crash when resuming the main menu without intent.
