@@ -64,9 +64,9 @@
         android:layout_below="@+id/textViewDiffBlockDiff"
         android:typeface="monospace" />
 
-    <!-- Seperator -->
+    <!-- Separator -->
     <View
-        android:id="@+id/seperatorDiffBlock"
+        android:id="@+id/separatorDiffBlock"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"

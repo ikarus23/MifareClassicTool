@@ -131,7 +131,7 @@ public class TagInfoTool extends BasicActivity {
             TextView headerGenericInfo = new TextView(this);
             headerGenericInfo.setText(Common.colorString(
                     getString(R.string.text_generic_info),
-                    getResources().getColor(R.color.blue)));;
+                    getResources().getColor(R.color.blue)));
             headerGenericInfo.setTextAppearance(this,
                     android.R.style.TextAppearance_Large);
             headerGenericInfo.setGravity(Gravity.CENTER_HORIZONTAL);

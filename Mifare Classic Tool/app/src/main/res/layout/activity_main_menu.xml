@@ -24,7 +24,7 @@
     android:id="@+id/relativeLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenu" >
+    tools:context="Activities.MainMenu" >
 
     <ScrollView
         android:id="@+id/scrollViewMain"

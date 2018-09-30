@@ -25,7 +25,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context=".DiffTool" >
+    tools:context="Activities.DiffTool" >
 
     <Button
         android:id="@+id/buttonDiffToolDump1"
@@ -71,9 +71,9 @@
         android:text="@string/text_dump_2"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <!-- Seperator -->
+    <!-- Separator -->
     <View
-        android:id="@+id/seperatorDiffTool"
+        android:id="@+id/separatorDiffTool"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_marginTop="5dp"
@@ -88,7 +88,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/seperatorDiffTool" >
+        android:layout_below="@+id/separatorDiffTool" >
 
         <LinearLayout
             android:id="@+id/linearLayoutDiffTool"

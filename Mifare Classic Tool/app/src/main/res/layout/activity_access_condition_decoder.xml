@@ -24,7 +24,7 @@
     android:id="@+id/relativeLayoutAccessConditionDecoder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccessConditionDecoder" >
+    tools:context="Activities.AccessConditionDecoder" >
 
     <TableRow
         android:id="@+id/tableRowAccessConditionDecoderHeader"

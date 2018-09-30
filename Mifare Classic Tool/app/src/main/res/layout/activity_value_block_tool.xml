@@ -24,7 +24,7 @@
     android:id="@+id/relativeLayoutValueBlockTool"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ValueBlockTool" >
+    tools:context="Activities.ValueBlockTool" >
 
     <!-- Dummy to prevent EditTexts from getting focus on Activity startup -->
     <LinearLayout

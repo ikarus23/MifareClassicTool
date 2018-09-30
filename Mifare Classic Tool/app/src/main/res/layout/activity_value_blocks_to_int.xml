@@ -24,7 +24,7 @@
     android:id="@+id/relativeLayoutValueBlocksToInt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ValueBlocksToInt" >
+    tools:context="Activities.ValueBlocksToInt" >
 
  <TableRow
      android:id="@+id/tableRowValueBlocksToIntHeader"

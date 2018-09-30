@@ -24,7 +24,7 @@
     android:id="@+id/scrollViewHexToAscii"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HexToAscii" >
+    tools:context="Activities.HexToAscii" >
 
     <TextView
         android:id="@+id/textViewHexToAscii"

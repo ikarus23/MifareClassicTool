@@ -24,7 +24,7 @@
     android:id="@+id/scrollViewWriteTag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WriteTag" >
+    tools:context="Activities.WriteTag" >
 
     <LinearLayout
         android:id="@+id/linearLayoutWriteTag"
@@ -161,7 +161,7 @@
                     android:text="@string/action_write_block" />
             </RelativeLayout>
 
-            <!-- Seperator -->
+            <!-- Separator -->
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
@@ -294,7 +294,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Seperator -->
+            <!-- Separator -->
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
@@ -339,7 +339,7 @@
                     android:text="@string/action_factory_format" />
             </LinearLayout>
 
-            <!-- Seperator -->
+            <!-- Separator -->
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"

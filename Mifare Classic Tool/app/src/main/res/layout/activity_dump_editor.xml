@@ -21,10 +21,10 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ralativeLayoutDumpEditor"
+    android:id="@+id/relativeLayoutDumpEditor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DumpEditor" >
+    tools:context="Activities.DumpEditor" >
 
     <!-- Dummy to prevent EditTexts from getting focus on Activity startup -->
     <LinearLayout

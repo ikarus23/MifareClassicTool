@@ -34,7 +34,7 @@
         android:text="@string/dialog_write_sectors"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <!-- Seperator -->
+    <!-- Separator -->
     <View
         android:id="@+id/viewWriteSectors"
         android:layout_width="fill_parent"

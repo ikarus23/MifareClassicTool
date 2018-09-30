@@ -24,14 +24,14 @@
     android:id="@+id/relativeLayoutPreferences"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Preferences"
+    tools:context="Activities.Preferences"
     android:padding="5dp" >
 
     <ScrollView
         android:id="@+id/scrollViewPreferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/seperatorPreferences"
+        android:layout_above="@+id/separatorPreferences"
         android:layout_alignParentTop="true" >
 
         <LinearLayout
@@ -263,9 +263,9 @@
 
     </ScrollView>
 
-    <!-- Seperator -->
+    <!-- Separator -->
     <View
-        android:id="@+id/seperatorPreferences"
+        android:id="@+id/separatorPreferences"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_margin="2dp"

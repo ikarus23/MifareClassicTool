@@ -24,7 +24,7 @@
     android:id="@+id/relativeLayoutReadTag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReadTag" >
+    tools:context="Activities.ReadTag" >
 
     <ProgressBar
         android:id="@+id/progressBarReadTag"

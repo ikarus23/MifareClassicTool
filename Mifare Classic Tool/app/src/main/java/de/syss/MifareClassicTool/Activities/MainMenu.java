@@ -273,13 +273,13 @@ public class MainMenu extends Activity {
 
     /**
      * Set whether to use the app in editor only mode or not.
-     * @param useAsEdtiorOnly True if the app should be used in editor
+     * @param useAsEditorOnly True if the app should be used in editor
      * only mode.
      */
-    private void useAsEditorOnly(boolean useAsEdtiorOnly) {
-        Common.setUseAsEditorOnly(useAsEdtiorOnly);
-        mReadTag.setEnabled(!useAsEdtiorOnly);
-        mWriteTag.setEnabled(!useAsEdtiorOnly);
+    private void useAsEditorOnly(boolean useAsEditorOnly) {
+        Common.setUseAsEditorOnly(useAsEditorOnly);
+        mReadTag.setEnabled(!useAsEditorOnly);
+        mWriteTag.setEnabled(!useAsEditorOnly);
     }
 
     /**
