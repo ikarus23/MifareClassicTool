@@ -27,6 +27,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Motorola G5 Plus
 * Motorola Photon Q
 * Nokia 8
+* Nokia 7 Plus
 * OnePlus One (with recent version of OmniROM/LineageOS)
 * OnePlus 3/3T
 * OnePlus 5/5T
@@ -46,6 +47,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy S9
 * Sony Xperia M4 Aqua
 * Sony Xperia V
+* Sony Xperia Z2
 * Sony Xperia Z3
 * Sony Xperia Z5 Compact
 * Sony Xperia XZ
