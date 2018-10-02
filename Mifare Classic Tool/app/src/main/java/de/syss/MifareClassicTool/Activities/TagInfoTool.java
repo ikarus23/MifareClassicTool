@@ -19,7 +19,6 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -102,12 +101,9 @@ public class TagInfoTool extends BasicActivity {
         .setMessage(styledText)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-         })
+                (dialog, which) -> {
+                    // Do nothing.
+                })
          .show();
         // Make links clickable.
         ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(

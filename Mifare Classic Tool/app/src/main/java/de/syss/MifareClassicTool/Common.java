@@ -26,7 +26,6 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -368,45 +367,36 @@ public class Common extends Application {
             .setMessage(message)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setPositiveButton(R.string.action_replace,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Replace.
-                    if (Common.saveFile(file, lines, false)) {
-                        Toast.makeText(context, R.string.info_save_successful,
-                                Toast.LENGTH_LONG).show();
-                        activity.onSaveSuccessful();
-                    } else {
-                        Toast.makeText(context, R.string.info_save_error,
-                                Toast.LENGTH_LONG).show();
-                        activity.onSaveFailure();
-                    }
-                }
-            })
+                    (dialog, which) -> {
+                        // Replace.
+                        if (Common.saveFile(file, lines, false)) {
+                            Toast.makeText(context, R.string.info_save_successful,
+                                    Toast.LENGTH_LONG).show();
+                            activity.onSaveSuccessful();
+                        } else {
+                            Toast.makeText(context, R.string.info_save_error,
+                                    Toast.LENGTH_LONG).show();
+                            activity.onSaveFailure();
+                        }
+                    })
             .setNeutralButton(R.string.action_append,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Append.
-                    if (Common.saveFileAppend(file, lines, isDump)) {
-                        Toast.makeText(context, R.string.info_save_successful,
-                                Toast.LENGTH_LONG).show();
-                        activity.onSaveSuccessful();
-                    } else {
-                        Toast.makeText(context, R.string.info_save_error,
-                                Toast.LENGTH_LONG).show();
-                        activity.onSaveFailure();
-                    }
-                }
-            })
+                    (dialog, which) -> {
+                        // Append.
+                        if (Common.saveFileAppend(file, lines, isDump)) {
+                            Toast.makeText(context, R.string.info_save_successful,
+                                    Toast.LENGTH_LONG).show();
+                            activity.onSaveSuccessful();
+                        } else {
+                            Toast.makeText(context, R.string.info_save_error,
+                                    Toast.LENGTH_LONG).show();
+                            activity.onSaveFailure();
+                        }
+                    })
             .setNegativeButton(R.string.action_cancel,
-                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // Cancel.
-                    activity.onSaveFailure();
-                }
-            }).show();
+                    (dialog, id) -> {
+                        // Cancel.
+                        activity.onSaveFailure();
+                    }).show();
         } else {
             if (Common.saveFile(file, lines, false)) {
                 Toast.makeText(context, R.string.info_save_successful,

@@ -1035,13 +1035,11 @@ public class MCReader {
         }
 
         // Connect in a worker thread. (connect() might be blocking).
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    mMFC.connect();
-                } catch (IOException | IllegalStateException ex) {
-                    error.set(true);
-                }
+        Thread t = new Thread(() -> {
+            try {
+                mMFC.connect();
+            } catch (IOException | IllegalStateException ex) {
+                error.set(true);
             }
         });
         t.start();

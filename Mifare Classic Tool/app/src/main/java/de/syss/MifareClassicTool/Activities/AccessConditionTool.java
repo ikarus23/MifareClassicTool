@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,26 +112,22 @@ public class AccessConditionTool extends BasicActivity {
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                    int position, long id) {
-                // Change button text to selected Access Conditions.
-                mBlockButtons[3].setText(getString(
-                        getResourceForSectorTrailersByRowNr(position)));
-                // Set Access Condition bits for sector trailer.
-                byte[] acBits = acRowNrToACBits(position, true);
-                mACMatrix[0][3] = acBits[0];
-                mACMatrix[1][3] = acBits[1];
-                mACMatrix[2][3] = acBits[2];
-                // Rebuild the data block dialog based on the readability of
-                // key B.
-                mIsKeyBReadable = position < 2 || position == 4;
-                buildDataBlockDialog(true);
-                // Close dialog.
-                mSectorTrailerDialog.dismiss();
-            }
-        });
+                (parent, view, position, id) -> {
+                    // Change button text to selected Access Conditions.
+                    mBlockButtons[3].setText(getString(
+                            getResourceForSectorTrailersByRowNr(position)));
+                    // Set Access Condition bits for sector trailer.
+                    byte[] acBits = acRowNrToACBits(position, true);
+                    mACMatrix[0][3] = acBits[0];
+                    mACMatrix[1][3] = acBits[1];
+                    mACMatrix[2][3] = acBits[2];
+                    // Rebuild the data block dialog based on the readability of
+                    // key B.
+                    mIsKeyBReadable = position < 2 || position == 4;
+                    buildDataBlockDialog(true);
+                    // Close dialog.
+                    mSectorTrailerDialog.dismiss();
+                });
         mSectorTrailerDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_choose_ac_title)
                 .setView(lv)
@@ -470,24 +465,20 @@ public class AccessConditionTool extends BasicActivity {
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                    int position, long id) {
-                // Change button text to selected Access Conditions.
-                mSelectedButton.setText(getString(
-                        getResourceForDataBlocksByRowNr(position)));
-                // Set Access Condition bits for this block.
-                byte[] acBits = acRowNrToACBits(position, false);
-                int blockNr = Integer.parseInt(
-                        mSelectedButton.getTag().toString());
-                mACMatrix[0][blockNr] = acBits [0];
-                mACMatrix[1][blockNr] = acBits [1];
-                mACMatrix[2][blockNr] = acBits [2];
-                // Close dialog.
-                mDataBlockDialog.dismiss();
-            }
-        });
+                (parent, view, position, id) -> {
+                    // Change button text to selected Access Conditions.
+                    mSelectedButton.setText(getString(
+                            getResourceForDataBlocksByRowNr(position)));
+                    // Set Access Condition bits for this block.
+                    byte[] acBits = acRowNrToACBits(position, false);
+                    int blockNr = Integer.parseInt(
+                            mSelectedButton.getTag().toString());
+                    mACMatrix[0][blockNr] = acBits[0];
+                    mACMatrix[1][blockNr] = acBits[1];
+                    mACMatrix[2][blockNr] = acBits[2];
+                    // Close dialog.
+                    mDataBlockDialog.dismiss();
+                });
         mDataBlockDialog =  new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_choose_ac_title)
                 .setView(lv)

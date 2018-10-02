@@ -19,7 +19,6 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -143,12 +142,9 @@ public class Preferences extends BasicActivity {
             .setMessage(R.string.dialog_auto_reconnect)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                             // Do nothing.
-                        }
-            }).show();
+                    (dialog, which) -> {
+                        // Do nothing.
+                    }).show();
     }
 
     /**
@@ -235,12 +231,9 @@ public class Preferences extends BasicActivity {
             .setMessage(R.string.dialog_custom_sector_count)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do nothing.
-                        }
-            }).show();
+                    (dialog, which) -> {
+                        // Do nothing.
+                    }).show();
     }
 
     /**
@@ -254,11 +247,8 @@ public class Preferences extends BasicActivity {
                 .setMessage(R.string.dialog_use_internal_storage)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing.
-                            }
+                        (dialog, which) -> {
+                            // Do nothing.
                         }).show();
     }
 
@@ -273,11 +263,8 @@ public class Preferences extends BasicActivity {
                 .setMessage(R.string.dialog_retry_authentication)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing.
-                            }
+                        (dialog, which) -> {
+                            // Do nothing.
                         }).show();
     }
 

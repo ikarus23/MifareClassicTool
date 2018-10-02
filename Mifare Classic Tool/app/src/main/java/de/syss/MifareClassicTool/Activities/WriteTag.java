@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
@@ -298,19 +297,13 @@ public class WriteTag extends BasicActivity {
                 .setMessage(R.string.dialog_sector_trailer_warning)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.action_i_know_what_i_am_doing,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Show key map creator.
-                                createKeyMapForBlock(sector, false);
-                            }
+                        (dialog, which) -> {
+                            // Show key map creator.
+                            createKeyMapForBlock(sector, false);
                         })
                  .setNegativeButton(R.string.action_cancel,
-                         new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialog, int id) {
-                                 // Do nothing.
-                             }
+                         (dialog, id) -> {
+                             // Do nothing.
                          }).show();
         } else if (sector == 0 && block == 0) {
             // Is the BCC valid?
@@ -402,23 +395,17 @@ public class WriteTag extends BasicActivity {
         if (createKeyMap) {
             buttonID = R.string.action_i_know_what_i_am_doing;
             dialog.setNegativeButton(R.string.action_cancel,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    (dialog12, which) -> {
                         // Do nothing.
-                    }
-                });
+                    });
         }
         dialog.setPositiveButton(buttonID,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                (dialog1, which) -> {
                     // Do nothing or create a key map.
                     if (createKeyMap) {
                         createKeyMapForBlock(0, false);
                     }
-                }
-             });
+                });
         dialog.show();
     }
 
@@ -513,12 +500,9 @@ public class WriteTag extends BasicActivity {
         .setMessage(R.string.dialog_static_ac)
         .setIcon(android.R.drawable.ic_dialog_info)
         .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-         }).show();
+                (dialog, which) -> {
+                    // Do nothing.
+                }).show();
     }
 
     /**
@@ -721,13 +705,10 @@ public class WriteTag extends BasicActivity {
                     + " " + sectors[i]);
             llCheckBoxes.addView(sectorBoxes[i]);
         }
-        OnClickListener listener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tag = v.getTag().toString();
-                for (CheckBox box : sectorBoxes) {
-                    box.setChecked(tag.equals("all"));
-                }
+        OnClickListener listener = v -> {
+            String tag = v.getTag().toString();
+            for (CheckBox box : sectorBoxes) {
+                box.setChecked(tag.equals("all"));
             }
         };
         selectAll.setOnClickListener(listener);
@@ -738,73 +719,64 @@ public class WriteTag extends BasicActivity {
             .setIcon(android.R.drawable.ic_menu_edit)
             .setView(dialogLayout)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing here because we override this button later
-                    // to change the close behaviour. However, we still need
-                    // this because on older versions of Android unless we
-                    // pass a handler the button doesn't get instantiated
-                }
-            })
+                    (dialog12, which) -> {
+                        // Do nothing here because we override this button later
+                        // to change the close behaviour. However, we still need
+                        // this because on older versions of Android unless we
+                        // pass a handler the button doesn't get instantiated
+                    })
             .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing.
-                }
-            })
+                    (dialog1, which) -> {
+                        // Do nothing.
+                    })
             .create();
         dialog.show();
         final Context con = this;
 
         // Override/define behavior for positive button click.
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
-                new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Re-Init mDumpWithPos in order to remove unwanted sectors.
-                initDumpWithPosFromDump(dump);
-                boolean writeBlock0 = false;
-                for (CheckBox box : sectorBoxes) {
-                    int sector = Integer.parseInt(box.getTag().toString());
-                    if (!box.isChecked()) {
-                        mDumpWithPos.remove(sector);
-                    } else if (sector == 0 && box.isChecked()
-                            && mWriteManufBlock.isChecked() ) {
-                        writeBlock0 = true;
+                v -> {
+                    // Re-Init mDumpWithPos in order to remove unwanted sectors.
+                    initDumpWithPosFromDump(dump);
+                    boolean writeBlock0 = false;
+                    for (CheckBox box : sectorBoxes) {
+                        int sector = Integer.parseInt(box.getTag().toString());
+                        if (!box.isChecked()) {
+                            mDumpWithPos.remove(sector);
+                        } else if (sector == 0 && box.isChecked()
+                                && mWriteManufBlock.isChecked()) {
+                            writeBlock0 = true;
+                        }
                     }
-                }
-                if (mDumpWithPos.size() == 0) {
-                    // Error. There is nothing to write.
-                    Toast.makeText(context, R.string.info_nothing_to_write,
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                // Check if last sector is out of range.
-                if (!isSectorInRage(con, false)) {
-                    return;
-                }
-
-                // Do a BCC check if sector 0 is chosen and writing to
-                // the manufacturer block was enabled.
-                if (writeBlock0) {
-                    int bccCheck = checkBCC(false);
-                    if (bccCheck == 2) {
-                        // Error. Redo.
-                        return;
-                    } else if (bccCheck == 1) {
-                        // Error in BCC. Exit.
-                        dialog.dismiss();
+                    if (mDumpWithPos.size() == 0) {
+                        // Error. There is nothing to write.
+                        Toast.makeText(context, R.string.info_nothing_to_write,
+                                Toast.LENGTH_LONG).show();
                         return;
                     }
-                }
-                // Create key map.
-                createKeyMapForDump();
-                dialog.dismiss();
-            }
-        });
+
+                    // Check if last sector is out of range.
+                    if (!isSectorInRage(con, false)) {
+                        return;
+                    }
+
+                    // Do a BCC check if sector 0 is chosen and writing to
+                    // the manufacturer block was enabled.
+                    if (writeBlock0) {
+                        int bccCheck = checkBCC(false);
+                        if (bccCheck == 2) {
+                            // Error. Redo.
+                            return;
+                        } else if (bccCheck == 1) {
+                            // Error in BCC. Exit.
+                            dialog.dismiss();
+                            return;
+                        }
+                    }
+                    // Create key map.
+                    createKeyMapForDump();
+                    dialog.dismiss();
+                });
     }
 
     /**
@@ -1117,20 +1089,14 @@ public class WriteTag extends BasicActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setView(ll)
                 .setPositiveButton(R.string.action_skip_blocks,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Skip not writable blocks and start writing.
-                        writeDump(writeOnPosSafe, keyMap);
-                    }
-                })
+                        (dialog, which) -> {
+                            // Skip not writable blocks and start writing.
+                            writeDump(writeOnPosSafe, keyMap);
+                        })
                 .setNegativeButton(R.string.action_cancel_all,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing.
-                    }
-                })
+                        (dialog, which) -> {
+                            // Do nothing.
+                        })
                 .show();
         } else {
             // Write.
@@ -1209,57 +1175,44 @@ public class WriteTag extends BasicActivity {
         // Start writing in new thread.
         final Activity a = this;
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Write dump to tag.
-                for (int sector : writeOnPos.keySet()) {
-                    byte[][] keys = keyMap.get(sector);
-                    for (int block : writeOnPos.get(sector).keySet()) {
-                        // Select key with write privileges.
-                        byte writeKey[] = null;
-                        boolean useAsKeyB = true;
-                        int wi = writeOnPos.get(sector).get(block);
-                        if (wi == 1 || wi == 4) {
-                            writeKey = keys[0]; // Write with key A.
-                            useAsKeyB = false;
-                        } else if (wi == 2 || wi == 5 || wi == 6) {
-                            writeKey = keys[1]; // Write with key B.
-                        }
+        new Thread(() -> {
+            // Write dump to tag.
+            for (int sector : writeOnPos.keySet()) {
+                byte[][] keys = keyMap.get(sector);
+                for (int block : writeOnPos.get(sector).keySet()) {
+                    // Select key with write privileges.
+                    byte writeKey[] = null;
+                    boolean useAsKeyB = true;
+                    int wi = writeOnPos.get(sector).get(block);
+                    if (wi == 1 || wi == 4) {
+                        writeKey = keys[0]; // Write with key A.
+                        useAsKeyB = false;
+                    } else if (wi == 2 || wi == 5 || wi == 6) {
+                        writeKey = keys[1]; // Write with key B.
+                    }
 
-                        // Write block.
-                        int result = reader.writeBlock(sector, block,
-                                mDumpWithPos.get(sector).get(block),
-                                writeKey, useAsKeyB);
+                    // Write block.
+                    int result = reader.writeBlock(sector, block,
+                            mDumpWithPos.get(sector).get(block),
+                            writeKey, useAsKeyB);
 
-                        if (result != 0) {
-                            // Error. Some error while writing.
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(a,
-                                            R.string.info_write_error,
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-                            reader.close();
-                            warning.cancel();
-                            return;
-                        }
+                    if (result != 0) {
+                        // Error. Some error while writing.
+                        handler.post(() -> Toast.makeText(a,
+                                R.string.info_write_error,
+                                Toast.LENGTH_LONG).show());
+                        reader.close();
+                        warning.cancel();
+                        return;
                     }
                 }
-                // Finished writing.
-                reader.close();
-                warning.cancel();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(a, R.string.info_write_successful,
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-                a.finish();
             }
+            // Finished writing.
+            reader.close();
+            warning.cancel();
+            handler.post(() -> Toast.makeText(a, R.string.info_write_successful,
+                    Toast.LENGTH_LONG).show());
+            a.finish();
         }).start();
     }
 

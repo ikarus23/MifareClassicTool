@@ -108,22 +108,14 @@ public class ReadTag extends Activity {
         if (reader == null) {
             return;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Get key map from glob. variable.
-                mRawDump = reader.readAsMuchAsPossible(
-                        Common.getKeyMap());
+        new Thread(() -> {
+            // Get key map from glob. variable.
+            mRawDump = reader.readAsMuchAsPossible(
+                    Common.getKeyMap());
 
-                reader.close();
+            reader.close();
 
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        createTagDump(mRawDump);
-                    }
-                });
-            }
+            mHandler.post(() -> createTagDump(mRawDump));
         }).start();
     }
 

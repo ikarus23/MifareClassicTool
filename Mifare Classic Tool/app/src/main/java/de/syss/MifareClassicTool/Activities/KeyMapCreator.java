@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -446,47 +445,36 @@ public class KeyMapCreator extends BasicActivity {
      * @see #keyMapCreated(MCReader)
      */
     private void createKeyMap(final MCReader reader, final Context context) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Build key map parts and update the progress bar.
-                while (mProgressStatus < mLastSector) {
-                    mProgressStatus = reader.buildNextKeyMapPart();
-                    if (mProgressStatus == -1 || !mIsCreatingKeyMap) {
-                        // Error while building next key map part.
-                        break;
-                    }
-
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressBar.setProgress(
-                                    (mProgressStatus - mFirstSector) + 1);
-                        }
-                    });
+        new Thread(() -> {
+            // Build key map parts and update the progress bar.
+            while (mProgressStatus < mLastSector) {
+                mProgressStatus = reader.buildNextKeyMapPart();
+                if (mProgressStatus == -1 || !mIsCreatingKeyMap) {
+                    // Error while building next key map part.
+                    break;
                 }
 
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        getWindow().clearFlags(
-                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                        mProgressBar.setProgress(0);
-                        mCreateKeyMap.setEnabled(true);
-                        reader.close();
-                        if (mIsCreatingKeyMap && mProgressStatus != -1) {
-                            keyMapCreated(reader);
-                        } else {
-                            // Error during key map creation.
-                            Common.setKeyMap(null);
-                            Common.setKeyMapRange(-1, -1);
-                            Toast.makeText(context, R.string.info_key_map_error,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        mIsCreatingKeyMap = false;
-                    }
-                });
+                mHandler.post(() -> mProgressBar.setProgress(
+                        (mProgressStatus - mFirstSector) + 1));
             }
+
+            mHandler.post(() -> {
+                getWindow().clearFlags(
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                mProgressBar.setProgress(0);
+                mCreateKeyMap.setEnabled(true);
+                reader.close();
+                if (mIsCreatingKeyMap && mProgressStatus != -1) {
+                    keyMapCreated(reader);
+                } else {
+                    // Error during key map creation.
+                    Common.setKeyMap(null);
+                    Common.setKeyMapRange(-1, -1);
+                    Toast.makeText(context, R.string.info_key_map_error,
+                            Toast.LENGTH_LONG).show();
+                }
+                mIsCreatingKeyMap = false;
+            });
         }).start();
     }
 
@@ -582,64 +570,55 @@ public class KeyMapCreator extends BasicActivity {
             .setMessage(R.string.dialog_mapping_range)
             .setView(llv)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Read from x to y.
-                    String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
-                    String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
-                    boolean noFrom = false;
-                    if (!from.getText().toString().equals("")) {
-                        txtFrom = from.getText().toString();
-                    } else {
-                        noFrom = true;
-                    }
-                    if (!to.getText().toString().equals("")) {
-                        txtTo = to.getText().toString();
-                    } else if (noFrom) {
-                        // No values provided. Read all sectors.
+                    (dialog, whichButton) -> {
+                        // Read from x to y.
+                        String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
+                        String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
+                        boolean noFrom = false;
+                        if (!from.getText().toString().equals("")) {
+                            txtFrom = from.getText().toString();
+                        } else {
+                            noFrom = true;
+                        }
+                        if (!to.getText().toString().equals("")) {
+                            txtTo = to.getText().toString();
+                        } else if (noFrom) {
+                            // No values provided. Read all sectors.
+                            mSectorRange.setText(
+                                    getString(R.string.text_sector_range_all));
+                            if (saveAsDefault.isChecked()) {
+                                saveMappingRange("", "");
+                            }
+                            return;
+                        }
+                        int intFrom = Integer.parseInt(txtFrom);
+                        int intTo = Integer.parseInt(txtTo);
+                        if (intFrom > intTo || intFrom < 0
+                                || intTo > MAX_SECTOR_COUNT - 1) {
+                            // Error.
+                            err.show();
+                        } else {
+                            mSectorRange.setText(txtFrom + " - " + txtTo);
+                            if (saveAsDefault.isChecked()) {
+                                // Save as default.
+                                saveMappingRange(txtFrom, txtTo);
+                            }
+                        }
+                    })
+            .setNeutralButton(R.string.action_read_all_sectors,
+                    (dialog, whichButton) -> {
+                        // Read all sectors.
                         mSectorRange.setText(
                                 getString(R.string.text_sector_range_all));
                         if (saveAsDefault.isChecked()) {
+                            // Save as default.
                             saveMappingRange("", "");
                         }
-                        return;
-                    }
-                    int intFrom = Integer.parseInt(txtFrom);
-                    int intTo = Integer.parseInt(txtTo);
-                    if (intFrom > intTo || intFrom < 0
-                            || intTo > MAX_SECTOR_COUNT - 1) {
-                        // Error.
-                        err.show();
-                    } else {
-                        mSectorRange.setText(txtFrom + " - " + txtTo);
-                        if (saveAsDefault.isChecked()) {
-                            // Save as default.
-                            saveMappingRange(txtFrom, txtTo);
-                        }
-                    }
-                }
-            })
-            .setNeutralButton(R.string.action_read_all_sectors,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Read all sectors.
-                    mSectorRange.setText(
-                            getString(R.string.text_sector_range_all));
-                    if (saveAsDefault.isChecked()) {
-                        // Save as default.
-                        saveMappingRange("", "");
-                    }
-                }
-            })
+                    })
             .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Cancel dialog (do nothing).
-                }
-            }).show();
+                    (dialog, whichButton) -> {
+                        // Cancel dialog (do nothing).
+                    }).show();
     }
 
     /**

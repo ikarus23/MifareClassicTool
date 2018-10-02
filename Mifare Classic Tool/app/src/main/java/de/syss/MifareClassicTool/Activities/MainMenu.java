@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -294,25 +293,17 @@ public class MainMenu extends Activity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setMessage(R.string.dialog_first_run)
                 .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
+                        (dialog, which) -> dialog.cancel())
                 .setOnCancelListener(
-                new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        SharedPreferences sharedPref =
-                                getPreferences(Context.MODE_PRIVATE);
-                        Editor sharedEditor = sharedPref.edit();
-                        sharedEditor.putBoolean("is_first_run", false);
-                        sharedEditor.apply();
-                        // Continue with "has NFC" check.
-                        runSartUpNode(StartUpNode.HasNfc);
-                    }
-                })
+                        dialog -> {
+                            SharedPreferences sharedPref =
+                                    getPreferences(Context.MODE_PRIVATE);
+                            Editor sharedEditor = sharedPref.edit();
+                            sharedEditor.putBoolean("is_first_run", false);
+                            sharedEditor.apply();
+                            // Continue with "has NFC" check.
+                            runSartUpNode(StartUpNode.HasNfc);
+                        })
                 .create();
     }
 
@@ -332,26 +323,13 @@ public class MainMenu extends Activity {
                 .setMessage(styledText)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.action_exit_app,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
+                        (dialog, which) -> finish())
                 .setNegativeButton(R.string.action_editor_only,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        useAsEditorOnly(true);
-                        runSartUpNode(StartUpNode.DonateDialog);
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                })
+                        (dialog, id) -> {
+                            useAsEditorOnly(true);
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
+                .setOnCancelListener(dialog -> finish())
                 .create();
     }
 
@@ -368,44 +346,29 @@ public class MainMenu extends Activity {
                 .setMessage(R.string.dialog_nfc_not_enabled)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_nfc,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    @SuppressLint("InlinedApi")
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Goto NFC Settings.
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            startActivity(new Intent(
-                                    Settings.ACTION_NFC_SETTINGS));
-                        } else {
-                            startActivity(new Intent(
-                                    Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    }
-                })
+                        (dialog, which) -> {
+                            // Goto NFC Settings.
+                            if (Build.VERSION.SDK_INT >= 16) {
+                                startActivity(new Intent(
+                                        Settings.ACTION_NFC_SETTINGS));
+                            } else {
+                                startActivity(new Intent(
+                                        Settings.ACTION_WIRELESS_SETTINGS));
+                            }
+                        })
                 .setNeutralButton(R.string.action_editor_only,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Only use Editor.
-                        useAsEditorOnly(true);
-                        runSartUpNode(StartUpNode.DonateDialog);
-                    }
-                })
+                        (dialog, which) -> {
+                            // Only use Editor.
+                            useAsEditorOnly(true);
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
                 .setNegativeButton(R.string.action_exit_app,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Exit the App.
-                        finish();
-                    }
-                })
+                        (dialog, id) -> {
+                            // Exit the App.
+                            finish();
+                        })
                 .setOnCancelListener(
-                new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                })
+                        dialog -> finish())
                 .create();
     }
 
@@ -424,47 +387,33 @@ public class MainMenu extends Activity {
                 .setMessage(R.string.dialog_no_nfc_support)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.action_install_external_nfc,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Open Google Play for the donate version of MCT.
-                        Uri uri = Uri.parse(
-                                "market://details?id=eu.dedb.nfc.service");
-                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                        try {
-                            startActivity(goToMarket);
-                        } catch (ActivityNotFoundException e) {
-                            startActivity(new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("https://play.google.com/store"
-                                            + "/apps/details?id=eu.dedb.nfc"
-                                            + ".service")));
-                        }
-                    }
-                })
+                        (dialog, which) -> {
+                            // Open Google Play for the donate version of MCT.
+                            Uri uri = Uri.parse(
+                                    "market://details?id=eu.dedb.nfc.service");
+                            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                            try {
+                                startActivity(goToMarket);
+                            } catch (ActivityNotFoundException e) {
+                                startActivity(new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("https://play.google.com/store"
+                                                + "/apps/details?id=eu.dedb.nfc"
+                                                + ".service")));
+                            }
+                        })
                 .setNeutralButton(R.string.action_editor_only,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Only use Editor.
-                        useAsEditorOnly(true);
-                        runSartUpNode(StartUpNode.DonateDialog);
-                    }
-                })
+                        (dialog, which) -> {
+                            // Only use Editor.
+                            useAsEditorOnly(true);
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
                 .setNegativeButton(R.string.action_exit_app,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Exit the App.
-                        finish();
-                    }
-                })
+                        (dialog, id) -> {
+                            // Exit the App.
+                            finish();
+                        })
                 .setOnCancelListener(
-                new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                })
+                        dialog -> finish())
                 .create();
     }
 
@@ -484,37 +433,23 @@ public class MainMenu extends Activity {
                 .setMessage(R.string.dialog_start_external_nfc)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.action_start_external_nfc,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        useAsEditorOnly(true);
-                        Common.openApp(context, "eu.dedb.nfc.service");
-                    }
-                })
+                        (dialog, which) -> {
+                            useAsEditorOnly(true);
+                            Common.openApp(context, "eu.dedb.nfc.service");
+                        })
                 .setNeutralButton(R.string.action_editor_only,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Only use Editor.
-                        useAsEditorOnly(true);
-                        runSartUpNode(StartUpNode.DonateDialog);
-                    }
-                })
+                        (dialog, which) -> {
+                            // Only use Editor.
+                            useAsEditorOnly(true);
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
                 .setNegativeButton(R.string.action_exit_app,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Exit the App.
-                        finish();
-                    }
-                })
+                        (dialog, id) -> {
+                            // Exit the App.
+                            finish();
+                        })
                 .setOnCancelListener(
-                new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                })
+                        dialog -> finish())
                 .create();
     }
 
@@ -539,28 +474,20 @@ public class MainMenu extends Activity {
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setView(dialogLayout)
                 .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
+                        (dialog, which) -> dialog.cancel())
                 .setOnCancelListener(
-                new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        if (showDonateDialogCheckBox.isChecked()) {
-                            // Do not show the donate dialog again.
-                            SharedPreferences sharedPref =
-                                    getPreferences(Context.MODE_PRIVATE);
-                            Editor sharedEditor = sharedPref.edit();
-                            sharedEditor.putBoolean(
-                                    "show_donate_dialog", false);
-                            sharedEditor.apply();
-                        }
-                        runSartUpNode(StartUpNode.HandleNewIntent);
-                    }
-                })
+                        dialog -> {
+                            if (showDonateDialogCheckBox.isChecked()) {
+                                // Do not show the donate dialog again.
+                                SharedPreferences sharedPref =
+                                        getPreferences(Context.MODE_PRIVATE);
+                                Editor sharedEditor = sharedPref.edit();
+                                sharedEditor.putBoolean(
+                                        "show_donate_dialog", false);
+                                sharedEditor.apply();
+                            }
+                            runSartUpNode(StartUpNode.HandleNewIntent);
+                        })
                 .create();
     }
 
@@ -873,12 +800,9 @@ public class MainMenu extends Activity {
             .setMessage(styledText)
             .setIcon(R.mipmap.ic_launcher)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing.
-                }
-            }).create();
+                    (dialog, which) -> {
+                        // Do nothing.
+                    }).create();
          ad.show();
          // Make links clickable.
          ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(

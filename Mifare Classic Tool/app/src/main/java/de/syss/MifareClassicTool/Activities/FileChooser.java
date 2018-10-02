@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -333,37 +332,31 @@ public class FileChooser extends BasicActivity {
             .setIcon(android.R.drawable.ic_menu_add)
             .setView(input)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    if (input.getText() != null
-                            && !input.getText().toString().equals("")) {
-                        File file = new File(mDir.getPath(),
-                                input.getText().toString());
-                        if (file.exists())  {
-                            Toast.makeText(cont,
-                                    R.string.info_file_already_exists,
+                    (dialog, whichButton) -> {
+                        if (input.getText() != null
+                                && !input.getText().toString().equals("")) {
+                            File file = new File(mDir.getPath(),
+                                    input.getText().toString());
+                            if (file.exists()) {
+                                Toast.makeText(cont,
+                                        R.string.info_file_already_exists,
+                                        Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            Intent intent = new Intent();
+                            intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
+                        } else {
+                            // Empty name is not allowed.
+                            Toast.makeText(cont, R.string.info_empty_file_name,
                                     Toast.LENGTH_LONG).show();
-                            return;
                         }
-                        Intent intent = new Intent();
-                        intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
-                    } else {
-                        // Empty name is not allowed.
-                        Toast.makeText(cont, R.string.info_empty_file_name,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            })
+                    })
             .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Do nothing.
-                }
-            }).show();
+                    (dialog, whichButton) -> {
+                        // Do nothing.
+                    }).show();
     }
 
     /**
