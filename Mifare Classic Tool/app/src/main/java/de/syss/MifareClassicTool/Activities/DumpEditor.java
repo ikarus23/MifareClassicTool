@@ -489,7 +489,7 @@ public class DumpEditor extends BasicActivity
      * @see #mLines
      */
     private int checkDumpAndUpdateLines() {
-        ArrayList<String> checkedLines = new ArrayList<String>();
+        ArrayList<String> checkedLines = new ArrayList<>();
         for(int i = 0; i < mLayout.getChildCount(); i++) {
             View child = mLayout.getChildAt(i);
             if (child instanceof EditText) {
@@ -553,7 +553,7 @@ public class DumpEditor extends BasicActivity
         boolean isFirstBlock = false;
         EditText et = null;
         ArrayList<SpannableString> blocks =
-                new ArrayList<SpannableString>(4);
+                new ArrayList<>(4);
         for (int i = 0; i < lines.length; i++) {
             if (lines[i].startsWith("+")) {
                 // Line is a header.
@@ -625,7 +625,7 @@ public class DumpEditor extends BasicActivity
                     }
                     text = TextUtils.concat(text, blocks.get(j));
                     et.setText(text, BufferType.SPANNABLE);
-                    blocks = new ArrayList<SpannableString>(4);
+                    blocks = new ArrayList<>(4);
                 } else {
                     // Add data block.
                     blocks.add(colorDataBlock(lines[i], isFirstBlock));
@@ -650,7 +650,7 @@ public class DumpEditor extends BasicActivity
             return;
         }
         // Get all data blocks (skip all Access Conditions).
-        ArrayList<String> tmpDump = new ArrayList<String>();
+        ArrayList<String> tmpDump = new ArrayList<>();
         for (int i = 0; i < mLines.length-1; i++) {
             if (i+1 != mLines.length
                     && !mLines[i+1].startsWith("+")) {
@@ -677,7 +677,7 @@ public class DumpEditor extends BasicActivity
             return;
         }
         // Get all Access Conditions (skip Data).
-        ArrayList<String> tmpACs = new ArrayList<String>();
+        ArrayList<String> tmpACs = new ArrayList<>();
         int lastSectorHeader = 0;
         for (int i = 0; i < mLines.length; i++) {
             if (mLines[i].startsWith("+")) {
@@ -717,7 +717,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Get all Value Blocks (skip other blocks).
-        ArrayList<String> tmpVBs = new ArrayList<String>();
+        ArrayList<String> tmpVBs = new ArrayList<>();
         String header = "";
         int blockCounter = 0;
         for (String line : mLines) {
@@ -926,7 +926,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Get all keys (skip Data and ACs).
-        HashSet<String> tmpKeys = new HashSet<String>();
+        HashSet<String> tmpKeys = new HashSet<>();
         for (int i = 0; i < mLines.length; i++) {
            if (i+1 == mLines.length || mLines[i+1].startsWith("+")) {
                 // Sector trailer.

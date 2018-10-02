@@ -325,7 +325,7 @@ public class KeyEditor extends BasicActivity
      */
     private void removeDuplicates() {
         if (isValidKeyFileErrorToast()) {
-            ArrayList<String> newLines = new ArrayList<String>();
+            ArrayList<String> newLines = new ArrayList<>();
             for (String line : mLines) {
                 if (line.equals("") || line.startsWith("#")) {
                     // Add comments for sure.

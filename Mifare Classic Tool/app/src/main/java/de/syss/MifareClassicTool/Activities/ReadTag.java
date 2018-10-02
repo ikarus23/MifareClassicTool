@@ -137,7 +137,7 @@ public class ReadTag extends Activity {
      * @see DumpEditor
      */
     private void createTagDump(SparseArray<String[]> rawDump) {
-        ArrayList<String> tmpDump = new ArrayList<String>();
+        ArrayList<String> tmpDump = new ArrayList<>();
         if (rawDump != null) {
             if (rawDump.size() != 0) {
                 for (int i = Common.getKeyMapRangeFrom();

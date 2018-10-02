@@ -297,7 +297,7 @@ public class DiffTool extends BasicActivity {
      * represents a block.
      */
     private static SparseArray<String[]> convertDumpFormat(String[] dump) {
-        SparseArray<String[]> ret = new SparseArray<String[]>();
+        SparseArray<String[]> ret = new SparseArray<>();
         int i = 0;
         int sector = 0;
         for (String line : dump) {

@@ -123,7 +123,7 @@ public class WriteTag extends BasicActivity {
         mWriteManufBlock = findViewById(
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
-        mWriteModeLayouts = new ArrayList<View>();
+        mWriteModeLayouts = new ArrayList<>();
         mWriteModeLayouts.add(findViewById(
                 R.id.relativeLayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
@@ -849,7 +849,7 @@ public class WriteTag extends BasicActivity {
      * @param dump The dump to initialize the mDumpWithPos with.
      */
     private void initDumpWithPosFromDump(String[] dump) {
-        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
+        mDumpWithPos = new HashMap<>();
         int sector = 0;
         int block = 0;
         // Transform the simple dump array into a structure (mDumpWithPos)
@@ -860,7 +860,7 @@ public class WriteTag extends BasicActivity {
                 String[] tmp = dump[i].split(": ");
                 sector = Integer.parseInt(tmp[tmp.length-1]);
                 block = 0;
-                mDumpWithPos.put(sector, new HashMap<Integer, byte[]>());
+                mDumpWithPos.put(sector, new HashMap<>());
             } else if (!dump[i].contains("-")) {
                 // Use static Access Conditions for all sectors?
                 if (mEnableStaticAC.isChecked()
@@ -938,7 +938,7 @@ public class WriteTag extends BasicActivity {
         final SparseArray<byte[][]> keyMap  =
                 Common.getKeyMap();
         HashMap<Integer, int[]> dataPos =
-                new HashMap<Integer, int[]>(mDumpWithPos.size());
+                new HashMap<>(mDumpWithPos.size());
         for (int sector : mDumpWithPos.keySet()) {
             int i = 0;
             int[] blocks = new int[mDumpWithPos.get(sector).size()];
@@ -964,12 +964,12 @@ public class WriteTag extends BasicActivity {
         // writable. The user can chose to skip all these blocks/sectors
         // or to cancel the whole write procedure.
         List<HashMap<String, String>> list = new
-                ArrayList<HashMap<String, String>>();
+                ArrayList<>();
         final HashMap<Integer, HashMap<Integer, Integer>> writeOnPosSafe =
-                new HashMap<Integer, HashMap<Integer,Integer>>(
+                new HashMap<>(
                         mDumpWithPos.size());
         // Keys that are missing completely (mDumpWithPos vs. keyMap).
-        HashSet<Integer> sectors = new HashSet<Integer>();
+        HashSet<Integer> sectors = new HashSet<>();
         for (int sector : mDumpWithPos.keySet()) {
             if (keyMap.indexOfKey(sector) < 0) {
                 // Problem. Keys for sector not found.
@@ -1080,7 +1080,7 @@ public class WriteTag extends BasicActivity {
                     if (writeOnPosSafe.get(sector) == null) {
                         // Create sector.
                         HashMap<Integer, Integer> blockInfo =
-                                new HashMap<Integer, Integer>();
+                                new HashMap<>();
                         blockInfo.put(block, writeInfo);
                         writeOnPosSafe.put(sector, blockInfo);
                     } else {
@@ -1150,7 +1150,7 @@ public class WriteTag extends BasicActivity {
      */
     private void addToList(List<HashMap<String, String>> list,
             String position, String reason) {
-        HashMap<String,String> item = new HashMap<String,String>();
+        HashMap<String, String> item = new HashMap<>();
         item.put( "position", position);
         item.put( "reason", reason);
         list.add(item);
@@ -1293,7 +1293,7 @@ public class WriteTag extends BasicActivity {
         // This function is directly called after a key map was created.
         // So Common.getTag() will return den current present tag
         // (and its size/sector count).
-        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
+        mDumpWithPos = new HashMap<>();
         int sectors = MifareClassic.get(Common.getTag()).getSectorCount();
         byte[] emptyBlock = new byte[]
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -1303,14 +1303,14 @@ public class WriteTag extends BasicActivity {
                 -1, 7, -128, -68, -1, -1, -1, -1, -1, -1};
         // Empty 4 block sector.
         HashMap<Integer, byte[]> empty4BlockSector =
-                new HashMap<Integer, byte[]>(4);
+                new HashMap<>(4);
         for (int i = 0; i < 3; i++) {
             empty4BlockSector.put(i, emptyBlock);
         }
         empty4BlockSector.put(3, normalSectorTrailer);
         // Empty 16 block sector.
         HashMap<Integer, byte[]> empty16BlockSector =
-                new HashMap<Integer, byte[]>(16);
+                new HashMap<>(16);
         for (int i = 0; i < 15; i++) {
             empty16BlockSector.put(i, emptyBlock);
         }
@@ -1320,7 +1320,7 @@ public class WriteTag extends BasicActivity {
 
         // Sector 0.
         HashMap<Integer, byte[]> firstSector =
-                new HashMap<Integer, byte[]>(4);
+                new HashMap<>(4);
         firstSector.put(1, emptyBlock);
         firstSector.put(2, emptyBlock);
         firstSector.put(3, normalSectorTrailer);
@@ -1337,11 +1337,11 @@ public class WriteTag extends BasicActivity {
                 mDumpWithPos.put(i, empty16BlockSector);
             }
             // In the last sector the Sector Trailer is different.
-            lastSector = new HashMap<Integer, byte[]>(empty16BlockSector);
+            lastSector = new HashMap<>(empty16BlockSector);
             lastSector.put(15, lastSectorTrailer);
         } else {
             // In the last sector the Sector Trailer is different.
-            lastSector = new HashMap<Integer, byte[]>(empty4BlockSector);
+            lastSector = new HashMap<>(empty4BlockSector);
             lastSector.put(3, lastSectorTrailer);
         }
         mDumpWithPos.put(sectors - 1, lastSector);

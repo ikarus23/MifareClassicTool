@@ -262,7 +262,7 @@ public class KeyMapCreator extends BasicActivity {
             String selectedFilesChain = sharedPref.getString(
                     "last_used_key_files", null);
             if (selectedFilesChain != null) {
-                selectedFiles = new ArrayList<String>(
+                selectedFiles = new ArrayList<>(
                         Arrays.asList(selectedFilesChain.split("/")));
             }
         }
@@ -346,7 +346,7 @@ public class KeyMapCreator extends BasicActivity {
                 Preference.SaveLastUsedKeyFiles.toString(), true);
         StringBuilder lastSelectedKeyFiles = new StringBuilder();
         // Check for checked check boxes.
-        ArrayList<String> fileNames = new ArrayList<String>();
+        ArrayList<String> fileNames = new ArrayList<>();
         for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
             CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt(i);
             if (c.isChecked()) {
@@ -355,7 +355,7 @@ public class KeyMapCreator extends BasicActivity {
         }
         if (fileNames.size() > 0) {
             // Check if key files still exists.
-            ArrayList<File> keyFiles = new ArrayList<File>();
+            ArrayList<File> keyFiles = new ArrayList<>();
             for (String fileName : fileNames) {
                 File keyFile = new File(mKeyDirPath, fileName);
                 if (keyFile.exists()) {

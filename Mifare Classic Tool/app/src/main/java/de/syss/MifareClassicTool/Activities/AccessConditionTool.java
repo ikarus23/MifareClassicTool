@@ -108,7 +108,7 @@ public class AccessConditionTool extends BasicActivity {
         for (int i = 0; i < 8; i++) {
             items[i] = getString(getResourceForSectorTrailersByRowNr(i));
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_item_small_text, items);
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);
@@ -465,7 +465,7 @@ public class AccessConditionTool extends BasicActivity {
             Toast.makeText(this, r, Toast.LENGTH_LONG).show();
         }
 
-        ListAdapter adapter = new ArrayAdapter<String>(
+        ListAdapter adapter = new ArrayAdapter<>(
                 this, R.layout.list_item_small_text, items);
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);

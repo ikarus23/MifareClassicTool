@@ -55,9 +55,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.math.BigInteger;
 
 import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
 
@@ -297,7 +297,7 @@ public class Common extends Application {
                 br = new BufferedReader(new FileReader(file));
 
                 String line;
-                ArrayList<String> linesArray = new ArrayList<String>();
+                ArrayList<String> linesArray = new ArrayList<>();
                 while ((line = br.readLine()) != null)   {
                     // Ignore empty lines.
                     // Ignore comments if readComments == false.
@@ -1183,7 +1183,7 @@ public class Common extends Application {
      * </ul>
      */
     public static int isValidDump(String[] lines, boolean ignoreAsterisk) {
-        ArrayList<Integer> knownSectors = new ArrayList<Integer>();
+        ArrayList<Integer> knownSectors = new ArrayList<>();
         int blocksSinceLastSectorHeader = 4;
         boolean is16BlockSector = false;
         if (lines == null || lines.length == 0) {

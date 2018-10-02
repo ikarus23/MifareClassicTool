@@ -45,7 +45,7 @@ public class MCDiffUtils {
     public static SparseArray<Integer[][]> diffIndices(
             SparseArray<String[]> dump1, SparseArray<String[]> dump2) {
         SparseArray<Integer[][]> ret =
-                new SparseArray<Integer[][]>();
+                new SparseArray<>();
         // Walk through all sectors of dump1.
         for (int i = 0; i < dump1.size(); i++) {
             String[] sector1 = dump1.valueAt(i);
@@ -62,7 +62,7 @@ public class MCDiffUtils {
             Integer[][] diffSector = new Integer[sector1.length][];
             // Walk through all blocks.
             for (int j = 0; j < sector1.length; j++) {
-                ArrayList<Integer> diffIndices = new ArrayList<Integer>();
+                ArrayList<Integer> diffIndices = new ArrayList<>();
                 // Walk through all symbols.
                 for (int k = 0; k < sector1[j].length(); k++) {
                     if (sector1[j].charAt(k) != sector2[j].charAt(k)) {
