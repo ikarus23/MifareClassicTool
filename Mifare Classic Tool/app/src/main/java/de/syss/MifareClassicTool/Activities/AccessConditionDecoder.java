@@ -61,7 +61,7 @@ public class AccessConditionDecoder extends BasicActivity {
         setContentView(R.layout.activity_access_condition_decoder);
 
         if (getIntent().hasExtra(EXTRA_AC)) {
-            mLayout = (TableLayout) findViewById(
+            mLayout = findViewById(
                     R.id.tableLayoutAccessConditionDecoder);
             String[] accessConditions =
                 getIntent().getStringArrayExtra(EXTRA_AC);

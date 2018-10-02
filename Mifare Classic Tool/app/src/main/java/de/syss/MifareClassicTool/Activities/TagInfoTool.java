@@ -60,8 +60,8 @@ public class TagInfoTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_info_tool);
 
-        mLayout = (LinearLayout) findViewById(R.id.linearLayoutTagInfoTool);
-        mErrorMessage = (TextView) findViewById(
+        mLayout = findViewById(R.id.linearLayoutTagInfoTool);
+        mErrorMessage = findViewById(
                 R.id.textTagInfoToolErrorMessage);
         updateTagInfo(Common.getTag());
     }
@@ -215,7 +215,7 @@ public class TagInfoTool extends BasicActivity {
                 mLayout.addView(tagTypeInfo);
             }
 
-            LinearLayout layout = (LinearLayout) findViewById(
+            LinearLayout layout = findViewById(
                     R.id.linearLayoutTagInfoToolSupport);
             // Check for MIFARE Classic support.
             if (mMFCSupport == 0) {

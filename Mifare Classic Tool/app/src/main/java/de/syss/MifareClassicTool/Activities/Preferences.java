@@ -86,21 +86,21 @@ public class Preferences extends BasicActivity {
         setContentView(R.layout.activity_preferences);
 
         // Get preferences (init. the member variables).
-        mPrefAutoReconnect = (CheckBox) findViewById(
+        mPrefAutoReconnect = findViewById(
                 R.id.checkBoxPreferencesAutoReconnect);
-        mPrefAutoCopyUID = (CheckBox) findViewById(
+        mPrefAutoCopyUID = findViewById(
                 R.id.checkBoxPreferencesCopyUID);
-        mPrefSaveLastUsedKeyFiles = (CheckBox) findViewById(
+        mPrefSaveLastUsedKeyFiles = findViewById(
                 R.id.checkBoxPreferencesSaveLastUsedKeyFiles);
-        mUseCustomSectorCount = (CheckBox) findViewById(
+        mUseCustomSectorCount = findViewById(
                 R.id.checkBoxPreferencesUseCustomSectorCount);
-        mCustomSectorCount = (EditText) findViewById(
+        mCustomSectorCount = findViewById(
                 R.id.editTextPreferencesCustomSectorCount);
-        mUseInternalStorage = (CheckBox) findViewById(
+        mUseInternalStorage = findViewById(
                 R.id.checkBoxPreferencesUseInternalStorage);
-        mUseRetryAuthentication = (CheckBox) findViewById(
+        mUseRetryAuthentication = findViewById(
                 R.id.checkBoxPreferencesUseRetryAuthentication);
-        mRetryAuthenticationCount = (EditText) findViewById(
+        mRetryAuthenticationCount = findViewById(
                 R.id.editTextPreferencesRetryAuthenticationCount);
 
         // Assign the last stored values.
@@ -127,7 +127,7 @@ public class Preferences extends BasicActivity {
                 Preference.RetryAuthenticationCount.toString(), 1));
 
         // UID Format Options (hide/show)
-        mUIDFormatRadioGroup = (RadioGroup) findViewById(
+        mUIDFormatRadioGroup = findViewById(
                 R.id.radioGroupUIDFormat);
         toggleUIDFormat(null);
     }
@@ -198,7 +198,7 @@ public class Preferences extends BasicActivity {
             default:
                 rBID = R.id.radioButtonHex;
         }
-        selectRadioButton = (RadioButton) findViewById(rBID);
+        selectRadioButton = findViewById(rBID);
         selectRadioButton.toggle();
     }
 

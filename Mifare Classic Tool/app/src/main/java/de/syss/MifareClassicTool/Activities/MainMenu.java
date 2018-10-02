@@ -46,7 +46,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -109,19 +108,19 @@ public class MainMenu extends Activity {
         setContentView(R.layout.activity_main_menu);
 
         // Show App version and footer.
-        TextView tv = (TextView) findViewById(R.id.textViewMainFooter);
+        TextView tv = findViewById(R.id.textViewMainFooter);
         tv.setText(getString(R.string.app_version)
                 + ": " + Common.getVersionCode());
 
         // Add the context menu to the tools button.
-        Button tools = (Button) findViewById(R.id.buttonMainTools);
+        Button tools = findViewById(R.id.buttonMainTools);
         registerForContextMenu(tools);
 
         // Bind main layout buttons.
-        mReadTag = (Button) findViewById(R.id.buttonMainReadTag);
-        mWriteTag = (Button) findViewById(R.id.buttonMainWriteTag);
-        mKeyEditor = (Button) findViewById(R.id.buttonMainEditKeyDump);
-        mDumpEditor = (Button) findViewById(R.id.buttonMainEditCardDump);
+        mReadTag = findViewById(R.id.buttonMainReadTag);
+        mWriteTag = findViewById(R.id.buttonMainWriteTag);
+        mKeyEditor = findViewById(R.id.buttonMainEditKeyDump);
+        mDumpEditor = findViewById(R.id.buttonMainEditCardDump);
 
         // Check if the user granted the app write permissions.
         if (Common.hasWritePermissionToExternalStorage(this)) {
@@ -529,11 +528,11 @@ public class MainMenu extends Activity {
     private AlertDialog createDonateDialog() {
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_donate,
-                (ViewGroup)findViewById(android.R.id.content), false);
-        TextView textView = (TextView) dialogLayout.findViewById(
+                findViewById(android.R.id.content), false);
+        TextView textView = dialogLayout.findViewById(
                 R.id.textViewDonateDialog);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-        final CheckBox showDonateDialogCheckBox = (CheckBox) dialogLayout
+        final CheckBox showDonateDialogCheckBox = dialogLayout
                 .findViewById(R.id.checkBoxDonateDialog);
         return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_donate_title)

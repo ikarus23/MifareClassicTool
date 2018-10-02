@@ -136,7 +136,7 @@ public class FileChooser extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_chooser);
-        mGroupOfFiles = (RadioGroup) findViewById(R.id.radioGroupFileChooser);
+        mGroupOfFiles = findViewById(R.id.radioGroupFileChooser);
     }
 
     /**
@@ -157,9 +157,9 @@ public class FileChooser extends BasicActivity {
             finish();
             return;
         }
-        mChooserText = (TextView) findViewById(
+        mChooserText = findViewById(
                 R.id.textViewFileChooser);
-        mChooserButton = (Button) findViewById(
+        mChooserButton = findViewById(
                 R.id.buttonFileChooserChoose);
         Intent intent = getIntent();
 
@@ -260,7 +260,7 @@ public class FileChooser extends BasicActivity {
      * @see #EXTRA_CHOSEN_FILENAME
      */
     public void onFileChosen(View view) {
-        RadioButton selected = (RadioButton) findViewById(
+        RadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
 
         Intent intent = new Intent();
@@ -371,7 +371,7 @@ public class FileChooser extends BasicActivity {
      * @see #updateFileIndex(File)
      */
     private void onDeleteFile() {
-        RadioButton selected = (RadioButton) findViewById(
+        RadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
         File file  = new File(mDir.getPath(), selected.getText().toString());
         file.delete();

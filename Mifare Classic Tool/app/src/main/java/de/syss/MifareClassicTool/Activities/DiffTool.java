@@ -25,7 +25,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -69,9 +68,9 @@ public class DiffTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diff_tool);
 
-        mDiffContent = (LinearLayout) findViewById(R.id.linearLayoutDiffTool);
-        mDumpFileButton1 = (Button) findViewById(R.id.buttonDiffToolDump1);
-        mDumpFileButton2 = (Button) findViewById(R.id.buttonDiffToolDump2);
+        mDiffContent = findViewById(R.id.linearLayoutDiffTool);
+        mDumpFileButton1 = findViewById(R.id.buttonDiffToolDump1);
+        mDumpFileButton2 = findViewById(R.id.buttonDiffToolDump2);
 
         // Check if one or both dumps are already chosen via Intent
         // (from DumpEditor).
@@ -170,13 +169,13 @@ public class DiffTool extends BasicActivity {
                     RelativeLayout rl = (RelativeLayout)
                             getLayoutInflater().inflate(
                                     R.layout.list_item_diff_block,
-                                    (ViewGroup)findViewById(
+                                    findViewById(
                                             android.R.id.content), false);
-                    TextView dump1 = (TextView) rl.findViewById(
+                    TextView dump1 = rl.findViewById(
                             R.id.textViewDiffBlockDump1);
-                    TextView dump2 = (TextView) rl.findViewById(
+                    TextView dump2 = rl.findViewById(
                             R.id.textViewDiffBlockDump2);
-                    TextView diffIndex = (TextView) rl.findViewById(
+                    TextView diffIndex = rl.findViewById(
                             R.id.textViewDiffBlockDiff);
 
                     // This is a (ugly) fix for a bug in Android 5.0+

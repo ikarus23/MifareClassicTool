@@ -129,7 +129,7 @@ public class DumpEditor extends BasicActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dump_editor);
 
-        mLayout= (LinearLayout) findViewById(
+        mLayout = findViewById(
                 R.id.linearLayoutDumpEditor);
 
         // Color caption.
@@ -149,12 +149,12 @@ public class DumpEditor extends BasicActivity
                 getString(R.string.text_valueblock),
                 getResources().getColor(R.color.yellow));
 
-        TextView caption = (TextView) findViewById(
+        TextView caption = findViewById(
                 R.id.textViewDumpEditorCaption);
         caption.setText(TextUtils.concat(uidAndManuf, " | ",
                 vb, " | ", keyA, " | ", keyB, " | ", ac), BufferType.SPANNABLE);
         // Add web-link optic to update colors text view (= caption title).
-        TextView captionTitle = (TextView) findViewById(
+        TextView captionTitle = findViewById(
                 R.id.textViewDumpEditorCaptionTitle);
         SpannableString updateText = Common.colorString(
                 getString(R.string.text_update_colors),

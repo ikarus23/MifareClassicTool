@@ -30,7 +30,6 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -107,21 +106,21 @@ public class WriteTag extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_tag);
 
-        mSectorTextBlock = (EditText) findViewById(R.id.editTextWriteTagSector);
-        mBlockTextBlock = (EditText) findViewById(R.id.editTextWriteTagBlock);
-        mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
-        mSectorTextVB = (EditText) findViewById(
+        mSectorTextBlock = findViewById(R.id.editTextWriteTagSector);
+        mBlockTextBlock = findViewById(R.id.editTextWriteTagBlock);
+        mDataText = findViewById(R.id.editTextWriteTagData);
+        mSectorTextVB = findViewById(
                 R.id.editTextWriteTagValueBlockSector);
-        mBlockTextVB = (EditText) findViewById(
+        mBlockTextVB = findViewById(
                 R.id.editTextWriteTagValueBlockBlock);
-        mNewValueTextVB = (EditText) findViewById(
+        mNewValueTextVB = findViewById(
                 R.id.editTextWriteTagValueBlockValue);
-        mIncreaseVB = (RadioButton) findViewById(
+        mIncreaseVB = findViewById(
                 R.id.radioButtonWriteTagWriteValueBlockIncr);
-        mStaticAC = (EditText) findViewById(R.id.editTextWriteTagDumpStaticAC);
-        mEnableStaticAC = (CheckBox) findViewById(
+        mStaticAC = findViewById(R.id.editTextWriteTagDumpStaticAC);
+        mEnableStaticAC = findViewById(
                 R.id.checkBoxWriteTagDumpStaticAC);
-        mWriteManufBlock = (CheckBox) findViewById(
+        mWriteManufBlock = findViewById(
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
         mWriteModeLayouts = new ArrayList<View>();
@@ -150,17 +149,17 @@ public class WriteTag extends BasicActivity {
             mDumpFromEditor = i.getStringArrayExtra(EXTRA_DUMP);
             mWriteDumpFromEditor = true;
             // Show "Write Dump" option and disable other write options.
-            RadioButton writeBlock = (RadioButton) findViewById(
+            RadioButton writeBlock = findViewById(
                     R.id.radioButtonWriteTagWriteBlock);
-            RadioButton factoryFormat = (RadioButton) findViewById(
+            RadioButton factoryFormat = findViewById(
                     R.id.radioButtonWriteTagFactoryFormat);
-            RadioButton writeDump = (RadioButton) findViewById(
+            RadioButton writeDump = findViewById(
                     R.id.radioButtonWriteTagWriteDump);
             writeDump.performClick();
             writeBlock.setEnabled(false);
             factoryFormat.setEnabled(false);
             // Update button text.
-            Button writeDumpButton = (Button) findViewById(
+            Button writeDumpButton = findViewById(
                     R.id.buttonWriteTagDump);
             writeDumpButton.setText(R.string.action_write_dump);
         }
@@ -367,9 +366,8 @@ public class WriteTag extends BasicActivity {
      * (in this case the show options button).
      */
     public void onShowOptions(View view) {
-        LinearLayout ll = (LinearLayout)
-                findViewById(R.id.linearLayoutWriteTagDumpOptions);
-        CheckBox cb = (CheckBox) findViewById(R.id.checkBoxWriteTagDumpOptions);
+        LinearLayout ll = findViewById(R.id.linearLayoutWriteTagDumpOptions);
+        CheckBox cb = findViewById(R.id.checkBoxWriteTagDumpOptions);
         if (cb.isChecked()) {
             ll.setVisibility(View.VISIBLE);
         } else {
@@ -703,12 +701,12 @@ public class WriteTag extends BasicActivity {
         // (let the user select the sectors which will be written).
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_write_sectors,
-                (ViewGroup)findViewById(android.R.id.content), false);
-        LinearLayout llCheckBoxes = (LinearLayout) dialogLayout.findViewById(
+                findViewById(android.R.id.content), false);
+        LinearLayout llCheckBoxes = dialogLayout.findViewById(
                 R.id.linearLayoutWriteSectorsCheckBoxes);
-        Button selectAll = (Button) dialogLayout.findViewById(
+        Button selectAll = dialogLayout.findViewById(
                 R.id.buttonWriteSectorsSelectAll);
-        Button selectNone = (Button) dialogLayout.findViewById(
+        Button selectNone = dialogLayout.findViewById(
                 R.id.buttonWriteSectorsSelectNone);
         Integer[] sectors = mDumpWithPos.keySet().toArray(
                 new Integer[mDumpWithPos.size()]);

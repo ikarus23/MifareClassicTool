@@ -152,16 +152,16 @@ public class KeyMapCreator extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_key_map);
-        mCreateKeyMap = (Button) findViewById(R.id.buttonCreateKeyMap);
-        mSectorRange = (TextView) findViewById(R.id.textViewCreateKeyMapFromTo);
-        mKeyFilesGroup = (LinearLayout) findViewById(
+        mCreateKeyMap = findViewById(R.id.buttonCreateKeyMap);
+        mSectorRange = findViewById(R.id.textViewCreateKeyMapFromTo);
+        mKeyFilesGroup = findViewById(
                 R.id.linearLayoutCreateKeyMapKeyFiles);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBarCreateKeyMap);
+        mProgressBar = findViewById(R.id.progressBarCreateKeyMap);
 
         // Init. sector range.
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_SECTOR_CHOOSER)) {
-            Button changeSectorRange = (Button) findViewById(
+            Button changeSectorRange = findViewById(
                     R.id.buttonCreateKeyMapChangeRange);
             boolean value = intent.getBooleanExtra(EXTRA_SECTOR_CHOOSER, true);
             changeSectorRange.setEnabled(value);

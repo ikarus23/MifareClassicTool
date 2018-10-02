@@ -81,7 +81,7 @@ public class KeyEditor extends BasicActivity
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(
                 FileChooser.EXTRA_CHOSEN_FILE)) {
-            mKeys = (EditText) findViewById(R.id.editTextKeyEditorKeys);
+            mKeys = findViewById(R.id.editTextKeyEditorKeys);
 
             // This is a (ugly) fix for a bug in Android 5.0+
             // https://code.google.com/p/android-developer-preview

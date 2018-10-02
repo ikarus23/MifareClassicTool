@@ -44,8 +44,8 @@ public class BccTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bcc_tool);
 
-        mUid = (EditText) findViewById(R.id.editTextBccToolUid);
-        mBcc = (EditText) findViewById(R.id.editTextBccToolBcc);
+        mUid = findViewById(R.id.editTextBccToolUid);
+        mBcc = findViewById(R.id.editTextBccToolBcc);
     }
 
     /**

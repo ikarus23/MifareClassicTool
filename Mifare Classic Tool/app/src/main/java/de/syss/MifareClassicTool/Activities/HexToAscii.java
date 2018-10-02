@@ -81,7 +81,7 @@ public class HexToAscii extends BasicActivity {
                         }
                     }
                 }
-                TextView tv = (TextView) findViewById(R.id.textViewHexToAscii);
+                TextView tv = findViewById(R.id.textViewHexToAscii);
                 tv.setText(ascii);
             }
             setIntent(null);

@@ -87,15 +87,15 @@ public class AccessConditionTool extends BasicActivity {
         setContentView(R.layout.activity_access_condition_tool);
 
         // Init. member vars.
-        mAC = (EditText) findViewById(R.id.editTextAccessConditionToolAC);
+        mAC = findViewById(R.id.editTextAccessConditionToolAC);
         mBlockButtons = new Button[4];
-        mBlockButtons[0] = (Button) findViewById(
+        mBlockButtons[0] = findViewById(
                 R.id.buttonAccessConditionToolBlock0);
-        mBlockButtons[1] = (Button) findViewById(
+        mBlockButtons[1] = findViewById(
                 R.id.buttonAccessConditionToolBlock1);
-        mBlockButtons[2] = (Button) findViewById(
+        mBlockButtons[2] = findViewById(
                 R.id.buttonAccessConditionToolBlock2);
-        mBlockButtons[3] = (Button) findViewById(
+        mBlockButtons[3] = findViewById(
                 R.id.buttonAccessConditionToolBlock3);
         // Init AC matrix with factory setting/transport configuration.
         mACMatrix = new byte[][] {
