@@ -370,12 +370,20 @@ public class MCReader {
                             + ret[last].substring(12, 20) + NO_KEY;
                 }
             } else {
-                if (ret[0].equals(NO_DATA)) {
-                    // If Key B may be read in the corresponding Sector Trailer,
-                    // it cannot serve for authentication (according to NXP).
-                    // What they mean is that you can authenticate successfully,
-                    // but can not read data. In this case the
-                    // readBlock() result is 0 for each block.
+                boolean noData = true;
+                // Was is possible to read any data with key B?
+                // If Key B may be read in the corresponding Sector Trailer,
+                // it cannot serve for authentication (according to NXP).
+                // What they mean is that you can authenticate successfully,
+                // but can not read data. In this case the
+                // readBlock() result is 0 for each block.
+                for (int i = 0; i < ret.length; i++) {
+                    if (!ret[i].equals(NO_DATA)) {
+                        noData = false;
+                        break;
+                    }
+                }
+                if (noData) {
                     ret = null;
                 } else {
                     ret[last] = NO_KEY + ret[last].substring(12, 20)
