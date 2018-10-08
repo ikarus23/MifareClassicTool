@@ -359,32 +359,35 @@ public class MCReader {
             ret = blocks.toArray(new String[blocks.size()]);
             int last = ret.length -1;
 
-            // Merge key in last block (sector trailer).
-            if (!useAsKeyB) {
-                if (isKeyBReadable(Common.hexStringToByteArray(
-                        ret[last].substring(12, 20)))) {
-                    ret[last] = Common.byte2HexString(key)
-                            + ret[last].substring(12, 32);
-                } else {
-                    ret[last] = Common.byte2HexString(key)
-                            + ret[last].substring(12, 20) + NO_KEY;
+            // Validate if it was possible to read any data.
+            boolean noData = true;
+            for (int i = 0; i < ret.length; i++) {
+                if (!ret[i].equals(NO_DATA)) {
+                    noData = false;
+                    break;
                 }
-            } else {
-                boolean noData = true;
-                // Was is possible to read any data with key B?
+            }
+            if (noData) {
+                // Was is possible to read any data (especially with key B)?
                 // If Key B may be read in the corresponding Sector Trailer,
                 // it cannot serve for authentication (according to NXP).
                 // What they mean is that you can authenticate successfully,
                 // but can not read data. In this case the
                 // readBlock() result is 0 for each block.
-                for (int i = 0; i < ret.length; i++) {
-                    if (!ret[i].equals(NO_DATA)) {
-                        noData = false;
-                        break;
+                // Also, a tag might be bricked in a way that the authentication
+                // works, but reading data does not.
+                ret = null;
+            } else {
+                // Merge key in last block (sector trailer).
+                if (!useAsKeyB) {
+                    if (isKeyBReadable(Common.hexStringToByteArray(
+                            ret[last].substring(12, 20)))) {
+                        ret[last] = Common.byte2HexString(key)
+                                + ret[last].substring(12, 32);
+                    } else {
+                        ret[last] = Common.byte2HexString(key)
+                                + ret[last].substring(12, 20) + NO_KEY;
                     }
-                }
-                if (noData) {
-                    ret = null;
                 } else {
                     ret[last] = NO_KEY + ret[last].substring(12, 20)
                             + Common.byte2HexString(key);
