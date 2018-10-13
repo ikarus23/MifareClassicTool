@@ -43,6 +43,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy S7 (Android 8.0)
 * Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
 * Samsung Galaxy S8 (Android 8.0)
+* Samsung Galaxy S8 Plus (Android 8.0)
 * Samsung Galaxy S9
 * Sony Xperia M4 Aqua
 * Sony Xperia V
