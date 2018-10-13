@@ -29,16 +29,33 @@ def main():
   if len(argv) is not 3:
     usage()
 
-  # TODO: Check if the dump is comple (has all sectors and no unknown data)
-  # and if not, create the missing data.
-  # (0x00 for data, 0xFF for keys and 0x078069)
-
   # Convert the file line by line.
   with open(argv[1], 'r') as mctFile, open(argv[2], 'w') as emlFile:
+    previous_sector = -1
     for line in mctFile:
+      # New sector?
       if line[:8] == '+Sector:':
+        current_sector = int(line[9:])
+        # Was there a sector missing in the MCT dump?
+        # If so create an empty sector for the .eml dump.
+        if previous_sector + 1 != current_sector:
+          for sector in range(previous_sector + 1, current_sector):
+            # Is Mifare Classic 4K?
+            block_count = 3 if sector < 32 else 15
+            for block in range(block_count):
+              emlFile.write('00000000000000000000000000000000\n')
+            emlFile.write('ffffffffffffff078069ffffffffffff\n')
+        previous_sector = current_sector
         continue
+      # Replace unknown blocks or keys from the MCT dump
+      # with "0x00" or 0xff bytes.
+      line = line.replace('--------------------------------',
+                          '00000000000000000000000000000000')
+      line = line.replace('------------', 'ffffffffffff')
       emlFile.write(line.lower())
+
+    # TODO: Check if the last sectors are missing. If so, fill the .eml dump
+    # up with default data (0x00 for data, 0xFF for keys and 0x078069 for ACs).
 
 
 def usage():
@@ -51,4 +68,3 @@ def usage():
 
 if __name__ == '__main__':
     main()
-
