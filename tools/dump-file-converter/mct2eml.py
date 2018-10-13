@@ -29,16 +29,19 @@ def main():
   if len(argv) is not 3:
     usage()
 
-  # TODO: Check if the dump is comple (has all sectors and no unknown data)
-  # and if not, create the missing data.
-  # (0x00 for data, 0xFF for keys and 0x078069)
-
   # Convert the file line by line.
   with open(argv[1], 'r') as mctFile, open(argv[2], 'w') as emlFile:
+    previous_sector = -1
     for line in mctFile:
       if line[:8] == '+Sector:':
+        current_sector = int(line[9:])
+        if previous_sector+1!=current_sector:
+          for i in range(current_sector-previous_sector-1):
+            emlFile.write('000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+                          '000000000000000FFFFFFFFFFFFFF078069FFFFFFFFFFFF')
+            previous_sector = current_sector
         continue
-      emlFile.write(line.lower())
+      emlFile.write(line.lower()[:-1].replace('-','F'))
 
 
 def usage():
