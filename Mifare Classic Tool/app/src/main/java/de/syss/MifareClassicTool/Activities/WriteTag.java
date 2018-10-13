@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -107,24 +105,24 @@ public class WriteTag extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_tag);
 
-        mSectorTextBlock = (EditText) findViewById(R.id.editTextWriteTagSector);
-        mBlockTextBlock = (EditText) findViewById(R.id.editTextWriteTagBlock);
-        mDataText = (EditText) findViewById(R.id.editTextWriteTagData);
-        mSectorTextVB = (EditText) findViewById(
+        mSectorTextBlock = findViewById(R.id.editTextWriteTagSector);
+        mBlockTextBlock = findViewById(R.id.editTextWriteTagBlock);
+        mDataText = findViewById(R.id.editTextWriteTagData);
+        mSectorTextVB = findViewById(
                 R.id.editTextWriteTagValueBlockSector);
-        mBlockTextVB = (EditText) findViewById(
+        mBlockTextVB = findViewById(
                 R.id.editTextWriteTagValueBlockBlock);
-        mNewValueTextVB = (EditText) findViewById(
+        mNewValueTextVB = findViewById(
                 R.id.editTextWriteTagValueBlockValue);
-        mIncreaseVB = (RadioButton) findViewById(
+        mIncreaseVB = findViewById(
                 R.id.radioButtonWriteTagWriteValueBlockIncr);
-        mStaticAC = (EditText) findViewById(R.id.editTextWriteTagDumpStaticAC);
-        mEnableStaticAC = (CheckBox) findViewById(
+        mStaticAC = findViewById(R.id.editTextWriteTagDumpStaticAC);
+        mEnableStaticAC = findViewById(
                 R.id.checkBoxWriteTagDumpStaticAC);
-        mWriteManufBlock = (CheckBox) findViewById(
+        mWriteManufBlock = findViewById(
                 R.id.checkBoxWriteTagDumpWriteManuf);
 
-        mWriteModeLayouts = new ArrayList<View>();
+        mWriteModeLayouts = new ArrayList<>();
         mWriteModeLayouts.add(findViewById(
                 R.id.relativeLayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
@@ -150,17 +148,17 @@ public class WriteTag extends BasicActivity {
             mDumpFromEditor = i.getStringArrayExtra(EXTRA_DUMP);
             mWriteDumpFromEditor = true;
             // Show "Write Dump" option and disable other write options.
-            RadioButton writeBlock = (RadioButton) findViewById(
+            RadioButton writeBlock = findViewById(
                     R.id.radioButtonWriteTagWriteBlock);
-            RadioButton factoryFormat = (RadioButton) findViewById(
+            RadioButton factoryFormat = findViewById(
                     R.id.radioButtonWriteTagFactoryFormat);
-            RadioButton writeDump = (RadioButton) findViewById(
+            RadioButton writeDump = findViewById(
                     R.id.radioButtonWriteTagWriteDump);
             writeDump.performClick();
             writeBlock.setEnabled(false);
             factoryFormat.setEnabled(false);
             // Update button text.
-            Button writeDumpButton = (Button) findViewById(
+            Button writeDumpButton = findViewById(
                     R.id.buttonWriteTagDump);
             writeDumpButton.setText(R.string.action_write_dump);
         }
@@ -299,19 +297,13 @@ public class WriteTag extends BasicActivity {
                 .setMessage(R.string.dialog_sector_trailer_warning)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(R.string.action_i_know_what_i_am_doing,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Show key map creator.
-                                createKeyMapForBlock(sector, false);
-                            }
+                        (dialog, which) -> {
+                            // Show key map creator.
+                            createKeyMapForBlock(sector, false);
                         })
                  .setNegativeButton(R.string.action_cancel,
-                         new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialog, int id) {
-                                 // Do nothing.
-                             }
+                         (dialog, id) -> {
+                             // Do nothing.
                          }).show();
         } else if (sector == 0 && block == 0) {
             // Is the BCC valid?
@@ -367,9 +359,8 @@ public class WriteTag extends BasicActivity {
      * (in this case the show options button).
      */
     public void onShowOptions(View view) {
-        LinearLayout ll = (LinearLayout)
-                findViewById(R.id.linearLayoutWriteTagDumpOptions);
-        CheckBox cb = (CheckBox) findViewById(R.id.checkBoxWriteTagDumpOptions);
+        LinearLayout ll = findViewById(R.id.linearLayoutWriteTagDumpOptions);
+        CheckBox cb = findViewById(R.id.checkBoxWriteTagDumpOptions);
         if (cb.isChecked()) {
             ll.setVisibility(View.VISIBLE);
         } else {
@@ -404,23 +395,17 @@ public class WriteTag extends BasicActivity {
         if (createKeyMap) {
             buttonID = R.string.action_i_know_what_i_am_doing;
             dialog.setNegativeButton(R.string.action_cancel,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    (dialog12, which) -> {
                         // Do nothing.
-                    }
-                });
+                    });
         }
         dialog.setPositiveButton(buttonID,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                (dialog1, which) -> {
                     // Do nothing or create a key map.
                     if (createKeyMap) {
                         createKeyMapForBlock(0, false);
                     }
-                }
-             });
+                });
         dialog.show();
     }
 
@@ -515,12 +500,9 @@ public class WriteTag extends BasicActivity {
         .setMessage(R.string.dialog_static_ac)
         .setIcon(android.R.drawable.ic_dialog_info)
         .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-         }).show();
+                (dialog, which) -> {
+                    // Do nothing.
+                }).show();
     }
 
     /**
@@ -703,12 +685,12 @@ public class WriteTag extends BasicActivity {
         // (let the user select the sectors which will be written).
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_write_sectors,
-                (ViewGroup)findViewById(android.R.id.content), false);
-        LinearLayout llCheckBoxes = (LinearLayout) dialogLayout.findViewById(
+                findViewById(android.R.id.content), false);
+        LinearLayout llCheckBoxes = dialogLayout.findViewById(
                 R.id.linearLayoutWriteSectorsCheckBoxes);
-        Button selectAll = (Button) dialogLayout.findViewById(
+        Button selectAll = dialogLayout.findViewById(
                 R.id.buttonWriteSectorsSelectAll);
-        Button selectNone = (Button) dialogLayout.findViewById(
+        Button selectNone = dialogLayout.findViewById(
                 R.id.buttonWriteSectorsSelectNone);
         Integer[] sectors = mDumpWithPos.keySet().toArray(
                 new Integer[mDumpWithPos.size()]);
@@ -723,13 +705,10 @@ public class WriteTag extends BasicActivity {
                     + " " + sectors[i]);
             llCheckBoxes.addView(sectorBoxes[i]);
         }
-        OnClickListener listener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tag = v.getTag().toString();
-                for (CheckBox box : sectorBoxes) {
-                    box.setChecked(tag.equals("all"));
-                }
+        OnClickListener listener = v -> {
+            String tag = v.getTag().toString();
+            for (CheckBox box : sectorBoxes) {
+                box.setChecked(tag.equals("all"));
             }
         };
         selectAll.setOnClickListener(listener);
@@ -740,73 +719,64 @@ public class WriteTag extends BasicActivity {
             .setIcon(android.R.drawable.ic_menu_edit)
             .setView(dialogLayout)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing here because we override this button later
-                    // to change the close behaviour. However, we still need
-                    // this because on older versions of Android unless we
-                    // pass a handler the button doesn't get instantiated
-                }
-            })
+                    (dialog12, which) -> {
+                        // Do nothing here because we override this button later
+                        // to change the close behaviour. However, we still need
+                        // this because on older versions of Android unless we
+                        // pass a handler the button doesn't get instantiated
+                    })
             .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing.
-                }
-            })
+                    (dialog1, which) -> {
+                        // Do nothing.
+                    })
             .create();
         dialog.show();
         final Context con = this;
 
         // Override/define behavior for positive button click.
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
-                new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Re-Init mDumpWithPos in order to remove unwanted sectors.
-                initDumpWithPosFromDump(dump);
-                boolean writeBlock0 = false;
-                for (CheckBox box : sectorBoxes) {
-                    int sector = Integer.parseInt(box.getTag().toString());
-                    if (!box.isChecked()) {
-                        mDumpWithPos.remove(sector);
-                    } else if (sector == 0 && box.isChecked()
-                            && mWriteManufBlock.isChecked() ) {
-                        writeBlock0 = true;
+                v -> {
+                    // Re-Init mDumpWithPos in order to remove unwanted sectors.
+                    initDumpWithPosFromDump(dump);
+                    boolean writeBlock0 = false;
+                    for (CheckBox box : sectorBoxes) {
+                        int sector = Integer.parseInt(box.getTag().toString());
+                        if (!box.isChecked()) {
+                            mDumpWithPos.remove(sector);
+                        } else if (sector == 0 && box.isChecked()
+                                && mWriteManufBlock.isChecked()) {
+                            writeBlock0 = true;
+                        }
                     }
-                }
-                if (mDumpWithPos.size() == 0) {
-                    // Error. There is nothing to write.
-                    Toast.makeText(context, R.string.info_nothing_to_write,
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                // Check if last sector is out of range.
-                if (!isSectorInRage(con, false)) {
-                    return;
-                }
-
-                // Do a BCC check if sector 0 is chosen and writing to
-                // the manufacturer block was enabled.
-                if (writeBlock0) {
-                    int bccCheck = checkBCC(false);
-                    if (bccCheck == 2) {
-                        // Error. Redo.
-                        return;
-                    } else if (bccCheck == 1) {
-                        // Error in BCC. Exit.
-                        dialog.dismiss();
+                    if (mDumpWithPos.size() == 0) {
+                        // Error. There is nothing to write.
+                        Toast.makeText(context, R.string.info_nothing_to_write,
+                                Toast.LENGTH_LONG).show();
                         return;
                     }
-                }
-                // Create key map.
-                createKeyMapForDump();
-                dialog.dismiss();
-            }
-        });
+
+                    // Check if last sector is out of range.
+                    if (!isSectorInRage(con, false)) {
+                        return;
+                    }
+
+                    // Do a BCC check if sector 0 is chosen and writing to
+                    // the manufacturer block was enabled.
+                    if (writeBlock0) {
+                        int bccCheck = checkBCC(false);
+                        if (bccCheck == 2) {
+                            // Error. Redo.
+                            return;
+                        } else if (bccCheck == 1) {
+                            // Error in BCC. Exit.
+                            dialog.dismiss();
+                            return;
+                        }
+                    }
+                    // Create key map.
+                    createKeyMapForDump();
+                    dialog.dismiss();
+                });
     }
 
     /**
@@ -851,7 +821,7 @@ public class WriteTag extends BasicActivity {
      * @param dump The dump to initialize the mDumpWithPos with.
      */
     private void initDumpWithPosFromDump(String[] dump) {
-        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
+        mDumpWithPos = new HashMap<>();
         int sector = 0;
         int block = 0;
         // Transform the simple dump array into a structure (mDumpWithPos)
@@ -862,7 +832,7 @@ public class WriteTag extends BasicActivity {
                 String[] tmp = dump[i].split(": ");
                 sector = Integer.parseInt(tmp[tmp.length-1]);
                 block = 0;
-                mDumpWithPos.put(sector, new HashMap<Integer, byte[]>());
+                mDumpWithPos.put(sector, new HashMap<>());
             } else if (!dump[i].contains("-")) {
                 // Use static Access Conditions for all sectors?
                 if (mEnableStaticAC.isChecked()
@@ -940,7 +910,7 @@ public class WriteTag extends BasicActivity {
         final SparseArray<byte[][]> keyMap  =
                 Common.getKeyMap();
         HashMap<Integer, int[]> dataPos =
-                new HashMap<Integer, int[]>(mDumpWithPos.size());
+                new HashMap<>(mDumpWithPos.size());
         for (int sector : mDumpWithPos.keySet()) {
             int i = 0;
             int[] blocks = new int[mDumpWithPos.get(sector).size()];
@@ -966,12 +936,12 @@ public class WriteTag extends BasicActivity {
         // writable. The user can chose to skip all these blocks/sectors
         // or to cancel the whole write procedure.
         List<HashMap<String, String>> list = new
-                ArrayList<HashMap<String, String>>();
+                ArrayList<>();
         final HashMap<Integer, HashMap<Integer, Integer>> writeOnPosSafe =
-                new HashMap<Integer, HashMap<Integer,Integer>>(
+                new HashMap<>(
                         mDumpWithPos.size());
         // Keys that are missing completely (mDumpWithPos vs. keyMap).
-        HashSet<Integer> sectors = new HashSet<Integer>();
+        HashSet<Integer> sectors = new HashSet<>();
         for (int sector : mDumpWithPos.keySet()) {
             if (keyMap.indexOfKey(sector) < 0) {
                 // Problem. Keys for sector not found.
@@ -1082,7 +1052,7 @@ public class WriteTag extends BasicActivity {
                     if (writeOnPosSafe.get(sector) == null) {
                         // Create sector.
                         HashMap<Integer, Integer> blockInfo =
-                                new HashMap<Integer, Integer>();
+                                new HashMap<>();
                         blockInfo.put(block, writeInfo);
                         writeOnPosSafe.put(sector, blockInfo);
                     } else {
@@ -1119,20 +1089,14 @@ public class WriteTag extends BasicActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setView(ll)
                 .setPositiveButton(R.string.action_skip_blocks,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Skip not writable blocks and start writing.
-                        writeDump(writeOnPosSafe, keyMap);
-                    }
-                })
+                        (dialog, which) -> {
+                            // Skip not writable blocks and start writing.
+                            writeDump(writeOnPosSafe, keyMap);
+                        })
                 .setNegativeButton(R.string.action_cancel_all,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing.
-                    }
-                })
+                        (dialog, which) -> {
+                            // Do nothing.
+                        })
                 .show();
         } else {
             // Write.
@@ -1152,7 +1116,7 @@ public class WriteTag extends BasicActivity {
      */
     private void addToList(List<HashMap<String, String>> list,
             String position, String reason) {
-        HashMap<String,String> item = new HashMap<String,String>();
+        HashMap<String, String> item = new HashMap<>();
         item.put( "position", position);
         item.put( "reason", reason);
         list.add(item);
@@ -1211,57 +1175,44 @@ public class WriteTag extends BasicActivity {
         // Start writing in new thread.
         final Activity a = this;
         final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Write dump to tag.
-                for (int sector : writeOnPos.keySet()) {
-                    byte[][] keys = keyMap.get(sector);
-                    for (int block : writeOnPos.get(sector).keySet()) {
-                        // Select key with write privileges.
-                        byte writeKey[] = null;
-                        boolean useAsKeyB = true;
-                        int wi = writeOnPos.get(sector).get(block);
-                        if (wi == 1 || wi == 4) {
-                            writeKey = keys[0]; // Write with key A.
-                            useAsKeyB = false;
-                        } else if (wi == 2 || wi == 5 || wi == 6) {
-                            writeKey = keys[1]; // Write with key B.
-                        }
+        new Thread(() -> {
+            // Write dump to tag.
+            for (int sector : writeOnPos.keySet()) {
+                byte[][] keys = keyMap.get(sector);
+                for (int block : writeOnPos.get(sector).keySet()) {
+                    // Select key with write privileges.
+                    byte writeKey[] = null;
+                    boolean useAsKeyB = true;
+                    int wi = writeOnPos.get(sector).get(block);
+                    if (wi == 1 || wi == 4) {
+                        writeKey = keys[0]; // Write with key A.
+                        useAsKeyB = false;
+                    } else if (wi == 2 || wi == 5 || wi == 6) {
+                        writeKey = keys[1]; // Write with key B.
+                    }
 
-                        // Write block.
-                        int result = reader.writeBlock(sector, block,
-                                mDumpWithPos.get(sector).get(block),
-                                writeKey, useAsKeyB);
+                    // Write block.
+                    int result = reader.writeBlock(sector, block,
+                            mDumpWithPos.get(sector).get(block),
+                            writeKey, useAsKeyB);
 
-                        if (result != 0) {
-                            // Error. Some error while writing.
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(a,
-                                            R.string.info_write_error,
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-                            reader.close();
-                            warning.cancel();
-                            return;
-                        }
+                    if (result != 0) {
+                        // Error. Some error while writing.
+                        handler.post(() -> Toast.makeText(a,
+                                R.string.info_write_error,
+                                Toast.LENGTH_LONG).show());
+                        reader.close();
+                        warning.cancel();
+                        return;
                     }
                 }
-                // Finished writing.
-                reader.close();
-                warning.cancel();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(a, R.string.info_write_successful,
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-                a.finish();
             }
+            // Finished writing.
+            reader.close();
+            warning.cancel();
+            handler.post(() -> Toast.makeText(a, R.string.info_write_successful,
+                    Toast.LENGTH_LONG).show());
+            a.finish();
         }).start();
     }
 
@@ -1295,7 +1246,7 @@ public class WriteTag extends BasicActivity {
         // This function is directly called after a key map was created.
         // So Common.getTag() will return den current present tag
         // (and its size/sector count).
-        mDumpWithPos = new HashMap<Integer, HashMap<Integer,byte[]>>();
+        mDumpWithPos = new HashMap<>();
         int sectors = MifareClassic.get(Common.getTag()).getSectorCount();
         byte[] emptyBlock = new byte[]
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -1305,14 +1256,14 @@ public class WriteTag extends BasicActivity {
                 -1, 7, -128, -68, -1, -1, -1, -1, -1, -1};
         // Empty 4 block sector.
         HashMap<Integer, byte[]> empty4BlockSector =
-                new HashMap<Integer, byte[]>(4);
+                new HashMap<>(4);
         for (int i = 0; i < 3; i++) {
             empty4BlockSector.put(i, emptyBlock);
         }
         empty4BlockSector.put(3, normalSectorTrailer);
         // Empty 16 block sector.
         HashMap<Integer, byte[]> empty16BlockSector =
-                new HashMap<Integer, byte[]>(16);
+                new HashMap<>(16);
         for (int i = 0; i < 15; i++) {
             empty16BlockSector.put(i, emptyBlock);
         }
@@ -1322,7 +1273,7 @@ public class WriteTag extends BasicActivity {
 
         // Sector 0.
         HashMap<Integer, byte[]> firstSector =
-                new HashMap<Integer, byte[]>(4);
+                new HashMap<>(4);
         firstSector.put(1, emptyBlock);
         firstSector.put(2, emptyBlock);
         firstSector.put(3, normalSectorTrailer);
@@ -1339,11 +1290,11 @@ public class WriteTag extends BasicActivity {
                 mDumpWithPos.put(i, empty16BlockSector);
             }
             // In the last sector the Sector Trailer is different.
-            lastSector = new HashMap<Integer, byte[]>(empty16BlockSector);
+            lastSector = new HashMap<>(empty16BlockSector);
             lastSector.put(15, lastSectorTrailer);
         } else {
             // In the last sector the Sector Trailer is different.
-            lastSector = new HashMap<Integer, byte[]>(empty4BlockSector);
+            lastSector = new HashMap<>(empty4BlockSector);
             lastSector.put(3, lastSectorTrailer);
         }
         mDumpWithPos.put(sectors - 1, lastSector);

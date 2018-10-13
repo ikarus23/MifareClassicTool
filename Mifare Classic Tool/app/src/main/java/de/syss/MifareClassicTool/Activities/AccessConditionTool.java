@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,15 +86,15 @@ public class AccessConditionTool extends BasicActivity {
         setContentView(R.layout.activity_access_condition_tool);
 
         // Init. member vars.
-        mAC = (EditText) findViewById(R.id.editTextAccessConditionToolAC);
+        mAC = findViewById(R.id.editTextAccessConditionToolAC);
         mBlockButtons = new Button[4];
-        mBlockButtons[0] = (Button) findViewById(
+        mBlockButtons[0] = findViewById(
                 R.id.buttonAccessConditionToolBlock0);
-        mBlockButtons[1] = (Button) findViewById(
+        mBlockButtons[1] = findViewById(
                 R.id.buttonAccessConditionToolBlock1);
-        mBlockButtons[2] = (Button) findViewById(
+        mBlockButtons[2] = findViewById(
                 R.id.buttonAccessConditionToolBlock2);
-        mBlockButtons[3] = (Button) findViewById(
+        mBlockButtons[3] = findViewById(
                 R.id.buttonAccessConditionToolBlock3);
         // Init AC matrix with factory setting/transport configuration.
         mACMatrix = new byte[][] {
@@ -108,31 +107,27 @@ public class AccessConditionTool extends BasicActivity {
         for (int i = 0; i < 8; i++) {
             items[i] = getString(getResourceForSectorTrailersByRowNr(i));
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_item_small_text, items);
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                    int position, long id) {
-                // Change button text to selected Access Conditions.
-                mBlockButtons[3].setText(getString(
-                        getResourceForSectorTrailersByRowNr(position)));
-                // Set Access Condition bits for sector trailer.
-                byte[] acBits = acRowNrToACBits(position, true);
-                mACMatrix[0][3] = acBits[0];
-                mACMatrix[1][3] = acBits[1];
-                mACMatrix[2][3] = acBits[2];
-                // Rebuild the data block dialog based on the readability of
-                // key B.
-                mIsKeyBReadable = position < 2 || position == 4;
-                buildDataBlockDialog(true);
-                // Close dialog.
-                mSectorTrailerDialog.dismiss();
-            }
-        });
+                (parent, view, position, id) -> {
+                    // Change button text to selected Access Conditions.
+                    mBlockButtons[3].setText(getString(
+                            getResourceForSectorTrailersByRowNr(position)));
+                    // Set Access Condition bits for sector trailer.
+                    byte[] acBits = acRowNrToACBits(position, true);
+                    mACMatrix[0][3] = acBits[0];
+                    mACMatrix[1][3] = acBits[1];
+                    mACMatrix[2][3] = acBits[2];
+                    // Rebuild the data block dialog based on the readability of
+                    // key B.
+                    mIsKeyBReadable = position < 2 || position == 4;
+                    buildDataBlockDialog(true);
+                    // Close dialog.
+                    mSectorTrailerDialog.dismiss();
+                });
         mSectorTrailerDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_choose_ac_title)
                 .setView(lv)
@@ -465,29 +460,25 @@ public class AccessConditionTool extends BasicActivity {
             Toast.makeText(this, r, Toast.LENGTH_LONG).show();
         }
 
-        ListAdapter adapter = new ArrayAdapter<String>(
+        ListAdapter adapter = new ArrayAdapter<>(
                 this, R.layout.list_item_small_text, items);
         ListView lv = new ListView(this);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                    int position, long id) {
-                // Change button text to selected Access Conditions.
-                mSelectedButton.setText(getString(
-                        getResourceForDataBlocksByRowNr(position)));
-                // Set Access Condition bits for this block.
-                byte[] acBits = acRowNrToACBits(position, false);
-                int blockNr = Integer.parseInt(
-                        mSelectedButton.getTag().toString());
-                mACMatrix[0][blockNr] = acBits [0];
-                mACMatrix[1][blockNr] = acBits [1];
-                mACMatrix[2][blockNr] = acBits [2];
-                // Close dialog.
-                mDataBlockDialog.dismiss();
-            }
-        });
+                (parent, view, position, id) -> {
+                    // Change button text to selected Access Conditions.
+                    mSelectedButton.setText(getString(
+                            getResourceForDataBlocksByRowNr(position)));
+                    // Set Access Condition bits for this block.
+                    byte[] acBits = acRowNrToACBits(position, false);
+                    int blockNr = Integer.parseInt(
+                            mSelectedButton.getTag().toString());
+                    mACMatrix[0][blockNr] = acBits[0];
+                    mACMatrix[1][blockNr] = acBits[1];
+                    mACMatrix[2][blockNr] = acBits[2];
+                    // Close dialog.
+                    mDataBlockDialog.dismiss();
+                });
         mDataBlockDialog =  new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_choose_ac_title)
                 .setView(lv)

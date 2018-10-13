@@ -20,7 +20,6 @@ package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -81,7 +80,7 @@ public class KeyEditor extends BasicActivity
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(
                 FileChooser.EXTRA_CHOSEN_FILE)) {
-            mKeys = (EditText) findViewById(R.id.editTextKeyEditorKeys);
+            mKeys = findViewById(R.id.editTextKeyEditorKeys);
 
             // This is a (ugly) fix for a bug in Android 5.0+
             // https://code.google.com/p/android-developer-preview
@@ -171,29 +170,20 @@ public class KeyEditor extends BasicActivity
             .setMessage(R.string.dialog_save_before_quitting)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_save,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Save.
-                    mCloseAfterSuccessfulSave = true;
-                    onSave();
-                }
-            })
+                    (dialog, which) -> {
+                        // Save.
+                        mCloseAfterSuccessfulSave = true;
+                        onSave();
+                    })
             .setNeutralButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Cancel. Do nothing.
-                }
-            })
+                    (dialog, which) -> {
+                        // Cancel. Do nothing.
+                    })
             .setNegativeButton(R.string.action_dont_save,
-                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // Don't save.
-                    finish();
-                }
-            }).show();
+                    (dialog, id) -> {
+                        // Don't save.
+                        finish();
+                    }).show();
         } else {
             super.onBackPressed();
         }
@@ -293,31 +283,21 @@ public class KeyEditor extends BasicActivity
             .setIcon(android.R.drawable.ic_menu_save)
             .setView(input)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog,
-                        int whichButton) {
-                    if (input.getText() != null
-                            && !input.getText().toString().equals("")) {
-                        File file = new File(path.getPath(),
-                                input.getText().toString());
-                        Common.checkFileExistenceAndSave(file, mLines,
-                                false, cont, activity);
-                    } else {
-                        // Empty name is not allowed.
-                        Toast.makeText(cont, R.string.info_empty_file_name,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            })
+                    (dialog, whichButton) -> {
+                        if (input.getText() != null
+                                && !input.getText().toString().equals("")) {
+                            File file = new File(path.getPath(),
+                                    input.getText().toString());
+                            Common.checkFileExistenceAndSave(file, mLines,
+                                    false, cont, activity);
+                        } else {
+                            // Empty name is not allowed.
+                            Toast.makeText(cont, R.string.info_empty_file_name,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    })
             .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog,
-                        int whichButton) {
-                    mCloseAfterSuccessfulSave = false;
-                }
-            }).show();
+                    (dialog, whichButton) -> mCloseAfterSuccessfulSave = false).show();
     }
 
     /**
@@ -325,7 +305,7 @@ public class KeyEditor extends BasicActivity
      */
     private void removeDuplicates() {
         if (isValidKeyFileErrorToast()) {
-            ArrayList<String> newLines = new ArrayList<String>();
+            ArrayList<String> newLines = new ArrayList<>();
             for (String line : mLines) {
                 if (line.equals("") || line.startsWith("#")) {
                     // Add comments for sure.

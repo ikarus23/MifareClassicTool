@@ -58,7 +58,7 @@ public class MCReader {
     public static final String NO_DATA = "--------------------------------";
 
     private final MifareClassic mMFC;
-    private SparseArray<byte[][]> mKeyMap = new SparseArray<byte[][]>();
+    private SparseArray<byte[][]> mKeyMap = new SparseArray<>();
     private int mKeyMapStatus = 0;
     private int mLastSector = -1;
     private int mFirstSector = 0;
@@ -239,7 +239,7 @@ public class MCReader {
             SparseArray<byte[][]> keyMap) {
         SparseArray<String[]> resultSparseArray;
         if (keyMap != null && keyMap.size() > 0) {
-            resultSparseArray = new SparseArray<String[]>(keyMap.size());
+            resultSparseArray = new SparseArray<>(keyMap.size());
             // For all entries in map do:
             for (int i = 0; i < keyMap.size(); i++) {
                 String[][] results = new String[2][];
@@ -316,7 +316,7 @@ public class MCReader {
         // Read sector.
         if (auth) {
             // Read all blocks.
-            ArrayList<String> blocks = new ArrayList<String>();
+            ArrayList<String> blocks = new ArrayList<>();
             int firstBlock = mMFC.sectorToBlock(sectorIndex);
             int lastBlock = firstBlock + 4;
             if (mMFC.getSize() == MifareClassic.SIZE_4K
@@ -518,7 +518,7 @@ public class MCReader {
         if (mKeysWithOrder != null && mLastSector != -1) {
             if (mKeyMapStatus == mLastSector+1) {
                 mKeyMapStatus = mFirstSector;
-                mKeyMap = new SparseArray<byte[][]>();
+                mKeyMap = new SparseArray<>();
             }
 
             // Get auto reconnect setting.
@@ -651,7 +651,7 @@ public class MCReader {
             }
             int length  = (firstResult != null)
                     ? firstResult.length : secondResult.length;
-            ArrayList<String> blocks = new ArrayList<String>();
+            ArrayList<String> blocks = new ArrayList<>();
             // Merge data blocks.
             for (int i = 0; i < length -1 ; i++) {
                 if (firstResult != null && firstResult[i] != null
@@ -726,7 +726,7 @@ public class MCReader {
             HashMap<Integer, int[]> pos,
             SparseArray<byte[][]> keyMap) {
         HashMap<Integer, HashMap<Integer, Integer>> ret =
-                new HashMap<Integer, HashMap<Integer,Integer>>();
+                new HashMap<>();
         for (int i = 0; i < keyMap.size(); i++) {
             int sector = keyMap.keyAt(i);
             if (pos.containsKey(sector)) {
@@ -775,7 +775,7 @@ public class MCReader {
 
                 // Check all Blocks with data (!= null).
                 HashMap<Integer, Integer> blockWithWriteInfo =
-                        new HashMap<Integer, Integer>();
+                        new HashMap<>();
                 for (int block : pos.get(sector)) {
                     if ((block == 3 && sector <= 31)
                             || (block == 15 && sector >= 32)) {
@@ -850,7 +850,7 @@ public class MCReader {
      * on error (out of memory).
      */
     public boolean setKeyFile(File[] keyFiles, Context context) {
-        HashSet<byte[]> keys = new HashSet<byte[]>();
+        HashSet<byte[]> keys = new HashSet<>();
         for (File file : keyFiles) {
             String[] lines = Common.readFileLineByLine(file, false, context);
             if (lines != null) {
@@ -870,7 +870,7 @@ public class MCReader {
             }
         }
         if (keys.size() > 0) {
-            mKeysWithOrder = new ArrayList<byte[]>(keys);
+            mKeysWithOrder = new ArrayList<>(keys);
         }
         return true;
     }
@@ -1046,13 +1046,11 @@ public class MCReader {
         }
 
         // Connect in a worker thread. (connect() might be blocking).
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    mMFC.connect();
-                } catch (IOException | IllegalStateException ex) {
-                    error.set(true);
-                }
+        Thread t = new Thread(() -> {
+            try {
+                mMFC.connect();
+            } catch (IOException | IllegalStateException ex) {
+                error.set(true);
             }
         });
         t.start();

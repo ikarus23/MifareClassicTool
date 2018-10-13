@@ -48,9 +48,9 @@ public class ValueBlockTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_value_block_tool);
 
-        mVB = (EditText) findViewById(R.id.editTextValueBlockToolVB);
-        mVBasInt = (EditText) findViewById(R.id.editTextValueBlockToolVBasInt);
-        mAddr = (EditText) findViewById(R.id.editTextValueBlockAddr);
+        mVB = findViewById(R.id.editTextValueBlockToolVB);
+        mVBasInt = findViewById(R.id.editTextValueBlockToolVBasInt);
+        mAddr = findViewById(R.id.editTextValueBlockAddr);
     }
 
     /**

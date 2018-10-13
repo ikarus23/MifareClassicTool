@@ -62,7 +62,7 @@ public class ValueBlocksToInt extends BasicActivity {
 
         boolean noValueBlocks = false;
         if (getIntent().hasExtra(EXTRA_VB)) {
-            mLayout = (TableLayout) findViewById(
+            mLayout = findViewById(
                     R.id.tableLayoutValueBlocksToInt);
             String[] valueBlocks = getIntent().getStringArrayExtra(EXTRA_VB);
             if (valueBlocks.length > 0) {

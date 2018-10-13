@@ -19,7 +19,6 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -60,8 +59,8 @@ public class TagInfoTool extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_info_tool);
 
-        mLayout = (LinearLayout) findViewById(R.id.linearLayoutTagInfoTool);
-        mErrorMessage = (TextView) findViewById(
+        mLayout = findViewById(R.id.linearLayoutTagInfoTool);
+        mErrorMessage = findViewById(
                 R.id.textTagInfoToolErrorMessage);
         updateTagInfo(Common.getTag());
     }
@@ -102,12 +101,9 @@ public class TagInfoTool extends BasicActivity {
         .setMessage(styledText)
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setPositiveButton(R.string.action_ok,
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-         })
+                (dialog, which) -> {
+                    // Do nothing.
+                })
          .show();
         // Make links clickable.
         ((TextView)ad.findViewById(android.R.id.message)).setMovementMethod(
@@ -215,7 +211,7 @@ public class TagInfoTool extends BasicActivity {
                 mLayout.addView(tagTypeInfo);
             }
 
-            LinearLayout layout = (LinearLayout) findViewById(
+            LinearLayout layout = findViewById(
                     R.id.linearLayoutTagInfoToolSupport);
             // Check for MIFARE Classic support.
             if (mMFCSupport == 0) {

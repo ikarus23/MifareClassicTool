@@ -19,7 +19,6 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -86,21 +85,21 @@ public class Preferences extends BasicActivity {
         setContentView(R.layout.activity_preferences);
 
         // Get preferences (init. the member variables).
-        mPrefAutoReconnect = (CheckBox) findViewById(
+        mPrefAutoReconnect = findViewById(
                 R.id.checkBoxPreferencesAutoReconnect);
-        mPrefAutoCopyUID = (CheckBox) findViewById(
+        mPrefAutoCopyUID = findViewById(
                 R.id.checkBoxPreferencesCopyUID);
-        mPrefSaveLastUsedKeyFiles = (CheckBox) findViewById(
+        mPrefSaveLastUsedKeyFiles = findViewById(
                 R.id.checkBoxPreferencesSaveLastUsedKeyFiles);
-        mUseCustomSectorCount = (CheckBox) findViewById(
+        mUseCustomSectorCount = findViewById(
                 R.id.checkBoxPreferencesUseCustomSectorCount);
-        mCustomSectorCount = (EditText) findViewById(
+        mCustomSectorCount = findViewById(
                 R.id.editTextPreferencesCustomSectorCount);
-        mUseInternalStorage = (CheckBox) findViewById(
+        mUseInternalStorage = findViewById(
                 R.id.checkBoxPreferencesUseInternalStorage);
-        mUseRetryAuthentication = (CheckBox) findViewById(
+        mUseRetryAuthentication = findViewById(
                 R.id.checkBoxPreferencesUseRetryAuthentication);
-        mRetryAuthenticationCount = (EditText) findViewById(
+        mRetryAuthenticationCount = findViewById(
                 R.id.editTextPreferencesRetryAuthenticationCount);
 
         // Assign the last stored values.
@@ -127,7 +126,7 @@ public class Preferences extends BasicActivity {
                 Preference.RetryAuthenticationCount.toString(), 1));
 
         // UID Format Options (hide/show)
-        mUIDFormatRadioGroup = (RadioGroup) findViewById(
+        mUIDFormatRadioGroup = findViewById(
                 R.id.radioGroupUIDFormat);
         toggleUIDFormat(null);
     }
@@ -143,12 +142,9 @@ public class Preferences extends BasicActivity {
             .setMessage(R.string.dialog_auto_reconnect)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                             // Do nothing.
-                        }
-            }).show();
+                    (dialog, which) -> {
+                        // Do nothing.
+                    }).show();
     }
 
     /**
@@ -198,7 +194,7 @@ public class Preferences extends BasicActivity {
             default:
                 rBID = R.id.radioButtonHex;
         }
-        selectRadioButton = (RadioButton) findViewById(rBID);
+        selectRadioButton = findViewById(rBID);
         selectRadioButton.toggle();
     }
 
@@ -235,12 +231,9 @@ public class Preferences extends BasicActivity {
             .setMessage(R.string.dialog_custom_sector_count)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_ok,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do nothing.
-                        }
-            }).show();
+                    (dialog, which) -> {
+                        // Do nothing.
+                    }).show();
     }
 
     /**
@@ -254,11 +247,8 @@ public class Preferences extends BasicActivity {
                 .setMessage(R.string.dialog_use_internal_storage)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing.
-                            }
+                        (dialog, which) -> {
+                            // Do nothing.
                         }).show();
     }
 
@@ -273,11 +263,8 @@ public class Preferences extends BasicActivity {
                 .setMessage(R.string.dialog_retry_authentication)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing.
-                            }
+                        (dialog, which) -> {
+                            // Do nothing.
                         }).show();
     }
 

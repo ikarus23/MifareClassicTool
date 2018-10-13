@@ -20,7 +20,6 @@ package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -129,7 +128,7 @@ public class DumpEditor extends BasicActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dump_editor);
 
-        mLayout= (LinearLayout) findViewById(
+        mLayout = findViewById(
                 R.id.linearLayoutDumpEditor);
 
         // Color caption.
@@ -149,12 +148,12 @@ public class DumpEditor extends BasicActivity
                 getString(R.string.text_valueblock),
                 getResources().getColor(R.color.yellow));
 
-        TextView caption = (TextView) findViewById(
+        TextView caption = findViewById(
                 R.id.textViewDumpEditorCaption);
         caption.setText(TextUtils.concat(uidAndManuf, " | ",
                 vb, " | ", keyA, " | ", keyB, " | ", ac), BufferType.SPANNABLE);
         // Add web-link optic to update colors text view (= caption title).
-        TextView captionTitle = (TextView) findViewById(
+        TextView captionTitle = findViewById(
                 R.id.textViewDumpEditorCaptionTitle);
         SpannableString updateText = Common.colorString(
                 getString(R.string.text_update_colors),
@@ -325,29 +324,20 @@ public class DumpEditor extends BasicActivity
             .setMessage(R.string.dialog_save_before_quitting)
             .setIcon(android.R.drawable.ic_dialog_info)
             .setPositiveButton(R.string.action_save,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Save.
-                    mCloseAfterSuccessfulSave = true;
-                    saveDump();
-                }
-            })
+                    (dialog, which) -> {
+                        // Save.
+                        mCloseAfterSuccessfulSave = true;
+                        saveDump();
+                    })
             .setNeutralButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Cancel. Do nothing.
-                }
-            })
+                    (dialog, which) -> {
+                        // Cancel. Do nothing.
+                    })
             .setNegativeButton(R.string.action_dont_save,
-                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // Don't save.
-                    finish();
-                }
-            }).show();
+                    (dialog, id) -> {
+                        // Don't save.
+                        finish();
+                    }).show();
         } else {
             super.onBackPressed();
         }
@@ -445,34 +435,26 @@ public class DumpEditor extends BasicActivity
             .setIcon(android.R.drawable.ic_menu_save)
             .setView(input)
             .setPositiveButton(R.string.action_save,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            if (input.getText() != null
-                                    && !input.getText().toString().equals("")) {
-                                File file = new File(path.getPath(),
-                                        input.getText().toString());
-                                Common.checkFileExistenceAndSave(file, data,
-                                        isDump, context, activity);
-                                if (isDump) {
-                                    mDumpName = file.getName();
-                                } else {
-                                    mKeysName = file.getName();
-                                }
+                    (dialog, whichButton) -> {
+                        if (input.getText() != null
+                                && !input.getText().toString().equals("")) {
+                            File file = new File(path.getPath(),
+                                    input.getText().toString());
+                            Common.checkFileExistenceAndSave(file, data,
+                                    isDump, context, activity);
+                            if (isDump) {
+                                mDumpName = file.getName();
                             } else {
-                                // Empty name is not allowed.
-                                Toast.makeText(context, R.string.info_empty_file_name,
-                                        Toast.LENGTH_LONG).show();
+                                mKeysName = file.getName();
                             }
+                        } else {
+                            // Empty name is not allowed.
+                            Toast.makeText(context, R.string.info_empty_file_name,
+                                    Toast.LENGTH_LONG).show();
                         }
                     })
             .setNegativeButton(R.string.action_cancel,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            mCloseAfterSuccessfulSave = false;
-                        }
-                    }).show();
+                    (dialog, whichButton) -> mCloseAfterSuccessfulSave = false).show();
         onUpdateColors(null);
     }
 
@@ -489,7 +471,7 @@ public class DumpEditor extends BasicActivity
      * @see #mLines
      */
     private int checkDumpAndUpdateLines() {
-        ArrayList<String> checkedLines = new ArrayList<String>();
+        ArrayList<String> checkedLines = new ArrayList<>();
         for(int i = 0; i < mLayout.getChildCount(); i++) {
             View child = mLayout.getChildAt(i);
             if (child instanceof EditText) {
@@ -553,7 +535,7 @@ public class DumpEditor extends BasicActivity
         boolean isFirstBlock = false;
         EditText et = null;
         ArrayList<SpannableString> blocks =
-                new ArrayList<SpannableString>(4);
+                new ArrayList<>(4);
         for (int i = 0; i < lines.length; i++) {
             if (lines[i].startsWith("+")) {
                 // Line is a header.
@@ -625,7 +607,7 @@ public class DumpEditor extends BasicActivity
                     }
                     text = TextUtils.concat(text, blocks.get(j));
                     et.setText(text, BufferType.SPANNABLE);
-                    blocks = new ArrayList<SpannableString>(4);
+                    blocks = new ArrayList<>(4);
                 } else {
                     // Add data block.
                     blocks.add(colorDataBlock(lines[i], isFirstBlock));
@@ -650,7 +632,7 @@ public class DumpEditor extends BasicActivity
             return;
         }
         // Get all data blocks (skip all Access Conditions).
-        ArrayList<String> tmpDump = new ArrayList<String>();
+        ArrayList<String> tmpDump = new ArrayList<>();
         for (int i = 0; i < mLines.length-1; i++) {
             if (i+1 != mLines.length
                     && !mLines[i+1].startsWith("+")) {
@@ -677,7 +659,7 @@ public class DumpEditor extends BasicActivity
             return;
         }
         // Get all Access Conditions (skip Data).
-        ArrayList<String> tmpACs = new ArrayList<String>();
+        ArrayList<String> tmpACs = new ArrayList<>();
         int lastSectorHeader = 0;
         for (int i = 0; i < mLines.length; i++) {
             if (mLines[i].startsWith("+")) {
@@ -717,7 +699,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Get all Value Blocks (skip other blocks).
-        ArrayList<String> tmpVBs = new ArrayList<String>();
+        ArrayList<String> tmpVBs = new ArrayList<>();
         String header = "";
         int blockCounter = 0;
         for (String line : mLines) {
@@ -800,12 +782,9 @@ public class DumpEditor extends BasicActivity
                 .setMessage(styledText)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
-                        new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing.
-                    }
-                }).show();
+                        (dialog, which) -> {
+                            // Do nothing.
+                        }).show();
         } else {
             // Error. There is no block 0.
             Toast.makeText(this, R.string.info_block0_missing,
@@ -926,7 +905,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Get all keys (skip Data and ACs).
-        HashSet<String> tmpKeys = new HashSet<String>();
+        HashSet<String> tmpKeys = new HashSet<>();
         for (int i = 0; i < mLines.length; i++) {
            if (i+1 == mLines.length || mLines[i+1].startsWith("+")) {
                 // Sector trailer.
