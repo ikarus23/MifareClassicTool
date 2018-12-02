@@ -13,6 +13,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Google Pixel
 * Google Pixel 2
 * Honor 9
+* Honor 10
 * HTC One
 * Huawei Ascend 620 (G620S)
 * Huawei Ascend Mate7
@@ -26,11 +27,13 @@ hardware (NFC-controller) does support MIFARE Classic
 * LGE LG G6 (H870)
 * Motorola G5 Plus
 * Motorola Photon Q
+* Nokia 5
 * Nokia 7 Plus
 * Nokia 8
 * OnePlus One (with recent version of OmniROM/LineageOS)
 * OnePlus 3/3T
 * OnePlus 5/5T
+* OnePlus 6
 * Philips Xenium I908
 * Samsung Galaxy A3 (2017, Android 8.0)
 * Samsung Galaxy A5 (2017, Android 8.0)
