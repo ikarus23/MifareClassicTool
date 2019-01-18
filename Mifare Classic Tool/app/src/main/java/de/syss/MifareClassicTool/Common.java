@@ -1005,9 +1005,9 @@ public class Common extends Application {
      */
     public static boolean isKeyBReadable(byte c1, byte c2, byte c3) {
         return c1 == 0
-                && (c2 == 0 && c3 == 0)
+                && ((c2 == 0 && c3 == 0)
                 || (c2 == 1 && c3 == 0)
-                || (c2 == 0 && c3 == 1);
+                || (c2 == 0 && c3 == 1));
     }
 
     /**
