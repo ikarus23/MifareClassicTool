@@ -79,6 +79,7 @@ public class MainMenu extends Activity {
     private final static int FILE_CHOOSER_KEY_FILE = 2;
     private static final int REQUEST_WRITE_STORAGE_CODE = 1;
     private boolean mDonateDialogWasShown = false;
+    private boolean mInfoExternalNfcDialogWasShown = false;
     private Button mReadTag;
     private Button mWriteTag;
     private Button mKeyEditor;
@@ -185,7 +186,7 @@ public class MainMenu extends Activity {
                         runSartUpNode(StartUpNode.DonateDialog);
                     }
                 } else {
-                    // NOTE: Use MCT with internal NFC controller.
+                    // Use MCT with internal NFC controller.
                     useAsEditorOnly(false);
                     Common.enableNfcForegroundDispatch(this);
                     runSartUpNode(StartUpNode.DonateDialog);
@@ -200,16 +201,28 @@ public class MainMenu extends Activity {
                 }
                 break;
             case ExternalNfcServiceRunning:
-                if (!Common.isExternalNfcServiceRunning(this)) {
+                int isExternalNfcRunning =
+                        Common.isExternalNfcServiceRunning(this);
+                if (isExternalNfcRunning == 0) {
+                    // External NFC is not running.
                     if (!Common.useAsEditorOnly()) {
                         createStartExternalNfcServiceDialog().show();
                     } else {
                         runSartUpNode(StartUpNode.DonateDialog);
                     }
-                } else {
-                    // NOTE: Use MCT with External NFC.
+                } else if (isExternalNfcRunning == 1) {
+                    // External NFC is running. Use MCT with External NFC.
                     useAsEditorOnly(false);
                     runSartUpNode(StartUpNode.DonateDialog);
+                } else {
+                    // Can not check if External NFC is running.
+                    if (!Common.useAsEditorOnly()
+                            && !mInfoExternalNfcDialogWasShown) {
+                        createInfoExternalNfcServiceDialog().show();
+                        mInfoExternalNfcDialogWasShown = true;
+                    } else {
+                        runSartUpNode(StartUpNode.DonateDialog);
+                    }
                 }
                 break;
             case DonateDialog:
@@ -454,6 +467,45 @@ public class MainMenu extends Activity {
     }
 
     /**
+     * Create the dialog which is displayed if it is not clear if the
+     * "External NFC" service running. After showing the dialog,
+     * {@link #runSartUpNode(StartUpNode)} with {@link StartUpNode#DonateDialog}
+     * will be called or MCT will redirect the user to the settings of
+     * "External NFC".
+     * @return The created alert dialog.
+     * @see #runSartUpNode(StartUpNode)
+     */
+    private AlertDialog createInfoExternalNfcServiceDialog() {
+        final Context context = this;
+        return new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_info_external_nfc_title)
+                .setMessage(R.string.dialog_info_external_nfc)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_external_nfc_is_running,
+                        (dialog, which) -> {
+                            // External NFC is running. Do "nothing".
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
+                .setNeutralButton(R.string.action_start_external_nfc,
+                        (dialog, which) -> {
+                            Common.openApp(context, "eu.dedb.nfc.service");
+                        })
+                .setNegativeButton(R.string.action_editor_only,
+                        (dialog, id) -> {
+                            // Only use Editor.
+                            useAsEditorOnly(true);
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
+                .setOnCancelListener(
+                        dialog -> {
+                            // Only use Editor.
+                            useAsEditorOnly(true);
+                            runSartUpNode(StartUpNode.DonateDialog);
+                        })
+                .create();
+    }
+
+    /**
      * Create the donate dialog. After showing the dialog,
      * {@link #runSartUpNode(StartUpNode)} with
      * {@link StartUpNode#HandleNewIntent} will be called.
@@ -604,7 +656,6 @@ public class MainMenu extends Activity {
             useAsEditorOnly(Common.useAsEditorOnly());
             runSartUpNode(StartUpNode.FirstUseDialog);
         } else {
-            Common.setUseAsEditorOnly(true);
             enableMenuButtons(false);
         }
     }

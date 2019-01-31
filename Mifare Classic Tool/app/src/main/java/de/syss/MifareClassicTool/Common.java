@@ -771,21 +771,31 @@ public class Common extends Application {
 
     /**
      * Check whether the service of the "External NFC" app is running or not.
+     * This will only work for Android < 8.
      * @param context The context for the system service.
-     * @return True if the service is running. False otherwise.
+     * @return
+     * <ul>
+     * <li>0 - Service is not running.</li>
+     * <li>1 - Service is running.</li>
+     * <li>-1 - Can not check because Android version is >= 8.</li>
+     * </ul>
      */
-    public static boolean isExternalNfcServiceRunning(Context context) {
-        ActivityManager manager =
-                (ActivityManager) context.getSystemService(
-                        Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service
-                : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if ("eu.dedb.nfc.service.NfcService".equals(
-                    service.service.getClassName())) {
-                return true;
+    public static int isExternalNfcServiceRunning(Context context) {
+        // getRunningServices() is deprecated since Android 8.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            ActivityManager manager =
+                    (ActivityManager) context.getSystemService(
+                            Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningServiceInfo service
+                    : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if ("eu.dedb.nfc.service.NfcService".equals(
+                        service.service.getClassName())) {
+                    return 1;
+                }
             }
+            return 0;
         }
-        return false;
+        return -1;
     }
 
     /**

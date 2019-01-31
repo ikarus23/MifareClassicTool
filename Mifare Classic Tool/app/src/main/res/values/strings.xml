@@ -243,6 +243,7 @@
     <string name="action_calc_bcc">Calculate BCC</string>
     <string name="action_install_external_nfc">Install \"External NFC\"</string>
     <string name="action_start_external_nfc">Go to \"External NFC\"</string>
+    <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -531,6 +532,11 @@
     <string name="dialog_start_external_nfc">The service of \"External NFC\" is not running.
         Please enable the service in order to use Mifare Classic Tool with an external
         NFC reader.
+    </string>
+    <string name="dialog_info_external_nfc_title">External NFC Service</string>
+    <string name="dialog_info_external_nfc">Your device doesn\'t have a NFC
+        reader, but the \"External NFC\" app is installed. Please make sure the \"External NFC\"
+        service is running in order to use Mifare Classic Tool with an external NFC reader.
     </string>
 
     <!-- Hints -->
