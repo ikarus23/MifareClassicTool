@@ -488,6 +488,121 @@ public class MCReader {
         return 0;
     }
 
+    public int findNextRandomKeyMapPart(){
+        boolean autoReconnect = Common.getPreferences().getBoolean(
+                Preference.AutoReconnect.toString(), false);
+        boolean retryAuth = Common.getPreferences().getBoolean(
+                Preference.UseRetryAuthentication.toString(), false);
+        int retryAuthCount = Common.getPreferences().getInt(
+                Preference.RetryAuthenticationCount.toString(), 1);
+
+        byte[][] genKeyBuffer = new byte[6][255];
+        byte lastElementInBuffer = 0;
+
+        boolean keyFound = false;
+        while(!keyFound) {
+            byte[] currentKey = new byte[6];
+            do {
+                for (int i = 0; i < 6; i++) {
+                    currentKey[i] = (byte) (Math.random() * 255);
+                }
+            }while(Arrays.asList(genKeyBuffer).contains(currentKey));
+
+            if(lastElementInBuffer == (byte)255){
+                lastElementInBuffer = 0;
+            }
+            genKeyBuffer[lastElementInBuffer] = currentKey;
+            lastElementInBuffer++;
+
+            try {
+                if (mMFC.authenticateSectorWithKeyA(mKeyMapStatus, currentKey)
+                        || mMFC.authenticateSectorWithKeyB(mKeyMapStatus, currentKey)) {
+                    mKeysWithOrder.add(0, currentKey);
+                    keyFound = true;
+                }
+            } catch (IOException e) {
+            } catch (Exception e) {
+                Log.d(LOG_TAG, "Error while building next key map part");
+                // Is auto reconnect enabled?
+                if (autoReconnect) {
+                    Log.d(LOG_TAG, "Auto reconnect is enabled");
+                    while (!isConnected()) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException ex) {
+                            //Sleep's interrupted
+                        }
+                        try {
+                            connect();
+                        } catch (Exception ex) {
+                            //Could not reconnect
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return ++mKeyMapStatus;
+    }
+
+    public int findNextIncrementalKeyMapPart(){
+        boolean autoReconnect = Common.getPreferences().getBoolean(
+                Preference.AutoReconnect.toString(), false);
+        boolean retryAuth = Common.getPreferences().getBoolean(
+                Preference.UseRetryAuthentication.toString(), false);
+        int retryAuthCount = Common.getPreferences().getInt(
+                Preference.RetryAuthenticationCount.toString(), 1);
+
+        byte[] currentKey = new byte[6];
+        boolean keyFound = false;
+        while(!keyFound) {
+            increment(currentKey);
+
+            try {
+                if (mMFC.authenticateSectorWithKeyA(mKeyMapStatus, currentKey)
+                        || mMFC.authenticateSectorWithKeyB(mKeyMapStatus, currentKey)) {
+                    mKeysWithOrder.add(0, currentKey);
+                    keyFound = true;
+                }
+            } catch (IOException e) {
+            } catch (Exception e) {
+                Log.d(LOG_TAG, "Error while building next key map part");
+                // Is auto reconnect enabled?
+                if (autoReconnect) {
+                    Log.d(LOG_TAG, "Auto reconnect is enabled");
+                    while (!isConnected()) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException ex) {
+                            //Sleep's interrupted
+                        }
+                        try {
+                            connect();
+                        } catch (Exception ex) {
+                            //Could not reconnect
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return ++mKeyMapStatus;
+    }
+
+    public boolean increment(byte[] byteArray) {
+        int i = byteArray.length;
+
+        //noinspection StatementWithEmptyBody
+        while (i-- > 0 && ++byteArray[i] == 0);
+
+        return i != -1;
+    }
+
+
     /**
      * Build Key-Value Pairs in which keys represent the sector and
      * values are one or both of the MIFARE keys (A/B).
@@ -855,8 +970,7 @@ public class MCReader {
             String[] lines = Common.readFileLineByLine(file, false, context);
             if (lines != null) {
                 for (String line : lines) {
-                    if (!line.equals("") && line.length() == 12
-                            && line.matches("[0-9A-Fa-f]+")) {
+                    if (line.length() == 12 && line.matches("[0-9A-Fa-f]+")) {
                         try {
                             keys.add(Common.hexStringToByteArray(line));
                         } catch (OutOfMemoryError e) {

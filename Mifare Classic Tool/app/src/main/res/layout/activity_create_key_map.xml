@@ -114,7 +114,7 @@
         android:id="@+id/textViewCreateKeyMapProgess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonCreateKeyMap"
+        android:layout_above="@+id/controlButtonsLayout"
         android:layout_alignParentLeft="true"
         android:padding="5dp"
         android:text="@string/text_key_map_progress"
@@ -125,17 +125,23 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonCreateKeyMap"
+        android:layout_above="@+id/controlButtonsLayout"
         android:layout_toRightOf="@id/textViewCreateKeyMapProgess"
         android:paddingBottom="5dp"
         android:paddingRight="5dp"
         android:paddingTop="10dp" />
 
+    <RelativeLayout
+            android:id="@+id/controlButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+
     <Button
         android:id="@+id/buttonCreateKeyMapCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/buttonCreateKeyMap"
         android:onClick="onCancelCreateKeyMap"
@@ -145,10 +151,19 @@
         android:id="@+id/buttonCreateKeyMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/buttonCreateKeyMapCancel"
         android:onClick="onCreateKeyMap"
         android:text="@string/action_create_key_map" />
+
+    <Button
+        android:id="@+id/buttonUseBruteForce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonCreateKeyMap"
+        android:onClick="onUseBruteForce"
+        android:text="@string/action_use_brute_force"/>
+    </RelativeLayout>
 
 </RelativeLayout>

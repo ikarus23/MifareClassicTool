@@ -197,6 +197,8 @@ public class KeyMapCreator extends BasicActivity {
             ((Button) findViewById(R.id.buttonCreateKeyMap)).setText(
                     intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
+
+
     }
 
     /**
@@ -325,6 +327,14 @@ public class KeyMapCreator extends BasicActivity {
         } else {
             finish();
         }
+    }
+
+    /**
+     * Crack sectors with brute force
+     *
+     */
+    public void onUseBruteForce(View view){
+
     }
 
     /**

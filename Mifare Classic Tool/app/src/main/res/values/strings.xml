@@ -166,6 +166,7 @@
     <string name="action_exit_app">Exit App</string>
     <string name="action_nfc">Go to NFC Settings</string>
     <string name="action_create_key_map">Map Keys to Sectors</string>
+    <string name="action_use_brute_force">Use brute force</string>
     <string name="action_create_key_map_and_read">Start Mapping and
         Read Tag</string>
     <string name="action_help">Help and Info</string>
