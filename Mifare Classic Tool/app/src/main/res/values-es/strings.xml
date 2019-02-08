@@ -49,6 +49,7 @@
     <string name="text_wait_read_tag">Leyendo etiqueta&#8230;\n(No quites
         la etiqueta)</string>
     <string name="text_key_map_progress">Progreso del mapeo de claves:</string>
+    <string name="text_find_key_progress">Encontrar el progreso clave:</string>
     <string name="text_sector">Sector</string>
     <string name="text_block">Bloque</string>
     <string name="text_caption_title">Título</string>

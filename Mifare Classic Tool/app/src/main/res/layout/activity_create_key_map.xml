@@ -20,116 +20,143 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayoutCreateKeyMap"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="Activities.KeyMapCreator"
-    android:orientation="horizontal" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/relativeLayoutCreateKeyMap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="Activities.KeyMapCreator"
+                android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/linearLayoutCreateKeyMap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+            android:id="@+id/linearLayoutCreateKeyMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textViewCreateKeyMapSectorRange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="3dp"
-            android:text="@string/text_sector_range"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:id="@+id/textViewCreateKeyMapSectorRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp"
+                android:text="@string/text_sector_range"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
-            android:id="@+id/textViewCreateKeyMapFromTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="3dp"
-            android:text="@string/text_sector_range_all"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/blue" />
+                android:id="@+id/textViewCreateKeyMapFromTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="3dp"
+                android:text="@string/text_sector_range_all"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/blue"/>
 
         <Button
-            android:id="@+id/buttonCreateKeyMapChangeRange"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="34dip"
-            android:onClick="onChangeSectorRange"
-            android:text="@string/action_change" />
+                android:id="@+id/buttonCreateKeyMapChangeRange"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="34dip"
+                android:onClick="onChangeSectorRange"
+                android:text="@string/action_change"/>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewCreateKeyMapChooseKeyFile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayoutCreateKeyMap"
-        android:paddingLeft="5dp"
-        android:text="@string/text_choose_key_file"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:id="@+id/textViewCreateKeyMapChooseKeyFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayoutCreateKeyMap"
+            android:paddingLeft="5dp"
+            android:text="@string/text_choose_key_file"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Button
-        android:id="@+id/buttonCreateKeyMapSelectAll"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewCreateKeyMapChooseKeyFile"
-        android:minHeight="34dip"
-        android:onClick="onSelectAll"
-        android:text="@string/action_select_all" />
+            android:id="@+id/buttonCreateKeyMapSelectAll"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewCreateKeyMapChooseKeyFile"
+            android:minHeight="34dip"
+            android:onClick="onSelectAll"
+            android:text="@string/action_select_all"/>
 
     <Button
-        android:id="@+id/buttonCreateKeyMapSelectNone"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/buttonCreateKeyMapSelectAll"
-        android:layout_toRightOf="@id/buttonCreateKeyMapSelectAll"
-        android:minHeight="34dip"
-        android:onClick="onSelectNone"
-        android:text="@string/action_select_none" />
+            android:id="@+id/buttonCreateKeyMapSelectNone"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/buttonCreateKeyMapSelectAll"
+            android:layout_toRightOf="@id/buttonCreateKeyMapSelectAll"
+            android:minHeight="34dip"
+            android:onClick="onSelectNone"
+            android:text="@string/action_select_none"/>
 
     <ScrollView
-        android:id="@+id/scrollViewCreateKeyMap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewCreateKeyMapProgess"
-        android:layout_below="@id/buttonCreateKeyMapSelectAll"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" >
-
-        <LinearLayout
-            android:id="@+id/linearLayoutCreateKeyMapKeyFiles"
+            android:id="@+id/scrollViewCreateKeyMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_above="@+id/keyMappingProgressLayout"
+            android:layout_below="@id/buttonCreateKeyMapSelectAll"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true">
+
+        <LinearLayout
+                android:id="@+id/linearLayoutCreateKeyMapKeyFiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
         </LinearLayout>
 
     </ScrollView>
 
-    <TextView
-        android:id="@+id/textViewCreateKeyMapProgess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/controlButtonsLayout"
-        android:layout_alignParentLeft="true"
-        android:padding="5dp"
-        android:text="@string/text_key_map_progress"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <RelativeLayout
+            android:id="@+id/keyMappingProgressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/controlButtonsLayout">
+        <TextView
+                android:id="@+id/textViewCreateKeyMapProgess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="5dp"
+                android:text="@string/text_key_map_progress"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-    <ProgressBar
-        android:id="@+id/progressBarCreateKeyMap"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/controlButtonsLayout"
-        android:layout_toRightOf="@id/textViewCreateKeyMapProgess"
-        android:paddingBottom="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp" />
+        <ProgressBar
+                android:id="@+id/progressBarCreateKeyMap"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textViewCreateKeyMapProgess"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"/>
+
+        <TextView
+                android:id="@+id/textViewFindKeyProgress"
+                android:layout_below="@id/textViewCreateKeyMapProgess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="5dp"
+                android:text="@string/text_find_key_progress"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <ProgressBar
+                android:id="@+id/progressBarFindKey"
+                android:layout_below="@id/progressBarCreateKeyMap"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textViewCreateKeyMapProgess"
+                android:max="100"
+                android:indeterminate="true"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"/>
+    </RelativeLayout>
 
     <RelativeLayout
             android:id="@+id/controlButtonsLayout"
@@ -138,32 +165,44 @@
             android:layout_alignParentBottom="true">
 
 
-    <Button
-        android:id="@+id/buttonCreateKeyMapCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/buttonCreateKeyMap"
-        android:onClick="onCancelCreateKeyMap"
-        android:text="@string/action_cancel" />
+        <Button
+                android:id="@+id/buttonCreateKeyMapCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/buttonCreateKeyMap"
+                android:onClick="onCancelCreateKeyMap"
+                android:text="@string/action_cancel"/>
 
-    <Button
-        android:id="@+id/buttonCreateKeyMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/buttonCreateKeyMapCancel"
-        android:onClick="onCreateKeyMap"
-        android:text="@string/action_create_key_map" />
+        <Button
+                android:id="@+id/buttonCreateKeyMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/buttonCreateKeyMapCancel"
+                android:onClick="onCreateKeyMap"
+                android:text="@string/action_create_key_map"/>
 
-    <Button
-        android:id="@+id/buttonUseBruteForce"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/buttonCreateKeyMap"
-        android:onClick="onUseBruteForce"
-        android:text="@string/action_use_brute_force"/>
+        <Button
+                android:id="@+id/buttonUseBruteForce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/buttonCreateKeyMap"
+                android:onClick="onUseBruteForce"
+                android:text="@string/action_use_brute_force"/>
+        <Button android:id="@+id/buttonIncrementalMode"
+                android:layout_below="@+id/buttonUseBruteForce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onUseBruteForce"
+                android:text="@string/action_incremental_mode"/>
+        <Button android:id="@+id/buttonRandomMode"
+                android:layout_below="@+id/buttonIncrementalMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onUseBruteForce"
+                android:text="@string/action_random_mode"/>
     </RelativeLayout>
 
 </RelativeLayout>

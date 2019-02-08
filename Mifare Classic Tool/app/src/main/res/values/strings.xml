@@ -50,6 +50,7 @@
     <string name="text_choose_key_file">Choose some key file(s):</string>
     <string name="text_wait_read_tag">Reading tag&#8230;\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>
+    <string name="text_find_key_progress">Key Finding Progress:</string>
     <string name="text_sector">Sector</string>
     <string name="text_block">Block</string>
     <string name="text_caption_title">Caption</string>
@@ -167,6 +168,8 @@
     <string name="action_nfc">Go to NFC Settings</string>
     <string name="action_create_key_map">Map Keys to Sectors</string>
     <string name="action_use_brute_force">Use brute force</string>
+    <string name="action_incremental_mode">Incremental mode</string>
+    <string name="action_random_mode">Random mode</string>
     <string name="action_create_key_map_and_read">Start Mapping and
         Read Tag</string>
     <string name="action_help">Help and Info</string>

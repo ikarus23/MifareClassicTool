@@ -69,6 +69,7 @@ import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInt
  * displayed to the user via Toast.</li>
  * <li>4 - Directory from {@link #EXTRA_KEYS_DIR} is null.</li>
  * </ul>
+ *
  * @author Gerhard Klostermeier
  */
 public class KeyMapCreator extends BasicActivity {
@@ -135,7 +136,9 @@ public class KeyMapCreator extends BasicActivity {
     private final Handler mHandler = new Handler();
     private int mProgressStatus;
     private ProgressBar mProgressBar;
+    private ProgressBar mProgressBarFindKey;
     private boolean mIsCreatingKeyMap;
+    private boolean mIsBruteForcing;
     private File mKeyDirPath;
     private int mFirstSector;
     private int mLastSector;
@@ -143,6 +146,7 @@ public class KeyMapCreator extends BasicActivity {
     /**
      * Set layout, set the mapping range
      * and initialize some member variables.
+     *
      * @see #EXTRA_SECTOR_CHOOSER
      * @see #EXTRA_SECTOR_CHOOSER_FROM
      * @see #EXTRA_SECTOR_CHOOSER_TO
@@ -156,6 +160,7 @@ public class KeyMapCreator extends BasicActivity {
         mKeyFilesGroup = findViewById(
                 R.id.linearLayoutCreateKeyMapKeyFiles);
         mProgressBar = findViewById(R.id.progressBarCreateKeyMap);
+        mProgressBarFindKey = findViewById(R.id.progressBarFindKey);
 
         // Init. sector range.
         Intent intent = getIntent();
@@ -204,6 +209,7 @@ public class KeyMapCreator extends BasicActivity {
     /**
      * Cancel the mapping process and disable NFC foreground dispatch system.
      * This method is not called, if screen orientation changes.
+     *
      * @see Common#disableNfcForegroundDispatch(Activity)
      */
     @Override
@@ -286,8 +292,9 @@ public class KeyMapCreator extends BasicActivity {
 
     /**
      * Select all of the key files.
+     *
      * @param view The View object that triggered the method
-     * (in this case the select all button).
+     *             (in this case the select all button).
      */
     public void onSelectAll(View view) {
         selectKeyFiles(true);
@@ -295,8 +302,9 @@ public class KeyMapCreator extends BasicActivity {
 
     /**
      * Select none of the key files.
+     *
      * @param view The View object that triggered the method
-     * (in this case the select none button).
+     *             (in this case the select none button).
      */
     public void onSelectNone(View view) {
         selectKeyFiles(false);
@@ -304,6 +312,7 @@ public class KeyMapCreator extends BasicActivity {
 
     /**
      * Select or deselect all key files.
+     *
      * @param allOrNone True for selecting all, False for none.
      */
     private void selectKeyFiles(boolean allOrNone) {
@@ -317,8 +326,9 @@ public class KeyMapCreator extends BasicActivity {
      * Inform the worker thread from {@link #createKeyMap(MCReader, Context)}
      * to stop creating the key map. If the thread is already
      * informed or does not exists this button will finish the activity.
+     *
      * @param view The View object that triggered the method
-     * (in this case the cancel button).
+     *             (in this case the cancel button).
      * @see #createKeyMap(MCReader, Context)
      */
     public void onCancelCreateKeyMap(View view) {
@@ -331,9 +341,37 @@ public class KeyMapCreator extends BasicActivity {
 
     /**
      * Crack sectors with brute force
-     *
      */
-    public void onUseBruteForce(View view){
+    public void onUseBruteForce(View view) {
+        MCReader reader = Common.checkForTagAndCreateReader(this);
+        if (reader != null) {
+            if (!mIsBruteForcing) {
+                switch (view.getId()) {
+                    case R.id.buttonIncrementalMode:
+                        new Thread(() -> {
+                            mIsBruteForcing = true;
+                            reader.tryFindNextIncrementalKeyMapPart();
+                            mIsBruteForcing = false;
+                        }).start();
+                        break;
+                    case R.id.buttonRandomMode:
+                        new Thread(() -> {
+                            mIsBruteForcing = true;
+                            reader.tryFindNextRandomKeyMapPart();
+                            mIsBruteForcing = false;
+                        }).start();
+                        break;
+                    default:
+                        Log.e(LOG_TAG, "Mode is unimplemented");
+                        break;
+                }
+            } else {
+                Log.e(LOG_TAG, "Brute force is already used!");
+            }
+
+        } else {
+            Log.e(LOG_TAG, "Couldn't create reader");
+        }
 
     }
 
@@ -345,8 +383,9 @@ public class KeyMapCreator extends BasicActivity {
      * {@link #keyMapCreated(MCReader)}).
      * If {@link Preference#SaveLastUsedKeyFiles} is active, this will also
      * save the selected key files.
+     *
      * @param view The View object that triggered the method
-     * (in this case the map keys to sectors button).
+     *             (in this case the map keys to sectors button).
      * @see #createKeyMap(MCReader, Context)
      * @see #keyMapCreated(MCReader)
      */
@@ -414,7 +453,7 @@ public class KeyMapCreator extends BasicActivity {
                         getString(R.string.text_sector_range_all))) {
                     // Read all.
                     mFirstSector = 0;
-                    mLastSector = reader.getSectorCount()-1;
+                    mLastSector = reader.getSectorCount() - 1;
                 } else {
                     String[] fromAndTo = mSectorRange.getText()
                             .toString().split(" ");
@@ -434,19 +473,17 @@ public class KeyMapCreator extends BasicActivity {
                 Common.setKeyMapRange(mFirstSector, mLastSector);
                 // Init. GUI elements.
                 mProgressStatus = -1;
-                mProgressBar.setMax((mLastSector-mFirstSector)+1);
+                mProgressBar.setMax((mLastSector - mFirstSector) + 1);
                 mCreateKeyMap.setEnabled(false);
                 mIsCreatingKeyMap = true;
                 Toast.makeText(this, R.string.info_wait_key_map,
                         Toast.LENGTH_SHORT).show();
                 // Read as much as possible with given key file.
                 createKeyMap(reader, this);
-            }
-            else{
+            } else {
                 Toast.makeText(this, R.string.info_mapping_no_keyfile_found, Toast.LENGTH_LONG).show();
             }
-        }
-        else{
+        } else {
             Toast.makeText(this, R.string.info_mapping_no_keyfile_selected, Toast.LENGTH_LONG).show();
         }
     }
@@ -456,6 +493,7 @@ public class KeyMapCreator extends BasicActivity {
      * method starts a worker thread that first creates a key map and then
      * calls {@link #keyMapCreated(MCReader)}.
      * It also updates the progress bar in the UI thread.
+     *
      * @param reader A connected {@link MCReader}.
      * @see #onCreateKeyMap(View)
      * @see #keyMapCreated(MCReader)
@@ -492,6 +530,19 @@ public class KeyMapCreator extends BasicActivity {
                 mIsCreatingKeyMap = false;
             });
         }).start();
+
+        new Thread(() -> {
+            mHandler.post(() -> mProgressBarFindKey.setIndeterminate(false));
+            while (mProgressStatus != -1 || mIsCreatingKeyMap) {
+                mHandler.post(() -> mProgressBarFindKey.setProgress((int) (reader.getKeyFindingProgress() * 100)));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    //Thread is interrupted
+                }
+            }
+            mHandler.post(() -> mProgressBarFindKey.setProgress(0));
+        }).start();
     }
 
     /**
@@ -500,6 +551,7 @@ public class KeyMapCreator extends BasicActivity {
      * saves the created key map to
      * {@link Common#setKeyMap(android.util.SparseArray)}
      * and finishes this Activity.
+     *
      * @param reader A {@link MCReader}.
      * @see #createKeyMap(MCReader, Context)
      * @see #onCreateKeyMap(View)
@@ -526,8 +578,9 @@ public class KeyMapCreator extends BasicActivity {
      * Show a dialog which lets the user choose the key mapping range.
      * If intended, save the mapping range as default
      * (using {@link #saveMappingRange(String, String)}).
+     *
      * @param view The View object that triggered the method
-     * (in this case the change button).
+     *             (in this case the change button).
      */
     public void onChangeSectorRange(View view) {
         // Build dialog elements.
@@ -582,65 +635,66 @@ public class KeyMapCreator extends BasicActivity {
                 R.string.info_invalid_range, Toast.LENGTH_LONG);
         // Build dialog and show him.
         new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_mapping_range_title)
-            .setMessage(R.string.dialog_mapping_range)
-            .setView(llv)
-            .setPositiveButton(R.string.action_ok,
-                    (dialog, whichButton) -> {
-                        // Read from x to y.
-                        String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
-                        String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
-                        boolean noFrom = false;
-                        if (!from.getText().toString().equals("")) {
-                            txtFrom = from.getText().toString();
-                        } else {
-                            noFrom = true;
-                        }
-                        if (!to.getText().toString().equals("")) {
-                            txtTo = to.getText().toString();
-                        } else if (noFrom) {
-                            // No values provided. Read all sectors.
+                .setTitle(R.string.dialog_mapping_range_title)
+                .setMessage(R.string.dialog_mapping_range)
+                .setView(llv)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, whichButton) -> {
+                            // Read from x to y.
+                            String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
+                            String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
+                            boolean noFrom = false;
+                            if (!from.getText().toString().equals("")) {
+                                txtFrom = from.getText().toString();
+                            } else {
+                                noFrom = true;
+                            }
+                            if (!to.getText().toString().equals("")) {
+                                txtTo = to.getText().toString();
+                            } else if (noFrom) {
+                                // No values provided. Read all sectors.
+                                mSectorRange.setText(
+                                        getString(R.string.text_sector_range_all));
+                                if (saveAsDefault.isChecked()) {
+                                    saveMappingRange("", "");
+                                }
+                                return;
+                            }
+                            int intFrom = Integer.parseInt(txtFrom);
+                            int intTo = Integer.parseInt(txtTo);
+                            if (intFrom > intTo || intFrom < 0
+                                    || intTo > MAX_SECTOR_COUNT - 1) {
+                                // Error.
+                                err.show();
+                            } else {
+                                mSectorRange.setText(txtFrom + " - " + txtTo);
+                                if (saveAsDefault.isChecked()) {
+                                    // Save as default.
+                                    saveMappingRange(txtFrom, txtTo);
+                                }
+                            }
+                        })
+                .setNeutralButton(R.string.action_read_all_sectors,
+                        (dialog, whichButton) -> {
+                            // Read all sectors.
                             mSectorRange.setText(
                                     getString(R.string.text_sector_range_all));
                             if (saveAsDefault.isChecked()) {
+                                // Save as default.
                                 saveMappingRange("", "");
                             }
-                            return;
-                        }
-                        int intFrom = Integer.parseInt(txtFrom);
-                        int intTo = Integer.parseInt(txtTo);
-                        if (intFrom > intTo || intFrom < 0
-                                || intTo > MAX_SECTOR_COUNT - 1) {
-                            // Error.
-                            err.show();
-                        } else {
-                            mSectorRange.setText(txtFrom + " - " + txtTo);
-                            if (saveAsDefault.isChecked()) {
-                                // Save as default.
-                                saveMappingRange(txtFrom, txtTo);
-                            }
-                        }
-                    })
-            .setNeutralButton(R.string.action_read_all_sectors,
-                    (dialog, whichButton) -> {
-                        // Read all sectors.
-                        mSectorRange.setText(
-                                getString(R.string.text_sector_range_all));
-                        if (saveAsDefault.isChecked()) {
-                            // Save as default.
-                            saveMappingRange("", "");
-                        }
-                    })
-            .setNegativeButton(R.string.action_cancel,
-                    (dialog, whichButton) -> {
-                        // Cancel dialog (do nothing).
-                    }).show();
+                        })
+                .setNegativeButton(R.string.action_cancel,
+                        (dialog, whichButton) -> {
+                            // Cancel dialog (do nothing).
+                        }).show();
     }
 
     /**
      * Helper method to save the mapping rage as default.
+     *
      * @param from Start of the mapping range.
-     * @param to End of the mapping range.
+     * @param to   End of the mapping range.
      */
     private void saveMappingRange(String from, String to) {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
