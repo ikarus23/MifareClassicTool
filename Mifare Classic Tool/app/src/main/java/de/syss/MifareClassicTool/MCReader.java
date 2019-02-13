@@ -87,6 +87,11 @@ public class MCReader {
         mMFC = tmpMFC;
     }
 
+    /**
+     * Get key finding state
+     *
+     * @return relative progress value with max=1
+     */
     public float getKeyFindingProgress() {
         return mLastKeyIndex == 0 ? 1 : (float) mCurrentKeyIndex / mLastKeyIndex;
     }
@@ -505,7 +510,10 @@ public class MCReader {
         return 0;
     }
 
-    public int tryFindNextRandomKeyMapPart() {
+    /**
+     * Find keyA or keyB using random brute force mode
+     */
+    public void findNextRandomKey() {
         boolean autoReconnect = Common.getPreferences().getBoolean(
                 Preference.AutoReconnect.toString(), false);
         boolean retryAuth = Common.getPreferences().getBoolean(
@@ -568,11 +576,12 @@ public class MCReader {
                 }
             }
         }
-
-        return ++mKeyMapStatus;
     }
 
-    public int tryFindNextIncrementalKeyMapPart() {
+    /**
+     * Find keyA or keyB using incremental brute force mode
+     */
+    public void findNextIncrementalKey() {
         boolean autoReconnect = Common.getPreferences().getBoolean(
                 Preference.AutoReconnect.toString(), false);
         boolean retryAuth = Common.getPreferences().getBoolean(
@@ -620,17 +629,13 @@ public class MCReader {
                 }
             }
         }
-
-        return ++mKeyMapStatus;
     }
 
-    public boolean increment(byte[] byteArray) {
+    public void increment(byte[] byteArray) {
         int i = byteArray.length;
 
         //noinspection StatementWithEmptyBody
         while (i-- > 0 && ++byteArray[i] == 0) ;
-
-        return i != -1;
     }
 
 
@@ -1134,6 +1139,11 @@ public class MCReader {
         return mKeyMap;
     }
 
+    /**
+     * Check if card is MifareClassic
+     *
+     * @return is MifareClassic
+     */
     public boolean isMifareClassic() {
         return mMFC != null;
     }

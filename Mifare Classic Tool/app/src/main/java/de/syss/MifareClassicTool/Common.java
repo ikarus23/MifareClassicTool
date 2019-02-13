@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
+import de.syss.MifareClassicTool.R;
 
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.AutoCopyUID;
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UIDFormat;
@@ -1700,15 +1701,19 @@ public class Common extends Application {
         return mUseAsEditorOnly;
     }
 
+    /**
+     * Convert MifareClassic 6 byte key to long
+     *
+     * @param b MifareClassic keyA or keyB
+     * @return long number representation
+     */
     public static long keyToLong(byte[] b) {
-        return ((long) 0 << 56)
-                | ((long) 0 & 0xff) << 48
-                | ((long) b[5] & 0xff) << 40
-                | ((long) b[4] & 0xff) << 32
-                | ((long) b[3] & 0xff) << 24
-                | ((long) b[2] & 0xff) << 16
-                | ((long) b[1] & 0xff) << 8
-                | ((long) b[0] & 0xff);
+        return (((long) b[7] & 0xff) << 40
+                | ((long) b[6] & 0xff) << 32
+                | ((long) b[5] & 0xff) << 24
+                | ((long) b[4] & 0xff) << 16
+                | ((long) b[3] & 0xff) << 8
+                | ((long) b[2] & 0xff));
     }
 
 

@@ -350,14 +350,14 @@ public class KeyMapCreator extends BasicActivity {
                     case R.id.buttonIncrementalMode:
                         new Thread(() -> {
                             mIsBruteForcing = true;
-                            reader.tryFindNextIncrementalKeyMapPart();
+                            reader.findNextIncrementalKey();
                             mIsBruteForcing = false;
                         }).start();
                         break;
                     case R.id.buttonRandomMode:
                         new Thread(() -> {
                             mIsBruteForcing = true;
-                            reader.tryFindNextRandomKeyMapPart();
+                            reader.findNextRandomKey();
                             mIsBruteForcing = false;
                         }).start();
                         break;

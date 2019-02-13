@@ -70,33 +70,37 @@
             android:text="@string/text_choose_key_file"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <Button
-            android:id="@+id/buttonCreateKeyMapSelectAll"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+    <RelativeLayout
+            android:id="@+id/selectionButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewCreateKeyMapChooseKeyFile"
-            android:minHeight="34dip"
-            android:onClick="onSelectAll"
-            android:text="@string/action_select_all"/>
+            android:layout_below="@id/textViewCreateKeyMapChooseKeyFile">
+        <Button
+                android:id="@+id/buttonCreateKeyMapSelectAll"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="34dip"
+                android:onClick="onSelectAll"
+                android:text="@string/action_select_all"/>
 
-    <Button
-            android:id="@+id/buttonCreateKeyMapSelectNone"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/buttonCreateKeyMapSelectAll"
-            android:layout_toRightOf="@id/buttonCreateKeyMapSelectAll"
-            android:minHeight="34dip"
-            android:onClick="onSelectNone"
-            android:text="@string/action_select_none"/>
-
+        <Button
+                android:id="@+id/buttonCreateKeyMapSelectNone"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/buttonCreateKeyMapSelectAll"
+                android:layout_toRightOf="@id/buttonCreateKeyMapSelectAll"
+                android:minHeight="34dip"
+                android:onClick="onSelectNone"
+                android:text="@string/action_select_none"/>
+    </RelativeLayout>
     <ScrollView
             android:id="@+id/scrollViewCreateKeyMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/keyMappingProgressLayout"
-            android:layout_below="@id/buttonCreateKeyMapSelectAll"
+            android:layout_below="@id/selectionButtons"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true">
 
@@ -204,5 +208,14 @@
                 android:onClick="onUseBruteForce"
                 android:text="@string/action_random_mode"/>
     </RelativeLayout>
+
+    <TextView
+            android:id="@+id/cardNotFoundPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#dd232323"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:text="card not found"/>
 
 </RelativeLayout>
