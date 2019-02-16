@@ -53,7 +53,6 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy J3 (2016)
 * Samsung Galaxy J5 (2017)
 * Samsung Galaxy J7 (2016, 2017)
-* Samsung Galaxy J7 Pro
 * Samsung Galaxy Mega
 * Samsung Galaxy Note 3
 * Samsung Galaxy Note 4
