@@ -13,7 +13,6 @@ This list may be incomplete. You might also want to have a look at
 * Asus Zenfone 2
 * Blackberry Priv
 * Blackview BV8000 Pro
-* BQ Aquaris X5 Plus
 * Foxcon InFocus M320
 * Google Nexus 4
 * Google Nexus 5
