@@ -1,5 +1,17 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.5:
+ * Improved compatibility with External NFC.
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
+ * Imporved the mct2eml converter tool.
+ * Bugfix: Detect if key B is readable.
+   Thanks to Vladimir "phcoder" Serbinenko.
+ * Bugfix: Show "dead sector" if auth worked but no data could be read.
+ * Bugfix: Read key B even ACs don't allow to read block 0 of sector x.
+ * Updated the list of compatible and incompatible devices.
+ * Some small code refactoring. Thanks to Hamidreza "HrBDev" Bayat.
+
 Version 2.2.4:
  * Added more well known keys to the extended key file.
    (Remove the old and restart MCT to get the new key file.)
