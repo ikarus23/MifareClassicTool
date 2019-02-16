@@ -432,6 +432,12 @@ public class KeyMapCreator extends BasicActivity {
                 // Read as much as possible with given key file.
                 createKeyMap(reader, this);
             }
+            else{
+                Toast.makeText(this, R.string.info_mapping_no_keyfile_found, Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            Toast.makeText(this, R.string.info_mapping_no_keyfile_selected, Toast.LENGTH_LONG).show();
         }
     }
 

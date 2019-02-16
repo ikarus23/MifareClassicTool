@@ -344,6 +344,8 @@
     <string name="info_share_error">Error: Sharing file failed</string>
     <string name="info_retry_authentication_count_error">Error: Retries must be between
         1 and 1000</string>
+    <string name="info_mapping_no_keyfile_selected">Error: No key files selected</string>
+    <string name="info_mapping_no_keyfile_found">Error: No key files found</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
