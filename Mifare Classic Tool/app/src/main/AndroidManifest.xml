@@ -48,16 +48,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
 
+        <activity-alias
+            android:targetActivity="de.syss.MifareClassicTool.Activities.MainMenu"
+            android:name=".MainMenuAlias"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTop" >
             <!-- NFC Tech Filter -->
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
-
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
-        </activity>
+        </activity-alias>
 
         <!-- Content Providers -->
         <provider
