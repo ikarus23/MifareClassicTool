@@ -25,7 +25,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -75,13 +74,13 @@ public class Preferences extends BasicActivity {
     private CheckBox mUseCustomSectorCount;
     private CheckBox mUseRetryAuthentication;
     private CheckBox mUseInternalStorage;
-    private CheckBox mPrefAutostartWhenCardDetected;
+    private CheckBox mPrefAutostartIfCardDetected;
     private EditText mCustomSectorCount;
     private EditText mRetryAuthenticationCount;
     private RadioGroup mUIDFormatRadioGroup;
 
-    private PackageManager packageManager;
-    private ComponentName componentName;
+    private PackageManager mPackageManager;
+    private ComponentName mComponentName;
 
     /**
      * Initialize the preferences with the last stored ones.
@@ -91,8 +90,8 @@ public class Preferences extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
-        packageManager = getApplicationContext().getPackageManager();
-        componentName = new ComponentName(getPackageName(), getPackageName() +
+        mPackageManager = getApplicationContext().getPackageManager();
+        mComponentName = new ComponentName(getPackageName(), getPackageName() +
                 ".MainMenuAlias");
 
         // Get preferences (init. the member variables).
@@ -108,9 +107,8 @@ public class Preferences extends BasicActivity {
                 R.id.editTextPreferencesCustomSectorCount);
         mUseInternalStorage = findViewById(
                 R.id.checkBoxPreferencesUseInternalStorage);
-        mPrefAutostartWhenCardDetected = findViewById(
-                R.id.checkBoxPreferencesAutostartWhenCardDetected);
-        setAutostartWhenCardDetectedState();
+        mPrefAutostartIfCardDetected = findViewById(
+                R.id.checkBoxPreferencesAutostartIfCardDetected);
         mUseRetryAuthentication = findViewById(
                 R.id.checkBoxPreferencesUseRetryAuthentication);
         mRetryAuthenticationCount = findViewById(
@@ -138,6 +136,7 @@ public class Preferences extends BasicActivity {
                 mUseRetryAuthentication.isChecked());
         mRetryAuthenticationCount.setText("" + pref.getInt(
                 Preference.RetryAuthenticationCount.toString(), 1));
+        detectAutostartIfCardDetectedState();
 
         // UID Format Options (hide/show)
         mUIDFormatRadioGroup = findViewById(
@@ -145,15 +144,20 @@ public class Preferences extends BasicActivity {
         toggleUIDFormat(null);
     }
 
-    private void setAutostartWhenCardDetectedState() {
-        int enabledSetting = packageManager.getComponentEnabledSetting(componentName);
+    /**
+     * Detect the current "Autostart if card is detected" state and set
+     * the checkbox accordingly.
+     */
+    private void detectAutostartIfCardDetectedState() {
+        int enabledSetting = mPackageManager.getComponentEnabledSetting(
+                mComponentName);
         switch (enabledSetting) {
             case PackageManager.COMPONENT_ENABLED_STATE_ENABLED:
             case PackageManager.COMPONENT_ENABLED_STATE_DEFAULT:
-                mPrefAutostartWhenCardDetected.setChecked(true);
+                mPrefAutostartIfCardDetected.setChecked(true);
                 break;
             case PackageManager.COMPONENT_ENABLED_STATE_DISABLED:
-                mPrefAutostartWhenCardDetected.setChecked(false);
+                mPrefAutostartIfCardDetected.setChecked(false);
                 break;
             default:
                 break;
@@ -344,14 +348,13 @@ public class Preferences extends BasicActivity {
         edit.apply();
 
         int newState;
-        if (mPrefAutostartWhenCardDetected.isChecked()) {
+        if (mPrefAutostartIfCardDetected.isChecked()) {
             newState = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-        }
-        else {
+        } else {
             newState = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         }
-        packageManager.setComponentEnabledSetting(
-                componentName,
+        mPackageManager.setComponentEnabledSetting(
+                mComponentName,
                 newState,
                 PackageManager.DONT_KILL_APP);
 

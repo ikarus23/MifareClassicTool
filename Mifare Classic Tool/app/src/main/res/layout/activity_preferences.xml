@@ -260,7 +260,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relativeLayoutPreferencesAutostartWhenCardDetected"
+                android:id="@+id/relativeLayoutPreferencesAutostartIfCardDetected"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
@@ -268,12 +268,12 @@
                 android:padding="2dp">
 
                 <CheckBox
-                    android:id="@+id/checkBoxPreferencesAutostartWhenCardDetected"
+                    android:id="@+id/checkBoxPreferencesAutostartIfCardDetected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/action_autostart_when_card_detected" />
+                    android:text="@string/action_autostart_if_card_detected" />
 
             </RelativeLayout>
 
