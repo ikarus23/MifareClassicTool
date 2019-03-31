@@ -444,7 +444,7 @@
         &#8226; Donate:
         <a href="market://details?id=de.syss.MifareClassicToolDonate">
         Google Play</a> or
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW">PayPal</a></b><br /><br />
+        <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">PayPal</a></b><br /><br />
         Useful information:<br />
         &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
         Tracker</a><br />
@@ -517,7 +517,7 @@
         please consider to make the developer happy. Buy him a beer! ;)
         \n\n<a href="market://details?id=de.syss.MifareClassicToolDonate">Donate
         with Google Play</a>
-        \n<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=24ET8A36XLMNW">Donate
+        \n<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">Donate
         with PayPal</a>
     </string>
     <string name="dialog_save_before_quitting_title">Unsaved changes</string>
