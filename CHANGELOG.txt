@@ -1,5 +1,10 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.2.6:
+ * Autorun on tag detection can be deactivated now. Thanks to "aerizzo".
+ * Removed PayPal links to be compliant to Google's payment policies.
+ * Some fixed to the all-0-keys bug.
+
 Version 2.2.5:
  * Improved compatibility with External NFC.
  * Added more well known keys to the extended key file.
