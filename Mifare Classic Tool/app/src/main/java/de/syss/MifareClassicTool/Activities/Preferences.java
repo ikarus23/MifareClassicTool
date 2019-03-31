@@ -19,10 +19,13 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -72,9 +75,13 @@ public class Preferences extends BasicActivity {
     private CheckBox mUseCustomSectorCount;
     private CheckBox mUseRetryAuthentication;
     private CheckBox mUseInternalStorage;
+    private CheckBox mPrefAutostartWhenCardDetected;
     private EditText mCustomSectorCount;
     private EditText mRetryAuthenticationCount;
     private RadioGroup mUIDFormatRadioGroup;
+
+    private PackageManager packageManager;
+    private ComponentName componentName;
 
     /**
      * Initialize the preferences with the last stored ones.
@@ -83,6 +90,10 @@ public class Preferences extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
+
+        packageManager = getApplicationContext().getPackageManager();
+        componentName = new ComponentName(getPackageName(), getPackageName() +
+                ".MainMenuAlias");
 
         // Get preferences (init. the member variables).
         mPrefAutoReconnect = findViewById(
@@ -97,6 +108,9 @@ public class Preferences extends BasicActivity {
                 R.id.editTextPreferencesCustomSectorCount);
         mUseInternalStorage = findViewById(
                 R.id.checkBoxPreferencesUseInternalStorage);
+        mPrefAutostartWhenCardDetected = findViewById(
+                R.id.checkBoxPreferencesAutostartWhenCardDetected);
+        setAutostartWhenCardDetectedState();
         mUseRetryAuthentication = findViewById(
                 R.id.checkBoxPreferencesUseRetryAuthentication);
         mRetryAuthenticationCount = findViewById(
@@ -129,6 +143,21 @@ public class Preferences extends BasicActivity {
         mUIDFormatRadioGroup = findViewById(
                 R.id.radioGroupUIDFormat);
         toggleUIDFormat(null);
+    }
+
+    private void setAutostartWhenCardDetectedState() {
+        int enabledSetting = packageManager.getComponentEnabledSetting(componentName);
+        switch (enabledSetting) {
+            case PackageManager.COMPONENT_ENABLED_STATE_ENABLED:
+            case PackageManager.COMPONENT_ENABLED_STATE_DEFAULT:
+                mPrefAutostartWhenCardDetected.setChecked(true);
+                break;
+            case PackageManager.COMPONENT_ENABLED_STATE_DISABLED:
+                mPrefAutostartWhenCardDetected.setChecked(false);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -313,6 +342,18 @@ public class Preferences extends BasicActivity {
         edit.putInt(Preference.RetryAuthenticationCount.toString(),
                 retryAuthenticationCount);
         edit.apply();
+
+        int newState;
+        if (mPrefAutostartWhenCardDetected.isChecked()) {
+            newState = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        }
+        else {
+            newState = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        }
+        packageManager.setComponentEnabledSetting(
+                componentName,
+                newState,
+                PackageManager.DONT_KILL_APP);
 
         // Exit the preferences view.
         finish();

@@ -213,6 +213,8 @@
     <string name="action_auto_copy_uid">Automatically copy new tag UID to clipboard</string>
     <string name="action_save_last_key_files">Remember the last selected key
         files (key mapping dialog)</string>
+    <string name="action_autostart_when_card_detected">Autostart the app when a card is
+        detected</string>
     <string name="action_use_custom_sector_count">Use custom sector count</string>
     <string name="action_save">Save</string>
     <string name="action_share">Share</string>
