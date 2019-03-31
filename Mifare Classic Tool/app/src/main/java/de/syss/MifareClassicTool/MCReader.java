@@ -600,15 +600,18 @@ public class MCReader {
             if (!error && (foundKeys[0] || foundKeys[1])) {
                 // At least one key found. Add key(s).
                 mKeyMap.put(mKeyMapStatus, keys);
-                // Key reuse is very likely, so try these first
-                // for the next sector.
+                // Key reuse is very likely, so try the found keys second.
+                // NOTE: The all-F key has to be tested always first if there
+                // is a all-0 key in the key file, because of a bug in
+                // some tags and/or devices.
+                // https://github.com/ikarus23/MifareClassicTool/issues/66
                 if (foundKeys[0]) {
                     mKeysWithOrder.remove(keys[0]);
-                    mKeysWithOrder.add(0, keys[0]);
+                    mKeysWithOrder.add(1, keys[0]);
                 }
                 if (foundKeys[1]) {
                     mKeysWithOrder.remove(keys[1]);
-                    mKeysWithOrder.add(0, keys[1]);
+                    mKeysWithOrder.add(1, keys[1]);
                 }
             }
             mKeyMapStatus++;
@@ -850,6 +853,7 @@ public class MCReader {
      * on error (out of memory).
      */
     public boolean setKeyFile(File[] keyFiles, Context context) {
+        boolean hasAllZeroKey = false;
         HashSet<byte[]> keys = new HashSet<>();
         for (File file : keyFiles) {
             String[] lines = Common.readFileLineByLine(file, false, context);
@@ -857,6 +861,9 @@ public class MCReader {
                 for (String line : lines) {
                     if (!line.equals("") && line.length() == 12
                             && line.matches("[0-9A-Fa-f]+")) {
+                        if (line.equals("000000000000")) {
+                            hasAllZeroKey = true;
+                        }
                         try {
                             keys.add(Common.hexStringToByteArray(line));
                         } catch (OutOfMemoryError e) {
@@ -871,6 +878,16 @@ public class MCReader {
         }
         if (keys.size() > 0) {
             mKeysWithOrder = new ArrayList<>(keys);
+            byte[] zeroKey = Common.hexStringToByteArray("000000000000");
+            if (hasAllZeroKey) {
+                // NOTE: The all-F key has to be tested always first if there
+                // is a all-0 key in the key file, because of a bug in
+                // some tags and/or devices.
+                // https://github.com/ikarus23/MifareClassicTool/iss000000000000ues/66
+                byte[] fKey = Common.hexStringToByteArray("FFFFFFFFFFFF");
+                mKeysWithOrder.remove(fKey);
+                mKeysWithOrder.add(0, fKey);
+            }
         }
         return true;
     }
