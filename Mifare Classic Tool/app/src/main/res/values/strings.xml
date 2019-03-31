@@ -443,8 +443,7 @@
         Google Play</a><br />
         &#8226; Donate:
         <a href="market://details?id=de.syss.MifareClassicToolDonate">
-        Google Play</a> or
-        <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">PayPal</a></b><br /><br />
+        Google Play</a></b><br /><br />
         Useful information:<br />
         &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
         Tracker</a><br />
@@ -515,10 +514,10 @@
         <b>MIFARE Classic Tool has been updated!</b>
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
-        \n\n<a href="market://details?id=de.syss.MifareClassicToolDonate">Donate
-        with Google Play</a>
-        \n<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">Donate
-        with PayPal</a>
+        \n\n<a href="market://details?id=de.syss.MifareClassicToolDonate">Get
+        the donate version</a>
+        \n<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
+        on github</a>
     </string>
     <string name="dialog_save_before_quitting_title">Unsaved changes</string>
     <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
