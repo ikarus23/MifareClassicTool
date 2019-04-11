@@ -907,8 +907,12 @@ public class MainMenu extends Activity {
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;
-            case R.id.menuMainBccTool:
+        case R.id.menuMainBccTool:
                 intent = new Intent(this, BccTool.class);
+                startActivity(intent);
+                return true;
+        case R.id.menuMainCloneUidTool:
+                intent = new Intent(this, CloneUid.class);
                 startActivity(intent);
                 return true;
         default:

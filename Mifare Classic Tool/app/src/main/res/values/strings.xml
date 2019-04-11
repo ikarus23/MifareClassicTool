@@ -45,6 +45,7 @@
     <string name="title_activity_preferences">Preferences</string>
     <string name="title_activity_diff_tool">Diff Tool</string>
     <string name="title_activity_bcc_tool">BCC Calculator</string>
+    <string name="title_activity_clone_uid">Clone UID to Magic gen2</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -156,6 +157,17 @@
     <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
     <string name="text_uid_part">UID (part):</string>
     <string name="text_bcc">BCC:</string>
+    <string name="text_clone_uid_hint">Enter, paste or scan original UID:</string>
+    <string name="text_clone_uid_original">UID to clone:</string>
+    <string name="text_clone_uid_manufacturer_block_rest">Rest of block 0 (you can safely leave default):</string>
+    <string name="text_clone_uid_manufacturer_block_key_hint">Key to write block 0:</string>
+    <string name="text_clone_uid_invalid_key">Invalid key!</string>
+    <string name="text_clone_uid_manufacturer_block_to_write">Final block 0 to write:</string>
+    <string name="text_clone_uid_waiting_for_magic_tag">Waiting for \'Magic UID\' gen2 tag...</string>
+    <string name="text_clone_uid_writing">Writing block 0...</string>
+    <string name="text_clone_uid_checking_clone">Checking clone...</string>
+    <string name="text_clone_uid_checking_clone_success">Success!</string>
+    <string name="text_clone_uid_checking_clone_error">Sorry, please try again. Are you sure you have Magic UID gen2 (direct write to block 0) card?</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -226,6 +238,7 @@
     <string name="action_show_ac_tool">Access Condition De-/Encoder</string>
     <string name="action_show_diff_tool">Diff Tool (Compare Dumps)</string>
     <string name="action_show_bcc_tool">BCC Calculator</string>
+    <string name="action_show_clone_uid">Clone UID</string>
     <string name="action_compare_dump">Compare Dump</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
@@ -246,6 +259,8 @@
     <string name="action_install_external_nfc">Install \"External NFC\"</string>
     <string name="action_start_external_nfc">Go to \"External NFC\"</string>
     <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
+    <string name="action_clone_uid">Calculate block 0 and clone UID</string>
+    <string name="action_clone_uid_advanced">Advanced options</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -348,6 +363,8 @@
         1 and 1000</string>
     <string name="info_mapping_no_keyfile_selected">Error: No key files selected</string>
     <string name="info_mapping_no_keyfile_found">Error: No key files found</string>
+    <string name="info_not_11_byte">Error: Rest of block 0 data must be 11 bytes
+        (22 characters)</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

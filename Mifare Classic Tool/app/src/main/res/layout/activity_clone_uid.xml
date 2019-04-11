@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2015 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/relativeLayoutValueBlockTool"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="de.syss.MifareClassicTool.Activities.CloneUid" >
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCloneUidHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_clone_uid_hint"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCloneUidToClone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutCloneUidHint"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/textViewCloneUid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/text_clone_uid_original"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editTextCloneUidOriginalUid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_hex_4_byte"
+            android:imeOptions="actionDone"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxLength="8" />
+
+        <ImageButton
+            android:id="@+id/imageButtonCloneUidPaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_paste"
+            android:onClick="onPasteUidFromClipboard"
+            android:src="@drawable/paste" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonAdvanced"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutCloneUidToClone"
+        android:layout_alignParentStart="true"
+        android:drawableRight="@drawable/arrow_down"
+        android:onClick="onShowAdvancedOptions"
+        android:text="@string/action_clone_uid_advanced" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAdvancedOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textViewCloneUidManufacturerBlockRestHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_below="@+id/buttonAdvanced"
+            android:text="@string/text_clone_uid_manufacturer_block_rest"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCloneUidManufacturerBlockRest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewCloneUidManufacturerBlockRestHint"
+            android:padding="5dp">
+
+            <EditText
+                android:id="@+id/editTextCloneUidManufacturerBlockRest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:maxLength="22" />
+
+            <ImageButton
+                android:id="@+id/imageButtonCloneUidPasteManufacturer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_paste"
+                android:onClick="onPasteManufacturerBlockFromClipboard"
+                android:src="@drawable/paste" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewCloneUidManufacturerBlockKeyHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_below="@+id/linearLayoutCloneUidManufacturerBlockRest"
+            android:text="@string/text_clone_uid_manufacturer_block_key_hint"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCloneUidManufacturerBlockKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewCloneUidManufacturerBlockKeyHint"
+            android:padding="5dp">
+
+            <EditText
+                android:id="@+id/editTextCloneUidManufacturerBlockKey"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:maxLength="12" />
+
+            <ImageButton
+                android:id="@+id/imageButtonCloneUidPasteKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_paste"
+                android:onClick="onPasteKeyFromClipboard"
+                android:src="@drawable/paste" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/buttonCalculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutAdvancedOptions"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:drawableTop="@drawable/clone_uid"
+        android:onClick="onCalculateManufacturerBlock"
+        android:text="@string/action_clone_uid" />
+
+
+    <TextView
+            android:id="@+id/textViewCloneUidManufacturerBlockFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:layout_below="@+id/buttonCalculate"
+            android:text="@string/text_clone_uid_manufacturer_block_to_write"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCloneUidManufacturerBlockFinalContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_below="@+id/textViewCloneUidManufacturerBlockFinal"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCloneUidWaitingForMagicTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:layout_below="@+id/textViewCloneUidManufacturerBlockFinalContent"
+        android:text="@string/text_clone_uid_waiting_for_magic_tag"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCloneUidWritingMagicTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_below="@+id/textViewCloneUidWaitingForMagicTag"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCloneUidCheckingClone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_below="@+id/textViewCloneUidWritingMagicTag"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>
