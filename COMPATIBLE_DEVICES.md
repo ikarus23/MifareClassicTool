@@ -58,5 +58,6 @@ hardware (NFC-controller) does support MIFARE Classic
 * Sony Xperia Z5 Compact
 * Sony Xperia XZ
 * Xiaomi Mi 5
+* Xiaomi Mi 6 (Android 8.0)
 * Yota Phone (YD201, YD206)
 * ZTE Axxon 7
