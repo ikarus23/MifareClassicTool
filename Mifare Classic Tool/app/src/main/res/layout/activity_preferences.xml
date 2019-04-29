@@ -273,7 +273,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/action_autostart_if_card_detected" />
+                    android:text="@string/action_autostart_if_tag_detected" />
 
             </RelativeLayout>
 

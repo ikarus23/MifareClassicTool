@@ -636,6 +636,9 @@ public class MainMenu extends Activity {
         // Enable/Disable tag info tool depending on NFC availability.
         menu.findItem(R.id.menuMainTagInfo).setEnabled(
                 !Common.useAsEditorOnly());
+        // Enable/Disable UID clone info tool depending on NFC availability.
+        menu.findItem(R.id.menuMainCloneUidTool).setEnabled(
+                !Common.useAsEditorOnly());
         // Enable/Disable diff tool depending on write permissions.
         menu.findItem(R.id.menuMainDiffTool).setEnabled(
                 Common.hasWritePermissionToExternalStorage(this));
@@ -907,10 +910,14 @@ public class MainMenu extends Activity {
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;
-            case R.id.menuMainBccTool:
-                intent = new Intent(this, BccTool.class);
-                startActivity(intent);
-                return true;
+        case R.id.menuMainBccTool:
+            intent = new Intent(this, BccTool.class);
+            startActivity(intent);
+            return true;
+        case R.id.menuMainCloneUidTool:
+            intent = new Intent(this, CloneUidTool.class);
+            startActivity(intent);
+            return true;
         default:
             return super.onContextItemSelected(item);
         }
