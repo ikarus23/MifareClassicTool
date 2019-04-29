@@ -174,7 +174,7 @@
             android:label="@string/title_activity_bcc_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.CloneUid"
+            android:name="de.syss.MifareClassicTool.Activities.CloneUidTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/clone_uid"
             android:label="@string/title_activity_clone_uid" >

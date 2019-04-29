@@ -45,7 +45,7 @@
     <string name="title_activity_preferences">Preferences</string>
     <string name="title_activity_diff_tool">Diff Tool</string>
     <string name="title_activity_bcc_tool">BCC Calculator</string>
-    <string name="title_activity_clone_uid">Clone UID to Magic gen2</string>
+    <string name="title_activity_clone_uid">Clone UID to Magic Tag (2nd gen)</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -157,17 +157,24 @@
     <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
     <string name="text_uid_part">UID (part):</string>
     <string name="text_bcc">BCC:</string>
-    <string name="text_clone_uid_hint">Enter, paste or scan original UID:</string>
-    <string name="text_clone_uid_original">UID to clone:</string>
-    <string name="text_clone_uid_manufacturer_block_rest">Rest of block 0 (you can safely leave default):</string>
-    <string name="text_clone_uid_manufacturer_block_key_hint">Key to write block 0:</string>
-    <string name="text_clone_uid_invalid_key">Invalid key!</string>
-    <string name="text_clone_uid_manufacturer_block_to_write">Final block 0 to write:</string>
-    <string name="text_clone_uid_waiting_for_magic_tag">Waiting for \'Magic UID\' gen2 tag...</string>
-    <string name="text_clone_uid_writing">Writing block 0...</string>
-    <string name="text_clone_uid_checking_clone">Checking clone...</string>
-    <string name="text_clone_uid_checking_clone_success">Success!</string>
-    <string name="text_clone_uid_checking_clone_error">Sorry, please try again. Are you sure you have Magic UID gen2 (direct write to block 0) card?</string>
+    <string name="text_clone_uid_info">This tool can clone the UID of a tag to a
+        \"magic tag\" (2nd gen, Android compatible, direct write,
+        block 0 writable). Hit the info button to get more information.</string>
+    <string name="text_uid_to_clone">UID to clone</string>
+    <string name="text_clone_uid_manufacturer_block_rest">The rest of block 0</string>
+    <string name="text_write_key">The key to write block 0</string>
+    <string name="text_status_log">Status Log</string>
+    <string name="text_use_uid_of_scanned_tag">Use UID of scanned tag</string>
+    <string name="text_block_0_calculated">Block 0 calculated</string>
+    <string name="text_waiting_for_magic_tag">Waiting for magic tag (2nd gen)</string>
+    <string name="text_writing_block_0">Writing block 0</string>
+    <string name="text_no_errors_on_write">No errors during write process</string>
+    <string name="text_rescan_tag_to_check">Rescan clone to validate success</string>
+    <string name="text_checking_clone">Checking clone</string>
+    <string name="text_clone_successfully">Successfully cloned UID</string>
+    <string name="text_uid_match_error">UIDs did not match</string>
+    <string name="text_clone_error">Error: Are you sure you have magic
+        tag (2nd gen)?</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -225,7 +232,7 @@
     <string name="action_auto_copy_uid">Automatically copy new tag UID to clipboard</string>
     <string name="action_save_last_key_files">Remember the last selected key
         files (key mapping dialog)</string>
-    <string name="action_autostart_if_card_detected">Autostart the app if a card is
+    <string name="action_autostart_if_tag_detected">Autostart the app if a tag is
         detected</string>
     <string name="action_use_custom_sector_count">Use custom sector count</string>
     <string name="action_save">Save</string>
@@ -325,7 +332,7 @@
     <string name="info_tag_too_small">Error: Tag is too small
         (sector out of range)</string>
     <string name="info_write_error">Error: Some error occurred while
-        writing.\nThis could be really bad.</string>
+        writing. (This might be bad.)</string>
     <string name="info_check_ac_error">Error: Tag lost while checking for keys
         with write privileges</string>
     <string name="info_nothing_to_write">There is nothing left to write</string>
@@ -363,8 +370,9 @@
         1 and 1000</string>
     <string name="info_mapping_no_keyfile_selected">Error: No key files selected</string>
     <string name="info_mapping_no_keyfile_found">Error: No key files found</string>
-    <string name="info_not_11_byte">Error: Rest of block 0 data must be 11 bytes
-        (22 characters)</string>
+    <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
+        is incorrect</string>
+    <string name="info_incorrect_key">Error: Key not correct</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
@@ -531,9 +539,9 @@
         <b>MIFARE Classic Tool has been updated!</b>
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
-        \n\n<a href="market://details?id=de.syss.MifareClassicToolDonate">Get
+        \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Get
         the donate version</a>
-        \n<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
+        \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
         on github</a>
     </string>
     <string name="dialog_save_before_quitting_title">Unsaved changes</string>
