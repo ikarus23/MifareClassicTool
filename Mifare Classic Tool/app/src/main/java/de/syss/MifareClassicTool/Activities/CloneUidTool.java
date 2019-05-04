@@ -55,7 +55,7 @@ public class CloneUidTool extends BasicActivity {
     private String mBlock0Rest = "08040001A2EC736FC3351D";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
     private String mBlock0Key = "FFFFFFFFFFFF";
-    private enum Status { INIT, BLOCK0_CALCULATED, CLONED, CONFIRMED }
+    private enum Status { INIT, BLOCK0_CALCULATED, CLONED }
     private Status mStatus = Status.INIT;
 
     /**
@@ -126,7 +126,7 @@ public class CloneUidTool extends BasicActivity {
                     String uidOriginal = mUid.getText().toString();
                     if (uid.equals(uidOriginal)) {
                         appendToLog(getString(R.string.text_clone_successfully));
-                        mStatus = Status.CONFIRMED;
+                        mStatus = Status.INIT;
                     } else {
                         appendToLog(getString(R.string.text_uid_match_error)
                                 + " (" + uidOriginal + " <-> " + uid + ")");
@@ -225,7 +225,6 @@ public class CloneUidTool extends BasicActivity {
         appendToLog(getString(R.string.text_writing_block_0));
         int result = reader.writeBlock(0, 0,
                 Common.hexStringToByteArray(mBlock0Complete), key, keyB);
-        reader.close();
 
         // Error handling.
         switch (result) {
@@ -243,6 +242,7 @@ public class CloneUidTool extends BasicActivity {
         appendToLog(getString(R.string.text_no_errors_on_write));
         appendToLog(getString(R.string.text_rescan_tag_to_check));
         mStatus = Status.CLONED;
+        reader.close();
     }
 
     /**

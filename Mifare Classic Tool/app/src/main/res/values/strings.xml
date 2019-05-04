@@ -173,7 +173,7 @@
     <string name="text_checking_clone">Checking clone</string>
     <string name="text_clone_successfully">Successfully cloned UID</string>
     <string name="text_uid_match_error">UIDs did not match</string>
-    <string name="text_clone_error">Error: Are you sure you have magic
+    <string name="text_clone_error">Error: Are you sure you have a magic
         tag (2nd gen)?</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
