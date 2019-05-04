@@ -605,13 +605,16 @@ public class MCReader {
                 // is a all-0 key in the key file, because of a bug in
                 // some tags and/or devices.
                 // https://github.com/ikarus23/MifareClassicTool/issues/66
-                if (foundKeys[0]) {
-                    mKeysWithOrder.remove(keys[0]);
-                    mKeysWithOrder.add(1, keys[0]);
-                }
-                if (foundKeys[1]) {
-                    mKeysWithOrder.remove(keys[1]);
-                    mKeysWithOrder.add(1, keys[1]);
+                byte[] fKey = Common.hexStringToByteArray("FFFFFFFFFFFF");
+                if (mKeysWithOrder.size() > 2) {
+                    if (foundKeys[0] && !Arrays.equals(keys[0], fKey)) {
+                        mKeysWithOrder.remove(keys[0]);
+                        mKeysWithOrder.add(1, keys[0]);
+                    }
+                    if (foundKeys[1] && !Arrays.equals(keys[1], fKey)) {
+                        mKeysWithOrder.remove(keys[1]);
+                        mKeysWithOrder.add(1, keys[1]);
+                    }
                 }
             }
             mKeyMapStatus++;
