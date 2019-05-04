@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -269,20 +270,40 @@ public class CloneUidTool extends BasicActivity {
         } else {
             optionsLayout.setVisibility(View.GONE);
         }
-
     }
 
-    // TODO: impelement and doc.
+    // TODO: implement and doc.
     public void onShowInfo(View view) {
-
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_gen2_tags_info_title)
+                .setMessage(R.string.dialog_gen2_tags_info)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, which) -> {
+                            // Do nothing.
+                        }).show();
     }
 
     public void onShowBlock0RestInfo(View view) {
-
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_rest_of_block_0_title)
+                .setMessage(R.string.dialog_rest_of_block_0)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, which) -> {
+                            // Do nothing.
+                        }).show();
     }
 
     public void onShowWriteKeyInfo(View view) {
-
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_key_for_block_0_title)
+                .setMessage(R.string.dialog_key_for_block_0)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, which) -> {
+                            // Do nothing.
+                        }).show();
     }
 
     /**

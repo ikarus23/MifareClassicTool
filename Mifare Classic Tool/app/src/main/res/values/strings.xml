@@ -566,6 +566,23 @@
         reader, but the \"External NFC\" app is installed. Please make sure the \"External NFC\"
         service is running in order to use Mifare Classic Tool with an external NFC reader.
     </string>
+    <string name="dialog_gen2_tags_info_title">Cloning the UID</string>
+    <string name="dialog_gen2_tags_info">The first block of the first sector of an MIFARE
+        Classic tag contains the UID and is read-only i.e. not writable. But there are
+        special MIFARE Classic tags (\"magic tags 2nd gen\", aka. \"block 0 direct write tags\")
+        that support writing to the first block (including the UID) with a simple write command.
+        This App is able to write to such tags and can therefore clone the UID. However, some special
+        tags (\"magic tags 1st gen\") require a special command sequence to put them into the
+        state where writing to the manufacturer block is possible. These tags will not work.</string>
+    <string name="dialog_rest_of_block_0_title">Rest of Block 0</string>
+    <string name="dialog_rest_of_block_0">MIFARE Classic tags can typically only be
+        written blockwise. The UID is represented by the first bytes of block 0. To
+        change the UID, the full block 0 must be written. The \"rest of block 0\" data are
+        the bytes which will get appended to the UID to represent a full block.</string>
+    <string name="dialog_key_for_block_0_title">Key for Block 0</string>
+    <string name="dialog_key_for_block_0">To write to block 0 (the block with the UID) you
+        need the corresponding key with write privileges. For blank or factory formatted
+        tags this key is key A with a value of \"FFFFFFFFFFFF\".</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
