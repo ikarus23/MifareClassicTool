@@ -40,6 +40,7 @@ This list may be incomplete. You might also want to have a look at
 * Motorola Moto X Force
 * Motorola Moto X Play
 * Motorola Moto X Style
+* Nubia Z18
 * Samsung Galaxy A3 (2015)
 * Samsung Galaxy A5 (2016)
 * Samsung Galaxy A7 (2016, 2017)

@@ -53,6 +53,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy S9
 * Sony Xperia M4 Aqua
 * Sony Xperia V
+* Sony Xperia X Compact (Android 8.0)
 * Sony Xperia Z2
 * Sony Xperia Z3
 * Sony Xperia Z5 Compact
