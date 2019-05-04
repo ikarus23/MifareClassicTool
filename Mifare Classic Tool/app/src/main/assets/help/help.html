@@ -54,6 +54,7 @@
         <li><a href="#ac_tool">7.3 Access Condition Decoder/Encoder</a></li>
         <li><a href="#diff_tool">7.4 Diff Tool (Compare Dumps)</a></li>
         <li><a href="#bcc_tool">7.5 BCC Calculator</a></li>
+        <li><a href="#clone_uid_tool">7.6 Clone UID</a></li>
       </ul>
     </li>
     <li><a href="#external_nfc">8. External NFC</a></li>
@@ -476,12 +477,22 @@
 
   <h3 id="bcc_tool">7.5 BCC Calculator</h3>
     This tool can calculate the Bit Count Check (BCC) value. For MIFARE
-    Classic tags with a 4 byte UID, the BCC must be the 5th byte of the very
+    Classic tags with a 4-byte UID, the BCC must be the 5th byte of the very
     first block (manufacturers block).
     <br /><br />
     More information about calculating the BCC and how it is used during
     the anti-collision phase can be found in
     <a href="http://cache.nxp.com/documents/application_note/AN10927.pdf">NXP's AN10927</a>.
+
+  <h3 id="clone_uid_tool">7.6 Clone UID</h3>
+    This tool helps to clone UIDs easily (4.byte UIDs only). Just touch
+    the original tag to read its UID, hit the button and then place a
+    compatible tag (&quot;magic tag 2nd gen&quot;) in the reader field.
+    Regarding the compatible tags, please have a look at the &quot;Write
+    to Manufacturer Block&quot; section of the
+    <a href="#write_dump">Write Dump (Clone)</a> chapter.
+
+
   <hr />
 
 
