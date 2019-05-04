@@ -234,7 +234,7 @@
             android:layout_below="@+id/relativeLayoutCloneUidToolKeyOption"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
-            android:onClick="onCalculateManufacturerBlock"
+            android:onClick="onCalculateBlock0"
             android:text="@string/action_clone_uid" />
 
         <TextView

@@ -89,9 +89,9 @@ public class CloneUidTool extends BasicActivity {
         }
     }
 
-    // TODO: update doc.
     /**
-     * Handle new Intent as a new tag Intent
+     * Handle new Intent as a new tag Intent and tread them according to
+     * the {@link #mStatus}.
      */
     @Override
     public void onNewIntent(Intent intent) {
@@ -137,11 +137,14 @@ public class CloneUidTool extends BasicActivity {
         }
     }
 
-    // TODO: update doc.
     /**
-     * Calculate the BCC and rest of manufacturer block (0)
+     * Calculate the BCC of the UID and create block 0
+     * (manufacturer block) by concatenating UID, BCC and the
+     * rest of block 0 ({@link #mBlock0Rest}).
+     * @param view The View object that triggered the method
+     * (in this case the "calculate block 0 and clone uid" button).
      */
-    public void onCalculateManufacturerBlock(View view) {
+    public void onCalculateBlock0(View view) {
         String uid = mUid.getText().toString();
         mBlock0Rest = mEditTextBlock0Rest
                 .getText().toString();
@@ -193,9 +196,9 @@ public class CloneUidTool extends BasicActivity {
         onShowOptions(null);
     }
 
-    // TODO: update doc.
     /**
-     * Write the manufacturer block 0 to tag.
+     * Write block 0 (manufacturer block) with {@link #mBlock0Complete}
+     * containing the cloned UID.
      */
     private void writeManufacturerBlock() {
 
@@ -242,10 +245,9 @@ public class CloneUidTool extends BasicActivity {
         mStatus = Status.CLONED;
     }
 
-    // TODO: doc.
     /**
-     *
-     * @param text
+     * Append a text to the status log.
+     * @param text The text to append to the status log.
      */
     private void appendToLog(String text) {
         CharSequence content = mStatusLogContent.getText();
@@ -260,7 +262,7 @@ public class CloneUidTool extends BasicActivity {
     /**
      * Show / hide options.
      * @param view The View object that triggered the method
-     * (in this case the "show options" check box)
+     * (in this case the "show options" check box).
      */
     public void onShowOptions(View view) {
         LinearLayout optionsLayout = (LinearLayout) findViewById(
@@ -272,7 +274,12 @@ public class CloneUidTool extends BasicActivity {
         }
     }
 
-    // TODO: implement and doc.
+    /**
+     * Show general information about this tool and cloning
+     * UIDs of MIFARE Classic tags.
+     * @param view The View object that triggered the method
+     * (in this case the "show info" button).
+     */
     public void onShowInfo(View view) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_gen2_tags_info_title)
@@ -284,6 +291,12 @@ public class CloneUidTool extends BasicActivity {
                         }).show();
     }
 
+    /**
+     * Show information about how the rest of the block 0 is
+     * used during the UID cloning process.
+     * @param view The View object that triggered the method
+     * (in this case the "show info" button).
+     */
     public void onShowBlock0RestInfo(View view) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_rest_of_block_0_title)
@@ -295,6 +308,12 @@ public class CloneUidTool extends BasicActivity {
                         }).show();
     }
 
+    /**
+     * Show information about the key which is needed
+     * to write to block 0.
+     * @param view The View object that triggered the method
+     * (in this case the "show info" button).
+     */
     public void onShowWriteKeyInfo(View view) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_key_for_block_0_title)
