@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.3.0:
+ * New Feature: Clone UID tool makes cloning the UID easy.
+   Thanks to Slawomir Jasek from smartlockpicking.com.
+
 Version 2.2.6:
  * Autorun on tag detection can be deactivated now. Thanks to "aerizzo".
  * Removed PayPal links to be compliant to Google's payment policies.
