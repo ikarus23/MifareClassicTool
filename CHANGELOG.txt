@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 2.3.1:
+ * Bugfix: Do not crash if there is only one key in
+   the key file.
+
 Version 2.3.0:
  * New Feature: Clone UID tool makes cloning the UID easy.
    Thanks to Slawomir Jasek from smartlockpicking.com.
