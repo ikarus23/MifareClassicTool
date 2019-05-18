@@ -22,10 +22,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -95,12 +98,12 @@ public class FileChooser extends BasicActivity {
      */
     public final static String EXTRA_ENABLE_NEW_FILE =
             "de.syss.MifareClassicTool.Activity.ENABLE_NEW_FILE";
-    /**
-     * Enable/Disable the menu item  that allows the user to delete a file.
-     * Optional. Boolean value. Disabled (false) by default.
-     */
-    public final static String EXTRA_ENABLE_DELETE_FILE =
-            "de.syss.MifareClassicTool.Activity.ENABLE_DELETE_FILE";
+
+    // TODO: doc.
+    public final static String EXTRA_IS_KEY_FILE =
+            "de.syss.MifareClassicTool.Activity.IS_KEY_FILE";
+    public final static String EXTRA_IS_DUMP_FILE =
+            "de.syss.MifareClassicTool.Activity.IS_DUMP_FILE";
 
 
     // Output parameter.
@@ -126,10 +129,15 @@ public class FileChooser extends BasicActivity {
     private Button mChooserButton;
     private TextView mChooserText;
     private MenuItem mDeleteFile;
+    private MenuItem mExportFile;
     private File mDir;
     private boolean mIsDirEmpty;
     private boolean mCreateFileEnabled = false;
-    private boolean mDeleteFileEnabled = false;
+    private boolean mIsKeyFile = false;
+    private boolean mIsDumpFile = false;
+    private boolean mIsExport = false;
+    private enum FileType { MCT, JSON, BIN, EML }
+    private FileType mFileType;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -174,17 +182,19 @@ public class FileChooser extends BasicActivity {
         if (intent.hasExtra(EXTRA_BUTTON_TEXT)) {
             mChooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
-        // Remember to enable/disable new file functionality.
+        // Remember file functionality.
         if (intent.hasExtra(EXTRA_ENABLE_NEW_FILE)) {
             mCreateFileEnabled = intent.getBooleanExtra(
-                        EXTRA_ENABLE_NEW_FILE, false);
+                    EXTRA_ENABLE_NEW_FILE, false);
         }
-        // Remember to enable/disable new file functionality.
-        if (intent.hasExtra(EXTRA_ENABLE_DELETE_FILE)) {
-            mDeleteFileEnabled = intent.getBooleanExtra(
-                        EXTRA_ENABLE_DELETE_FILE, false);
+        if (intent.hasExtra(EXTRA_IS_KEY_FILE)) {
+            mIsKeyFile = intent.getBooleanExtra(
+                    EXTRA_IS_KEY_FILE, false);
         }
-
+        if (intent.hasExtra(EXTRA_IS_DUMP_FILE)) {
+            mIsDumpFile = intent.getBooleanExtra(
+                    EXTRA_IS_DUMP_FILE, false);
+        }
 
         // Check path and initialize file list.
         if (intent.hasExtra(EXTRA_DIR)) {
@@ -220,31 +230,88 @@ public class FileChooser extends BasicActivity {
         menu.findItem(R.id.menuFileChooserNewFile)
                 .setEnabled(mCreateFileEnabled);
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
-        // Only use the enable/disable system for the delete file menu item
+        mExportFile = menu.findItem(R.id.menuFileChooserExportFile);
+
+        // Use the enable/disable system for the delete/export file menu item
         // if there is a least one file.
-        if (!mIsDirEmpty) {
-            mDeleteFile.setEnabled(mDeleteFileEnabled);
-        } else {
-            mDeleteFile.setEnabled(false);
-        }
+        mDeleteFile.setEnabled(!mIsDirEmpty);
+        mExportFile.setEnabled(!mIsDirEmpty);
         return true;
     }
 
+    // TODO: doc.
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.file_types, menu);
+    }
+
     /**
-     * Handle selected function form the menu (create new file, delete file).
+     * Handle selected function form the menu (create new file,
+     * delete file, etc.).
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        case R.id.menuFileChooserNewFile:
-            onNewFile();
-            return true;
-        case R.id.menuFileChooserDeleteFile:
-            onDeleteFile();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menuFileChooserNewFile:
+                onNewFile();
+                return true;
+            case R.id.menuFileChooserDeleteFile:
+                onDeleteFile();
+                return true;
+            case R.id.menuFileChooserImportFile:
+                mIsExport = false;
+                showTypeChooserMenu();
+                return true;
+            case R.id.menuFileChooserExportFile:
+                mIsExport = true;
+                showTypeChooserMenu();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // TODO: doc.
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+            case R.id.menuFileTypesMct:
+                mFileType = FileType.MCT;
+                showImportExportFileChooser();
+                return true;
+            case R.id.menuFileTypesJson:
+                mFileType = FileType.JSON;
+                showImportExportFileChooser();
+                return true;
+            case R.id.menuFileTypesMfdBin:
+                mFileType = FileType.BIN;
+                showImportExportFileChooser();
+                return true;
+            case R.id.menuFileTypesEml:
+                mFileType = FileType.EML;
+                showImportExportFileChooser();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    // TODO: doc.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(resultCode == RESULT_OK) {
+            Uri selectedLocation = data.getData();
+            if (mIsExport) {
+                onExportFile(selectedLocation);
+            } else {
+                onImportFile(selectedLocation);
+            }
         }
     }
 
@@ -277,12 +344,14 @@ public class FileChooser extends BasicActivity {
      * @return True if directory is empty. False otherwise.
      */
     private boolean updateFileIndex(File path) {
+        boolean isEmpty;
         File[] files = path.listFiles();
+        mGroupOfFiles.removeAllViews();
 
         // Refresh file list.
         if (files != null && files.length > 0) {
+            isEmpty = false;
             Arrays.sort(files);
-            mGroupOfFiles.removeAllViews();
 
             for(File f : files) {
                 RadioButton r = new RadioButton(this);
@@ -291,17 +360,9 @@ public class FileChooser extends BasicActivity {
             }
             // Check first file.
             ((RadioButton)mGroupOfFiles.getChildAt(0)).setChecked(true);
-            mChooserButton.setEnabled(true);
-            if (mDeleteFile != null) {
-                mDeleteFile.setEnabled(mDeleteFileEnabled);
-            }
-            return false;
         } else {
             // No files in directory.
-            mChooserButton.setEnabled(false);
-            if (mDeleteFile != null) {
-                mDeleteFile.setEnabled(false);
-            }
+            isEmpty = true;
             Intent intent = getIntent();
             String chooserText = "";
             if (intent.hasExtra(EXTRA_CHOOSER_TEXT)) {
@@ -312,7 +373,14 @@ public class FileChooser extends BasicActivity {
                     + getString(R.string.text_no_files_in_chooser)
                     + " ---");
         }
-        return true;
+
+        mChooserButton.setEnabled(!isEmpty);
+        if (mDeleteFile != null && mExportFile != null) {
+            mDeleteFile.setEnabled(!isEmpty);
+            mExportFile.setEnabled(!isEmpty);
+        }
+
+        return isEmpty;
     }
 
     /**
@@ -370,4 +438,42 @@ public class FileChooser extends BasicActivity {
         file.delete();
         mIsDirEmpty = updateFileIndex(mDir);
     }
+
+    // TODO: doc.
+    private void onImportFile(Uri file) {
+
+    }
+
+    // TODO: doc.
+    private void onExportFile(Uri dir) {
+
+    }
+
+    // TODO: doc.
+    private void showTypeChooserMenu() {
+        // mGroupOfFiles is just used as a dummy because a context menu
+        // always need a view.
+        registerForContextMenu(mGroupOfFiles);
+        openContextMenu(mGroupOfFiles);
+    }
+
+    // TODO: doc.
+    private void showImportExportFileChooser() {
+        Intent intent = new Intent();
+        String title;
+        if (mIsExport) {
+            // TODO: does not work < API 21. Maybe export to static path?
+            intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            title = getString(R.string.text_select_export_location);
+        } else {
+            intent.setType("*/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            title = getString(R.string.text_select_file);
+        }
+        startActivityForResult(Intent.createChooser(
+                intent, title), 1);
+    }
+
+
 }

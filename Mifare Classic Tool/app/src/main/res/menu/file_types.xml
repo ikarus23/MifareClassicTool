@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright 2013 Gerhard Klostermeier
+ * Copyright 2019 Gerhard Klostermeier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuFileChooserNewFile"
-        android:title="@string/action_create_new_file" />
-    <item android:id="@+id/menuFileChooserDeleteFile"
-        android:title="@string/action_delete_file" />
-    <item android:id="@+id/menuFileChooserImportFile"
-          android:title="@string/action_import_file" />
-    <item android:id="@+id/menuFileChooserExportFile"
-          android:title="@string/action_export_file" />
+    <item android:id="@+id/menuFileTypesMct"
+          android:title="@string/action_file_type_mct" />
+    <item android:id="@+id/menuFileTypesJson"
+          android:title="@string/action_file_type_json" />
+    <item android:id="@+id/menuFileTypesMfdBin"
+          android:title="@string/action_file_type_mdf_bin" />
+    <item android:id="@+id/menuFileTypesEml"
+          android:title="@string/action_file_type_eml" />
 </menu>
