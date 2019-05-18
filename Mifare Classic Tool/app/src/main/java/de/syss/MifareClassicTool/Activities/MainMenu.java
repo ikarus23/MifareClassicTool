@@ -579,6 +579,16 @@ public class MainMenu extends Activity {
                 return;
             }
 
+            // Create export directory.
+            path = Common.getFileFromStorage(
+                    Common.HOME_DIR + "/" + Common.EXPORT_DIR);
+            if (!path.exists() && !path.mkdirs()) {
+                // Could not create directory.
+                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                        + "/" + Common.EXPORT_DIR + "' directory.");
+                return;
+            }
+
             // Create tmp directory.
             path = Common.getFileFromStorage(
                     Common.HOME_DIR + "/" + Common.TMP_DIR);
@@ -830,7 +840,7 @@ public class MainMenu extends Activity {
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_open_key_file));
         intent.putExtra(FileChooser.EXTRA_ENABLE_NEW_FILE, true);
-        intent.putExtra(FileChooser.EXTRA_IS_DUMP_FILE, true);
+        intent.putExtra(FileChooser.EXTRA_IS_KEY_FILE, true);
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
     }
 

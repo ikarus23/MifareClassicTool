@@ -93,6 +93,11 @@ public class Common extends Application {
     public static final String DUMPS_DIR = "dump-files";
 
     /**
+     * The name of the directory where dump/key files get exported to.
+     */
+    public static final String EXPORT_DIR = "export";
+
+    /**
      * The directory name of the folder where temporary files are
      * stored. The directory will be cleaned during the creation of
      * the main activity

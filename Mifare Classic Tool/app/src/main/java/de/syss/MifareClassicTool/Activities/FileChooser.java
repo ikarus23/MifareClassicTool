@@ -136,8 +136,24 @@ public class FileChooser extends BasicActivity {
     private boolean mIsKeyFile = false;
     private boolean mIsDumpFile = false;
     private boolean mIsExport = false;
-    private enum FileType { MCT, JSON, BIN, EML }
     private FileType mFileType;
+    private enum FileType {
+        MCT(".mct"),
+        JSON(".json"),
+        BIN(".bin"),
+        EML(".eml");
+
+        private final String text;
+
+        private FileType(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -236,6 +252,13 @@ public class FileChooser extends BasicActivity {
         // if there is a least one file.
         mDeleteFile.setEnabled(!mIsDirEmpty);
         mExportFile.setEnabled(!mIsDirEmpty);
+
+        // TODO: remove once import/export key files is implemented.
+        if (mIsKeyFile) {
+            MenuItem importFile = menu.findItem(R.id.menuFileChooserImportFile);
+            importFile.setEnabled(false);
+        }
+
         return true;
     }
 
@@ -282,23 +305,26 @@ public class FileChooser extends BasicActivity {
         switch (item.getItemId()) {
             case R.id.menuFileTypesMct:
                 mFileType = FileType.MCT;
-                showImportExportFileChooser();
-                return true;
+                break;
             case R.id.menuFileTypesJson:
                 mFileType = FileType.JSON;
-                showImportExportFileChooser();
-                return true;
+                break;
             case R.id.menuFileTypesMfdBin:
                 mFileType = FileType.BIN;
-                showImportExportFileChooser();
-                return true;
+                break;
             case R.id.menuFileTypesEml:
                 mFileType = FileType.EML;
-                showImportExportFileChooser();
-                return true;
+                break;
             default:
                 return super.onContextItemSelected(item);
         }
+
+        if (mIsExport) {
+            onExportFile();
+        } else {
+            showImportFileChooser();
+        }
+        return true;
     }
 
     // TODO: doc.
@@ -307,11 +333,7 @@ public class FileChooser extends BasicActivity {
     {
         if(resultCode == RESULT_OK) {
             Uri selectedLocation = data.getData();
-            if (mIsExport) {
-                onExportFile(selectedLocation);
-            } else {
-                onImportFile(selectedLocation);
-            }
+            onImportFile(selectedLocation);
         }
     }
 
@@ -328,7 +350,6 @@ public class FileChooser extends BasicActivity {
     public void onFileChosen(View view) {
         RadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
-
         Intent intent = new Intent();
         File file = new File(mDir.getPath(), selected.getText().toString());
         intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
@@ -441,12 +462,43 @@ public class FileChooser extends BasicActivity {
 
     // TODO: doc.
     private void onImportFile(Uri file) {
-
+        // Key or dump?
     }
 
     // TODO: doc.
-    private void onExportFile(Uri dir) {
+    private void onExportFile() {
+        RadioButton selected = findViewById(
+                mGroupOfFiles.getCheckedRadioButtonId());
+        String fileName = selected.getText().toString();
+        File source = new File(mDir.getPath(), fileName);
+        String[] content = Common.readFileLineByLine(source, false,this);
+        if (content == null) {
+            return;
+        }
+        // Key or dump file?
+        if (mIsKeyFile) {
+            // Not supported yet.
+            // TODO: implement.
+        } else if (mIsDumpFile) {
+            // Convert and save converted dump.
+            String[] convertedContent = convert(
+                    content, FileType.MCT, mFileType);
+            String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
+            String destFileName = fileName + mFileType.toString();
+            File destination = Common.getFileFromStorage(
+                    destPath + "/" + destFileName);
+            if (Common.saveFile(destination, convertedContent,false)) {
+                Toast.makeText(this, R.string.info_file_exported,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
+    // TODO: doc.
+    private String[] convert(String[] source, FileType srcType,
+            FileType destType) {
+        // TODO: implement.
+        return source;
     }
 
     // TODO: doc.
@@ -458,22 +510,12 @@ public class FileChooser extends BasicActivity {
     }
 
     // TODO: doc.
-    private void showImportExportFileChooser() {
-        Intent intent = new Intent();
+    private void showImportFileChooser() {
         String title;
-        if (mIsExport) {
-            // TODO: does not work < API 21. Maybe export to static path?
-            intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            title = getString(R.string.text_select_export_location);
-        } else {
-            intent.setType("*/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            title = getString(R.string.text_select_file);
-        }
-        startActivityForResult(Intent.createChooser(
-                intent, title), 1);
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        title = getString(R.string.text_select_file);
+        startActivityForResult(Intent.createChooser(intent, title), 1);
     }
-
-
 }

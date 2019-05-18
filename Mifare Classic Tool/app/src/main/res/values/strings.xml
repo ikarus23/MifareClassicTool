@@ -381,6 +381,7 @@
     <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
         is incorrect</string>
     <string name="info_incorrect_key">Error: Key not correct</string>
+    <string name="info_file_exported">File exported</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
