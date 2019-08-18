@@ -253,12 +253,6 @@ public class FileChooser extends BasicActivity {
         mDeleteFile.setEnabled(!mIsDirEmpty);
         mExportFile.setEnabled(!mIsDirEmpty);
 
-        // TODO: remove once import/export key files is implemented.
-        if (mIsKeyFile) {
-            MenuItem importFile = menu.findItem(R.id.menuFileChooserImportFile);
-            importFile.setEnabled(false);
-        }
-
         return true;
     }
 
@@ -309,7 +303,7 @@ public class FileChooser extends BasicActivity {
             case R.id.menuFileTypesJson:
                 mFileType = FileType.JSON;
                 break;
-            case R.id.menuFileTypesMfdBin:
+            case R.id.menuFileTypesBinMfd:
                 mFileType = FileType.BIN;
                 break;
             case R.id.menuFileTypesEml:
@@ -477,7 +471,7 @@ public class FileChooser extends BasicActivity {
         }
         // Key or dump file?
         if (mIsKeyFile) {
-            // Not supported yet.
+            // Exporting key files is not supported yet.
             // TODO: implement.
         } else if (mIsDumpFile) {
             // Convert and save converted dump.

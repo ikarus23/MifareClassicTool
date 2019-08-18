@@ -273,7 +273,7 @@
     <string name="action_clone_uid">Calculate block 0 and clone UID</string>
     <string name="action_clone_uid_advanced">Advanced options</string>
     <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
-    <string name="action_file_type_mdf_bin">.mfd/.bin (Proxmark, libnfc, mfoc)</string>
+    <string name="action_file_type_mdf_bin">.bin/.mfd (Proxmark, libnfc, mfoc)</string>
     <string name="action_file_type_eml">.eml (Proxmark Emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
 
