@@ -90,7 +90,7 @@ For further information about MIFARE Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
 [do some Google searches](https://www.google.com/search?q=mifare+classic")
 or read the
-[MIFARE Classic (1k) 'Datasheet'](http://www.nxp.com/documents/data_sheet/MF1S50YYX.pdf)
+[MIFARE Classic (1k) 'Datasheet'](https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf)
 (PDF) from NXP.
 
 
