@@ -92,12 +92,6 @@ public class FileChooser extends BasicActivity {
      */
     public final static String EXTRA_BUTTON_TEXT =
             "de.syss.MifareClassicTool.Activity.BUTTON_TEXT";
-    /**
-     * Enable/Disable the menu item  that allows the user to create a new file.
-     * Optional. Boolean value. Disabled (false) by default.
-     */
-    public final static String EXTRA_ENABLE_NEW_FILE =
-            "de.syss.MifareClassicTool.Activity.ENABLE_NEW_FILE";
 
     // TODO: doc.
     public final static String EXTRA_IS_KEY_FILE =
@@ -132,7 +126,6 @@ public class FileChooser extends BasicActivity {
     private MenuItem mExportFile;
     private File mDir;
     private boolean mIsDirEmpty;
-    private boolean mCreateFileEnabled = false;
     private boolean mIsKeyFile = false;
     private boolean mIsDumpFile = false;
     private boolean mIsExport = false;
@@ -199,10 +192,6 @@ public class FileChooser extends BasicActivity {
             mChooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
         // Remember file functionality.
-        if (intent.hasExtra(EXTRA_ENABLE_NEW_FILE)) {
-            mCreateFileEnabled = intent.getBooleanExtra(
-                    EXTRA_ENABLE_NEW_FILE, false);
-        }
         if (intent.hasExtra(EXTRA_IS_KEY_FILE)) {
             mIsKeyFile = intent.getBooleanExtra(
                     EXTRA_IS_KEY_FILE, false);
@@ -243,15 +232,24 @@ public class FileChooser extends BasicActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.file_chooser_functions, menu);
-        menu.findItem(R.id.menuFileChooserNewFile)
-                .setEnabled(mCreateFileEnabled);
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
         mExportFile = menu.findItem(R.id.menuFileChooserExportFile);
 
-        // Use the enable/disable system for the delete/export file menu item
-        // if there is a least one file.
+        // Enable/disable the delete/export menu item if there is a least one
+        // file.
         mDeleteFile.setEnabled(!mIsDirEmpty);
         mExportFile.setEnabled(!mIsDirEmpty);
+
+
+        if (mIsKeyFile) {
+            // Exporting key files is not supported.
+            menu.removeItem(mExportFile.getItemId());
+        }
+        if (mIsDumpFile) {
+            // Creating new dump files is not supported.
+            menu.removeItem(menu.findItem(R.id.menuFileChooserNewFile)
+                    .getItemId());
+        }
 
         return true;
     }
@@ -281,11 +279,19 @@ public class FileChooser extends BasicActivity {
                 return true;
             case R.id.menuFileChooserImportFile:
                 mIsExport = false;
-                showTypeChooserMenu();
+                if (mIsDumpFile) {
+                    showTypeChooserMenu();
+                } else {
+                    showImportFileChooser();
+                }
                 return true;
             case R.id.menuFileChooserExportFile:
                 mIsExport = true;
-                showTypeChooserMenu();
+                if (mIsDumpFile) {
+                    showTypeChooserMenu();
+                } else {
+                    // Exporting key files is not supported.
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -314,8 +320,10 @@ public class FileChooser extends BasicActivity {
         }
 
         if (mIsExport) {
+            // Convert file and export.
             onExportFile();
         } else {
+            // Let the user pick the file to import.
             showImportFileChooser();
         }
         return true;
@@ -325,9 +333,12 @@ public class FileChooser extends BasicActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(resultCode == RESULT_OK) {
-            Uri selectedLocation = data.getData();
-            onImportFile(selectedLocation);
+        switch (requestCode) {
+            case 1: // File for importing has been selected.
+            if (resultCode == RESULT_OK) {
+                Uri selectedLocation = data.getData();
+                onImportFile(selectedLocation);
+            }
         }
     }
 
@@ -369,9 +380,11 @@ public class FileChooser extends BasicActivity {
             Arrays.sort(files);
 
             for(File f : files) {
-                RadioButton r = new RadioButton(this);
-                r.setText(f.getName());
-                mGroupOfFiles.addView(r);
+                if (f.isFile()) { // Do not list directories.
+                    RadioButton r = new RadioButton(this);
+                    r.setText(f.getName());
+                    mGroupOfFiles.addView(r);
+                }
             }
             // Check first file.
             ((RadioButton)mGroupOfFiles.getChildAt(0)).setChecked(true);
@@ -392,7 +405,7 @@ public class FileChooser extends BasicActivity {
         mChooserButton.setEnabled(!isEmpty);
         if (mDeleteFile != null && mExportFile != null) {
             mDeleteFile.setEnabled(!isEmpty);
-            mExportFile.setEnabled(!isEmpty);
+            mExportFile.setEnabled(!isEmpty && !mIsKeyFile);
         }
 
         return isEmpty;
@@ -457,6 +470,7 @@ public class FileChooser extends BasicActivity {
     // TODO: doc.
     private void onImportFile(Uri file) {
         // Key or dump?
+        // TODO: implement.
     }
 
     // TODO: doc.
@@ -471,20 +485,25 @@ public class FileChooser extends BasicActivity {
         }
         // Key or dump file?
         if (mIsKeyFile) {
-            // Exporting key files is not supported yet.
-            // TODO: implement.
+            // Exporting key files is not supported.
+            // (User can just grab the files from the folder or use share.)
         } else if (mIsDumpFile) {
-            // Convert and save converted dump.
+            // Convert.
             String[] convertedContent = convert(
                     content, FileType.MCT, mFileType);
+            // Remove ".mct" file extension and replace it with export type.
             String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
+            fileName = fileName.replace(".mct", "");
             String destFileName = fileName + mFileType.toString();
+            // Save converted file.
             File destination = Common.getFileFromStorage(
-                    destPath + "/" + destFileName);
+                    destPath + "/" + destFileName, true);
             if (Common.saveFile(destination, convertedContent,false)) {
                 Toast.makeText(this, R.string.info_file_exported,
                         Toast.LENGTH_LONG).show();
             }
+        } else {
+            // TODO: Implement error (should never occur).
         }
     }
 
@@ -505,11 +524,27 @@ public class FileChooser extends BasicActivity {
 
     // TODO: doc.
     private void showImportFileChooser() {
-        String title;
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        title = getString(R.string.text_select_file);
+        String title = getString(R.string.text_select_file);
         startActivityForResult(Intent.createChooser(intent, title), 1);
     }
+
+    // TODO: Once we've dropped Android 4 and have API level 21, let the user
+    // choose the export director.
+    private void showExportDirectoryChooser() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        String title = getString(R.string.text_select_directory);
+        startActivityForResult(Intent.createChooser(intent, title), 2);
+    }
 }
+
+// TODO: Import key file:
+//  isKeyFile->showImpotFileChooser->Copy file (no convert).
+// TODO: Import dump file:
+//  isDumpFile->showTypeChooserMenu->showImportFileChooser->read file
+//  ->convert->save file
+// TODO: save isKeyFile or other important vars.

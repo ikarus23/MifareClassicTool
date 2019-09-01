@@ -262,15 +262,17 @@ public class Common extends Application {
      * (internal/external according to its preference) and the relative
      * path.
      * @param relativePath The relative path that gets appended to the
-     * internal or external storage path part
+     * internal or external storage path part.
+     * @param forceExternal Return the external path regardless of the options.
      * @return A File object with the absolute path of the storage and the
      * relative component given by the parameter.
      */
-    public static File getFileFromStorage(String relativePath) {
+    public static File getFileFromStorage(String relativePath,
+                boolean forceExternal) {
         File file;
         boolean isUseInternalStorage = getPreferences().getBoolean(
                 UseInternalStorage.toString(), false);
-        if (isUseInternalStorage) {
+        if (!forceExternal && isUseInternalStorage) {
             // Use internal storage.
             file = new File(mAppContext.getFilesDir() + relativePath);
         } else {
@@ -279,6 +281,19 @@ public class Common extends Application {
                     relativePath);
         }
         return file;
+    }
+
+    /**
+     * Create a File object with a path that consists of its storage
+     * (internal/external according to its preference) and the relative
+     * path.
+     * @param relativePath The relative path that gets appended to the
+     * internal or external storage path part.
+     * @return A File object with the absolute path of the storage and the
+     * relative component given by the parameter.
+     */
+    public static File getFileFromStorage(String relativePath) {
+        return getFileFromStorage(relativePath, false);
     }
 
     /**

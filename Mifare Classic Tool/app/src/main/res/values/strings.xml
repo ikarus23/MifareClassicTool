@@ -177,6 +177,7 @@
         tag (2nd gen)?</string>
     <string name="text_select_export_location">Select Export Location</string>
     <string name="text_select_file">Select file</string>
+    <string name="text_select_directory">Select directory</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -274,7 +275,7 @@
     <string name="action_clone_uid_advanced">Advanced options</string>
     <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd (Proxmark, libnfc, mfoc)</string>
-    <string name="action_file_type_eml">.eml (Proxmark Emulator)</string>
+    <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
 
     <!-- Toast messages -->
@@ -381,7 +382,7 @@
     <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
         is incorrect</string>
     <string name="info_incorrect_key">Error: Key not correct</string>
-    <string name="info_file_exported">File exported</string>
+    <string name="info_file_exported">File exported to external storage (SD card)</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

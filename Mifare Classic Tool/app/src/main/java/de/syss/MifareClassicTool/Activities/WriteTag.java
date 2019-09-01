@@ -637,6 +637,7 @@ public class WriteTag extends BasicActivity {
                     getString(R.string.text_choose_dump_to_write));
             intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                     getString(R.string.action_write_full_dump));
+            intent.putExtra(FileChooser.EXTRA_IS_DUMP_FILE, true);
             startActivityForResult(intent, FC_WRITE_DUMP);
         }
     }
