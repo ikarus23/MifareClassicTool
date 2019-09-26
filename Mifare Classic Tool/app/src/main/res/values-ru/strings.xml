@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ac_data_block_0">"Read: A|B
+Write: A|B
+Incr: A|B
+Decr/Trans/Rest: A|B"</string>
+    <string name="ac_data_block_1">"Read: A|B
+Write: Never
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_data_block_2">"Read: A|B
+Write: B
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_data_block_3">"Read:A|B
+Write: B
+Incr: B
+Decr/Trans/Rest: A|B"</string>
+    <string name="ac_data_block_4">"Read: A|B
+Write: Never
+Incr: Never
+Decr/Trans/Rest: A|B"</string>
+    <string name="ac_data_block_5">"Read: B
+Write: B
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_data_block_6">"Read: B
+Write: Never
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_data_block_7">"Read: Never
+Write: Never
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_data_block_no_keyb_0">"Read: A
+Write: A
+Incr: A
+Decr/Trans/Rest: A"</string>
+    <string name="ac_data_block_no_keyb_1">"Read: A
+Write: Never
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_data_block_no_keyb_2">"Read: A
+Write: Never
+Incr: Never
+Decr/Trans/Rest: A"</string>
+    <string name="ac_data_block_no_keyb_3">"Read: Never
+Write: Never
+Incr: Never
+Decr/Trans/Rest: Never"</string>
+    <string name="ac_sector_trailer_0">"Read KeyA: Never
+Write KeyA: A
+Read ACs: A
+Write ACs: Never 
+Read KeyB: A
+Write KeyB: A"</string>
+    <string name="ac_sector_trailer_1">"Read KeyA: Never
+Write KeyA: Never
+Read ACs: A
+Write ACs: Never 
+Read KeyB: A
+Write KeyB: Never"</string>
+    <string name="ac_sector_trailer_2">"Read KeyA: Never
+Write KeyA: B
+Read ACs: A|B
+Write ACs: Never 
+Read KeyB: Never
+Write KeyB: B"</string>
+    <string name="ac_sector_trailer_3">"Read KeyA: Never
+Write KeyA: Never
+Read ACs: A|B
+Write ACs: Never 
+Read KeyB: Never
+Write KeyB: Never"</string>
+    <string name="ac_sector_trailer_4">"Read KeyA: Never
+Write KeyA: A
+Read ACs: A
+Write ACs: A 
+Read KeyB: A
+Write KeyB: A"</string>
+    <string name="ac_sector_trailer_5">"Read KeyA: Never
+Write KeyA: B
+Read ACs: A|B
+Write ACs: B 
+Read KeyB: Never
+Write KeyB: B"</string>
+    <string name="ac_sector_trailer_6">"Read KeyA: Never
+Write KeyA: Never
+Read ACs: A|B
+Write ACs: B 
+Read KeyB: Never
+Write KeyB: Never"</string>
+    <string name="ac_sector_trailer_7">"Read KeyA: Never
+Write KeyA: Never
+Read ACs: A|B
+Write ACs: Never 
+Read KeyB: Never
+Write KeyB: Never"</string>
+    <string name="action_append">Добавить</string>
+    <string name="action_auto_copy_uid">Автоматическое копирование нового UID тега в буфер обмена</string>
+    <string name="action_auto_reconnect">Дополнительно: автоматическое повторное подключение в случае потери тега в процессе сопоставления ключей</string>
+    <string name="action_autostart_if_tag_detected">Автозапуск приложения, если обнаружен тег</string>
+    <string name="action_calc_bcc">Рассчитать BCC</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_cancel_all">Отменить запись</string>
+    <string name="action_change">Изменить</string>
+    <string name="action_choose_file">Выберите выбранный файл</string>
+    <string name="action_chose_dump">Выберите дамп…</string>
+    <string name="action_clone_uid">Вычислить блок 0 и клонировать UID</string>
+    <string name="action_clone_uid_advanced">Расширенные опции</string>
+    <string name="action_compare_dump">Сравнить дамп</string>
+    <string name="action_continue">Продолжить</string>
+    <string name="action_create_key_map">Ключи к секторам карты</string>
+    <string name="action_create_key_map_and_factory_format">Чтение карты и формат тегов</string>
+    <string name="action_create_key_map_and_read">Чтение тегов</string>
+    <string name="action_create_key_map_and_write_block">Запись блока</string>
+    <string name="action_create_key_map_and_write_dump">Запись дампа</string>
+    <string name="action_create_key_map_and_write_value_block">Начать сопоставление и записать блок значений</string>
+    <string name="action_create_new_file">Создать новый файл</string>
+    <string name="action_data_as_ascii">Данные как ASCII</string>
+    <string name="action_decode">Расшифровать</string>
+    <string name="action_decode_ac">Расшифруйте условия доступа</string>
+    <string name="action_decode_manuf_date">Расшифруйте дату изготовления</string>
+    <string name="action_delete_file">Удалить файл</string>
+    <string name="action_do_not_show_again">Не показывать это сообщение снова</string>
+    <string name="action_dont_save">"Не сохранять"</string>
+    <string name="action_edit_key_dump">Редактировать/добавить ключ</string>
+    <string name="action_edit_tag_dump">Редактировать/анализировать файл дампа</string>
+    <string name="action_editor_only">автономный режим</string>
+    <string name="action_encode">Закодировать</string>
+    <string name="action_exit_app">Выход из приложения</string>
+    <string name="action_external_nfc_is_running">\"Внешний NFC\" работает</string>
+    <string name="action_factory_format">Форматировать</string>
+    <string name="action_help">Справка и информация</string>
+    <string name="action_i_know_what_i_am_doing">"Я знаю, что я делаю"</string>
+    <string name="action_install_external_nfc">Установить \"Внешний NFC\"</string>
+    <string name="action_more">Читать дальше…</string>
+    <string name="action_nfc">Перейти к настройкам NFC</string>
+    <string name="action_ok">OK</string>
+    <string name="action_open_dump_file">Открыть дамп файла</string>
+    <string name="action_open_key_file">Открыть фаил ключей</string>
+    <string name="action_read_all_sectors">Читать все сектора</string>
+    <string name="action_read_tag">Чтение тегов</string>
+    <string name="action_remove_duplicates">Удалить дубликаты</string>
+    <string name="action_replace">Заменить</string>
+    <string name="action_retry_authentication">Повторите проверку подлинности в случае сбоя</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_save_as_default">Сохранить по умолчанию</string>
+    <string name="action_save_keys">Сохранить ключи</string>
+    <string name="action_save_last_key_files">Запомнить последние выбранные файлы ключей</string>
+    <string name="action_select_all">Выбрать все</string>
+    <string name="action_select_none">Снять выбор</string>
+    <string name="action_share">Отпр.</string>
+    <string name="action_show_about">О приложении</string>
+    <string name="action_show_ac_tool">Условие доступа De-/Encoder</string>
+    <string name="action_show_bcc_tool">Калькулятор BCC</string>
+    <string name="action_show_clone_uid">Клон UID</string>
+    <string name="action_show_diff_tool">Инструмент Сравнения (Сравнить дампы)</string>
+    <string name="action_show_options">Показать параметры</string>
+    <string name="action_show_preferences">Настройки</string>
+    <string name="action_show_tag_info">Показать информацию о тегах</string>
+    <string name="action_show_value_blocks_as_int">Блоки значений как Int.</string>
+    <string name="action_show_vb_tool">Значение блока De-/Encoder</string>
+    <string name="action_skip_blocks">Записать как можно больше</string>
+    <string name="action_start_external_nfc">Перейти к \"Внешний NFC\"</string>
+    <string name="action_static_ac">Используйте следующие условия доступа для всех секторов:</string>
+    <string name="action_tools">Инструменты</string>
+    <string name="action_use_custom_sector_count">Использовать пользовательский счет сектора</string>
+    <string name="action_use_internal_storage">Сохранение файлов дампа и ключей во внутреннем хранилище</string>
+    <string name="action_wirte_block">Записать блок</string>
+    <string name="action_write_block">Записать блок</string>
+    <string name="action_write_dump">Записать дамп</string>
+    <string name="action_write_dump_clone">Записать дамп (клон)</string>
+    <string name="action_write_full_dump">Выберите дамп</string>
+    <string name="action_write_mfid">Дополнительно: Включить запись 0 сектора</string>
+    <string name="action_write_tag">Запись тегов</string>
+    <string name="action_write_value_block">Написать блок значения</string>
+    <string name="app_name">Классический инструмент MIFARE</string>
+    <string name="app_version">Версия приложения</string>
+    <string name="dialog_about_mct">"
+        &lt;b>MIFARE Classic Tool (MCT)&lt;br />&lt;br />
+        &amp;#8226; Версия: %1$s&lt;br />
+        &amp;#8226; Лицензии:
+        &lt;a href=\"https://www.gnu.org/licenses/gpl-3.0.txt\">GPLv3&lt;/a>&lt;br />
+        &amp;#8226; Страница проекта:
+        &lt;a href=\"https://github.com/ikarus23/MifareClassicTool\">MCT
+        on github&lt;/a>&lt;br />
+        &amp;#8226; Оцените это приложение:
+        &lt;a href=\"market://details?id=de.syss.MifareClassicTool\">Через
+        Google Play&lt;/a>&lt;br />
+        &amp;#8226; Пожертвовать:
+        &lt;a href=\"market://details?id=de.syss.MifareClassicToolDonate\">
+        Google Play&lt;/a>&lt;/b>&lt;br />&lt;br />
+        Полезная информация:&lt;br />
+        &amp;#8226; &lt;a href=\"https://github.com/ikarus23/MifareClassicTool/issues\">Bug
+        Tracker&lt;/a>&lt;br />
+        &amp;#8226; &lt;a href=\"https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt\">Changelog
+        / История версии&lt;/a>&lt;br />
+        &amp;#8226; &lt;a href=\"http://publications.icaria.de/mct/\">Documentation,
+        APKs, etc.&lt;/a>&lt;br />
+        &amp;#8226; &lt;a href=\"http://www.proxmark.org/forum/viewtopic.php?id=1535\">Поток
+        на форуме Proxmark&lt;/a>&lt;br />&lt;br />
+        MIFARE&amp;reg; является зарегистрированной торговой маркой NXP Semiconductors.
+        "</string>
+    <string name="dialog_about_mct_title">О компании MCT</string>
+    <string name="dialog_auto_reconnect">"Если тег теряется во время процесса отображения ключей (из-за проблем с антенной, тайм-аута и т.д.), приложение будет пытаться восстановить к нему (с задержкой 500 мс) до тех пор, пока одна попытка не увенчается успехом. 
+
+"<b>Это может помочь, если вы столкнулись с проблемами во время процесса отображения ключей. Однако это также может вызвать странное поведение MCT.</b>" 
+
+Известные проблемы, в которых этот параметр может помочь:
+ • Специальные метки (например, SmartMX)"</string>
+    <string name="dialog_auto_reconnect_title">Авто переподключение</string>
+    <string name="dialog_block0_writing"><b>Запись в первый блок сектора 0 невозможна на оригинальных тегах MIFARE Classic.</b>" 
+
+Убедитесь, что вы используете специальный тег, поддерживающий запись в блок производителя (с обычной командой записи MIFARE Classic). 
+
+"<b>Дополнительную информацию см. В разделе \"Запись тега\" в разделе \"Справка и информация\".</b></string>
+    <string name="dialog_block0_writing_title">Записать блок производителя</string>
+    <string name="dialog_choose_ac_title">Выберите условия доступа</string>
+    <string name="dialog_custom_sector_count">Принудительное количество пользовательских секторов и игнорировать количество секторов, обнаруженных Android. Это может быть полезно для тегов с памятью 2K.</string>
+    <string name="dialog_custom_sector_count_title">Пользовательский счетчик секторов</string>
+    <string name="dialog_date_of_manuf">"
+        Тег был изготовлен между &lt;b>%1$s&lt;/b> и &lt;b>%2$s&lt;/b>
+        &lt;br />&lt;br />
+        (Эта информация может быть неправильной. См. раздел \"справка и информация\" для
+        подробной информации.)
+        "</string>
+    <string name="dialog_date_of_manuf_error"><b>Дата изготовления содержит недопустимые данные.</b>" 
+
+Последние 2 байта блока производителя должны быть в двоичном закодированном десятичном формате (только цифры, без букв). Первый байт (неделя производства) должен быть между 1 и 53 (например, 28). Второй байт (год производства) должен быть между 0 и текущим годом (например, 12, то есть 2012). 
+
+Может быть, тег не является оригинальным тегом MIFARE Classic."</string>
+    <string name="dialog_date_of_manuf_title">Дата изготовления</string>
+    <string name="dialog_donate">" "<b>MIFARE Classic Tool обновлен!</b>" 
+
+Если вас порадуют новые функции, исправления или приложение в целом, пожалуйста, порадуйте разработчика. Купи ему пива! ;) 
+
+• "<a href="market://details?id=de.syss.MifareClassicToolDonate">Получить версию пожертвования</a>" 
+• "<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT on github</a>" "</string>
+    <string name="dialog_donate_title">Пожертвовать</string>
+    <string name="dialog_first_run">"Это приложение предназначено для пользователей, которые, по крайней мере основные знания с технологией MIFARE Classic. Его особенности являются основными и на низком уровне. Поэтому почти все данные ввода и вывода будет гексадецимальным. Важно также, чтобы вы понимали, что вы делаете, например, если вы пишете данные на тег. Написание неверных данных определенным блокам может нанести непоправимый ущерб тегу. 
+
+"<b>Для получения дополнительной информации и справки ознакомьтесь с разделом \"справка и информация\".</b></string>
+    <string name="dialog_first_run_title">ВНИМАНИЕ</string>
+    <string name="dialog_gen2_tags_info">"Первый блок первого сектора тега MIFARE Classic содержит UID и доступен только для чтения, т. Е. Недоступен для записи. Но есть специальные классические теги MIFARE («магические теги 2-го поколения», иначе «теги прямой записи блока 0»), которые поддерживают запись в первый блок (включая UID) с помощью простой команды записи. Это приложение может записывать в такие теги и, следовательно, может клонировать UID. Однако некоторые специальные теги («магические теги 1-го поколения») требуют специальной последовательности команд, чтобы перевести их в состояние, в котором возможна запись в блок производителя. Эти теги не будут работать. 
+
+Пока этот инструмент будет работать только с 4-байтовыми UID."</string>
+    <string name="dialog_gen2_tags_info_title">Клонирование UID</string>
+    <string name="dialog_info_external_nfc">"На вашем устройстве нет считывателя NFC, но установлено приложение «Внешний NFC». Пожалуйста, убедитесь, что услуга «Внешний NFC» работает для того, чтобы использовать Mifare Classic Tool с внешним считывателем NFC."</string>
+    <string name="dialog_info_external_nfc_title">Внешнее обслуживание NFC</string>
+    <string name="dialog_key_for_block_0">Для записи в блок 0 (блок с UID) вам нужен соответствующий ключ с правами на запись. Для пустых или заводских тегов этот ключ является ключом A со значением \ " FFFFFFFFFFFF\".</string>
+    <string name="dialog_key_for_block_0_title">Ключ для блока 0</string>
+    <string name="dialog_mapping_range">"Выберите диапазон секторов для процесса сопоставления ключей
+(0 - первый сектор):"</string>
+    <string name="dialog_mapping_range_title">Выбрать диапазон</string>
+    <string name="dialog_new_file">Введите имя нового файла:</string>
+    <string name="dialog_new_file_title">Новый файл</string>
+    <string name="dialog_nfc_not_enabled">Адаптер NFC не включен. Пожалуйста, перейдите в настройки и включите его.</string>
+    <string name="dialog_nfc_not_enabled_title">NFC не включен</string>
+    <string name="dialog_no_mfc_support_device">"
+        Ваше устройство (из-за аппаратного обеспечения) не поддерживает Mifare Classic!
+        Единственное, что возможно, это отобразить UID и некоторую другую общую информацию.
+        Дальнейшие операции ввода-вывода невозможны.
+        &lt;br />&lt;br />&lt;b>Таким образом, это приложение в значительной степени бесполезно для этого устройства.&lt;/b>
+        &lt;br />&lt;br />Вы можете просмотреть список известных устройств без Mifare Classic
+        поддержка &lt;a href=\"https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md\">github&lt;/a>.
+        Если вашего устройства нет в этом списке, пожалуйста, напишите
+        &lt;a href=\"mailto:fooblubb@gmail.com\">Написать разработчику&lt;/a>.
+        "</string>
+    <string name="dialog_no_mfc_support_device_title">Нет поддержки Mifare Classic</string>
+    <string name="dialog_no_mfc_support_tag">"
+        Этот тег несовместим с технологией MIFARE Classic!
+        Обратите внимание, что это приложение предназначено только для тегов MIFARE Classic!
+        &lt;br />&lt;br />&lt;b>Пожалуйста, используйте другой тег.&lt;/b>
+        &lt;br />&lt;br />&lt;small>(Обратите внимание: в некоторых редких случаях это сообщение может быть ложным срабатыванием,
+        вызванным несколькими тегами в поле чтения или странными
+        значениями ATQA+SAK.)&lt;/small>
+        "</string>
+    <string name="dialog_no_mfc_support_tag_title">Не тег Mifare Classic</string>
+    <string name="dialog_no_nfc_support">"На вашем устройстве нет считывателя NFC. Поэтому вы не можете читать или писать на теги NFC. 
+
+Если устройство поддерживает USB-OTG, вы сможете подключить внешний считыватель NFC к устройству Android. 
+
+Mifare Classic Tool должен работать вместе с приложением\"External NFC\", которое поддерживает несколько USB-считывателей NFC. Однако могут быть некоторые ограничения."</string>
+    <string name="dialog_no_nfc_support_title">Поддержка NFC отсутствует</string>
+    <string name="dialog_not_writable">Некоторые части не доступны для записи! Проверьте весь список ниже.</string>
+    <string name="dialog_not_writable_title">Напишите проблемы</string>
+    <string name="dialog_rest_of_block_0">Классические теги MIFARE обычно могут быть записаны только блочно. UID представлен первыми байтами блока 0. Чтобы изменить UID, должен быть записан полный блок 0. Данные «остаток блока 0» - это байты, которые будут добавлены к UID для представления полного блока.</string>
+    <string name="dialog_rest_of_block_0_title">Остальная часть блока 0</string>
+    <string name="dialog_retry_authentication">"Повторите проверку подлинности (для доступа к сектору/блоку) X раз в случае сбоя.
+
+Некоторым тегам это необходимо для правильной работы (например, некоторые теги с возможностью записи в блоке 0 с 7-байтовым UID). Также может помочь заставить некоторые устройства работать более согласованно (например, Google Nexus 5X или Huawei P10).
+
+Имейте в виду, что это может замедлить чтение, запись или даже отображение ключей. В большинстве случаев вы должны оставить эту опцию отключенной."</string>
+    <string name="dialog_retry_authentication_title">Повторите идентификацию</string>
+    <string name="dialog_save_before_quitting"><b>Есть несохраненные изменения!</b>" 
+Вы хотите сохранить эти изменения? "</string>
+    <string name="dialog_save_before_quitting_title">Несохраненные изменения</string>
+    <string name="dialog_save_conflict_dump">"Этот файл уже существует. Что вы хотите сделать? 
+
+"<b>Примечание: файлы, содержащие несколько дампов (созданных с помощью \"добавить\") не могут быть отображены, отредактированы или написаны этим приложением.</b></string>
+    <string name="dialog_save_conflict_keyfile">Этот файл уже существует. Что вы хотите сделать?</string>
+    <string name="dialog_save_conflict_title">Файл уже существует</string>
+    <string name="dialog_save_dump">Введите имя файла для дампа:</string>
+    <string name="dialog_save_dump_title">Сохранить дамп</string>
+    <string name="dialog_save_keys">Введите имя файла ключа:</string>
+    <string name="dialog_save_keys_title">Сохраните файл ключа</string>
+    <string name="dialog_sector_trailer_warning">"Вы собираетесь написать в секторный трейлер. Запись неверных данных может привести к непоправимому повреждению тега."</string>
+    <string name="dialog_sector_trailer_warning_title">Написание трейлера сектора</string>
+    <string name="dialog_share_title">Отправить файл на…</string>
+    <string name="dialog_start_external_nfc">Служба\"Внешний NFC\" не запущена. Включите службу, чтобы использовать Mifare Classic Tool с внешним устройством чтения NFC.</string>
+    <string name="dialog_start_external_nfc_title">Внешний сервис NFC</string>
+    <string name="dialog_static_ac"><b>Замените все условия доступа из дампа на выбранные.</b>" 
+
+Это полезно, если дамп содержит условия доступа, которые будут постоянными для тега. В случае, если читатель не проверяет их, вы можете легко использовать пользовательские, чтобы сделать тег многоразовым. 
+
+"<b>Предупреждение: запись неверных данных может привести к непоправимому повреждению тега.</b></string>
+    <string name="dialog_static_ac_title">Использование статических условий доступа</string>
+    <string name="dialog_tools_menu_title">Имеющиеся инструменты</string>
+    <string name="dialog_use_internal_storage">"Android обычно имеет два места для хранения файлов: внутренняя и внешняя память.
+
+Внутренняя память читается только приложением и будет удалена после удаления приложения.
+
+Внешнее хранилище, во многих случаях SD-карта, считывается каждым приложением с достаточными правами. Данные, хранящиеся во внешней памяти, переживут удаление приложения.
+
+Используя эту опцию, вы можете переключаться между двумя хранилищами. Файлы дампа и ключа не будут скопированы между ними."</string>
+    <string name="dialog_use_internal_storage_title">Использовать внутреннее хранилище</string>
+    <string name="dialog_wait_write_tag">"Запись тега…
+(Не удаляйте тег)"</string>
+    <string name="dialog_wait_write_tag_title">Запись…</string>
+    <string name="dialog_write_sectors">Выберите сектора, которые вы хотите написать:</string>
+    <string name="dialog_write_sectors_title">Запись секторов</string>
+    <string name="hint_custom_retry_authentication_count">Количество повторений</string>
+    <string name="hint_custom_sector_count">например, 16 для 1K</string>
+    <string name="hint_hex_00">00</string>
+    <string name="hint_hex_16_byte">HEX, 16 байтов (например, 0A4…)</string>
+    <string name="hint_hex_3_byte">HEX, 3 байта</string>
+    <string name="hint_hex_4_byte">HEX, 4 байта</string>
+    <string name="hint_int_423">например, 423</string>
+    <string name="info_ac_format_error">Ошибка: недопустимые условия доступа</string>
+    <string name="info_ac_not_3_byte">Ошибка: Условия доступа должны иметь длину 3 байта (6 символов)</string>
+    <string name="info_ac_not_hex">Ошибка: условия доступа не являются шестнадцатеричными (0-9, A-F)</string>
+    <string name="info_ac_reset_keyb_not_readable">"Ключ B не читается. 
+ACs блоков данных обновлены."</string>
+    <string name="info_ac_reset_keyb_readable">"Ключ B читается. 
+ACs блоков данных обновлены."</string>
+    <string name="info_addr_not_hex_byte">Ошибка: Addr не является шестнадцатеричным байтом (0-9, A-F, 2 символа)</string>
+    <string name="info_bcc_not_valid">Ошибка: недопустимый BCC блока 0</string>
+    <string name="info_block0_missing">Ошибка: нет блока производителя (блок 0)</string>
+    <string name="info_block_not_in_sector">Ошибка: сектор не содержит блока с заданным номером.</string>
+    <string name="info_block_out_of_range">Ошибка: блок находится вне диапазона</string>
+    <string name="info_check_ac_error">Ошибка: тег потерян при проверке Ключей с правами на запись</string>
+    <string name="info_copied_to_clipboard">Скопировано в буфер обмена</string>
+    <string name="info_data_location_not_set">Ошибка: блок или сектор не указан</string>
+    <string name="info_editor_init_error">Ошибка: данные были неверны для этого редактора</string>
+    <string name="info_empty_file_name">Ошибка: файлы должны иметь имя</string>
+    <string name="info_error_writing_block">Ошибка: блок доступен только для чтения или недоступен для записи с ключами из файла ключей</string>
+    <string name="info_error_writing_value_block">Ошибка: блок значений, недостаточные права или неверное значение</string>
+    <string name="info_file_already_exists">Ошибка: файл уже существует</string>
+    <string name="info_file_to_big">Ошибка: файл слишком большой (недостаточно памяти)</string>
+    <string name="info_incorrect_key">Ошибка: ключ не правильный</string>
+    <string name="info_invalid_int">Не является допустимым целым числом</string>
+    <string name="info_invalid_range">Ошибка в диапазоне отображения</string>
+    <string name="info_invalid_uid_length">Ошибка: недопустимая длина UID</string>
+    <string name="info_is_not_vb">Ошибка: Не значение блока.</string>
+    <string name="info_key_map_error">Ошибка: потеряно подключение к тегу</string>
+    <string name="info_mapping_no_keyfile_found">Ошибка: ключевые файлы не найдены</string>
+    <string name="info_mapping_no_keyfile_selected">Ошибка: ключевые файлы не выбраны</string>
+    <string name="info_mapping_sector_out_of_range">Ошибка в отображении диапазона: сектор вне диапазона.</string>
+    <string name="info_new_tag_found">Найдена новая метка</string>
+    <string name="info_no_dumps">Тут нет дампа. Прочитайте метку и сохранить дамп</string>
+    <string name="info_no_external_storage">Ошибка: Внешнее хранилище недоступно для чтения или записи</string>
+    <string name="info_no_int_to_encode">Ошибка: отсутствует целое число для кодирования</string>
+    <string name="info_no_key_found">В выбранном файле ключей не найден допустимый ключ</string>
+    <string name="info_no_tag_found">Ошибка: отсутствует метка Mifare Classic</string>
+    <string name="info_no_vb_in_dump">В этом дампе нет блоков значений</string>
+    <string name="info_none_key_valid_for_reading">Ошибка: ни один из ключей не был допустимым для чтения</string>
+    <string name="info_not_16_byte">Ошибка: Длина данных должна составлять 16 байт (32 символа)</string>
+    <string name="info_not_hex_data">Ошибка: данные должны быть шестнадцатеричными (0-9 и A-F)</string>
+    <string name="info_not_supported_now">Эта функция не поддерживается в этой версии. (Может быть, это будет в будущих версиях…)</string>
+    <string name="info_not_vb">Ошибка: выбранный блок не является блоком значений</string>
+    <string name="info_nothing_to_write">Нечего писать</string>
+    <string name="info_rest_of_block_0_length">Ошибка: длина остальной части блока 0 неверна</string>
+    <string name="info_retry_authentication_count_error">Ошибка: Повторные попытки должны находиться в диапазоне от 1 до 1000</string>
+    <string name="info_save_error">Ошибка при сохранении данных</string>
+    <string name="info_save_successful">Данные успешно сохранены</string>
+    <string name="info_sector_count_error">Ошибка: число секторов должно быть от 1 до 40</string>
+    <string name="info_sector_out_of_range">Ошибка: сектор находится вне диапазона</string>
+    <string name="info_share_error">Ошибка: не удалось предоставить общий доступ к файлу</string>
+    <string name="info_strange_error">"Ошибка: произошла странная ошибка... и я не знаю, почему :(
+Пожалуйста, сообщите об этом на странице проекта"</string>
+    <string name="info_tag_removed_while_reading">Ошибка: метка удалена во время чтения</string>
+    <string name="info_tag_too_small">Ошибка: тег слишком мал (сектор выходит за пределы допустимого диапазона)</string>
+    <string name="info_to_many_keys">Ошибка: слишком много ключей (недостаточно памяти)</string>
+    <string name="info_valid_dump_double_sector">Ошибка: несколько раз один и тот же номер сектора </string>
+    <string name="info_valid_dump_empty_dump">Ошибка: пустой дамп</string>
+    <string name="info_valid_dump_not_16_bytes">"Ошибка: некоторые блоки не имеют 16 байт (32 символа)"</string>
+    <string name="info_valid_dump_not_4_or_16_lines">"Ошибка: некоторые сектора не имеют 4 или 16 блоков (строк)"</string>
+    <string name="info_valid_dump_not_hex">Ошибка: некоторые блоки содержат недопустимые данные (не шестнадцатеричные)</string>
+    <string name="info_valid_dump_sector_range">Ошибка: сектор вне диапазона (&lt; 0 или > 39)</string>
+    <string name="info_valid_keys_no_keys">Ошибка: должен быть хотя бы один ключ</string>
+    <string name="info_valid_keys_not_6_byte">"Ошибка: некоторые ключи не имеют 6 байт (12 символов)"</string>
+    <string name="info_valid_keys_not_hex">Ошибка: некоторые ключи содержат недопустимые данные (не шестнадцатеричные)</string>
+    <string name="info_value_too_big">Ошибка: значение слишком большое</string>
+    <string name="info_wait_key_map">Создание ключей карты… пожалуйста, подождите…</string>
+    <string name="info_write_error">Ошибка при записи. (Возможно, это плохо.)</string>
+    <string name="info_write_permission">Для правильной работы необходимо разрешение на запись</string>
+    <string name="info_write_successful">Данные успешно записаны</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="tag_000218">MIFARE Classic 4k, NXP</string>
+    <string name="tag_000238">MIFARE Classic 4k - emulated (6212 Classic), Nokia</string>
+    <string name="tag_000298">MPCOS, Gemplus</string>
+    <string name="tag_000408">MIFARE Classic 1k, NXP</string>
+    <string name="tag_000409">MIFARE Mini, NXP</string>
+    <string name="tag_000428">JCOP41, IBM</string>
+    <string name="tag_0004283833B14A434F50343156323331">JCOP41 v2.3.1, IBM</string>
+    <string name="tag_000488">MIFARE Classic 1K, Infineon</string>
+    <string name="tag_000838">MIFARE Classic 4k - emulated (6131 NFC), Nokia</string>
+    <string name="tag_004218">MIFARE Classic 4k, NXP</string>
+    <string name="tag_004400">MIFARE Ultralight, NXP</string>
+    <string name="tag_004820">JCOP, IBM</string>
+    <string name="tag_0048203833B14A434F503431563232">JCOP41 v2.2, IBM</string>
+    <string name="tag_0048207877B1024A434F5076323431">JCOP31 v2.4.1, IBM</string>
+    <string name="tag_030428">JCOP31, IBM</string>
+    <string name="tag_0304283877B14A434f503331">JCOP31, IBM</string>
+    <string name="tag_034420">"MIFARE DESFire or 
+MIFARE DESFire EV1, NXP"</string>
+    <string name="tag_0344207577810280">"MIFARE DESFire or 
+MIFARE DESFire EV1, NXP"</string>
+    <string name="tag_0C00">Jewel, Innovision R&amp;T</string>
+    <string name="tag_0F0101">TNP3xxx (MFC compatible), NXP</string>
+    <string name="tag_unknown">Неизвестный</string>
+    <string name="tag_unknown_mf_classic">Mifare Classic, неизвестный</string>
+    <string name="text_a">A:</string>
+    <string name="text_ac">ACs</string>
+    <string name="text_ac_decr">Decr./Trans./Rest.:</string>
+    <string name="text_ac_error">Ошибка: эта конфигурация не известна</string>
+    <string name="text_ac_incr">Incr.:</string>
+    <string name="text_ac_label">ACs:</string>
+    <string name="text_ac_pos">Местоположение:</string>
+    <string name="text_ac_read">Читать:</string>
+    <string name="text_ac_read_only">Условия доступа доступны только для чтения</string>
+    <string name="text_ac_write">Писать:</string>
+    <string name="text_addr">Адрес:</string>
+    <string name="text_atqa">ATQA</string>
+    <string name="text_ats">ATS</string>
+    <string name="text_b">B:</string>
+    <string name="text_bcc">BCC:</string>
+    <string name="text_block">Блок</string>
+    <string name="text_block_0">Блок 0 (0-4):</string>
+    <string name="text_block_0_calculated">Блок 0 вычислен</string>
+    <string name="text_block_1">Блок 1 (5-9):</string>
+    <string name="text_block_2">Блок 2 (10-14):</string>
+    <string name="text_block_3">Блок 3 (15) - Сектор:</string>
+    <string name="text_block_count">Количество блоков</string>
+    <string name="text_block_read_only">Блок только для чтения</string>
+    <string name="text_block_size">Размер блока</string>
+    <string name="text_caption_title">Заголовок</string>
+    <string name="text_checking_clone">Проверка клона</string>
+    <string name="text_choose_dump_to_write">Выберите дамп для записи:</string>
+    <string name="text_choose_key_file">Выберите ключ (и):</string>
+    <string name="text_chooser_info_text">Выберите файл:</string>
+    <string name="text_clone_error">Ошибка: вы уверены, что у вас есть волшебная карта (2-го поколения)?</string>
+    <string name="text_clone_successfully">Успешно клонированный UID</string>
+    <string name="text_clone_uid_info">Этот инструмент может клонировать UID тега в «магический тег» (2-го поколения, совместимый с Android, прямая запись, запись блока 0). Нажмите кнопку информации, чтобы получить больше информации.</string>
+    <string name="text_clone_uid_manufacturer_block_rest">Остальная часть блока 0</string>
+    <string name="text_copy">Копировать</string>
+    <string name="text_data">Данные</string>
+    <string name="text_decrement">Уменьшение</string>
+    <string name="text_dump_1">Дамп 1 (A):</string>
+    <string name="text_dump_2">Дамп 2 (B):</string>
+    <string name="text_dump_from_editor">Редактор дампа</string>
+    <string name="text_factory_format_info">Попробуйте отформатировать тег к заводскому состоянию.</string>
+    <string name="text_from">С</string>
+    <string name="text_generic_info">Общая информация</string>
+    <string name="text_identical_data">-----------идентичный------------</string>
+    <string name="text_incr_decr_value_block">Увл./Умен. Блок значений</string>
+    <string name="text_incr_decr_value_block_info">"Увеличивайте или уменьшайте, а затем передавайте блок значений. (Если вы не знаете, что такое блоки значений, ознакомьтесь с разделом «Справка и информация».)"</string>
+    <string name="text_increment">Увеличить</string>
+    <string name="text_invalid_ac_or_sector_dead">Недопустимые условия доступа или мертвый сектор :(</string>
+    <string name="text_key_a">Ключ A</string>
+    <string name="text_key_ab">Ключ A|B</string>
+    <string name="text_key_b">Ключ B</string>
+    <string name="text_key_map_progress">Ход сопоставления ключей:</string>
+    <string name="text_keya">КлючA</string>
+    <string name="text_keyb">КлючB</string>
+    <string name="text_keys_not_known">Ключи (А и В) не известны</string>
+    <string name="text_keys_read_only">Ключи (A и B) только для чтения</string>
+    <string name="text_mem_size">Размер памяти</string>
+    <string name="text_mf_info">Информация о MIFARE Classic</string>
+    <string name="text_never">Никогда</string>
+    <string name="text_no_errors_on_write">Ошибки во время записи отсутствуют</string>
+    <string name="text_no_files_in_chooser">Файлы не найдены</string>
+    <string name="text_no_key_io_error">Ключи не найдены (или мертвый сектор)</string>
+    <string name="text_no_mfc_support_device">Это устройство не поддерживает MIFARE Classic!</string>
+    <string name="text_no_mfc_support_tag">Не классический тег MIFARE!</string>
+    <string name="text_no_tag">Нет тега MIFARE Classic.</string>
+    <string name="text_only_in_dump1">Сектор встречается только в дампе 1 (A)</string>
+    <string name="text_only_in_dump2">Сектор встречается только в дампе 2 (B)</string>
+    <string name="text_open_dump_title">Открыть Tag дампа</string>
+    <string name="text_open_key_file_title">Откройте или создайте файл ключа</string>
+    <string name="text_option_info">Информация для опции</string>
+    <string name="text_paste">Вставить</string>
+    <string name="text_rescan_tag_to_check">Повторное сканирование клона для проверки успешности</string>
+    <string name="text_rf_tech">RF технология</string>
+    <string name="text_rf_tech_14a">ISO/IEC 14443, Type A</string>
+    <string name="text_sak">SAK</string>
+    <string name="text_sector">Сектор</string>
+    <string name="text_sector_count">Количество секторов</string>
+    <string name="text_sector_range">Создание карты для секторов:</string>
+    <string name="text_sector_range_all">Все</string>
+    <string name="text_share_subject_dump">MCT Дамп</string>
+    <string name="text_share_subject_key_file">MCT файл ключа</string>
+    <string name="text_starting_at_0">(Начиная с 0)</string>
+    <string name="text_static_ac_default">08778F</string>
+    <string name="text_status_log">Журнал состояния</string>
+    <string name="text_step_1_sector_trailer">Шаг 1: Выберите ACs для Sector Trailer</string>
+    <string name="text_step_2_data_blocks">Шаг 2: Выберите ACs для блоков данных</string>
+    <string name="text_strange_error">Произошла какая-то странная ошибка :(</string>
+    <string name="text_tag_type_and_manuf">Тип метки и производитель</string>
+    <string name="text_tag_type_guess">"\"Тип тега и производитель \" могут быть неправильными.
+Смотрите \"Справка и информация \" для получения дополнительной информации."</string>
+    <string name="text_to">До</string>
+    <string name="text_uid">UID</string>
+    <string name="text_uid_and_manuf">UID &amp; ManufInfo</string>
+    <string name="text_uid_match_error">UID не совпадают</string>
+    <string name="text_uid_part">UID (часть):</string>
+    <string name="text_uid_to_clone">UID для клонирования</string>
+    <string name="text_update_colors">Обновить цвета</string>
+    <string name="text_use_uid_of_scanned_tag">Использовать UID отсканированного тега</string>
+    <string name="text_value">Значение</string>
+    <string name="text_valueblock">Блок значений</string>
+    <string name="text_vb">VB:</string>
+    <string name="text_vb_as_int">VB как Int:</string>
+    <string name="text_vb_as_int_decoded">Как целое число:</string>
+    <string name="text_vb_orig">Оригинал:</string>
+    <string name="text_vb_value">Значение:</string>
+    <string name="text_vb_what">Что:</string>
+    <string name="text_wait_read_tag">"Чтение тегов…
+(Не убирайте карту)"</string>
+    <string name="text_waiting_for_magic_tag">В ожидании волшебной карты (2-го поколения)</string>
+    <string name="text_write_dump_info">Запишите дамп (или некоторые его сектора) в тег. Блоки, содержащие неизвестные данные (---) будут пропущены!</string>
+    <string name="text_write_key">Ключ, чтобы написать блок 0</string>
+    <string name="text_write_key_a_not_known">Ключ с доступом к записи (A) не известен</string>
+    <string name="text_write_key_b_not_known">Ключ с доступом к записи (B) не известен</string>
+    <string name="text_writing_block_0">Блок записи 0</string>
+    <string name="title_activity_access_condition_tool">Декодер состояния доступа и &amp; кодирование</string>
+    <string name="title_activity_access_conditions">Условия доступа</string>
+    <string name="title_activity_bcc_tool">Калькулятор BCC</string>
+    <string name="title_activity_clone_uid">Клон UID для Magic Tag (2-го поколения)</string>
+    <string name="title_activity_create_key_map">Ключи карты к секторам</string>
+    <string name="title_activity_diff_tool">Инструмент Сравнения</string>
+    <string name="title_activity_dump_editor">Редактор дампа</string>
+    <string name="title_activity_file_chooser">Выбор файла</string>
+    <string name="title_activity_help">Помощь и информация</string>
+    <string name="title_activity_hex_to_ascii">Данные как ASCII</string>
+    <string name="title_activity_key_editor">Редактор ключей</string>
+    <string name="title_activity_main">MIFARE Classic Tool</string>
+    <string name="title_activity_preferences">Предпочтения</string>
+    <string name="title_activity_read_tag">Читать тег</string>
+    <string name="title_activity_tag_info">Информация тега</string>
+    <string name="title_activity_value_block_tool">Кодировщик &amp; расшифровки блоков значения</string>
+    <string name="title_activity_value_blocks">Блоки значений в виде целых чисел</string>
+    <string name="title_activity_write_tag">Запись тегов</string>
+</resources>
