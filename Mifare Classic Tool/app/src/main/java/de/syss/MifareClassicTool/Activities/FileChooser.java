@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.syss.MifareClassicTool.Common;
@@ -511,7 +512,90 @@ public class FileChooser extends BasicActivity {
     private String[] convert(String[] source, FileType srcType,
             FileType destType) {
         // TODO: implement.
-        return source;
+        // TODO: Write "SectorKeys" information into JSON as well.
+        // Convert source to json.
+        ArrayList<String> json = new ArrayList<String>();
+        if (srcType != FileType.JSON) {
+            json.add("{");
+            json.add("  \"Created\": \"MifareClassicTool\",");
+            json.add("  \"FileType\": \"mfcard\",");
+            json.add("  \"blocks\": {");
+        }
+        switch (srcType) {
+            case MCT:
+                // Convert MCT to json (export).
+                int err = Common.isValidDump(source, true);
+                if (err != 0) {
+                    Common.isValidDumpErrorToast(err, this);
+                    return null;
+                }
+                int sectorNumber = 0;
+                int blockNumber = 0;
+                String block = null;
+                for (String line : source) {
+                    if (line.startsWith("+")) {
+                        sectorNumber = Integer.parseInt(line.split(": ")[1]);
+                        if (sectorNumber < 32) {
+                            blockNumber = sectorNumber * 4;
+                        } else {
+                            blockNumber =  32 * 4 + (sectorNumber - 32) * 16;
+                        }
+                        continue;
+                    }
+
+                    block = "    \"" + blockNumber + "\": \"" + line + "\",";
+                    json.add(block);
+                    blockNumber += 1;
+                }
+                block = block.replace(",", "");
+                json.remove(json.size()-1);
+                json.add(block);
+                break;
+            case JSON:
+                // Import json.
+                json = new ArrayList<String>(Arrays.asList(source));
+                break;
+            case BIN:
+                // TODO: Convert bin to json (import).
+                break;
+            case EML:
+                // TODO: Convert eml to json (import).
+                break;
+        }
+        if (srcType != FileType.JSON) {
+            json.add("  }");
+            json.add("}");
+        }
+
+        // Check source convertion.
+        if (json.size() <= 6) {
+            // Error converting source file.
+            return null;
+        }
+
+        // Convert json to destType.
+        String[] dest = null;
+        switch (destType) {
+            case JSON:
+                // Export json.
+                dest = json.toArray(new String[json.size()]);
+                break;
+            case BIN:
+                // TODO: Convert json to bin (export).
+                break;
+            case MCT:
+                if (srcType == FileType.MCT) {
+                    // Import/Export.
+                    dest = source;
+                } else {
+                    // TODO: Convert json to MCT (import).
+                }
+                break;
+            case EML:
+                // TODO: Convert json to eml (export).
+        }
+
+        return dest;
     }
 
     // TODO: doc.
@@ -542,6 +626,7 @@ public class FileChooser extends BasicActivity {
     }
 }
 
+// TODO: implement convert function completely.
 // TODO: Import key file:
 //  isKeyFile->showImpotFileChooser->Copy file (no convert).
 // TODO: Import dump file:
