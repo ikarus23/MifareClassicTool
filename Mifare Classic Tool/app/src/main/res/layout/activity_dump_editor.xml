@@ -60,21 +60,21 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/scrollViewDumpEditor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayoutDumpEditorCaption"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" >
+    <ScrollView
+        android:id="@+id/scrollViewDumpEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayoutDumpEditorCaption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true">
 
         <LinearLayout
             android:id="@+id/linearLayoutDumpEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
         </LinearLayout>
     </ScrollView>

@@ -553,9 +553,6 @@ public class DumpEditor extends BasicActivity
                 if (i+1 != lines.length && !lines[i+1].startsWith("*")) {
                     // Add sector data (EditText).
                     et = new EditText(this);
-                    et.setLayoutParams(new LayoutParams(
-                            LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT));
                     et.setInputType(et.getInputType()
                             |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
                             |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
@@ -565,6 +562,10 @@ public class DumpEditor extends BasicActivity
                     // pixels - unit is needed.)
                     et.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                             new TextView(this).getTextSize());
+                    // Add some extra padding as a workaround for Maizu m16S
+                    // https://github.com/ikarus23/MifareClassicTool/issues/271
+                    et.setPadding(et.getPaddingLeft()+20, et.getPaddingTop(),
+                            et.getPaddingRight()+20, et.getPaddingBottom());
                     // Add a listener for changes to the text.
                     et.addTextChangedListener(new TextWatcher(){
                         @Override
