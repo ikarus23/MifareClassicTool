@@ -756,6 +756,18 @@ public class MainMenu extends Activity {
     }
 
     /**
+     * Show the {@link WriteTagFragmentActivity}.
+     * @param view The View object that triggered the method
+     * (in this case the write tag button).
+     * @see WriteTagFragmentActivity
+     */
+    public void onShowWriteTagFragmentActivity(View view) {
+        Intent intent = new Intent(this, WriteTagFragmentActivity.class);
+        startActivity(intent);
+    }
+
+
+    /**
      * Show the {@link HelpAndInfo}.
      * @param view The View object that triggered the method
      * (in this case the help/info button).

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.syss.MifareClassicTool.Fragments.WriteBlockFragment"
+    android:paddingTop="15dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:background="@color/background_material_dark">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutWriteTagWriteBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:tag="write_block_layout">
+
+        <!-- Dummy for preventing EditTexts to get focus on
+        Activity startup -->
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="0dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <TextView
+            android:id="@+id/textViewWriteTagSector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/editTextWriteTagSector"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
+            android:text="@string/text_sector"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:theme="@style/Theme.AppCompat" />
+
+        <EditText
+            android:id="@+id/editTextWriteTagSector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/textViewWriteTagSector"
+            android:theme="@style/Theme.AppCompat"
+            android:gravity="center_horizontal"
+            android:inputType="number"
+            android:maxLength="2"
+            android:minEms="3" />
+
+        <TextView
+            android:id="@+id/textViewWriteTagHint1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/editTextWriteTagSector"
+            android:layout_toRightOf="@id/editTextWriteTagSector"
+            android:theme="@style/Theme.AppCompat"
+            android:text="@string/text_starting_at_0"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewWriteTagBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/editTextWriteTagBlock"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textViewWriteTagSector"
+            android:padding="5dp"
+            android:text="@string/text_block"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:theme="@style/Theme.AppCompat"/>
+
+        <EditText
+            android:id="@+id/editTextWriteTagBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextWriteTagSector"
+            android:layout_below="@id/editTextWriteTagSector"
+            android:layout_marginRight="5dp"
+            android:theme="@style/Theme.AppCompat"
+            android:gravity="center_horizontal"
+            android:inputType="number"
+            android:maxLength="2"
+            android:minEms="3" />
+
+        <TextView
+            android:id="@+id/textViewWriteTagHint2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/editTextWriteTagBlock"
+            android:layout_toRightOf="@id/editTextWriteTagBlock"
+            android:theme="@style/Theme.AppCompat"
+            android:text="@string/text_starting_at_0"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewWriteTagData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/editTextWriteTagData"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textViewWriteTagBlock"
+            android:padding="5dp"
+            android:text="@string/text_data"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:theme="@style/Theme.AppCompat" />
+
+        <EditText
+            android:id="@+id/editTextWriteTagData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextWriteTagBlock"
+            android:layout_below="@id/editTextWriteTagBlock"
+            android:theme="@style/Theme.AppCompat"
+            android:hint="@string/hint_hex_16_byte"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxLength="32" />
+
+        <Button
+            android:id="@+id/buttonWriteTagBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextWriteTagData"
+            android:theme="@style/Theme.AppCompat"
+            android:text="@string/action_write_block" />
+    </RelativeLayout>
+
+</RelativeLayout>
