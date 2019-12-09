@@ -206,7 +206,7 @@ public class CloneUidTool extends BasicActivity {
         // Calculate BCC and cuonstruct full block 0.
         if (mUidLen == 7) {
             // 7 Byte UID cards don't seem to need stored BCC
-            mBlock0Complete = uid + mBlock0Rest7;
+            mBlock0Complete = uid + mBlock0Rest;
         } else {
             // Regular 4 byte UID
             byte bcc = Common.calcBCC(Common.hexStringToByteArray(uid));
