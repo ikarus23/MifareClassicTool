@@ -590,6 +590,7 @@
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
     <string name="hint_hex_4_byte">HEX, 4 bytes</string>
+    <string name="hint_hex_4_or_7_byte">HEX, 4 or 7 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.g. 423</string>
     <string name="hint_custom_sector_count">e.g. 16 for 1K</string>
