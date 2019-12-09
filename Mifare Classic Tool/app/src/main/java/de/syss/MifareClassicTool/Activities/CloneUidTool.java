@@ -121,6 +121,9 @@ public class CloneUidTool extends BasicActivity {
                     if (mUidLen == 7) {
                         m7ByteUid.setChecked(true);
                         mEditTextBlock0Rest.setText(mBlock0Rest7);
+                    } else if (mUidLen == 4) {
+                        m7ByteUid.setChecked(false);
+                        mEditTextBlock0Rest.setText(mBlock0Rest);
                     }
 
                     appendToLog(getString(
