@@ -222,6 +222,7 @@
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
     <string name="action_show_options">Show Options</string>
+    <string name="action_7byte_uid">7-Byte UID</string>
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
     <string name="action_retry_authentication">Retry the authentication if it fails</string>

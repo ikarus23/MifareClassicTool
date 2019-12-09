@@ -39,12 +39,14 @@ import de.syss.MifareClassicTool.R;
  * Clone UID to "magic tag gen2". The gen2 magic tags allow direct write to
  * block 0 without the need for special "backdoor" commands.
  * @author Slawomir Jasek slawomir.jasek@smartlockpicking.com and Gerhard Klostermeier
+ * 7 Byte UID support by Donny Maasland
  */
 public class CloneUidTool extends BasicActivity {
 
     private EditText mUid;
     private EditText mEditTextBlock0Rest;
     private EditText mEditTextBlock0Key;
+    private CheckBox m7ByteUid;
     private CheckBox mShowOptions;
     private RadioButton mRadioButtonKeyB;
     private TextView mStatusLogContent;
@@ -53,10 +55,12 @@ public class CloneUidTool extends BasicActivity {
     // Taken from sample card, in most cases it will not matter because bad
     // access control systems only check for the UID.
     private String mBlock0Rest = "08040001A2EC736FC3351D";
+    private String mBlock0Rest7 = "884400C82000000000";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
     private String mBlock0Key = "FFFFFFFFFFFF";
     private enum Status { INIT, BLOCK0_CALCULATED, CLONED }
     private Status mStatus = Status.INIT;
+    private int mUidLen = 4;
 
     /**
      * Initialize some member variables.
@@ -73,6 +77,8 @@ public class CloneUidTool extends BasicActivity {
                 R.id.editTextCloneUidToolWriteKey);
         mStatusLogContent = findViewById(
                 R.id.textViewCloneUidToolStatusLogContent);
+        m7ByteUid = (CheckBox) findViewById(
+                R.id.checkBoxCloneUidTool7Byte);
         mShowOptions = (CheckBox) findViewById(
                 R.id.checkBoxCloneUidToolOptions);
         mRadioButtonKeyB = findViewById(
@@ -109,6 +115,14 @@ public class CloneUidTool extends BasicActivity {
                 case INIT:
                     // Original tag scanned.
                     mUid.setText(uid);
+
+                    // Set checkbox if UID is 7 Byte
+                    mUidLen = Common.getUID().length;
+                    if (mUidLen == 7) {
+                        m7ByteUid.setChecked(true);
+                        mEditTextBlock0Rest.setText(mBlock0Rest7);
+                    }
+
                     appendToLog(getString(
                             R.string.text_use_uid_of_scanned_tag)
                             + " (" + Common.byte2HexString(Common.getUID())
@@ -169,15 +183,17 @@ public class CloneUidTool extends BasicActivity {
         }
 
         // Check the UID length.
-        if (uid.length() != 8) {
-            // Error: no 4 bytes UID. 7 and 10 bytes UID not supported (yet).
+        if ((mUidLen == 4 && uid.length() != 8)
+                || (mUidLen == 7 && uid.length() != 14)) {
+            // Error: no 4 or 7 bytes UID. 10 bytes UID not supported (yet).
             Toast.makeText(this, R.string.info_invalid_uid_length,
                     Toast.LENGTH_LONG).show();
             return;
         }
 
         // Check rest of block 0..
-        if (mBlock0Rest.length() != 22) {
+        if ((mUidLen == 4 && mBlock0Rest.length() != 22)
+                || (mUidLen == 7 && mBlock0Rest.length() != 18)) {
             Toast.makeText(this,
                     R.string.info_rest_of_block_0_length,
                     Toast.LENGTH_LONG).show();
@@ -185,8 +201,15 @@ public class CloneUidTool extends BasicActivity {
         }
 
         // Calculate BCC and cuonstruct full block 0.
-        byte bcc = Common.calcBCC(Common.hexStringToByteArray(uid));
-        mBlock0Complete = uid + String.format("%02X", bcc) + mBlock0Rest;
+        if (mUidLen == 7) {
+            // 7 Byte UID cards don't seem to need stored BCC
+            mBlock0Complete = uid + mBlock0Rest;
+        } else {
+            // Regular 4 byte UID
+            byte bcc = Common.calcBCC(Common.hexStringToByteArray(uid));
+            mBlock0Complete = uid + String.format("%02X", bcc) + mBlock0Rest;
+        }
+        
         mStatus = Status.BLOCK0_CALCULATED;
         appendToLog(getString(R.string.text_block_0_calculated)
                 + " (" + mBlock0Complete + ")");
@@ -214,8 +237,8 @@ public class CloneUidTool extends BasicActivity {
 
         // Check UID length of magic card gen2.
         byte[] uid = Common.getUID();
-        if (uid.length != 4) {
-            // Error: no 4 bytes UID. 7 and 10 bytes UID not supported (yet).
+        if (uid.length != 4 && uid.length != 7) {
+            // Error: no 4 or 7 bytes UID. 10 bytes UID not supported (yet).
             Toast.makeText(this, R.string.info_invalid_uid_length,
                     Toast.LENGTH_LONG).show();
             return;
@@ -257,6 +280,21 @@ public class CloneUidTool extends BasicActivity {
         }
         content = content + newline + "\u2022 " + text;
         mStatusLogContent.setText(content);
+    }
+
+    /**
+     * 7-Byte UID.
+     * @param view The View object that triggered the method
+     * (in this case the "7-Byte UID" check box).
+     */
+    public void on7ByteUid(View view) {
+        if (m7ByteUid.isChecked()) {
+            mUidLen = 7;
+            mEditTextBlock0Rest.setText(mBlock0Rest7);
+        } else {
+            mUidLen = 4;
+            mEditTextBlock0Rest.setText(mBlock0Rest);
+        }
     }
 
     /**

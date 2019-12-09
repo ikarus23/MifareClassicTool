@@ -105,10 +105,18 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/checkBoxCloneUidToolOptions"
+            android:id="@+id/checkBoxCloneUidTool7Byte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearLayoutCloneUidToolToClone"
+            android:onClick="on7ByteUid"
+            android:text="@string/action_7byte_uid" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCloneUidToolOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkBoxCloneUidTool7Byte"
             android:onClick="onShowOptions"
             android:text="@string/action_show_options" />
 
