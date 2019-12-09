@@ -575,7 +575,7 @@
         This App is able to write to such tags and can therefore clone the UID. However, some special
         tags (\"magic tags 1st gen\") require a special command sequence to put them into the
         state where writing to the manufacturer block is possible. These tags will not work.
-        \n\nFor now this tool will only work with 4-byte UIDs.</string>
+        \n\nFor now this tool will only work with 4-byte and 7-byte UIDs.</string>
     <string name="dialog_rest_of_block_0_title">Rest of Block 0</string>
     <string name="dialog_rest_of_block_0">MIFARE Classic tags can typically only be
         written blockwise. The UID is represented by the first bytes of block 0. To
