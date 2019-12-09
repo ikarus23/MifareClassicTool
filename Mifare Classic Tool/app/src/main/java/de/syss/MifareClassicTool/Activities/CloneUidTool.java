@@ -38,7 +38,7 @@ import de.syss.MifareClassicTool.R;
 /**
  * Clone UID to "magic tag gen2". The gen2 magic tags allow direct write to
  * block 0 without the need for special "backdoor" commands.
- * @author Slawomir Jasek slawomir.jasek@smartlockpicking.com and Gerhard Klostermeier
+ * @author Slawomir Jasek slawomir.jasek@smartlockpicking.com and Gerhard Klostermeier.
  * 7 Byte UID support by Donny Maasland
  */
 public class CloneUidTool extends BasicActivity {
@@ -203,7 +203,7 @@ public class CloneUidTool extends BasicActivity {
         // Calculate BCC and cuonstruct full block 0.
         if (mUidLen == 7) {
             // 7 Byte UID cards don't seem to need stored BCC
-            mBlock0Complete = uid + mBlock0Rest;
+            mBlock0Complete = uid + mBlock0Rest7;
         } else {
             // Regular 4 byte UID
             byte bcc = Common.calcBCC(Common.hexStringToByteArray(uid));
