@@ -383,6 +383,7 @@
         is incorrect</string>
     <string name="info_incorrect_key">Error: Key not correct</string>
     <string name="info_file_exported">File exported to external storage (SD card)</string>
+    <string name="info_file_imported">File imported</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

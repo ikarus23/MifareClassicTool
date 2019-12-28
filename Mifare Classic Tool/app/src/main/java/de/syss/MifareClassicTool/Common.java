@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -40,6 +41,8 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+
+import android.provider.OpenableColumns;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -49,10 +52,12 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -296,6 +301,7 @@ public class Common extends Application {
         return getFileFromStorage(relativePath, false);
     }
 
+    // TODO: update doc.
     /**
      * Read a file line by line. The file should be a simple text file.
      * Empty lines and lines STARTING with "#" will not be interpreted.
@@ -309,45 +315,19 @@ public class Common extends Application {
      */
     public static String[] readFileLineByLine(File file, boolean readComments,
             Context context) {
-        BufferedReader br = null;
         String[] ret = null;
-        if (file != null  && isExternalStorageMounted() && file.exists()) {
+        BufferedReader reader = null;
+        if (file != null && isExternalStorageMounted() && file.exists()) {
             try {
-                br = new BufferedReader(new FileReader(file));
-
-                String line;
-                ArrayList<String> linesArray = new ArrayList<>();
-                while ((line = br.readLine()) != null)   {
-                    // Ignore empty lines.
-                    // Ignore comments if readComments == false.
-                    if ( !line.equals("")
-                            && (readComments || !line.startsWith("#"))) {
-                        try {
-                            linesArray.add(line);
-                        } catch (OutOfMemoryError e) {
-                            // Error. File is too big
-                            // (too many lines, out of memory).
-                            Toast.makeText(context, R.string.info_file_to_big,
-                                    Toast.LENGTH_LONG).show();
-                            return null;
-                        }
-                    }
-                }
-                if (linesArray.size() > 0) {
-                    ret = linesArray.toArray(new String[linesArray.size()]);
-                } else {
-                    ret = new String[] {""};
-                }
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Error while reading from file "
-                        + file.getPath() + "." ,e);
+                reader = new BufferedReader(new FileReader(file));
+                ret = readLineByLine(reader, readComments, context);
+            } catch (FileNotFoundException ex) {
                 ret = null;
             } finally {
-                if (br != null) {
+                if (reader != null) {
                     try {
-                        br.close();
-                    }
-                    catch (IOException e) {
+                        reader.close();
+                    } catch (IOException e) {
                         Log.e(LOG_TAG, "Error while closing file.", e);
                         ret = null;
                     }
@@ -355,6 +335,86 @@ public class Common extends Application {
             }
         }
         return ret;
+    }
+
+    // TODO: doc.
+    public static String[] readUriLineByLine(Uri uri, Context context){
+        InputStream contentStream = null;
+        String[] ret = null;
+        try {
+            contentStream = context.getContentResolver().openInputStream(uri);
+        } catch (FileNotFoundException ex) {
+            return null;
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(contentStream));
+        ret = readLineByLine(reader, true, context);
+        try {
+            reader.close();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error while closing file.", e);
+            ret = null;
+        }
+        return ret;
+    }
+
+    // TODO: doc.
+    private static String[] readLineByLine(BufferedReader reader,
+            boolean readComments, Context context) {
+        String[] ret = null;
+        String line;
+        ArrayList<String> linesArray = new ArrayList<>();
+        try {
+            while ((line = reader.readLine()) != null) {
+                // Ignore empty lines.
+                // Ignore comments if readComments == false.
+                if (!line.equals("")
+                        && (readComments || !line.startsWith("#"))) {
+                    try {
+                        linesArray.add(line);
+                    } catch (OutOfMemoryError e) {
+                        // Error. File is too big
+                        // (too many lines, out of memory).
+                        Toast.makeText(context, R.string.info_file_to_big,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            Log.e(LOG_TAG, "Error while reading from file.", ex);
+            ret = null;
+        }
+        if (linesArray.size() > 0) {
+            ret = linesArray.toArray(new String[linesArray.size()]);
+        } else {
+            ret = new String[]{""};
+        }
+        return ret;
+    }
+
+    // TODO: doc. https://stackoverflow.com/a/25005243
+    public static String getFileName(Uri uri, Context context) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(
+                    uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(
+                            OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     /**

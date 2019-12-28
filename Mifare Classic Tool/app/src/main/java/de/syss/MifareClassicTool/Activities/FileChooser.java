@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -470,8 +471,35 @@ public class FileChooser extends BasicActivity {
 
     // TODO: doc.
     private void onImportFile(Uri file) {
+        String[] content = Common.readUriLineByLine(file,this);
+        if (content == null) {
+            return;
+        }
         // Key or dump?
-        // TODO: implement.
+        if (mIsKeyFile) {
+            // Importing key files is not supported.
+        } else if (mIsDumpFile) {
+            // Convert.
+            String[] convertedContent = convert(
+                    content, mFileType, FileType.MCT);
+            // Remove file extension and replace it with ".mct".
+            String fileName = Common.getFileName(file, this);
+            if (fileName.contains(".")) {
+                fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+            }
+            String destFileName = fileName + FileType.MCT.toString();
+            // Save converted file.
+            String destPath = Common.HOME_DIR + "/" + Common.DUMPS_DIR;
+            File destination = Common.getFileFromStorage(
+                    destPath + "/" + destFileName, true);
+            if (Common.saveFile(destination, convertedContent,false)) {
+                Toast.makeText(this, R.string.info_file_imported,
+                        Toast.LENGTH_LONG).show();
+                mIsDirEmpty = updateFileIndex(mDir);
+            }
+        } else {
+            // TODO: Implement error (should never occur).
+        }
     }
 
     // TODO: doc.
@@ -493,10 +521,10 @@ public class FileChooser extends BasicActivity {
             String[] convertedContent = convert(
                     content, FileType.MCT, mFileType);
             // Remove ".mct" file extension and replace it with export type.
-            String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
-            fileName = fileName.replace(".mct", "");
+            fileName = fileName.replace(FileType.MCT.toString(), "");
             String destFileName = fileName + mFileType.toString();
             // Save converted file.
+            String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
             File destination = Common.getFileFromStorage(
                     destPath + "/" + destFileName, true);
             if (Common.saveFile(destination, convertedContent,false)) {
@@ -515,6 +543,7 @@ public class FileChooser extends BasicActivity {
         // TODO: Write "SectorKeys" information into JSON as well.
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
+        String block = null;
         if (srcType != FileType.JSON) {
             json.add("{");
             json.add("  \"Created\": \"MifareClassicTool\",");
@@ -531,7 +560,6 @@ public class FileChooser extends BasicActivity {
                 }
                 int sectorNumber = 0;
                 int blockNumber = 0;
-                String block = null;
                 for (String line : source) {
                     if (line.startsWith("+")) {
                         sectorNumber = Integer.parseInt(line.split(": ")[1]);
@@ -542,27 +570,31 @@ public class FileChooser extends BasicActivity {
                         }
                         continue;
                     }
-
                     block = "    \"" + blockNumber + "\": \"" + line + "\",";
                     json.add(block);
                     blockNumber += 1;
                 }
-                block = block.replace(",", "");
-                json.remove(json.size()-1);
-                json.add(block);
                 break;
             case JSON:
-                // Import json.
+                // Convert json to json (import).
                 json = new ArrayList<String>(Arrays.asList(source));
                 break;
             case BIN:
                 // TODO: Convert bin to json (import).
+                // Convert bin to json (import).
                 break;
             case EML:
-                // TODO: Convert eml to json (import).
+                // Convert eml to json (import).
+                for (int i = 0; i < source.length; i++) {
+                    block = "    \"" + i + "\": \"" + source[i] + "\",";
+                    json.add(block);
+                }
                 break;
         }
         if (srcType != FileType.JSON) {
+            block = block.replace(",", "");
+            json.remove(json.size()-1);
+            json.add(block);
             json.add("  }");
             json.add("}");
         }
@@ -572,6 +604,9 @@ public class FileChooser extends BasicActivity {
             // Error converting source file.
             return null;
         }
+
+        // TODO: Only temporary.
+        destType = FileType.JSON;
 
         // Convert json to destType.
         String[] dest = null;
@@ -584,6 +619,7 @@ public class FileChooser extends BasicActivity {
                 // TODO: Convert json to bin (export).
                 break;
             case MCT:
+                // TODO: Only temporary.
                 if (srcType == FileType.MCT) {
                     // Import/Export.
                     dest = source;
@@ -616,7 +652,7 @@ public class FileChooser extends BasicActivity {
     }
 
     // TODO: Once we've dropped Android 4 and have API level 21, let the user
-    // choose the export director.
+    // Choose the export directory.
     private void showExportDirectoryChooser() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
@@ -629,7 +665,4 @@ public class FileChooser extends BasicActivity {
 // TODO: implement convert function completely.
 // TODO: Import key file:
 //  isKeyFile->showImpotFileChooser->Copy file (no convert).
-// TODO: Import dump file:
-//  isDumpFile->showTypeChooserMenu->showImportFileChooser->read file
-//  ->convert->save file
 // TODO: save isKeyFile or other important vars.
