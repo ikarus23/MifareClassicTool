@@ -20,6 +20,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Huawei Ascend 620 (G620S)
 * Huawei Ascend Mate7
 * Huawei Mate 20
+* Huawei P7
 * Huawei P8 Lite (2016, 2017)
 * Huawei P9
 * Huawei P10 Lite
