@@ -179,6 +179,10 @@
             android:icon="@drawable/clone_uid"
             android:label="@string/title_activity_clone_uid" >
         </activity>
+        <activity android:name=".Activities.CrcCalc"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_crc_calc" >
+        </activity>
 
     </application>
 

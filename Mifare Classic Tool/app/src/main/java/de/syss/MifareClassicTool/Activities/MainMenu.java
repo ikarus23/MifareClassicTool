@@ -914,6 +914,10 @@ public class MainMenu extends Activity {
             intent = new Intent(this, BccTool.class);
             startActivity(intent);
             return true;
+        case R.id.menuMainCrcCalc:
+            intent = new Intent(this, CrcCalc.class);
+            startActivity(intent);
+            return true;
         case R.id.menuMainCloneUidTool:
             intent = new Intent(this, CloneUidTool.class);
             startActivity(intent);
