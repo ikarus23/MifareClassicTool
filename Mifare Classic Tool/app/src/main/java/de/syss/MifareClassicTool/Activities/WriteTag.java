@@ -54,6 +54,7 @@ import java.util.Set;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
+import de.syss.MifareClassicTool.databinding.ActivityWriteTagBinding;
 
 /**
  * Write data to tag. The user can choose to write
@@ -76,17 +77,8 @@ public class WriteTag extends BasicActivity {
     private static final int CKM_FACTORY_FORMAT = 4;
     private static final int CKM_WRITE_NEW_VALUE = 5;
 
-    private EditText mSectorTextBlock;
-    private EditText mBlockTextBlock;
-    private EditText mDataText;
-    private EditText mSectorTextVB;
-    private EditText mBlockTextVB;
-    private EditText mNewValueTextVB;
-    private RadioButton mIncreaseVB;
-    private EditText mStaticAC;
+    ActivityWriteTagBinding b;
     private ArrayList<View> mWriteModeLayouts;
-    private CheckBox mWriteManufBlock;
-    private CheckBox mEnableStaticAC;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
     private boolean mWriteDumpFromEditor = false;
     private String[] mDumpFromEditor;
@@ -103,37 +95,18 @@ public class WriteTag extends BasicActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_tag);
-
-        mSectorTextBlock = findViewById(R.id.editTextWriteTagSector);
-        mBlockTextBlock = findViewById(R.id.editTextWriteTagBlock);
-        mDataText = findViewById(R.id.editTextWriteTagData);
-        mSectorTextVB = findViewById(
-                R.id.editTextWriteTagValueBlockSector);
-        mBlockTextVB = findViewById(
-                R.id.editTextWriteTagValueBlockBlock);
-        mNewValueTextVB = findViewById(
-                R.id.editTextWriteTagValueBlockValue);
-        mIncreaseVB = findViewById(
-                R.id.radioButtonWriteTagWriteValueBlockIncr);
-        mStaticAC = findViewById(R.id.editTextWriteTagDumpStaticAC);
-        mEnableStaticAC = findViewById(
-                R.id.checkBoxWriteTagDumpStaticAC);
-        mWriteManufBlock = findViewById(
-                R.id.checkBoxWriteTagDumpWriteManuf);
+        b = ActivityWriteTagBinding.inflate(getLayoutInflater());
+        setContentView(b.getRoot());
 
         mWriteModeLayouts = new ArrayList<>();
-        mWriteModeLayouts.add(findViewById(
-                R.id.relativeLayoutWriteTagWriteBlock));
-        mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
-        mWriteModeLayouts.add(findViewById(
-                R.id.linearLayoutWriteTagFactoryFormat));
-        mWriteModeLayouts.add(findViewById(
-                R.id.relativeLayoutWriteTagValueBlock));
+        mWriteModeLayouts.add(b.relativeLayoutWriteTagWriteBlock);
+        mWriteModeLayouts.add(b.linearLayoutWriteTagDump);
+        mWriteModeLayouts.add(b.linearLayoutWriteTagFactoryFormat);
+        mWriteModeLayouts.add(b.relativeLayoutWriteTagValueBlock);
 
         // Restore mDumpWithPos and the "write to manufacturer block"-state.
         if (savedInstanceState != null) {
-            mWriteManufBlock.setChecked(
+            b.checkBoxWriteTagDumpWriteManuf.setChecked(
                     savedInstanceState.getBoolean("write_manuf_block", false));
             Serializable s = savedInstanceState
                     .getSerializable("dump_with_pos");
@@ -148,12 +121,9 @@ public class WriteTag extends BasicActivity {
             mDumpFromEditor = i.getStringArrayExtra(EXTRA_DUMP);
             mWriteDumpFromEditor = true;
             // Show "Write Dump" option and disable other write options.
-            RadioButton writeBlock = findViewById(
-                    R.id.radioButtonWriteTagWriteBlock);
-            RadioButton factoryFormat = findViewById(
-                    R.id.radioButtonWriteTagFactoryFormat);
-            RadioButton writeDump = findViewById(
-                    R.id.radioButtonWriteTagWriteDump);
+            RadioButton writeBlock = b.radioButtonWriteTagWriteBlock;
+            RadioButton factoryFormat = b.radioButtonWriteTagFactoryFormat;
+            RadioButton writeDump = b.radioButtonWriteTagWriteDump;
             writeDump.performClick();
             writeBlock.setEnabled(false);
             factoryFormat.setEnabled(false);
@@ -170,7 +140,7 @@ public class WriteTag extends BasicActivity {
     @Override
     public void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("write_manuf_block", mWriteManufBlock.isChecked());
+        outState.putBoolean("write_manuf_block", b.checkBoxWriteTagDumpWriteManuf.isChecked());
         outState.putSerializable("dump_with_pos", mDumpWithPos);
     }
 
@@ -273,18 +243,18 @@ public class WriteTag extends BasicActivity {
      */
     public void onWriteBlock(View view) {
         // Check input.
-        if (!checkSectorAndBlock(mSectorTextBlock, mBlockTextBlock)) {
+        if (!checkSectorAndBlock(b.editTextWriteTagSector, b.editTextWriteTagBlock)) {
             return;
         }
-        String data = mDataText.getText().toString();
+        String data = b.editTextWriteTagData.getText().toString();
         if (!Common.isHexAnd16Byte(data, this)) {
             return;
         }
 
         final int sector = Integer.parseInt(
-                mSectorTextBlock.getText().toString());
+                b.editTextWriteTagSector.getText().toString());
         final int block = Integer.parseInt(
-                mBlockTextBlock.getText().toString());
+                b.editTextWriteTagBlock.getText().toString());
 
         if (!isSectorInRage(this, true)) {
             return;
@@ -446,10 +416,10 @@ public class WriteTag extends BasicActivity {
         // the UID length of the current tag. In this case 4 byte.
         if (isWriteBlock) {
             bcc = Common.hexStringToByteArray(
-                    mDataText.getText().toString()
+                    b.editTextWriteTagSector.getText().toString()
                     .substring(8, 10))[0];
             uid = Common.hexStringToByteArray(
-                    mDataText.getText().toString()
+                    b.editTextWriteTagSector.getText().toString()
                     .substring(0, 8));
         } else {
             // Has to be called after mDumpWithPos is properly initialized.
@@ -548,21 +518,21 @@ public class WriteTag extends BasicActivity {
         if (reader == null) {
             return;
         }
-        int sector = Integer.parseInt(mSectorTextBlock.getText().toString());
-        int block = Integer.parseInt(mBlockTextBlock.getText().toString());
+        int sector = Integer.parseInt(b.editTextWriteTagSector.getText().toString());
+        int block = Integer.parseInt(b.editTextWriteTagBlock.getText().toString());
         byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
 
         if (keys[1] != null) {
             result = reader.writeBlock(sector, block,
-                    Common.hexStringToByteArray(mDataText.getText().toString()),
+                    Common.hexStringToByteArray(b.editTextWriteTagData.getText().toString()),
                     keys[1], true);
         }
         // Error while writing? Maybe tag has default factory settings ->
         // try to write with key a (if there is one).
         if (result == -1 && keys[0] != null) {
             result = reader.writeBlock(sector, block,
-                    Common.hexStringToByteArray(mDataText.getText().toString()),
+                    Common.hexStringToByteArray(b.editTextWriteTagData.getText().toString()),
                     keys[0], false);
         }
         reader.close();
@@ -605,8 +575,8 @@ public class WriteTag extends BasicActivity {
      */
     public void onWriteDump(View view) {
         // Check the static Access Condition option.
-        if (mEnableStaticAC.isChecked()) {
-            String ac = mStaticAC.getText().toString();
+        if (b.checkBoxWriteTagDumpStaticAC.isChecked()) {
+            String ac = b.editTextWriteTagDumpStaticAC.getText().toString();
             if (!ac.matches("[0-9A-Fa-f]+")) {
                 // Error, not hex.
                 Toast.makeText(this, R.string.info_ac_not_hex,
@@ -744,7 +714,7 @@ public class WriteTag extends BasicActivity {
                         if (!box.isChecked()) {
                             mDumpWithPos.remove(sector);
                         } else if (sector == 0 && box.isChecked()
-                                && mWriteManufBlock.isChecked()) {
+                                && b.checkBoxWriteTagDumpWriteManuf.isChecked()) {
                             writeBlock0 = true;
                         }
                     }
@@ -797,7 +767,7 @@ public class WriteTag extends BasicActivity {
         // Initialize last sector.
         if (isWriteBlock) {
             lastSector = Integer.parseInt(
-                    mSectorTextBlock.getText().toString());
+                    b.editTextWriteTagSector.getText().toString());
         } else {
             lastSector = Collections.max(mDumpWithPos.keySet());
         }
@@ -835,12 +805,12 @@ public class WriteTag extends BasicActivity {
                 mDumpWithPos.put(sector, new HashMap<>());
             } else if (!dump[i].contains("-")) {
                 // Use static Access Conditions for all sectors?
-                if (mEnableStaticAC.isChecked()
+                if (b.checkBoxWriteTagDumpStaticAC.isChecked()
                         && (i+1 == dump.length || dump[i+1].startsWith("+"))) {
                     // This is a Sector Trailer. Replace its ACs
                     // with the static ones.
                     String newBlock = dump[i].substring(0, 12)
-                            + mStaticAC.getText().toString()
+                            + b.editTextWriteTagDumpStaticAC.getText().toString()
                             + dump[i].substring(18, dump[i].length());
                     dump[i] = newBlock;
                 }
@@ -964,7 +934,7 @@ public class WriteTag extends BasicActivity {
             Set<Integer> blocks = mDumpWithPos.get(sector).keySet();
             for (int block : blocks) {
                 boolean isSafeForWriting = true;
-                if (!mWriteManufBlock.isChecked()
+                if (!b.checkBoxWriteTagDumpWriteManuf.isChecked()
                         && sector == 0 && block == 0) {
                     // Block 0 is read-only. This is normal.
                     // Do not add an entry to the dialog and skip the
@@ -1314,12 +1284,12 @@ public class WriteTag extends BasicActivity {
      */
     public void onWriteValue(View view) {
         // Check input.
-        if (!checkSectorAndBlock(mSectorTextVB, mBlockTextVB)) {
+        if (!checkSectorAndBlock(b.editTextWriteTagValueBlockSector, b.editTextWriteTagValueBlockBlock)) {
             return;
         }
 
-        int sector = Integer.parseInt(mSectorTextVB.getText().toString());
-        int block = Integer.parseInt(mBlockTextVB.getText().toString());
+        int sector = Integer.parseInt(b.editTextWriteTagValueBlockSector.getText().toString());
+        int block = Integer.parseInt(b.editTextWriteTagValueBlockBlock.getText().toString());
         if (block == 3 || block == 15 || (sector == 0 && block == 0)) {
             // Error. Block can't be a Value Block.
             Toast.makeText(this, R.string.info_not_vb,
@@ -1328,7 +1298,7 @@ public class WriteTag extends BasicActivity {
         }
 
         try {
-            Integer.parseInt(mNewValueTextVB.getText().toString());
+            Integer.parseInt(b.editTextWriteTagValueBlockValue.getText().toString());
         } catch (Exception e) {
             // Error. Value is too big.
             Toast.makeText(this, R.string.info_value_too_big,
@@ -1353,22 +1323,22 @@ public class WriteTag extends BasicActivity {
         if (reader == null) {
             return;
         }
-        int value = Integer.parseInt(mNewValueTextVB.getText().toString());
-        int sector = Integer.parseInt(mSectorTextVB.getText().toString());
-        int block = Integer.parseInt(mBlockTextVB.getText().toString());
+        int value = Integer.parseInt(b.editTextWriteTagValueBlockValue.getText().toString());
+        int sector = Integer.parseInt(b.editTextWriteTagValueBlockSector.getText().toString());
+        int block = Integer.parseInt(b.editTextWriteTagValueBlockBlock.getText().toString());
         byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
 
         if (keys[1] != null) {
             result = reader.writeValueBlock(sector, block, value,
-                    mIncreaseVB.isChecked(),
+                    b.radioButtonWriteTagWriteValueBlockIncr.isChecked(),
                     keys[1], true);
         }
         // Error while writing? Maybe tag has default factory settings ->
         // try to write with key a (if there is one).
         if (result == -1 && keys[0] != null) {
             result = reader.writeValueBlock(sector, block, value,
-                    mIncreaseVB.isChecked(),
+                    b.radioButtonWriteTagWriteValueBlockIncr.isChecked(),
                     keys[0], false);
         }
         reader.close();
