@@ -32,4 +32,6 @@
           android:title="@string/action_show_bcc_tool" />
     <item android:id="@+id/menuMainCloneUidTool"
         android:title="@string/action_show_clone_uid" />
+    <item android:id="@+id/menuMainImportExportTool"
+        android:title="@string/action_show_import_export_tool" />
 </menu>

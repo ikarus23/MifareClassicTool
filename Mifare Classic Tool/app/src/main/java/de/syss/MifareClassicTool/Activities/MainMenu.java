@@ -652,6 +652,9 @@ public class MainMenu extends Activity {
         // Enable/Disable diff tool depending on write permissions.
         menu.findItem(R.id.menuMainDiffTool).setEnabled(
                 Common.hasWritePermissionToExternalStorage(this));
+        // Enable/Disable import/export tool depending on write permissions.
+        menu.findItem(R.id.menuMainImportExportTool).setEnabled(
+                Common.hasWritePermissionToExternalStorage(this));
     }
 
     /**
@@ -925,6 +928,10 @@ public class MainMenu extends Activity {
             return true;
         case R.id.menuMainCloneUidTool:
             intent = new Intent(this, CloneUidTool.class);
+            startActivity(intent);
+            return true;
+        case R.id.menuMainImportExportTool:
+            intent = new Intent(this, ImportExportTool.class);
             startActivity(intent);
             return true;
         default:

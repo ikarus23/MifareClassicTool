@@ -46,6 +46,7 @@
     <string name="title_activity_diff_tool">Diff Tool</string>
     <string name="title_activity_bcc_tool">BCC Calculator</string>
     <string name="title_activity_clone_uid">Clone UID to Magic Tag (2nd gen)</string>
+    <string name="title_activity_import_export_tool">Import/Export Tool</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -249,6 +250,7 @@
     <string name="action_show_diff_tool">Diff Tool (Compare Dumps)</string>
     <string name="action_show_bcc_tool">BCC Calculator</string>
     <string name="action_show_clone_uid">Clone UID</string>
+    <string name="action_show_import_export_tool">Import/Export</string>
     <string name="action_compare_dump">Compare Dump</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
@@ -277,6 +279,10 @@
     <string name="action_file_type_mdf_bin">.bin/.mfd (Proxmark, libnfc, mfoc)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_import_dump">Import dump</string>
+    <string name="action_export_dump">Export dump</string>
+    <string name="action_import_keys">Import keys</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
