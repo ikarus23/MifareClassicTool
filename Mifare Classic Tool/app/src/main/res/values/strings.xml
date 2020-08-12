@@ -179,6 +179,7 @@
     <string name="text_select_export_location">Select Export Location</string>
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
+    <string name="text_choose_dump_file">Choose dump file</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -390,6 +391,8 @@
     <string name="info_incorrect_key">Error: Key not correct</string>
     <string name="info_file_exported">File exported to external storage (SD card)</string>
     <string name="info_file_imported">File imported</string>
+    <string name="info_convert_error">Error: Could not convert</string>
+    <string name="info_incomplete_dump">Error: Incomplete dump</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

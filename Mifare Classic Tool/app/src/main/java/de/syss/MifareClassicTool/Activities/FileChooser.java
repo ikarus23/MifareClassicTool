@@ -95,13 +95,6 @@ public class FileChooser extends BasicActivity {
     public final static String EXTRA_BUTTON_TEXT =
             "de.syss.MifareClassicTool.Activity.BUTTON_TEXT";
 
-    // TODO: doc.
-    public final static String EXTRA_IS_KEY_FILE =
-            "de.syss.MifareClassicTool.Activity.IS_KEY_FILE";
-    public final static String EXTRA_IS_DUMP_FILE =
-            "de.syss.MifareClassicTool.Activity.IS_DUMP_FILE";
-
-
     // Output parameter.
     /**
      * The file (with full path) that will be passed via Intent
@@ -125,30 +118,9 @@ public class FileChooser extends BasicActivity {
     private Button mChooserButton;
     private TextView mChooserText;
     private MenuItem mDeleteFile;
-    private MenuItem mExportFile;
     private File mDir;
     private boolean mIsDirEmpty;
-    private boolean mIsKeyFile = false;
-    private boolean mIsDumpFile = false;
-    private boolean mIsExport = false;
-    private FileType mFileType;
-    private enum FileType {
-        MCT(".mct"),
-        JSON(".json"),
-        BIN(".bin"),
-        EML(".eml");
 
-        private final String text;
-
-        private FileType(final String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,6 +132,7 @@ public class FileChooser extends BasicActivity {
     /**
      * Initialize the file chooser with the data from the calling Intent
      * (if external storage is mounted).
+     *
      * @see #EXTRA_DIR
      * @see #EXTRA_TITLE
      * @see #EXTRA_CHOOSER_TEXT
@@ -192,15 +165,6 @@ public class FileChooser extends BasicActivity {
         // Set button text.
         if (intent.hasExtra(EXTRA_BUTTON_TEXT)) {
             mChooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
-        }
-        // Remember file functionality.
-        if (intent.hasExtra(EXTRA_IS_KEY_FILE)) {
-            mIsKeyFile = intent.getBooleanExtra(
-                    EXTRA_IS_KEY_FILE, false);
-        }
-        if (intent.hasExtra(EXTRA_IS_DUMP_FILE)) {
-            mIsDumpFile = intent.getBooleanExtra(
-                    EXTRA_IS_DUMP_FILE, false);
         }
 
         // Check path and initialize file list.
@@ -235,34 +199,11 @@ public class FileChooser extends BasicActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.file_chooser_functions, menu);
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
-        mExportFile = menu.findItem(R.id.menuFileChooserExportFile);
 
-        // Enable/disable the delete/export menu item if there is a least one
-        // file.
+        // Enable/disable the delete menu item if there is a least one file.
         mDeleteFile.setEnabled(!mIsDirEmpty);
-        mExportFile.setEnabled(!mIsDirEmpty);
-
-
-        if (mIsKeyFile) {
-            // Exporting key files is not supported.
-            menu.removeItem(mExportFile.getItemId());
-        }
-        if (mIsDumpFile) {
-            // Creating new dump files is not supported.
-            menu.removeItem(menu.findItem(R.id.menuFileChooserNewFile)
-                    .getItemId());
-        }
 
         return true;
-    }
-
-    // TODO: doc.
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.file_types, menu);
     }
 
     /**
@@ -279,68 +220,8 @@ public class FileChooser extends BasicActivity {
             case R.id.menuFileChooserDeleteFile:
                 onDeleteFile();
                 return true;
-            case R.id.menuFileChooserImportFile:
-                mIsExport = false;
-                if (mIsDumpFile) {
-                    showTypeChooserMenu();
-                } else {
-                    showImportFileChooser();
-                }
-                return true;
-            case R.id.menuFileChooserExportFile:
-                mIsExport = true;
-                if (mIsDumpFile) {
-                    showTypeChooserMenu();
-                } else {
-                    // Exporting key files is not supported.
-                }
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    // TODO: doc.
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuFileTypesMct:
-                mFileType = FileType.MCT;
-                break;
-            case R.id.menuFileTypesJson:
-                mFileType = FileType.JSON;
-                break;
-            case R.id.menuFileTypesBinMfd:
-                mFileType = FileType.BIN;
-                break;
-            case R.id.menuFileTypesEml:
-                mFileType = FileType.EML;
-                break;
-            default:
-                return super.onContextItemSelected(item);
-        }
-
-        if (mIsExport) {
-            // Convert file and export.
-            onExportFile();
-        } else {
-            // Let the user pick the file to import.
-            showImportFileChooser();
-        }
-        return true;
-    }
-
-    // TODO: doc.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        switch (requestCode) {
-            case 1: // File for importing has been selected.
-            if (resultCode == RESULT_OK) {
-                Uri selectedLocation = data.getData();
-                onImportFile(selectedLocation);
-            }
         }
     }
 
@@ -349,8 +230,9 @@ public class FileChooser extends BasicActivity {
      * {@link #EXTRA_CHOSEN_FILE} and {@link #EXTRA_CHOSEN_FILENAME} as result.
      * You can catch that result by overriding onActivityResult() in the
      * Activity that called the file chooser via startActivityForResult().
+     *
      * @param view The View object that triggered the function
-     * (in this case the choose file button).
+     *             (in this case the choose file button).
      * @see #EXTRA_CHOSEN_FILE
      * @see #EXTRA_CHOSEN_FILENAME
      */
@@ -368,6 +250,7 @@ public class FileChooser extends BasicActivity {
     /**
      * Update the file list and the components that depend on it
      * (e.g. disable the open file button if there is no file).
+     *
      * @param path Path to the directory which will be listed.
      * @return True if directory is empty. False otherwise.
      */
@@ -381,7 +264,7 @@ public class FileChooser extends BasicActivity {
             isEmpty = false;
             Arrays.sort(files);
 
-            for(File f : files) {
+            for (File f : files) {
                 if (f.isFile()) { // Do not list directories.
                     RadioButton r = new RadioButton(this);
                     r.setText(f.getName());
@@ -389,7 +272,7 @@ public class FileChooser extends BasicActivity {
                 }
             }
             // Check first file.
-            ((RadioButton)mGroupOfFiles.getChildAt(0)).setChecked(true);
+            ((RadioButton) mGroupOfFiles.getChildAt(0)).setChecked(true);
         } else {
             // No files in directory.
             isEmpty = true;
@@ -405,9 +288,8 @@ public class FileChooser extends BasicActivity {
         }
 
         mChooserButton.setEnabled(!isEmpty);
-        if (mDeleteFile != null && mExportFile != null) {
+        if (mDeleteFile != null) {
             mDeleteFile.setEnabled(!isEmpty);
-            mExportFile.setEnabled(!isEmpty && !mIsKeyFile);
         }
 
         return isEmpty;
@@ -425,244 +307,48 @@ public class FileChooser extends BasicActivity {
         input.setLines(1);
         input.setHorizontallyScrolling(true);
         new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_new_file_title)
-            .setMessage(R.string.dialog_new_file)
-            .setIcon(android.R.drawable.ic_menu_add)
-            .setView(input)
-            .setPositiveButton(R.string.action_ok,
-                    (dialog, whichButton) -> {
-                        if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
-                            File file = new File(mDir.getPath(),
-                                    input.getText().toString());
-                            if (file.exists()) {
-                                Toast.makeText(cont,
-                                        R.string.info_file_already_exists,
+                .setTitle(R.string.dialog_new_file_title)
+                .setMessage(R.string.dialog_new_file)
+                .setIcon(android.R.drawable.ic_menu_add)
+                .setView(input)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, whichButton) -> {
+                            if (input.getText() != null
+                                    && !input.getText().toString().equals("")) {
+                                File file = new File(mDir.getPath(),
+                                        input.getText().toString());
+                                if (file.exists()) {
+                                    Toast.makeText(cont,
+                                            R.string.info_file_already_exists,
+                                            Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                                Intent intent = new Intent();
+                                intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
+                                setResult(Activity.RESULT_OK, intent);
+                                finish();
+                            } else {
+                                // Empty name is not allowed.
+                                Toast.makeText(cont, R.string.info_empty_file_name,
                                         Toast.LENGTH_LONG).show();
-                                return;
                             }
-                            Intent intent = new Intent();
-                            intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
-                            setResult(Activity.RESULT_OK, intent);
-                            finish();
-                        } else {
-                            // Empty name is not allowed.
-                            Toast.makeText(cont, R.string.info_empty_file_name,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    })
-            .setNegativeButton(R.string.action_cancel,
-                    (dialog, whichButton) -> {
-                        // Do nothing.
-                    }).show();
+                        })
+                .setNegativeButton(R.string.action_cancel,
+                        (dialog, whichButton) -> {
+                            // Do nothing.
+                        }).show();
     }
 
     /**
      * Delete the selected file and update the file list.
+     *
      * @see #updateFileIndex(File)
      */
     private void onDeleteFile() {
         RadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
-        File file  = new File(mDir.getPath(), selected.getText().toString());
+        File file = new File(mDir.getPath(), selected.getText().toString());
         file.delete();
         mIsDirEmpty = updateFileIndex(mDir);
     }
-
-    // TODO: doc.
-    private void onImportFile(Uri file) {
-        String[] content = Common.readUriLineByLine(file,this);
-        if (content == null) {
-            return;
-        }
-        // Key or dump?
-        if (mIsKeyFile) {
-            // Importing key files is not supported.
-        } else if (mIsDumpFile) {
-            // Convert.
-            String[] convertedContent = convert(
-                    content, mFileType, FileType.MCT);
-            // Remove file extension and replace it with ".mct".
-            String fileName = Common.getFileName(file, this);
-            if (fileName.contains(".")) {
-                fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-            }
-            String destFileName = fileName + FileType.MCT.toString();
-            // Save converted file.
-            String destPath = Common.HOME_DIR + "/" + Common.DUMPS_DIR;
-            File destination = Common.getFileFromStorage(
-                    destPath + "/" + destFileName, true);
-            if (Common.saveFile(destination, convertedContent,false)) {
-                Toast.makeText(this, R.string.info_file_imported,
-                        Toast.LENGTH_LONG).show();
-                mIsDirEmpty = updateFileIndex(mDir);
-            }
-        } else {
-            // TODO: Implement error (should never occur).
-        }
-    }
-
-    // TODO: doc.
-    private void onExportFile() {
-        RadioButton selected = findViewById(
-                mGroupOfFiles.getCheckedRadioButtonId());
-        String fileName = selected.getText().toString();
-        File source = new File(mDir.getPath(), fileName);
-        String[] content = Common.readFileLineByLine(source, false,this);
-        if (content == null) {
-            return;
-        }
-        // Key or dump file?
-        if (mIsKeyFile) {
-            // Exporting key files is not supported.
-            // (User can just grab the files from the folder or use share.)
-        } else if (mIsDumpFile) {
-            // Convert.
-            String[] convertedContent = convert(
-                    content, FileType.MCT, mFileType);
-            // Remove ".mct" file extension and replace it with export type.
-            fileName = fileName.replace(FileType.MCT.toString(), "");
-            String destFileName = fileName + mFileType.toString();
-            // Save converted file.
-            String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
-            File destination = Common.getFileFromStorage(
-                    destPath + "/" + destFileName, true);
-            if (Common.saveFile(destination, convertedContent,false)) {
-                Toast.makeText(this, R.string.info_file_exported,
-                        Toast.LENGTH_LONG).show();
-            }
-        } else {
-            // TODO: Implement error (should never occur).
-        }
-    }
-
-    // TODO: doc.
-    private String[] convert(String[] source, FileType srcType,
-            FileType destType) {
-        // TODO: implement.
-        // TODO: Write "SectorKeys" information into JSON as well.
-        // Convert source to json.
-        ArrayList<String> json = new ArrayList<String>();
-        String block = null;
-        if (srcType != FileType.JSON) {
-            json.add("{");
-            json.add("  \"Created\": \"MifareClassicTool\",");
-            json.add("  \"FileType\": \"mfcard\",");
-            json.add("  \"blocks\": {");
-        }
-        switch (srcType) {
-            case MCT:
-                // Convert MCT to json (export).
-                int err = Common.isValidDump(source, true);
-                if (err != 0) {
-                    Common.isValidDumpErrorToast(err, this);
-                    return null;
-                }
-                int sectorNumber = 0;
-                int blockNumber = 0;
-                for (String line : source) {
-                    if (line.startsWith("+")) {
-                        sectorNumber = Integer.parseInt(line.split(": ")[1]);
-                        if (sectorNumber < 32) {
-                            blockNumber = sectorNumber * 4;
-                        } else {
-                            blockNumber =  32 * 4 + (sectorNumber - 32) * 16;
-                        }
-                        continue;
-                    }
-                    block = "    \"" + blockNumber + "\": \"" + line + "\",";
-                    json.add(block);
-                    blockNumber += 1;
-                }
-                break;
-            case JSON:
-                // Convert json to json (import).
-                json = new ArrayList<String>(Arrays.asList(source));
-                break;
-            case BIN:
-                // TODO: Convert bin to json (import).
-                // Convert bin to json (import).
-                break;
-            case EML:
-                // Convert eml to json (import).
-                for (int i = 0; i < source.length; i++) {
-                    block = "    \"" + i + "\": \"" + source[i] + "\",";
-                    json.add(block);
-                }
-                break;
-        }
-        if (srcType != FileType.JSON) {
-            block = block.replace(",", "");
-            json.remove(json.size()-1);
-            json.add(block);
-            json.add("  }");
-            json.add("}");
-        }
-
-        // Check source convertion.
-        if (json.size() <= 6) {
-            // Error converting source file.
-            return null;
-        }
-
-        // TODO: Only temporary.
-        destType = FileType.JSON;
-
-        // Convert json to destType.
-        String[] dest = null;
-        switch (destType) {
-            case JSON:
-                // Export json.
-                dest = json.toArray(new String[json.size()]);
-                break;
-            case BIN:
-                // TODO: Convert json to bin (export).
-                break;
-            case MCT:
-                // TODO: Only temporary.
-                if (srcType == FileType.MCT) {
-                    // Import/Export.
-                    dest = source;
-                } else {
-                    // TODO: Convert json to MCT (import).
-                }
-                break;
-            case EML:
-                // TODO: Convert json to eml (export).
-        }
-
-        return dest;
-    }
-
-    // TODO: doc.
-    private void showTypeChooserMenu() {
-        // mGroupOfFiles is just used as a dummy because a context menu
-        // always need a view.
-        registerForContextMenu(mGroupOfFiles);
-        openContextMenu(mGroupOfFiles);
-    }
-
-    // TODO: doc.
-    private void showImportFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("*/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        String title = getString(R.string.text_select_file);
-        startActivityForResult(Intent.createChooser(intent, title), 1);
-    }
-
-    // TODO: Once we've dropped Android 4 and have API level 21, let the user
-    // Choose the export directory.
-    private void showExportDirectoryChooser() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        String title = getString(R.string.text_select_directory);
-        startActivityForResult(Intent.createChooser(intent, title), 2);
-    }
 }
-
-// TODO: implement convert function completely.
-// TODO: Import key file:
-//  isKeyFile->showImpotFileChooser->Copy file (no convert).
-// TODO: save isKeyFile or other important vars.

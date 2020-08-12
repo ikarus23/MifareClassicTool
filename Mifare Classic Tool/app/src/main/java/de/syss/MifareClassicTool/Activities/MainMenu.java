@@ -816,7 +816,6 @@ public class MainMenu extends Activity {
                 getString(R.string.text_open_dump_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_open_dump_file));
-        intent.putExtra(FileChooser.EXTRA_IS_DUMP_FILE, true);
         startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE);
     }
 
@@ -842,7 +841,6 @@ public class MainMenu extends Activity {
                 getString(R.string.text_open_key_file_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_open_key_file));
-        intent.putExtra(FileChooser.EXTRA_IS_KEY_FILE, true);
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
     }
 

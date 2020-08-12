@@ -283,7 +283,6 @@ public class DiffTool extends BasicActivity {
                 getString(R.string.text_open_dump_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_open_dump_file));
-        intent.putExtra(FileChooser.EXTRA_IS_DUMP_FILE, true);
         return intent;
     }
 
