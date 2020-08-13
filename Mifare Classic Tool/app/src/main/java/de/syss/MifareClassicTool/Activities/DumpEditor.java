@@ -386,7 +386,7 @@ public class DumpEditor extends BasicActivity
                     Locale.getDefault());
             fmt.setCalendar(calendar);
             String dateFormatted = fmt.format(calendar.getTime());
-            mDumpName = "UID_" + mUID + "_" + dateFormatted;
+            mDumpName = "UID_" + mUID + "_" + dateFormatted + ".mct";
         }
 
         saveFile(mLines, mDumpName, true, R.string.dialog_save_dump_title,

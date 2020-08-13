@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -38,21 +39,27 @@ import android.nfc.tech.NfcA;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
+import android.provider.OpenableColumns;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -91,6 +98,11 @@ public class Common extends Application {
      * (sub directory of {@link #HOME_DIR}.)
      */
     public static final String DUMPS_DIR = "dump-files";
+
+    /**
+     * The name of the directory where dump/key files get exported to.
+     */
+    public static final String EXPORT_DIR = "export";
 
     /**
      * The directory name of the folder where temporary files are
@@ -257,15 +269,17 @@ public class Common extends Application {
      * (internal/external according to its preference) and the relative
      * path.
      * @param relativePath The relative path that gets appended to the
-     * internal or external storage path part
+     * internal or external storage path part.
+     * @param forceExternal Return the external path regardless of the options.
      * @return A File object with the absolute path of the storage and the
      * relative component given by the parameter.
      */
-    public static File getFileFromStorage(String relativePath) {
+    public static File getFileFromStorage(String relativePath,
+                boolean forceExternal) {
         File file;
         boolean isUseInternalStorage = getPreferences().getBoolean(
                 UseInternalStorage.toString(), false);
-        if (isUseInternalStorage) {
+        if (!forceExternal && isUseInternalStorage) {
             // Use internal storage.
             file = new File(mAppContext.getFilesDir() + relativePath);
         } else {
@@ -277,8 +291,21 @@ public class Common extends Application {
     }
 
     /**
+     * Create a File object with a path that consists of its storage
+     * (internal/external according to its preference) and the relative
+     * path.
+     * @param relativePath The relative path that gets appended to the
+     * internal or external storage path part.
+     * @return A File object with the absolute path of the storage and the
+     * relative component given by the parameter.
+     */
+    public static File getFileFromStorage(String relativePath) {
+        return getFileFromStorage(relativePath, false);
+    }
+
+    /**
      * Read a file line by line. The file should be a simple text file.
-     * Empty lines and lines STARTING with "#" will not be interpreted.
+     * Empty lines will not be read.
      * @param file The file to read.
      * @param readComments Whether to read comments or to ignore them.
      * Comments are lines STARTING with "#" (and empty lines).
@@ -289,45 +316,19 @@ public class Common extends Application {
      */
     public static String[] readFileLineByLine(File file, boolean readComments,
             Context context) {
-        BufferedReader br = null;
         String[] ret = null;
-        if (file != null  && isExternalStorageMounted() && file.exists()) {
+        BufferedReader reader = null;
+        if (file != null && isExternalStorageMounted() && file.exists()) {
             try {
-                br = new BufferedReader(new FileReader(file));
-
-                String line;
-                ArrayList<String> linesArray = new ArrayList<>();
-                while ((line = br.readLine()) != null)   {
-                    // Ignore empty lines.
-                    // Ignore comments if readComments == false.
-                    if ( !line.equals("")
-                            && (readComments || !line.startsWith("#"))) {
-                        try {
-                            linesArray.add(line);
-                        } catch (OutOfMemoryError e) {
-                            // Error. File is too big
-                            // (too many lines, out of memory).
-                            Toast.makeText(context, R.string.info_file_to_big,
-                                    Toast.LENGTH_LONG).show();
-                            return null;
-                        }
-                    }
-                }
-                if (linesArray.size() > 0) {
-                    ret = linesArray.toArray(new String[linesArray.size()]);
-                } else {
-                    ret = new String[] {""};
-                }
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Error while reading from file "
-                        + file.getPath() + "." ,e);
+                reader = new BufferedReader(new FileReader(file));
+                ret = readLineByLine(reader, readComments, context);
+            } catch (FileNotFoundException ex) {
                 ret = null;
             } finally {
-                if (br != null) {
+                if (reader != null) {
                     try {
-                        br.close();
-                    }
-                    catch (IOException e) {
+                        reader.close();
+                    } catch (IOException e) {
                         Log.e(LOG_TAG, "Error while closing file.", e);
                         ret = null;
                     }
@@ -335,6 +336,112 @@ public class Common extends Application {
             }
         }
         return ret;
+    }
+
+    // TODO: doc.
+    public static String[] readUriLineByLine(Uri uri, Context context){
+        InputStream contentStream = null;
+        String[] ret = null;
+        try {
+            contentStream = context.getContentResolver().openInputStream(uri);
+        } catch (FileNotFoundException ex) {
+            return null;
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(contentStream));
+        ret = readLineByLine(reader, true, context);
+        try {
+            reader.close();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error while closing file.", e);
+            return null;
+        }
+        return ret;
+    }
+
+    // TODO: doc.
+    public static byte[] readUriRaw(Uri uri, Context context) {
+        InputStream contentStream = null;
+        String[] ret = null;
+        try {
+            contentStream = context.getContentResolver().openInputStream(uri);
+        } catch (FileNotFoundException ex) {
+            return null;
+        }
+
+        int len;
+        byte[] data = new byte[16384];
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        try {
+            while ((len = contentStream.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, len);
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error while reading from file.", e);
+            return null;
+        }
+
+        return buffer.toByteArray();
+    }
+
+    // TODO: doc.
+    private static String[] readLineByLine(BufferedReader reader,
+            boolean readComments, Context context) {
+        String[] ret = null;
+        String line;
+        ArrayList<String> linesArray = new ArrayList<>();
+        try {
+            while ((line = reader.readLine()) != null) {
+                // Ignore empty lines.
+                // Ignore comments if readComments == false.
+                if (!line.equals("")
+                        && (readComments || !line.startsWith("#"))) {
+                    try {
+                        linesArray.add(line);
+                    } catch (OutOfMemoryError e) {
+                        // Error. File is too big
+                        // (too many lines, out of memory).
+                        Toast.makeText(context, R.string.info_file_to_big,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            Log.e(LOG_TAG, "Error while reading from file.", ex);
+            ret = null;
+        }
+        if (linesArray.size() > 0) {
+            ret = linesArray.toArray(new String[linesArray.size()]);
+        } else {
+            ret = new String[]{""};
+        }
+        return ret;
+    }
+
+    // TODO: doc. https://stackoverflow.com/a/25005243
+    public static String getFileName(Uri uri, Context context) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(
+                    uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(
+                            OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     /**
@@ -475,7 +582,23 @@ public class Common extends Application {
         return noError;
     }
 
-
+    // TODO: doc.
+    public static boolean saveFile(File file, byte[] bytes, boolean append) {
+        boolean noError = true;
+        if (file != null && bytes != null && isExternalStorageMounted()) {
+            try {
+                FileOutputStream stream = new FileOutputStream(file, append);
+                stream.write(bytes);
+            } catch ( IOException | NullPointerException e) {
+                Log.e(LOG_TAG, "Error while writing to '"
+                        + file.getName() + "' file.", e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get the shared preferences with application context for saving

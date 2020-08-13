@@ -22,10 +22,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.syss.MifareClassicTool.Common;
@@ -89,19 +94,6 @@ public class FileChooser extends BasicActivity {
      */
     public final static String EXTRA_BUTTON_TEXT =
             "de.syss.MifareClassicTool.Activity.BUTTON_TEXT";
-    /**
-     * Enable/Disable the menu item  that allows the user to create a new file.
-     * Optional. Boolean value. Disabled (false) by default.
-     */
-    public final static String EXTRA_ENABLE_NEW_FILE =
-            "de.syss.MifareClassicTool.Activity.ENABLE_NEW_FILE";
-    /**
-     * Enable/Disable the menu item  that allows the user to delete a file.
-     * Optional. Boolean value. Disabled (false) by default.
-     */
-    public final static String EXTRA_ENABLE_DELETE_FILE =
-            "de.syss.MifareClassicTool.Activity.ENABLE_DELETE_FILE";
-
 
     // Output parameter.
     /**
@@ -128,8 +120,7 @@ public class FileChooser extends BasicActivity {
     private MenuItem mDeleteFile;
     private File mDir;
     private boolean mIsDirEmpty;
-    private boolean mCreateFileEnabled = false;
-    private boolean mDeleteFileEnabled = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +132,7 @@ public class FileChooser extends BasicActivity {
     /**
      * Initialize the file chooser with the data from the calling Intent
      * (if external storage is mounted).
+     *
      * @see #EXTRA_DIR
      * @see #EXTRA_TITLE
      * @see #EXTRA_CHOOSER_TEXT
@@ -174,17 +166,6 @@ public class FileChooser extends BasicActivity {
         if (intent.hasExtra(EXTRA_BUTTON_TEXT)) {
             mChooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
-        // Remember to enable/disable new file functionality.
-        if (intent.hasExtra(EXTRA_ENABLE_NEW_FILE)) {
-            mCreateFileEnabled = intent.getBooleanExtra(
-                        EXTRA_ENABLE_NEW_FILE, false);
-        }
-        // Remember to enable/disable new file functionality.
-        if (intent.hasExtra(EXTRA_ENABLE_DELETE_FILE)) {
-            mDeleteFileEnabled = intent.getBooleanExtra(
-                        EXTRA_ENABLE_DELETE_FILE, false);
-        }
-
 
         // Check path and initialize file list.
         if (intent.hasExtra(EXTRA_DIR)) {
@@ -217,34 +198,30 @@ public class FileChooser extends BasicActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.file_chooser_functions, menu);
-        menu.findItem(R.id.menuFileChooserNewFile)
-                .setEnabled(mCreateFileEnabled);
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
-        // Only use the enable/disable system for the delete file menu item
-        // if there is a least one file.
-        if (!mIsDirEmpty) {
-            mDeleteFile.setEnabled(mDeleteFileEnabled);
-        } else {
-            mDeleteFile.setEnabled(false);
-        }
+
+        // Enable/disable the delete menu item if there is a least one file.
+        mDeleteFile.setEnabled(!mIsDirEmpty);
+
         return true;
     }
 
     /**
-     * Handle selected function form the menu (create new file, delete file).
+     * Handle selected function form the menu (create new file,
+     * delete file, etc.).
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        case R.id.menuFileChooserNewFile:
-            onNewFile();
-            return true;
-        case R.id.menuFileChooserDeleteFile:
-            onDeleteFile();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menuFileChooserNewFile:
+                onNewFile();
+                return true;
+            case R.id.menuFileChooserDeleteFile:
+                onDeleteFile();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -253,15 +230,15 @@ public class FileChooser extends BasicActivity {
      * {@link #EXTRA_CHOSEN_FILE} and {@link #EXTRA_CHOSEN_FILENAME} as result.
      * You can catch that result by overriding onActivityResult() in the
      * Activity that called the file chooser via startActivityForResult().
+     *
      * @param view The View object that triggered the function
-     * (in this case the choose file button).
+     *             (in this case the choose file button).
      * @see #EXTRA_CHOSEN_FILE
      * @see #EXTRA_CHOSEN_FILENAME
      */
     public void onFileChosen(View view) {
         RadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
-
         Intent intent = new Intent();
         File file = new File(mDir.getPath(), selected.getText().toString());
         intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
@@ -273,35 +250,32 @@ public class FileChooser extends BasicActivity {
     /**
      * Update the file list and the components that depend on it
      * (e.g. disable the open file button if there is no file).
+     *
      * @param path Path to the directory which will be listed.
      * @return True if directory is empty. False otherwise.
      */
     private boolean updateFileIndex(File path) {
+        boolean isEmpty;
         File[] files = path.listFiles();
+        mGroupOfFiles.removeAllViews();
 
         // Refresh file list.
         if (files != null && files.length > 0) {
+            isEmpty = false;
             Arrays.sort(files);
-            mGroupOfFiles.removeAllViews();
 
-            for(File f : files) {
-                RadioButton r = new RadioButton(this);
-                r.setText(f.getName());
-                mGroupOfFiles.addView(r);
+            for (File f : files) {
+                if (f.isFile()) { // Do not list directories.
+                    RadioButton r = new RadioButton(this);
+                    r.setText(f.getName());
+                    mGroupOfFiles.addView(r);
+                }
             }
             // Check first file.
-            ((RadioButton)mGroupOfFiles.getChildAt(0)).setChecked(true);
-            mChooserButton.setEnabled(true);
-            if (mDeleteFile != null) {
-                mDeleteFile.setEnabled(mDeleteFileEnabled);
-            }
-            return false;
+            ((RadioButton) mGroupOfFiles.getChildAt(0)).setChecked(true);
         } else {
             // No files in directory.
-            mChooserButton.setEnabled(false);
-            if (mDeleteFile != null) {
-                mDeleteFile.setEnabled(false);
-            }
+            isEmpty = true;
             Intent intent = getIntent();
             String chooserText = "";
             if (intent.hasExtra(EXTRA_CHOOSER_TEXT)) {
@@ -312,7 +286,13 @@ public class FileChooser extends BasicActivity {
                     + getString(R.string.text_no_files_in_chooser)
                     + " ---");
         }
-        return true;
+
+        mChooserButton.setEnabled(!isEmpty);
+        if (mDeleteFile != null) {
+            mDeleteFile.setEnabled(!isEmpty);
+        }
+
+        return isEmpty;
     }
 
     /**
@@ -327,46 +307,47 @@ public class FileChooser extends BasicActivity {
         input.setLines(1);
         input.setHorizontallyScrolling(true);
         new AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_new_file_title)
-            .setMessage(R.string.dialog_new_file)
-            .setIcon(android.R.drawable.ic_menu_add)
-            .setView(input)
-            .setPositiveButton(R.string.action_ok,
-                    (dialog, whichButton) -> {
-                        if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
-                            File file = new File(mDir.getPath(),
-                                    input.getText().toString());
-                            if (file.exists()) {
-                                Toast.makeText(cont,
-                                        R.string.info_file_already_exists,
+                .setTitle(R.string.dialog_new_file_title)
+                .setMessage(R.string.dialog_new_file)
+                .setIcon(android.R.drawable.ic_menu_add)
+                .setView(input)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, whichButton) -> {
+                            if (input.getText() != null
+                                    && !input.getText().toString().equals("")) {
+                                File file = new File(mDir.getPath(),
+                                        input.getText().toString());
+                                if (file.exists()) {
+                                    Toast.makeText(cont,
+                                            R.string.info_file_already_exists,
+                                            Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                                Intent intent = new Intent();
+                                intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
+                                setResult(Activity.RESULT_OK, intent);
+                                finish();
+                            } else {
+                                // Empty name is not allowed.
+                                Toast.makeText(cont, R.string.info_empty_file_name,
                                         Toast.LENGTH_LONG).show();
-                                return;
                             }
-                            Intent intent = new Intent();
-                            intent.putExtra(EXTRA_CHOSEN_FILE, file.getPath());
-                            setResult(Activity.RESULT_OK, intent);
-                            finish();
-                        } else {
-                            // Empty name is not allowed.
-                            Toast.makeText(cont, R.string.info_empty_file_name,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    })
-            .setNegativeButton(R.string.action_cancel,
-                    (dialog, whichButton) -> {
-                        // Do nothing.
-                    }).show();
+                        })
+                .setNegativeButton(R.string.action_cancel,
+                        (dialog, whichButton) -> {
+                            // Do nothing.
+                        }).show();
     }
 
     /**
      * Delete the selected file and update the file list.
+     *
      * @see #updateFileIndex(File)
      */
     private void onDeleteFile() {
         RadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
-        File file  = new File(mDir.getPath(), selected.getText().toString());
+        File file = new File(mDir.getPath(), selected.getText().toString());
         file.delete();
         mIsDirEmpty = updateFileIndex(mDir);
     }

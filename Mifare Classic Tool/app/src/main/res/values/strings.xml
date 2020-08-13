@@ -46,6 +46,7 @@
     <string name="title_activity_diff_tool">Diff Tool</string>
     <string name="title_activity_bcc_tool">BCC Calculator</string>
     <string name="title_activity_clone_uid">Clone UID to Magic Tag (2nd gen)</string>
+    <string name="title_activity_import_export_tool">Import/Export Tool</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -175,6 +176,13 @@
     <string name="text_uid_match_error">UIDs did not match</string>
     <string name="text_clone_error">Error: Are you sure you have a magic
         tag (2nd gen)?</string>
+    <string name="text_select_export_location">Select Export Location</string>
+    <string name="text_select_file">Select file</string>
+    <string name="text_select_directory">Select directory</string>
+    <string name="text_choose_dump_file">Choose dump file</string>
+    <string name="text_export_convert_dest_info">&#8226; Exported/converted files are always
+        stored in \"MifareClassicTool/export\" on the external storage (e.g. the SD
+        card).\n&#8226; If a file with the same name already exist upon import, it will be overwritten.</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -246,6 +254,7 @@
     <string name="action_show_diff_tool">Diff Tool (Compare Dumps)</string>
     <string name="action_show_bcc_tool">BCC Calculator</string>
     <string name="action_show_clone_uid">Clone UID</string>
+    <string name="action_show_import_export_tool">Import/Export Dumps</string>
     <string name="action_compare_dump">Compare Dump</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
@@ -268,6 +277,13 @@
     <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
     <string name="action_clone_uid">Calculate block 0 and clone UID</string>
     <string name="action_clone_uid_advanced">Advanced options</string>
+    <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
+    <string name="action_file_type_mdf_bin">.bin/.mfd (Proxmark, libnfc, mfoc)</string>
+    <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
+    <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_import_dump">Import dump</string>
+    <string name="action_export_dump">Export dump</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -373,6 +389,11 @@
     <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
         is incorrect</string>
     <string name="info_incorrect_key">Error: Key not correct</string>
+    <string name="info_file_exported">File exported to external storage</string>
+    <string name="info_file_imported">File imported</string>
+    <string name="info_convert_error">Error: Could not convert</string>
+    <string name="info_incomplete_dump">Error: Incomplete or oversized dump</string>
+    <string name="info_error_reading_file">Error: Could not read file</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
