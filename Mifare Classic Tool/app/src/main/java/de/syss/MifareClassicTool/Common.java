@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -59,6 +60,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -346,15 +348,41 @@ public class Common extends Application {
         } catch (FileNotFoundException ex) {
             return null;
         }
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(contentStream));
         ret = readLineByLine(reader, true, context);
         try {
             reader.close();
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error while closing file.", e);
-            ret = null;
+            return null;
         }
         return ret;
+    }
+
+    // TODO: doc.
+    public static byte[] readUriRaw(Uri uri, Context context) {
+        InputStream contentStream = null;
+        String[] ret = null;
+        try {
+            contentStream = context.getContentResolver().openInputStream(uri);
+        } catch (FileNotFoundException ex) {
+            return null;
+        }
+
+        int len;
+        byte[] data = new byte[16384];
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        try {
+            while ((len = contentStream.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, len);
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error while reading from file.", e);
+            return null;
+        }
+
+        return buffer.toByteArray();
     }
 
     // TODO: doc.

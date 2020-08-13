@@ -50,7 +50,6 @@ public class ImportExportTool extends BasicActivity {
 
     private final static int IMPORT_FILE_CHOSEN = 1;
     private final static int EXPORT_FILE_CHOSEN = 2;
-
     private boolean mIsExport;
     private boolean mIsDumpFile;
     private String mFile;
@@ -175,10 +174,26 @@ public class ImportExportTool extends BasicActivity {
 
     // TODO: doc.
     private void onImportFile(Uri file) {
-        String[] content = Common.readUriLineByLine(file, this);
+        // TODO: reading bin does not work with "LineByLine" functions. Implement readRaw().
+        String[] content = null;
+        if (mFileType != FileType.BIN) {
+            content = Common.readUriLineByLine(file, this);
+        } else {
+            byte[] bytes = Common.readUriRaw(file, this);
+            content = new String[1];
+            // Convert to string, since convert() works only on strings.
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append((char)b);
+            }
+            content[0] = sb.toString();
+        }
         if (content == null) {
+            Toast.makeText(this, R.string.info_error_reading_file,
+                    Toast.LENGTH_LONG).show();
             return;
         }
+
         // Keys or dump?
         if (mIsDumpFile) {
             // Convert.
@@ -254,6 +269,9 @@ public class ImportExportTool extends BasicActivity {
             json.add("  \"blocks\": {");
         }
         switch (srcType) {
+            case JSON:
+                json = new ArrayList<String>(Arrays.asList(source));
+                break;
             case MCT:
                 int err = Common.isValidDump(source, true);
                 if (err != 0) {
@@ -277,21 +295,24 @@ public class ImportExportTool extends BasicActivity {
                     blockNumber += 1;
                 }
                 break;
-            case JSON:
-                json = new ArrayList<String>(Arrays.asList(source));
-                break;
             case BIN:
-                // TODO: Convert bin to json.
-                // TODO: source != real binary data, because readLine() strips \r,\n.
-                // Join everything to one line.
-                String binary = TextUtils.join("", source);
-                int binLen = binary.getBytes().length;
-                if (binLen != 320 && binLen != 1024 &&
-                        binLen != 2048 && binLen != 4096) {
+                String binary = source[0];
+                if (binary.length() != 320 && binary.length() != 1024 &&
+                        binary.length() != 2048 && binary.length() != 4096) {
                     // Error. Not a complete dump (MIFARE mini, 1k, 2k, 4k).
                     Toast.makeText(this, R.string.info_incomplete_dump,
                             Toast.LENGTH_LONG).show();
                     return null;
+                }
+                // In this case: chars = bytes. Get 16 bytes and convert.
+                for (int i = 0; i < binary.length(); i += 16) {
+                    byte[] blockBytes = new byte[16];
+                    for (int j = 0; j < 16; j++) {
+                        blockBytes[j] = (byte) binary.charAt(i + j);
+                    }
+                    block = "    \"" + i/16 + "\": \"" +
+                            Common.byte2HexString(blockBytes) + "\",";
+                    json.add(block);
                 }
                 break;
             case EML:
@@ -350,9 +371,6 @@ public class ImportExportTool extends BasicActivity {
             case JSON:
                 dest = json.toArray(new String[json.size()]);
                 break;
-            case BIN:
-                // TODO: Convert json to bin (export).
-                break;
             case MCT:
                 // Find highest block number to guess the MIFARE Classic tag size.
                 Iterator<String> iter = blocks.keys();
@@ -393,6 +411,9 @@ public class ImportExportTool extends BasicActivity {
                     }
                     j++;
                 }
+                break;
+            case BIN:
+                // TODO: Convert json to bin (export).
                 break;
             case EML:
                 if (blocks.length() != 20 && blocks.length() != 64 &&
@@ -450,6 +471,4 @@ public class ImportExportTool extends BasicActivity {
 // TODO: implement convert function completely.
 // TODO: Import key file.
 // TODO: Add icon for this tool.
-// TODO: Add convert option.
-
 // TODO: save isKeyFile or other important vars.

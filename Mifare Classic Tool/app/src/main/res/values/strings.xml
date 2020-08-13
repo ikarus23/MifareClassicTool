@@ -393,6 +393,7 @@
     <string name="info_file_imported">File imported</string>
     <string name="info_convert_error">Error: Could not convert</string>
     <string name="info_incomplete_dump">Error: Incomplete dump</string>
+    <string name="info_error_reading_file">Error: Could not read file</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
