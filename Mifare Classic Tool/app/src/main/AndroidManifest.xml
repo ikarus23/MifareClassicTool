@@ -181,8 +181,8 @@
         <activity
             android:name="de.syss.MifareClassicTool.Activities.ImportExportTool"
             android:configChanges="orientation|screenSize"
+            android:icon="@drawable/value_block_tool"
             android:label="@string/title_activity_import_export_tool" >
-            <!-- TODO: add icon. -->
         </activity>
 
     </application>

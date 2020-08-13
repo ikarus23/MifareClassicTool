@@ -166,15 +166,7 @@ public class ImportExportTool extends BasicActivity {
     }
 
     // TODO: doc.
-    public void onImportKeys(View view) {
-        mIsExport = false;
-        mIsDumpFile = false;
-        showImportFileChooser();
-    }
-
-    // TODO: doc.
     private void onImportFile(Uri file) {
-        // TODO: reading bin does not work with "LineByLine" functions. Implement readRaw().
         String[] content = null;
         if (mFileType != FileType.BIN) {
             content = Common.readUriLineByLine(file, this);
@@ -217,7 +209,7 @@ public class ImportExportTool extends BasicActivity {
                         Toast.LENGTH_LONG).show();
             }
         } else {
-            // TODO: import key file (just copy).
+            // TODO (optional): Support importing key files.
         }
     }
 
@@ -244,21 +236,28 @@ public class ImportExportTool extends BasicActivity {
             String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
             File destination = Common.getFileFromStorage(
                     destPath + "/" + destFileName, true);
-            if (Common.saveFile(destination, convertedContent,false)) {
+            boolean error = false;
+            if (mFileType != FileType.BIN) {
+                error = Common.saveFile(destination, convertedContent, false);
+            } else {
+                byte[] bytes = new byte[convertedContent[0].length()];
+                for (int i = 0; i < convertedContent[0].length(); i++) {
+                    bytes[i] = (byte) convertedContent[0].charAt(i);
+                }
+                error = Common.saveFile(destination, bytes, false);
+            }
+            if (error) {
                 Toast.makeText(this, R.string.info_file_exported,
                         Toast.LENGTH_LONG).show();
             }
         } else {
-            // Exporting key files is not supported.
-            // (User can just grab the files from the folder or use share.)
+            // TODO (optional): Support exporting key files.
         }
     }
 
     // TODO: doc.
     private String[] convert(String[] source, FileType srcType,
                              FileType destType) {
-        // TODO: implement.
-        // TODO: Write "SectorKeys" information into JSON as well.
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
         String block = null;
@@ -413,7 +412,30 @@ public class ImportExportTool extends BasicActivity {
                 }
                 break;
             case BIN:
-                // TODO: Convert json to bin (export).
+                if (blocks.length() != 20 && blocks.length() != 64 &&
+                        blocks.length() != 128 && blocks.length() != 256) {
+                    // Error. Not a complete dump (MIFARE mini, 1k, 2k, 4k).
+                    Toast.makeText(this, R.string.info_incomplete_dump,
+                            Toast.LENGTH_LONG).show();
+                    return null;
+                }
+                dest = new String[1];
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < blocks.length(); i++) {
+                    try {
+                        block = blocks.getString(String.format("%d", i));
+                    } catch (JSONException e) {
+                        // Error. Not a complete dump (MIFARE mini, 1k, 2k, 4k).
+                        Toast.makeText(this, R.string.info_incomplete_dump,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
+                    byte[] bytes = Common.hexStringToByteArray(block);
+                    for (byte b : bytes) {
+                        sb.append((char)b);
+                    }
+                }
+                dest[0] = sb.toString();
                 break;
             case EML:
                 if (blocks.length() != 20 && blocks.length() != 64 &&
@@ -457,18 +479,13 @@ public class ImportExportTool extends BasicActivity {
         startActivityForResult(Intent.createChooser(intent, title), IMPORT_FILE_CHOSEN);
     }
 
-    // TODO: Once we've dropped Android 4 and have API level 21, let the user
+    // TODO (optional): Once we've dropped Android 4 and have API level 21, let the user
     // Choose the export directory.
     private void showExportDirectoryChooser() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         String title = getString(R.string.text_select_directory);
-        startActivityForResult(Intent.createChooser(intent, title), 2);
+        startActivityForResult(Intent.createChooser(intent, title), 3);
     }
 }
-
-// TODO: implement convert function completely.
-// TODO: Import key file.
-// TODO: Add icon for this tool.
-// TODO: save isKeyFile or other important vars.

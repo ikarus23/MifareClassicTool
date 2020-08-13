@@ -37,6 +37,7 @@
             android:id="@+id/buttonImportExportToolImportDump"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableTop="@drawable/arrow_up"
             android:onClick="onImportDump"
             android:text="@string/action_import_dump" />
 
@@ -44,15 +45,9 @@
             android:id="@+id/buttonImportExportToolExportDump"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableTop="@drawable/arrow_down"
             android:onClick="onExportDump"
             android:text="@string/action_export_dump" />
-
-        <Button
-            android:id="@+id/buttonImportExportToolImportKeys"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onImportKeys"
-            android:text="@string/action_import_keys" />
 
         <TextView
             android:id="@+id/textViewImportExportToolInfo"

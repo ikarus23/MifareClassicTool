@@ -39,9 +39,6 @@ import android.nfc.tech.NfcA;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.provider.OpenableColumns;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -49,18 +46,21 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -303,10 +303,9 @@ public class Common extends Application {
         return getFileFromStorage(relativePath, false);
     }
 
-    // TODO: update doc.
     /**
      * Read a file line by line. The file should be a simple text file.
-     * Empty lines and lines STARTING with "#" will not be interpreted.
+     * Empty lines will not be read.
      * @param file The file to read.
      * @param readComments Whether to read comments or to ignore them.
      * Comments are lines STARTING with "#" (and empty lines).
@@ -583,7 +582,23 @@ public class Common extends Application {
         return noError;
     }
 
-
+    // TODO: doc.
+    public static boolean saveFile(File file, byte[] bytes, boolean append) {
+        boolean noError = true;
+        if (file != null && bytes != null && isExternalStorageMounted()) {
+            try {
+                FileOutputStream stream = new FileOutputStream(file, append);
+                stream.write(bytes);
+            } catch ( IOException | NullPointerException e) {
+                Log.e(LOG_TAG, "Error while writing to '"
+                        + file.getName() + "' file.", e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get the shared preferences with application context for saving
