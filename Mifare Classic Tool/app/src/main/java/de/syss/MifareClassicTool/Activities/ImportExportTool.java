@@ -34,8 +34,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import de.syss.MifareClassicTool.Common;
+import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
 
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
@@ -173,7 +175,7 @@ public class ImportExportTool extends BasicActivity {
 
     // TODO: doc.
     private void onImportFile(Uri file) {
-        String[] content = Common.readUriLineByLine(file,this);
+        String[] content = Common.readUriLineByLine(file, this);
         if (content == null) {
             return;
         }
@@ -253,7 +255,6 @@ public class ImportExportTool extends BasicActivity {
         }
         switch (srcType) {
             case MCT:
-                // Convert MCT to json (export).
                 int err = Common.isValidDump(source, true);
                 if (err != 0) {
                     Common.isValidDumpErrorToast(err, this);
@@ -277,16 +278,37 @@ public class ImportExportTool extends BasicActivity {
                 }
                 break;
             case JSON:
-                // Convert json to json (import).
                 json = new ArrayList<String>(Arrays.asList(source));
                 break;
             case BIN:
-                // TODO: Convert bin to json (import).
-                // Convert bin to json (import).
+                // TODO: Convert bin to json.
+                // TODO: source != real binary data, because readLine() strips \r,\n.
+                // Join everything to one line.
+                String binary = TextUtils.join("", source);
+                int binLen = binary.getBytes().length;
+                if (binLen != 320 && binLen != 1024 &&
+                        binLen != 2048 && binLen != 4096) {
+                    // Error. Not a complete dump (MIFARE mini, 1k, 2k, 4k).
+                    Toast.makeText(this, R.string.info_incomplete_dump,
+                            Toast.LENGTH_LONG).show();
+                    return null;
+                }
                 break;
             case EML:
-                // Convert eml to json (import).
+                if (source.length != 20 && source.length != 64 &&
+                        source.length != 128 && source.length != 256) {
+                    // Error. Not a complete dump (MIFARE mini, 1k, 2k, 4k).
+                    Toast.makeText(this, R.string.info_incomplete_dump,
+                            Toast.LENGTH_LONG).show();
+                    return null;
+                }
                 for (int i = 0; i < source.length; i++) {
+                    if (source[i] == "") {
+                        // Error. Empty line in .eml file.
+                        Toast.makeText(this, R.string.info_incomplete_dump,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
                     block = "    \"" + i + "\": \"" + source[i] + "\",";
                     json.add(block);
                 }
@@ -300,7 +322,7 @@ public class ImportExportTool extends BasicActivity {
             json.add("}");
         }
 
-        // Check source convertion.
+        // Check source conversion.
         if (json.size() <= 6) {
             // Error converting source file.
             Toast.makeText(this, R.string.info_convert_error,
@@ -313,6 +335,9 @@ public class ImportExportTool extends BasicActivity {
         try {
             JSONObject parsedJson = new JSONObject(TextUtils.join("", json));
             blocks = parsedJson.getJSONObject("blocks");
+            if (blocks.length() < 1) {
+                throw new JSONException("No blocks in source file");
+            }
         } catch (JSONException e) {
             // Error parsing json file.
             Toast.makeText(this, R.string.info_convert_error,
@@ -323,23 +348,53 @@ public class ImportExportTool extends BasicActivity {
         String[] dest = null;
         switch (destType) {
             case JSON:
-                // Export json.
                 dest = json.toArray(new String[json.size()]);
                 break;
             case BIN:
                 // TODO: Convert json to bin (export).
                 break;
             case MCT:
-                // TODO: Only temporary.
-                if (srcType == FileType.MCT) {
-                    // Import/Export.
-                    dest = source;
-                } else {
-                    // TODO: Convert json to MCT (import).
+                // Find highest block number to guess the MIFARE Classic tag size.
+                Iterator<String> iter = blocks.keys();
+                int maxBlock = -1;
+                while (iter.hasNext()) {
+                    int blockNr = Integer.parseInt(iter.next());
+                    if (blockNr > maxBlock) {
+                        maxBlock = blockNr;
+                    }
+                }
+                // Find the next fitting MIFARE Classic tag size.
+                if (maxBlock < 20) {
+                    maxBlock = 19;
+                    dest = new String[20+5];
+                } else if (maxBlock < 64) {
+                    maxBlock = 63;
+                    dest = new String[64+16];
+                } else if (maxBlock < 128) {
+                    maxBlock = 127;
+                    dest = new String[128+32];
+                } else if (maxBlock < 256) {
+                    maxBlock = 255;
+                    dest = new String[256+40];
+                }
+                // Format blocks to dump in MCT format.
+                int j = 0;
+                int sector = 0;
+                for (int i = 0; i <= maxBlock; i++){
+                    if (i < 127 && i % 4 == 0) {
+                        dest[j++] = "+Sector: " + sector++;
+                    } else if (i >= 128 && i % 16 == 0) {
+                        dest[j++] = "+Sector: " + sector++;
+                    }
+                    try {
+                        dest[j] = blocks.getString(String.format("%d", i));
+                    } catch (JSONException e) {
+                        dest[j] = MCReader.NO_DATA;
+                    }
+                    j++;
                 }
                 break;
             case EML:
-                // TODO: Convert json to eml (export).
                 if (blocks.length() != 20 && blocks.length() != 64 &&
                         blocks.length() != 128 && blocks.length() != 256) {
                     // Error. Not a complete dump (MIFARE mini, 1k, 2k, 4k).

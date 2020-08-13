@@ -180,6 +180,8 @@
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
+    <string name="text_export_convert_dest_info">Exported or converted files are always
+        stored in \"MifareClassicTool/export\" on the external storage (e.g. your SD card).</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -255,8 +257,6 @@
     <string name="action_compare_dump">Compare Dump</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>
-    <string name="action_import_file">Import File</string>
-    <string name="action_export_file">Export File</string>
     <string name="action_remove_duplicates">Remove Duplicates</string>
     <string name="action_show_preferences">Preferences</string>
     <string name="action_show_about">About</string>

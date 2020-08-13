@@ -24,8 +24,4 @@
         android:title="@string/action_create_new_file" />
     <item android:id="@+id/menuFileChooserDeleteFile"
         android:title="@string/action_delete_file" />
-    <item android:id="@+id/menuFileChooserImportFile"
-          android:title="@string/action_import_file" />
-    <item android:id="@+id/menuFileChooserExportFile"
-          android:title="@string/action_export_file" />
 </menu>

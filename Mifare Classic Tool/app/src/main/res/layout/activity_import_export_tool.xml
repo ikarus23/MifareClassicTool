@@ -54,6 +54,15 @@
             android:onClick="onImportKeys"
             android:text="@string/action_import_keys" />
 
+        <TextView
+            android:id="@+id/textViewImportExportToolInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_dialog_info"
+            android:drawablePadding="10dp"
+            android:padding="5dp"
+            android:text="@string/text_export_convert_dest_info" />
+
     </LinearLayout>
 
 </ScrollView>
