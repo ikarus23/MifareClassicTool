@@ -42,6 +42,9 @@ Features
 * Display the tag data as 7-Bit US-ASCII
 * Display the MIFARE Classic Access Conditions as a table
 * Display MIFARE Classic Value Blocks as integer
+* Calcualate the BCC
+* Quick UID clone feature
+* Import/export to common file types
 * In-App (offline) help and information
 * It's free software (open source). ;)
 
