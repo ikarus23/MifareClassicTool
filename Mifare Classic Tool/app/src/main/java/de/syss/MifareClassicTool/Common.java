@@ -338,7 +338,15 @@ public class Common extends Application {
         return ret;
     }
 
-    // TODO: doc.
+    /**
+     * Read the URI source line by line.
+     * @param uri The URI to read from.
+     * @param context The context for the content resolver and in which
+     *                error/info Toasts are shown.
+     * @return The content of the URI, each line representing an array item
+     * or Null in case of an read error.
+     * @see #readLineByLine(BufferedReader, boolean, Context)
+     */
     public static String[] readUriLineByLine(Uri uri, Context context){
         InputStream contentStream = null;
         String[] ret = null;
@@ -359,7 +367,13 @@ public class Common extends Application {
         return ret;
     }
 
-    // TODO: doc.
+    /**
+     * Read the URI as raw bytes.
+     * @param uri The URI to read from.
+     * @param context The context for the content resolver.
+     * @return The content of the URI as raw bytes or Null in case of
+     * an read error.
+     */
     public static byte[] readUriRaw(Uri uri, Context context) {
         InputStream contentStream = null;
         String[] ret = null;
@@ -384,7 +398,15 @@ public class Common extends Application {
         return buffer.toByteArray();
     }
 
-    // TODO: doc.
+    /**
+     * Read a as BufferedReader line by line with the option to ignore
+     * lines starting with #.
+     * @param reader The reader object initialized with a file (data).
+     * @param readComments True if lines starting with # should be ignored.
+     * @param context The Context in which error Toasts will be shown.
+     * @return The content with each line representing an array item
+     * or Null in case of an read error.
+     */
     private static String[] readLineByLine(BufferedReader reader,
             boolean readComments, Context context) {
         String[] ret = null;
@@ -419,7 +441,13 @@ public class Common extends Application {
         return ret;
     }
 
-    // TODO: doc. https://stackoverflow.com/a/25005243
+    /**
+     * Get the file name from an URI object.
+     * Taken from https://stackoverflow.com/a/25005243
+     * @param uri The URI to get the file name from,
+     * @param context The Context for the content resolver.
+     * @return The file name of the URI object.
+     */
     public static String getFileName(Uri uri, Context context) {
         String result = null;
         if (uri.getScheme().equals("content")) {
@@ -582,7 +610,13 @@ public class Common extends Application {
         return noError;
     }
 
-    // TODO: doc.
+    /**
+     * Write an array of bytes (raw data) to a given file.
+     * @param file The file to write to.
+     * @param bytes The bytes to save.
+     * @param append Append to file (instead of replacing its content).
+     * @return True if file writing was successful. False otherwise.
+     */
     public static boolean saveFile(File file, byte[] bytes, boolean append) {
         boolean noError = true;
         if (file != null && bytes != null && isExternalStorageMounted()) {

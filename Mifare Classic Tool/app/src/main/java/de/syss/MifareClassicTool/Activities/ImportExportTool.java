@@ -43,7 +43,10 @@ import de.syss.MifareClassicTool.R;
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
- * TODO: doc.
+ * A simple tool to import and export dump files in and from different file
+ * formats. Supported are .mct (Mifare Classic Tool), .bin/.mfd (Proxmark,
+ * libnfc, mfoc), .eml (Proxmark emulator) and .json (Proxmark, Chameleon
+ * Mini GUI). Exported files are saved at {@link Common#EXPORT_DIR}.
  * @author Gerhard Klostermeier
  */
 public class ImportExportTool extends BasicActivity {
@@ -79,7 +82,9 @@ public class ImportExportTool extends BasicActivity {
 
     }
 
-    // TODO: doc.
+    /**
+     * Create the context menu with the supported file types.
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -88,7 +93,10 @@ public class ImportExportTool extends BasicActivity {
         inflater.inflate(R.menu.file_types, menu);
     }
 
-    // TODO: doc.
+    /**
+     * Saves the selected file type in {@link #mFileType} and continue
+     * with the import or export process (depending on {@link #mIsExport}).
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         // Handle item selection.
@@ -111,7 +119,7 @@ public class ImportExportTool extends BasicActivity {
 
         if (mIsExport) {
             // Convert file and export.
-            onExportFile(mFile, true);
+            onExportFile(mFile);
         } else {
             // Let the user pick the file to import.
             showImportFileChooser();
@@ -119,12 +127,15 @@ public class ImportExportTool extends BasicActivity {
         return true;
     }
 
-    // TODO: doc.
+    /**
+     * Get the file chooser result (a path) and continue with the import or
+     * export process.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode) {
-            case IMPORT_FILE_CHOSEN: // File for importing has been selected.
+            case IMPORT_FILE_CHOSEN: // Dump for importing has been selected.
                 if (resultCode == RESULT_OK) {
                     Uri selectedLocation = data.getData();
                     onImportFile(selectedLocation);
@@ -139,14 +150,24 @@ public class ImportExportTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Start the dump import process by showing the file type chooser
+     * menu {@link #showTypeChooserMenu()}.
+     * @param view The View object that triggered the function
+     *             (in this case the import dump button).
+     */
     public void onImportDump(View view) {
         mIsExport = false;
         mIsDumpFile = true;
         showTypeChooserMenu();
     }
 
-    // TODO: doc.
+    /**
+     * Start the dump export process by showing the dump chooser dialog.
+     * @param view The View object that triggered the function
+     *             (in this case the export file button).
+     * @see FileChooser
+     */
     public void onExportDump(View view) {
         mIsExport = true;
         mIsDumpFile = true;
@@ -165,7 +186,11 @@ public class ImportExportTool extends BasicActivity {
         startActivityForResult(intent, EXPORT_FILE_CHOSEN);
     }
 
-    // TODO: doc.
+    /**
+     * Import the file by reading, converting and saving it.
+     * The conversion is made by {@link #convert(String[], FileType, FileType)}.
+     * @param file The file to read from.
+     */
     private void onImportFile(Uri file) {
         String[] content = null;
         if (mFileType != FileType.BIN) {
@@ -213,8 +238,12 @@ public class ImportExportTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
-    private void onExportFile(String path, boolean isDumpFile) {
+    /**
+     * Export the file by reading, converting and saving it.
+     * The conversion is made by {@link #convert(String[], FileType, FileType)}.
+     * @param path The file to read from.
+     */
+    private void onExportFile(String path) {
         File source = new File(path);
         String fileName = source.getName();
         String[] content = Common.readFileLineByLine(source, false,this);
@@ -222,7 +251,7 @@ public class ImportExportTool extends BasicActivity {
             return;
         }
         // Key or dump file?
-        if (isDumpFile) {
+        if (mIsDumpFile) {
             // Convert.
             String[] convertedContent = convert(
                     content, FileType.MCT, mFileType);
@@ -255,7 +284,19 @@ public class ImportExportTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Convert {@code source} from {@code srcType} to {@code destType}.
+     * The formats .mct, . .json, .eml and .bin are supported. The
+     * intermediate is always JSON. If the {@code srcType} or the
+     * {@code destType} is {@link FileType#BIN}, the the
+     * {@code source}/return value must be a string array with only
+     * one string with each char representing one byte (MSB=0).
+     * @param source The data to be converted.
+     * @param srcType The type of the {@code source} data.
+     * @param destType The type for the return value.
+     * @return The converted data.
+     * @see FileType
+     */
     private String[] convert(String[] source, FileType srcType,
                              FileType destType) {
         // Convert source to json.
@@ -323,7 +364,7 @@ public class ImportExportTool extends BasicActivity {
                     return null;
                 }
                 for (int i = 0; i < source.length; i++) {
-                    if (source[i] == "") {
+                    if (source[i].equals("")) {
                         // Error. Empty line in .eml file.
                         Toast.makeText(this, R.string.info_incomplete_dump,
                                 Toast.LENGTH_LONG).show();
@@ -461,7 +502,11 @@ public class ImportExportTool extends BasicActivity {
         return dest;
     }
 
-    // TODO: doc.
+    /**
+     * Show the file type chooser menu and save the result in
+     * {@link #mFileType}.
+     * @see #onContextItemSelected(MenuItem)
+     */
     private void showTypeChooserMenu() {
         // "button" is just used as a dummy because a context menu
         // always need a view.
@@ -470,7 +515,11 @@ public class ImportExportTool extends BasicActivity {
         openContextMenu(button);
     }
 
-    // TODO: doc.
+    /**
+     * Show Android's generic file chooser and let the user
+     * pick the file to import from.
+     * @see #onActivityResult(int, int, Intent)
+     */
     private void showImportFileChooser() {
         Intent intent = new Intent();
         intent.setType("*/*");
@@ -480,7 +529,12 @@ public class ImportExportTool extends BasicActivity {
     }
 
     // TODO (optional): Once we've dropped Android 4 and have API level 21, let the user
-    // Choose the export directory.
+
+    /**
+     * Show Android's generic directory chooser and let
+     * the user pick the directory to which files should
+     * be exported to (not implemented yet).
+     */
     private void showExportDirectoryChooser() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
