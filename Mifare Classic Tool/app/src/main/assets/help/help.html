@@ -55,6 +55,7 @@
         <li><a href="#diff_tool">7.4 Diff Tool (Compare Dumps)</a></li>
         <li><a href="#bcc_tool">7.5 BCC Calculator</a></li>
         <li><a href="#clone_uid_tool">7.6 Clone UID</a></li>
+        <li><a href="#import_export_tool">7.7 Import/Export/Convert Dumps</a></li>
       </ul>
     </li>
     <li><a href="#external_nfc">8. External NFC</a></li>
@@ -396,7 +397,7 @@
       </li>
       <li><i>On your Computer</i><br />
         You can create a simple text file on your computer and
-        transmit it to <b>MifareClassicTool/key-files/</b> on the phone's
+        transmit it to <b>MifareClassicTool/key-files/</b> on the device's
         external storage.
       </li>
     </ul>
@@ -492,6 +493,14 @@
     to Manufacturer Block&quot; section of the
     <a href="#write_dump">Write Dump (Clone)</a> chapter.
 
+  <h3 id="import_export_tool">7.7 Import/Export/Convert Dumps</h3>
+    This tool can import and export dump files with different file types.
+    Supported are .mct (Mifare Classic Tool), .bin/.mfd (Proxmark, libnfc, mfoc),
+    .eml (Proxmark emulator) and .json (Proxmark, Chameleon Mini GUI).
+    Exported files are always stored to <b>MifareClassicTool/export/</b>
+    on the device's external storage. For converting a dump file from e.g.
+    .bin to .json, it can be simply imported and then exported again.
+
 
   <hr />
 
@@ -509,6 +518,8 @@
       <li>MFRC522 via USB-UART adapters</li>
       <li>PN532 via USB-UART adapters</li>
     </ul>
+
+    According to user reports, the ACR 122U reader works the best.<br /><br />
 
     For questions regarding the External NFC app please have a look at its
     <a href="https://play.google.com/store/apps/details?id=eu.dedb.nfc.service">Play Store</a>
