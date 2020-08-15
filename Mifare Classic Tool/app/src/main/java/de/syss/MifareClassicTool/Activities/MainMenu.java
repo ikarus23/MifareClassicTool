@@ -730,7 +730,6 @@ public class MainMenu extends Activity {
 
                 }
                 break;
-
         }
     }
 

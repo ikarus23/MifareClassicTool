@@ -19,5 +19,10 @@
 -->
 
 <paths>
-    <external-path name="tmp" path="MifareClassicTool/tmp/" />
+    <external-path
+        name="external_tmp"
+        path="MifareClassicTool/tmp/" />
+    <files-path
+        name="internal_tmp"
+        path="MifareClassicTool/tmp/" />
 </paths>
