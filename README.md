@@ -3,15 +3,16 @@ MIFARE Classic Tool (MCT)
 
 An Android NFC app for reading, writing, analyzing, etc. MIFARE Classic RFID tags.
 
-* **[MIFARE Classic Tool on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)**
-* **[MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)**
-* **[MIFARE Classic Tool on F-Droid](https://f-droid.org/packages/de.syss.MifareClassicTool/)**
-* **[Screenshots](http://www.icaria.de/mct/screenshots/)**
+* [MIFARE Classic Tool on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)
+* [MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)
+* [MIFARE Classic Tool on F-Droid](https://f-droid.org/packages/de.syss.MifareClassicTool/)
+* [MIFARE Classic Tool on Huawei's AppGallery](https://appgallery1.huawei.com/#/app/C101783071)
+* [Screenshots](http://www.icaria.de/mct/screenshots/)
   (outdated, check Google Play)
-* **[Help & Info/User Manual](https://www.icaria.de/mct/help-and-info/)**
-* **[Additional stuff](http://www.icaria.de/mct/)** (Documentation, APK files, etc.)
-* **[Thread at the Proxmark forum](http://www.proxmark.org/forum/viewtopic.php?id=1535)**
-* **[Donate with Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW)** [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW)
+* [Help & Info/User Manual](https://www.icaria.de/mct/help-and-info/)
+* [Additional stuff](http://www.icaria.de/mct/) (Documentation, APK files, etc.)
+* [Thread at the Proxmark forum](http://www.proxmark.org/forum/viewtopic.php?id=1535)
+* [Donate with Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW) [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24ET8A36XLMNW)
 
 
 
