@@ -1,5 +1,13 @@
 Changelog of MifareClassicTool (MCT):
 
+In development:
+ * Added import/export tool for different file formats.
+ * Updated the list of compatible and incompatible devices.
+ * Compatibility updates for Android 10.
+ * Updated Spanish translation. Thanks to Richard "RAVMN".
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
+
 Version 2.3.1:
  * Bugfix: Do not crash if there is only one key in
    the key file.
