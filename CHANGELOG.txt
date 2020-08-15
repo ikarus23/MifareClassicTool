@@ -2,6 +2,7 @@ Changelog of MifareClassicTool (MCT):
 
 In development:
  * Added import/export tool for different file formats.
+ * Added random UID generator for clone UID tool.
  * Added more well known keys to the extended key file.
    (Remove the old and restart MCT to get the new key file.)
  * Updated Spanish translation. Thanks to Richard "RAVMN".
