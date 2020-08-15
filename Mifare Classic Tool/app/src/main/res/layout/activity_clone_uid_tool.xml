@@ -20,12 +20,12 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-           xmlns:tools="http://schemas.android.com/tools"
-           android:id="@+id/scrollViewCloneUidTool"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           tools:context="de.syss.MifareClassicTool.Activities.CloneUidTool"
-           android:padding="5dp">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollViewCloneUidTool"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="de.syss.MifareClassicTool.Activities.CloneUidTool"
+        android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/linearLayoutCloneUidTool"
@@ -89,6 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:typeface="monospace"
                 android:hint="@string/hint_hex_4_byte"
                 android:imeOptions="actionDone"
                 android:inputType="textCapCharacters|textNoSuggestions"
@@ -101,6 +102,14 @@
                 android:contentDescription="@string/text_paste"
                 android:onClick="onPasteUidFromClipboard"
                 android:src="@drawable/paste" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_random_uid"
+                android:onClick="onRandomUid"
+                android:src="@drawable/random" />
 
         </LinearLayout>
 
@@ -145,6 +154,7 @@
                     android:layout_below="@+id/textViewCloneUidToolBlock0Rest"
                     android:layout_alignLeft="@+id/textViewCloneUidToolBlock0Rest"
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
+                    android:typeface="monospace"
                     android:imeOptions="actionDone"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="22"/>
@@ -186,6 +196,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignRight="@+id/textViewCloneUidToolWriteKey"
                     android:layout_below="@+id/textViewCloneUidToolWriteKey"
+                    android:typeface="monospace"
                     android:imeOptions="actionDone"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="22" />

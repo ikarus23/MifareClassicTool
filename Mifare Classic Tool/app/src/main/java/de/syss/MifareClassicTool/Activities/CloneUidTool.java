@@ -30,6 +30,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
 import de.syss.MifareClassicTool.R;
@@ -336,5 +338,24 @@ public class CloneUidTool extends BasicActivity {
         if (text != null) {
             mUid.setText(text);
         }
+    }
+
+    /**
+     * Generate a random UID to be written to the tag.
+     * UID 00000000 will be ignored because it my cause errors
+     * on some readers.
+     * @param view The View object that triggered the method
+     * (in this case the random UID button).
+     */
+    public void onRandomUid(View view) {
+        String uid = "00000000";
+        byte[] bytesUid = new byte[4];
+        while (uid.equals("00000000")) {
+            new Random().nextBytes(bytesUid);
+            uid = Common.byte2HexString(bytesUid);
+        }
+        mUid.setText(uid);
+        Toast.makeText(this, R.string.info_random_uid,
+                Toast.LENGTH_SHORT).show();
     }
 }

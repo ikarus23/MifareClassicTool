@@ -183,6 +183,7 @@
     <string name="text_export_convert_dest_info">&#8226; Exported/converted files are always
         stored in \"MifareClassicTool/export\" on the external storage (e.g. the SD
         card).\n&#8226; If a file with the same name already exist upon import, it will be overwritten.</string>
+    <string name="text_random_uid">Random UID</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -394,6 +395,7 @@
     <string name="info_convert_error">Error: Could not convert</string>
     <string name="info_incomplete_dump">Error: Incomplete or oversized dump</string>
     <string name="info_error_reading_file">Error: Could not read file</string>
+    <string name="info_random_uid">Generated random UID</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
