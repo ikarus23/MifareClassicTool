@@ -35,7 +35,6 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.core.app.ActivityCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -49,6 +48,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,6 +81,7 @@ public class MainMenu extends Activity {
     private static final int REQUEST_WRITE_STORAGE_CODE = 1;
     private boolean mDonateDialogWasShown = false;
     private boolean mInfoExternalNfcDialogWasShown = false;
+    private boolean mHasNoNfc = false;
     private Button mReadTag;
     private Button mWriteTag;
     private Button mKeyEditor;
@@ -159,6 +161,7 @@ public class MainMenu extends Activity {
             case HasNfc:
                 Common.setNfcAdapter(NfcAdapter.getDefaultAdapter(this));
                 if (Common.getNfcAdapter() == null) {
+                    mHasNoNfc = true;
                     runStartUpNode(StartUpNode.HasExternalNfc);
                 } else {
                     runStartUpNode(StartUpNode.HasMifareClassicSupport);
@@ -167,12 +170,7 @@ public class MainMenu extends Activity {
             case HasMifareClassicSupport:
                 if (!Common.hasMifareClassicSupport()
                         && !Common.useAsEditorOnly()) {
-                    AlertDialog ad = createHasNoMifareClassicSupportDialog();
-                    ad.show();
-                    // Make links clickable.
-                    ((TextView) ad.findViewById(android.R.id.message))
-                            .setMovementMethod(
-                                    LinkMovementMethod.getInstance());
+                    runStartUpNode(StartUpNode.HasExternalNfc);
                 } else {
                     runStartUpNode(StartUpNode.HasNfcEnabled);
                 }
@@ -195,7 +193,18 @@ public class MainMenu extends Activity {
             case HasExternalNfc:
                 if (!Common.hasExternalNfcInstalled(this)
                         && !Common.useAsEditorOnly()) {
-                    createInstallExternalNfcDialog().show();
+                    if (mHasNoNfc) {
+                        // Here because the phone is not NFC enabled.
+                        createInstallExternalNfcDialog().show();
+                    } else {
+                        // Here because phone does not support MIFARE Classic.
+                        AlertDialog ad = createHasNoMifareClassicSupportDialog();
+                        ad.show();
+                        // Make links clickable.
+                        ((TextView) ad.findViewById(android.R.id.message))
+                                .setMovementMethod(
+                                        LinkMovementMethod.getInstance());
+                    }
                 } else {
                     runStartUpNode(StartUpNode.ExternalNfcServiceRunning);
                 }
@@ -335,14 +344,34 @@ public class MainMenu extends Activity {
                 .setTitle(R.string.dialog_no_mfc_support_device_title)
                 .setMessage(styledText)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.action_exit_app,
-                        (dialog, which) -> finish())
-                .setNegativeButton(R.string.action_editor_only,
-                        (dialog, id) -> {
+                .setPositiveButton(R.string.action_install_external_nfc,
+                (dialog, which) -> {
+                    // Open Google Play for the donate version of MCT.
+                    Uri uri = Uri.parse(
+                            "market://details?id=eu.dedb.nfc.service");
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    try {
+                        startActivity(goToMarket);
+                    } catch (ActivityNotFoundException e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store"
+                                        + "/apps/details?id=eu.dedb.nfc"
+                                        + ".service")));
+                    }
+                })
+                .setNeutralButton(R.string.action_editor_only,
+                        (dialog, which) -> {
+                            // Only use Editor.
                             useAsEditorOnly(true);
                             runStartUpNode(StartUpNode.DonateDialog);
                         })
-                .setOnCancelListener(dialog -> finish())
+                .setNegativeButton(R.string.action_exit_app,
+                        (dialog, id) -> {
+                            // Exit the App.
+                            finish();
+                        })
+                .setOnCancelListener(
+                        dialog -> finish())
                 .create();
     }
 

@@ -407,11 +407,14 @@
         Your device (due to hardware) does not support MIFARE Classic! The only
         thing possible is to display the UID and some other generic
         information. Further I/O operations are impossible.
-        <br /><br /><b>Therefore, this app is pretty much useless for this device.</b>
         <br /><br />You can view a list of known devices with no MIFARE Classic
         support at <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">github</a>.
         If your device is not on that list, please write an
         <a href="mailto:fooblubb@gmail.com">Email to developer</a>.
+        <br /><br />If your device supports USB-OTG you might be able to connect an
+        external NFC reader to your Android device. Mifare Classic Tool should work
+        together with the <i>External NFC</i> app, which supports several USB based
+        NFC readers. There might be some limitations though.
         ]]>
         </string>
     <string name="dialog_no_mfc_support_tag_title">Not a MIFARE Classic tag</string>
@@ -586,8 +589,9 @@
     </string>
     <string name="dialog_info_external_nfc_title">External NFC Service</string>
     <string name="dialog_info_external_nfc">Your device doesn\'t have a NFC
-        reader, but the \"External NFC\" app is installed. Please make sure the \"External NFC\"
-        service is running in order to use Mifare Classic Tool with an external NFC reader.
+        reader or MIFARE Classic support, but the \"External NFC\" app is installed.
+        Please make sure the \"External NFC\" service is running in order to use
+        Mifare Classic Tool with an external NFC reader.
     </string>
     <string name="dialog_gen2_tags_info_title">Cloning the UID</string>
     <string name="dialog_gen2_tags_info">The first block of the first sector of an MIFARE
