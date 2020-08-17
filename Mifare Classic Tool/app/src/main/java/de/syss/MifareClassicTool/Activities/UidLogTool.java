@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,11 +34,21 @@ import java.util.Collections;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
+/**
+ * Tool to display and share the UIDs of previously detected tags.
+ * @author Gerhard Klostermeier
+ * @see Common#treatAsNewTag(Intent, Context)
+ * @see Common#logUid(String)
+ * @see Common#UID_LOG_FILE
+ */
 public class UidLogTool extends BasicActivity {
 
     TextView mUidLog;
 
-    // TODO: doc.
+    /**
+     * Calls {@link #updateUidLog()} (and initialize some member
+     * variables).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +57,10 @@ public class UidLogTool extends BasicActivity {
         updateUidLog();
     }
 
-    // TODO: doc.
+    /**
+     * Calls {@link BasicActivity#onNewIntent(Intent)} and
+     * then calls {@link #updateUidLog()}
+     */
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -81,7 +95,10 @@ public class UidLogTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Read the UID log file {@link Common#UID_LOG_FILE} and
+     * display its content.
+     */
     private void updateUidLog() {
         File log = new File(this.getFilesDir(),
                 Common.HOME_DIR + File.separator + Common.UID_LOG_FILE);
@@ -99,7 +116,10 @@ public class UidLogTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Delete the UID log file {@link Common#UID_LOG_FILE} and
+     * update the UI (call {@link #updateUidLog()}).
+     */
     private void clearUidLog() {
         File log = new File(this.getFilesDir(),
                 Common.HOME_DIR + File.separator + Common.UID_LOG_FILE);
@@ -109,7 +129,10 @@ public class UidLogTool extends BasicActivity {
         updateUidLog();
     }
 
-    // TODO: doc.
+    /**
+     * Share the UID log file {@link Common#UID_LOG_FILE} as
+     * text file.
+     */
     private void shareUidLog() {
         File log = new File(this.getFilesDir(),
                 Common.HOME_DIR + File.separator + Common.UID_LOG_FILE);

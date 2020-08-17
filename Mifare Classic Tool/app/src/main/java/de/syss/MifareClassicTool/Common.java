@@ -136,7 +136,7 @@ public class Common extends Application {
     public static final String STD_KEYS_EXTENDED = "extended-std.keys";
 
     /**
-     * Log file with UIDs which have been discovered.
+     * Log file with UIDs which have been discovered in the past.
      */
     public static final String UID_LOG_FILE = "uid-log-file.txt";
 
