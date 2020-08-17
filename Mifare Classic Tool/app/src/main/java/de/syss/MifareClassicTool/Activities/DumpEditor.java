@@ -981,9 +981,10 @@ public class DumpEditor extends BasicActivity
             SpannableString keyB = Common.colorString(
                     data.substring(20), colorKeyB);
             SpannableString ac = Common.colorString(
-                    data.substring(12, 20), colorAC);
+                    data.substring(12, 18), colorAC);
             return new SpannableString(
-                    TextUtils.concat(keyA, ac, keyB));
+                    TextUtils.concat(keyA, ac,
+                            data.substring(18, 20), keyB));
         } catch (IndexOutOfBoundsException e) {
             Log.d(LOG_TAG, "Error while coloring " +
                     "sector trailer");
