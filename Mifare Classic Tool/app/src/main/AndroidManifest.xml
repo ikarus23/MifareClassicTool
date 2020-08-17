@@ -184,6 +184,12 @@
             android:icon="@drawable/value_block_tool"
             android:label="@string/title_activity_import_export_tool" >
         </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activities.UidLogTool"
+            android:configChanges="orientation|screenSize"
+            android:icon="@drawable/edit_dump"
+            android:label="@string/title_activity_uid_log_tool" >
+        </activity>
 
     </application>
 

@@ -960,6 +960,10 @@ public class MainMenu extends Activity {
             intent = new Intent(this, ImportExportTool.class);
             startActivity(intent);
             return true;
+        case R.id.menuMainUidLogTool:
+            intent = new Intent(this, UidLogTool.class);
+            startActivity(intent);
+            return true;
         default:
             return super.onContextItemSelected(item);
         }

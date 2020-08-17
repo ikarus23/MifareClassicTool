@@ -62,8 +62,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
 
@@ -125,10 +128,17 @@ public class Common extends Application {
 
     /**
      * Keys taken from SLURP by Anders Sundman anders@4zm.org
-     * (and a short google search).
+     * the proxmark3 repositories and a short google search.
      * https://github.com/4ZM/slurp/blob/master/res/xml/mifare_default_keys.xml
+     * https://github.com/RfidResearchGroup/proxmark3
+     * https://github.com/Proxmark/proxmark3
      */
     public static final String STD_KEYS_EXTENDED = "extended-std.keys";
+
+    /**
+     * Log file with UIDs which have been discovered.
+     */
+    public static final String UID_LOG_FILE = "uid-log-file.txt";
 
     /**
      * Possible operations the on a MIFARE Classic Tag.
@@ -676,10 +686,32 @@ public class Common extends Application {
     }
 
     /**
+     * Log the UID to a file. This is called by {@link #treatAsNewTag(Intent, Context)}
+     * and needed for the {@link de.syss.MifareClassicTool.Activities.UidLogTool}.
+     * @param uid The UID to append to the log file.
+     * @see #UID_LOG_FILE
+     * @see #treatAsNewTag(Intent, Context)
+     * @see de.syss.MifareClassicTool.Activities.UidLogTool
+     */
+    public static void logUid(String uid) {
+        File log = new File(mAppContext.getFilesDir(),
+                HOME_DIR + File.separator + UID_LOG_FILE);
+        GregorianCalendar calendar = new GregorianCalendar();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
+                Locale.getDefault());
+        fmt.setCalendar(calendar);
+        String dateFormatted = fmt.format(calendar.getTime());
+        String[] logEntry = new String[1];
+        logEntry[0] = dateFormatted + ": " + uid;
+        saveFile(log, logEntry, true);
+    }
+
+    /**
      * For Activities which want to treat new Intents as Intents with a new
      * Tag attached. If the given Intent has a Tag extra, it will be patched
-     * by {@link MCReader#patchTag(Tag)} and  {@link #mTag} as well as
-     * {@link #mUID} will be updated. A Toast message will be shown in the
+     * by {@link MCReader#patchTag(Tag)} and {@link #mTag} as well as
+     * {@link #mUID} will be updated. The UID will be loged using
+     * {@link #logUid(String)}. A Toast message will be shown in the
      * Context of the calling Activity. This method will also check if the
      * device/tag supports MIFARE Classic (see return values and
      * {@link #checkMifareClassicSupport(Tag, Context)}).
@@ -703,6 +735,7 @@ public class Common extends Application {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             tag = MCReader.patchTag(tag);
             setTag(tag);
+            logUid(byte2HexString(tag.getId()));
 
             boolean isCopyUID = getPreferences().getBoolean(
                     AutoCopyUID.toString(), false);
