@@ -887,7 +887,7 @@ public class DumpEditor extends BasicActivity
         }
 
         // Share file.
-        Common.shareTmpFile(this, file);
+        Common.shareTextFile(this, file);
     }
 
     /**

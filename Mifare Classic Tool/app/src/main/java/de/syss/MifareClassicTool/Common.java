@@ -1626,7 +1626,7 @@ public class Common extends Application {
      * @param file The file to share (from the "tmp" directory).
      * @see #TMP_DIR
      */
-    public static void shareTmpFile(Context context, File file) {
+    public static void shareTextFile(Context context, File file) {
         // Share file.
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

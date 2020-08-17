@@ -21,6 +21,8 @@ package de.syss.MifareClassicTool.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.io.File;
@@ -51,6 +53,34 @@ public class UidLogTool extends BasicActivity {
         updateUidLog();
     }
 
+    /**
+     * Add the menu with the share/clear functions to the Activity.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.uid_log_tool_functions, menu);
+        return true;
+    }
+
+    /**
+     * Handle the selected function from the menu.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+            case R.id.menuUidLogToolShare:
+                shareUidLog();
+                return true;
+            case R.id.menuUidLogToolClear:
+                clearUidLog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     // TODO: doc.
     private void updateUidLog() {
         File log = new File(this.getFilesDir(),
@@ -65,10 +95,26 @@ public class UidLogTool extends BasicActivity {
                     System.getProperty("line.separator"), tempEntries));
         } else {
             // No log yet.
+            mUidLog.setText(R.string.text_no_uid_logs);
         }
     }
 
-    // TODO: make log sharable.
-    // TODO: add function to clear log.
+    // TODO: doc.
+    private void clearUidLog() {
+        File log = new File(this.getFilesDir(),
+                Common.HOME_DIR + File.separator + Common.UID_LOG_FILE);
+        if (log.exists()){
+            log.delete();
+        }
+        updateUidLog();
+    }
 
+    // TODO: doc.
+    private void shareUidLog() {
+        File log = new File(this.getFilesDir(),
+                Common.HOME_DIR + File.separator + Common.UID_LOG_FILE);
+        if (log.exists()) {
+            Common.shareTextFile(this, log);
+        }
+    }
 }

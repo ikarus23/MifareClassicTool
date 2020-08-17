@@ -248,7 +248,7 @@ public class KeyEditor extends BasicActivity
         }
 
         // Share file.
-        Common.shareTmpFile(this, file);
+        Common.shareTextFile(this, file);
     }
 
     /**

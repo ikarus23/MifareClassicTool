@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright 2013 Gerhard Klostermeier
+ * Copyright 2020 Gerhard Klostermeier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,17 @@
  */
 -->
 
-<paths>
-    <external-path
-        name="external_tmp"
-        path="MifareClassicTool/tmp/" />
-    <files-path
-        name="internal_tmp"
-        path="MifareClassicTool/tmp/" />
-    <files-path
-        name="internal_uid_log"
-        path="MifareClassicTool/" />
-</paths>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@+id/menuUidLogToolShare"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/action_share"
+        android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuUidLogToolClear"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/action_remove_duplicates"
+        android:showAsAction="ifRoom" />
+
+</menu>
