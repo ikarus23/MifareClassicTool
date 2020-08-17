@@ -9,6 +9,8 @@ In development:
  * Compatibility updates for Android 10.
  * Updated the list of compatible and incompatible devices.
  * Bugfix: Share dumps/keys when using internal storage.
+ * Bugfix: Auto reconnect option for key mapping should now work.
+ * Some minor bug fixes.
 
 Version 2.3.1:
  * Bugfix: Do not crash if there is only one key in

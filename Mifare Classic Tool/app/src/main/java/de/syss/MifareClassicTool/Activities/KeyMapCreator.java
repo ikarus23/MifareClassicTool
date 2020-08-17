@@ -207,7 +207,12 @@ public class KeyMapCreator extends BasicActivity {
     @Override
     public void onPause() {
         super.onPause();
-        mIsCreatingKeyMap = false;
+        boolean autoReconnect = Common.getPreferences().getBoolean(
+                Preference.AutoReconnect.toString(), false);
+        // Don't stop key map building if auto reconnect option is enabled.
+        if (!autoReconnect) {
+            mIsCreatingKeyMap = false;
+        }
     }
 
     /**

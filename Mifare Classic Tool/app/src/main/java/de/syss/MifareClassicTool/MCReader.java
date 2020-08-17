@@ -560,9 +560,11 @@ public class MCReader {
                     } catch (Exception e) {
                         Log.d(LOG_TAG,
                                 "Error while building next key map part");
-                        // Is auto reconnect enabled?
                         if (autoReconnect) {
-                            Log.d(LOG_TAG, "Auto reconnect is enabled");
+                            // Is the tag still in range?
+                            if (isConnectedButTagLost()) {
+                                close();
+                            }
                             while (!isConnected()) {
                                 // Sleep for 500ms.
                                 try {
@@ -1045,10 +1047,27 @@ public class MCReader {
 
     /**
      * Check if the reader is connected to the tag.
+     * This is NOT an indicator that the tag is in range.
      * @return True if the reader is connected. False otherwise.
      */
     public boolean isConnected() {
         return mMFC.isConnected();
+    }
+
+    /**
+     * Check if the reader is connected, but the tag is lost
+     * (not in range anymore).
+     * @return True if tag is lost. False otherwise.
+     */
+    public boolean isConnectedButTagLost() {
+        if (isConnected()) {
+            try {
+                mMFC.readBlock(0);
+            } catch (IOException e) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
