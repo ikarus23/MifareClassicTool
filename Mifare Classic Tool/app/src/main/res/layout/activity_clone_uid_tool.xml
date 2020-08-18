@@ -90,10 +90,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:typeface="monospace"
-                android:hint="@string/hint_hex_4_byte"
+                android:hint="@string/hint_hex_4_7_10_byte"
                 android:imeOptions="actionDone"
                 android:inputType="textCapCharacters|textNoSuggestions"
-                android:maxLength="14" />
+                android:maxLength="20" />
 
             <ImageButton
                 android:id="@+id/imageButtonCloneUidToolPaste"
