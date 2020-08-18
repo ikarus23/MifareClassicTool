@@ -187,6 +187,7 @@
         card). If a file with the same name already exist upon import, it will be overwritten.</string>
     <string name="text_random_uid">Random UID</string>
     <string name="text_no_uid_logs">The UID log is empty</string>
+    <string name="text_not_ascii">Not ASCII</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -326,6 +327,8 @@
     <string name="info_block_out_of_range">Error: The block is out of range</string>
     <string name="info_not_hex_data">Error: Data must be in hexadecimal
         (0-9 and A-F)</string>
+    <string name="info_not_bin_data">Error: Data must be in binary
+        (0/1, multiple of 8)</string>
     <string name="info_not_16_byte">Error: Data must be 16 bytes
         (32 characters) long</string>
     <string name="info_is_not_vb">Error: Not a value block.</string>

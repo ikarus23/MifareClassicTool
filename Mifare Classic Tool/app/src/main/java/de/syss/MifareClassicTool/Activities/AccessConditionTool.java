@@ -169,7 +169,7 @@ public class AccessConditionTool extends BasicActivity {
         }
 
         byte[][] acMatrix = Common.acBytesToACMatrix(
-                Common.hexStringToByteArray(ac));
+                Common.hex2ByteArray(ac));
         boolean error = false;
         if (acMatrix != null) {
             // First check & set Sector Trailer.
@@ -224,7 +224,7 @@ public class AccessConditionTool extends BasicActivity {
      * @see #acRowNrToACBits(int, boolean)
      */
     public void onEncode(View view) {
-        mAC.setText(Common.byte2HexString(Common.acMatrixToACBytes(mACMatrix)));
+        mAC.setText(Common.byte2Hex(Common.acMatrixToACBytes(mACMatrix)));
     }
 
     /**

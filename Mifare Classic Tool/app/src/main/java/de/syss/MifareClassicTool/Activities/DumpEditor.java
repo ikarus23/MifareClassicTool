@@ -168,7 +168,7 @@ public class DumpEditor extends BasicActivity
             String[] dump = getIntent().getStringArrayExtra(EXTRA_DUMP);
             // Set title with UID.
             if (Common.getUID() != null) {
-                mUID = Common.byte2HexString(Common.getUID());
+                mUID = Common.byte2Hex(Common.getUID());
                 setTitle(getTitle() + " (UID: " + mUID+ ")");
             }
             initEditor(dump);

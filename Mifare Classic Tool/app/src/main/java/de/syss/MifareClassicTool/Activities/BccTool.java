@@ -72,7 +72,7 @@ public class BccTool extends BasicActivity {
         }
 
         // Calculate the BCC.
-        byte bcc = Common.calcBCC(Common.hexStringToByteArray(data));
+        byte bcc = Common.calcBCC(Common.hex2ByteArray(data));
         mBcc.setText(String.format("%02X", bcc));
     }
 

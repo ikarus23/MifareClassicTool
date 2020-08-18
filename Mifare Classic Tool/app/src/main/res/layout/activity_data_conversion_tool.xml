@@ -58,7 +58,8 @@
                 android:id="@+id/imageButtonDataConversionToolAscii"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/stat_notify_sync" />
+                android:src="@android:drawable/stat_notify_sync"
+                android:onClick="onConvert" />
 
         </LinearLayout>
 
@@ -91,7 +92,8 @@
                 android:id="@+id/imageButtonDataConversionToolHex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/stat_notify_sync" />
+                android:src="@android:drawable/stat_notify_sync"
+                android:onClick="onConvert"/>
 
         </LinearLayout>
 
@@ -124,7 +126,8 @@
                 android:id="@+id/imageButtonDataConversionToolBin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/stat_notify_sync" />
+                android:src="@android:drawable/stat_notify_sync"
+                android:onClick="onConvert" />
 
         </LinearLayout>
 

@@ -351,7 +351,7 @@ public class ImportExportTool extends BasicActivity {
                         blockBytes[j] = (byte) binary.charAt(i + j);
                     }
                     block = "    \"" + i/16 + "\": \"" +
-                            Common.byte2HexString(blockBytes) + "\",";
+                            Common.byte2Hex(blockBytes) + "\",";
                     json.add(block);
                 }
                 break;
@@ -471,7 +471,7 @@ public class ImportExportTool extends BasicActivity {
                                 Toast.LENGTH_LONG).show();
                         return null;
                     }
-                    byte[] bytes = Common.hexStringToByteArray(block);
+                    byte[] bytes = Common.hex2ByteArray(block);
                     for (byte b : bytes) {
                         sb.append((char)b);
                     }

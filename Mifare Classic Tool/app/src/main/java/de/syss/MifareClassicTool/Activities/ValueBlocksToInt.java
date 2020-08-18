@@ -140,7 +140,7 @@ public class ValueBlocksToInt extends BasicActivity {
         what = new TextView(this);
         what.setText(R.string.text_vb_as_int_decoded);
         value = new TextView(this);
-        byte[] asBytes = Common.hexStringToByteArray(
+        byte[] asBytes = Common.hex2ByteArray(
                 hexValueBlock.substring(0, 8));
         Common.reverseByteArrayInPlace(asBytes);
         ByteBuffer bb = ByteBuffer.wrap(asBytes);

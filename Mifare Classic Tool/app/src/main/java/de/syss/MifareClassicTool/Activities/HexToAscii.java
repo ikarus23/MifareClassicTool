@@ -20,10 +20,7 @@ package de.syss.MifareClassicTool.Activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.TextView;
-
-import java.io.UnsupportedEncodingException;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
@@ -65,20 +62,8 @@ public class HexToAscii extends BasicActivity {
                                 getResources().getColor(R.color.blue)), s);
                     } else {
                         // Data.
-                        // Replace non printable ASCII with ".".
-                        byte[] hex = Common.hexStringToByteArray(line);
-                        for(int i = 0; i < hex.length; i++) {
-                            if (hex[i] < (byte)0x20 || hex[i] == (byte)0x7F) {
-                                hex[i] = (byte)0x2E;
-                            }
-                        }
-                        // Hex to ASCII.
-                        try {
-                            ascii = TextUtils.concat(ascii, " ",
-                                    new String(hex, "US-ASCII"), s);
-                        } catch (UnsupportedEncodingException e) {
-                            Log.e(LOG_TAG, "Error while encoding to ASCII", e);
-                        }
+                        String converted = Common.hex2Ascii(line);
+                        ascii = TextUtils.concat(ascii, " ", converted, s);
                     }
                 }
                 TextView tv = findViewById(R.id.textViewHexToAscii);

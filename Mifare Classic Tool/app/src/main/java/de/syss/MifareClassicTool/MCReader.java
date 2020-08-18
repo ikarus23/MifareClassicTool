@@ -339,7 +339,7 @@ public class MCReader {
                         blockBytes = Arrays.copyOf(blockBytes,16);
                     }
 
-                    blocks.add(Common.byte2HexString(blockBytes));
+                    blocks.add(Common.byte2Hex(blockBytes));
                 } catch (TagLostException e) {
                     throw e;
                 } catch (IOException e) {
@@ -380,17 +380,17 @@ public class MCReader {
             } else {
                 // Merge key in last block (sector trailer).
                 if (!useAsKeyB) {
-                    if (isKeyBReadable(Common.hexStringToByteArray(
+                    if (isKeyBReadable(Common.hex2ByteArray(
                             ret[last].substring(12, 20)))) {
-                        ret[last] = Common.byte2HexString(key)
+                        ret[last] = Common.byte2Hex(key)
                                 + ret[last].substring(12, 32);
                     } else {
-                        ret[last] = Common.byte2HexString(key)
+                        ret[last] = Common.byte2Hex(key)
                                 + ret[last].substring(12, 20) + NO_KEY;
                     }
                 } else {
                     ret[last] = NO_KEY + ret[last].substring(12, 20)
-                            + Common.byte2HexString(key);
+                            + Common.byte2Hex(key);
                 }
             }
         }
@@ -607,7 +607,7 @@ public class MCReader {
                 // is a all-0 key in the key file, because of a bug in
                 // some tags and/or devices.
                 // https://github.com/ikarus23/MifareClassicTool/issues/66
-                byte[] fKey = Common.hexStringToByteArray("FFFFFFFFFFFF");
+                byte[] fKey = Common.hex2ByteArray("FFFFFFFFFFFF");
                 if (mKeysWithOrder.size() > 2) {
                     if (foundKeys[0] && !Arrays.equals(keys[0], fKey)) {
                         mKeysWithOrder.remove(keys[0]);
@@ -870,7 +870,7 @@ public class MCReader {
                             hasAllZeroKey = true;
                         }
                         try {
-                            keys.add(Common.hexStringToByteArray(line));
+                            keys.add(Common.hex2ByteArray(line));
                         } catch (OutOfMemoryError e) {
                             // Error. Too many keys (out of memory).
                             Toast.makeText(context, R.string.info_to_many_keys,
@@ -883,13 +883,13 @@ public class MCReader {
         }
         if (keys.size() > 0) {
             mKeysWithOrder = new ArrayList<>(keys);
-            byte[] zeroKey = Common.hexStringToByteArray("000000000000");
+            byte[] zeroKey = Common.hex2ByteArray("000000000000");
             if (hasAllZeroKey) {
                 // NOTE: The all-F key has to be tested always first if there
                 // is a all-0 key in the key file, because of a bug in
                 // some tags and/or devices.
                 // https://github.com/ikarus23/MifareClassicTool/iss000000000000ues/66
-                byte[] fKey = Common.hexStringToByteArray("FFFFFFFFFFFF");
+                byte[] fKey = Common.hex2ByteArray("FFFFFFFFFFFF");
                 mKeysWithOrder.remove(fKey);
                 mKeysWithOrder.add(0, fKey);
             }

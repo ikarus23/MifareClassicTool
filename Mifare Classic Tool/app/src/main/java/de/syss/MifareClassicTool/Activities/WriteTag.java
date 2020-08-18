@@ -445,10 +445,10 @@ public class WriteTag extends BasicActivity {
         // The length of UID of the dump or the block 0 is expected to match
         // the UID length of the current tag. In this case 4 byte.
         if (isWriteBlock) {
-            bcc = Common.hexStringToByteArray(
+            bcc = Common.hex2ByteArray(
                     mDataText.getText().toString()
                     .substring(8, 10))[0];
-            uid = Common.hexStringToByteArray(
+            uid = Common.hex2ByteArray(
                     mDataText.getText().toString()
                     .substring(0, 8));
         } else {
@@ -555,14 +555,14 @@ public class WriteTag extends BasicActivity {
 
         if (keys[1] != null) {
             result = reader.writeBlock(sector, block,
-                    Common.hexStringToByteArray(mDataText.getText().toString()),
+                    Common.hex2ByteArray(mDataText.getText().toString()),
                     keys[1], true);
         }
         // Error while writing? Maybe tag has default factory settings ->
         // try to write with key a (if there is one).
         if (result == -1 && keys[0] != null) {
             result = reader.writeBlock(sector, block,
-                    Common.hexStringToByteArray(mDataText.getText().toString()),
+                    Common.hex2ByteArray(mDataText.getText().toString()),
                     keys[0], false);
         }
         reader.close();
@@ -845,7 +845,7 @@ public class WriteTag extends BasicActivity {
                     dump[i] = newBlock;
                 }
                 mDumpWithPos.get(sector).put(block++,
-                        Common.hexStringToByteArray(dump[i]));
+                        Common.hex2ByteArray(dump[i]));
             } else {
                 block++;
             }

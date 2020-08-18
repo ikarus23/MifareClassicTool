@@ -61,6 +61,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -735,7 +736,7 @@ public class Common extends Application {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             tag = MCReader.patchTag(tag);
             setTag(tag);
-            logUid(byte2HexString(tag.getId()));
+            logUid(byte2Hex(tag.getId()));
 
             boolean isCopyUID = getPreferences().getBoolean(
                     AutoCopyUID.toString(), false);
@@ -754,7 +755,7 @@ public class Common extends Application {
                 // Show Toast message with UID.
                 String id = context.getResources().getString(
                         R.string.info_new_tag_found) + " (UID: ";
-                id += byte2HexString(tag.getId());
+                id += byte2Hex(tag.getId());
                 id += ")";
                 Toast.makeText(context, id, Toast.LENGTH_LONG).show();
             }
@@ -1309,17 +1310,34 @@ public class Common extends Application {
      * @param hexString The string to check.
      * @param context The Context in which the Toast will be shown.
      * @return True if sting is hex an 16 Bytes long, False otherwise.
+     * @see #isHex(String, Context)  
      */
     public static boolean isHexAnd16Byte(String hexString, Context context) {
-        if (!hexString.matches("[0-9A-Fa-f]+")) {
-            // Error, not hex.
-            Toast.makeText(context, R.string.info_not_hex_data,
-                    Toast.LENGTH_LONG).show();
+        boolean isHex = isHex(hexString, context);
+        if (!isHex) {
             return false;
         }
         if (hexString.length() != 32) {
             // Error, not 16 byte (32 chars).
             Toast.makeText(context, R.string.info_not_16_byte,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if a (hex) string is pure hex (0-9, A-F, a-f).
+     * If not show an error Toast in the context.
+     * @param hex The string to check.
+     * @param context The Context in which the Toast will be shown.
+     * @return True if sting is hex. False otherwise.
+     */
+    public static boolean isHex(String hex, Context context) {
+        if (!(hex != null && hex.length() % 2 == 0
+                && hex.matches("[0-9A-Fa-f]+"))) {
+            // Error, not hex.
+            Toast.makeText(context, R.string.info_not_hex_data,
                     Toast.LENGTH_LONG).show();
             return false;
         }
@@ -1335,7 +1353,7 @@ public class Common extends Application {
      * @return True if it is a value block. False otherwise.
      */
     public static boolean isValueBlock(String hexString) {
-        byte[] b = Common.hexStringToByteArray(hexString);
+        byte[] b = Common.hex2ByteArray(hexString);
         if (b.length == 16) {
             // Google some NXP info PDFs about MIFARE Classic to see how
             // Value Blocks are formatted.
@@ -1493,27 +1511,31 @@ public class Common extends Application {
             case 2:
                 byte[] revBytes = bytes.clone();
                 reverseByteArrayInPlace(revBytes);
-                return hex2Dec(byte2HexString(revBytes));
+                return hex2Dec(byte2Hex(revBytes));
             case 1:
-                return hex2Dec(byte2HexString(bytes));
+                return hex2Dec(byte2Hex(bytes));
         }
-        return byte2HexString(bytes);
+        return byte2Hex(bytes);
     }
 
     /**
      * Convert a hexadecimal string to a decimal string.
      * Uses BigInteger only if the hexadecimal string is longer than 7 bytes.
-     * @param hexString The hexadecimal value to convert.
+     * @param hex The hexadecimal value to convert.
      * @return String representation of the decimal value of hexString.
      */
-    public static String hex2Dec(String hexString) {
+    public static String hex2Dec(String hex) {
+        if (!(hex != null && hex.length() % 2 == 0
+                && hex.matches("[0-9A-Fa-f]+"))) {
+            return null;
+        }
         String ret;
-        if (hexString == null || hexString.isEmpty()) {
+        if (hex == null || hex.isEmpty()) {
             ret = "0";
-        } else if (hexString.length() <= 14) {
-            ret = Long.toString(Long.parseLong(hexString, 16));
+        } else if (hex.length() <= 14) {
+            ret = Long.toString(Long.parseLong(hex, 16));
         } else {
-            BigInteger bigInteger = new BigInteger(hexString , 16);
+            BigInteger bigInteger = new BigInteger(hex , 16);
             ret = bigInteger.toString();
         }
         return ret;
@@ -1524,7 +1546,7 @@ public class Common extends Application {
      * @param bytes Bytes to convert.
      * @return The bytes in hex string format.
      */
-    public static String byte2HexString(byte[] bytes) {
+    public static String byte2Hex(byte[] bytes) {
         StringBuilder ret = new StringBuilder();
         if (bytes != null) {
             for (Byte b : bytes) {
@@ -1537,22 +1559,106 @@ public class Common extends Application {
     /**
      * Convert a string of hex data into a byte array.
      * Original author is: Dave L. (http://stackoverflow.com/a/140861).
-     * @param s The hex string to convert
+     * @param hex The hex string to convert
      * @return An array of bytes with the values of the string.
      */
-    public static byte[] hexStringToByteArray(String s) {
-        int len = s.length();
+    public static byte[] hex2ByteArray(String hex) {
+        if (!(hex != null && hex.length() % 2 == 0
+                && hex.matches("[0-9A-Fa-f]+"))) {
+            return null;
+        }
+        int len = hex.length();
         byte[] data = new byte[len / 2];
         try {
             for (int i = 0; i < len; i += 2) {
-                data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                                     + Character.digit(s.charAt(i+1), 16));
+                data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
+                                     + Character.digit(hex.charAt(i+1), 16));
             }
         } catch (Exception e) {
             Log.d(LOG_TAG, "Argument(s) for hexStringToByteArray(String s)"
                     + "was not a hex string");
         }
         return data;
+    }
+
+    /**
+     * Convert a hex string to ASCII string.
+     * @param hex Hex string to convert.
+     * @return Converted ASCII string. Null on error.
+     */
+    public static String hex2Ascii(String hex) {
+        if (!(hex != null && hex.length() % 2 == 0
+                && hex.matches("[0-9A-Fa-f]+"))) {
+            return null;
+        }
+        byte[] bytes = hex2ByteArray(hex);
+        String ret = null;
+        // Replace non printable ASCII with ".".
+        for(int i = 0; i < bytes.length; i++) {
+            if (bytes[i] < (byte)0x20 || bytes[i] == (byte)0x7F) {
+                bytes[i] = (byte)0x2E;
+            }
+        }
+        // Hex to ASCII.
+        try {
+            ret = new String(bytes, "US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+            Log.e(LOG_TAG, "Error while encoding to ASCII", e);
+        }
+        return ret;
+    }
+
+    /**
+     * Convert a ASCII string to a hex string.
+     * @param ascii ASCII string to convert.
+     * @return Converted hex string.
+     */
+    public static String ascii2Hex(String ascii) {
+        if (!(ascii != null && !ascii.equals(""))) {
+            return null;
+        }
+        char[] chars = ascii.toCharArray();
+        StringBuilder hex = new StringBuilder();
+        for (int i = 0; i < chars.length; i++) {
+            hex.append(String.format("%02X", (int)chars[i]));
+        }
+        return hex.toString();
+    }
+
+    /**
+     * Convert a hex string to a binary string (with leading zeros).
+     * @param hex Hex string to convert.
+     * @return Converted binary string.
+     */
+    public static String hex2Bin(String hex) {
+        if (!(hex != null && hex.length() % 2 == 0
+                && hex.matches("[0-9A-Fa-f]+"))) {
+            return null;
+        }
+        String bin = new BigInteger(hex, 16).toString(2);
+        // Pad left with zeros (have not found a better way...).
+        if(bin.length() < hex.length() * 4){
+            int diff = hex.length() * 4 - bin.length();
+            StringBuilder pad = new StringBuilder();
+            for(int i = 0; i < diff; i++){
+                pad.append("0");
+            }
+            pad.append(bin);
+            bin = pad.toString();
+        }
+        return bin;
+    }
+
+    public static String bin2Hex(String bin) {
+        if (!(bin != null && bin.length() % 8 == 0
+                && bin.matches("[0-1]+"))) {
+            return null;
+        }
+        String hex = new BigInteger(bin, 2).toString(16);
+        if (hex.length() % 2 != 0) {
+            hex = "0" + hex;
+        }
+        return hex;
     }
 
     /**

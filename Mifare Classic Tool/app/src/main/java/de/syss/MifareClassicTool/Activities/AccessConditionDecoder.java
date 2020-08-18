@@ -73,7 +73,7 @@ public class AccessConditionDecoder extends BasicActivity {
                 }
 
                 // b6 = bAC[0], b7 = bAC[1], ...
-                byte[] bAC = Common.hexStringToByteArray(accessConditions[j+1]);
+                byte[] bAC = Common.hex2ByteArray(accessConditions[j+1]);
 
                 // acMatrix[C1-C3][Block1-Block3 + Sector Trailer]
                 byte[][] acMatrix = Common.acBytesToACMatrix(bAC);
