@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/text_uid_part"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/editTextBccToolUid"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/text_bcc"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <!--
         There is an ugly hack to make the edit text not editable. Maybe it's

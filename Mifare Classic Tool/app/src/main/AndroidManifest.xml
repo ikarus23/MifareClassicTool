@@ -190,6 +190,12 @@
             android:icon="@drawable/edit_dump"
             android:label="@string/title_activity_uid_log_tool" >
         </activity>
+        <activity
+            android:name="de.syss.MifareClassicTool.Activities.DataConversionTool"
+            android:configChanges="orientation|screenSize"
+            android:icon="@drawable/hex_to_ascii"
+            android:label="@string/title_activity_data_conversion_tool" >
+        </activity>
 
     </application>
 

@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/text_vb"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/editTextValueBlockToolVB"
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:text="@string/text_vb_as_int"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/editTextValueBlockToolVBasInt"
@@ -140,7 +140,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="5dp"
             android:text="@string/text_addr"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/editTextValueBlockAddr"

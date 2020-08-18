@@ -268,7 +268,7 @@ public class TagInfoTool extends BasicActivity {
             TextView text = new TextView(this);
             int pad = Common.dpToPx(5);
             text.setPadding(pad, pad, 0, 0);
-            text.setTextAppearance(this, android.R.style.TextAppearance_Large);
+            text.setTextAppearance(this, android.R.style.TextAppearance_Medium);
             text.setText(getString(R.string.text_no_tag));
             mLayout.removeAllViews();
             mLayout.addView(text);

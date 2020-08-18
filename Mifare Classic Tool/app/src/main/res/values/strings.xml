@@ -48,6 +48,7 @@
     <string name="title_activity_clone_uid">Clone UID to Magic Tag (2nd gen)</string>
     <string name="title_activity_import_export_tool">Import/Export Tool</string>
     <string name="title_activity_uid_log_tool">UID Log</string>
+    <string name="title_activity_data_conversion_tool">Data Conversion Tool</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Choose some key file(s):</string>
@@ -126,9 +127,9 @@
     <string name="text_block_size">Block Size</string>
     <string name="text_sector_count">Number of Sectors</string>
     <string name="text_block_count">Number of Blocks</string>
-    <string name="text_vb">VB:</string>
-    <string name="text_vb_as_int">VB as Int:</string>
-    <string name="text_addr">Addr:</string>
+    <string name="text_vb">VB</string>
+    <string name="text_vb_as_int">VB as Int</string>
+    <string name="text_addr">Addr</string>
     <string name="text_copy">Copy</string>
     <string name="text_paste">Paste</string>
     <string name="text_share_subject_dump">MCT Dump</string>
@@ -136,7 +137,7 @@
     <string name="text_option_info">Info to option</string>
     <string name="text_static_ac_default">08778F</string>
     <string name="text_no_key_io_error">No keys found (or dead sector)</string>
-    <string name="text_ac_label">ACs:</string>
+    <string name="text_ac_label">ACs</string>
     <string name="text_block_0">Block 0 (0-4):</string>
     <string name="text_block_1">Block 1 (5-9):</string>
     <string name="text_block_2">Block 2 (10-14):</string>
@@ -145,8 +146,8 @@
         Choose ACs for Sector Trailer</string>
     <string name="text_step_2_data_blocks">Step 2:
         Choose ACs for Data Blocks</string>
-    <string name="text_dump_1">Dump 1 (A):</string>
-    <string name="text_dump_2">Dump 2 (B):</string>
+    <string name="text_dump_1">Dump 1 (A)</string>
+    <string name="text_dump_2">Dump 2 (B)</string>
     <string name="text_a">A:</string>
     <string name="text_b">B:</string>
     <string name="text_dump_from_editor">Dump from Editor</string>
@@ -157,8 +158,8 @@
     <string name="text_identical_data">-----------Identical------------</string>
     <string name="text_only_in_dump1">Sector occurs only in dump 1 (A)</string>
     <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
-    <string name="text_uid_part">UID (part):</string>
-    <string name="text_bcc">BCC:</string>
+    <string name="text_uid_part">UID (part)</string>
+    <string name="text_bcc">BCC</string>
     <string name="text_clone_uid_info">This tool can clone the UID of a tag to a
         \"magic tag\" (2nd gen, Android compatible, direct write,
         block 0 writable). Hit the info button to get more information.</string>
@@ -181,9 +182,9 @@
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
-    <string name="text_export_convert_dest_info">&#8226; Exported/converted files are always
+    <string name="text_export_convert_dest_info">Exported/converted files are always
         stored in \"MifareClassicTool/export\" on the external storage (e.g. the SD
-        card).\n&#8226; If a file with the same name already exist upon import, it will be overwritten.</string>
+        card). If a file with the same name already exist upon import, it will be overwritten.</string>
     <string name="text_random_uid">Random UID</string>
     <string name="text_no_uid_logs">The UID log is empty</string>
 
@@ -259,6 +260,7 @@
     <string name="action_show_clone_uid">Clone UID</string>
     <string name="action_show_import_export_tool">Import/Export/Convert Dumps</string>
     <string name="action_show_uid_log_tool">UID Log</string>
+    <string name="action_show_data_conversion_tool">Convert Data</string>
     <string name="action_compare_dump">Compare Dump</string>
     <string name="action_create_new_file">Create New File</string>
     <string name="action_delete_file">Delete File</string>

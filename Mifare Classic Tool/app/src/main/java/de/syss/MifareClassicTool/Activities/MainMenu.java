@@ -964,6 +964,10 @@ public class MainMenu extends Activity {
             intent = new Intent(this, UidLogTool.class);
             startActivity(intent);
             return true;
+        case R.id.menuMainDataConversionTool:
+            intent = new Intent(this, DataConversionTool.class);
+            startActivity(intent);
+            return true;
         default:
             return super.onContextItemSelected(item);
         }
