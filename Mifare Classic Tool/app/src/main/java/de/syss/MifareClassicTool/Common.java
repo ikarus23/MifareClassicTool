@@ -1330,8 +1330,8 @@ public class Common extends Application {
      * Check if a (hex) string is pure hex (0-9, A-F, a-f).
      * If not show an error Toast in the context.
      * @param hex The string to check.
-     * @param context The Context in which the Toast will be shown.
-     * @return True if sting is hex. False otherwise.
+     * @param context The Context in which an error Toast will be shown.
+     * @return True if string is hex. False otherwise.
      */
     public static boolean isHex(String hex, Context context) {
         if (!(hex != null && hex.length() % 2 == 0

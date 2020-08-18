@@ -28,14 +28,19 @@ import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
 // TODO (optional): Add more conversion formats like short/int/long/etc.
-// TODO: doc.
+/**
+ * Convert data from formats like ASCII/hex/bin to each other.
+ * @author Gerhard Klostermeier
+ */
 public class DataConversionTool extends BasicActivity {
 
     EditText mAscii;
     EditText mHex;
     EditText mBin;
 
-    // TODO: doc.
+    /**
+     * Initialize the some member variables.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +50,13 @@ public class DataConversionTool extends BasicActivity {
         mBin = findViewById(R.id.editTextDataConversionToolBin);
     }
 
-    // TODO: doc.
+    /**
+     * Convert the data from the source input (determined by the view /
+     * the button) to a hex string and call {@link #convertData(String)}.
+     * @param view The View object that triggered the method
+     * (in this case any of the convert button).
+     * @see #convertData(String)
+     */
     public void onConvert(View view) {
         int id = view.getId();
         switch (id) {
@@ -68,7 +79,11 @@ public class DataConversionTool extends BasicActivity {
         }
     }
 
-    // TODO: doc.
+    /**
+     * Convert the data from a hex string to different output
+     * formats and update the corresponding UI object.
+     * @param hex The hex string to be converted into different formats.
+     */
     private void convertData(String hex) {
         if (hex != null && hex.equals("")) {
             Toast.makeText(this, R.string.info_convert_error,
@@ -88,7 +103,12 @@ public class DataConversionTool extends BasicActivity {
         mBin.setText(Common.hex2Bin(hex));
     }
 
-    // TODO: doc.
+    /**
+     * Check if a string represents binary bytes (0/1, multiple of 8).
+     * @param bin The binary string to check.
+     * @param context The Context in which an error Toast will be shown.
+     * @return True if string is binary. False otherwise.
+     */
     private boolean isBin(String bin, Context context) {
         if (bin != null && bin.length() % 8 == 0
                 && bin.matches("[0-1]+")) {
