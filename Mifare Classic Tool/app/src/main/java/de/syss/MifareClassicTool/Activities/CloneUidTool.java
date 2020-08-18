@@ -52,9 +52,10 @@ public class CloneUidTool extends BasicActivity {
     private TextView mStatusLogContent;
 
     private String mBlock0Complete = "";
-    // Taken from sample card, in most cases it will not matter because bad
+    // Taken from original MIFARE Classic EV1 tag.
+    // In most cases it will not matter because bad
     // access control systems only check for the UID.
-    private String mBlock0Rest = "08040001A2EC736FC3351D";
+    private String mBlock0Rest = "1D80184200040111001810";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
     private String mBlock0Key = "FFFFFFFFFFFF";
     private enum Status { INIT, BLOCK0_CALCULATED, CLONED }
