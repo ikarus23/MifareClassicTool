@@ -4,6 +4,7 @@ In development:
  * Added import/export tool for different file formats.
  * Added UID log tool.
  * Added tool for converting data formats (ASCII/hex/bin).
+ * The clone UID tool now supports 7 or 10 bytes long UIDs.
  * Added random UID generator for clone UID tool.
  * Added more well known keys to the extended key file.
    (Remove the old and restart MCT to get the new key file.)
@@ -12,6 +13,7 @@ In development:
  * Updated the list of compatible and incompatible devices.
  * Bugfix: Share dumps/keys when using internal storage.
  * Bugfix: Auto reconnect option for key mapping should now work.
+ * Bugfix: Use MCT with External NFC on device with no MFC support.
  * Some minor bug fixes.
 
 Version 2.3.1:
