@@ -44,6 +44,7 @@ import de.syss.MifareClassicTool.R;
 public class CloneUidTool extends BasicActivity {
 
     private EditText mUid;
+    private int mUidLen;
     private EditText mEditTextBlock0Rest;
     private EditText mEditTextBlock0Key;
     private CheckBox mShowOptions;
@@ -51,9 +52,10 @@ public class CloneUidTool extends BasicActivity {
     private TextView mStatusLogContent;
 
     private String mBlock0Complete = "";
-    // Taken from sample card, in most cases it will not matter because bad
+    // Taken from original MIFARE Classic EV1 tag.
+    // In most cases it will not matter because bad
     // access control systems only check for the UID.
-    private String mBlock0Rest = "08040001A2EC736FC3351D";
+    private String mBlock0Rest = "1D80184200040111001810";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
     private String mBlock0Key = "FFFFFFFFFFFF";
     private enum Status { INIT, BLOCK0_CALCULATED, CLONED }
@@ -147,6 +149,7 @@ public class CloneUidTool extends BasicActivity {
      */
     public void onCalculateBlock0(View view) {
         String uid = mUid.getText().toString();
+        mUidLen = uid.length();
         mBlock0Rest = mEditTextBlock0Rest
                 .getText().toString();
         mBlock0Key = mEditTextBlock0Key
@@ -170,24 +173,31 @@ public class CloneUidTool extends BasicActivity {
         }
 
         // Check the UID length.
-        if (uid.length() != 8) {
-            // Error: no 4 bytes UID. 7 and 10 bytes UID not supported (yet).
+        if (mUidLen != 8 && mUidLen != 14 && mUidLen != 20) {
+            // Error. No 4, 7 or 10 bytes UID.
             Toast.makeText(this, R.string.info_invalid_uid_length,
                     Toast.LENGTH_LONG).show();
             return;
         }
+        mUidLen = mUidLen / 2; // Change from char length to byte length.
 
         // Check rest of block 0..
-        if (mBlock0Rest.length() != 22) {
+        int block0RestLen = (mUidLen == 4) ? 22 : 32 - mUidLen * 2;
+        if (mBlock0Rest.length() < block0RestLen) {
             Toast.makeText(this,
                     R.string.info_rest_of_block_0_length,
                     Toast.LENGTH_LONG).show();
             return;
         }
 
-        // Calculate BCC and cuonstruct full block 0.
-        byte bcc = Common.calcBCC(Common.hex2ByteArray(uid));
-        mBlock0Complete = uid + String.format("%02X", bcc) + mBlock0Rest;
+        // Calculate BCC for 4-byte UIDs and construct full block 0.
+        if (mUidLen == 4) {
+            byte bcc = Common.calcBCC(Common.hex2ByteArray(uid));
+            mBlock0Complete = uid + String.format("%02X", bcc) + mBlock0Rest;
+        } else {
+            mBlock0Complete = uid + mBlock0Rest.substring(
+                    mBlock0Rest.length() - block0RestLen);
+        }
         mStatus = Status.BLOCK0_CALCULATED;
         appendToLog(getString(R.string.text_block_0_calculated)
                 + " (" + mBlock0Complete + ")");
@@ -215,10 +225,9 @@ public class CloneUidTool extends BasicActivity {
 
         // Check UID length of magic card gen2.
         byte[] uid = Common.getUID();
-        if (uid.length != 4) {
-            // Error: no 4 bytes UID. 7 and 10 bytes UID not supported (yet).
-            Toast.makeText(this, R.string.info_invalid_uid_length,
-                    Toast.LENGTH_LONG).show();
+        if (uid.length != mUidLen) {
+            // Error. UID length does not match the source.
+            appendToLog(getString(R.string.text_uid_length_error));
             return;
         }
 
@@ -230,8 +239,7 @@ public class CloneUidTool extends BasicActivity {
         // Error handling.
         switch (result) {
             case 4:
-                Toast.makeText(this, R.string.info_incorrect_key,
-                        Toast.LENGTH_LONG).show();
+                appendToLog(getString(R.string.info_incorrect_key));
                 return;
             case -1:
                 Toast.makeText(this, R.string.info_write_error,
@@ -340,7 +348,7 @@ public class CloneUidTool extends BasicActivity {
     }
 
     /**
-     * Generate a random UID to be written to the tag.
+     * Generate a random 4 byte UID to be written to the tag.
      * UID 00000000 will be ignored because it my cause errors
      * on some readers.
      * @param view The View object that triggered the method
