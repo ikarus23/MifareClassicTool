@@ -85,7 +85,7 @@ public class DataConversionTool extends BasicActivity {
      * @param hex The hex string to be converted into different formats.
      */
     private void convertData(String hex) {
-        if (hex != null && hex.equals("")) {
+        if (hex == null || hex.equals("")) {
             Toast.makeText(this, R.string.info_convert_error,
                     Toast.LENGTH_SHORT).show();
             return;
