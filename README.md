@@ -80,8 +80,9 @@ Some important things are:
   fully correct clones. However, some special tags require a
   **special command sequence** to put them into the state where
   writing to the manufacturer block is possible (often called "gen1"
-  tags). These tags will not work.  
-  Remember this when you are shopping for special tags!  
+  tags).  
+  These tags will not work. Remember this when you are shopping for special
+  tags!  
   Also, make sure the the BCC value is correct before writing. The BCC
   is the first byte after a 4 byte long UID. It is calculated by
   XOR-ing all bytes of the UID.
