@@ -144,7 +144,7 @@ public class ReadTag extends Activity {
                         tmpDump.add("*No keys found or dead sector");
                     }
                 }
-                String[] dump = tmpDump.toArray(new String[tmpDump.size()]);
+                String[] dump = tmpDump.toArray(new String[0]);
 
                 // Show Dump Editor Activity.
                 Intent intent = new Intent(this, DumpEditor.class);

@@ -18,17 +18,15 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -39,8 +37,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.syss.MifareClassicTool.Common;
@@ -254,6 +250,7 @@ public class FileChooser extends BasicActivity {
      * @param path Path to the directory which will be listed.
      * @return True if directory is empty. False otherwise.
      */
+    @SuppressLint("SetTextI18n")
     private boolean updateFileIndex(File path) {
         boolean isEmpty;
         File[] files = path.listFiles();

@@ -104,6 +104,7 @@ public class MainMenu extends Activity {
      * notice and a donate message will be displayed.
      * @see #copyStdKeysFilesIfNecessary()
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -147,6 +148,7 @@ public class KeyMapCreator extends BasicActivity {
      * @see #EXTRA_SECTOR_CHOOSER_FROM
      * @see #EXTRA_SECTOR_CHOOSER_TO
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -395,7 +397,7 @@ public class KeyMapCreator extends BasicActivity {
                 }
 
                 // Set key files.
-                File[] keys = keyFiles.toArray(new File[keyFiles.size()]);
+                File[] keys = keyFiles.toArray(new File[0]);
                 if (!reader.setKeyFile(keys, this)) {
                     // Error.
                     reader.close();
@@ -524,6 +526,7 @@ public class KeyMapCreator extends BasicActivity {
      * @param view The View object that triggered the method
      * (in this case the change button).
      */
+    @SuppressLint("SetTextI18n")
     public void onChangeSectorRange(View view) {
         // Build dialog elements.
         LinearLayout ll = new LinearLayout(this);

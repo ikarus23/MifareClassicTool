@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -65,7 +66,7 @@ public class ImportExportTool extends BasicActivity {
 
         private final String text;
 
-        private FileType(final String text) {
+        FileType(final String text) {
             this.text = text;
         }
 
@@ -297,6 +298,7 @@ public class ImportExportTool extends BasicActivity {
      * @return The converted data.
      * @see FileType
      */
+    @SuppressLint("DefaultLocale")
     private String[] convert(String[] source, FileType srcType,
                              FileType destType) {
         // Convert source to json.
@@ -409,7 +411,7 @@ public class ImportExportTool extends BasicActivity {
         String[] dest = null;
         switch (destType) {
             case JSON:
-                dest = json.toArray(new String[json.size()]);
+                dest = json.toArray(new String[0]);
                 break;
             case MCT:
                 // Find highest block number to guess the MIFARE Classic tag size.

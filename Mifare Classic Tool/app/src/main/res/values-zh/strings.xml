@@ -10,7 +10,6 @@
     <string name="action_choose_file">选定选择的文件</string>
     <string name="action_chose_dump">选定一个转储…</string>
     <string name="action_compare_dump">比较转储</string>
-    <string name="action_continue">继续</string>
     <string name="action_create_key_map">映射密钥到扇区</string>
     <string name="action_create_key_map_and_factory_format">启动映射并格式化标签</string>
     <string name="action_create_key_map_and_read">启动映射并读取标签</string>
@@ -126,7 +125,7 @@
     <string name="dialog_save_keys_title">保存密钥文件</string>
     <string name="dialog_sector_trailer_warning_title">写入扇区尾部</string><string name="dialog_sector_trailer_warning">关于写入扇区尾部。
 写错误数据可能导致无法弥补的标签损坏。</string>
-    <string name="dialog_share_title">发送转储文件到...</string>
+    <string name="dialog_share_title">发送转储文件到…</string>
     <string name="dialog_static_ac_title">使用静态访问条件</string>
     <string name="dialog_tools_menu_title">可用工具</string>
     <string name="dialog_wait_write_tag">写标签…\n
@@ -258,8 +257,6 @@
     <string name="text_step_2_data_blocks">步骤2: 选定数据块访问条件</string>
     <string name="text_step_1_sector_trailer">步骤1: 选定扇区尾部访问条件</string>
     <string name="text_starting_at_0">(从0开始)</string>
-    <string name="text_share_subject_key_file">MCT 密钥文件</string>
-    <string name="text_share_subject_dump">MCT 转储</string>
     <string name="text_block">块</string>
     <string name="text_ac_error">错误: 这个配置是未知的</string>
     <string name="info_valid_dump_double_sector">错误：多次相同的扇区数</string>

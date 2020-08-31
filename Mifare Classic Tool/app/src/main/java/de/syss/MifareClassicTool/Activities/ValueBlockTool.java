@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -58,6 +59,7 @@ public class ValueBlockTool extends BasicActivity {
      * @param view The View object that triggered the method
      * (in this case the decode button).
      */
+    @SuppressLint("SetTextI18n")
     public void onDecode(View view) {
         String data = mVB.getText().toString();
         if (!Common.isHexAnd16Byte(data, this)) {
@@ -84,6 +86,7 @@ public class ValueBlockTool extends BasicActivity {
      * @param view The View object that triggered the method
      * (in this case the encode button).
      */
+    @SuppressLint("SetTextI18n")
     public void onEncode(View view) {
         String vbText = mVBasInt.getText().toString();
         String addrText = mAddr.getText().toString();

@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
@@ -58,7 +59,7 @@ public class Preferences extends BasicActivity {
 
         private final String text;
 
-        private Preference(final String text) {
+        Preference(final String text) {
             this.text = text;
         }
 
@@ -85,6 +86,7 @@ public class Preferences extends BasicActivity {
     /**
      * Initialize the preferences with the last stored ones.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +150,7 @@ public class Preferences extends BasicActivity {
      * Detect the current "Autostart if card is detected" state and set
      * the checkbox accordingly.
      */
+    @SuppressLint("SwitchIntDef")
     private void detectAutostartIfCardDetectedState() {
         int enabledSetting = mPackageManager.getComponentEnabledSetting(
                 mComponentName);

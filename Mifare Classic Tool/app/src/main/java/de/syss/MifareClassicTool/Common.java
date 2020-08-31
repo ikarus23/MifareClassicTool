@@ -445,7 +445,7 @@ public class Common extends Application {
             ret = null;
         }
         if (linesArray.size() > 0) {
-            ret = linesArray.toArray(new String[linesArray.size()]);
+            ret = linesArray.toArray(new String[0]);
         } else {
             ret = new String[]{""};
         }
@@ -1220,7 +1220,7 @@ public class Common extends Application {
      * dimension is the block number (Index 0-3). If the ACs are incorrect
      * null will be returned.
      */
-    public static byte[][] acBytesToACMatrix(byte acBytes[]) {
+    public static byte[][] acBytesToACMatrix(byte[] acBytes) {
         // ACs correct?
         // C1 (Byte 7, 4-7) == ~C1 (Byte 6, 0-3) and
         // C2 (Byte 8, 0-3) == ~C2 (Byte 6, 4-7) and
@@ -1258,7 +1258,7 @@ public class Common extends Application {
      * dimension is the block number (Index 0-3).
      * @return The Access Condition bytes (3 byte).
      */
-    public static byte[] acMatrixToACBytes(byte acMatrix[][]) {
+    public static byte[] acMatrixToACBytes(byte[][] acMatrix) {
         if (acMatrix != null && acMatrix.length == 3) {
             for (int i = 0; i < 3; i++) {
                 if (acMatrix[i].length != 4)
@@ -1619,8 +1619,8 @@ public class Common extends Application {
         }
         char[] chars = ascii.toCharArray();
         StringBuilder hex = new StringBuilder();
-        for (int i = 0; i < chars.length; i++) {
-            hex.append(String.format("%02X", (int)chars[i]));
+        for (char aChar : chars) {
+            hex.append(String.format("%02X", (int) aChar));
         }
         return hex.toString();
     }

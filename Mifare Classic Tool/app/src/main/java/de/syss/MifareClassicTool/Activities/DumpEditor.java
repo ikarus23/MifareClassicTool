@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -507,7 +508,7 @@ public class DumpEditor extends BasicActivity
             }
         }
         // Update mLines.
-        mLines = checkedLines.toArray(new String[checkedLines.size()]);
+        mLines = checkedLines.toArray(new String[0]);
         return 0;
     }
 
@@ -519,6 +520,7 @@ public class DumpEditor extends BasicActivity
      * @see Common#isValidDump(String[], boolean)
      * @see Common#isValidDumpErrorToast(int, Context)
      */
+    @SuppressLint("SetTextI18n")
     private void initEditor(String[] lines) {
         int err = Common.isValidDump(lines, true);
         if (err != 0) {
@@ -639,7 +641,7 @@ public class DumpEditor extends BasicActivity
                 tmpDump.add(mLines[i]);
             }
         }
-        String[] dump = tmpDump.toArray(new String[tmpDump.size()]);
+        String[] dump = tmpDump.toArray(new String[0]);
 
         Intent intent = new Intent(this, HexToAscii.class);
         intent.putExtra(EXTRA_DUMP, dump);
@@ -678,7 +680,7 @@ public class DumpEditor extends BasicActivity
                 }
             }
         }
-        String[] ac = tmpACs.toArray(new String[tmpACs.size()]);
+        String[] ac = tmpACs.toArray(new String[0]);
 
         Intent intent = new Intent(this, AccessConditionDecoder.class);
         intent.putExtra(AccessConditionDecoder.EXTRA_AC, ac);
@@ -718,7 +720,7 @@ public class DumpEditor extends BasicActivity
         }
 
         if (tmpVBs.size() > 0) {
-            String[] vb = tmpVBs.toArray(new String[tmpVBs.size()]);
+            String[] vb = tmpVBs.toArray(new String[0]);
             Intent intent = new Intent(this, ValueBlocksToInt.class);
             intent.putExtra(ValueBlocksToInt.EXTRA_VB, vb);
             startActivity(intent);
@@ -919,7 +921,7 @@ public class DumpEditor extends BasicActivity
                }
             }
         }
-        String[] keys = tmpKeys.toArray(new String[tmpKeys.size()]);
+        String[] keys = tmpKeys.toArray(new String[0]);
 
         // Set the filename to the UID if there is none.
         if (mKeysName == null) {

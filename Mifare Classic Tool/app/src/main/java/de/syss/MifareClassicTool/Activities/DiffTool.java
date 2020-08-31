@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -125,6 +126,7 @@ public class DiffTool extends BasicActivity {
      * Run diff if there are two dumps and show the result in the GUI.
      * @see MCDiffUtils#diffIndices(SparseArray, SparseArray)
      */
+    @SuppressLint("SetTextI18n")
     private void runDiff() {
         // Check if both dumps are there.
         if (mDump1 != null && mDump2 != null) {

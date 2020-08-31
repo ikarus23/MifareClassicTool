@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textCapCharacters|textMultiLine|textNoSuggestions"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:importantForAutofill="no" />
 
     </ScrollView>
 

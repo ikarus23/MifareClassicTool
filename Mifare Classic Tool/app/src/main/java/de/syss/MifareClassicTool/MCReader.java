@@ -325,7 +325,7 @@ public class MCReader {
             }
             for (int i = firstBlock; i < lastBlock; i++) {
                 try {
-                    byte blockBytes[] = mMFC.readBlock(i);
+                    byte[] blockBytes = mMFC.readBlock(i);
                     // mMFC.readBlock(i) must return 16 bytes or throw an error.
                     // At least this is what the documentation says.
                     // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
@@ -356,13 +356,13 @@ public class MCReader {
                     authenticate(sectorIndex, key, useAsKeyB);
                 }
             }
-            ret = blocks.toArray(new String[blocks.size()]);
+            ret = blocks.toArray(new String[0]);
             int last = ret.length -1;
 
             // Validate if it was possible to read any data.
             boolean noData = true;
-            for (int i = 0; i < ret.length; i++) {
-                if (!ret[i].equals(NO_DATA)) {
+            for (String s : ret) {
+                if (!s.equals(NO_DATA)) {
                     noData = false;
                     break;
                 }

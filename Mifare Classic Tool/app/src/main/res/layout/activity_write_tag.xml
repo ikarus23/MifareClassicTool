@@ -88,7 +88,8 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:minEms="3" />
+                    android:minEms="3"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewWriteTagHint1"
@@ -120,7 +121,8 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:minEms="3" />
+                    android:minEms="3"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewWriteTagHint2"
@@ -150,7 +152,8 @@
                     android:layout_below="@id/editTextWriteTagBlock"
                     android:hint="@string/hint_hex_16_byte"
                     android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="32" />
+                    android:maxLength="32"
+                    android:importantForAutofill="no" />
 
                 <Button
                     android:id="@+id/buttonWriteTagBlock"
@@ -249,7 +252,8 @@
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:maxLength="6"
                             android:minEms="3"
-                            android:text="@string/text_static_ac_default" />
+                            android:text="@string/text_static_ac_default"
+                            android:importantForAutofill="no" />
 
                         <ImageButton
                             android:id="@+id/imageButtonWriteTagDumpStaticACInfo"
@@ -406,7 +410,8 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:minEms="3" />
+                    android:minEms="3"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewWriteTagHint3"
@@ -438,7 +443,8 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:minEms="3" />
+                    android:minEms="3"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewWriteTagHint4"
@@ -468,7 +474,8 @@
                     android:layout_below="@id/editTextWriteTagValueBlockBlock"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:minEms="7" />
+                    android:minEms="7"
+                    android:importantForAutofill="no" />
 
 
                 <RadioGroup

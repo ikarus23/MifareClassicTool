@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -115,6 +116,7 @@ public class TagInfoTool extends BasicActivity {
      * If there is no MIFARE Classic support, a warning will be shown.
      * @param tag A Tag from an NFC Intent.
      */
+    @SuppressLint("SetTextI18n")
     private void updateTagInfo(Tag tag) {
 
         if (tag != null) {

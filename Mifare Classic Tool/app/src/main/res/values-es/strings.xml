@@ -121,8 +121,6 @@
     <string name="text_addr">Directorio:</string>
     <string name="text_copy">Copiar</string>
     <string name="text_paste">Pegar</string>
-    <string name="text_share_subject_dump">Dumpeo MCT</string>
-    <string name="text_share_subject_key_file">Archivo de claves MCT</string>
     <string name="text_option_info">Info de opciones</string>
     <string name="text_static_ac_default">08778F</string>
     <string name="text_no_key_io_error">No se encontraron claves

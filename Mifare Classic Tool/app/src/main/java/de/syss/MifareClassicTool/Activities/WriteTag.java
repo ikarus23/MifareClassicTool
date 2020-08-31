@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -671,6 +672,7 @@ public class WriteTag extends BasicActivity {
      * @see #createKeyMapForDump()
      * @see #checkBCC(boolean)
      */
+    @SuppressLint("SetTextI18n")
     private void checkDumpAndShowSectorChooserDialog(final String[] dump) {
         int err = Common.isValidDump(dump, false);
         if (err != 0) {
@@ -693,7 +695,7 @@ public class WriteTag extends BasicActivity {
         Button selectNone = dialogLayout.findViewById(
                 R.id.buttonWriteSectorsSelectNone);
         Integer[] sectors = mDumpWithPos.keySet().toArray(
-                new Integer[mDumpWithPos.size()]);
+                new Integer[0]);
         Arrays.sort(sectors);
         final Context context = this;
         final CheckBox[] sectorBoxes = new CheckBox[mDumpWithPos.size()];
@@ -1181,7 +1183,7 @@ public class WriteTag extends BasicActivity {
                 byte[][] keys = keyMap.get(sector);
                 for (int block : writeOnPos.get(sector).keySet()) {
                     // Select key with write privileges.
-                    byte writeKey[] = null;
+                    byte[] writeKey = null;
                     boolean useAsKeyB = true;
                     int wi = writeOnPos.get(sector).get(block);
                     if (wi == 1 || wi == 4) {

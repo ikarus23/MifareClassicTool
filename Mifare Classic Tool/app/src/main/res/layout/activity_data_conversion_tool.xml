@@ -20,7 +20,6 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
@@ -44,21 +43,24 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
-                android:text="ASCII" />
+                android:text="@string/text_ascii" />
 
             <EditText
                 android:id="@+id/editTextDataConversionToolAscii"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
                 android:typeface="monospace"
-                android:imeOptions="actionDone" />
+                android:importantForAutofill="no" />
 
             <ImageButton
                 android:id="@+id/imageButtonDataConversionToolAscii"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
                 android:onClick="onConvert" />
 
         </LinearLayout>
@@ -77,22 +79,24 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
-                android:text="Hex" />
+                android:text="@string/text_hex" />
 
             <EditText
                 android:id="@+id/editTextDataConversionToolHex"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:typeface="monospace"
                 android:imeOptions="actionDone"
-                android:inputType="textCapCharacters|textNoSuggestions" />
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:importantForAutofill="no" />
 
             <ImageButton
                 android:id="@+id/imageButtonDataConversionToolHex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
                 android:onClick="onConvert"/>
 
         </LinearLayout>
@@ -111,22 +115,24 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
-                android:text="Bin" />
+                android:text="@string/text_bin" />
 
             <EditText
                 android:id="@+id/editTextDataConversionToolBin"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="numberSigned"
                 android:typeface="monospace"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
 
             <ImageButton
                 android:id="@+id/imageButtonDataConversionToolBin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
                 android:onClick="onConvert" />
 
         </LinearLayout>

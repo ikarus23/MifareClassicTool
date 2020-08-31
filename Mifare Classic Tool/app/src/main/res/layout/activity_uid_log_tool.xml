@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:typeface="monospace"
         android:textIsSelectable="true"
-        android:text="TextView" />
+        android:text="@string/text_no_uid_logs" />
 
 </ScrollView>

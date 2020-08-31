@@ -90,7 +90,8 @@
                     android:layout_width="0dip"
                     android:layout_height="0dip"
                     android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:focusableInTouchMode="true"
+                    tools:ignore="UselessLeaf" />
 
                 <EditText
                     android:id="@+id/editTextPreferencesCustomSectorCount"
@@ -101,7 +102,8 @@
                     android:layout_marginLeft="30dp"
                     android:inputType="numberDecimal"
                     android:ems="8"
-                    android:hint="@string/hint_custom_sector_count" />
+                    android:hint="@string/hint_custom_sector_count"
+                    android:importantForAutofill="no" />
 
             </RelativeLayout>
 
@@ -137,7 +139,8 @@
                     android:layout_width="0dip"
                     android:layout_height="0dip"
                     android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:focusableInTouchMode="true"
+                    tools:ignore="UselessLeaf" />
 
                 <EditText
                     android:id="@+id/editTextPreferencesRetryAuthenticationCount"
@@ -148,7 +151,8 @@
                     android:layout_marginLeft="30dp"
                     android:inputType="numberDecimal"
                     android:ems="8"
-                    android:hint="@string/hint_custom_retry_authentication_count" />
+                    android:hint="@string/hint_custom_retry_authentication_count"
+                    android:importantForAutofill="no" />
 
             </RelativeLayout>
 
@@ -240,21 +244,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="Hex" />
+                        android:text="@string/text_hex" />
 
                     <RadioButton
                         android:id="@+id/radioButtonDecBE"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Dec (BE)" />
+                        android:text="@string/text_dec_be" />
 
                     <RadioButton
                         android:id="@+id/radioButtonDecLE"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Dec (LE)" />
+                        android:text="@string/text_dec_le" />
                 </RadioGroup>
 
             </RelativeLayout>

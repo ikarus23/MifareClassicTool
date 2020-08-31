@@ -132,8 +132,6 @@
     <string name="text_addr">Addr</string>
     <string name="text_copy">Copy</string>
     <string name="text_paste">Paste</string>
-    <string name="text_share_subject_dump">MCT Dump</string>
-    <string name="text_share_subject_key_file">MCT Key File</string>
     <string name="text_option_info">Info to option</string>
     <string name="text_static_ac_default">08778F</string>
     <string name="text_no_key_io_error">No keys found (or dead sector)</string>
@@ -179,7 +177,6 @@
     <string name="text_clone_error">Error: Are you sure you have a magic
         tag (2nd gen)?</string>
     <string name="text_uid_length_error">Error: UID length mismatch (4 vs. 7 vs. 10 bytes)</string>
-    <string name="text_select_export_location">Select Export Location</string>
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
@@ -189,6 +186,12 @@
     <string name="text_random_uid">Random UID</string>
     <string name="text_no_uid_logs">The UID log is empty</string>
     <string name="text_not_ascii">Not ASCII</string>
+    <string name="text_convert">Convert</string>
+    <string name="text_ascii">ASCII</string>
+    <string name="text_hex">Hex</string>
+    <string name="text_bin">Bin</string>
+    <string name="text_dec_be">Dec (BE)</string>
+    <string name="text_dec_le">Dec (LE)</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -275,7 +278,6 @@
     <string name="action_do_not_show_again">Do not show this message
         again</string>
     <string name="action_chose_dump">Choose a Dump&#8230;</string>
-    <string name="action_continue">Continue</string>
     <string name="action_dont_save">Don\'t Save</string>
     <string name="action_save_as_default">Save as Default</string>
     <string name="action_save_keys">Save Keys</string>
@@ -284,12 +286,10 @@
     <string name="action_start_external_nfc">Go to \"External NFC\"</string>
     <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
     <string name="action_clone_uid">Calculate block 0 and clone UID</string>
-    <string name="action_clone_uid_advanced">Advanced options</string>
     <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd (Proxmark, libnfc, mfoc)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
-    <string name="action_settings">Settings</string>
     <string name="action_import_dump">Import dump</string>
     <string name="action_export_dump">Export dump</string>
 

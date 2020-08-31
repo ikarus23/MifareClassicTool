@@ -75,7 +75,7 @@ public class MCDiffUtils {
                     diffSector[j] = new Integer[0];
                 } else {
                     diffSector[j] = diffIndices.toArray(
-                            new Integer[diffIndices.size()]);
+                            new Integer[0]);
                 }
             }
             ret.put(sectorNr, diffSector);

@@ -95,7 +95,7 @@ public class KeyEditor extends BasicActivity
             mFileName = keyFile.getName();
             setTitle(getTitle() + " (" + mFileName + ")");
             if (keyFile.exists()) {
-                String keyDump[] = Common.readFileLineByLine(keyFile,
+                String[] keyDump = Common.readFileLineByLine(keyFile,
                         true, this);
                 if (keyDump == null) {
                     // Error. Exit.
@@ -317,7 +317,7 @@ public class KeyEditor extends BasicActivity
                     newLines.add(line);
                 }
             }
-            mLines = newLines.toArray(new String[newLines.size()]);
+            mLines = newLines.toArray(new String[0]);
             setKeyArrayAsText(mLines);
         }
     }

@@ -57,7 +57,8 @@
             android:hint="@string/hint_hex_16_byte"
             android:imeOptions="actionDone"
             android:inputType="textCapCharacters|textNoSuggestions"
-            android:maxLength="32" />
+            android:maxLength="32"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/imageButtonValueBlockToolCopy"
@@ -95,7 +96,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/arrow_down"
             android:onClick="onDecode"
-            android:text="@string/action_decode" />
+            android:text="@string/action_decode"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonValueBlockToolEncode"
@@ -104,7 +106,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/arrow_up"
             android:onClick="onEncode"
-            android:text="@string/action_encode" />
+            android:text="@string/action_encode"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
@@ -131,7 +134,8 @@
             android:layout_weight="1"
             android:hint="@string/hint_int_423"
             android:imeOptions="actionNext"
-            android:inputType="numberSigned" />
+            android:inputType="numberSigned"
+            android:importantForAutofill="no" />
 
         <TextView
             android:id="@+id/textViewValueBlockToolAddr"
@@ -150,7 +154,8 @@
             android:imeOptions="actionDone"
             android:inputType="textCapCharacters|textNoSuggestions"
             android:maxLength="2"
-            android:minEms="2" />
+            android:minEms="2"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
 

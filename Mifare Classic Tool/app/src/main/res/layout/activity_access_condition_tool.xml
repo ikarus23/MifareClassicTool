@@ -59,7 +59,8 @@
             android:inputType="textCapCharacters|textNoSuggestions"
             android:maxEms="6"
             android:maxLength="6"
-            android:minEms="6" />
+            android:minEms="6"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/imageButtonAccessConditionToolCopy"
@@ -97,7 +98,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/arrow_down"
             android:onClick="onDecode"
-            android:text="@string/action_decode" />
+            android:text="@string/action_decode"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonAccessConditionToolEncode"
@@ -106,7 +108,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/arrow_up"
             android:onClick="onEncode"
-            android:text="@string/action_encode" />
+            android:text="@string/action_encode"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 

@@ -31,7 +31,8 @@
         android:layout_width="0dip"
         android:layout_height="0dip"
         android:focusable="true"
-        android:focusableInTouchMode="true" />
+        android:focusableInTouchMode="true"
+        tools:ignore="UselessLeaf" />
 
     <LinearLayout
         android:id="@+id/linearLayoutBccToolUid"
@@ -57,7 +58,8 @@
             android:hint="@string/hint_hex_4_byte"
             android:imeOptions="actionDone"
             android:inputType="textCapCharacters|textNoSuggestions"
-            android:maxLength="8" />
+            android:maxLength="8"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/imageButtonBccToolPaste"
@@ -107,7 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="none"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/imageButtonBccToolCopy"

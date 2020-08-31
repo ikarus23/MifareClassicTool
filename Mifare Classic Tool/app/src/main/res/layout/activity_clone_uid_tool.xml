@@ -30,7 +30,7 @@
     <LinearLayout
         android:id="@+id/linearLayoutCloneUidTool"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
@@ -65,8 +65,7 @@
             android:id="@+id/linearLayoutCloneUidToolToClone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="15dp"
-            android:layout_below="@+id/relativeLayoutCloneUidToolInfo" >
+            android:paddingTop="15dp">
 
             <TextView
                 android:id="@+id/textViewCloneUidToolOriginalUid"
@@ -82,7 +81,8 @@
                 android:layout_width="0dip"
                 android:layout_height="0dip"
                 android:focusable="true"
-                android:focusableInTouchMode="true" />
+                android:focusableInTouchMode="true"
+                tools:ignore="UselessLeaf" />
 
             <EditText
                 android:id="@+id/editTextCloneUidToolOriginalUid"
@@ -93,7 +93,8 @@
                 android:hint="@string/hint_hex_4_7_10_byte"
                 android:imeOptions="actionDone"
                 android:inputType="textCapCharacters|textNoSuggestions"
-                android:maxLength="20" />
+                android:maxLength="20"
+                android:importantForAutofill="no" />
 
             <ImageButton
                 android:id="@+id/imageButtonCloneUidToolPaste"
@@ -117,7 +118,6 @@
             android:id="@+id/checkBoxCloneUidToolOptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayoutCloneUidToolToClone"
             android:onClick="onShowOptions"
             android:text="@string/action_show_options" />
 
@@ -133,7 +133,6 @@
                 android:id="@+id/relativeLayoutCloneUidToolRestOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayoutOptions"
                 android:layout_marginBottom="5dp"
                 android:background="@xml/layout_border"
                 android:padding="5dp">
@@ -157,7 +156,8 @@
                     android:typeface="monospace"
                     android:imeOptions="actionDone"
                     android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="22"/>
+                    android:maxLength="22"
+                    android:importantForAutofill="no" />
 
                 <ImageButton
                     android:id="@+id/imageButtonCloneUidToolBlock0RestInfo"
@@ -175,7 +175,6 @@
                 android:id="@+id/relativeLayoutCloneUidToolKeyOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayoutOptions"
                 android:background="@xml/layout_border"
                 android:padding="5dp"
                 android:layout_marginBottom="5dp" >
@@ -199,7 +198,8 @@
                     android:typeface="monospace"
                     android:imeOptions="actionDone"
                     android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="22" />
+                    android:maxLength="22"
+                    android:importantForAutofill="no" />
 
                 <RadioGroup
                     android:id="@+id/radioGroupCloneUidToolKeys"
@@ -242,7 +242,6 @@
             android:id="@+id/buttonCloneUidToolCalculate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayoutCloneUidToolKeyOption"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:onClick="onCalculateBlock0"
