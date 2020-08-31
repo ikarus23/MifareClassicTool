@@ -100,10 +100,10 @@
                     android:layout_below="@id/checkBoxPreferencesUseCustomSectorCount"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="30dp"
-                    android:inputType="numberDecimal"
                     android:ems="8"
                     android:hint="@string/hint_custom_sector_count"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
 
             </RelativeLayout>
 
@@ -149,10 +149,10 @@
                     android:layout_below="@id/checkBoxPreferencesUseRetryAuthentication"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="30dp"
-                    android:inputType="numberDecimal"
                     android:ems="8"
                     android:hint="@string/hint_custom_retry_authentication_count"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
 
             </RelativeLayout>
 
