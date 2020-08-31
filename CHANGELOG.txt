@@ -1,6 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
+ * TBA
+
+Version 3.0.0:
  * Added import/export tool for different file formats.
  * Added UID log tool.
  * Added tool for converting data formats (ASCII/hex/bin).
