@@ -1,7 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
- * TBA
+ * Added clarification that importing .dump files is
+   also supported.
+ * Some minor bug fixes.
 
 Version 3.0.0:
  * Added import/export tool for different file formats.
