@@ -1354,7 +1354,7 @@ public class Common extends Application {
      */
     public static boolean isValueBlock(String hexString) {
         byte[] b = Common.hex2ByteArray(hexString);
-        if (b.length == 16) {
+        if (b != null && b.length == 16) {
             // Google some NXP info PDFs about MIFARE Classic to see how
             // Value Blocks are formatted.
             // For better reading (~ = invert operator):
