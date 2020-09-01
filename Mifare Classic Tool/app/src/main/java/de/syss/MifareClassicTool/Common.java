@@ -1009,7 +1009,9 @@ public class Common extends Application {
         try {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             return true;
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (Exception e) {
+            // Should only throw PackageManager.NameNotFoundException, but
+            // might throw TransactionTooLargeException in some cases...
             return false;
         }
     }
