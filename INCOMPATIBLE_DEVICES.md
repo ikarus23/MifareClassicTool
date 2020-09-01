@@ -12,6 +12,7 @@ This list may be incomplete. You might also want to have a look at
 
 * Asus Zenfone 2
 * Blackberry Priv
+* Blackview BV5500 Pro/Plus
 * Blackview BV8000 Pro
 * Doogee S60
 * Foxcon InFocus M320
