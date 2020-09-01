@@ -8,8 +8,8 @@ android {
         applicationId "de.syss.MifareClassicTool"
         minSdkVersion 14
         targetSdkVersion 30
-        versionCode 50
-        versionName '3.0.0'
+        versionCode 51
+        versionName '3.0.1'
     }
 
     buildTypes {
