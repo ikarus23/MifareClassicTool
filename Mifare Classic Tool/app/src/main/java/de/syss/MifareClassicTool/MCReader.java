@@ -948,7 +948,7 @@ public class MCReader {
                     // Key B.
                     ret = mMFC.authenticateSectorWithKeyB(sectorIndex, key);
                 }
-            } catch (IOException e) {
+            } catch (IOException | ArrayIndexOutOfBoundsException e) {
                 Log.d(LOG_TAG, "Error authenticating with tag.");
                 return false;
             }
