@@ -972,6 +972,9 @@ public class MCReader {
      * @return True if key B is readable. False otherwise.
      */
     private boolean isKeyBReadable(byte[] ac) {
+        if (ac == null) {
+            return false;
+        }
         byte c1 = (byte) ((ac[1] & 0x80) >>> 7);
         byte c2 = (byte) ((ac[2] & 0x08) >>> 3);
         byte c3 = (byte) ((ac[2] & 0x80) >>> 7);
