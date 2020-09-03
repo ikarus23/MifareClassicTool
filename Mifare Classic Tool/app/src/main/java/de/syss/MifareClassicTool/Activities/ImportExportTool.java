@@ -129,8 +129,8 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Get the file chooser result (a path) and continue with the import or
-     * export process.
+     * Get the file chooser result (one or more files) and continue with
+     * the import or export process.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -138,8 +138,21 @@ public class ImportExportTool extends BasicActivity {
         switch (requestCode) {
             case IMPORT_FILE_CHOSEN: // Dump for importing has been selected.
                 if (resultCode == RESULT_OK) {
-                    Uri selectedLocation = data.getData();
-                    onImportFile(selectedLocation);
+                    if(data != null ) {
+                        Uri[] uris;
+                        if(data.getClipData() != null) {
+                            // Multiple files where selected.
+                            uris = new Uri[data.getClipData().getItemCount()];
+                            for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+                                uris[i] = data.getClipData().getItemAt(i).getUri();
+                            }
+                        } else {
+                            uris = new Uri[1];
+                            uris[0] = data.getData();
+                        }
+                        onImportFile(uris);
+                    }
+
                     break;
                 }
             case EXPORT_FILE_CHOSEN: // Dump for exporting has been selected.
@@ -188,61 +201,63 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Import the file by reading, converting and saving it.
+     * Import the file(s) by reading, converting and saving them.
      * The conversion is made by {@link #convert(String[], FileType, FileType)}.
-     * @param file The file to read from.
+     * @param files The file to read from.
      */
-    private void onImportFile(Uri file) {
-        String[] content = null;
-        try {
-            if (mFileType != FileType.BIN) {
-                content = Common.readUriLineByLine(file, this);
-            } else {
-                byte[] bytes = Common.readUriRaw(file, this);
-                content = new String[1];
-                // Convert to string, since convert() works only on strings.
-                StringBuilder sb = new StringBuilder();
-                for (byte b : bytes) {
-                    sb.append((char) b);
+    private void onImportFile(Uri[] files) {
+        String[] content;
+        for (Uri file : files) {
+            try {
+                if (mFileType != FileType.BIN) {
+                    content = Common.readUriLineByLine(file, this);
+                } else {
+                    byte[] bytes = Common.readUriRaw(file, this);
+                    content = new String[1];
+                    // Convert to string, since convert() works only on strings.
+                    StringBuilder sb = new StringBuilder();
+                    for (byte b : bytes) {
+                        sb.append((char) b);
+                    }
+                    content[0] = sb.toString();
                 }
-                content[0] = sb.toString();
-            }
 
-            if (content == null) {
-                Toast.makeText(this, R.string.info_error_reading_file,
-                        Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            // Keys or dump?
-            if (mIsDumpFile) {
-                // Convert.
-                String[] convertedContent = convert(
-                        content, mFileType, FileType.MCT);
-                if (convertedContent == null) {
-                    return;
-                }
-                // Remove file extension and replace it with ".mct".
-                String fileName = Common.getFileName(file, this);
-                if (fileName.contains(".")) {
-                    fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-                }
-                String destFileName = fileName + FileType.MCT.toString();
-                // Save converted file.
-                String destPath = Common.HOME_DIR + "/" + Common.DUMPS_DIR;
-                File destination = Common.getFileFromStorage(
-                        destPath + "/" + destFileName, true);
-                if (Common.saveFile(destination, convertedContent, false)) {
-                    Toast.makeText(this, R.string.info_file_imported,
+                if (content == null) {
+                    Toast.makeText(this, R.string.info_error_reading_file,
                             Toast.LENGTH_LONG).show();
+                    continue;
                 }
-            } else {
-                // TODO (optional): Support importing key files.
+
+                // Keys or dump?
+                if (mIsDumpFile) {
+                    // Convert.
+                    String[] convertedContent = convert(
+                            content, mFileType, FileType.MCT);
+                    if (convertedContent == null) {
+                        continue;
+                    }
+                    // Remove file extension and replace it with ".mct".
+                    String fileName = Common.getFileName(file, this);
+                    if (fileName.contains(".")) {
+                        fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+                    }
+                    String destFileName = fileName + FileType.MCT.toString();
+                    // Save converted file.
+                    String destPath = Common.HOME_DIR + "/" + Common.DUMPS_DIR;
+                    File destination = Common.getFileFromStorage(
+                            destPath + "/" + destFileName, true);
+                    if (Common.saveFile(destination, convertedContent, false)) {
+                        Toast.makeText(this, R.string.info_file_imported,
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    // TODO (optional): Support importing key files.
+                }
+            } catch (OutOfMemoryError e) {
+                Toast.makeText(this, R.string.info_file_to_big,
+                        Toast.LENGTH_LONG).show();
+                continue;
             }
-        } catch (OutOfMemoryError e) {
-            Toast.makeText(this, R.string.info_file_to_big,
-                    Toast.LENGTH_LONG).show();
-            return;
         }
     }
 
@@ -533,6 +548,7 @@ public class ImportExportTool extends BasicActivity {
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         String title = getString(R.string.text_select_file);
         startActivityForResult(Intent.createChooser(intent, title), IMPORT_FILE_CHOSEN);
     }
