@@ -1,7 +1,7 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
- *
+ * Importing multiple files is now possible.
 
 Version 3.0.2:
  * Quick fix for Android 11 compatibility.
