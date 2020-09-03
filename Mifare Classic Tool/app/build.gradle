@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
-        minSdkVersion 14
-        targetSdkVersion 29
+        minSdkVersion 18
+        targetSdkVersion 30
         versionCode 52
         versionName '3.0.2'
     }
