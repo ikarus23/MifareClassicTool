@@ -870,6 +870,7 @@ public class MainMenu extends Activity {
                 getString(R.string.text_open_key_file_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_open_key_file));
+        intent.putExtra(FileChooser.EXTRA_ALLOW_NEW_FILE, true);
         startActivityForResult(intent, FILE_CHOOSER_KEY_FILE);
     }
 
