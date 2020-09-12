@@ -49,7 +49,7 @@ public class HexToAscii extends BasicActivity {
         if (getIntent().hasExtra(DumpEditor.EXTRA_DUMP)) {
             String[] dump = getIntent().getStringArrayExtra(
                     DumpEditor.EXTRA_DUMP);
-            if (dump.length != 0) {
+            if (dump != null && dump.length != 0) {
                 String s = System.getProperty("line.separator");
                 CharSequence ascii = "";
                 for (String line : dump) {
@@ -63,6 +63,9 @@ public class HexToAscii extends BasicActivity {
                     } else {
                         // Data.
                         String converted = Common.hex2Ascii(line);
+                        if (converted == null) {
+                            converted = getString(R.string.text_invalid_data);
+                        }
                         ascii = TextUtils.concat(ascii, " ", converted, s);
                     }
                 }
