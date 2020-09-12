@@ -1452,6 +1452,44 @@ public class Common extends Application {
     }
 
     /**
+     * Check if the user input is a valid key file.
+     * @param lines Lines of a key file.
+     * @return <ul>
+     * <li>0 - All O.K.</li>
+     * <li>1 - There is no key.</li>
+     * <li>2 - At least one key has invalid characters (not hex).</li>
+     * <li>3 - At least one key has not 6 byte (12 chars).</li>
+     * </ul>
+     */
+    public static int isValidKeyFile(String[] lines) {
+        boolean keyFound = false;
+        for (int i = 0; i < lines.length; i++) {
+            if (!lines[i].startsWith("#") && !lines[i].equals("")
+                    && !lines[i].matches("[0-9A-Fa-f]+")) {
+                // Not pure hex and not a comment.
+                return 2;
+            }
+
+            if (!lines[i].startsWith("#") && !lines[i].equals("")
+                    && lines[i].length() != 12) {
+                // Not 12 chars per line.
+                return 3;
+            }
+
+            if (!lines[i].startsWith("#") && !lines[i].equals("")) {
+                // At least one key found.
+                lines[i] = lines[i].toUpperCase(Locale.getDefault());
+                keyFound = true;
+            }
+        }
+        if (!keyFound) {
+            // No key found.
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
      * Show a Toast message with error information according to
      * {@link #isValidDump(String[], boolean)}.
      * @see #isValidDump(String[], boolean)
@@ -1484,6 +1522,33 @@ public class Common extends Application {
                     Toast.LENGTH_LONG).show();
             break;
         }
+    }
+
+    /**
+     * Show a Toast message with error information according to
+     * {@link #isValidKeyFile(String[]).}
+     * @return True if all keys were O.K. False otherwise.
+     * @see #isValidKeyFile(String[])
+     */
+    public static boolean isValidKeyFileErrorToast(
+            int errorCode, Context context) {
+        switch (errorCode) {
+            case 0:
+                return true;
+            case 1:
+                Toast.makeText(context, R.string.info_valid_keys_no_keys,
+                        Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Toast.makeText(context, R.string.info_valid_keys_not_hex,
+                        Toast.LENGTH_LONG).show();
+                break;
+            case 3:
+                Toast.makeText(context, R.string.info_valid_keys_not_6_byte,
+                        Toast.LENGTH_LONG).show();
+                break;
+        }
+        return false;
     }
 
     /**

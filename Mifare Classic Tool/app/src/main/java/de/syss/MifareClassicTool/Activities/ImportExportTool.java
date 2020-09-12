@@ -60,6 +60,7 @@ public class ImportExportTool extends BasicActivity {
     private FileType mFileType;
     private enum FileType {
         MCT(".mct"),
+        KEYS(".keys"),
         JSON(".json"),
         BIN(".bin"),
         EML(".eml");
@@ -202,13 +203,14 @@ public class ImportExportTool extends BasicActivity {
 
     /**
      * Import the file(s) by reading, converting and saving them.
-     * The conversion is made by {@link #convert(String[], FileType, FileType)}.
+     * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
      * @param files The file to read from.
      */
     private void onImportFile(Uri[] files) {
         String[] content;
         for (Uri file : files) {
             try {
+                // Read file.
                 if (mFileType != FileType.BIN) {
                     content = Common.readUriLineByLine(file, this);
                 } else {
@@ -221,37 +223,44 @@ public class ImportExportTool extends BasicActivity {
                     }
                     content[0] = sb.toString();
                 }
-
                 if (content == null) {
                     Toast.makeText(this, R.string.info_error_reading_file,
                             Toast.LENGTH_LONG).show();
                     continue;
                 }
 
-                // Keys or dump?
+                // Prepare file names and paths.
+                String fileName = Common.getFileName(file, this);
+                if (fileName.contains(".")) {
+                    fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+                }
+                String destFileName = fileName;
+                String destPath = Common.HOME_DIR + "/";
+
+                // Convert key or dump file.
+                String[] convertedContent;
                 if (mIsDumpFile) {
-                    // Convert.
-                    String[] convertedContent = convert(
+                    convertedContent = convertDump(
                             content, mFileType, FileType.MCT);
-                    if (convertedContent == null) {
-                        continue;
-                    }
-                    // Remove file extension and replace it with ".mct".
-                    String fileName = Common.getFileName(file, this);
-                    if (fileName.contains(".")) {
-                        fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-                    }
-                    String destFileName = fileName + FileType.MCT.toString();
-                    // Save converted file.
-                    String destPath = Common.HOME_DIR + "/" + Common.DUMPS_DIR;
-                    File destination = Common.getFileFromStorage(
-                            destPath + "/" + destFileName, true);
-                    if (Common.saveFile(destination, convertedContent, false)) {
-                        Toast.makeText(this, R.string.info_file_imported,
-                                Toast.LENGTH_LONG).show();
-                    }
+                    destFileName += FileType.MCT.toString();
+                    destPath += Common.DUMPS_DIR;
                 } else {
-                    // TODO (optional): Support importing key files.
+                    convertedContent = convertKeys(
+                            content, mFileType, FileType.KEYS);
+                    destFileName += FileType.KEYS.toString();
+                    destPath += Common.KEYS_DIR;
+                }
+                if (convertedContent == null) {
+                    // Error during conversion.
+                    continue;
+                }
+
+                // Save converted file.
+                File destination = Common.getFileFromStorage(
+                        destPath + "/" + destFileName, true);
+                if (Common.saveFile(destination, convertedContent, false)) {
+                    Toast.makeText(this, R.string.info_file_imported,
+                            Toast.LENGTH_LONG).show();
                 }
             } catch (OutOfMemoryError e) {
                 Toast.makeText(this, R.string.info_file_to_big,
@@ -263,7 +272,7 @@ public class ImportExportTool extends BasicActivity {
 
     /**
      * Export the file by reading, converting and saving it.
-     * The conversion is made by {@link #convert(String[], FileType, FileType)}.
+     * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
      * @param path The file to read from.
      */
     private void onExportFile(String path) {
@@ -276,7 +285,7 @@ public class ImportExportTool extends BasicActivity {
         // Key or dump file?
         if (mIsDumpFile) {
             // Convert.
-            String[] convertedContent = convert(
+            String[] convertedContent = convertDump(
                     content, FileType.MCT, mFileType);
             if (convertedContent == null) {
                 return;
@@ -321,8 +330,8 @@ public class ImportExportTool extends BasicActivity {
      * @see FileType
      */
     @SuppressLint("DefaultLocale")
-    private String[] convert(String[] source, FileType srcType,
-                             FileType destType) {
+    private String[] convertDump(String[] source, FileType srcType,
+                                 FileType destType) {
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
         String block = null;
@@ -521,6 +530,33 @@ public class ImportExportTool extends BasicActivity {
                         return null;
                     }
                 }
+        }
+
+        return dest;
+    }
+
+    // TODO: impl. UI (key import/export button & context menu).
+    // TODO: doc + impl.
+    @SuppressLint("DefaultLocale")
+    private String[] convertKeys(String[] source, FileType srcType,
+                                 FileType destType) {
+        switch (srcType) {
+            case KEYS:
+                Common.isValidKeyFile(source);
+                break;
+            case BIN:
+
+                break;
+        }
+
+        String[] dest = null;
+        switch (destType) {
+            case KEYS:
+
+                break;
+            case BIN:
+
+                break;
         }
 
         return dest;
