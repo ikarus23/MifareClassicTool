@@ -308,6 +308,12 @@ public class ImportExportTool extends BasicActivity {
     @SuppressLint("DefaultLocale")
     private String[] convert(String[] source, FileType srcType,
                              FileType destType) {
+        if (source == null || source.length < 1) {
+            Toast.makeText(this, R.string.info_convert_error,
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
         String block = null;
@@ -330,6 +336,11 @@ public class ImportExportTool extends BasicActivity {
                 int sectorNumber = 0;
                 int blockNumber = 0;
                 for (String line : source) {
+                    if (line == null) {
+                        Toast.makeText(this, R.string.info_convert_error,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
                     if (line.startsWith("+")) {
                         sectorNumber = Integer.parseInt(line.split(": ")[1]);
                         if (sectorNumber < 32) {
@@ -405,7 +416,7 @@ public class ImportExportTool extends BasicActivity {
         try {
             JSONObject parsedJson = new JSONObject(TextUtils.join("", json));
             blocks = parsedJson.getJSONObject("blocks");
-            if (blocks.length() < 1) {
+            if (blocks == null || blocks.length() < 1) {
                 throw new JSONException("No blocks in source file");
             }
         } catch (JSONException e) {

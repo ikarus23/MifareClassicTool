@@ -1223,6 +1223,9 @@ public class Common extends Application {
      * null will be returned.
      */
     public static byte[][] acBytesToACMatrix(byte[] acBytes) {
+        if (acBytes == null) {
+            return null;
+        }
         // ACs correct?
         // C1 (Byte 7, 4-7) == ~C1 (Byte 6, 0-3) and
         // C2 (Byte 8, 0-3) == ~C2 (Byte 6, 4-7) and
