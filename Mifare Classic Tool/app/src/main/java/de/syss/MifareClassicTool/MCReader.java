@@ -938,6 +938,9 @@ public class MCReader {
                 Preference.UseRetryAuthentication.toString(), false);
         int retryCount = Common.getPreferences().getInt(
                 Preference.RetryAuthenticationCount.toString(), 1);
+        if (key == null) {
+            return false;
+        }
         boolean ret = false;
         for (int i = 0; i < retryCount+1; i++) {
             try {
