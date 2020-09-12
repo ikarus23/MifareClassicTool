@@ -253,7 +253,11 @@ public class FileChooser extends BasicActivity {
     @SuppressLint("SetTextI18n")
     private boolean updateFileIndex(File path) {
         boolean isEmpty;
-        File[] files = path.listFiles();
+        File[] files = null;
+
+        if (path != null) {
+            files = path.listFiles();
+        }
         mGroupOfFiles.removeAllViews();
 
         // Refresh file list.
