@@ -3,6 +3,10 @@ Changelog of MifareClassicTool (MCT):
 In development:
  *
 
+Version 3.0.3:
+ * Bugfix: Don't soft-brick gen2 tags when using the clone UID tool.
+ * Some minor bug fixes.
+
 Version 3.0.2:
  * Quick fix for Android 11 compatibility.
  * Some minor bug fixes.
