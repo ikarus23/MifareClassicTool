@@ -291,8 +291,11 @@
     <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
-    <string name="action_import_dump">Import dump</string>
-    <string name="action_export_dump">Export dump</string>
+    <string name="action_file_type_bin">.bin (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_import_dump">Import Dump</string>
+    <string name="action_export_dump">Export Dump</string>
+    <string name="action_import_keys">Import Keys</string>
+    <string name="action_export_keys">Export Keys</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

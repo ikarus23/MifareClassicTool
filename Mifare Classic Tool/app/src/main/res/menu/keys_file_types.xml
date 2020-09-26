@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright 2019 Gerhard Klostermeier
+ * Copyright 2020 Gerhard Klostermeier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,8 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuFileTypesJson"
-          android:title="@string/action_file_type_json" />
-    <item android:id="@+id/menuFileTypesBinMfd"
-          android:title="@string/action_file_type_mdf_bin" />
-    <item android:id="@+id/menuFileTypesEml"
-          android:title="@string/action_file_type_eml" />
-    <item android:id="@+id/menuFileTypesMct"
-        android:title="@string/action_file_type_mct" />
+    <item android:id="@+id/menuKeysFileTypesBin"
+        android:title="@string/action_file_type_bin" />
+    <item android:id="@+id/menuKeysFileTypesKeys"
+        android:title="@string/action_file_type_keys" />
 </menu>
