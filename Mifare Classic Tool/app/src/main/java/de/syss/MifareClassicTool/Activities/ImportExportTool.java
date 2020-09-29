@@ -147,7 +147,7 @@ public class ImportExportTool extends BasicActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode) {
-            case IMPORT_FILE_CHOSEN: // Dump for importing has been selected.
+            case IMPORT_FILE_CHOSEN: // File for importing has been selected.
                 if (resultCode == RESULT_OK) {
                     if(data != null ) {
                         Uri[] uris;
@@ -163,10 +163,9 @@ public class ImportExportTool extends BasicActivity {
                         }
                         onImportFile(uris);
                     }
-
                     break;
                 }
-            case EXPORT_FILE_CHOSEN: // Dump for exporting has been selected.
+            case EXPORT_FILE_CHOSEN: // File for exporting has been selected.
                 if (resultCode == RESULT_OK) {
                     mFile = data.getStringExtra(FileChooser.EXTRA_CHOSEN_FILE);
                     if (mIsDumpFile) {
@@ -297,6 +296,7 @@ public class ImportExportTool extends BasicActivity {
                 } else {
                     convertedContent = convertKeys(
                             content, mFileType, FileType.KEYS);
+                    // TODO (optional): Remove duplicates.
                     destFileName += FileType.KEYS.toString();
                     destPath += Common.KEYS_DIR;
                 }
@@ -341,7 +341,7 @@ public class ImportExportTool extends BasicActivity {
         if (fileName.contains(".")) {
             fileName = fileName.substring(0, fileName.lastIndexOf('.'));
         }
-        String destFileName = fileName;
+        String destFileName = fileName + mFileType.toString();
         String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
 
         // Convert key or dump file.
@@ -349,11 +349,10 @@ public class ImportExportTool extends BasicActivity {
         if (mIsDumpFile) {
             convertedContent = convertKeys(
                     content, FileType.MCT, mFileType);
-            destFileName += FileType.MCT.toString();
+
         } else {
             convertedContent = convertKeys(
                     content, FileType.KEYS, mFileType);
-            destFileName += FileType.KEYS.toString();
         }
         if (convertedContent == null) {
             // Error during conversion.
@@ -383,8 +382,8 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Convert {@code source} from {@code srcType} to {@code destType}.
-     * The formats .mct, . .json, .eml and .bin are supported. The
+     * Convert dump {@code source} from {@code srcType} to {@code destType}.
+     * The formats .mct, .json, .eml and .bin are supported. The
      * intermediate is always JSON. If the {@code srcType} or the
      * {@code destType} is {@link FileType#BIN}, the the
      * {@code source}/return value must be a string array with only
@@ -601,7 +600,19 @@ public class ImportExportTool extends BasicActivity {
         return dest;
     }
 
-    // TODO: doc + impl.
+    /**
+     * Convert keys {@code source} from {@code srcType} to {@code destType}.
+     * The formats .keys and .bin are supported. The
+     * intermediate is always a String. If the {@code srcType} or the
+     * {@code destType} is {@link FileType#BIN}, the the
+     * {@code source}/return value must be a string array with only
+     * one string with each char representing one byte (MSB=0).
+     * @param source The data to be converted.
+     * @param srcType The type of the {@code source} data.
+     * @param destType The type for the return value.
+     * @return The converted data.
+     * @see FileType
+     */
     @SuppressLint("DefaultLocale")
     private String[] convertKeys(String[] source, FileType srcType,
                                  FileType destType) {
@@ -609,11 +620,31 @@ public class ImportExportTool extends BasicActivity {
         String[] keys = null;
         switch (srcType) {
             case KEYS:
-                Common.isValidKeyFile(source);
+                int err = Common.isValidKeyFile(source);
+                if (err != 0) {
+                    Common.isValidKeyFileErrorToast(err, this);
+                    return null;
+                }
                 keys = source;
                 break;
             case BIN:
-
+                String binary = source[0];
+                int len = binary.length();
+                if (binary.length() > 0 && binary.length() % 6 != 0) {
+                    // Error. Not multiple of 6 byte.
+                    Toast.makeText(this, R.string.info_invalid_key_file,
+                            Toast.LENGTH_LONG).show();
+                    return null;
+                }
+                keys = new String[binary.length() / 6];
+                // In this case: chars = bytes. Get 6 bytes and convert.
+                for (int i = 0; i < binary.length(); i += 6) {
+                    byte[] keyBytes = new byte[6];
+                    for (int j = 0; j < 6; j++) {
+                        keyBytes[j] = (byte) binary.charAt(i + j);
+                    }
+                    keys[i/6] = Common.byte2Hex(keyBytes);
+                }
                 break;
         }
 
@@ -623,10 +654,17 @@ public class ImportExportTool extends BasicActivity {
                 dest = keys;
                 break;
             case BIN:
-
+                dest = new String[1];
+                StringBuilder sb = new StringBuilder();
+                for (String key : keys) {
+                    byte[] bytes = Common.hex2ByteArray(key);
+                    for (byte b : bytes) {
+                        sb.append((char)b);
+                    }
+                }
+                dest[0] = sb.toString();
                 break;
         }
-
         return dest;
     }
 

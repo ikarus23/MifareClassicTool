@@ -409,6 +409,7 @@
     <string name="info_incomplete_dump">Error: Incomplete or oversized dump</string>
     <string name="info_error_reading_file">Error: Could not read file</string>
     <string name="info_random_uid">Generated random UID</string>
+    <string name="info_invalid_key_file">Error: Not a valid key file</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
