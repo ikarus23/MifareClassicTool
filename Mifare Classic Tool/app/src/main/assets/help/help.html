@@ -55,7 +55,7 @@
         <li><a href="#diff_tool">7.4 Diff Tool (Compare Dumps)</a></li>
         <li><a href="#bcc_tool">7.5 BCC Calculator</a></li>
         <li><a href="#clone_uid_tool">7.6 Clone UID</a></li>
-        <li><a href="#import_export_tool">7.7 Import/Export/Convert Dumps</a></li>
+        <li><a href="#import_export_tool">7.7 Import/Export/Convert Files</a></li>
         <li><a href="#data_conversion_tool">7.8 Convert Data</a></li>
         <li><a href="#uid_log_tool">7.9 UID Log</a></li>
       </ul>
@@ -497,10 +497,12 @@
     to Manufacturer Block&quot; section of the
     <a href="#write_dump">Write Dump (Clone)</a> chapter.
 
-  <h3 id="import_export_tool">7.7 Import/Export/Convert Dumps</h3>
-    This tool can import and export dump files with different file types.
-    Supported are .mct (Mifare Classic Tool), .bin/.mfd/.dump/ (Proxmark, libnfc, mfoc,
-    others), .eml (Proxmark emulator) and .json (Proxmark, Chameleon Mini GUI).
+  <h3 id="import_export_tool">7.7 Import/Export/Convert Files</h3>
+    This tool can import and export dump and key files with different file types.
+    Supported are .mct (Mifare Classic Tool), .keys (Mifare Classic Tool),
+    .bin/.mfd/.dump (Proxmark, libnfc, mfoc, others), .eml (Proxmark emulator) and
+    .json (Proxmark, Chameleon Mini GUI).
+    <br /><br />
     Exported files are always stored to <b>MifareClassicTool/export/</b>
     on the device's external storage. For converting a dump file from e.g.
     .bin to .json, it can be simply imported and then exported again.
