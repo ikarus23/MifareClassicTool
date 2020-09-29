@@ -1,7 +1,7 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
- *
+ * Importing multiple files is now possible.
 
 Version 3.0.3:
  * Bugfix: Don't soft-brick gen2 tags when using the clone UID tool.

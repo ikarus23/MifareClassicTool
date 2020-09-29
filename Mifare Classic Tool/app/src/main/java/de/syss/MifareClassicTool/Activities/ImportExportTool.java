@@ -60,6 +60,7 @@ public class ImportExportTool extends BasicActivity {
     private FileType mFileType;
     private enum FileType {
         MCT(".mct"),
+        KEYS(".keys"),
         JSON(".json"),
         BIN(".bin"),
         EML(".eml");
@@ -84,14 +85,18 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Create the context menu with the supported file types.
+     * Create the context menu with the supported dump/keys file types.
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.file_types, menu);
+        if(v.getId() == R.id.buttonImportExportToolImportDump) {
+            inflater.inflate(R.menu.dump_file_types, menu);
+        } else if(v.getId() == R.id.buttonImportExportToolImportKeys) {
+            inflater.inflate(R.menu.keys_file_types, menu);
+        }
     }
 
     /**
@@ -102,17 +107,23 @@ public class ImportExportTool extends BasicActivity {
     public boolean onContextItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-            case R.id.menuFileTypesMct:
+            case R.id.menuDumpFileTypesMct:
                 mFileType = FileType.MCT;
                 break;
-            case R.id.menuFileTypesJson:
+            case R.id.menuDumpFileTypesJson:
                 mFileType = FileType.JSON;
                 break;
-            case R.id.menuFileTypesBinMfd:
+            case R.id.menuDumpFileTypesBinMfd:
                 mFileType = FileType.BIN;
                 break;
-            case R.id.menuFileTypesEml:
+            case R.id.menuDumpFileTypesEml:
                 mFileType = FileType.EML;
+                break;
+            case R.id.menuKeysFileTypesKeys:
+                mFileType = FileType.KEYS;
+                break;
+            case R.id.menuKeysFileTypesBin:
+                mFileType = FileType.BIN;
                 break;
             default:
                 return super.onContextItemSelected(item);
@@ -129,23 +140,39 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Get the file chooser result (a path) and continue with the import or
-     * export process.
+     * Get the file chooser result (one or more files) and continue with
+     * the import or export process.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode) {
-            case IMPORT_FILE_CHOSEN: // Dump for importing has been selected.
+            case IMPORT_FILE_CHOSEN: // File for importing has been selected.
                 if (resultCode == RESULT_OK) {
-                    Uri selectedLocation = data.getData();
-                    onImportFile(selectedLocation);
+                    if(data != null ) {
+                        Uri[] uris;
+                        if(data.getClipData() != null) {
+                            // Multiple files where selected.
+                            uris = new Uri[data.getClipData().getItemCount()];
+                            for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+                                uris[i] = data.getClipData().getItemAt(i).getUri();
+                            }
+                        } else {
+                            uris = new Uri[1];
+                            uris[0] = data.getData();
+                        }
+                        onImportFile(uris);
+                    }
                     break;
                 }
-            case EXPORT_FILE_CHOSEN: // Dump for exporting has been selected.
+            case EXPORT_FILE_CHOSEN: // File for exporting has been selected.
                 if (resultCode == RESULT_OK) {
                     mFile = data.getStringExtra(FileChooser.EXTRA_CHOSEN_FILE);
-                    showTypeChooserMenu();
+                    if (mIsDumpFile) {
+                        showDumpFileTypeChooserMenu();
+                    } else {
+                        showKeysFileTypeChooserMenu();
+                    }
                     break;
                 }
         }
@@ -153,20 +180,20 @@ public class ImportExportTool extends BasicActivity {
 
     /**
      * Start the dump import process by showing the file type chooser
-     * menu {@link #showTypeChooserMenu()}.
+     * menu {@link #showDumpFileTypeChooserMenu()}.
      * @param view The View object that triggered the function
      *             (in this case the import dump button).
      */
     public void onImportDump(View view) {
         mIsExport = false;
         mIsDumpFile = true;
-        showTypeChooserMenu();
+        showDumpFileTypeChooserMenu();
     }
 
     /**
      * Start the dump export process by showing the dump chooser dialog.
      * @param view The View object that triggered the function
-     *             (in this case the export file button).
+     *             (in this case the export dump button).
      * @see FileChooser
      */
     public void onExportDump(View view) {
@@ -188,113 +215,175 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Import the file by reading, converting and saving it.
-     * The conversion is made by {@link #convert(String[], FileType, FileType)}.
-     * @param file The file to read from.
+     * Start the keys import process by showing the keys file type chooser
+     * menu {@link #showKeysFileTypeChooserMenu()}.
+     * @param view The View object that triggered the function
+     *             (in this case the import keys button).
      */
-    private void onImportFile(Uri file) {
-        String[] content = null;
-        try {
-            if (mFileType != FileType.BIN) {
-                content = Common.readUriLineByLine(file, this);
-            } else {
-                byte[] bytes = Common.readUriRaw(file, this);
-                content = new String[1];
-                // Convert to string, since convert() works only on strings.
-                StringBuilder sb = new StringBuilder();
-                for (byte b : bytes) {
-                    sb.append((char) b);
-                }
-                content[0] = sb.toString();
-            }
+    public void onImportKeys(View view) {
+        mIsExport = false;
+        mIsDumpFile = false;
+        showKeysFileTypeChooserMenu();
+    }
 
-            if (content == null) {
-                Toast.makeText(this, R.string.info_error_reading_file,
-                        Toast.LENGTH_LONG).show();
-                return;
-            }
+    /**
+     * Start the keys export process by showing the keys chooser dialog.
+     * @param view The View object that triggered the function
+     *             (in this case the export keys button).
+     * @see FileChooser
+     */
+    public void onExportKeys(View view) {
+        mIsExport = true;
+        mIsDumpFile = false;
+        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
+                false) && !Common.isExternalStorageWritableErrorToast(this)) {
+            return;
+        }
+        Intent intent = new Intent(this, FileChooser.class);
+        intent.putExtra(FileChooser.EXTRA_DIR,
+                Common.getFileFromStorage(Common.HOME_DIR + "/" +
+                        Common.KEYS_DIR).getAbsolutePath());
+        intent.putExtra(FileChooser.EXTRA_TITLE,
+                getString(R.string.text_choose_key_file));
+        intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
+                getString(R.string.action_export_keys));
+        startActivityForResult(intent, EXPORT_FILE_CHOSEN);
+    }
 
-            // Keys or dump?
-            if (mIsDumpFile) {
-                // Convert.
-                String[] convertedContent = convert(
-                        content, mFileType, FileType.MCT);
-                if (convertedContent == null) {
-                    return;
+    /**
+     * Import the file(s) by reading, converting and saving them.
+     * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
+     * @param files The file to read from.
+     */
+    private void onImportFile(Uri[] files) {
+        String[] content;
+        for (Uri file : files) {
+            try {
+                // Read file.
+                if (mFileType != FileType.BIN) {
+                    content = Common.readUriLineByLine(file, this);
+                } else {
+                    byte[] bytes = Common.readUriRaw(file, this);
+                    content = new String[1];
+                    // Convert to string, since convert() works only on strings.
+                    StringBuilder sb = new StringBuilder();
+                    for (byte b : bytes) {
+                        sb.append((char) b);
+                    }
+                    content[0] = sb.toString();
                 }
-                // Remove file extension and replace it with ".mct".
+                if (content == null) {
+                    Toast.makeText(this, R.string.info_error_reading_file,
+                            Toast.LENGTH_LONG).show();
+                    continue;
+                }
+
+                // Prepare file names and paths.
                 String fileName = Common.getFileName(file, this);
                 if (fileName.contains(".")) {
                     fileName = fileName.substring(0, fileName.lastIndexOf('.'));
                 }
-                String destFileName = fileName + FileType.MCT.toString();
+                String destFileName = fileName;
+                String destPath = Common.HOME_DIR + "/";
+
+                // Convert key or dump file.
+                String[] convertedContent;
+                if (mIsDumpFile) {
+                    convertedContent = convertDump(
+                            content, mFileType, FileType.MCT);
+                    destFileName += FileType.MCT.toString();
+                    destPath += Common.DUMPS_DIR;
+                } else {
+                    convertedContent = convertKeys(
+                            content, mFileType, FileType.KEYS);
+                    // TODO (optional): Remove duplicates.
+                    destFileName += FileType.KEYS.toString();
+                    destPath += Common.KEYS_DIR;
+                }
+                if (convertedContent == null) {
+                    // Error during conversion.
+                    continue;
+                }
+
                 // Save converted file.
-                String destPath = Common.HOME_DIR + "/" + Common.DUMPS_DIR;
                 File destination = Common.getFileFromStorage(
                         destPath + "/" + destFileName, true);
                 if (Common.saveFile(destination, convertedContent, false)) {
                     Toast.makeText(this, R.string.info_file_imported,
                             Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, R.string.info_save_error,
+                            Toast.LENGTH_LONG).show();
+                    continue;
                 }
-            } else {
-                // TODO (optional): Support importing key files.
+            } catch (OutOfMemoryError e) {
+                Toast.makeText(this, R.string.info_file_to_big,
+                        Toast.LENGTH_LONG).show();
+                continue;
             }
-        } catch (OutOfMemoryError e) {
-            Toast.makeText(this, R.string.info_file_to_big,
-                    Toast.LENGTH_LONG).show();
-            return;
         }
     }
 
     /**
      * Export the file by reading, converting and saving it.
-     * The conversion is made by {@link #convert(String[], FileType, FileType)}.
+     * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
      * @param path The file to read from.
      */
     private void onExportFile(String path) {
         File source = new File(path);
-        String fileName = source.getName();
         String[] content = Common.readFileLineByLine(source, false,this);
         if (content == null) {
             return;
         }
-        // Key or dump file?
+
+        // Prepare file names and paths.
+        String fileName = source.getName();
+        if (fileName.contains(".")) {
+            fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+        }
+        String destFileName = fileName + mFileType.toString();
+        String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
+
+        // Convert key or dump file.
+        String[] convertedContent;
         if (mIsDumpFile) {
-            // Convert.
-            String[] convertedContent = convert(
+            convertedContent = convertKeys(
                     content, FileType.MCT, mFileType);
-            if (convertedContent == null) {
-                return;
-            }
-            // Remove ".mct" file extension and replace it with export type.
-            fileName = fileName.replace(FileType.MCT.toString(), "");
-            String destFileName = fileName + mFileType.toString();
-            // Save converted file.
-            String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
-            File destination = Common.getFileFromStorage(
-                    destPath + "/" + destFileName, true);
-            boolean error = false;
-            if (mFileType != FileType.BIN) {
-                error = Common.saveFile(destination, convertedContent, false);
-            } else {
-                byte[] bytes = new byte[convertedContent[0].length()];
-                for (int i = 0; i < convertedContent[0].length(); i++) {
-                    bytes[i] = (byte) convertedContent[0].charAt(i);
-                }
-                error = Common.saveFile(destination, bytes, false);
-            }
-            if (error) {
-                Toast.makeText(this, R.string.info_file_exported,
-                        Toast.LENGTH_LONG).show();
-            }
+
         } else {
-            // TODO (optional): Support exporting key files.
+            convertedContent = convertKeys(
+                    content, FileType.KEYS, mFileType);
+        }
+        if (convertedContent == null) {
+            // Error during conversion.
+            return;
+        }
+
+        // Save converted file.
+        File destination = Common.getFileFromStorage(
+                destPath + "/" + destFileName, true);
+        boolean success = false;
+        if (mFileType != FileType.BIN) {
+            success = Common.saveFile(destination, convertedContent, false);
+        } else {
+            byte[] bytes = new byte[convertedContent[0].length()];
+            for (int i = 0; i < convertedContent[0].length(); i++) {
+                bytes[i] = (byte) convertedContent[0].charAt(i);
+            }
+            success = Common.saveFile(destination, bytes, false);
+        }
+        if (success) {
+            Toast.makeText(this, R.string.info_file_exported,
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.info_save_error,
+                    Toast.LENGTH_LONG).show();
         }
     }
 
     /**
-     * Convert {@code source} from {@code srcType} to {@code destType}.
-     * The formats .mct, . .json, .eml and .bin are supported. The
+     * Convert dump {@code source} from {@code srcType} to {@code destType}.
+     * The formats .mct, .json, .eml and .bin are supported. The
      * intermediate is always JSON. If the {@code srcType} or the
      * {@code destType} is {@link FileType#BIN}, the the
      * {@code source}/return value must be a string array with only
@@ -306,14 +395,8 @@ public class ImportExportTool extends BasicActivity {
      * @see FileType
      */
     @SuppressLint("DefaultLocale")
-    private String[] convert(String[] source, FileType srcType,
-                             FileType destType) {
-        if (source == null || source.length < 1) {
-            Toast.makeText(this, R.string.info_convert_error,
-                    Toast.LENGTH_LONG).show();
-            return null;
-        }
-
+    private String[] convertDump(String[] source, FileType srcType,
+                                 FileType destType) {
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
         String block = null;
@@ -336,11 +419,6 @@ public class ImportExportTool extends BasicActivity {
                 int sectorNumber = 0;
                 int blockNumber = 0;
                 for (String line : source) {
-                    if (line == null) {
-                        Toast.makeText(this, R.string.info_convert_error,
-                                Toast.LENGTH_LONG).show();
-                        return null;
-                    }
                     if (line.startsWith("+")) {
                         sectorNumber = Integer.parseInt(line.split(": ")[1]);
                         if (sectorNumber < 32) {
@@ -411,12 +489,11 @@ public class ImportExportTool extends BasicActivity {
             return null;
         }
 
-        // Convert json to destType.
         JSONObject blocks = null;
         try {
             JSONObject parsedJson = new JSONObject(TextUtils.join("", json));
             blocks = parsedJson.getJSONObject("blocks");
-            if (blocks == null || blocks.length() < 1) {
+            if (blocks.length() < 1) {
                 throw new JSONException("No blocks in source file");
             }
         } catch (JSONException e) {
@@ -426,6 +503,7 @@ public class ImportExportTool extends BasicActivity {
             return null;
         }
 
+        // Convert json to destType.
         String[] dest = null;
         switch (destType) {
             case JSON:
@@ -523,14 +601,91 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Show the file type chooser menu and save the result in
+     * Convert keys {@code source} from {@code srcType} to {@code destType}.
+     * The formats .keys and .bin are supported. The
+     * intermediate is always a String. If the {@code srcType} or the
+     * {@code destType} is {@link FileType#BIN}, the the
+     * {@code source}/return value must be a string array with only
+     * one string with each char representing one byte (MSB=0).
+     * @param source The data to be converted.
+     * @param srcType The type of the {@code source} data.
+     * @param destType The type for the return value.
+     * @return The converted data.
+     * @see FileType
+     */
+    @SuppressLint("DefaultLocale")
+    private String[] convertKeys(String[] source, FileType srcType,
+                                 FileType destType) {
+        // Convert source to strings.
+        String[] keys = null;
+        switch (srcType) {
+            case KEYS:
+                int err = Common.isValidKeyFile(source);
+                if (err != 0) {
+                    Common.isValidKeyFileErrorToast(err, this);
+                    return null;
+                }
+                keys = source;
+                break;
+            case BIN:
+                String binary = source[0];
+                int len = binary.length();
+                if (binary.length() > 0 && binary.length() % 6 != 0) {
+                    // Error. Not multiple of 6 byte.
+                    Toast.makeText(this, R.string.info_invalid_key_file,
+                            Toast.LENGTH_LONG).show();
+                    return null;
+                }
+                keys = new String[binary.length() / 6];
+                // In this case: chars = bytes. Get 6 bytes and convert.
+                for (int i = 0; i < binary.length(); i += 6) {
+                    byte[] keyBytes = new byte[6];
+                    for (int j = 0; j < 6; j++) {
+                        keyBytes[j] = (byte) binary.charAt(i + j);
+                    }
+                    keys[i/6] = Common.byte2Hex(keyBytes);
+                }
+                break;
+        }
+
+        String[] dest = null;
+        switch (destType) {
+            case KEYS:
+                dest = keys;
+                break;
+            case BIN:
+                dest = new String[1];
+                StringBuilder sb = new StringBuilder();
+                for (String key : keys) {
+                    byte[] bytes = Common.hex2ByteArray(key);
+                    for (byte b : bytes) {
+                        sb.append((char)b);
+                    }
+                }
+                dest[0] = sb.toString();
+                break;
+        }
+        return dest;
+    }
+
+    /**
+     * Show the dump file type chooser menu and save the result in
      * {@link #mFileType}.
      * @see #onContextItemSelected(MenuItem)
      */
-    private void showTypeChooserMenu() {
-        // "button" is just used as a dummy because a context menu
-        // always need a view.
-        View button = findViewById(R.id.buttonImportExportToolExportDump);
+    private void showDumpFileTypeChooserMenu() {
+        View button = findViewById(R.id.buttonImportExportToolImportDump);
+        registerForContextMenu(button);
+        openContextMenu(button);
+    }
+
+    /**
+     * Show the keys file type chooser menu and save the result in
+     * {@link #mFileType}.
+     * @see #onContextItemSelected(MenuItem)
+     */
+    private void showKeysFileTypeChooserMenu() {
+        View button = findViewById(R.id.buttonImportExportToolImportKeys);
         registerForContextMenu(button);
         openContextMenu(button);
     }
@@ -544,6 +699,7 @@ public class ImportExportTool extends BasicActivity {
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         String title = getString(R.string.text_select_file);
         startActivityForResult(Intent.createChooser(intent, title), IMPORT_FILE_CHOSEN);
     }

@@ -71,25 +71,31 @@ public class FileChooser extends BasicActivity {
      * are the files the user can choose from. This must be in the Intent.
      */
     public final static String EXTRA_DIR =
-            "de.syss.MifareClassicTool.Activity.DIR";
+            "de.syss.MifareClassicTool.Activity.FileChooser.DIR";
     /**
      * The title of the activity. Optional.
      * e.g. "Open Dump File"
      */
     public final static String EXTRA_TITLE =
-            "de.syss.MifareClassicTool.Activity.TITLE";
+            "de.syss.MifareClassicTool.Activity.FileChooser.TITLE";
     /**
      * The small text above the files. Optional.
      * e.g. "Please choose a file:
      */
     public final static String EXTRA_CHOOSER_TEXT =
-            "de.syss.MifareClassicTool.Activity.CHOOSER_TEXT";
+            "de.syss.MifareClassicTool.Activity.FileChooser.CHOOSER_TEXT";
     /**
      * The text of the choose button. Optional.
      * e.g. "Open File"
      */
     public final static String EXTRA_BUTTON_TEXT =
-            "de.syss.MifareClassicTool.Activity.BUTTON_TEXT";
+            "de.syss.MifareClassicTool.Activity.FileChooser.BUTTON_TEXT";
+
+    /**
+     * Set to True if file creation should be allowed.
+     */
+    public final static String EXTRA_ALLOW_NEW_FILE =
+            "de.syss.MifareClassicTool.Activity.FileChooser.ALLOW_NEW_FILE";
 
     // Output parameter.
     /**
@@ -116,6 +122,7 @@ public class FileChooser extends BasicActivity {
     private MenuItem mDeleteFile;
     private File mDir;
     private boolean mIsDirEmpty;
+    private boolean mIsAllowNewFile;
 
 
     @Override
@@ -162,6 +169,10 @@ public class FileChooser extends BasicActivity {
         if (intent.hasExtra(EXTRA_BUTTON_TEXT)) {
             mChooserButton.setText(intent.getStringExtra(EXTRA_BUTTON_TEXT));
         }
+        // Check file creation.
+        if (intent.hasExtra(EXTRA_ALLOW_NEW_FILE)) {
+            mIsAllowNewFile = intent.getBooleanExtra(EXTRA_ALLOW_NEW_FILE, false);
+        }
 
         // Check path and initialize file list.
         if (intent.hasExtra(EXTRA_DIR)) {
@@ -195,9 +206,13 @@ public class FileChooser extends BasicActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.file_chooser_functions, menu);
         mDeleteFile = menu.findItem(R.id.menuFileChooserDeleteFile);
+        MenuItem newFile = menu.findItem(R.id.menuFileChooserNewFile);
 
         // Enable/disable the delete menu item if there is a least one file.
         mDeleteFile.setEnabled(!mIsDirEmpty);
+
+        // Enable/disable the new file menu item acording to mIsAllowNewFile.
+        newFile.setEnabled(mIsAllowNewFile);
 
         return true;
     }
@@ -302,10 +317,15 @@ public class FileChooser extends BasicActivity {
      */
     private void onNewFile() {
         final Context cont = this;
+        String prefill = "";
+        if (mDir.getName().equals(Common.KEYS_DIR)) {
+            prefill = ".keys";
+        }
         // Ask user for filename.
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setLines(1);
+        input.setText(prefill);
         input.setHorizontallyScrolling(true);
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_new_file_title)

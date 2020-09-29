@@ -218,11 +218,11 @@ public class KeyEditor extends BasicActivity
      * in which the user can choose between apps that are willing to
      * handle the dump.
      * @see Common#TMP_DIR
-     * @see #isValidKeyFileErrorToast()
+     * @see Common#isValidKeyFileErrorToast(int, Context)
      *
      */
     private void shareKeyFile() {
-        if (!isValidKeyFileErrorToast()) {
+        if (!Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
             return;
         }
         // Save key file to to a temporary file which will be
@@ -253,16 +253,15 @@ public class KeyEditor extends BasicActivity
 
     /**
      * Check if it is a valid key file
-     * ({@link #isValidKeyFileErrorToast()}),
      * ask user for a save name and then call
      * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
      * Context, IActivityThatReactsToSave)}
      * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context,
      * IActivityThatReactsToSave)
-     * @see #isValidKeyFileErrorToast()
+     * @see Common#isValidKeyFileErrorToast(int, Context)
      */
     private void onSave() {
-        if (!isValidKeyFileErrorToast()) {
+        if (!Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
             return;
         }
         final File path = Common.getFileFromStorage(Common.HOME_DIR + "/" +
@@ -304,7 +303,7 @@ public class KeyEditor extends BasicActivity
      * Remove duplicates (keys) from key file.
      */
     private void removeDuplicates() {
-        if (isValidKeyFileErrorToast()) {
+        if (Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
             ArrayList<String> newLines = new ArrayList<>();
             for (String line : mLines) {
                 if (line.equals("") || line.startsWith("#")) {
@@ -347,56 +346,15 @@ public class KeyEditor extends BasicActivity
      * <li>2 - At least one key has invalid characters (not hex).</li>
      * <li>3 - At least one key has not 6 byte (12 chars).</li>
      * </ul>
+     * @see Common#isValidKeyFile(String[])
      */
     private int isValidKeyFile() {
         String[] lines = mKeys.getText().toString()
                 .split(System.getProperty("line.separator"));
-        boolean keyFound = false;
-        for (int i = 0; i < lines.length; i++) {
-            if (!lines[i].startsWith("#") && !lines[i].equals("")
-                    && !lines[i].matches("[0-9A-Fa-f]+")) {
-                // Not pure hex and not a comment.
-                return 2;
-            }
-
-            if (!lines[i].startsWith("#") && !lines[i].equals("")
-                    && lines[i].length() != 12) {
-                // Not 12 chars per line.
-                return 3;
-            }
-
-            if (!lines[i].startsWith("#") && !lines[i].equals("")) {
-                // At least one key found.
-                lines[i] = lines[i].toUpperCase(Locale.getDefault());
-                keyFound = true;
-            }
+        int ret = Common.isValidKeyFile(lines);
+        if (ret == 0) {
+            mLines = lines;
         }
-        if (!keyFound) {
-            // No key found.
-            return 1;
-        }
-        mLines = lines;
-        return 0;
-    }
-
-    /**
-     * Check keys with {@link #isValidKeyFile()()} and show
-     * a Toast message with error information (if an error occurred).
-     * @return True if all keys were O.K. False otherwise.
-     * @see #isValidKeyFile()
-     */
-    private boolean isValidKeyFileErrorToast() {
-        int err = isValidKeyFile();
-        if (err == 1) {
-            Toast.makeText(this, R.string.info_valid_keys_no_keys,
-                    Toast.LENGTH_LONG).show();
-        } else if (err == 2) {
-            Toast.makeText(this, R.string.info_valid_keys_not_hex,
-                    Toast.LENGTH_LONG).show();
-        } else if (err == 3) {
-            Toast.makeText(this, R.string.info_valid_keys_not_6_byte,
-                    Toast.LENGTH_LONG).show();
-        }
-        return err == 0;
+        return ret;
     }
 }

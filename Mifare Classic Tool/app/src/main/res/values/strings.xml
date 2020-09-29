@@ -265,7 +265,7 @@
     <string name="action_show_diff_tool">Diff Tool (Compare Dumps)</string>
     <string name="action_show_bcc_tool">BCC Calculator</string>
     <string name="action_show_clone_uid">Clone UID</string>
-    <string name="action_show_import_export_tool">Import/Export/Convert Dumps</string>
+    <string name="action_show_import_export_tool">Import/Export/Convert Files</string>
     <string name="action_show_uid_log_tool">UID Log</string>
     <string name="action_show_data_conversion_tool">Convert Data</string>
     <string name="action_compare_dump">Compare Dump</string>
@@ -289,11 +289,15 @@
     <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
     <string name="action_clone_uid">Calculate block 0 and clone UID</string>
     <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
+    <string name="action_file_type_keys">.keys/.txt (Mifare Classic Tool)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
-    <string name="action_import_dump">Import dump</string>
-    <string name="action_export_dump">Export dump</string>
+    <string name="action_file_type_bin">.bin (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_import_dump">Import Dump</string>
+    <string name="action_export_dump">Export Dump</string>
+    <string name="action_import_keys">Import Keys</string>
+    <string name="action_export_keys">Export Keys</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -407,6 +411,7 @@
     <string name="info_incomplete_dump">Error: Incomplete or oversized dump</string>
     <string name="info_error_reading_file">Error: Could not read file</string>
     <string name="info_random_uid">Generated random UID</string>
+    <string name="info_invalid_key_file">Error: Not a valid key file</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

@@ -49,12 +49,50 @@
             android:onClick="onExportDump"
             android:text="@string/action_export_dump" />
 
+        <!-- Separator -->
+        <View
+            android:id="@+id/separatorImportExportTool1"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="@color/light_gray" />
+
+        <Button
+            android:id="@+id/buttonImportExportToolImportKeys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/arrow_up"
+            android:onClick="onImportKeys"
+            android:text="@string/action_import_keys" />
+
+        <Button
+            android:id="@+id/buttonImportExportToolExportKeys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/arrow_down"
+            android:onClick="onExportKeys"
+            android:text="@string/action_export_keys" />
+
+        <!-- Separator -->
+        <View
+            android:id="@+id/separatorImportExportTool2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="13dp"
+            android:background="@color/light_gray" />
+
         <TextView
             android:id="@+id/textViewImportExportToolInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@android:drawable/ic_dialog_info"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:padding="5dp"
             android:text="@string/text_export_convert_dest_info" />
 
