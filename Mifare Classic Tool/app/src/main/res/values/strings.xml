@@ -585,7 +585,7 @@
         \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Get
         the donate version</a>
         \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
-        on github</a>
+        on github / donate link</a>
     </string>
     <string name="dialog_save_before_quitting_title">Unsaved changes</string>
     <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
