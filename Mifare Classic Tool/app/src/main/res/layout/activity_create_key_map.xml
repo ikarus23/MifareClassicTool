@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayoutCreateKeyMap"
         android:paddingLeft="5dp"
-        android:text="@string/text_choose_key_file"
+        android:text="@string/text_choose_key_files"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button

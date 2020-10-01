@@ -51,7 +51,7 @@
     <string name="title_activity_data_conversion_tool">Data Conversion Tool</string>
 
     <!-- Texts (labels etc.) -->
-    <string name="text_choose_key_file">Choose some key file(s):</string>
+    <string name="text_choose_key_files">Choose some key file(s):</string>
     <string name="text_wait_read_tag">Reading tag&#8230;\n(Don\'t remove tag)</string>
     <string name="text_key_map_progress">Key Mapping Progress:</string>
     <string name="text_sector">Sector</string>
@@ -182,6 +182,7 @@
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
+    <string name="text_choose_key_file">Choose key file</string>
     <string name="text_export_convert_dest_info">Exported/converted files are always
         stored in \"MifareClassicTool/export\" on the external storage (e.g. the SD
         card). If a file with the same name already exist upon import, it will be overwritten.</string>
