@@ -1,6 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
+ *
+
+Version 3.1.0:
  * Importing/Exporting keys is now possible.
  * Importing multiple files is now possible.
  * Some minor bug fixes.
