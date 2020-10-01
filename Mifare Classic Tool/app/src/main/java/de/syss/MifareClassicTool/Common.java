@@ -391,6 +391,9 @@ public class Common extends Application {
     public static byte[] readUriRaw(Uri uri, Context context) {
         InputStream contentStream = null;
         String[] ret = null;
+        if (uri == null || context == null) {
+            return null;
+        }
         try {
             contentStream = context.getContentResolver().openInputStream(uri);
         } catch (FileNotFoundException ex) {

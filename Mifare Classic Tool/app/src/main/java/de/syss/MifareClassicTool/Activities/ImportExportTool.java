@@ -264,13 +264,17 @@ public class ImportExportTool extends BasicActivity {
                     content = Common.readUriLineByLine(file, this);
                 } else {
                     byte[] bytes = Common.readUriRaw(file, this);
-                    content = new String[1];
-                    // Convert to string, since convert() works only on strings.
-                    StringBuilder sb = new StringBuilder();
-                    for (byte b : bytes) {
-                        sb.append((char) b);
+                    if (bytes != null) {
+                        content = new String[1];
+                        // Convert to string, since convert() works only on strings.
+                        StringBuilder sb = new StringBuilder();
+                        for (byte b : bytes) {
+                            sb.append((char) b);
+                        }
+                        content[0] = sb.toString();
+                    } else {
+                        content = null;
                     }
-                    content[0] = sb.toString();
                 }
                 if (content == null) {
                     Toast.makeText(this, R.string.info_error_reading_file,
