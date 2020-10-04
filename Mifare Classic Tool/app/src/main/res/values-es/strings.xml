@@ -39,6 +39,8 @@
     <string name="title_activity_hex_to_ascii">Datos como ASCII</string>
     <string name="title_activity_tag_info">Información de la etiqueta</string>
     <string name="title_activity_value_block_tool">Decodificador y codificador de valores de bloque</string>
+    <string name="title_activity_access_condition_tool">Decodificador y codificador de condición de acceso</string>
+    <string name="title_activity_preferences">Preferencias</string>
     <string name="title_activity_diff_tool">Herramienta Diff</string>
     <string name="title_activity_bcc_tool">Calculadora de BCC</string>
     <string name="title_activity_clone_uid">Clonar UID al Magic Tag (2 gen)</string>
