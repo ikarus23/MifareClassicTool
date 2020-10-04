@@ -177,9 +177,8 @@
         Tag (2nd gen)?</string>
     <string name="text_uid_length_error">Error: Tamaño del UID incorrecto (4 vs. 7 vs. 10 bytes)</string>
     <string name="text_select_file">Selecciona un fichero</string>
-    <string name="text_select_directory"Selecciona un directorio</string>
+    <string name="text_select_directory">Selecciona un directorio</string>
     <string name="text_choose_dump_file">Elige un archivo dump</string>
-    <string name="text_choose_key_file">Elige un fichero de claves</string>
     <string name="text_export_convert_dest_info"> Los ficheros exportados/comvertidos están
        siempre almacenados en \"MifareClassicTool/export\" en el almacenamiento externo (e.g. la tarjeta SD
         ). Si un fichero con el mismo nombre ya existe en el moment ode importar, este será sobreescrito.</string>
@@ -384,7 +383,7 @@
     <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
         es incorrecto</string>
     <string name="info_incorrect_key">Error: La clave no es correcta</string>
-    <string name="info_file_exported"Archivo exportado al almacenamiento externo</string>
+    <string name="info_file_exported">Archivo exportado al almacenamiento externo</string>
     <string name="info_file_imported">Archivo importado</string>
     <string name="info_convert_error">Error: No se ha podido convertir</string>
     <string name="info_incomplete_dump">Error: Dump incompleto o de gran tamaño</string>
