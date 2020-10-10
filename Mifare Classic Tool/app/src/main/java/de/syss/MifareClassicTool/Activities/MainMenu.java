@@ -700,6 +700,8 @@ public class MainMenu extends Activity {
             mKeyEditor.setEnabled(true);
             mDumpEditor.setEnabled(true);
             useAsEditorOnly(Common.useAsEditorOnly());
+            // The start up nodes will also enable the NFC foreground dispatch if all
+            // conditions are met (has NFC & NFC enabled).
             runStartUpNode(StartUpNode.FirstUseDialog);
         } else {
             enableMenuButtons(false);
@@ -712,8 +714,8 @@ public class MainMenu extends Activity {
      */
     @Override
     public void onPause() {
-        Common.disableNfcForegroundDispatch(this);
         super.onPause();
+        Common.disableNfcForegroundDispatch(this);
     }
 
     /**

@@ -676,9 +676,14 @@ public class Common extends Application {
                             Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(
                     targetActivity, 0, intent, 0);
-            mNfcAdapter.enableForegroundDispatch(
-                    targetActivity, pendingIntent, null, new String[][] {
-                            new String[] { NfcA.class.getName() } });
+            try {
+                mNfcAdapter.enableForegroundDispatch(
+                        targetActivity, pendingIntent, null, new String[][]{
+                                new String[]{NfcA.class.getName()}});
+            } catch (IllegalStateException ex) {
+                Log.d(LOG_TAG, "Error: Could not enable the NFC foreground" +
+                        "dispatch system. The activity was not in foreground.");
+            }
         }
     }
 
