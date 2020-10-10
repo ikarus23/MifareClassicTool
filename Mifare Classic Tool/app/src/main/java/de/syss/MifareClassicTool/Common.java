@@ -588,11 +588,13 @@ public class Common extends Application {
      * @param file The file to write to.
      * @param lines The lines to save.
      * @param append Append to file (instead of replacing its content).
-     * @return True if file writing was successful. False otherwise.
+     * @return True if file writing was successful. False otherwise or if
+     * parameters were wrong (e.g. null)..
      */
     public static boolean saveFile(File file, String[] lines, boolean append) {
-        boolean noError = true;
-        if (file != null && lines != null && isExternalStorageMounted()) {
+        boolean error = false;
+        if (file != null && lines != null
+                && lines.length > 0 && isExternalStorageMounted()) {
             BufferedWriter bw = null;
             try {
                 bw = new BufferedWriter(new FileWriter(file, append));
@@ -609,7 +611,7 @@ public class Common extends Application {
             } catch (IOException | NullPointerException ex) {
                 Log.e(LOG_TAG, "Error while writing to '"
                         + file.getName() + "' file.", ex);
-                noError = false;
+                error = true;
 
             } finally {
                 if (bw != null) {
@@ -617,14 +619,14 @@ public class Common extends Application {
                         bw.close();
                     } catch (IOException e) {
                         Log.e(LOG_TAG, "Error while closing file.", e);
-                        noError = false;
+                        error = true;
                     }
                 }
             }
         } else {
-            noError = false;
+            error = true;
         }
-        return noError;
+        return error == false;
     }
 
     /**
@@ -741,6 +743,9 @@ public class Common extends Application {
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             tag = MCReader.patchTag(tag);
+            if (tag == null) {
+                return -3;
+            }
             setTag(tag);
             logUid(byte2Hex(tag.getId()));
 
