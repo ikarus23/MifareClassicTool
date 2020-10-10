@@ -652,6 +652,13 @@ public class ImportExportTool extends BasicActivity {
                 break;
         }
 
+        if (keys == null) {
+            // Error converting source file.
+            Toast.makeText(this, R.string.info_convert_error,
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+
         String[] dest = null;
         switch (destType) {
             case KEYS:
