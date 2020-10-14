@@ -907,7 +907,7 @@ public class Common extends Application {
             // Check if device does not support MIFARE Classic.
             // For doing so, check if the SAK of the tag indicate that
             // it's a MIFARE Classic tag.
-            // See: https://www.nxp.com/docs/en/application-note/AN10834.pdf
+            // See: https://www.nxp.com/docs/en/application-note/AN10834.pdf (page 7)
             NfcA nfca = NfcA.get(tag);
             byte sak = (byte)nfca.getSak();
             if ((sak>>1 & 1) == 1) {
@@ -916,10 +916,12 @@ public class Common extends Application {
             } else {
                 if ((sak>>3 & 1) == 1) { // SAK bit 4 = 1?
                     if((sak>>4 & 1) == 1) { // SAK bit 5 = 1?
-                        // MIFARE Classic 4k
+                        // MIFARE Classic 2K
+                        // MIFARE Classic 4K
                         // MIFARE SmartMX 4K
-                        // MIFARE PlusS 4K SL1
-                        // MIFARE PlusX 4K SL1
+                        // MIFARE Plus S 4K SL1
+                        // MIFARE Plus X 4K SL1
+                        // MIFARE Plus EV1 2K/4K SL1
                         return -1;
                     } else {
                         if ((sak & 1) == 1) { // SAK bit 1 = 1?
@@ -928,8 +930,10 @@ public class Common extends Application {
                         } else {
                             // MIFARE Classic 1k
                             // MIFARE SmartMX 1k
-                            // MIFARE PlusS 2K SL1
-                            // MIFARE PlusX 2K SL2
+                            // MIFARE Plus S 2K SL1
+                            // MIFARE Plus X 2K SL1
+                            // MIFARE Plus SE 1K
+                            // MIFARE Plus EV1 2K/4K SL1
                             return -1;
                         }
                     }
