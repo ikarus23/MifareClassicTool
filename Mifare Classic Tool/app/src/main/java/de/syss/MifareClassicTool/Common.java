@@ -881,7 +881,16 @@ public class Common extends Application {
 
         if (Arrays.asList(tag.getTechList()).contains(
                 MifareClassic.class.getName())) {
-            // Device and tag support MIFARE Classic.
+            // Device and tag should support MIFARE Classic.
+            // But is there something wrong the the tag?
+            try {
+                MifareClassic.get(tag);
+            } catch (RuntimeException ex) {
+                // Stack incorrectly reported a MifareClassic.
+                // Most likely not a MIFARE Classic tag.
+                // See: https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/nfc/tech/MifareClassic.java#196
+                return -2;
+            }
             return 0;
 
         // This is no longer valid. There are some devices (e.g. LG's F60)
