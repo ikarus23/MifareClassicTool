@@ -3,6 +3,10 @@ Changelog of MifareClassicTool (MCT):
 In development:
  *
 
+Version 3.1.2:
+ * Bugfix: Export dumps correctly. (Thanks to Niel!)
+ * Show error if Access Conditions could not be decoded.
+
 Version 3.1.1:
  * Some minor bug fixes.
 
