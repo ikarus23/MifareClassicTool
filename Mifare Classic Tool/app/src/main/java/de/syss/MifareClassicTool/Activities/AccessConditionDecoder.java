@@ -65,6 +65,7 @@ public class AccessConditionDecoder extends BasicActivity {
                     R.id.tableLayoutAccessConditionDecoder);
             String[] accessConditions =
                 getIntent().getStringArrayExtra(EXTRA_AC);
+
             for (int j = 0; j < accessConditions.length; j=j+2) {
                 boolean hasMoreThan4Blocks = false;
                 if (accessConditions[j+1].startsWith("*")) {
@@ -77,11 +78,9 @@ public class AccessConditionDecoder extends BasicActivity {
 
                 // acMatrix[C1-C3][Block1-Block3 + Sector Trailer]
                 byte[][] acMatrix = Common.acBytesToACMatrix(bAC);
-                if (acMatrix != null) {
-                    String sectorNumber = accessConditions[j].split(": ")[1];
-                    addSectorAC(acMatrix, getString(R.string.text_sector)
-                            + ": " + sectorNumber, hasMoreThan4Blocks);
-                }
+                String sectorNumber = accessConditions[j].split(": ")[1];
+                addSectorAC(acMatrix, getString(R.string.text_sector)
+                        + ": " + sectorNumber, hasMoreThan4Blocks);
             }
         } else {
             Log.d(LOG_TAG, "There were no access conditions in intent.");
@@ -98,6 +97,7 @@ public class AccessConditionDecoder extends BasicActivity {
      * dimension is the "C" parameter (C1-C3, Index 0-2) and the second
      * dimension is the block number
      * (Block0-Block2 + Sector Trailer, Index 0-3).
+     * If this parameter is null, a "invalid ACs" error will be added.
      * @param sectorHeader The sector header to display (e.g. "Sector: 0").
      * @param hasMoreThan4Blocks True for the last 8 sectors
      * of a MIFARE Classic 4K tag.
@@ -119,10 +119,27 @@ public class AccessConditionDecoder extends BasicActivity {
         mLayout.addView(tr, new LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
-        // Add Block 0-2.
-        addBlockAC(acMatrix, hasMoreThan4Blocks);
-        // Add Sector Trailer.
-        addSectorTrailerAC(acMatrix);
+
+        if (acMatrix == null) {
+            TextView error = new TextView(this);
+            String errorText = getString(R.string.text_invalid_ac);
+            error.setText(Common.colorString(errorText,
+                    getResources().getColor(R.color.red)),
+                    BufferType.SPANNABLE);
+            tr = new TableRow(this);
+            tr.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT));
+            tr.addView(error);
+            mLayout.addView(tr, new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT));
+        } else {
+            // Add Block 0-2.
+            addBlockAC(acMatrix, hasMoreThan4Blocks);
+            // Add Sector Trailer.
+            addSectorTrailerAC(acMatrix);
+        }
     }
 
     /**

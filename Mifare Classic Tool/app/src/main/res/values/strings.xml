@@ -195,6 +195,7 @@
     <string name="text_bin">Bin</string>
     <string name="text_dec_be">Dec (BE)</string>
     <string name="text_dec_le">Dec (LE)</string>
+    <string name="text_invalid_ac">Access Conditions are invalid</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
