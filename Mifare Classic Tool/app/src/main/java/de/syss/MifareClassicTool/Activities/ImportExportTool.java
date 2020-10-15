@@ -351,7 +351,7 @@ public class ImportExportTool extends BasicActivity {
         // Convert key or dump file.
         String[] convertedContent;
         if (mIsDumpFile) {
-            convertedContent = convertKeys(
+            convertedContent = convertDump(
                     content, FileType.MCT, mFileType);
 
         } else {
