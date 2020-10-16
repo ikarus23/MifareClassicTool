@@ -41,6 +41,12 @@
     <string name="title_activity_value_block_tool">Decodificador y codificador de valores de bloque</string>
     <string name="title_activity_access_condition_tool">Decodificador y codificador de condición de acceso</string>
     <string name="title_activity_preferences">Preferencias</string>
+    <string name="title_activity_diff_tool">Herramienta Diff</string>
+    <string name="title_activity_bcc_tool">Calculadora de BCC</string>
+    <string name="title_activity_clone_uid">Clonar UID al Magic Tag (2 gen)</string>
+    <string name="title_activity_import_export_tool">Importar/Exportar Herramienta</string>
+    <string name="title_activity_uid_log_tool">Log del n UID</string>
+    <string name="title_activity_data_conversion_tool">Herramienta de Conversión de Datos</string>
 
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_file">Escoge algún archivo de claves:</string>
@@ -135,6 +141,59 @@
     <string name="text_step_2_data_blocks">Paso 2:
        Selecciona ACs para bloques de datos</string>
 
+
+
+     <string name="text_dump_1">Dump 1 (A)</string>
+    <string name="text_dump_2">Dump 2 (B)</string>
+    <string name="text_a">A:</string>
+    <string name="text_b">B:</string>
+    <string name="text_dump_from_editor">Dumpear desde el editor</string>
+    <string name="text_incr_decr_value_block">Incr./Decr. Value Block</string>
+    <string name="text_increment">Incremento</string>
+    <string name="text_decrement">Decremento</string>
+    <!-- Has to be 32 chars long. The text should be centered. -->
+    <string name="text_identical_data">-----------Idéntico------------</string>
+    <!-- Has to be 16 chars long. The text should be centered. -->
+    <string name="text_invalid_data">--Datos Inválidos--</string>
+    <string name="text_only_in_dump1">Sector occurs only in dump 1 (A)</string>
+    <string name="text_only_in_dump2">Sector occurs only in dump 2 (B)</string>
+    <string name="text_uid_part">UID (parte)</string>
+    <string name="text_bcc">BCC</string>
+    <string name="text_clone_uid_info">Esta herramienta puede clonar el UID of a etiqueta a una
+        \"magic tag\" (2nd gen, compatible con Android, escritura directa,
+        block 0 escribible). Presional el botón de info para obtener más información.</string>
+    <string name="text_uid_to_clone">UID para clonar</string>
+    <string name="text_clone_uid_manufacturer_block_rest">El resto del bloque 0</string>
+    <string name="text_write_key">La clave para escribir el bloque 0</string>
+    <string name="text_status_log">Log de estado</string>
+    <string name="text_use_uid_of_scanned_tag">Utiliza el UID de etiquetas escaneadas</string>
+    <string name="text_block_0_calculated">Bloque 0 calculado</string>
+    <string name="text_waiting_for_magic_tag">Esperando a la magic tag (2nd gen)</string>
+    <string name="text_writing_block_0">Escribirndo bloque 0</string>
+    <string name="text_no_errors_on_write">Sin errores durante el proceso de escritura</string>
+    <string name="text_rescan_tag_to_check">Rescan clone to validate success</string>
+    <string name="text_checking_clone">Comprobando clon</string>
+    <string name="text_clone_successfully">UID clonada correctamente</string>
+    <string name="text_uid_match_error">Las UIDs no coinciden</string>
+    <string name="text_clone_error">Error: ¿Estas seguro de que tienes una Magic
+        Tag (2nd gen)?</string>
+    <string name="text_uid_length_error">Error: Tamaño del UID incorrecto (4 vs. 7 vs. 10 bytes)</string>
+    <string name="text_select_file">Selecciona un fichero</string>
+    <string name="text_select_directory">Selecciona un directorio</string>
+    <string name="text_choose_dump_file">Elige un archivo dump</string>
+    <string name="text_export_convert_dest_info"> Los ficheros exportados/comvertidos están
+       siempre almacenados en \"MifareClassicTool/export\" en el almacenamiento externo (e.g. la tarjeta SD
+        ). Si un fichero con el mismo nombre ya existe en el moment ode importar, este será sobreescrito.</string>
+    <string name="text_random_uid">UID aleatorio</string>
+    <string name="text_no_uid_logs">El log del UID está vacío</string>
+    <string name="text_not_ascii">Not ASCII</string>
+    <string name="text_convert">Convertir</string>
+    <string name="text_ascii">ASCII</string>
+    <string name="text_hex">Hex</string>
+    <string name="text_bin">Bin</string>
+    <string name="text_dec_be">Dec (BE)</string>
+    <string name="text_dec_le">Dec (LE)</string>
+
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Leer etiqueta</string>
     <string name="action_write_tag">Escribir etiqueta</string>
@@ -201,6 +260,26 @@
     <string name="action_decode_manuf_date">Decodificar fecha de fabricación</string>
     <string name="action_replace">Reemplazar</string>
     <string name="action_append">Combinar</string>
+    <string name="action_do_not_show_again">No mostrar este mensaje de nuevo</string>
+    <string name="action_chose_dump">Elige un dump&#8230;</string>
+    <string name="action_dont_save">No guardar</string>
+    <string name="action_save_as_default">Guardar como Predeterminado</string>
+    <string name="action_save_keys">Guardar claves</string>
+    <string name="action_calc_bcc">Calcular BCC</string>
+    <string name="action_install_external_nfc">Instala \"External NFC\"</string>
+    <string name="action_start_external_nfc">Ve a \"External NFC\"</string>
+    <string name="action_external_nfc_is_running">\"External NFC\" está ejecutandose</string>
+    <string name="action_clone_uid">Calcular el bloque 0 y clonar UID</string>
+    <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
+    <string name="action_file_type_keys">.keys/.txt (Mifare Classic Tool)</string>
+    <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
+    <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
+    <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_file_type_bin">.bin (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_import_dump">Importar Dump</string>
+    <string name="action_export_dump">Exportar Dump</string>
+    <string name="action_import_keys">Importar Keys</string>
+    <string name="action_export_keys">Exportar Keys</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nueva etiqueta encontrada</string>
@@ -292,6 +371,28 @@
     <string name="info_key_map_error">Error: Conexión perdida con la etiqueta</string>
     <string name="info_block0_missing">Error: No hay bloque de fábrica
         (bloque 0)</string>
+    <string name="info_not_vb">Error: El bloque seleccionado no es un Bloque de Valor</string>
+    <string name="info_value_too_big">Error: El valor es demasiado grande</string>
+    <string name="info_write_permission">El permiso de escritura es necesario para poder funcionar correctamente</string>
+    <string name="info_bcc_not_valid">Error: El bloque 0 del BCC no es válido</string>
+    <string name="info_invalid_uid_length">Error: Tamaño del UID inválido</string>
+    <string name="info_sector_count_error">Error: El recuento de sectores debe estar entre 1 y 40</string>
+    <string name="info_share_error">Error: Error al compartir archivo</string>
+    <string name="info_retry_authentication_count_error">Error: Los reintentos deben estar entre
+        1 y 1000</string>
+    <string name="info_mapping_no_keyfile_selected">Error: No se ha seleccionado ningún fichero de claves</string>
+    <string name="info_mapping_no_keyfile_found">Error: No se ha encontrado ningún fichero de claves</string>
+    <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
+        es incorrecto</string>
+    <string name="info_incorrect_key">Error: La clave no es correcta</string>
+    <string name="info_file_exported">Archivo exportado al almacenamiento externo</string>
+    <string name="info_file_imported">Archivo importado</string>
+    <string name="info_convert_error">Error: No se ha podido convertir</string>
+    <string name="info_incomplete_dump">Error: Dump incompleto o de gran tamaño</string>
+    <string name="info_error_reading_file">Error: No se ha podido leer el archivo</string>
+    <string name="info_random_uid">Generar UID aleatorio</string>
+    <string name="info_invalid_key_file">Error: No es un archivo de claves válido</string>
+
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">La antena NFC no está habilitada.
@@ -424,10 +525,71 @@
          (e.g. 12, queriendo decir 2012).
         \n\nQuizás la etiqueta no sea una MIFARE Classic original.</string>
 
+
+
+
+     <string name="dialog_save_conflict_title">El archivo ya existe</string>
+    <string name="dialog_save_conflict_dump">Los archivos ya existen.
+        ¿Qué es lo que quieres hacer?
+        \n\n<b>Nota: Los archivos que contienen multiples dumps (creados usando
+        \"append\") no pueden ser mostrados, editados o escritospor esta app.</b></string>
+    <string name="dialog_save_conflict_keyfile">Este fichero ya existe.
+        ¿Que es lo que quieres hacer?</string>
+    <string name="dialog_donate_title">Donar</string>
+    <string name="dialog_donate">
+        <b>¡MIFARE Classic Tool se ha actualizado!</b>
+        \n\nSI las nuevas funcionalidades, arreglos o la app en general te hacer feliz,
+        por favor, considera hacer al desarrollador feliz. !Cómprale una cerveza! ;)
+        \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Obtén la versión de donadores</a>
+        \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
+        en github / link para donar</a>
+    </string>
+    <string name="dialog_save_before_quitting_title">Cambios sin guardar</string>
+        <string name="dialog_save_before_quitting"><b>¡Hay cambios sin guardar!</b>
+        \n¿Quieres guardar esos cambios?
+    </string>
+    <string name="dialog_no_nfc_support_title">Sin soporte para NFC</string>
+    <string name="dialog_no_nfc_support">Tu dispositivo no tiene un lector NFC. Por lo tanto no puedes ni leer ni escribir a etiquetas NFC.
+        \n\nSi tu dispositivo soporta USB-OTG puede que puedas conectarle un
+        lector externo NFC a tu dispositivo Android.
+        \n\nMifare Classic Tool debería funcionar comjuntamente con la app \"External NFC\",
+        la cual soporta varios lectores NFC USB. Sin embargo, pueden haber algunas limitaciones.
+    </string>
+    <string name="dialog_start_external_nfc_title">External NFC Service</string>
+    <string name="dialog_start_external_nfc">El servicio de \"External NFC\" no está corriendo.
+        Por favor, habilita el servicio para que Mifare Classic Tool pueda usar un lector NFC externo.
+    </string>
+    <string name="dialog_info_external_nfc_title">External NFC Service</string>
+    <string name="dialog_info_external_nfc">Tu dispositivo no tiene un lector NFC
+        o no es soportado por MIFARE Classic, pero la app \"External NFC\" está instalada.
+        Por favor asegúrese de que el servicio \"External NFC\" está ejecutandose para poder usar
+        Mifare Classic Tool con un lector externo NFC.
+    </string>
+    <string name="dialog_gen2_tags_info_title">Clonando el UID</string>
+    <string name="dialog_gen2_tags_info">El primer bloque del primer sector de una etiqueta MIFARE
+        Classic contiene el UID y es de solo lectura, es decir, no se puede escribir. Pero hay
+        etiquetas especiales MIFARE Classic (\"magic tags 2nd gen\", alias \"block 0 direct write tags\")
+        que admiten la escritura en el primer bloque (incluido el UID) con un simple comando de escritura.
+        Esta aplicación puede escribir en dichas etiquetas y, por lo tanto, puede clonar el UID. Sin embargo, algunas
+        etiquetas (\"magic tags 1st gen\") requieren una secuencia de comandos especial para ponerlos en el
+        estado en el que es posible escribir en el bloque del fabricante. Estas etiquetas no funcionarán.</string>
+    <string name="dialog_rest_of_block_0_title">Resto del Bloque 0</string>
+    <string name="dialog_rest_of_block_0">Las etiquetas MIFARE Classic normalmente solo pueden
+        escritas por bloques. EL UID es representado por los primeros bytes del bloque 0. Para cambiar el UID, 
+        se debe escribir el bloque 0 completo. Los datos del \"resto del bloque 0\" son
+        los bytes que se agregarán al UID para representar un bloque completo.</string>
+    <string name="dialog_key_for_block_0_title">Clave para el Bloque 0</string>
+    <string name="dialog_key_for_block_0">Para escribir en el bloque 0 (el bloque con el UID),
+        necesita la clave con privilegios de escritura. Para las etiquetas con formato en blanco o de fábrica,
+        la clave A tiene un valor de \"FFFFFFFFFFFF\".</string>
+
+
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.j. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">e.j. 423</string>
+    <string name="hint_custom_sector_count">e.g. 16 para 1K</string>
+    <string name="hint_custom_retry_authentication_count">Número de reintentos</string>
 
 </resources>
