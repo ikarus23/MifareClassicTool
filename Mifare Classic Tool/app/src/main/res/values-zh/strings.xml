@@ -198,7 +198,7 @@
     <string name="action_editor_only">使用离线模式</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">取消</string>
-    <string name="action_choose_file">选定选择的文件</string>
+    <string name="action_choose_file">选择文件</string>
     <string name="action_open_dump_file">打开转储文件</string>
     <string name="action_change">更改</string>
     <string name="action_read_all_sectors">读全部扇区</string>
@@ -336,7 +336,7 @@
     <string name="info_block0_missing">错误:无厂商块(块0)</string>
     <string name="info_not_vb">错误:选择的块非值块</string>
     <string name="info_value_too_big">错误:值太大</string>
-    <string name="info_write_permission">写权限需要正常工作</string>
+    <string name="info_write_permission">需要获得写入权限</string>
     <string name="info_bcc_not_valid">错误:块0的BCC无效</string>
     <string name="info_invalid_uid_length">错误:无效的UID长度</string>
     <string name="info_sector_count_error">错误:扇区数必须在0到40之间</string>
