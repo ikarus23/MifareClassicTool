@@ -358,9 +358,9 @@
     <string name="dialog_nfc_not_enabled">未启用NFC，请到设置中启用。</string>
     <string name="dialog_nfc_not_enabled_title">NFC未启用</string>
     <string name="dialog_no_mfc_support_device_title">没有支持MIFARE Classic的设备</string>
-    <string name="dialog_no_mfc_support_device"><![CDATA[您的设备(由于硬件)不支持MIFARE Classic !!仅可能显示UID和其他一些常规信息｡无法进行进一步的I/O操作｡<br /><br />您可以在<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">上查看不支持MIFARE Classic的已知设备列表｡</a>若您的设备不在该列表中,请通过电子邮件告知开发人员<a href="mailto:fooblubb@gmail.com"></a><br /><br />若您的设备支持USB-OTG,则可以将外部NFC读卡器连接到Android设备｡ Mifare Classic Tool应该与<i>External NFC</i>应用程序配合使用,该应用程序支持多种基于USB的NFC读取器｡但是可能会有一些限制｡]]></string>
+    <string name="dialog_no_mfc_support_device"><![CDATA[您的设备(由于硬件)不支持MIFARE Classic !!仅可能显示UID和其他一些常规信息。无法进行进一步的I/O操作。<br /><br />您可以在<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">上查看不支持MIFARE Classic的已知设备列表。</a>若您的设备不在该列表中,请通过电子邮件告知开发人员<a href="mailto:fooblubb@gmail.com"></a><br /><br />若您的设备支持USB-OTG,则可以将外部NFC读卡器连接到Android设备。 Mifare Classic Tool应该与<i>External NFC</i>应用程序配合使用,该应用程序支持多种基于USB的NFC读取器。但是可能会有一些限制。]]></string>
     <string name="dialog_no_mfc_support_tag_title">没有MIFARE Classic标签</string>
-    <string name="dialog_no_mfc_support_tag"><![CDATA[此标签与MIFARE Classic技术不兼容!请注意,此App仅适用于MIFARE Classic标签!<br /><br /><b>请使用其他标签｡</b><br /><br /><small>(注意:在极少数情况下,此消息可能是由于读卡区放置了多个标签或由于特殊的ATQA + SAK值｡)</small>]]></string>
+    <string name="dialog_no_mfc_support_tag"><![CDATA[此标签与MIFARE Classic技术不兼容!请注意,此App仅适用于MIFARE Classic标签!<br /><br /><b>请使用其他标签。</b><br /><br /><small>(注意:在极少数情况下,此消息可能是由于读卡区放置了多个标签或由于特殊的ATQA + SAK值。)</small>]]></string>
     <string name="dialog_save_dump_title">保存转储</string>
     <string name="dialog_save_dump">输入转储文件名</string>
     <string name="dialog_mapping_range_title">选择范围</string>
@@ -382,7 +382,7 @@
     <string name="dialog_block0_writing_title">写厂商块(块0)</string> 
     <string name="dialog_block0_writing"><b>MIFARE Classic 标签的扇区0首块是不可写入的。</b>\n\n请确保您使用的是支持(同标准MIFARE Classic 写命令)写入厂商块(块0)的特殊标签\n\n<b>查看“帮助信息“ - “写标签“ 节 获取更多信息.</b></string>
     <string name="dialog_static_ac_title">使用静态访问控制条件</string>
-    <string name="dialog_static_ac"><b>用选定的条件替换转储中的所有访问控制条件｡</b> \n\n若转储文件包含对于标签永久存在的访问控制条件,这会很有用｡若读卡器没有检查它们,则可以轻松地使标签能重复使用｡\n\n <b>警告:写错数据可能会对标签造成无法挽回的损害｡</b></string>
+    <string name="dialog_static_ac"><b>用选定的条件替换转储中的所有访问控制条件。</b> \n\n若转储文件包含对于标签永久存在的访问控制条件,这会很有用。若读卡器没有检查它们,则可以轻松地使标签能重复使用。\n\n <b>警告:写错数据可能会对标签造成无法挽回的损害。</b></string>
     <string name="dialog_choose_ac_title">选定访问条件</string>
     <string name="dialog_write_sectors_title">写扇区</string>
     <string name="dialog_write_sectors">选择你想写的扇区:</string>
