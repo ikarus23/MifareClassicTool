@@ -73,7 +73,7 @@
     <string name="text_ac_pos">Location:</string>
     <string name="text_ac_error">Error: This configuration
         is not known</string>
-    <string name="text_vb_what">What:</string>
+    <string name="text_vb_location">Location:</string>
     <string name="text_vb_value">Value:</string>
     <string name="text_vb_orig">Original:</string>
     <string name="text_vb_as_int_decoded">As Integer:</string>

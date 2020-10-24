@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="100dp"
-            android:text="@string/text_vb_what"
+            android:text="@string/text_vb_location"
             android:textColor="@color/light_gray" />
 
         <TextView
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:height="0dp"
                     android:paddingRight="100dp"
-                    android:text="@string/text_vb_what" />
+                    android:text="@string/text_vb_location" />
         
                 <TextView
                     android:id="@+id/textViewValueBlocksToIntHeaderFake2"
