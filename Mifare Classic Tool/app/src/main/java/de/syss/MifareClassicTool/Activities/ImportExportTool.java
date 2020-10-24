@@ -574,6 +574,12 @@ public class ImportExportTool extends BasicActivity {
                         return null;
                     }
                     byte[] bytes = Common.hex2ByteArray(block);
+                    if (bytes == null) {
+                        // Error. Invalid block.
+                        Toast.makeText(this, R.string.info_convert_error,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
                     for (byte b : bytes) {
                         sb.append((char)b);
                     }
@@ -669,6 +675,12 @@ public class ImportExportTool extends BasicActivity {
                 StringBuilder sb = new StringBuilder();
                 for (String key : keys) {
                     byte[] bytes = Common.hex2ByteArray(key);
+                    if (bytes == null) {
+                        // Error. Invalid key.
+                        Toast.makeText(this, R.string.info_convert_error,
+                                Toast.LENGTH_LONG).show();
+                        return null;
+                    }
                     for (byte b : bytes) {
                         sb.append((char)b);
                     }
