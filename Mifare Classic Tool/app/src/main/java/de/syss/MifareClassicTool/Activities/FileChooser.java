@@ -267,7 +267,7 @@ public class FileChooser extends BasicActivity {
      */
     @SuppressLint("SetTextI18n")
     private boolean updateFileIndex(File path) {
-        boolean isEmpty;
+        boolean isEmpty = true;
         File[] files = null;
 
         if (path != null) {
@@ -277,9 +277,7 @@ public class FileChooser extends BasicActivity {
 
         // Refresh file list.
         if (files != null && files.length > 0) {
-            isEmpty = false;
             Arrays.sort(files);
-
             for (File f : files) {
                 if (f.isFile()) { // Do not list directories.
                     RadioButton r = new RadioButton(this);
@@ -287,8 +285,10 @@ public class FileChooser extends BasicActivity {
                     mGroupOfFiles.addView(r);
                 }
             }
-            // Check first file.
-            ((RadioButton) mGroupOfFiles.getChildAt(0)).setChecked(true);
+            if (mGroupOfFiles.getChildCount() > 0) {
+                isEmpty = false;
+                ((RadioButton) mGroupOfFiles.getChildAt(0)).setChecked(true);
+            }
         } else {
             // No files in directory.
             isEmpty = true;
