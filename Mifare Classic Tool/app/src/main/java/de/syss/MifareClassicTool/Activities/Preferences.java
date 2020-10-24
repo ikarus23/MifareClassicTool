@@ -312,22 +312,43 @@ public class Preferences extends BasicActivity {
      */
     public void onSave(View view) {
         // Check if settings are valid.
-        int customSectorCount = Integer.parseInt(
-                mCustomSectorCount.getText().toString());
-        if (customSectorCount > 40 || customSectorCount <= 0) {
-            Toast.makeText(this, R.string.info_sector_count_error,
-                    Toast.LENGTH_LONG).show();
-            return;
+        boolean error = false;
+        int customSectorCount = 16;
+        if (mUseCustomSectorCount.isChecked()) {
+            try {
+                customSectorCount = Integer.parseInt(
+                        mCustomSectorCount.getText().toString());
+            } catch (NumberFormatException ex) {
+                error = true;
+            }
+            if (!error && customSectorCount > 40 || customSectorCount <= 0) {
+                error = true;
+            }
+            if (error) {
+                Toast.makeText(this, R.string.info_sector_count_error,
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
         }
-        int retryAuthenticationCount = Integer.parseInt(
-                mRetryAuthenticationCount.getText().toString());
-        if (retryAuthenticationCount > 1000 || retryAuthenticationCount <= 0) {
-            Toast.makeText(this,
-                    R.string.info_retry_authentication_count_error,
-                    Toast.LENGTH_LONG).show();
-            return;
+        error = false;
+        int retryAuthenticationCount = 1;
+        if (mUseRetryAuthentication.isChecked()) {
+            try {
+                retryAuthenticationCount = Integer.parseInt(
+                        mRetryAuthenticationCount.getText().toString());
+            } catch (NumberFormatException ex) {
+                error = true;
+            }
+            if (!error && retryAuthenticationCount > 1000 || retryAuthenticationCount <= 0) {
+                error = true;
+            }
+            if (error) {
+                Toast.makeText(this,
+                        R.string.info_retry_authentication_count_error,
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
         }
-
 
         // Save preferences.
         SharedPreferences.Editor edit = Common.getPreferences().edit();
