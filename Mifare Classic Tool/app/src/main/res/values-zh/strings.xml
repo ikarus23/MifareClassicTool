@@ -45,7 +45,7 @@
     <string name="title_activity_preferences">首选项</string>
     <string name="title_activity_diff_tool">差异比较</string>
     <string name="title_activity_bcc_tool">BCC计算器</string>
-    <string name="title_activity_clone_uid">将UID克隆到CUID/FUID卡</string>
+    <string name="title_activity_clone_uid">将UID克隆到2代魔术卡</string>
     <string name="title_activity_import_export_tool">导入/导出工具</string>
     <string name="title_activity_uid_log_tool">UID日志</string>
     <string name="title_activity_data_conversion_tool">数据转换工具</string>
@@ -56,7 +56,7 @@
     <string name="text_key_map_progress">密钥映射中:</string>
     <string name="text_sector">扇区</string>
     <string name="text_block">块</string>
-    <string name="text_caption_title">标题</string>
+    <string name="text_caption_title">图例</string>
     <string name="text_keya">密钥A</string>
     <string name="text_keyb">密钥B</string>
     <string name="text_ac">访问控制</string>
@@ -68,22 +68,22 @@
     <string name="text_chooser_info_text">选择一个文件:</string>
     <string name="text_open_dump_title">打开转储的标签</string>
     <string name="text_no_files_in_chooser">没找到文件</string>
-    <string name="text_ac_read">读块:</string>
-    <string name="text_ac_write">写块:</string>
-    <string name="text_ac_incr">增值:</string>
+    <string name="text_ac_read">读块</string>
+    <string name="text_ac_write">写块</string>
+    <string name="text_ac_incr">增值</string>
     <string name="text_ac_decr">减值/转移/恢复</string>
-    <string name="text_ac_pos">位置:</string>
+    <string name="text_ac_pos">位置</string>
     <string name="text_ac_error">错误: 未知配置</string>
-    <string name="text_vb_what">在哪里:</string>
-    <string name="text_vb_value">值:</string>
-    <string name="text_vb_orig">原始:</string>
-    <string name="text_vb_as_int_decoded">整数:</string>
-    <string name="text_sector_range">创建扇区映射:</string>
+    <string name="text_vb_what">位置</string>
+    <string name="text_vb_value">结果值</string>
+    <string name="text_vb_orig">原始值</string>
+    <string name="text_vb_as_int_decoded">整数</string>
+    <string name="text_sector_range">创建扇区映射</string>
     <string name="text_sector_range_all">全部</string>
     <string name="text_update_colors">更新配色</string>
     <string name="text_data">数据</string>
     <string name="text_value">值</string>
-    <string name="text_write_dump_info">写转储文件(或其部分扇区)到标签。\n包含未知数据(---)的块将被跳过!</string>
+    <string name="text_write_dump_info">将转储文件(或其部分扇区)写入标签。\n包含未知数据(---)的块将被跳过!</string>
     <string name="text_factory_format_info">尝试将标签格式化为工厂/交付状态。</string>
     <string name="text_incr_decr_value_block_info">增值或减值并传输值块(若你不知道什么是值块,请查看“帮助信息“)</string>
     <string name="text_starting_at_0">(从0开始)</string>
@@ -144,7 +144,7 @@
     <string name="text_decrement">减值</string>
     
     <!-- Has to be 32 chars long. The text should be centered. -->
-    <string name="text_identical_data">---------------相同---------------</string>
+    <string name="text_identical_data">-------------相同-------------</string>
     
     <!-- Has to be 16 chars long. The text should be centered. -->
     <string name="text_invalid_data">------无效数据------</string>
@@ -152,21 +152,21 @@
     <string name="text_only_in_dump2">扇区只存在于转储2(B)</string>
     <string name="text_uid_part">UID (部分)</string>
     <string name="text_bcc">BCC</string>
-    <string name="text_clone_uid_info">该工具可以将标签的UID克隆到C/FUID(Android兼容,可直接写入,可写0块)｡点击信息按钮以获取更多信息｡</string>
+    <string name="text_clone_uid_info">该工具可以将标签的UID克隆到2代魔术卡(即FUID卡及部分CUID卡)｡点击信息按钮以获取更多信息｡</string>
     <string name="text_uid_to_clone">要克隆的UID</string>
     <string name="text_clone_uid_manufacturer_block_rest">块0的其余部分</string>
     <string name="text_write_key">块0的写密钥</string>
     <string name="text_status_log">状态日志</string>
     <string name="text_use_uid_of_scanned_tag">使用已扫描标签的UID</string>
     <string name="text_block_0_calculated">计算所得块0</string>
-    <string name="text_waiting_for_magic_tag">等待C/FUID</string>
+    <string name="text_waiting_for_magic_tag">等待2代魔术卡中</string>
     <string name="text_writing_block_0">写块0</string>
     <string name="text_no_errors_on_write">写入过程中没有错误</string>
     <string name="text_rescan_tag_to_check">重新扫描克隆卡片以验证成功</string>
     <string name="text_checking_clone">验证克隆中</string>
     <string name="text_clone_successfully">成功克隆UID卡</string>
     <string name="text_uid_match_error">UID不匹配</string>
-    <string name="text_clone_error">错误:您确定使用的是C/FUID?</string>
+    <string name="text_clone_error">错误:您确定使用的是2代魔术卡?</string>
     <string name="text_uid_length_error">错误:UID长度不匹配(4/7/10字节)</string>
     <string name="text_select_file">选择文件</string>
     <string name="text_select_directory">选择目录</string>
@@ -225,7 +225,7 @@
     <string name="action_write_mfid">高级:开启块0写入</string>
     <string name="action_show_options">显示选项</string>
     <string name="action_static_ac">应用这些访问条件到所有扇区</string>
-    <string name="action_retry_authentication">若验证失败,请重试</string>
+    <string name="action_retry_authentication">验证失败时的重试次数</string>
     <string name="action_use_internal_storage">将转储和密钥文件保存到内部存储器</string>
     <string name="action_auto_reconnect">高级: 在密钥映射时失去连接则自动重连</string>
     <string name="action_auto_copy_uid">将UID复制到剪贴板</string>
@@ -289,7 +289,7 @@
     <string name="info_valid_dump_sector_range">
         <![CDATA[错误:扇区超出范围 (0~39)]]>
     </string>
-    <string name="info_valid_dump_double_sector">错误:多次相同的扇区数</string>
+    <string name="info_valid_dump_double_sector">错误:扇区编号重复</string>
     <string name="info_valid_dump_empty_dump">错误:空转储</string>
     <string name="info_editor_init_error">错误:编辑器中的数据错误</string>
     <string name="info_no_dumps">无转储文件,请读标签并保存转储。</string>
@@ -377,12 +377,12 @@
     <string name="dialog_not_writable">部分不可写!请检查下面的列表。</string>
     <string name="dialog_tools_menu_title">可用的工具</string>
     <string name="dialog_wait_write_tag_title">写入中…</string>
-    <string name="dialog_wait_write_tag">写标签…\n (不要移除标签)</string>
+    <string name="dialog_wait_write_tag">写标签…\n(不要移除标签)</string>
     <string name="dialog_share_title">发送转储文件到…</string>
     <string name="dialog_block0_writing_title">写厂商块(块0)</string> 
     <string name="dialog_block0_writing"><b>MIFARE Classic 标签的扇区0首块是不可写入的。</b>\n\n请确保您使用的是支持(同标准MIFARE Classic 写命令)写入厂商块(块0)的特殊标签\n\n<b>查看“帮助信息“ - “写标签“ 节 获取更多信息.</b></string>
     <string name="dialog_static_ac_title">使用静态访问控制条件</string>
-    <string name="dialog_static_ac"><b>用选定的条件替换转储中的所有访问控制条件。</b> \n\n若转储文件包含对于标签永久存在的访问控制条件,这会很有用。若读卡器没有检查它们,则可以轻松地使标签能重复使用。\n\n <b>警告:写错数据可能会对标签造成无法挽回的损害。</b></string>
+    <string name="dialog_static_ac"><b>用选定的条件替换转储中的所有访问控制条件。</b> \n\n若转储文件包含对于标签永久存在的访问控制条件,这会很有用。若读卡器没有检查它们,则可以轻松地使标签能重复使用。\n\n<b>警告:写错数据可能会对标签造成无法挽回的损害。</b></string>
     <string name="dialog_choose_ac_title">选定访问条件</string>
     <string name="dialog_write_sectors_title">写扇区</string>
     <string name="dialog_write_sectors">选择你想写的扇区:</string>
@@ -402,7 +402,7 @@
         &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug提交处</a><br />
         &#8226; <a href="https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">更新日志/历史版本</a><br />
         &#8226; <a href="http://publications.icaria.de/mct/">文档,安装包等</a><br />
-        &#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Proxmark 论坛</a><br /><br />MIFARE&reg; 为NXP Semiconductors的注册商标。]]></string>
+        &#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Proxmark论坛</a><br /><br />MIFARE&reg; 为NXP Semiconductors的注册商标。]]></string>
     <string name="dialog_auto_reconnect_title">自动重连</string>
     <string name="dialog_auto_reconnect">密钥映射过程中, 若出现连接丢失(天线问题, 超时等),该App将尝试重新连接(间隔500ms)直到成功.\n\n<b>若在密钥映射过程中遇到问题, 这也许有用.然而, 这也可能导致MCT行为异常.</b>\n\n对某些已知问题,本设置也许有用:\n&#8226; 特殊标签 (例如 smartMX)</string>
     <string name="dialog_retry_authentication_title">重试身份验证</string>
@@ -413,9 +413,9 @@
     <string name="dialog_custom_sector_count">忽略检测到的扇区数并使用自定义的扇区数,这样可以使用全部的2K内存。</string>
     <string name="dialog_date_of_manuf_title">制造日期</string>
     <string name="dialog_date_of_manuf"><![CDATA[标签在<b>%1$s</b>到<b>%2$s</b>期间生产<br /><br />(这些信息可能有误. 查看 “帮助信息“ 了解更多.)]]></string>
-    <string name="dialog_date_of_manuf_error"><b>制造日期包含无效数据。</b>\n\n\n厂商块(块0)的最后2字节应为二进制编码的十进制格式(仅数字,无字母)。\n第一个字节(制造周)必须在1至53之间(例如28)。\n第二个字节(制造年份)必须在0至99之间(例如12,意味着2012)。\n\n也许这个标签是不是原始的MIFARE Classic标签。\n </string>
+    <string name="dialog_date_of_manuf_error"><b>制造日期包含无效数据。</b>\n\n\n厂商块(块0)的最后2字节应为二进制编码的十进制格式(仅数字,无字母)。\n第一个字节(制造周)必须在1至53之间(例如28)。\n第二个字节(制造年份)必须在0至99之间(例如12,意味着2012)。\n\n也许这个标签是不是原始的MIFARE Classic标签。</string>
     <string name="dialog_save_conflict_title">文件已存在</string>
-    <string name="dialog_save_conflict_dump">这个文件已经存在,怎么办?\n\n <b>注:包含多个转储文件的文件(使用“追加“创建)不能显示、编辑或写入。</b></string>
+    <string name="dialog_save_conflict_dump">这个文件已经存在,怎么办?\n\n<b>注:包含多个转储文件的文件(使用“追加“创建)不能显示、编辑或写入。</b></string>
     <string name="dialog_save_conflict_keyfile">文件已存在,怎么办?</string>
     <string name="dialog_donate_title">捐赠</string>
     <string name="dialog_donate"><b>MIFARE Classic工具已更新!</b>\n\n如果新特性, 问题修复或这个程序帮助到你,请考虑支持一下开发者。给他买瓶啤酒吧! ;)</string>
@@ -428,7 +428,7 @@
     <string name="dialog_info_external_nfc_title">External NFC服务</string>
     <string name="dialog_info_external_nfc">您的设备没有NFC读卡器或不支持MIFARE Classic,但已安装了“ External NFC “应用。请确保“ External NFC “服务正在运行,以便Mifare Classic工具使用外部NFC读卡器。</string>
     <string name="dialog_gen2_tags_info_title">克隆UID</string>
-    <string name="dialog_gen2_tags_info">MIFARE Classic标签的第一扇区的第一块包含只读的UID,即不可写入。但是有一些特殊的MIFARE Classic标签(即CUID/FUID卡,又名“ 块0直接写入标签”或”2代magic tags”),支持通过write命令写入第一个块(包括UID)。本App能够写入此类标签,以克隆UID。但是,某些特殊标签(UID卡,即“一代magic tags”)需要特殊的命令序列,才能将其置于可以写入厂商块(即块0)的状态。本App无法用于这些标签。</string>
+    <string name="dialog_gen2_tags_info">MIFARE Classic标签的第一扇区的第一块包含只读的UID,即不可写入。但是有一些特殊的MIFARE Classic标签(即”2代magic tags”,常见形式为FUID卡及部分CUID卡,又名“ 块0直接写入标签”),支持通过write命令写入第一个块(包括UID)。本App能够写入此类标签,以克隆UID。但是,某些特殊标签(UID卡,即“一代magic tags”;以及特定种类的CUID卡)需要特殊的命令序列,才能将其置于可以写入厂商块(即块0)的状态。本App无法用于这些标签。</string>
     <string name="dialog_rest_of_block_0_title">块0的其余部分</string>
     <string name="dialog_rest_of_block_0">MIFARE Classic标签通常只能逐块编写。 UID由块0的前几个字节表示。要更改UID,必须写入完整的块0。 “块0的其余部分“是将数据填充到UID后,以形成完整的块数据。</string>
     <string name="dialog_key_for_block_0_title">块0的密钥</string>
