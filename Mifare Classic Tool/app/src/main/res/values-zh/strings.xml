@@ -20,7 +20,7 @@
 <resources>
 
     <!-- Common stuff -->
-    <string name="app_name">Mifare Classic工具</string>
+    <string name="app_name">Mifare Classic 工具</string>
     <string name="app_version">App版本</string>
     
     <!-- Activity titles -->
@@ -75,9 +75,9 @@
     <string name="text_ac_pos">位置</string>
     <string name="text_ac_error">错误: 未知配置</string>
     <string name="text_vb_what">位置</string>
-    <string name="text_vb_value">结果值</string>
+    <string name="text_vb_value">值</string>
     <string name="text_vb_orig">原始值</string>
-    <string name="text_vb_as_int_decoded">整数</string>
+    <string name="text_vb_as_int_decoded">整数形式</string>
     <string name="text_sector_range">创建扇区映射</string>
     <string name="text_sector_range_all">全部</string>
     <string name="text_update_colors">更新配色</string>
@@ -85,7 +85,7 @@
     <string name="text_value">值</string>
     <string name="text_write_dump_info">将转储文件(或其部分扇区)写入标签。\n包含未知数据(---)的块将被跳过!</string>
     <string name="text_factory_format_info">尝试将标签格式化为工厂/交付状态。</string>
-    <string name="text_incr_decr_value_block_info">增值或减值并传输值块(若你不知道什么是值块,请查看“帮助信息“)</string>
+    <string name="text_incr_decr_value_block_info">增值或减值并传输值块(若你不知道什么是值块,请查看“帮助信息”)</string>
     <string name="text_starting_at_0">(从0开始)</string>
     <string name="text_open_key_file_title">打开或创建一个密钥文件</string>
     <string name="text_choose_dump_to_write">选定要写入的转储:</string>
@@ -114,7 +114,7 @@
     <string name="text_sak">SAK</string>
     <string name="text_ats">ATS</string>
     <string name="text_tag_type_and_manuf">标签类型和制造商</string>
-    <string name="text_tag_type_guess">“标签类型和制造商“ 可能有误.\n查看 “帮助信息“ 获取更多信息.</string>
+    <string name="text_tag_type_guess">“标签类型和制造商”可能有误.\n查看“帮助信息”获取更多信息.</string>
     <string name="text_mem_size">内存大小</string>
     <string name="text_block_size">块大小</string>
     <string name="text_sector_count">扇区数</string>
@@ -172,7 +172,7 @@
     <string name="text_select_directory">选择目录</string>
     <string name="text_choose_dump_file">选择转储文件</string>
     <string name="text_choose_key_file">选择一些密钥文件:</string>
-    <string name="text_export_convert_dest_info">导出/转换的文件始终保存于外部存储设备(例如SD卡)的“MifareClassicTool/export“中｡若已存在同名文件,则该文件将被覆盖｡</string>
+    <string name="text_export_convert_dest_info">导出/转换的文件始终保存于外部存储设备(例如SD卡)的“MifareClassicTool/export”中｡若已存在同名文件,则该文件将被覆盖｡</string>
     <string name="text_random_uid">随机UID</string>
     <string name="text_no_uid_logs">UID日志为空</string>
     <string name="text_not_ascii">非ASCII码</string>
@@ -261,9 +261,9 @@
     <string name="action_save_as_default">保存为默认</string>
     <string name="action_save_keys">保存密钥</string>
     <string name="action_calc_bcc">BCC计算器</string>
-    <string name="action_install_external_nfc">安装“外部NFC“</string>
-    <string name="action_start_external_nfc">转到“外部NFC”</string>
-    <string name="action_external_nfc_is_running">“外部NFC “正在运行</string>
+    <string name="action_install_external_nfc">安装“External NFC”App</string>
+    <string name="action_start_external_nfc">转到“External NFC”App</string>
+    <string name="action_external_nfc_is_running">“External NFC”正在运行</string>
     <string name="action_clone_uid">计算块0并克隆UID</string>
     <string name="action_file_type_mct">.mct (Mifare Classic工具)</string>
     <string name="action_file_type_keys">.keys/.txt (Mifare Classic工具)</string>
@@ -380,7 +380,7 @@
     <string name="dialog_wait_write_tag">写标签…\n(不要移除标签)</string>
     <string name="dialog_share_title">发送转储文件到…</string>
     <string name="dialog_block0_writing_title">写厂商块(块0)</string> 
-    <string name="dialog_block0_writing"><b>MIFARE Classic 标签的扇区0首块是不可写入的。</b>\n\n请确保您使用的是支持(同标准MIFARE Classic 写命令)写入厂商块(块0)的特殊标签\n\n<b>查看“帮助信息“ - “写标签“ 节 获取更多信息.</b></string>
+    <string name="dialog_block0_writing"><b>MIFARE Classic 标签的扇区0首块是不可写入的。</b>\n\n请确保您使用的是支持(同标准MIFARE Classic 写命令)写入厂商块(块0)的特殊标签\n\n<b>查看“帮助信息” - “写标签” 节 获取更多信息.</b></string>
     <string name="dialog_static_ac_title">使用静态访问控制条件</string>
     <string name="dialog_static_ac"><b>用选定的条件替换转储中的所有访问控制条件。</b> \n\n若转储文件包含对于标签永久存在的访问控制条件,这会很有用。若读卡器没有检查它们,则可以轻松地使标签能重复使用。\n\n<b>警告:写错数据可能会对标签造成无法挽回的损害。</b></string>
     <string name="dialog_choose_ac_title">选定访问条件</string>
@@ -412,35 +412,35 @@
     <string name="dialog_custom_sector_count_title">自定义扇区数</string>
     <string name="dialog_custom_sector_count">忽略检测到的扇区数并使用自定义的扇区数,这样可以使用全部的2K内存。</string>
     <string name="dialog_date_of_manuf_title">制造日期</string>
-    <string name="dialog_date_of_manuf"><![CDATA[标签在<b>%1$s</b>到<b>%2$s</b>期间生产<br /><br />(这些信息可能有误. 查看 “帮助信息“ 了解更多.)]]></string>
+    <string name="dialog_date_of_manuf"><![CDATA[标签在<b>%1$s</b>到<b>%2$s</b>期间生产<br /><br />(这些信息可能有误. 查看 “帮助信息” 了解更多.)]]></string>
     <string name="dialog_date_of_manuf_error"><b>制造日期包含无效数据。</b>\n\n\n厂商块(块0)的最后2字节应为二进制编码的十进制格式(仅数字,无字母)。\n第一个字节(制造周)必须在1至53之间(例如28)。\n第二个字节(制造年份)必须在0至99之间(例如12,意味着2012)。\n\n也许这个标签是不是原始的MIFARE Classic标签。</string>
     <string name="dialog_save_conflict_title">文件已存在</string>
-    <string name="dialog_save_conflict_dump">这个文件已经存在,怎么办?\n\n<b>注:包含多个转储文件的文件(使用“追加“创建)不能显示、编辑或写入。</b></string>
+    <string name="dialog_save_conflict_dump">这个文件已经存在,怎么办?\n\n<b>注:包含多个转储文件的文件(使用“追加”创建)不能显示、编辑或写入。</b></string>
     <string name="dialog_save_conflict_keyfile">文件已存在,怎么办?</string>
     <string name="dialog_donate_title">捐赠</string>
-    <string name="dialog_donate"><b>MIFARE Classic工具已更新!</b>\n\n如果新特性, 问题修复或这个程序帮助到你,请考虑支持一下开发者。给他买瓶啤酒吧! ;)</string>
+    <string name="dialog_donate"><b>MIFARE Classic工具已更新!</b>\n\n如果新特性、问题修复或这个App帮助到你,请考虑支持一下开发者。给他买瓶啤酒吧! ;)</string>
     <string name="dialog_save_before_quitting_title">更改未保存</string>
     <string name="dialog_save_before_quitting"><b>有未保存的更改!</b> \n要保存这些更改吗?</string>
     <string name="dialog_no_nfc_support_title">没有支持的NFC设备</string>
-    <string name="dialog_no_nfc_support">您的设备没有NFC读卡器,因此,您无法读取或写入NFC标签。 \n\n若您的设备支持USB-OTG,则可以连接外部NFC读卡器。 \n\nMifare Classic工具应与“ External NFC “应用程序配合使用,该应用程序支持多种基于USB的NFC读取器,但是可能会有一些限制。</string>
+    <string name="dialog_no_nfc_support">您的设备没有NFC读卡器,因此,您无法读取或写入NFC标签。 \n\n若您的设备支持USB-OTG,则可以连接外部NFC读卡器。 \n\nMifare Classic工具应与“External NFC“应用程序配合使用,该应用程序支持多种基于USB的NFC读取器,但是可能会有一些限制。</string>
     <string name="dialog_start_external_nfc_title">External NFC服务</string>
-    <string name="dialog_start_external_nfc">“External NFC “服务未运行,请启用该服务,以便Mifare Classic工具使用外部NFC读卡器。</string>
+    <string name="dialog_start_external_nfc">“External NFC”服务未运行,请启用该服务,以便Mifare Classic工具使用外部NFC读卡器。</string>
     <string name="dialog_info_external_nfc_title">External NFC服务</string>
-    <string name="dialog_info_external_nfc">您的设备没有NFC读卡器或不支持MIFARE Classic,但已安装了“ External NFC “应用。请确保“ External NFC “服务正在运行,以便Mifare Classic工具使用外部NFC读卡器。</string>
+    <string name="dialog_info_external_nfc">您的设备没有NFC读卡器或不支持MIFARE Classic,但已安装了“External NFC”应用。请确保“External NFC”服务正在运行,以便Mifare Classic工具使用外部NFC读卡器。</string>
     <string name="dialog_gen2_tags_info_title">克隆UID</string>
-    <string name="dialog_gen2_tags_info">MIFARE Classic标签的第一扇区的第一块包含只读的UID,即不可写入。但是有一些特殊的MIFARE Classic标签(即”2代magic tags”,常见形式为FUID卡及部分CUID卡,又名“ 块0直接写入标签”),支持通过write命令写入第一个块(包括UID)。本App能够写入此类标签,以克隆UID。但是,某些特殊标签(UID卡,即“一代magic tags”;以及特定种类的CUID卡)需要特殊的命令序列,才能将其置于可以写入厂商块(即块0)的状态。本App无法用于这些标签。</string>
+    <string name="dialog_gen2_tags_info">MIFARE Classic标签的第一扇区的第一块包含只读的UID,即不可写入。但是有一些特殊的MIFARE Classic标签(即”2代magic tags”,常见形式为FUID卡及部分CUID卡,又名“块0直接写入标签”),支持通过write命令写入第一个块(包括UID)。本App能够写入此类标签,以克隆UID。但是,某些特殊标签(UID卡,即“一代magic tags”;以及特定种类的CUID卡)需要特殊的命令序列,才能将其置于可以写入厂商块(即块0)的状态。本App无法用于这些标签。</string>
     <string name="dialog_rest_of_block_0_title">块0的其余部分</string>
-    <string name="dialog_rest_of_block_0">MIFARE Classic标签通常只能逐块编写。 UID由块0的前几个字节表示。要更改UID,必须写入完整的块0。 “块0的其余部分“是将数据填充到UID后,以形成完整的块数据。</string>
+    <string name="dialog_rest_of_block_0">MIFARE Classic标签通常只能逐块编写。 UID由块0的前几个字节表示。要更改UID,必须写入完整的块0。“块0的其余部分”是将数据填充到UID后,以形成完整的块数据。</string>
     <string name="dialog_key_for_block_0_title">块0的密钥</string>
-    <string name="dialog_key_for_block_0">要写入块0(保存UID的块),您需要具有写入权限的相应密钥。对于空白或出厂模式的标签,此密钥是密钥A,其值为“ FFFFFFFFFFFF “。</string>
+    <string name="dialog_key_for_block_0">要写入块0(保存UID的块),您需要具有写入权限的相应密钥。对于空白或出厂模式的标签,此密钥是密钥A,其值为“FFFFFFFFFFFF”。</string>
     
     <!-- Hints -->
-    <string name="hint_hex_16_byte">十六进制,16字节(例如0A4F…)</string>
+    <string name="hint_hex_16_byte">十六进制,16字节(如0A4F…)</string>
     <string name="hint_hex_3_byte">十六进制,3字节</string>
     <string name="hint_hex_4_byte">十六进制,4字节</string>
     <string name="hint_hex_4_7_10_byte">十六进制,4/7/10字节</string>
     <string name="hint_hex_00">00</string>
-    <string name="hint_int_423">例如:423</string>
-    <string name="hint_custom_sector_count">例如1K:16</string>
+    <string name="hint_int_423">如:423</string>
+    <string name="hint_custom_sector_count">如1K:16</string>
     <string name="hint_custom_retry_authentication_count">重试次数</string>
 </resources>
