@@ -17,12 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
+
+
 <resources>
 
     <!-- Common stuff -->
     <string name="app_name">Mifare Classic 工具</string>
     <string name="app_version">App版本</string>
-    
+
     <!-- Activity titles -->
     <string name="title_activity_main">Mifare Classic工具</string>
     <string name="title_activity_read_tag">读标签</string>
@@ -49,7 +51,7 @@
     <string name="title_activity_import_export_tool">导入/导出工具</string>
     <string name="title_activity_uid_log_tool">UID日志</string>
     <string name="title_activity_data_conversion_tool">数据转换工具</string>
-    
+
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_files">选择密钥文件:</string>
     <string name="text_wait_read_tag">读标签中…\n(不要移开标签)</string>
@@ -142,10 +144,10 @@
     <string name="text_incr_decr_value_block">增/减 值块</string>
     <string name="text_increment">增值</string>
     <string name="text_decrement">减值</string>
-    
+
     <!-- Has to be 32 chars long. The text should be centered. -->
     <string name="text_identical_data">-------------相同-------------</string>
-    
+
     <!-- Has to be 16 chars long. The text should be centered. -->
     <string name="text_invalid_data">------无效数据------</string>
     <string name="text_only_in_dump1">扇区只存在于转储1(A)</string>
@@ -183,7 +185,7 @@
     <string name="text_dec_be">10进制(BE)</string>
     <string name="text_dec_le">10进制(LE)</string>
     <string name="text_invalid_ac">无效访问控制条件</string>
-    
+
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">读标签</string>
     <string name="action_write_tag">写标签</string>
@@ -275,7 +277,7 @@
     <string name="action_export_dump">导出转储文件</string>
     <string name="action_import_keys">导入密钥</string>
     <string name="action_export_keys">导出密钥</string>
-    
+
     <!-- Toast messages -->
     <string name="info_new_tag_found">发现新标签</string>
     <string name="info_no_external_storage">错误:外部存储器不可读/写</string>
@@ -353,7 +355,7 @@
     <string name="info_error_reading_file">错误:无法读取文件</string>
     <string name="info_random_uid">生成的随机UID</string>
     <string name="info_invalid_key_file">错误:无效的密钥文件</string>
-    
+
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">未启用NFC，请到设置中启用。</string>
     <string name="dialog_nfc_not_enabled_title">NFC未启用</string>
@@ -379,7 +381,7 @@
     <string name="dialog_wait_write_tag_title">写入中…</string>
     <string name="dialog_wait_write_tag">写标签…\n(不要移除标签)</string>
     <string name="dialog_share_title">发送转储文件到…</string>
-    <string name="dialog_block0_writing_title">写厂商块(块0)</string> 
+    <string name="dialog_block0_writing_title">写厂商块(块0)</string>
     <string name="dialog_block0_writing"><b>MIFARE Classic 标签的扇区0首块是不可写入的。</b>\n\n请确保您使用的是支持(同标准MIFARE Classic 写命令)写入厂商块(块0)的特殊标签\n\n<b>查看“帮助信息” - “写标签” 节 获取更多信息.</b></string>
     <string name="dialog_static_ac_title">使用静态访问控制条件</string>
     <string name="dialog_static_ac"><b>用选定的条件替换转储中的所有访问控制条件。</b> \n\n若转储文件包含对于标签永久存在的访问控制条件,这会很有用。若读卡器没有检查它们,则可以轻松地使标签能重复使用。\n\n<b>警告:写错数据可能会对标签造成无法挽回的损害。</b></string>
@@ -433,7 +435,7 @@
     <string name="dialog_rest_of_block_0">MIFARE Classic标签通常只能逐块编写。 UID由块0的前几个字节表示。要更改UID,必须写入完整的块0。“块0的其余部分”是将数据填充到UID后,以形成完整的块数据。</string>
     <string name="dialog_key_for_block_0_title">块0的密钥</string>
     <string name="dialog_key_for_block_0">要写入块0(保存UID的块),您需要具有写入权限的相应密钥。对于空白或出厂模式的标签,此密钥是密钥A,其值为“FFFFFFFFFFFF”。</string>
-    
+
     <!-- Hints -->
     <string name="hint_hex_16_byte">十六进制,16字节(如0A4F…)</string>
     <string name="hint_hex_3_byte">十六进制,3字节</string>
