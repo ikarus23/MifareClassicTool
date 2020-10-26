@@ -87,6 +87,25 @@
             android:layout_marginBottom="13dp"
             android:background="@color/light_gray" />
 
+        <Button
+            android:id="@+id/buttonImportExportToolBackupAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@android:drawable/ic_menu_save"
+            android:onClick="onBackupAll"
+            android:text="@string/action_backup_all" />
+
+        <!-- Separator -->
+        <View
+            android:id="@+id/separatorImportExportTool3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="13dp"
+            android:background="@color/light_gray" />
+
         <TextView
             android:id="@+id/textViewImportExportToolInfo"
             android:layout_width="match_parent"

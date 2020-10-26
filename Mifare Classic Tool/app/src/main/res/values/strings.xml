@@ -299,6 +299,7 @@
     <string name="action_export_dump">Export Dump</string>
     <string name="action_import_keys">Import Keys</string>
     <string name="action_export_keys">Export Keys</string>
+    <string name="action_backup_all">Backup / Export Everything</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
@@ -413,6 +414,8 @@
     <string name="info_error_reading_file">Error: Could not read file</string>
     <string name="info_random_uid">Generated random UID</string>
     <string name="info_invalid_key_file">Error: Not a valid key file</string>
+    <string name="info_backup_created">Backup created</string>
+    <string name="info_backup_error">Error while creating a full backup</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

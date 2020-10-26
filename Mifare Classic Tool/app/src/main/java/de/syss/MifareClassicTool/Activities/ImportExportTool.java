@@ -33,10 +33,19 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.MCReader;
@@ -48,7 +57,7 @@ import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInt
  * A simple tool to import and export dump files in and from different file
  * formats. Supported are .mct (Mifare Classic Tool), .bin/.mfd (Proxmark,
  * libnfc, mfoc), .eml (Proxmark emulator) and .json (Proxmark, Chameleon
- * Mini GUI). Exported files are saved at {@link Common#EXPORT_DIR}.
+ * Mini GUI).
  * @author Gerhard Klostermeier
  */
 public class ImportExportTool extends BasicActivity {
@@ -56,6 +65,7 @@ public class ImportExportTool extends BasicActivity {
     private final static int IMPORT_FILE_CHOSEN = 1;
     private final static int EXPORT_FILE_CHOSEN = 2;
     private final static int EXPORT_LOCATION_CHOSEN = 3;
+    private final static int BACKUP_LOCATION_CHOSEN = 4;
     private boolean mIsExport;
     private boolean mIsDumpFile;
     private String mFile;
@@ -184,6 +194,12 @@ public class ImportExportTool extends BasicActivity {
                     saveConvertedDataToContent(mConvertedContent, uri);
                     break;
                 }
+            case BACKUP_LOCATION_CHOSEN: // Destination for the backup has been chosen.
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    backupDumpsAndKeys(uri);
+                    break;
+                }
         }
     }
 
@@ -257,6 +273,21 @@ public class ImportExportTool extends BasicActivity {
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_export_keys));
         startActivityForResult(intent, EXPORT_FILE_CHOSEN);
+    }
+
+    /**
+     * Create a full backup of all dump and key files.
+     * @param view The View object that triggered the function
+     *             (in this case the backup button).
+     */
+    public void onBackupAll(View view) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd",
+                Locale.getDefault());
+        fmt.setCalendar(calendar);
+        String dateFormatted = fmt.format(calendar.getTime());
+        showExportFileChooser("MCT-Backup_" + dateFormatted + ".zip",
+                BACKUP_LOCATION_CHOSEN);
     }
 
     /**
@@ -341,7 +372,7 @@ public class ImportExportTool extends BasicActivity {
      * Export the file by reading, converting and showing the save to dialog.
      * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
      * @param path The file to read from.
-     * @see #showExportFileChooser(String)
+     * @see #showExportFileChooser(String, int)
      * @see #onActivityResult(int, int, Intent)
      */
     private void readAndConvertExportData(String path) {
@@ -375,7 +406,7 @@ public class ImportExportTool extends BasicActivity {
 
         // Save converted content and show destination chooser.
         mConvertedContent = convertedContent;
-        showExportFileChooser(destFileName);
+        showExportFileChooser(destFileName, EXPORT_LOCATION_CHOSEN);
     }
 
     /**
@@ -669,7 +700,7 @@ public class ImportExportTool extends BasicActivity {
             case BIN:
                 String binary = source[0];
                 int len = binary.length();
-                if (binary.length() > 0 && binary.length() % 6 != 0) {
+                if (len > 0 && len % 6 != 0) {
                     // Error. Not multiple of 6 byte.
                     Toast.makeText(this, R.string.info_invalid_key_file,
                             Toast.LENGTH_LONG).show();
@@ -677,7 +708,7 @@ public class ImportExportTool extends BasicActivity {
                 }
                 keys = new String[binary.length() / 6];
                 // In this case: chars = bytes. Get 6 bytes and convert.
-                for (int i = 0; i < binary.length(); i += 6) {
+                for (int i = 0; i < len; i += 6) {
                     byte[] keyBytes = new byte[6];
                     for (int j = 0; j < 6; j++) {
                         keyBytes[j] = (byte) binary.charAt(i + j);
@@ -725,12 +756,12 @@ public class ImportExportTool extends BasicActivity {
      * destination for exported files.
      * @param fileName The file name of the file to export.
      */
-    private void showExportFileChooser(String fileName) {
+    private void showExportFileChooser(String fileName, int context) {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_TITLE, fileName);
-        startActivityForResult(intent, EXPORT_LOCATION_CHOSEN);
+        startActivityForResult(intent, context);
     }
 
     /**
@@ -768,4 +799,54 @@ public class ImportExportTool extends BasicActivity {
         String title = getString(R.string.text_select_file);
         startActivityForResult(Intent.createChooser(intent, title), IMPORT_FILE_CHOSEN);
     }
+
+    /**
+     * Create a ZIP file containing all keys and dumps and save it to the
+     * content URI.
+     * @param contentDestUri Content URI to the ZIP file to be saved.
+     * @return True is writing the ZIP file succeeded. False otherwise.
+     */
+    private boolean backupDumpsAndKeys(Uri contentDestUri) {
+        final int BUFFER = 2048;
+        File[] dirs = new File[2];
+        dirs[0] = Common.getFileFromStorage(
+                Common.HOME_DIR + "/" + Common.KEYS_DIR);
+        dirs[1] = Common.getFileFromStorage(
+                Common.HOME_DIR + "/" + Common.DUMPS_DIR);
+        int commonPathLen = Common.getFileFromStorage("").getAbsolutePath().length();
+        try {
+            OutputStream dest =  getContentResolver().openOutputStream(
+                    contentDestUri, "rw");
+            ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(
+                    dest));
+            for (File dir : dirs) {
+                File[] fileList = dir.listFiles();
+                if (fileList == null || fileList.length == 0) {
+                    continue;
+                }
+                for (File file : fileList) {
+                    byte[] data = new byte[BUFFER];
+                    FileInputStream fi = new FileInputStream(file);
+                    BufferedInputStream origin = new BufferedInputStream(fi, BUFFER);
+                    ZipEntry entry = new ZipEntry(
+                            file.getAbsolutePath().substring(commonPathLen));
+                    entry.setTime(file.lastModified());
+                    out.putNextEntry(entry);
+                    int count = 0;
+                    while ((count = origin.read(data, 0, BUFFER)) != -1) {
+                        out.write(data, 0, count);
+                    }
+                }
+            }
+            out.close();
+        } catch (Exception ex) {
+            Toast.makeText(this, R.string.info_backup_error,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        Toast.makeText(this, R.string.info_backup_created,
+                Toast.LENGTH_LONG).show();
+        return true;
+    }
+
 }
