@@ -76,7 +76,7 @@
     <string name="text_ac_decr">减值/转移/恢复</string>
     <string name="text_ac_pos">位置</string>
     <string name="text_ac_error">错误: 未知配置</string>
-    <string name="text_vb_what">位置</string>
+    <string name="text_vb_location">位置</string>
     <string name="text_vb_value">值</string>
     <string name="text_vb_orig">原始值</string>
     <string name="text_vb_as_int_decoded">整数形式</string>
@@ -174,7 +174,7 @@
     <string name="text_select_directory">选择目录</string>
     <string name="text_choose_dump_file">选择转储文件</string>
     <string name="text_choose_key_file">选择一些密钥文件:</string>
-    <string name="text_export_convert_dest_info">导出/转换的文件始终保存于外部存储设备(例如SD卡)的“MifareClassicTool/export”中｡若已存在同名文件,则该文件将被覆盖｡</string>
+    <string name="text_import_export_tool_info">若已存在同名文件,则该文件将被覆盖｡</string>
     <string name="text_random_uid">随机UID</string>
     <string name="text_no_uid_logs">UID日志为空</string>
     <string name="text_not_ascii">非ASCII码</string>

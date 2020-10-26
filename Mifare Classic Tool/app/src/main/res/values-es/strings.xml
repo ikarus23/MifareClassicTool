@@ -71,7 +71,7 @@
     <string name="text_ac_decr">Decr./Trans./Rest.:</string>
     <string name="text_ac_pos">Localización:</string>
     <string name="text_ac_error">Error: Esta configuración es desconocida</string>
-    <string name="text_vb_what">Qué:</string>
+    <string name="text_vb_location">Ubicación:</string>
     <string name="text_vb_value">Valor:</string>
     <string name="text_vb_orig">Original:</string>
     <string name="text_vb_as_int_decoded">Como entero:</string>
@@ -181,7 +181,7 @@
     <string name="text_select_file">Selecciona un fichero</string>
     <string name="text_select_directory">Selecciona un directorio</string>
     <string name="text_choose_dump_file">Elige un archivo dump</string>
-    <string name="text_export_convert_dest_info"> Los ficheros exportados/comvertidos están
+    <string name="text_import_export_tool_info"> Los ficheros exportados/comvertidos están
        siempre almacenados en \"MifareClassicTool/export\" en el almacenamiento externo (e.g. la tarjeta SD
         ). Si un fichero con el mismo nombre ya existe en el moment ode importar, este será sobreescrito.</string>
     <string name="text_random_uid">UID aleatorio</string>
