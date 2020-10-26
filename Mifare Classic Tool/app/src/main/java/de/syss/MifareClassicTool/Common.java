@@ -714,7 +714,12 @@ public class Common extends Application {
      */
     public static void disableNfcForegroundDispatch(Activity targetActivity) {
         if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
-            mNfcAdapter.disableForegroundDispatch(targetActivity);
+            try {
+                mNfcAdapter.disableForegroundDispatch(targetActivity);
+            } catch (IllegalStateException ex) {
+                Log.d(LOG_TAG, "Error: Could not disable the NFC foreground" +
+                        "dispatch system. The activity was not in foreground.");
+            }
         }
     }
 
