@@ -41,6 +41,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.SparseArray;
@@ -54,7 +55,6 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -102,11 +102,6 @@ public class Common extends Application {
      * (sub directory of {@link #HOME_DIR}.)
      */
     public static final String DUMPS_DIR = "dump-files";
-
-    /**
-     * The name of the directory where dump/key files get exported to.
-     */
-    public static final String EXPORT_DIR = "export";
 
     /**
      * The directory name of the folder where temporary files are
@@ -630,25 +625,49 @@ public class Common extends Application {
     }
 
     /**
-     * Write an array of bytes (raw data) to a given file.
-     * @param file The file to write to.
-     * @param bytes The bytes to save.
-     * @param append Append to file (instead of replacing its content).
+     * Write text lines to a given content URI.
+     * @param contentUri The content URI to write to.
+     * @param lines The text lines to save.
+     * @param context The context for the ContentProvider.
      * @return True if file writing was successful. False otherwise.
      */
-    public static boolean saveFile(File file, byte[] bytes, boolean append) {
-        boolean noError = true;
-        if (file != null && bytes != null && isExternalStorageMounted()) {
+    public static boolean saveFile(Uri contentUri, String[] lines, Context context) {
+        if (contentUri == null || lines == null || context == null || lines.length == 0) {
+            return false;
+        }
+        int i;
+        String concatenatedLines = TextUtils.join(
+                System.getProperty("line.separator"), lines);
+        byte[] bytes = concatenatedLines.getBytes();
+        return saveFile(contentUri, bytes, context);
+    }
+
+    /**
+     * Write an array of bytes (raw data) to a given content URI.
+     * @param contentUri The content URI to write to.
+     * @param bytes The bytes to save.
+     * @param context The context for the ContentProvider.
+     * @return True if file writing was successful. False otherwise.
+     */
+    public static boolean saveFile(Uri contentUri, byte[] bytes, Context context) {
+        OutputStream output = null;
+        if (contentUri == null || bytes == null || context == null || bytes.length == 0) {
+            return false;
+        }
+        try {
+            output = context.getContentResolver().openOutputStream(
+                    contentUri, "rw");
+        } catch (FileNotFoundException ex) {
+            return false;
+        }
+        if (output != null) {
             try {
-                FileOutputStream stream = new FileOutputStream(file, append);
-                stream.write(bytes);
-            } catch ( IOException | NullPointerException e) {
-                Log.e(LOG_TAG, "Error while writing to '"
-                        + file.getName() + "' file.", e);
+                output.write(bytes);
+                output.flush();
+                output.close();
+            } catch (IOException ex) {
                 return false;
             }
-        } else {
-            return false;
         }
         return true;
     }

@@ -609,16 +609,6 @@ public class MainMenu extends Activity {
                 return;
             }
 
-            // Create export directory.
-            path = Common.getFileFromStorage(
-                    Common.HOME_DIR + "/" + Common.EXPORT_DIR);
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + "/" + Common.EXPORT_DIR + "' directory.");
-                return;
-            }
-
             // Create tmp directory.
             path = Common.getFileFromStorage(
                     Common.HOME_DIR + "/" + Common.TMP_DIR);

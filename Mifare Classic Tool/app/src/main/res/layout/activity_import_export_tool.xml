@@ -94,7 +94,7 @@
             android:drawableLeft="@android:drawable/ic_dialog_info"
             android:drawablePadding="5dp"
             android:padding="5dp"
-            android:text="@string/text_export_convert_dest_info" />
+            android:text="@string/text_import_export_tool_info" />
 
     </LinearLayout>
 

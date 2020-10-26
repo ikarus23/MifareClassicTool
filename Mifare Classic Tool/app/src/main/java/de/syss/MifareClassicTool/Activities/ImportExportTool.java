@@ -19,6 +19,7 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,9 +55,11 @@ public class ImportExportTool extends BasicActivity {
 
     private final static int IMPORT_FILE_CHOSEN = 1;
     private final static int EXPORT_FILE_CHOSEN = 2;
+    private final static int EXPORT_LOCATION_CHOSEN = 3;
     private boolean mIsExport;
     private boolean mIsDumpFile;
     private String mFile;
+    private String[] mConvertedContent;
     private FileType mFileType;
     private enum FileType {
         MCT(".mct"),
@@ -131,7 +134,7 @@ public class ImportExportTool extends BasicActivity {
 
         if (mIsExport) {
             // Convert file and export.
-            onExportFile(mFile);
+            readAndConvertExportData(mFile);
         } else {
             // Let the user pick the file to import.
             showImportFileChooser();
@@ -161,7 +164,7 @@ public class ImportExportTool extends BasicActivity {
                             uris = new Uri[1];
                             uris[0] = data.getData();
                         }
-                        onImportFile(uris);
+                        readConvertAndSaveImportData(uris);
                     }
                     break;
                 }
@@ -173,6 +176,12 @@ public class ImportExportTool extends BasicActivity {
                     } else {
                         showKeysFileTypeChooserMenu();
                     }
+                    break;
+                }
+            case EXPORT_LOCATION_CHOSEN: // Destination for exporting has been chosen.
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    saveConvertedDataToContent(mConvertedContent, uri);
                     break;
                 }
         }
@@ -255,7 +264,7 @@ public class ImportExportTool extends BasicActivity {
      * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
      * @param files The file to read from.
      */
-    private void onImportFile(Uri[] files) {
+    private void readConvertAndSaveImportData(Uri[] files) {
         String[] content;
         for (Uri file : files) {
             try {
@@ -329,11 +338,13 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Export the file by reading, converting and saving it.
+     * Export the file by reading, converting and showing the save to dialog.
      * The conversion is made by {@link #convertDump(String[], FileType, FileType)}.
      * @param path The file to read from.
+     * @see #showExportFileChooser(String)
+     * @see #onActivityResult(int, int, Intent)
      */
-    private void onExportFile(String path) {
+    private void readAndConvertExportData(String path) {
         File source = new File(path);
         String[] content = Common.readFileLineByLine(source, false,this);
         if (content == null) {
@@ -346,7 +357,6 @@ public class ImportExportTool extends BasicActivity {
             fileName = fileName.substring(0, fileName.lastIndexOf('.'));
         }
         String destFileName = fileName + mFileType.toString();
-        String destPath = Common.HOME_DIR + "/" + Common.EXPORT_DIR;
 
         // Convert key or dump file.
         String[] convertedContent;
@@ -363,18 +373,37 @@ public class ImportExportTool extends BasicActivity {
             return;
         }
 
-        // Save converted file.
-        File destination = Common.getFileFromStorage(
-                destPath + "/" + destFileName, true);
+        // Save converted content and show destination chooser.
+        mConvertedContent = convertedContent;
+        showExportFileChooser(destFileName);
+    }
+
+    /**
+     * Save the converted content with respect to {@link #mFileType} to a given
+     * content URI.
+     * @param convertedContent Converted content (output of
+     * {@link #convertDump(String[], FileType, FileType)} or
+     * {@link #convertKeys(String[], FileType, FileType)}).
+     * @param contentDestination Content URI to the destination where the data
+     * should be stored.
+     * @see Common#saveFile(Uri, String[], Context)
+     */
+    private void saveConvertedDataToContent(String[] convertedContent,
+                Uri contentDestination) {
+        if(convertedContent == null || contentDestination == null) {
+            Toast.makeText(this, R.string.info_convert_error,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
         boolean success = false;
         if (mFileType != FileType.BIN) {
-            success = Common.saveFile(destination, convertedContent, false);
+            success = Common.saveFile(contentDestination, convertedContent, this);
         } else {
             byte[] bytes = new byte[convertedContent[0].length()];
             for (int i = 0; i < convertedContent[0].length(); i++) {
                 bytes[i] = (byte) convertedContent[0].charAt(i);
             }
-            success = Common.saveFile(destination, bytes, false);
+            success = Common.saveFile(contentDestination, bytes, this);
         }
         if (success) {
             Toast.makeText(this, R.string.info_file_exported,
@@ -400,7 +429,7 @@ public class ImportExportTool extends BasicActivity {
      */
     @SuppressLint("DefaultLocale")
     private String[] convertDump(String[] source, FileType srcType,
-                                 FileType destType) {
+            FileType destType) {
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
         String block = null;
@@ -692,6 +721,19 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
+     * Show the "save-as" dialog as provided by Android to let the user chose a
+     * destination for exported files.
+     * @param fileName The file name of the file to export.
+     */
+    private void showExportFileChooser(String fileName) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_TITLE, fileName);
+        startActivityForResult(intent, EXPORT_LOCATION_CHOSEN);
+    }
+
+    /**
      * Show the dump file type chooser menu and save the result in
      * {@link #mFileType}.
      * @see #onContextItemSelected(MenuItem)
@@ -725,20 +767,5 @@ public class ImportExportTool extends BasicActivity {
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         String title = getString(R.string.text_select_file);
         startActivityForResult(Intent.createChooser(intent, title), IMPORT_FILE_CHOSEN);
-    }
-
-    // TODO (optional): Once we've dropped Android 4 and have API level 21, let the user
-
-    /**
-     * Show Android's generic directory chooser and let
-     * the user pick the directory to which files should
-     * be exported to (not implemented yet).
-     */
-    private void showExportDirectoryChooser() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        String title = getString(R.string.text_select_directory);
-        startActivityForResult(Intent.createChooser(intent, title), 3);
     }
 }

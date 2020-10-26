@@ -183,9 +183,8 @@
     <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
     <string name="text_choose_key_file">Choose key file</string>
-    <string name="text_export_convert_dest_info">Exported/converted files are always
-        stored in \"MifareClassicTool/export\" on the external storage (e.g. the SD
-        card). If a file with the same name already exist upon import, it will be overwritten.</string>
+    <string name="text_import_export_tool_info">If a file with the same name already
+        exist upon import, it will be overwritten.</string>
     <string name="text_random_uid">Random UID</string>
     <string name="text_no_uid_logs">The UID log is empty</string>
     <string name="text_not_ascii">Not ASCII</string>
@@ -407,7 +406,7 @@
     <string name="info_rest_of_block_0_length">Error: The length of the rest of block 0
         is incorrect</string>
     <string name="info_incorrect_key">Error: Key not correct</string>
-    <string name="info_file_exported">File exported to external storage</string>
+    <string name="info_file_exported">File exported</string>
     <string name="info_file_imported">File imported</string>
     <string name="info_convert_error">Error: Could not convert</string>
     <string name="info_incomplete_dump">Error: Incomplete or oversized dump</string>
