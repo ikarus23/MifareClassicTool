@@ -351,7 +351,7 @@ public class ImportExportTool extends BasicActivity {
 
                 // Save converted file.
                 File destination = Common.getFileFromStorage(
-                        destPath + "/" + destFileName, true);
+                        destPath + "/" + destFileName);
                 if (Common.saveFile(destination, convertedContent, false)) {
                     Toast.makeText(this, R.string.info_file_imported,
                             Toast.LENGTH_LONG).show();
