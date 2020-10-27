@@ -245,8 +245,6 @@
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
     <string name="action_retry_authentication">Retry the authentication if it fails</string>
-    <string name="action_use_internal_storage">Save dump and key files
-        to the internal storage</string>
     <string name="action_auto_reconnect">Advanced: Auto reconnect if tag gets
         lost during the key mapping process</string>
     <string name="action_auto_copy_uid">Automatically copy new tag UID to clipboard</string>
@@ -541,14 +539,6 @@
         consistent (e.g. the Google Nexus 5X or the Huawei P10).\n\nKeep in mind that this
         might slow down reading, writing or even key mapping. In most cases you should leave
         this option disabled.</string>
-    <string name="dialog_use_internal_storage_title">Use Internal Storage</string>
-    <string name="dialog_use_internal_storage">Android commonly has two places to store
-        files: The internal and the external memory.\n\nThe internal memory is only
-        readable by the app and will be deleted once the app gets uninstalled.\n\nThe
-        external storage, in many cases the SD card, is readable by every app with
-        sufficient rights. Data stored on the external memory will survive an
-        uninstall of the app.\n\nBy using this option you can switch between the two
-        storages. Dump and key files will not be copied between them.</string>
     <string name="dialog_custom_sector_count_title">Custom Sector Count</string>
     <string name="dialog_custom_sector_count">Force a custom sector count
         and ignore the sector count detected by Android. This can be useful

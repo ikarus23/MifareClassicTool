@@ -228,7 +228,6 @@
     <string name="action_show_options">显示选项</string>
     <string name="action_static_ac">应用这些访问条件到所有扇区</string>
     <string name="action_retry_authentication">验证失败时的重试次数</string>
-    <string name="action_use_internal_storage">将转储和密钥文件保存到内部存储器</string>
     <string name="action_auto_reconnect">高级: 在密钥映射时失去连接则自动重连</string>
     <string name="action_auto_copy_uid">将UID复制到剪贴板</string>
     <string name="action_save_last_key_files">记住最后选定的密钥文件(密钥映射对话框)</string>
@@ -408,8 +407,6 @@
     <string name="dialog_auto_reconnect">密钥映射过程中, 若出现连接丢失(天线问题, 超时等),该App将尝试重新连接(间隔500ms)直到成功.\n\n<b>若在密钥映射过程中遇到问题, 这也许有用.然而, 这也可能导致MCT行为异常.</b>\n\n对某些已知问题,本设置也许有用:\n&#8226; 特殊标签 (例如 smartMX)</string>
     <string name="dialog_retry_authentication_title">重试身份验证</string>
     <string name="dialog_retry_authentication">若验证失败,重试身份验证(访问扇区/块)X次。\n\n某些标签需要使用此身份验证才能正常工作(例如,某些具有7字节UID的块0可写标签)。此外,这可能有助于提高某些设备(例如Google Nexus 5X或Huawei P10)工作一致性。\n\n请注意,这可能会减慢读取、写入及密钥映射的速度。在大多数情况下,应禁用此选项。</string>
-    <string name="dialog_use_internal_storage_title">使用内部存储</string>
-    <string name="dialog_use_internal_storage">Android通常有两个存储文件的位置:内部和外部存储器。\n\n内部存储器只能由应用读取,并且在应用卸载后将被删除。\n\n外部存储器,通常为SD卡,可供具有足够权限的每个应用读取。存储在外部存储器中的数据将在应用程序卸载后留存。\n\n通过此选项,您可以在两个存储之间进行切换。转储文件和密钥文件不会在它们之间复制。</string>
     <string name="dialog_custom_sector_count_title">自定义扇区数</string>
     <string name="dialog_custom_sector_count">忽略检测到的扇区数并使用自定义的扇区数,这样可以使用全部的2K内存。</string>
     <string name="dialog_date_of_manuf_title">制造日期</string>

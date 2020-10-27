@@ -52,7 +52,6 @@ public class Preferences extends BasicActivity {
         SaveLastUsedKeyFiles("save_last_used_key_files"),
         UseCustomSectorCount("use_custom_sector_count"),
         CustomSectorCount("custom_sector_count"),
-        UseInternalStorage("use_internal_storage"),
         UseRetryAuthentication("use_retry_authentication"),
         RetryAuthenticationCount("retry_authentication_count");
         // Add more preferences here (comma separated).
@@ -74,7 +73,6 @@ public class Preferences extends BasicActivity {
     private CheckBox mPrefSaveLastUsedKeyFiles;
     private CheckBox mUseCustomSectorCount;
     private CheckBox mUseRetryAuthentication;
-    private CheckBox mUseInternalStorage;
     private CheckBox mPrefAutostartIfCardDetected;
     private EditText mCustomSectorCount;
     private EditText mRetryAuthenticationCount;
@@ -107,8 +105,6 @@ public class Preferences extends BasicActivity {
                 R.id.checkBoxPreferencesUseCustomSectorCount);
         mCustomSectorCount = findViewById(
                 R.id.editTextPreferencesCustomSectorCount);
-        mUseInternalStorage = findViewById(
-                R.id.checkBoxPreferencesUseInternalStorage);
         mPrefAutostartIfCardDetected = findViewById(
                 R.id.checkBoxPreferencesAutostartIfCardDetected);
         mUseRetryAuthentication = findViewById(
@@ -130,8 +126,6 @@ public class Preferences extends BasicActivity {
         mCustomSectorCount.setEnabled(mUseCustomSectorCount.isChecked());
         mCustomSectorCount.setText("" + pref.getInt(
                 Preference.CustomSectorCount.toString(), 16));
-        mUseInternalStorage.setChecked(pref.getBoolean(
-                Preference.UseInternalStorage.toString(), false));
         mUseRetryAuthentication.setChecked(pref.getBoolean(
                 Preference.UseRetryAuthentication.toString(), false));
         mRetryAuthenticationCount.setEnabled(
@@ -273,25 +267,9 @@ public class Preferences extends BasicActivity {
     }
 
     /**
-     * Show information on the "use internal storage" preference.
-     * @param view The View object that triggered the method
-     * (in this case the info on use internal storage button).
-     */
-    public void onShowUseInternalStorageInfo(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_use_internal_storage_title)
-                .setMessage(R.string.dialog_use_internal_storage)
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setPositiveButton(R.string.action_ok,
-                        (dialog, which) -> {
-                            // Do nothing.
-                        }).show();
-    }
-
-    /**
      * Show information on the "retry authentication" preference.
      * @param view The View object that triggered the method
-     * (in this case the info on use internal storage button).
+     * (in this case the info on retry authentication button).
      */
     public void onShowRetryAuthenticationInfo(View view) {
         new AlertDialog.Builder(this)
@@ -361,8 +339,6 @@ public class Preferences extends BasicActivity {
                 mPrefSaveLastUsedKeyFiles.isChecked());
         edit.putBoolean(Preference.UseCustomSectorCount.toString(),
                 mUseCustomSectorCount.isChecked());
-        edit.putBoolean(Preference.UseInternalStorage.toString(),
-                mUseInternalStorage.isChecked());
         edit.putBoolean(Preference.UseRetryAuthentication.toString(),
                 mUseRetryAuthentication.isChecked());
         edit.putInt(Preference.CustomSectorCount.toString(),

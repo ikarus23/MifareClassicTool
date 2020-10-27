@@ -157,34 +157,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relativeLayoutPreferencesUseInternalStorage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@xml/layout_border"
-                android:padding="2dp"
-                android:layout_marginBottom="5dp" >
-
-                <CheckBox
-                    android:id="@+id/checkBoxPreferencesUseInternalStorage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/imageButtonPreferencesUseInternalStorageInfo"
-                    android:text="@string/action_use_internal_storage" />
-
-                <ImageButton
-                    android:id="@+id/imageButtonPreferencesUseInternalStorageInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:contentDescription="@string/text_option_info"
-                    android:onClick="onShowUseInternalStorageInfo"
-                    android:src="@android:drawable/ic_dialog_info" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/relativeLayoutPreferencesAutoReconnect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

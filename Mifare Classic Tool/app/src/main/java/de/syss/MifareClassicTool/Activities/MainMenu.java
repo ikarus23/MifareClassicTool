@@ -60,7 +60,6 @@ import java.io.OutputStream;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
  * Main App entry point showing the main menu.
@@ -578,59 +577,43 @@ public class MainMenu extends Activity {
      */
     @SuppressLint("ApplySharedPref")
     private void initFolders() {
-        boolean isUseInternalStorage = Common.getPreferences().getBoolean(
-                UseInternalStorage.toString(), false);
+        // Create keys directory.
+        File path = Common.getFile(Common.KEYS_DIR);
 
-        // Run twice and init the folders on the internal and external storage.
-        for (int i = 0; i < 2; i++) {
-            // Create keys directory.
-            File path = Common.getFile(Common.KEYS_DIR);
-
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + "/" + Common.KEYS_DIR + "' directory.");
-                return;
-            }
-
-            // Create dumps directory.
-            path = Common.getFile(Common.DUMPS_DIR);
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + "/" + Common.DUMPS_DIR + "' directory.");
-                return;
-            }
-
-            // Create tmp directory.
-            path = Common.getFile(Common.TMP_DIR);
-            if (!path.exists() && !path.mkdirs()) {
-                // Could not create directory.
-                Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
-                        + Common.TMP_DIR + "' directory.");
-                return;
-            }
-            // Try to clean up tmp directory.
-            File[] tmpFiles = path.listFiles();
-            if (tmpFiles != null) {
-                for (File file : tmpFiles) {
-                    file.delete();
-                }
-            }
-
-            // Create std. key file if there is none.
-            copyStdKeysFilesIfNecessary();
-
-            // Change the storage for the second run.
-            Common.getPreferences().edit().putBoolean(
-                    UseInternalStorage.toString(),
-                    !isUseInternalStorage).commit();
+        if (!path.exists() && !path.mkdirs()) {
+            // Could not create directory.
+            Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                    + "/" + Common.KEYS_DIR + "' directory.");
+            return;
         }
-        // Restore the storage preference.
-        Common.getPreferences().edit().putBoolean(
-                UseInternalStorage.toString(),
-                isUseInternalStorage).commit();
 
+        // Create dumps directory.
+        path = Common.getFile(Common.DUMPS_DIR);
+        if (!path.exists() && !path.mkdirs()) {
+            // Could not create directory.
+            Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                    + "/" + Common.DUMPS_DIR + "' directory.");
+            return;
+        }
+
+        // Create tmp directory.
+        path = Common.getFile(Common.TMP_DIR);
+        if (!path.exists() && !path.mkdirs()) {
+            // Could not create directory.
+            Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
+                    + Common.TMP_DIR + "' directory.");
+            return;
+        }
+        // Try to clean up tmp directory.
+        File[] tmpFiles = path.listFiles();
+        if (tmpFiles != null) {
+            for (File file : tmpFiles) {
+                file.delete();
+            }
+        }
+
+        // Create std. key file if there is none.
+        copyStdKeysFilesIfNecessary();
     }
 
     /**

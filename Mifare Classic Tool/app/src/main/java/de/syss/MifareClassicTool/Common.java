@@ -73,7 +73,7 @@ import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
 
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.AutoCopyUID;
 import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UIDFormat;
-import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
+
 
 /**
  * Common functions and variables for all Activities.

@@ -42,7 +42,6 @@ import java.util.Arrays;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInternalStorage;
 
 /**
  * A simple generic file chooser that lets the user choose a file from
