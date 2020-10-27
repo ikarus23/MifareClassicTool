@@ -72,6 +72,8 @@ Some important things are:
 * There will be **no &quot;brute-force&quot; attack**
   capability in this application. It is way too slow due
   to the protocol.
+* Be aware! Uninstalling this app will delete all files
+  (dumps/keys) permanently.
 * The first block of the first sector of an **original**
   MIFARE Classic tag is **read-only** i.e. not writable. But there
   are **special** MIFARE Classic tags that support writing to the
