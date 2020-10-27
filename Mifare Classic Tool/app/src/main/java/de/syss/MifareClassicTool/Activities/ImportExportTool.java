@@ -224,10 +224,6 @@ public class ImportExportTool extends BasicActivity {
     public void onExportDump(View view) {
         mIsExport = true;
         mIsDumpFile = true;
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            return;
-        }
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
                 Common.getFile(Common.DUMPS_DIR).getAbsolutePath());
@@ -259,10 +255,6 @@ public class ImportExportTool extends BasicActivity {
     public void onExportKeys(View view) {
         mIsExport = true;
         mIsDumpFile = false;
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            return;
-        }
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
                 Common.getFile(Common.KEYS_DIR).getAbsolutePath());

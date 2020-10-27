@@ -47,18 +47,12 @@ public class ReadTag extends Activity {
     private SparseArray<String[]> mRawDump;
 
     /**
-     * Check for external storage and show the {@link KeyMapCreator}.
+     * Show the {@link KeyMapCreator}.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_tag);
-
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            finish();
-            return;
-        }
 
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,

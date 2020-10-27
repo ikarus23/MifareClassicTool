@@ -583,11 +583,6 @@ public class MainMenu extends Activity {
 
         // Run twice and init the folders on the internal and external storage.
         for (int i = 0; i < 2; i++) {
-            if (!isUseInternalStorage &&
-                    !Common.isExternalStorageWritableErrorToast(this)) {
-                continue;
-            }
-
             // Create keys directory.
             File path = Common.getFile(Common.KEYS_DIR);
 
@@ -817,10 +812,6 @@ public class MainMenu extends Activity {
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenTagDumpEditor(View view) {
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            return;
-        }
         File file = Common.getFile(Common.DUMPS_DIR);
         if (file.isDirectory() && (file.listFiles() == null
                 || file.listFiles().length == 0)) {
@@ -846,10 +837,6 @@ public class MainMenu extends Activity {
      * @see #onActivityResult(int, int, Intent)
      */
     public void onOpenKeyEditor(View view) {
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            return;
-        }
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
                 Common.getFile(Common.KEYS_DIR).getAbsolutePath());

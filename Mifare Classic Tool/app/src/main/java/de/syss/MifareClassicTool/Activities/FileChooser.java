@@ -57,8 +57,7 @@ import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInt
  * exist.</li>
  * <li>2 - No directory specified in Intent
  * ({@link #EXTRA_DIR})</li>
- * <li>3 - External Storage is not read/writable. This error is
- * displayed to the user via Toast.</li>
+ * <li>3 - RFU.</li>
  * <li>4 - Directory from {@link #EXTRA_DIR} is not a directory.</li>
  * </ul>
  * @author Gerhard Klostermeier
@@ -133,8 +132,7 @@ public class FileChooser extends BasicActivity {
     }
 
     /**
-     * Initialize the file chooser with the data from the calling Intent
-     * (if external storage is mounted).
+     * Initialize the file chooser with the data from the calling Intent.
      *
      * @see #EXTRA_DIR
      * @see #EXTRA_TITLE
@@ -145,12 +143,6 @@ public class FileChooser extends BasicActivity {
     public void onStart() {
         super.onStart();
 
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            setResult(3);
-            finish();
-            return;
-        }
         mChooserText = findViewById(
                 R.id.textViewFileChooser);
         mChooserButton = findViewById(

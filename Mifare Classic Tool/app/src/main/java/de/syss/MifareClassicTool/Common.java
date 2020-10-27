@@ -246,31 +246,6 @@ public class Common extends Application {
     }
 
     /**
-     * Checks if external storage is available for read and write.
-     * If not, show an error Toast.
-     * @param context The Context in which the Toast will be shown.
-     * @return True if external storage is writable. False otherwise.
-     */
-    public static boolean isExternalStorageWritableErrorToast(
-            Context context) {
-        if (!isExternalStorageMounted()) {
-            Toast.makeText(context, R.string.info_no_external_storage,
-                    Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Checks if external storage is available for read and write.
-     * @return True if external storage is writable. False otherwise.
-     */
-    public static boolean isExternalStorageMounted() {
-        return Environment.MEDIA_MOUNTED.equals(
-                Environment.getExternalStorageState());
-    }
-
-    /**
      * Create a File object with a path that consists of the apps file
      * directory, the {@link #HOME_DIR} and the relative path.
      * @param relativePath The relative path that gets appended to the
@@ -299,7 +274,7 @@ public class Common extends Application {
             Context context) {
         String[] ret = null;
         BufferedReader reader = null;
-        if (file != null && isExternalStorageMounted() && file.exists()) {
+        if (file != null && file.exists()) {
             try {
                 reader = new BufferedReader(new FileReader(file));
                 ret = readLineByLine(reader, readComments, context);
@@ -563,8 +538,7 @@ public class Common extends Application {
      */
     public static boolean saveFile(File file, String[] lines, boolean append) {
         boolean error = false;
-        if (file != null && lines != null
-                && lines.length > 0 && isExternalStorageMounted()) {
+        if (file != null && lines != null && lines.length > 0) {
             BufferedWriter bw = null;
             try {
                 bw = new BufferedWriter(new FileWriter(file, append));

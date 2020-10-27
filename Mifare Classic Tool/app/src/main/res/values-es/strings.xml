@@ -283,8 +283,6 @@
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nueva etiqueta encontrada</string>
-    <string name="info_no_external_storage">Error: sin acceso al
-        almacenamiento externo</string>
     <string name="info_no_tag_found">Error: no hay una etiqueta MIFARE Classic</string>
     <string name="info_wait_key_map">Creando mapa de claves&#8230;
         Espere por favor&#8230;</string>

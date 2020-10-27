@@ -395,9 +395,7 @@ public class DumpEditor extends BasicActivity
     }
 
     /**
-     * Check if the external storage is writable
-     * {@link Common#isExternalStorageWritableErrorToast(Context)},
-     * ask user for a save name and then call
+     * Ask user for a save name and then call
      * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
      * Context, IActivityThatReactsToSave)}.
      * This is a helper function for {@link #saveDump()}
@@ -407,16 +405,11 @@ public class DumpEditor extends BasicActivity
      * @param isDump True if data contains a dump. False if data contains keys.
      * @param titleId Resource ID for the title of the dialog.
      * @param messageId Resource ID for the message of the dialog.
-     * @see Common#isExternalStorageWritableErrorToast(Context)
      * @see Common#checkFileExistenceAndSave(File, String[], boolean,
      * Context, IActivityThatReactsToSave)
      */
     private void saveFile(final String[] data, final String fileName,
             final boolean isDump, int titleId, int messageId) {
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            return;
-        }
         String targetDir = (isDump) ? Common.DUMPS_DIR : Common.KEYS_DIR;
         final File path = Common.getFile(targetDir);
         final Context context = this;

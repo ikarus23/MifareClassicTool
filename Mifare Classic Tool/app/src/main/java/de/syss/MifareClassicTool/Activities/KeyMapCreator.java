@@ -66,8 +66,7 @@ import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UseInt
  * exist.</li>
  * <li>2 - No directory specified in Intent
  * ({@link #EXTRA_KEYS_DIR})</li>
- * <li>3 - External Storage is not read/writable. This error is
- * displayed to the user via Toast.</li>
+ * <li>3 - RFU.</li>
  * <li>4 - Directory from {@link #EXTRA_KEYS_DIR} is null.</li>
  * </ul>
  * @author Gerhard Klostermeier
@@ -242,13 +241,6 @@ public class KeyMapCreator extends BasicActivity {
             mKeyDirPath = new File(path);
         }
 
-        // Is external storage writable?
-        if (!Common.getPreferences().getBoolean(UseInternalStorage.toString(),
-                false) && !Common.isExternalStorageWritableErrorToast(this)) {
-            setResult(3);
-            finish();
-            return;
-        }
         // Does the directory exist?
         if (!mKeyDirPath.exists()) {
             setResult(1);

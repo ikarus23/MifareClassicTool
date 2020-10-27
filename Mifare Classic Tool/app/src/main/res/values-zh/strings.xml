@@ -280,7 +280,6 @@
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">发现新标签</string>
-    <string name="info_no_external_storage">错误:外部存储器不可读/写</string>
     <string name="info_no_tag_found">错误:未发现MIFARE Classic标签</string>
     <string name="info_wait_key_map">创建密钥映射中… 请稍等…</string>
     <string name="info_tag_removed_while_reading">错误:读取过程中失去连接</string>
