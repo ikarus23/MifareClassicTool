@@ -122,7 +122,9 @@ public class FileChooser extends BasicActivity {
     private boolean mIsDirEmpty;
     private boolean mIsAllowNewFile;
 
-
+    /**
+     * Initialize class variables.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -260,6 +262,7 @@ public class FileChooser extends BasicActivity {
     private boolean updateFileIndex(File path) {
         boolean isEmpty = true;
         File[] files = null;
+        String chooserText = "";
 
         if (path != null) {
             files = path.listFiles();
@@ -283,16 +286,29 @@ public class FileChooser extends BasicActivity {
         } else {
             // No files in directory.
             isEmpty = true;
-            Intent intent = getIntent();
-            String chooserText = "";
-            if (intent.hasExtra(EXTRA_CHOOSER_TEXT)) {
-                chooserText = intent.getStringExtra(EXTRA_CHOOSER_TEXT);
-            }
-            mChooserText.setText(chooserText
-                    + "\n   --- "
-                    + getString(R.string.text_no_files_in_chooser)
-                    + " ---");
         }
+
+        // Update chooser text.
+        // Add storage model update info, if MCT was updated and there are no
+        // or only standard files.
+        if ((!Common.isFirstInstall() && isEmpty) ||
+                (!Common.isFirstInstall() && files != null && files.length == 2
+                && files[0].getName().equals(Common.STD_KEYS_EXTENDED)
+                && files[1].getName().equals(Common.STD_KEYS))) {
+            chooserText += getString(R.string.text_missing_files_update) + "\n\n";
+        }
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_CHOOSER_TEXT)) {
+            chooserText += intent.getStringExtra(EXTRA_CHOOSER_TEXT);
+        } else {
+            chooserText += getString(R.string.text_chooser_info_text);
+        }
+        if (isEmpty) {
+            chooserText += "\n\n   --- "
+                    + getString(R.string.text_no_files_in_chooser)
+                    + " ---";
+        }
+        mChooserText.setText(chooserText);
 
         mChooserButton.setEnabled(!isEmpty);
         if (mDeleteFile != null) {

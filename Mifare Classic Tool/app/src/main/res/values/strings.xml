@@ -195,6 +195,8 @@
     <string name="text_dec_be">Dec (BE)</string>
     <string name="text_dec_le">Dec (LE)</string>
     <string name="text_invalid_ac">Access Conditions are invalid</string>
+    <string name="text_missing_files_update">Missing files after updating from version prior
+            to 4.0.0? Please read section \"1.2 Data Storage\" of \"Help and Info\".</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>

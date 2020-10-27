@@ -213,8 +213,8 @@ public class Common extends Application {
 // ############################################################################
 
     /**
-     * Initialize the {@link #mAppContext} with the application context
-     * (for {@link #getPreferences()}) and {@link #mVersionCode}.
+     * Initialize the {@link #mAppContext} with the application context.
+     * Some functions depend on this context.
      */
     @Override
     public void onCreate() {
@@ -227,6 +227,22 @@ public class Common extends Application {
                     getPackageName(), 0).versionName;
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
+        }
+    }
+
+    /**
+     * Check if this is the first installation of this app or just an update.
+     * @return True if app was not installed before. False otherwise.
+     */
+    public static boolean isFirstInstall() {
+        try {
+            long firstInstallTime = mAppContext.getPackageManager()
+                    .getPackageInfo(mAppContext.getPackageName(), 0).firstInstallTime;
+            long lastUpdateTime = mAppContext.getPackageManager()
+                    .getPackageInfo(mAppContext.getPackageName(), 0).lastUpdateTime;
+            return firstInstallTime == lastUpdateTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            return true;
         }
     }
 
