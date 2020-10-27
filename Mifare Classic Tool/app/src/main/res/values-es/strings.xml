@@ -181,9 +181,8 @@
     <string name="text_select_file">Selecciona un fichero</string>
     <string name="text_select_directory">Selecciona un directorio</string>
     <string name="text_choose_dump_file">Elige un archivo dump</string>
-    <string name="text_import_export_tool_info"> Los ficheros exportados/comvertidos están
-       siempre almacenados en \"MifareClassicTool/export\" en el almacenamiento externo (e.g. la tarjeta SD
-        ). Si un fichero con el mismo nombre ya existe en el moment ode importar, este será sobreescrito.</string>
+    <string name="text_import_export_tool_info">Si un fichero con el mismo nombre ya existe en el moment
+        ode importar, este será sobreescrito.</string>
     <string name="text_random_uid">UID aleatorio</string>
     <string name="text_no_uid_logs">El log del UID está vacío</string>
     <string name="text_not_ascii">Not ASCII</string>
@@ -572,7 +571,7 @@
         estado en el que es posible escribir en el bloque del fabricante. Estas etiquetas no funcionarán.</string>
     <string name="dialog_rest_of_block_0_title">Resto del Bloque 0</string>
     <string name="dialog_rest_of_block_0">Las etiquetas MIFARE Classic normalmente solo pueden
-        escritas por bloques. EL UID es representado por los primeros bytes del bloque 0. Para cambiar el UID, 
+        escritas por bloques. EL UID es representado por los primeros bytes del bloque 0. Para cambiar el UID,
         se debe escribir el bloque 0 completo. Los datos del \"resto del bloque 0\" son
         los bytes que se agregarán al UID para representar un bloque completo.</string>
     <string name="dialog_key_for_block_0_title">Clave para el Bloque 0</string>

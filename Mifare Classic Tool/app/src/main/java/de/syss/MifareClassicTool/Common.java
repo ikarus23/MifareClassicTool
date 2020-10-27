@@ -83,8 +83,7 @@ public class Common extends Application {
      */
     public static final boolean IS_DONATE_VERSION = false;
     /**
-     * The directory name of the root directory of this app
-     * (on external storage).
+     * The directory name of the root directory of this app.
      */
     public static final String HOME_DIR = "/MifareClassicTool";
 
