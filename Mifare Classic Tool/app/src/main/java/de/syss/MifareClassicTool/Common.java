@@ -271,27 +271,17 @@ public class Common extends Application {
     }
 
     /**
-     * Create a File object with a path that consists of its storage
-     * (internal/external according to its preference) and the relative
-     * path.
+     * Create a File object with a path that consists of the apps file
+     * directory, the {@link #HOME_DIR} and the relative path.
      * @param relativePath The relative path that gets appended to the
-     * internal or external storage path part.
-     * @return A File object with the absolute path of the storage and the
-     * relative component given by the parameter.
+     * base path.
+     * @return A File object with the absolute path of app file directory +
+     * {@link #HOME_DIR} + relativePath.
+     * @see Context#getFilesDir()
      */
-    public static File getFileFromStorage(String relativePath) {
-        File file;
-        boolean isUseInternalStorage = getPreferences().getBoolean(
-                UseInternalStorage.toString(), false);
-        if (isUseInternalStorage) {
-            // Use internal storage.
-            file = new File(mAppContext.getFilesDir() + relativePath);
-        } else {
-            // Use external storage (default).
-            file = new File(Environment.getExternalStorageDirectory() +
-                    relativePath);
-        }
-        return file;
+    public static File getFile(String relativePath) {
+        return new File(mAppContext.getFilesDir()
+                + HOME_DIR + "/" + relativePath);
     }
 
     /**

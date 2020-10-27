@@ -589,8 +589,7 @@ public class MainMenu extends Activity {
             }
 
             // Create keys directory.
-            File path = Common.getFileFromStorage(
-                    Common.HOME_DIR + "/" + Common.KEYS_DIR);
+            File path = Common.getFile(Common.KEYS_DIR);
 
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
@@ -600,8 +599,7 @@ public class MainMenu extends Activity {
             }
 
             // Create dumps directory.
-            path = Common.getFileFromStorage(
-                    Common.HOME_DIR + "/" + Common.DUMPS_DIR);
+            path = Common.getFile(Common.DUMPS_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
@@ -610,8 +608,7 @@ public class MainMenu extends Activity {
             }
 
             // Create tmp directory.
-            path = Common.getFileFromStorage(
-                    Common.HOME_DIR + "/" + Common.TMP_DIR);
+            path = Common.getFile(Common.TMP_DIR);
             if (!path.exists() && !path.mkdirs()) {
                 // Could not create directory.
                 Log.e(LOG_TAG, "Error while creating '" + Common.HOME_DIR
@@ -824,8 +821,7 @@ public class MainMenu extends Activity {
                 false) && !Common.isExternalStorageWritableErrorToast(this)) {
             return;
         }
-        File file = Common.getFileFromStorage(
-            Common.HOME_DIR + "/" + Common.DUMPS_DIR);
+        File file = Common.getFile(Common.DUMPS_DIR);
         if (file.isDirectory() && (file.listFiles() == null
                 || file.listFiles().length == 0)) {
             Toast.makeText(this, R.string.info_no_dumps,
@@ -856,8 +852,7 @@ public class MainMenu extends Activity {
         }
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
-                Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                        Common.KEYS_DIR).getAbsolutePath());
+                Common.getFile(Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(FileChooser.EXTRA_TITLE,
                 getString(R.string.text_open_key_file_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
@@ -1013,10 +1008,10 @@ public class MainMenu extends Activity {
      * @see Common#copyFile(InputStream, OutputStream)
      */
     private void copyStdKeysFilesIfNecessary() {
-        File std = Common.getFileFromStorage(Common.HOME_DIR + "/" +
+        File std = Common.getFile(
                 Common.KEYS_DIR + "/" + Common.STD_KEYS);
-        File extended = Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                        Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
+        File extended = Common.getFile(
+                Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
         AssetManager assetManager = getAssets();
 
         if (!std.exists()) {

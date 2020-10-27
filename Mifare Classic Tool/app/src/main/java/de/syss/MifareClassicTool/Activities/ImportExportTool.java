@@ -230,8 +230,7 @@ public class ImportExportTool extends BasicActivity {
         }
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
-                Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                        Common.DUMPS_DIR).getAbsolutePath());
+                Common.getFile(Common.DUMPS_DIR).getAbsolutePath());
         intent.putExtra(FileChooser.EXTRA_TITLE,
                 getString(R.string.text_choose_dump_file));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
@@ -266,8 +265,7 @@ public class ImportExportTool extends BasicActivity {
         }
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
-                Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                        Common.KEYS_DIR).getAbsolutePath());
+                Common.getFile(Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(FileChooser.EXTRA_TITLE,
                 getString(R.string.text_choose_key_file));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
@@ -328,7 +326,7 @@ public class ImportExportTool extends BasicActivity {
                     fileName = fileName.substring(0, fileName.lastIndexOf('.'));
                 }
                 String destFileName = fileName;
-                String destPath = Common.HOME_DIR + "/";
+                String destPath;
 
                 // Convert key or dump file.
                 String[] convertedContent;
@@ -336,13 +334,13 @@ public class ImportExportTool extends BasicActivity {
                     convertedContent = convertDump(
                             content, mFileType, FileType.MCT);
                     destFileName += FileType.MCT.toString();
-                    destPath += Common.DUMPS_DIR;
+                    destPath = Common.DUMPS_DIR;
                 } else {
                     convertedContent = convertKeys(
                             content, mFileType, FileType.KEYS);
                     // TODO (optional): Remove duplicates.
                     destFileName += FileType.KEYS.toString();
-                    destPath += Common.KEYS_DIR;
+                    destPath = Common.KEYS_DIR;
                 }
                 if (convertedContent == null) {
                     // Error during conversion.
@@ -350,7 +348,7 @@ public class ImportExportTool extends BasicActivity {
                 }
 
                 // Save converted file.
-                File destination = Common.getFileFromStorage(
+                File destination = Common.getFile(
                         destPath + "/" + destFileName);
                 if (Common.saveFile(destination, convertedContent, false)) {
                     Toast.makeText(this, R.string.info_file_imported,
@@ -809,11 +807,10 @@ public class ImportExportTool extends BasicActivity {
     private boolean backupDumpsAndKeys(Uri contentDestUri) {
         final int BUFFER = 2048;
         File[] dirs = new File[2];
-        dirs[0] = Common.getFileFromStorage(
-                Common.HOME_DIR + "/" + Common.KEYS_DIR);
-        dirs[1] = Common.getFileFromStorage(
-                Common.HOME_DIR + "/" + Common.DUMPS_DIR);
-        int commonPathLen = Common.getFileFromStorage("").getAbsolutePath().length();
+        dirs[0] = Common.getFile(Common.KEYS_DIR);
+        dirs[1] = Common.getFile(Common.DUMPS_DIR);
+        int commonPathLen = Common.getFile("")
+                .getAbsolutePath().lastIndexOf("/");
         try {
             OutputStream dest =  getContentResolver().openOutputStream(
                     contentDestUri, "rw");

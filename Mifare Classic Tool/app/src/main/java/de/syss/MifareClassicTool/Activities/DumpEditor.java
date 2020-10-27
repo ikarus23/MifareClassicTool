@@ -418,8 +418,7 @@ public class DumpEditor extends BasicActivity
             return;
         }
         String targetDir = (isDump) ? Common.DUMPS_DIR : Common.KEYS_DIR;
-        final File path = Common.getFileFromStorage(
-                Common.HOME_DIR +  "/" + targetDir);
+        final File path = Common.getFile(targetDir);
         final Context context = this;
         final IActivityThatReactsToSave activity = this;
 
@@ -880,8 +879,7 @@ public class DumpEditor extends BasicActivity
             fileName = mDumpName;
         }
         // Save file to tmp directory.
-        File file = Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                Common.TMP_DIR + "/" + fileName);
+        File file = Common.getFile(Common.TMP_DIR + "/" + fileName);
         if (!Common.saveFile(file, mLines, false)) {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();

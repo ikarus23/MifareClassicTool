@@ -62,8 +62,7 @@ public class ReadTag extends Activity {
 
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
-                Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                        Common.KEYS_DIR).getAbsolutePath());
+                Common.getFile(Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_read));
         startActivityForResult(intent, KEY_MAP_CREATOR);

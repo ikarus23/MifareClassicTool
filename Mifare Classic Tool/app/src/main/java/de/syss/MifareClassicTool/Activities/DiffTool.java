@@ -279,8 +279,7 @@ public class DiffTool extends BasicActivity {
     private Intent prepareFileChooserForDump() {
         Intent intent = new Intent(this, FileChooser.class);
         intent.putExtra(FileChooser.EXTRA_DIR,
-                Common.getFileFromStorage(Common.HOME_DIR + "/" +
-                        Common.DUMPS_DIR).getAbsolutePath());
+                Common.getFile(Common.DUMPS_DIR).getAbsolutePath());
         intent.putExtra(FileChooser.EXTRA_TITLE,
                 getString(R.string.text_open_dump_title));
         intent.putExtra(FileChooser.EXTRA_BUTTON_TEXT,
