@@ -377,13 +377,8 @@ public class MainMenu extends Activity {
                 .setPositiveButton(R.string.action_nfc,
                         (dialog, which) -> {
                             // Goto NFC Settings.
-                            if (Build.VERSION.SDK_INT >= 16) {
-                                startActivity(new Intent(
-                                        Settings.ACTION_NFC_SETTINGS));
-                            } else {
-                                startActivity(new Intent(
-                                        Settings.ACTION_WIRELESS_SETTINGS));
-                            }
+                            startActivity(new Intent(
+                                    Settings.ACTION_NFC_SETTINGS));
                         })
                 .setNeutralButton(R.string.action_editor_only,
                         (dialog, which) -> {

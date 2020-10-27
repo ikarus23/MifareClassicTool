@@ -1748,7 +1748,7 @@ public class Common extends Application {
                             Context.CLIPBOARD_SERVICE);
             android.content.ClipData clip =
                     android.content.ClipData.newPlainText(
-                            "MIFARE classic tool data", text);
+                            "MIFARE Classic Tool data", text);
             clipboard.setPrimaryClip(clip);
             if (showMsg) {
                 Toast.makeText(context, R.string.info_copied_to_clipboard,
