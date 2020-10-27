@@ -18,7 +18,8 @@
       <a href="#general_information">1. General Information</a>
       <ul>
         <li><a href="#features">1.1 Features</a></li>
-        <li><a href="#license">1.2 License</a></li>
+        <li><a href="#storage">1.2 Data Storage</a></li>
+        <li><a href="#license">1.3 License</a></li>
       </ul>
     </li>
     <li><a href="#getting_started">2. Getting Started</a></li>
@@ -140,7 +141,23 @@
       <li>It's open source ;)</li>
     </ul>
 
-  <h3 id="license">1.2 License</h3>
+  <h3 id="storage">1.2 Data Storage</h3>
+  This app stores data in the app-specific, internal storage. Files like a saved dump from
+  a read-out tag can not be access by any other app or with a computer (USB). If you want to
+  use them elsewhere, you can use the share button or MCT's
+  <a href="#import_export_tool">Import/Export Tool</a>.
+  <br /><br />
+  <b>Be aware! Uninstalling this app will delete all files (dumps/keys) permanently.</b>
+  <br /><br />
+  If you updated this app from a version prior to 4.0.0 it might appear, that all dump and
+  key files are gone. This is not the case. With version 4.0.0 MCT's file storage model
+  has changed. You can get your files back by simply using the
+  <a href="#import_export_tool">Import/Export Tool</a>. The old files are stored on the
+  external storage (SD card) in a folder named <i>MifareClassicTool</i>. Dump files are
+  in the format <i>.mct</i> and key files are in the format <i>.keys</i>. It is possible
+  to import multiple files at once.
+
+  <h3 id="license">1.3 License</h3>
     This application was originally developed by
     Gerhard Klostermeier in cooperation with SySS GmbH
     (<a href="http://www.syss.de/">www.syss.de</a>) and Aalen
