@@ -343,7 +343,7 @@ public class ImportExportTool extends BasicActivity {
                         destPath + "/" + destFileName);
                 if (Common.saveFile(destination, convertedContent, false)) {
                     Toast.makeText(this, R.string.info_file_imported,
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, R.string.info_save_error,
                             Toast.LENGTH_LONG).show();
