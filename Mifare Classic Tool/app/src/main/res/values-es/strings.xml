@@ -371,7 +371,6 @@
         (bloque 0)</string>
     <string name="info_not_vb">Error: El bloque seleccionado no es un Bloque de Valor</string>
     <string name="info_value_too_big">Error: El valor es demasiado grande</string>
-    <string name="info_write_permission">El permiso de escritura es necesario para poder funcionar correctamente</string>
     <string name="info_bcc_not_valid">Error: El bloque 0 del BCC no es válido</string>
     <string name="info_invalid_uid_length">Error: Tamaño del UID inválido</string>
     <string name="info_sector_count_error">Error: El recuento de sectores debe estar entre 1 y 40</string>

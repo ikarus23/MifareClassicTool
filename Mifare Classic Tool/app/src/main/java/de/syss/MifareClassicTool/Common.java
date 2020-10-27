@@ -18,7 +18,6 @@
 
 package de.syss.MifareClassicTool;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -37,7 +36,6 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Build;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.text.SpannableString;
@@ -47,7 +45,6 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.BufferedReader;
@@ -232,17 +229,6 @@ public class Common extends Application {
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
         }
-    }
-
-    /**
-     * Check if the user granted read/write permissions to the external storage.
-     * @param context The Context to check the permissions for.
-     * @return True if granted the permissions. False otherwise.
-     */
-    public static boolean hasWritePermissionToExternalStorage(Context context) {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED;
     }
 
     /**

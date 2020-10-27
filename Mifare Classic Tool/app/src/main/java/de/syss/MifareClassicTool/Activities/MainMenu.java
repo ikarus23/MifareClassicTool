@@ -18,7 +18,6 @@
 
 package de.syss.MifareClassicTool.Activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +26,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -48,8 +46,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -77,7 +73,6 @@ public class MainMenu extends Activity {
 
     private final static int FILE_CHOOSER_DUMP_FILE = 1;
     private final static int FILE_CHOOSER_KEY_FILE = 2;
-    private static final int REQUEST_WRITE_STORAGE_CODE = 1;
     private boolean mDonateDialogWasShown = false;
     private boolean mInfoExternalNfcDialogWasShown = false;
     private boolean mHasNoNfc = false;
@@ -124,15 +119,7 @@ public class MainMenu extends Activity {
         mKeyEditor = findViewById(R.id.buttonMainEditKeyDump);
         mDumpEditor = findViewById(R.id.buttonMainEditCardDump);
 
-        // Check if the user granted the app write permissions.
-        if (Common.hasWritePermissionToExternalStorage(this)) {
-            initFolders();
-        } else {
-            // Request the permission.
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_WRITE_STORAGE_CODE);
-        }
+        initFolders();
     }
 
     /**
@@ -644,12 +631,6 @@ public class MainMenu extends Activity {
         // Enable/Disable UID clone info tool depending on NFC availability.
         menu.findItem(R.id.menuMainCloneUidTool).setEnabled(
                 !Common.useAsEditorOnly());
-        // Enable/Disable diff tool depending on write permissions.
-        menu.findItem(R.id.menuMainDiffTool).setEnabled(
-                Common.hasWritePermissionToExternalStorage(this));
-        // Enable/Disable import/export tool depending on write permissions.
-        menu.findItem(R.id.menuMainImportExportTool).setEnabled(
-                Common.hasWritePermissionToExternalStorage(this));
     }
 
     /**
@@ -661,16 +642,12 @@ public class MainMenu extends Activity {
     public void onResume() {
         super.onResume();
 
-        if (Common.hasWritePermissionToExternalStorage(this)) {
-            mKeyEditor.setEnabled(true);
-            mDumpEditor.setEnabled(true);
-            useAsEditorOnly(Common.useAsEditorOnly());
-            // The start up nodes will also enable the NFC foreground dispatch if all
-            // conditions are met (has NFC & NFC enabled).
-            runStartUpNode(StartUpNode.FirstUseDialog);
-        } else {
-            enableMenuButtons(false);
-        }
+        mKeyEditor.setEnabled(true);
+        mDumpEditor.setEnabled(true);
+        useAsEditorOnly(Common.useAsEditorOnly());
+        // The start up nodes will also enable the NFC foreground dispatch if all
+        // conditions are met (has NFC & NFC enabled).
+        runStartUpNode(StartUpNode.FirstUseDialog);
     }
 
     /**
@@ -703,43 +680,6 @@ public class MainMenu extends Activity {
                 startActivity(i);
             }
         }
-    }
-
-    /**
-     * Handle answered permission requests. Until now, the app only asks for
-     * the permission to access the external storage.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-            String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode,
-                permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST_WRITE_STORAGE_CODE:
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    initFolders();
-                } else {
-                    Toast.makeText(this, R.string.info_write_permission,
-                            Toast.LENGTH_LONG).show();
-                    enableMenuButtons(false);
-
-                }
-                break;
-        }
-    }
-
-    /**
-     * Enable or disable all menu buttons which provide functionality that
-     * uses the external storage.
-     * @param enable True to enable the buttons. False to disable them.
-     */
-    private void enableMenuButtons(boolean enable) {
-        mWriteTag.setEnabled(enable);
-        mReadTag.setEnabled(enable);
-        mKeyEditor.setEnabled(enable);
-        mDumpEditor.setEnabled(enable);
     }
 
     /**
@@ -970,9 +910,6 @@ public class MainMenu extends Activity {
      * Copy the standard key files ({@link Common#STD_KEYS} and
      * {@link Common#STD_KEYS_EXTENDED}) form assets to {@link Common#KEYS_DIR}.
      * Key files are simple text files. Any plain text editor will do the trick.
-     * All key and dump data from this App is stored in
-     * getExternalStoragePublicDirectory(Common.HOME_DIR) to remain
-     * there after App uninstallation.
      * @see Common#KEYS_DIR
      * @see Common#HOME_DIR
      * @see Common#copyFile(InputStream, OutputStream)
@@ -996,7 +933,7 @@ public class MainMenu extends Activity {
                 out.close();
               } catch(IOException e) {
                   Log.e(LOG_TAG, "Error while copying 'std.keys' from assets "
-                          + "to external storage.");
+                          + "to internal storage.");
               }
         }
         if (!extended.exists()) {
@@ -1011,7 +948,7 @@ public class MainMenu extends Activity {
                 out.close();
               } catch(IOException e) {
                   Log.e(LOG_TAG, "Error while copying 'extended-std.keys' "
-                          + "from assets to external storage.");
+                          + "from assets to internal storage.");
               }
         }
     }
