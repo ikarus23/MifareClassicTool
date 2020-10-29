@@ -921,6 +921,7 @@ public class DumpEditor extends BasicActivity
                 mKeysName = new String(mDumpName);
             }
         }
+        mKeysName += ".keys";
 
         saveFile(keys, mKeysName, false, R.string.dialog_save_keys_title,
                 R.string.dialog_save_keys);
