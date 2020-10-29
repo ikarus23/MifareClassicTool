@@ -1580,26 +1580,34 @@ public class Common extends Application {
         return false;
     }
 
-    // TODO: doc. + test + use in clone tool and write activity.
-    // UID0/BCC: https://www.nxp.com/docs/en/application-note/AN10927.pdf section 2.x.x
-    // ATQA: https://www.nxp.com/docs/en/application-note/AN10833.pdf section 3.1
-    // SAK: // https://www.nxp.com/docs/en/application-note/AN10833.pdf section 3.2
-    public static boolean isValidBlock0(String block0, byte[] uid, int tagSize) {
-        if (block0 == null || block0.length() != 64 || uid == null
-        || (uid.length != 4 && uid.length != 7 && uid.length != 10)) {
+    /**
+     * Check if a block 0 contains valid data. This covers the first and
+     * third byte of the UID, the BCC, the ATQA and the SAK value.
+     * The rules for these values have been taken from:
+     * UID0/UID3/BCC: https://www.nxp.com/docs/en/application-note/AN10927.pdf section 2.x.x
+     * ATQA: https://www.nxp.com/docs/en/application-note/AN10833.pdf section 3.1
+     * SAK: https://www.nxp.com/docs/en/application-note/AN10834.pdf (page 7)
+     * @param block0 Block 0 as hex string.
+     * @param uidLen Length of the UID.
+     * @param tagSize Size of the tag according to {@link MifareClassic#getSize()}
+     * @return True if block 0 is valid. False otherwise.
+     */
+    public static boolean isValidBlock0(String block0, int uidLen, int tagSize) {
+        if (block0 == null || block0.length() != 32
+                || (uidLen != 4 && uidLen != 7 && uidLen != 10)) {
             return false;
         }
         block0 = block0.toUpperCase();
         String byte0 = block0.substring(0, 2);
         String bcc = block0.substring(8, 10);
-        String sak = block0.substring(10, 12);
-        String atqa = block0.substring(12, 16);
+        String sak = block0.substring(uidLen*2 + 2, uidLen*2 + 4);
+        String atqa = block0.substring(uidLen*2 + 4, uidLen*2 + 8);
         boolean valid = true;
-        int uidLen = uid.length;
         // BCC.
         if (valid && uidLen == 4) {
             // The 5th byte of block 0 should be the BCC.
             byte byteBcc = hex2ByteArray(bcc)[0];
+            byte[] uid = hex2ByteArray(block0.substring(0, 8));
             valid = isValidBCC(uid, byteBcc);
         }
         // Byte0.
@@ -1631,8 +1639,8 @@ public class Common extends Application {
         // Check if there is a special ATQA tied to MIFARE SmartMX or TNP3xxx.
         // If not, check if there is a valid ATQA with respect to the UID length
         // and tag size in use.
-        if (valid && (atqa.matches("040.") ||
-                atqa.matches("020.") ||
+        if (valid && (atqa.matches("040[1-9A-F]") ||
+                atqa.matches("020[1-9A-F]") ||
                 atqa.matches("480.") ||
                 atqa.matches("010F"))) {
             // Special ATQA value found. Must be SmartMX with MIFARE emulation or TNP3xxx.
@@ -1644,26 +1652,21 @@ public class Common extends Application {
                     tagSize == MifareClassic.SIZE_MINI)) {
                 // ATQA must be 0x0400 for a single size UID tag with 320b/1k/2k memory.
                 valid = atqa.equals("0400");
-            }
-            if (valid && uidLen == 4 && tagSize == MifareClassic.SIZE_4K) {
+            } else if (valid && uidLen == 4 && tagSize == MifareClassic.SIZE_4K) {
                 // ATQA must be 0x0200 for a single size UID tag with 4k memory.
                 valid = atqa.equals("0200");
-            }
-            if (valid && uidLen == 7 && (tagSize == MifareClassic.SIZE_1K ||
+            } else if (valid && uidLen == 7 && (tagSize == MifareClassic.SIZE_1K ||
                     tagSize == MifareClassic.SIZE_2K ||
                     tagSize == MifareClassic.SIZE_MINI)) {
                 // ATQA must be 0x4400 for a double size UID tag with 320b/1k/2k memory.
                 valid = atqa.equals("4400");
-            }
-            if (valid && uidLen == 7 && tagSize == MifareClassic.SIZE_4K) {
+            } else if (valid && uidLen == 7 && tagSize == MifareClassic.SIZE_4K) {
                 // ATQA must be 0x4200 for a double size UID tag with 4k memory.
                 valid = atqa.equals("4200");
             }
         }
         // SAK.
-        // Check if there is a valid MIFARE Classic/SmartMX/Plus SAK,
-        // independent of the tag size. An improvement would be to check the
-        // tag size as well.
+        // Check if there is a valid MIFARE Classic/SmartMX/Plus SAK.
         byte byteSak = hex2ByteArray(sak)[0];
         boolean validSak = false;
         if (valid) {
@@ -1676,11 +1679,12 @@ public class Common extends Application {
                         // MIFARE Plus S 4K SL1
                         // MIFARE Plus X 4K SL1
                         // MIFARE Plus EV1 2K/4K SL1
-                        validSak = true;
+                        validSak =  (tagSize == MifareClassic.SIZE_2K ||
+                                tagSize == MifareClassic.SIZE_4K);
                     } else {
                         if ((byteSak & 1) == 1) { // SAK bit 1 = 1?
                             // MIFARE Mini
-                            validSak = true;
+                            validSak = tagSize == MifareClassic.SIZE_MINI;
                         } else {
                             // MIFARE Classic 1k
                             // MIFARE SmartMX 1k
@@ -1688,7 +1692,8 @@ public class Common extends Application {
                             // MIFARE Plus X 2K SL1
                             // MIFARE Plus SE 1K
                             // MIFARE Plus EV1 2K/4K SL1
-                            validSak = true;
+                            validSak =  (tagSize == MifareClassic.SIZE_2K ||
+                                    tagSize == MifareClassic.SIZE_1K);
                         }
                     }
                 }

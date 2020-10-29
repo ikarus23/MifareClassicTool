@@ -179,6 +179,8 @@
     <string name="text_clone_error">Error: Are you sure you have a magic
         tag (2nd gen)?</string>
     <string name="text_uid_length_error">Error: UID length mismatch (4 vs. 7 vs. 10 bytes)</string>
+    <string name="text_block0_warning">Warning: Block 0 may contain invalid data (BCC/SAK/ATQA/UID0)</string>
+    <string name="text_reset_clone_process">Resetting the clone process</string>
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
@@ -621,6 +623,13 @@
     <string name="dialog_key_for_block_0">To write to block 0 (the block with the UID) you
         need the corresponding key with write privileges. For blank or factory formatted
         tags this key is key A with a value of \"FFFFFFFFFFFF\".</string>
+    <string name="dialog_block0_data_warning_title">Block 0 Data</string>
+    <string name="dialog_block0_data_warning">You are about to write data to block 0.
+        However, it looks like your data might be invalid.
+        \n\nOn some 2nd gen tags, values like SAK and ATQA can be controlled by bytes
+        in block 0. If you set wrong values, the tag may (soft-)brick. Also, a UID should
+        follow the ISO 14443 specifications.
+        \n\nProceed at your own risk!</string>
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

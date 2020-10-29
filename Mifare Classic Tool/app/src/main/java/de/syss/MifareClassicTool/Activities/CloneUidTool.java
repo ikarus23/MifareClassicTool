@@ -58,6 +58,7 @@ public class CloneUidTool extends BasicActivity {
     private String mBlock0Rest = "880400475955D141103607";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
     private String mBlock0Key = "FFFFFFFFFFFF";
+    private boolean mIgnoreIncorrectBlock0 = false;
     private enum Status { INIT, BLOCK0_CALCULATED, CLONED }
     private Status mStatus = Status.INIT;
 
@@ -129,13 +130,16 @@ public class CloneUidTool extends BasicActivity {
                     String uidOriginal = mUid.getText().toString();
                     if (uid.equals(uidOriginal)) {
                         appendToLog(getString(R.string.text_clone_successfully));
+                        appendToLog(getString(R.string.text_reset_clone_process));
                         mStatus = Status.INIT;
+                        mIgnoreIncorrectBlock0 = false;
                     } else {
                         appendToLog(getString(R.string.text_uid_match_error)
                                 + " (" + uidOriginal + " <-> " + uid + ")");
                         appendToLog(getString(R.string.text_clone_error));
                         mStatus = Status.BLOCK0_CALCULATED;
                     }
+                    break;
             }
         }
     }
@@ -208,7 +212,7 @@ public class CloneUidTool extends BasicActivity {
     }
 
     /**
-     * Write block 0 (manufacturer block) with {@link #mBlock0Complete}
+     * Check and write block 0 (manufacturer block) with {@link #mBlock0Complete}
      * containing the cloned UID.
      */
     private void writeManufacturerBlock() {
@@ -223,11 +227,21 @@ public class CloneUidTool extends BasicActivity {
             return;
         }
 
-        // Check UID length of magic card gen2.
+        // Check for UID length missmatch between user input and detected card.
         byte[] uid = Common.getUID();
         if (uid.length != mUidLen) {
             // Error. UID length does not match the source.
             appendToLog(getString(R.string.text_uid_length_error));
+            reader.close();
+            return;
+        }
+
+        // Check block 0 issues (BCC, SAK, ATQA, UID0, ...).
+        if (!mIgnoreIncorrectBlock0 && !Common.isValidBlock0(
+                mBlock0Complete, uid.length, reader.getSize())) {
+            appendToLog(getString(R.string.text_block0_warning));
+            showBlock0Warning();
+            reader.close();
             return;
         }
 
@@ -252,6 +266,38 @@ public class CloneUidTool extends BasicActivity {
         appendToLog(getString(R.string.text_rescan_tag_to_check));
         mStatus = Status.CLONED;
         reader.close();
+    }
+
+    /**
+     * Show a warning dialog to inform the user, he is about to write what may be
+     * invalid data to block 0. On ignore, continue with writing. On cancel, reset
+     * the clone process.
+     * @see #writeManufacturerBlock()
+     * @see #mIgnoreIncorrectBlock0
+     * @see #mStatus
+     */
+    private void showBlock0Warning() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_block0_data_warning_title)
+                .setMessage(R.string.dialog_block0_data_warning)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.action_i_know_what_i_am_doing,
+                        (dialog, which) -> {
+                            // Write.
+                            mIgnoreIncorrectBlock0 = true;
+                            writeManufacturerBlock();
+                        })
+                .setNegativeButton(R.string.action_cancel,
+                        (dialog, id) -> {
+                            dialog.cancel();
+                        })
+                .setOnCancelListener(
+                        dialog -> {
+                            // Cancel.
+                            mStatus = Status.INIT;
+                            appendToLog(getString(R.string.text_reset_clone_process));
+                        })
+                .show();
     }
 
     /**
