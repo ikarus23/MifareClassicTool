@@ -515,7 +515,7 @@
         Useful information:<br />
         &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
         Tracker</a><br />
-        &#8226; <a href="https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">Changelog
+        &#8226; <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">Changelog
         / Version History</a><br />
         &#8226; <a href="http://publications.icaria.de/mct/">Documentation,
         APKs, etc.</a><br />
@@ -570,8 +570,10 @@
     <string name="dialog_save_conflict_keyfile">This file already exists.
         What do you want to do?</string>
     <string name="dialog_donate_title">Donate</string>
-    <string name="dialog_donate">
-        <b>MIFARE Classic Tool has been updated!</b>
+    <string name="dialog_donate"><b>MIFARE Classic Tool has been updated!</b>
+        \nYou can find the full
+        <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">changelog</a>
+        online.
         \n\nIf the new features, fixes or the app in general makes you happy,
         please consider to make the developer happy. Buy him a beer! ;)
         \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Get
