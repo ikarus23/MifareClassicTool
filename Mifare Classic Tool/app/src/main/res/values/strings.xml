@@ -629,7 +629,9 @@
         \n\nOn some 2nd gen tags, values like SAK and ATQA can be controlled by bytes
         in block 0. If you set wrong values, the tag may (soft-)brick. But there are
         also tags which ignore the wrong values. Independently, a UID should
-        follow the ISO 14443 specifications.
+        follow the ISO 14443 specification.
+        \n\nThis block 0 check tries to make sure, you are writing data complaint to
+        NXP\'s specifications.
         \n\nProceed at your own risk!</string>
 
     <!-- Hints -->
