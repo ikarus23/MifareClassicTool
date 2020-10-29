@@ -1580,6 +1580,125 @@ public class Common extends Application {
         return false;
     }
 
+    // TODO: doc. + test + use in clone tool and write activity.
+    // UID0/BCC: https://www.nxp.com/docs/en/application-note/AN10927.pdf section 2.x.x
+    // ATQA: https://www.nxp.com/docs/en/application-note/AN10833.pdf section 3.1
+    // SAK: // https://www.nxp.com/docs/en/application-note/AN10833.pdf section 3.2
+    public static boolean isValidBlock0(String block0, byte[] uid, int tagSize) {
+        if (block0 == null || block0.length() != 64 || uid == null
+        || (uid.length != 4 && uid.length != 7 && uid.length != 10)) {
+            return false;
+        }
+        block0 = block0.toUpperCase();
+        String byte0 = block0.substring(0, 2);
+        String bcc = block0.substring(8, 10);
+        String sak = block0.substring(10, 12);
+        String atqa = block0.substring(12, 16);
+        boolean valid = true;
+        int uidLen = uid.length;
+        // BCC.
+        if (valid && uidLen == 4) {
+            // The 5th byte of block 0 should be the BCC.
+            byte byteBcc = hex2ByteArray(bcc)[0];
+            valid = isValidBCC(uid, byteBcc);
+        }
+        // Byte0.
+        if (valid && (uidLen == 7 || uidLen == 10)) {
+            // NXP's TagInfo Android app says, double/triple sized UIDs shall
+            // not be 0x00 at the first byte.
+            valid = !byte0.equals("00");
+        }
+        if (valid && uidLen == 4) {
+            // First byte of single size UID must not be 0x88.
+            valid = !byte0.equals("88");
+        }
+        if (valid && uidLen == 4) {
+            // First byte of single size UID must not be 0xF8.
+            valid = !byte0.equals("F8");
+        }
+        if (valid && (uidLen == 7 || uidLen == 10)) {
+            // First byte of double/triple sized UID shall not be 0x81-0xFE.
+            byte firstByte = hex2ByteArray(byte0)[0];
+            valid = (firstByte < 0x81 || firstByte > 0xFE);
+
+        }
+        // Byte3.
+        if (valid && (uidLen == 7 || uidLen == 10)) {
+            // The 3rd byte of a double/triple sized UID shall not be 0x88.
+            valid = !block0.substring(4, 6).equals("88");
+        }
+        // ATQA.
+        // Check if there is a special ATQA tied to MIFARE SmartMX or TNP3xxx.
+        // If not, check if there is a valid ATQA with respect to the UID length
+        // and tag size in use.
+        if (valid && (atqa.matches("040.") ||
+                atqa.matches("020.") ||
+                atqa.matches("480.") ||
+                atqa.matches("010F"))) {
+            // Special ATQA value found. Must be SmartMX with MIFARE emulation or TNP3xxx.
+            // This is a valid ATQA, do nothing.
+        } else if (valid) {
+            // Check for common ATQA values.
+            if (valid && uidLen == 4 && (tagSize == MifareClassic.SIZE_1K ||
+                    tagSize == MifareClassic.SIZE_2K ||
+                    tagSize == MifareClassic.SIZE_MINI)) {
+                // ATQA must be 0x0400 for a single size UID tag with 320b/1k/2k memory.
+                valid = atqa.equals("0400");
+            }
+            if (valid && uidLen == 4 && tagSize == MifareClassic.SIZE_4K) {
+                // ATQA must be 0x0200 for a single size UID tag with 4k memory.
+                valid = atqa.equals("0200");
+            }
+            if (valid && uidLen == 7 && (tagSize == MifareClassic.SIZE_1K ||
+                    tagSize == MifareClassic.SIZE_2K ||
+                    tagSize == MifareClassic.SIZE_MINI)) {
+                // ATQA must be 0x4400 for a double size UID tag with 320b/1k/2k memory.
+                valid = atqa.equals("4400");
+            }
+            if (valid && uidLen == 7 && tagSize == MifareClassic.SIZE_4K) {
+                // ATQA must be 0x4200 for a double size UID tag with 4k memory.
+                valid = atqa.equals("4200");
+            }
+        }
+        // SAK.
+        // Check if there is a valid MIFARE Classic/SmartMX/Plus SAK,
+        // independent of the tag size. An improvement would be to check the
+        // tag size as well.
+        byte byteSak = hex2ByteArray(sak)[0];
+        boolean validSak = false;
+        if (valid) {
+            if ((byteSak >> 1 & 1) == 0) { // SAK bit 2 = 1?
+                if ((byteSak >> 3 & 1) == 1) { // SAK bit 4 = 1?
+                    if ((byteSak >> 4 & 1) == 1) { // SAK bit 5 = 1?
+                        // MIFARE Classic 2K
+                        // MIFARE Classic 4K
+                        // MIFARE SmartMX 4K
+                        // MIFARE Plus S 4K SL1
+                        // MIFARE Plus X 4K SL1
+                        // MIFARE Plus EV1 2K/4K SL1
+                        validSak = true;
+                    } else {
+                        if ((byteSak & 1) == 1) { // SAK bit 1 = 1?
+                            // MIFARE Mini
+                            validSak = true;
+                        } else {
+                            // MIFARE Classic 1k
+                            // MIFARE SmartMX 1k
+                            // MIFARE Plus S 2K SL1
+                            // MIFARE Plus X 2K SL1
+                            // MIFARE Plus SE 1K
+                            // MIFARE Plus EV1 2K/4K SL1
+                            validSak = true;
+                        }
+                    }
+                }
+            }
+        }
+        valid = validSak;
+
+        return valid;
+    }
+
     /**
      * Reverse a byte Array (e.g. Little Endian -> Big Endian).
      * Hmpf! Java has no Array.reverse(). And I don't want to use
