@@ -362,10 +362,10 @@ public class Common extends Application {
     }
 
     /**
-     * Read a as BufferedReader line by line with the option to ignore
-     * lines starting with #.
+     * Read a as BufferedReader line by line with some exceptions.
+     * Empty lines and leading/tailing whitespaces will be ignored.
      * @param reader The reader object initialized with a file (data).
-     * @param readComments True if lines starting with # should be ignored.
+     * @param readComments True if comments (marked with #) should be read as well.
      * @param context The Context in which error Toasts will be shown.
      * @return The content with each line representing an array item
      * or Null in case of an read error.
@@ -377,19 +377,27 @@ public class Common extends Application {
         ArrayList<String> linesArray = new ArrayList<>();
         try {
             while ((line = reader.readLine()) != null) {
-                // Ignore empty lines.
-                // Ignore comments if readComments == false.
-                if (!line.equals("")
-                        && (readComments || !line.startsWith("#"))) {
-                    try {
-                        linesArray.add(line);
-                    } catch (OutOfMemoryError e) {
-                        // Error. File is too big
-                        // (too many lines, out of memory).
-                        Toast.makeText(context, R.string.info_file_to_big,
-                                Toast.LENGTH_LONG).show();
-                        return null;
+                // Remove comments if readComments is false.
+                if (!readComments) {
+                    if (line.matches("^#+$")) {
+                        continue;
                     }
+                    line = line.split("#")[0];
+                }
+                // Ignore leading/tailing whitespaces.
+                line = line.trim();
+                // Ignore empty lines.
+                if (line.equals("")) {
+                    continue;
+                }
+                try {
+                    linesArray.add(line);
+                } catch (OutOfMemoryError e) {
+                    // Error. File is too big
+                    // (too many lines, out of memory).
+                    Toast.makeText(context, R.string.info_file_to_big,
+                            Toast.LENGTH_LONG).show();
+                    return null;
                 }
             }
         } catch (IOException ex) {
@@ -1459,6 +1467,8 @@ public class Common extends Application {
 
     /**
      * Check if the user input is a valid key file.
+     * Empty lines, leading/tailing whitespaces and comments (marked with #)
+     * will be ignored.
      * @param lines Lines of a key file.
      * @return <ul>
      * <li>0 - All O.K.</li>
@@ -1469,25 +1479,38 @@ public class Common extends Application {
      */
     public static int isValidKeyFile(String[] lines) {
         boolean keyFound = false;
-        for (int i = 0; i < lines.length; i++) {
-            if (!lines[i].startsWith("#") && !lines[i].equals("")
-                    && !lines[i].matches("[0-9A-Fa-f]+")) {
-                // Not pure hex and not a comment.
+        if (lines == null || lines.length == 0) {
+            return 1;
+        }
+        for (String line : lines) {
+            // Remove comments.
+            if (line.matches("^#+$")) {
+                continue;
+            }
+            line = line.split("#")[0];
+
+            // Ignore leading/tailing whitespaces.
+            line = line.trim();
+
+            // Ignore empty lines.
+            if (line.equals("")) {
+                continue;
+            }
+
+            // Is hex?
+            if (!line.matches("[0-9A-Fa-f]+")) {
                 return 2;
             }
 
-            if (!lines[i].startsWith("#") && !lines[i].equals("")
-                    && lines[i].length() != 12) {
-                // Not 12 chars per line.
+            // Is 6 byte long (12 chars)?
+            if (line.length() != 12) {
                 return 3;
             }
 
-            if (!lines[i].startsWith("#") && !lines[i].equals("")) {
-                // At least one key found.
-                lines[i] = lines[i].toUpperCase(Locale.getDefault());
-                keyFound = true;
-            }
+            // At least one key found.
+            keyFound = true;
         }
+
         if (!keyFound) {
             // No key found.
             return 1;
