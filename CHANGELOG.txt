@@ -2,6 +2,10 @@ Changelog of MifareClassicTool (MCT):
 
 In development:
  * Permission to read/write external storage (SD card) has been dropped.
+ * Values like BCC, SAK and ATQA are checked before writing
+   (but not enforced).
+ * Clone UID tool has now an option to automatically calculate the SAK
+   and ATQA values.
 
 Version 3.2.0:
  * Added backup (export everything) option.
