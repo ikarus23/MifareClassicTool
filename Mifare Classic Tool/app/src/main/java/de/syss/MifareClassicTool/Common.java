@@ -1600,8 +1600,9 @@ public class Common extends Application {
         block0 = block0.toUpperCase();
         String byte0 = block0.substring(0, 2);
         String bcc = block0.substring(8, 10);
-        String sak = block0.substring(uidLen*2 + 2, uidLen*2 + 4);
-        String atqa = block0.substring(uidLen*2 + 4, uidLen*2 + 8);
+        int sakStart = (uidLen == 4) ? uidLen * 2 + 2 : uidLen * 2;
+        String sak = block0.substring(sakStart, sakStart + 2);
+        String atqa = block0.substring(sakStart + 2, sakStart + 6);
         boolean valid = true;
         // BCC.
         if (valid && uidLen == 4) {

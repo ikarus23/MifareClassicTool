@@ -231,8 +231,8 @@ public class CloneUidTool extends BasicActivity {
         }
 
         // Check for UID length mismatch between user input and detected card.
-        byte[] uid = Common.getUID();
-        if (uid.length != mUidLen) {
+        int uidLen = Common.getUID().length;
+        if (uidLen != mUidLen) {
             // Error. UID length does not match the source.
             appendToLog(getString(R.string.text_uid_length_error));
             reader.close();
@@ -241,16 +241,16 @@ public class CloneUidTool extends BasicActivity {
 
         // Automatically calculate the SAK and ATQA value?
         if (mCalcSakAtqa.isChecked()) {
-            String sakAndAtqa = calcSakAtqa(uid.length, reader.getSize());
+            String sakAndAtqa = calcSakAtqa(uidLen, reader.getSize());
             if (sakAndAtqa == null) {
                 // Error.
                 appendToLog(getString(R.string.text_sak_atqa_calc_warning));
             } else {
                 // Replace SAK & ATQA.
-                int startIndex = uid.length*2 + 2;
-                mBlock0Complete = mBlock0Complete.substring(0, startIndex)
+                int sakStart = (uidLen == 4) ? uidLen * 2 + 2 : uidLen * 2;
+                mBlock0Complete = mBlock0Complete.substring(0, sakStart)
                         + sakAndAtqa
-                        + mBlock0Complete.substring(startIndex + sakAndAtqa.length());
+                        + mBlock0Complete.substring(sakStart + sakAndAtqa.length());
             }
         }
         appendToLog(getString(R.string.text_data_to_write)
@@ -258,7 +258,7 @@ public class CloneUidTool extends BasicActivity {
 
         // Check for block 0 issues (BCC, SAK, ATQA, UID0, ...).
         if (!mIgnoreIncorrectBlock0 && !Common.isValidBlock0(
-                mBlock0Complete, uid.length, reader.getSize())) {
+                mBlock0Complete, uidLen, reader.getSize())) {
             appendToLog(getString(R.string.text_block0_warning));
             showBlock0Warning();
             reader.close();
