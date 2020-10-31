@@ -484,10 +484,10 @@
     <string name="dialog_block0_writing_title">Write manufacturer block</string>
     <string name="dialog_block0_writing">Writing to the first block of sector 0
         is not possible on original MIFARE Classic tags.
-        \n\nPlease make sure you are using a \"magic tag\" (2nd gen) that
+        \n\nPlease make sure you are using a \"magic tag\" (2nd gen/gen2) that
         supports writing to the manufacturer block.
-        \n\nOn some tags, the values behind the UID (and possibly the BCC) in block 0
-        represent SAK and ATQA. Make sure the values are correct. Writing wrong data
+        \n\nOn some tags, the values behind the UID in block 0 represent the BCC,
+        SAK and ATQA. Make sure the values are correct. Writing wrong data
         to block 0 may destroy the tag.
 
         \n\n<b>Check out the \"Write Tag\" section from
