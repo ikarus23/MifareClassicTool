@@ -6,6 +6,7 @@ In development:
    (but not enforced).
  * Clone UID tool has now an option to automatically calculate the SAK
    and ATQA values.
+ * Some minor bug fixes.
 
 Version 3.2.0:
  * Added backup (export everything) option.

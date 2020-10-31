@@ -95,6 +95,10 @@ public class TagInfoTool extends BasicActivity {
             titleID = R.string.dialog_no_mfc_support_tag_title;
             messageID = R.string.dialog_no_mfc_support_tag;
         }
+        if (messageID == 0) {
+            // Error.
+            return;
+        }
         CharSequence styledText = Html.fromHtml(
                 getString(messageID));
         AlertDialog ad = new AlertDialog.Builder(this)
