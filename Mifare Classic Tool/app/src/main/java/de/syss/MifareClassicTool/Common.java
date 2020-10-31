@@ -1610,7 +1610,7 @@ public class Common extends Application {
             // The 5th byte of block 0 should be the BCC.
             byte byteBcc = hex2ByteArray(bcc)[0];
             byte[] uid = hex2ByteArray(block0.substring(0, 8));
-            valid = isValidBCC(uid, byteBcc);
+            valid = isValidBcc(uid, byteBcc);
         }
         // Byte0.
         if (valid && (uidLen == 7 || uidLen == 10)) {
@@ -2122,8 +2122,8 @@ public class Common extends Application {
      * @param bcc The BCC the calculated BCC gets compared with.
      * @return True if the BCC if valid for the UID. False otherwise.
      */
-    public static boolean isValidBCC(byte[] uid, byte bcc) {
-        return calcBCC(uid) == bcc;
+    public static boolean isValidBcc(byte[] uid, byte bcc) {
+        return calcBcc(uid) == bcc;
     }
 
     /**
@@ -2135,7 +2135,7 @@ public class Common extends Application {
      * has not 4 bytes.
      * @return The BCC of the given UID.
      */
-    public static byte calcBCC(byte[] uid) throws IllegalArgumentException {
+    public static byte calcBcc(byte[] uid) throws IllegalArgumentException {
         if (uid.length != 4) {
             throw new IllegalArgumentException("UID length is not 4 bytes.");
         }

@@ -482,11 +482,14 @@
     <string name="dialog_wait_write_tag">Writing tag&#8230;\n(Don\'t remove tag)</string>
     <string name="dialog_share_title">Send file to…</string>
     <string name="dialog_block0_writing_title">Write manufacturer block</string>
-    <string name="dialog_block0_writing"><b>Writing to the first block of sector 0
-        is not possible on original MIFARE Classic tags.</b>
-        \n\nPlease make sure you are using a special tag that
-        supports writing to the manufacturer block
-        (with a normal MIFARE Classic write command).
+    <string name="dialog_block0_writing">Writing to the first block of sector 0
+        is not possible on original MIFARE Classic tags.
+        \n\nPlease make sure you are using a \"magic tag\" (2nd gen) that
+        supports writing to the manufacturer block.
+        \n\nOn some tags, the values behind the UID (and possibly the BCC) in block 0
+        represent SAK and ATQA. Make sure the values are correct. Writing wrong data
+        to block 0 may destroy the tag.
+
         \n\n<b>Check out the \"Write Tag\" section from
         \"Help and Info\" for more information.</b></string>
     <string name="dialog_static_ac_title">Use static Access Conditions</string>

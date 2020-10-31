@@ -77,17 +77,17 @@ Some important things are:
 * The first block of the first sector of an **original**
   MIFARE Classic tag is **read-only** i.e. not writable. But there
   are **special** MIFARE Classic tags that support writing to the
-  manufacturer block with a simple write command (often called "gen2"
-  tags). This App is able to write to such tags and can therefore create
+  manufacturer block with a simple write command (often called "magic tag
+  gen2"). This App is able to write to such tags and can therefore create
   fully correct clones. However, some special tags require a
   **special command sequence** to put them into the state where
   writing to the manufacturer block is possible (often called "gen1"
   tags).  
   These tags will not work. Remember this when you are shopping for special
   tags!  
-  Also, make sure the the BCC value is correct before writing. The BCC
-  is the first byte after a 4 byte long UID. It is calculated by
-  XOR-ing all bytes of the UID.
+  Also, make sure the the BCC value (check out the "BCC Calculator Tool"),
+  the SAK and the ATQA values are correct. If you just want to clone a UID,
+  please use the "Clone UID Tool".
 * This app **will not work** on some devices because their hardware
   (NFC-controller) does not support MIFARE Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).

@@ -200,7 +200,7 @@ public class CloneUidTool extends BasicActivity {
 
         // Calculate BCC for 4-byte UIDs and construct full block 0.
         if (mUidLen == 4) {
-            byte bcc = Common.calcBCC(Common.hex2ByteArray(uid));
+            byte bcc = Common.calcBcc(Common.hex2ByteArray(uid));
             mBlock0Complete = uid + String.format("%02X", bcc) + mBlock0Rest;
         } else {
             mBlock0Complete = uid + mBlock0Rest.substring(

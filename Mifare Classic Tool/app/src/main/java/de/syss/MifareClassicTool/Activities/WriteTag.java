@@ -261,15 +261,14 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Check the user input and, if necessary, the BCC value
-     * ({@link #checkBCC(boolean)}). If everythin is O.K., show the
-     * {@link KeyMapCreator} with predefined mapping range (se
-     * {@link #createKeyMapForBlock(int, boolean)}).
+     * Check the user input and, if necessary, possible issues with block 0.
+     * If everythin is O.K., show the {@link KeyMapCreator} with predefined mapping range
+     * (see {@link #createKeyMapForBlock(int, boolean)}).
      * After a key map was created, {@link #writeBlock()} will be triggered.
      * @param view The View object that triggered the method
      * (in this case the write block button).
      * @see KeyMapCreator
-     * @see #checkBCC(boolean)
+     * @see #checkBlock0(String)
      * @see #createKeyMapForBlock(int, boolean)
      */
     public void onWriteBlock(View view) {
@@ -307,9 +306,9 @@ public class WriteTag extends BasicActivity {
                              // Do nothing.
                          }).show();
         } else if (sector == 0 && block == 0) {
-            // Is the BCC valid?
-            int bccCheck = checkBCC(true);
-            if (bccCheck == 0 || bccCheck > 2) {
+            // Is block 0 valid? Display warning.
+            int block0Check = checkBlock0(data);
+            if (block0Check != 1) {
                 // Warning. Writing to manufacturer block.
                 showWriteManufInfo(true);
             }
@@ -411,80 +410,46 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Check if the BCC of the dump ({@link #mDumpWithPos}) or of the block
-     * ({@link #mDataText}) is valid and show a error message if needed.
-     * This check is only for 4 byte UIDs.
-     * @param isWriteBlock If Ture, the UID and BCC are taken from
-     * the {@link #mDataText} input field. If False, the UID and BCC
-     * is taken from the {@link #mDumpWithPos} dump.
+     * Check if block 0 data is valid and show a error message if needed.
+     * @param block0 Hex string of block 0.
      * @return <ul>
      * <li>0 - Everything is O.K.</li>
-     * <li>1 - BCC is not valid.</li>
-     * <li>2 - There is no tag.</li>
-     * <li>3 - UID is not 4 bytes long.</li>
-     * <li>4 - Dump does not contain the first sector.</li>
-     * <li>5 - Dump does not contain the block 0.</li>
+     * <li>1 - There is no tag.</li>
+     * <li>2 - BCC is not valid.</li>
+     * <li>3 - SAK or ATQA is not valid.</li>
      * </ul>
      */
-    private int checkBCC(boolean isWriteBlock) {
+    private int checkBlock0(String block0) {
         MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             // Error. There is no tag.
-            return 2;
-        }
-        reader.close();
-
-        int uidLen = Common.getUID().length;
-        if (uidLen != 4) {
-            // UID is not 4 bytes long. The BCC does not matter for
-            // tags with 7 byte UIDs.
-            return 3;
-        }
-
-        byte bcc;
-        byte[] uid;
-        // The length of UID of the dump or the block 0 is expected to match
-        // the UID length of the current tag. In this case 4 byte.
-        if (isWriteBlock) {
-            bcc = Common.hex2ByteArray(
-                    mDataText.getText().toString()
-                    .substring(8, 10))[0];
-            uid = Common.hex2ByteArray(
-                    mDataText.getText().toString()
-                    .substring(0, 8));
-        } else {
-            // Has to be called after mDumpWithPos is properly initialized.
-            // (After checkDumpAndShowSectorChooserDialog().)
-            HashMap<Integer, byte[]> sector0 = mDumpWithPos.get(0);
-            if (sector0 == null) {
-                // Error. There is no sector 0 in this dump. Checking the BCC
-                // is therefore irrelevant.
-                return 4;
-            }
-            byte[] block0 = sector0.get(0);
-            if (block0 == null) {
-                // Error. There is no block 0 in sector 0. Checking the BCC is
-                // therefore irrelevant.
-                return 5;
-            }
-            bcc = block0[4];
-            uid = new byte[uidLen];
-            System.arraycopy(block0, 0, uid, 0, uidLen);
-        }
-        boolean isValidBcc;
-        try {
-            isValidBcc = Common.isValidBCC(uid, bcc);
-        } catch (IllegalArgumentException e) {
-            // This should never happen, because we already know that the
-            // length of the UID is 4 byte.
-            return 3;
-        }
-        if (!isValidBcc) {
-            // Error. BCC is not valid. Show error message.
-            Toast.makeText(this, R.string.info_bcc_not_valid,
-                    Toast.LENGTH_LONG).show();
             return 1;
         }
+        reader.close();
+        int uidLen = Common.getUID().length;
+
+        // BCC.
+        if (uidLen == 4 ) {
+            byte bcc = Common.hex2ByteArray(block0.substring(8, 10))[0];
+            byte[] uid = Common.hex2ByteArray(block0.substring(0, 8));
+            boolean isValidBcc = Common.isValidBcc(uid, bcc);
+            if (!isValidBcc) {
+                // Error. BCC is not valid. Show error message.
+                Toast.makeText(this, R.string.info_bcc_not_valid,
+                        Toast.LENGTH_LONG).show();
+                return 2;
+            }
+        }
+
+        // SAK & ATQA.
+        boolean isValidBlock0 = Common.isValidBlock0(
+                block0, uidLen, reader.getSize(), true);
+        if (!isValidBlock0) {
+            Toast.makeText(this, R.string.text_block0_warning,
+                    Toast.LENGTH_LONG).show();
+            return 3;
+        }
+
         // Everything was O.K.
         return 0;
     }
@@ -659,16 +624,16 @@ public class WriteTag extends BasicActivity {
      * and read (by {@link #readDumpFromFile(String)}), this method saves
      * the data including its position in {@link #mDumpWithPos}.
      * If the "use static Access Condition" option is enabled, all the ACs
-     * will be replaced by the static ones. Also, the BCC value is
-     * check if necessary ({@link #checkBCC(boolean)}). After all this it
-     * will show a dialog in which the user can choose the sectors he wants
-     * to write. When the sectors are chosen, this method calls
+     * will be replaced by the static ones. After this it will show a dialog
+     * in which the user can choose the sectors he wants
+     * to write. It checks block 0 if it was chosen to be written.
+     * When the sectors are chosen, this method calls
      * {@link #createKeyMapForDump()} to create a key map for the present tag.
      * @param dump Dump selected by {@link FileChooser} or directly
      * from the {@link DumpEditor} (via an Intent with{@link #EXTRA_DUMP})).
      * @see KeyMapCreator
      * @see #createKeyMapForDump()
-     * @see #checkBCC(boolean)
+     * @see #checkBlock0(String)
      */
     @SuppressLint("SetTextI18n")
     private void checkDumpAndShowSectorChooserDialog(final String[] dump) {
@@ -760,17 +725,23 @@ public class WriteTag extends BasicActivity {
                         return;
                     }
 
-                    // Do a BCC check if sector 0 is chosen and writing to
+                    // Do a block 0 check if sector 0 is chosen and writing to
                     // the manufacturer block was enabled.
                     if (writeBlock0) {
-                        int bccCheck = checkBCC(false);
-                        if (bccCheck == 2) {
-                            // Error. Redo.
-                            return;
-                        } else if (bccCheck == 1) {
-                            // Error in BCC. Exit.
-                            dialog.dismiss();
-                            return;
+                        HashMap<Integer, byte[]> sector0 = mDumpWithPos.get(0);
+                        if (sector0 != null) {
+                            byte[] block0 = sector0.get(0);
+                            if (block0 != null) {
+                                int block0Check = checkBlock0(Common.byte2Hex(block0));
+                                if (block0Check == 1) {
+                                    // No tag found. Redo.
+                                    return;
+                                } else if (block0Check == 2) {
+                                    // Error in BCC. Exit.
+                                    dialog.dismiss();
+                                    return;
+                                }
+                            }
                         }
                     }
                     // Create key map.

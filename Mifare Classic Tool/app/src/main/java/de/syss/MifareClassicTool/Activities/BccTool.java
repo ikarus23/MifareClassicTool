@@ -50,11 +50,11 @@ public class BccTool extends BasicActivity {
 
     /**
      * Calculate the BCC value of the given UID (part). This is done calling
-     * {@link Common#calcBCC(byte[])} after some input checks (is the length
+     * {@link Common#calcBcc(byte[])} after some input checks (is the length
      * of the given UID valid; are there only hex symbols).
      * @param view The View object that triggered the method
      * (in this case the calculate BCC button).
-     * @see Common#calcBCC(byte[])
+     * @see Common#calcBcc(byte[])
      */
     public void onCalculate(View view) {
         String data = mUid.getText().toString();
@@ -72,7 +72,7 @@ public class BccTool extends BasicActivity {
         }
 
         // Calculate the BCC.
-        byte bcc = Common.calcBCC(Common.hex2ByteArray(data));
+        byte bcc = Common.calcBcc(Common.hex2ByteArray(data));
         mBcc.setText(String.format("%02X", bcc));
     }
 

@@ -294,13 +294,16 @@
         <i>Write to Manufacturer Block</i><br />
         The first block of the first sector of an <b>original</b>
         MIFARE Classic tag is read-only i.e. not writable. But there are
-        <b>special</b> MIFARE Classic tags that support writing to the
-        manufacturer block with a simple write command. This App is able to
-        write to such tags and can therefore create fully correct clones.
+        <b>special</b> MIFARE Classic tags (aka magic tags 2nd gen) that support
+        writing to the manufacturer block with a simple write command. This App is
+        able to write to such tags and can therefore create fully correct clones.
         <br />However, some special tags require a special command sequence to
         put them into the state where writing to the manufacturer block is
-        possible. These tags will not work. Also, make sure the the BCC value is
-        correct (see <a href="#bcc_tool">BCC Calculator</a>).
+        possible. These tags will not work.
+        <br />Also, make sure the the BCC value (see
+        <a href="#bcc_tool">BCC Calculator</a>), the SAK and the ATQA values are
+        correct. If you just want to clone a UID, please use the
+        <a href="#clone_uid_tool">Clone UID Tool</a>.
       </li>
     </ul>
 
