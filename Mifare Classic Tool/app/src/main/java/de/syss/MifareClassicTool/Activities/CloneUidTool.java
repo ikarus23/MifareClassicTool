@@ -55,7 +55,7 @@ public class CloneUidTool extends BasicActivity {
     // Taken from original MIFARE Classic tag with 4 byte UID.
     // In most cases it will not matter because bad
     // access control systems only check for the UID.
-    private String mBlock0Rest = "880400475955D141103607";
+    private String mBlock0Rest = "080400475955D141103607";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
     private String mBlock0Key = "FFFFFFFFFFFF";
     private boolean mIgnoreIncorrectBlock0 = false;
