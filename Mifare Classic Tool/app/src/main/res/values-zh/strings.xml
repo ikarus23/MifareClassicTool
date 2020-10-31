@@ -160,7 +160,7 @@
     <string name="text_write_key">块0的写密钥</string>
     <string name="text_status_log">状态日志</string>
     <string name="text_use_uid_of_scanned_tag">使用已扫描标签的UID</string>
-    <string name="text_block_0_calculated">计算所得块0</string>
+    <string name="text_block_0_generated">计算所得块0</string>
     <string name="text_waiting_for_magic_tag">等待2代魔术卡中</string>
     <string name="text_writing_block_0">写块0</string>
     <string name="text_no_errors_on_write">写入过程中没有错误</string>

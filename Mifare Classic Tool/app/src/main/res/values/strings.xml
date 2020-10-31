@@ -168,7 +168,8 @@
     <string name="text_write_key">The key to write block 0</string>
     <string name="text_status_log">Status Log</string>
     <string name="text_use_uid_of_scanned_tag">Use UID of scanned tag</string>
-    <string name="text_block_0_calculated">Block 0 calculated</string>
+    <string name="text_block_0_generated">Block 0 generated</string>
+    <string name="text_data_to_write">Data to write:</string>
     <string name="text_waiting_for_magic_tag">Waiting for magic tag (2nd gen)</string>
     <string name="text_writing_block_0">Writing block 0</string>
     <string name="text_no_errors_on_write">No errors during write process</string>
@@ -180,6 +181,7 @@
         tag (2nd gen)?</string>
     <string name="text_uid_length_error">Error: UID length mismatch (4 vs. 7 vs. 10 bytes)</string>
     <string name="text_block0_warning">Warning: Block 0 may contain invalid data (BCC/SAK/ATQA/UID0)</string>
+    <string name="text_sak_atqa_calc_warning">Warning: Could not calculate SAK/ATQA, using default</string>
     <string name="text_reset_clone_process">Resetting the clone process</string>
     <string name="text_select_file">Select file</string>
     <string name="text_select_directory">Select directory</string>
@@ -290,7 +292,8 @@
     <string name="action_install_external_nfc">Install \"External NFC\"</string>
     <string name="action_start_external_nfc">Go to \"External NFC\"</string>
     <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
-    <string name="action_clone_uid">Calculate block 0 and clone UID</string>
+    <string name="action_clone_uid">Generate block 0 and clone UID</string>
+    <string name="action_calc_sak_atqa">Automatically calculate SAK and ATQA value</string>
     <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
     <string name="action_file_type_keys">.keys/.txt (Mifare Classic Tool)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
@@ -623,6 +626,11 @@
     <string name="dialog_key_for_block_0">To write to block 0 (the block with the UID) you
         need the corresponding key with write privileges. For blank or factory formatted
         tags this key is key A with a value of \"FFFFFFFFFFFF\".</string>
+    <string name="dialog_auto_calc_sak_atqa_title">Calculate SAK and ATQA</string>
+    <string name="dialog_auto_calc_sak_atqa">For some 2nd gen magic tags, the values behind the UID
+        (and possibly the BCC) in block 0 represent SAK and ATQA.
+        \n\nIf this option is used, the values will be generated automatically. If not, the values
+        coded into \"rest of block 0\" will be used.</string>
     <string name="dialog_block0_data_warning_title">Block 0 Data</string>
     <string name="dialog_block0_data_warning">You are about to write data to block 0.
         However, it looks like your data might be invalid.
@@ -633,6 +641,7 @@
         \n\nThis block 0 check tries to make sure, you are writing data complaint to
         NXP\'s specifications.
         \n\nProceed at your own risk!</string>
+
 
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>

@@ -20,6 +20,7 @@ package de.syss.MifareClassicTool.Activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -48,6 +49,7 @@ public class CloneUidTool extends BasicActivity {
     private EditText mEditTextBlock0Rest;
     private EditText mEditTextBlock0Key;
     private CheckBox mShowOptions;
+    private CheckBox mCalcSakAtqa;
     private RadioButton mRadioButtonKeyB;
     private TextView mStatusLogContent;
 
@@ -81,6 +83,8 @@ public class CloneUidTool extends BasicActivity {
                 R.id.checkBoxCloneUidToolOptions);
         mRadioButtonKeyB = findViewById(
                 R.id.radioButtonCloneUidToolKeyB);
+        mCalcSakAtqa = findViewById(
+                R.id.checkBoxCloneUidToolSakAtqa);
 
         mEditTextBlock0Rest.setText(mBlock0Rest);
         mEditTextBlock0Key.setText(mBlock0Key);
@@ -203,8 +207,7 @@ public class CloneUidTool extends BasicActivity {
                     mBlock0Rest.length() - block0RestLen);
         }
         mStatus = Status.BLOCK0_CALCULATED;
-        appendToLog(getString(R.string.text_block_0_calculated)
-                + " (" + mBlock0Complete + ")");
+        appendToLog(getString(R.string.text_block_0_generated));
         appendToLog(getString(R.string.text_waiting_for_magic_tag));
         // Hide options.
         mShowOptions.setChecked(false);
@@ -227,7 +230,7 @@ public class CloneUidTool extends BasicActivity {
             return;
         }
 
-        // Check for UID length missmatch between user input and detected card.
+        // Check for UID length mismatch between user input and detected card.
         byte[] uid = Common.getUID();
         if (uid.length != mUidLen) {
             // Error. UID length does not match the source.
@@ -236,7 +239,24 @@ public class CloneUidTool extends BasicActivity {
             return;
         }
 
-        // Check block 0 issues (BCC, SAK, ATQA, UID0, ...).
+        // Automatically calculate the SAK and ATQA value?
+        if (mCalcSakAtqa.isChecked()) {
+            String sakAndAtqa = calcSakAtqa(uid.length, reader.getSize());
+            if (sakAndAtqa == null) {
+                // Error.
+                appendToLog(getString(R.string.text_sak_atqa_calc_warning));
+            } else {
+                // Replace SAK & ATQA.
+                int startIndex = uid.length*2 + 2;
+                mBlock0Complete = mBlock0Complete.substring(0, startIndex)
+                        + sakAndAtqa
+                        + mBlock0Complete.substring(startIndex + sakAndAtqa.length());
+            }
+        }
+        appendToLog(getString(R.string.text_data_to_write)
+                + " " + mBlock0Complete);
+
+        // Check for block 0 issues (BCC, SAK, ATQA, UID0, ...).
         if (!mIgnoreIncorrectBlock0 && !Common.isValidBlock0(
                 mBlock0Complete, uid.length, reader.getSize())) {
             appendToLog(getString(R.string.text_block0_warning));
@@ -266,6 +286,54 @@ public class CloneUidTool extends BasicActivity {
         appendToLog(getString(R.string.text_rescan_tag_to_check));
         mStatus = Status.CLONED;
         reader.close();
+    }
+
+    /**
+     * Calculate a SAK and ATQA value according to NXP's specifications.
+     * https://www.nxp.com/docs/en/application-note/AN10833.pdf
+     * @param uidLen Length of the UID.
+     * @param tagSize Size of the tag.
+     * @return Hex string representing 1 byte SAK and 2 byte ATQA. Null on error.
+     */
+    private String calcSakAtqa(int uidLen, int tagSize) {
+        if ((uidLen != 4 && uidLen != 7) || (
+                tagSize != MifareClassic.SIZE_MINI &&
+                tagSize != MifareClassic.SIZE_1K &&
+                tagSize != MifareClassic.SIZE_2K &&
+                tagSize != MifareClassic.SIZE_4K)) {
+            return null;
+        }
+
+        // ATQA.
+        String atqa = null;
+        if (uidLen == 4 && (tagSize == MifareClassic.SIZE_1K ||
+                tagSize == MifareClassic.SIZE_2K ||
+                tagSize == MifareClassic.SIZE_MINI)) {
+            atqa = "0400";
+        } else if (uidLen == 4 && tagSize == MifareClassic.SIZE_4K) {
+            atqa = "0200";
+        } else if (uidLen == 7 && (tagSize == MifareClassic.SIZE_1K ||
+                tagSize == MifareClassic.SIZE_2K ||
+                tagSize == MifareClassic.SIZE_MINI)) {
+            atqa = "4400";
+        } else if (uidLen == 7 && tagSize == MifareClassic.SIZE_4K) {
+            atqa = "4200";
+        }
+
+        // SAK.
+        String sak = null;
+        if (tagSize == MifareClassic.SIZE_MINI) {
+            sak = "09";
+        } else if (tagSize == MifareClassic.SIZE_1K || tagSize == MifareClassic.SIZE_2K) {
+            sak = "08";
+        } else if (tagSize == MifareClassic.SIZE_4K) {
+            sak = "18";
+        }
+
+        if (sak == null || atqa == null) {
+            return null;
+        }
+        return sak + atqa;
     }
 
     /**
@@ -373,6 +441,23 @@ public class CloneUidTool extends BasicActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_key_for_block_0_title)
                 .setMessage(R.string.dialog_key_for_block_0)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.action_ok,
+                        (dialog, which) -> {
+                            // Do nothing.
+                        }).show();
+    }
+
+    /**
+     * Show information about SAK and ATQA being part of block 0
+     * (or at least might be).
+     * @param view The View object that triggered the method
+     * (in this case the "show info" button).
+     */
+    public void onShowSakAtqaInfo(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_auto_calc_sak_atqa_title)
+                .setMessage(R.string.dialog_auto_calc_sak_atqa)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.action_ok,
                         (dialog, which) -> {

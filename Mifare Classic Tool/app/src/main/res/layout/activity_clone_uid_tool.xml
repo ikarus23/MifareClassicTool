@@ -236,6 +236,34 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/relativeLayoutCloneUidToolSakAtqaOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxCloneUidToolSakAtqa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/action_calc_sak_atqa"
+                    android:checked="true" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonCloneUidToolSakAtqaInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowSakAtqaInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <Button

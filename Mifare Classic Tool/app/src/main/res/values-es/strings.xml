@@ -167,7 +167,7 @@
     <string name="text_write_key">La clave para escribir el bloque 0</string>
     <string name="text_status_log">Log de estado</string>
     <string name="text_use_uid_of_scanned_tag">Utiliza el UID de etiquetas escaneadas</string>
-    <string name="text_block_0_calculated">Bloque 0 calculado</string>
+    <string name="text_block_0_generated">Bloque 0 generado</string>
     <string name="text_waiting_for_magic_tag">Esperando a la magic tag (2nd gen)</string>
     <string name="text_writing_block_0">Escribirndo bloque 0</string>
     <string name="text_no_errors_on_write">Sin errores durante el proceso de escritura</string>
