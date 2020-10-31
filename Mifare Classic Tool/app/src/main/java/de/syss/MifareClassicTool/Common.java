@@ -1592,7 +1592,8 @@ public class Common extends Application {
      * @param tagSize Size of the tag according to {@link MifareClassic#getSize()}
      * @return True if block 0 is valid. False otherwise.
      */
-    public static boolean isValidBlock0(String block0, int uidLen, int tagSize) {
+    public static boolean isValidBlock0(String block0, int uidLen, int tagSize,
+                                        boolean skipBccCheck) {
         if (block0 == null || block0.length() != 32
                 || (uidLen != 4 && uidLen != 7 && uidLen != 10)) {
             return false;
@@ -1605,7 +1606,7 @@ public class Common extends Application {
         String atqa = block0.substring(sakStart + 2, sakStart + 6);
         boolean valid = true;
         // BCC.
-        if (valid && uidLen == 4) {
+        if (!skipBccCheck && valid && uidLen == 4) {
             // The 5th byte of block 0 should be the BCC.
             byte byteBcc = hex2ByteArray(bcc)[0];
             byte[] uid = hex2ByteArray(block0.substring(0, 8));

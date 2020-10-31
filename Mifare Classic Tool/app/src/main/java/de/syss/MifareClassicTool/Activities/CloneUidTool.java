@@ -258,7 +258,7 @@ public class CloneUidTool extends BasicActivity {
 
         // Check for block 0 issues (BCC, SAK, ATQA, UID0, ...).
         if (!mIgnoreIncorrectBlock0 && !Common.isValidBlock0(
-                mBlock0Complete, uidLen, reader.getSize())) {
+                mBlock0Complete, uidLen, reader.getSize(), false)) {
             appendToLog(getString(R.string.text_block0_warning));
             showBlock0Warning();
             reader.close();
