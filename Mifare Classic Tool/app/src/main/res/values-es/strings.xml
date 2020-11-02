@@ -341,8 +341,6 @@
         para el dumpeo seleccionado</string>
     <string name="info_write_error">Error: Algún error ocurrió durante la
         escritura.\nPodría ser realmente malo.</string>
-    <string name="info_check_ac_error">Error: Etiqueta perdida mientras se
-        comprobaban claves con acceso a escritura</string>
     <string name="info_nothing_to_write">No queda nada que escribir</string>
     <string name="info_no_int_to_encode">Error: No existe un entero que
         codificar</string>
@@ -446,9 +444,6 @@
         bloques puede causar daños irreparables a la etiqueta.
         \n\n<b>PARA MÁS INFORMACIÓN Y AYUDA MIRA LA SECCIÓN
         \"Ayuda e info\".</b></string>
-    <string name="dialog_not_writable_title">Problemas de escritura</string>
-    <string name="dialog_not_writable">¡Algunas partes no son escribibles!
-        Comprueba la lista de abajo COMPLETA.</string>
     <string name="dialog_tools_menu_title">Herramientas disponibles</string>
     <string name="dialog_wait_write_tag_title">Escribiendo…</string>
     <string name="dialog_wait_write_tag">Escribiendo etiqueta…\n(No quites

@@ -193,7 +193,7 @@ public class WriteTag extends BasicActivity {
      * Handle incoming results from {@link KeyMapCreator} or
      * {@link FileChooser}.
      * @see #writeBlock()
-     * @see #checkTag()
+     * @see #checkDumpAgainstTag()
      * @see #checkDumpAndShowSectorChooserDialog(String[])
      * @see #createFactoryFormattedDump()
      * @see #writeValueBlock()
@@ -217,7 +217,7 @@ public class WriteTag extends BasicActivity {
                 // Error.
                 ckmError = resultCode;
             } else {
-                checkTag();
+                checkDumpAgainstTag();
             }
             break;
         case CKM_FACTORY_FORMAT:
@@ -268,7 +268,8 @@ public class WriteTag extends BasicActivity {
      * @param view The View object that triggered the method
      * (in this case the write block button).
      * @see KeyMapCreator
-     * @see #checkBlock0(String)
+     * @see #checkBlock0(String, boolean)
+     * @see #checkAccessConditions(String, boolean)
      * @see #createKeyMapForBlock(int, boolean)
      */
     public void onWriteBlock(View view) {
@@ -292,7 +293,7 @@ public class WriteTag extends BasicActivity {
 
         if (block == 3 || block == 15) {
             // Sector Trailer.
-            int acCheck = checkAccessConditions(data);
+            int acCheck = checkAccessConditions(data, true);
             if (acCheck == 1) {
                 // Invalid Access Conditions. Abort.
                 return;
@@ -314,11 +315,13 @@ public class WriteTag extends BasicActivity {
         } else if (sector == 0 && block == 0) {
             // Manufacturer block.
             // Is block 0 valid? Display warning.
-            int block0Check = checkBlock0(data);
-            if (block0Check != 1) {
-                // Warning. Writing to manufacturer block.
-                showWriteManufInfo(true);
+            int block0Check = checkBlock0(data, true);
+            if (block0Check == 1 || block0Check == 2) {
+                // BCC not valid. Abort.
+                return;
             }
+            // Warning. Writing to manufacturer block.
+            showWriteManufInfo(true);
         } else {
             // Normal data block.
             createKeyMapForBlock(sector, false);
@@ -420,6 +423,7 @@ public class WriteTag extends BasicActivity {
     /**
      * Check if block 0 data is valid and show a error message if needed.
      * @param block0 Hex string of block 0.
+     * @param showToasts If true, show error mesages as toast.
      * @return <ul>
      * <li>0 - Everything is O.K.</li>
      * <li>1 - There is no tag.</li>
@@ -427,7 +431,7 @@ public class WriteTag extends BasicActivity {
      * <li>3 - SAK or ATQA is not valid.</li>
      * </ul>
      */
-    private int checkBlock0(String block0) {
+    private int checkBlock0(String block0, boolean showToasts) {
         MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
             // Error. There is no tag.
@@ -443,8 +447,10 @@ public class WriteTag extends BasicActivity {
             boolean isValidBcc = Common.isValidBcc(uid, bcc);
             if (!isValidBcc) {
                 // Error. BCC is not valid. Show error message.
-                Toast.makeText(this, R.string.info_bcc_not_valid,
-                        Toast.LENGTH_LONG).show();
+                if (showToasts) {
+                    Toast.makeText(this, R.string.info_bcc_not_valid,
+                            Toast.LENGTH_LONG).show();
+                }
                 return 2;
             }
         }
@@ -453,8 +459,10 @@ public class WriteTag extends BasicActivity {
         boolean isValidBlock0 = Common.isValidBlock0(
                 block0, uidLen, reader.getSize(), true);
         if (!isValidBlock0) {
-            Toast.makeText(this, R.string.text_block0_warning,
-                    Toast.LENGTH_LONG).show();
+            if (showToasts) {
+                Toast.makeText(this, R.string.text_block0_warning,
+                        Toast.LENGTH_LONG).show();
+            }
             return 3;
         }
 
@@ -466,20 +474,23 @@ public class WriteTag extends BasicActivity {
      * Check if the Access Conditions of a Sector Trailer are correct and
      * if they are irreversible (shows a error message if needed).
      * @param sectorTrailer
+     * @param showToasts If true, show error mesages as toast.
      * @return <ul>
      * <li>0 - Everything is O.K.</li>
      * <li>1 - The Access Conditions are invalid.</li>
      * <li>2 - The Access Conditions are irreversible.</li>
      * </ul>
      */
-    private int checkAccessConditions(String sectorTrailer) {
+    private int checkAccessConditions(String sectorTrailer, boolean showToasts) {
         // Check if Access Conditions are valid.
         byte[] acBytes = Common.hex2ByteArray(sectorTrailer.substring(12, 18));
         byte[][] acMatrix = Common.acBytesToACMatrix(acBytes);
         if (acMatrix == null) {
             // Error. Invalid ACs.
-            Toast.makeText(this, R.string.info_ac_format_error,
-                    Toast.LENGTH_LONG).show();
+            if (showToasts) {
+                Toast.makeText(this, R.string.info_ac_format_error,
+                        Toast.LENGTH_LONG).show();
+            }
             return 1;
         }
         // Check if Access Conditions are irreversible.
@@ -490,8 +501,10 @@ public class WriteTag extends BasicActivity {
                 Common.Operation.WriteAC, true, keyBReadable);
         if (writeAC == 0) {
             // Warning. Access Conditions can not be changed after writing.
-            Toast.makeText(this, R.string.info_irreversible_acs,
-                    Toast.LENGTH_LONG).show();
+            if (showToasts) {
+                Toast.makeText(this, R.string.info_irreversible_acs,
+                        Toast.LENGTH_LONG).show();
+            }
             return 2;
         }
         return 0;
@@ -599,7 +612,7 @@ public class WriteTag extends BasicActivity {
      * (this method) -> read dump ({@link #readDumpFromFile(String)})
      * -> check dump ({@link #checkDumpAndShowSectorChooserDialog(String[])}) ->
      * open {@link KeyMapCreator} ({@link #createKeyMapForDump()})
-     * -> run {@link #checkTag()} -> run
+     * -> run {@link #checkDumpAgainstTag()} -> run
      * {@link #writeDump(HashMap, SparseArray)}.<br />
      * Behavior if the dump is already there (from the {@link DumpEditor}):
      * The same as before except the call chain will directly start from
@@ -649,8 +662,7 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Read the dump (skipping all blocks with unknown data "-") and
-     * call {@link #checkDumpAndShowSectorChooserDialog(String[])}.
+     * Read the dump and call {@link #checkDumpAndShowSectorChooserDialog(String[])}.
      * @param pathToDump path and filename of the dump
      * (selected by {@link FileChooser}).
      * @see #checkDumpAndShowSectorChooserDialog(String[])
@@ -669,14 +681,13 @@ public class WriteTag extends BasicActivity {
      * If the "use static Access Condition" option is enabled, all the ACs
      * will be replaced by the static ones. After this it will show a dialog
      * in which the user can choose the sectors he wants
-     * to write. It checks block 0 if it was chosen to be written.
-     * When the sectors are chosen, this method calls
+     * to write. When the sectors are chosen, this method calls
      * {@link #createKeyMapForDump()} to create a key map for the present tag.
      * @param dump Dump selected by {@link FileChooser} or directly
      * from the {@link DumpEditor} (via an Intent with{@link #EXTRA_DUMP})).
      * @see KeyMapCreator
      * @see #createKeyMapForDump()
-     * @see #checkBlock0(String)
+     * @see #checkBlock0(String, boolean)
      */
     @SuppressLint("SetTextI18n")
     private void checkDumpAndShowSectorChooserDialog(final String[] dump) {
@@ -746,14 +757,10 @@ public class WriteTag extends BasicActivity {
                 v -> {
                     // Re-Init mDumpWithPos in order to remove unwanted sectors.
                     initDumpWithPosFromDump(dump);
-                    boolean writeBlock0 = false;
                     for (CheckBox box : sectorBoxes) {
                         int sector = Integer.parseInt(box.getTag().toString());
                         if (!box.isChecked()) {
                             mDumpWithPos.remove(sector);
-                        } else if (sector == 0 && box.isChecked()
-                                && mWriteManufBlock.isChecked()) {
-                            writeBlock0 = true;
                         }
                     }
                     if (mDumpWithPos.size() == 0) {
@@ -768,25 +775,6 @@ public class WriteTag extends BasicActivity {
                         return;
                     }
 
-                    // Do a block 0 check if sector 0 is chosen and writing to
-                    // the manufacturer block was enabled.
-                    if (writeBlock0) {
-                        HashMap<Integer, byte[]> sector0 = mDumpWithPos.get(0);
-                        if (sector0 != null) {
-                            byte[] block0 = sector0.get(0);
-                            if (block0 != null) {
-                                int block0Check = checkBlock0(Common.byte2Hex(block0));
-                                if (block0Check == 1) {
-                                    // No tag found. Redo.
-                                    return;
-                                } else if (block0Check == 2) {
-                                    // Error in BCC. Exit.
-                                    dialog.dismiss();
-                                    return;
-                                }
-                            }
-                        }
-                    }
                     // Create key map.
                     createKeyMapForDump();
                     dialog.dismiss();
@@ -885,6 +873,7 @@ public class WriteTag extends BasicActivity {
         startActivityForResult(intent, CKM_WRITE_DUMP);
     }
 
+    // TODO: update doc.
     /**
      * Check if the tag is suitable for the dump ({@link #mDumpWithPos}).
      * This is done in three steps. The first check determines if the dump
@@ -901,10 +890,12 @@ public class WriteTag extends BasicActivity {
      * byte, Common.Operation, boolean, boolean)
      * @see #writeDump(HashMap, SparseArray)
      */
-    private void checkTag() {
+    private void checkDumpAgainstTag() {
         // Create reader.
         MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
+            Toast.makeText(this, R.string.info_tag_lost_check_dump,
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -938,7 +929,7 @@ public class WriteTag extends BasicActivity {
 
         if (writeOnPos == null) {
             // Error while checking for keys with write privileges.
-            Toast.makeText(this, R.string.info_check_ac_error,
+            Toast.makeText(this, R.string.info_tag_lost_check_dump,
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -953,7 +944,7 @@ public class WriteTag extends BasicActivity {
         final HashMap<Integer, HashMap<Integer, Integer>> writeOnPosSafe =
                 new HashMap<>(
                         mDumpWithPos.size());
-        // Keys that are missing completely (mDumpWithPos vs. keyMap).
+        // Check for keys that are missing completely (mDumpWithPos vs. keyMap).
         HashSet<Integer> sectors = new HashSet<>();
         for (int sector : mDumpWithPos.keySet()) {
             if (keyMap.indexOfKey(sector) < 0) {
@@ -964,8 +955,10 @@ public class WriteTag extends BasicActivity {
                 sectors.add(sector);
             }
         }
-        // Keys with write privileges that are missing or some
-        // blocks (block-parts) are read-only (writeOnPos vs. keyMap).
+        // Check for keys with write privileges that are missing (writeOnPos vs. keyMap).
+        // Check for blocks (block-parts) that are read-only.
+        // Check for issues of block 0 of the dump about to be written.
+        // Check the Access Conditions of the dump about to be written.
         for (int sector : sectors) {
             if (writeOnPos.get(sector) == null) {
                 // Error. Sector is dead (IO Error) or ACs are invalid.
@@ -977,17 +970,39 @@ public class WriteTag extends BasicActivity {
             Set<Integer> blocks = mDumpWithPos.get(sector).keySet();
             for (int block : blocks) {
                 boolean isSafeForWriting = true;
-                if (!mWriteManufBlock.isChecked()
-                        && sector == 0 && block == 0) {
-                    // Block 0 is read-only. This is normal.
-                    // Do not add an entry to the dialog and skip the
-                    // "write info" check (except for some
-                    // special (non-original) MIFARE tags).
-                    continue;
-                }
                 String position = getString(R.string.text_sector) + ": "
                         + sector + ", " + getString(R.string.text_block)
                         + ": " + block;
+                // Special block 0 checks.
+                if (!mWriteManufBlock.isChecked()
+                        && sector == 0 && block == 0) {
+                    // Block 0 is read-only. This is normal. Skip.
+                    continue;
+                } else if (mWriteManufBlock.isChecked()
+                        && sector == 0 && block == 0) {
+                    // Block 0 should be written. Check it.
+                    String block0 = Common.byte2Hex(mDumpWithPos.get(0).get(0));
+                    int block0Check = checkBlock0(block0, false);
+                    switch (block0Check) {
+                        case 1:
+                            Toast.makeText(this, R.string.info_tag_lost_check_dump,
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        case 2:
+                            // BCC not valid. Abort.
+                            Toast.makeText(this, R.string.info_bcc_not_valid,
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        case 3:
+                            addToList(list, position, getString(
+                                    R.string.text_block0_warning));
+                            break;
+                    }
+                }
+                // Special Access Conditions checks.
+                // TODO.
+
+                // Normal write privileges checks.
                 int writeInfo = writeOnPos.get(sector).get(block);
                 switch (writeInfo) {
                 case 0:
@@ -1085,7 +1100,8 @@ public class WriteTag extends BasicActivity {
             ll.setPadding(pad, pad, pad, pad);
             ll.setOrientation(LinearLayout.VERTICAL);
             TextView textView = new TextView(this);
-            textView.setText(R.string.dialog_not_writable);
+            textView.setText(R.string.dialog_write_issues);
+            textView.setPadding(0,0,0, Common.dpToPx(5));
             textView.setTextAppearance(this,
                     android.R.style.TextAppearance_Medium);
             ListView listView = new ListView(this);
@@ -1098,7 +1114,7 @@ public class WriteTag extends BasicActivity {
             listView.setAdapter(adapter);
 
             new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_not_writable_title)
+                .setTitle(R.string.dialog_write_issues_title)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setView(ll)
                 .setPositiveButton(R.string.action_skip_blocks,
@@ -1118,7 +1134,7 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * A helper function for {@link #checkTag()} adding an item to
+     * A helper function for {@link #checkDumpAgainstTag()} adding an item to
      * the list of all blocks with write issues.
      * This list will be displayed to the user in a dialog before writing.
      * @param list The list in which to add the key-value-pair.
@@ -1136,15 +1152,15 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * This method is triggered by {@link #checkTag()} and writes a dump
+     * This method is triggered by {@link #checkDumpAgainstTag()} and writes a dump
      * to a tag.
      * @param writeOnPos A map within a map (all with type = Integer).
      * The key of the outer map is the sector number and the value is another
      * map with key = block number and value = write information. The write
-     * information must be filtered (by {@link #checkTag()}) return values
+     * information must be filtered (by {@link #checkDumpAgainstTag()}) return values
      * of {@link MCReader#isWritableOnPositions(HashMap, SparseArray)}.<br />
      * Attention: This method does not any checking. The position and write
-     * information must be checked by {@link #checkTag()}.
+     * information must be checked by {@link #checkDumpAgainstTag()}.
      * @param keyMap A key map generated by {@link KeyMapCreator}.
      */
     private void writeDump(
@@ -1248,11 +1264,11 @@ public class WriteTag extends BasicActivity {
 
     /**
      * Create an factory formatted, empty dump with a size matching
-     * the current tag size and then call {@link #checkTag()}.
+     * the current tag size and then call {@link #checkDumpAgainstTag()}.
      * Factory (default) MIFARE Classic Access Conditions are: 0xFF0780XX
      * XX = General purpose byte (GPB): Most of the time 0x69. At the end of
      * an Tag XX = 0xBC.
-     * @see #checkTag()
+     * @see #checkDumpAgainstTag()
      */
     private void createFactoryFormattedDump() {
         // This function is directly called after a key map was created.
@@ -1310,7 +1326,7 @@ public class WriteTag extends BasicActivity {
             lastSector.put(3, lastSectorTrailer);
         }
         mDumpWithPos.put(sectors - 1, lastSector);
-        checkTag();
+        checkDumpAgainstTag();
     }
 
     /**

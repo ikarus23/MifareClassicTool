@@ -370,8 +370,7 @@
         (sector out of range)</string>
     <string name="info_write_error">Error: Some error occurred while
         writing. (This might be bad.)</string>
-    <string name="info_check_ac_error">Error: Tag lost while checking for keys
-        with write privileges</string>
+    <string name="info_tag_lost_check_dump">Error: Tag lost while checking dump</string>
     <string name="info_nothing_to_write">There is nothing left to write</string>
     <string name="info_no_int_to_encode">Error: There is no integer
         to be encoded</string>
@@ -476,9 +475,9 @@
         blocks may cause irreparable damage to the tag.
         \n\n<b>FOR MORE INFORMATION AND HELP CHECK OUT THE
         \"Help and Info\" SECTION.</b></string>
-    <string name="dialog_not_writable_title">Write Issues</string>
-    <string name="dialog_not_writable">Some parts are not writable! Check the
-        WHOLE list below.</string>
+    <string name="dialog_write_issues_title">Write Issues</string>
+    <string name="dialog_write_issues">There were issues detected, which affect writing to the Tag.
+        Check the WHOLE list below!</string>
     <string name="dialog_tools_menu_title">Available tools</string>
     <string name="dialog_wait_write_tag_title">Writing&#8230;</string>
     <string name="dialog_wait_write_tag">Writing tag&#8230;\n(Don\'t remove tag)</string>

@@ -34,20 +34,11 @@
         android:text="@string/dialog_write_sectors"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <!-- Separator -->
-    <View
-        android:id="@+id/viewWriteSectors"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/textViewWriteSectorsMessage"
-        android:layout_margin="10dp"
-        android:background="@color/light_gray" />
-
     <LinearLayout
         android:id="@+id/linearLayoutWriteSectorsButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewWriteSectors" >
+        android:layout_below="@+id/textViewWriteSectorsMessage" >
 
         <Button
             android:id="@+id/buttonWriteSectorsSelectAll"

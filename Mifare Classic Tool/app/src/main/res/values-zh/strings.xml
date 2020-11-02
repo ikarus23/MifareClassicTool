@@ -318,7 +318,6 @@
     <string name="info_file_already_exists">错误:文件已存在</string>
     <string name="info_tag_too_small">错误:标签容量小于选定的转储</string>
     <string name="info_write_error">错误:写入发生错误.\n这可能很糟…</string>
-    <string name="info_check_ac_error">错误:检查写密钥时连接丢失</string>
     <string name="info_nothing_to_write">没什么可写了</string>
     <string name="info_no_int_to_encode">错误:未输入整数值</string>
     <string name="info_addr_not_hex_byte">错误:非十六进制地址(0-9,A-F,2字符)</string>
@@ -372,8 +371,6 @@
     <string name="dialog_new_file">输入新文件名</string>
     <string name="dialog_first_run_title">警告</string>
     <string name="dialog_first_run">本App针对至少基本熟悉MifareClassic技术的用户。App需进行底层操作,因此,几乎所有的数据输入和输出都是十六进制。同样重要的是,你必须明白自己在做什么。例如,若将数据写入标签,或将错误数据写入特定的块,可能会对标签造成不可修复的损坏。\n\n<b>更多的信息和帮助请查看“帮助信息“ </b></string>
-    <string name="dialog_not_writable_title">写入出现问题</string>
-    <string name="dialog_not_writable">部分不可写!请检查下面的列表。</string>
     <string name="dialog_tools_menu_title">可用的工具</string>
     <string name="dialog_wait_write_tag_title">写入中…</string>
     <string name="dialog_wait_write_tag">写标签…\n(不要移除标签)</string>
