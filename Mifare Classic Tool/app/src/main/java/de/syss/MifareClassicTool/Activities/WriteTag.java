@@ -292,27 +292,11 @@ public class WriteTag extends BasicActivity {
 
         if (block == 3 || block == 15) {
             // Sector Trailer.
-            // Check if Access Conditions are valid.
-            byte[] acBytes = Common.hex2ByteArray(data.substring(12, 18));
-            byte[][] acMatrix = Common.acBytesToACMatrix(acBytes);
-            if (acMatrix == null) {
-                // Error. Invalid ACs.
-                Toast.makeText(this, R.string.info_ac_format_error,
-                        Toast.LENGTH_LONG).show();
+            int acCheck = checkAccessConditions(data);
+            if (acCheck == 1) {
+                // Invalid Access Conditions. Abort.
                 return;
             }
-            // Check if Access Conditions are irreversible.
-            boolean keyBReadable = Common.isKeyBReadable(
-                    acMatrix[0][3], acMatrix[1][3], acMatrix[2][3]);
-            int writeAC = Common.getOperationRequirements(
-                    acMatrix[0][3], acMatrix[1][3], acMatrix[2][3],
-                    Common.Operation.WriteAC, true, keyBReadable);
-            if (writeAC == 0) {
-                // Warning. Access Conditions can not be changed after writing.
-                Toast.makeText(this, R.string.info_irreversible_acs,
-                        Toast.LENGTH_LONG).show();
-            }
-
             // Warning. This is a sector trailer.
             new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_sector_trailer_warning_title)
@@ -475,6 +459,41 @@ public class WriteTag extends BasicActivity {
         }
 
         // Everything was O.K.
+        return 0;
+    }
+
+    /**
+     * Check if the Access Conditions of a Sector Trailer are correct and
+     * if they are irreversible (shows a error message if needed).
+     * @param sectorTrailer
+     * @return <ul>
+     * <li>0 - Everything is O.K.</li>
+     * <li>1 - The Access Conditions are invalid.</li>
+     * <li>2 - The Access Conditions are irreversible.</li>
+     * </ul>
+     */
+    private int checkAccessConditions(String sectorTrailer) {
+        // Check if Access Conditions are valid.
+        byte[] acBytes = Common.hex2ByteArray(sectorTrailer.substring(12, 18));
+        byte[][] acMatrix = Common.acBytesToACMatrix(acBytes);
+        if (acMatrix == null) {
+            // Error. Invalid ACs.
+            Toast.makeText(this, R.string.info_ac_format_error,
+                    Toast.LENGTH_LONG).show();
+            return 1;
+        }
+        // Check if Access Conditions are irreversible.
+        boolean keyBReadable = Common.isKeyBReadable(
+                acMatrix[0][3], acMatrix[1][3], acMatrix[2][3]);
+        int writeAC = Common.getOperationRequirements(
+                acMatrix[0][3], acMatrix[1][3], acMatrix[2][3],
+                Common.Operation.WriteAC, true, keyBReadable);
+        if (writeAC == 0) {
+            // Warning. Access Conditions can not be changed after writing.
+            Toast.makeText(this, R.string.info_irreversible_acs,
+                    Toast.LENGTH_LONG).show();
+            return 2;
+        }
         return 0;
     }
 
