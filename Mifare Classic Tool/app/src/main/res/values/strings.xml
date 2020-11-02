@@ -384,7 +384,7 @@
         have to be 3 bytes (6 characters) long</string>
     <string name="info_file_to_big">Error: File is too big (out of memory)</string>
     <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
-    <string name="info_ac_format_error">Error: The Access Conditions
+    <string name="info_ac_format_error">Error: The access conditions
         are invalid</string>
     <string name="info_ac_reset_keyb_readable">Key B is readable.
         \nACs of data blocks have been updated.</string>
@@ -417,7 +417,7 @@
     <string name="info_invalid_key_file">Error: Not a valid key file</string>
     <string name="info_backup_created">Backup created</string>
     <string name="info_backup_error">Error while creating a full backup</string>
-    <string name="info_irreversible_acs">Warning: The Access Conditions will be irreversible</string>
+    <string name="info_irreversible_acs">Warning: The access conditions will be irreversible</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
@@ -476,7 +476,7 @@
         \n\n<b>FOR MORE INFORMATION AND HELP CHECK OUT THE
         \"Help and Info\" SECTION.</b></string>
     <string name="dialog_write_issues_title">Write Issues</string>
-    <string name="dialog_write_issues">There were issues detected, which affect writing to the Tag.
+    <string name="dialog_write_issues">There were issues detected, which affect writing to the tag.
         Check the WHOLE list below!</string>
     <string name="dialog_tools_menu_title">Available tools</string>
     <string name="dialog_wait_write_tag_title">Writing&#8230;</string>

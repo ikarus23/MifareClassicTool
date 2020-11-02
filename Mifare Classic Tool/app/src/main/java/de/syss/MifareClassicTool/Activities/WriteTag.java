@@ -944,6 +944,7 @@ public class WriteTag extends BasicActivity {
         final HashMap<Integer, HashMap<Integer, Integer>> writeOnPosSafe =
                 new HashMap<>(
                         mDumpWithPos.size());
+
         // Check for keys that are missing completely (mDumpWithPos vs. keyMap).
         HashSet<Integer> sectors = new HashSet<>();
         for (int sector : mDumpWithPos.keySet()) {
@@ -955,6 +956,7 @@ public class WriteTag extends BasicActivity {
                 sectors.add(sector);
             }
         }
+
         // Check for keys with write privileges that are missing (writeOnPos vs. keyMap).
         // Check for blocks (block-parts) that are read-only.
         // Check for issues of block 0 of the dump about to be written.
@@ -973,6 +975,7 @@ public class WriteTag extends BasicActivity {
                 String position = getString(R.string.text_sector) + ": "
                         + sector + ", " + getString(R.string.text_block)
                         + ": " + block;
+
                 // Special block 0 checks.
                 if (!mWriteManufBlock.isChecked()
                         && sector == 0 && block == 0) {
@@ -999,8 +1002,24 @@ public class WriteTag extends BasicActivity {
                             break;
                     }
                 }
+
                 // Special Access Conditions checks.
-                // TODO.
+                if ((sector < 31 && block == 3) || sector >= 31 && block == 15) {
+                    String sectorTrailer = Common.byte2Hex(
+                            mDumpWithPos.get(sector).get(block));
+                    int acCheck = checkAccessConditions(sectorTrailer, false);
+                    switch (acCheck) {
+                        case 1:
+                            // Access Conditions not valid. Abort.
+                            Toast.makeText(this, R.string.info_ac_format_error,
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        case 2:
+                            addToList(list, position, getString(
+                                    R.string.info_irreversible_acs));
+                            break;
+                    }
+                }
 
                 // Normal write privileges checks.
                 int writeInfo = writeOnPos.get(sector).get(block);
