@@ -3,10 +3,12 @@ Changelog of MifareClassicTool (MCT):
 In development:
  * Permission to read/write external storage (SD card) has been dropped.
    See: https://www.icaria.de/mct/help-and-info/#storage
- * Values like BCC, SAK and ATQA are checked before writing.
- * The access conditions bits are checked before writing.
- * Clone UID tool has now an option to automatically calculate the SAK
-   and ATQA values.
+ * Prevent writing a wrong BCC value.
+ * Show a warning before writing a possibly invalid SAK or ATQA value.
+ * Prevent writing invalid access condition bits.
+ * Show a warning before writing irreversible access condition bits.
+ * Clone UID tool has now an option to automatically calculate
+   the SAK and ATQA values.
  * Some minor bug fixes.
 
 Version 3.2.0:
