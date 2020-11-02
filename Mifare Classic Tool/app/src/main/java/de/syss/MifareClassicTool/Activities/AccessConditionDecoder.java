@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
 import de.syss.MifareClassicTool.Common;
-import de.syss.MifareClassicTool.Common.Operations;
+import de.syss.MifareClassicTool.Common.Operation;
 import de.syss.MifareClassicTool.R;
 
 /**
@@ -179,13 +179,13 @@ public class AccessConditionDecoder extends BasicActivity {
 
             // Set cell texts to colored permissions.
             read.setText(getColoredPermissionText(c1, c2, c3,
-                    Operations.Read, false, isKeyBReadable));
+                    Operation.Read, false, isKeyBReadable));
             write.setText(getColoredPermissionText(c1, c2, c3,
-                    Operations.Write, false, isKeyBReadable));
+                    Operation.Write, false, isKeyBReadable));
             incr.setText(getColoredPermissionText(c1, c2, c3,
-                    Operations.Increment, false, isKeyBReadable));
+                    Operation.Increment, false, isKeyBReadable));
             decr.setText(getColoredPermissionText(c1, c2, c3,
-                    Operations.DecTransRest, false, isKeyBReadable));
+                    Operation.DecTransRest, false, isKeyBReadable));
 
             // Add cells to row.
             tr.addView(location);
@@ -221,17 +221,17 @@ public class AccessConditionDecoder extends BasicActivity {
 
         // Set row texts to colored permissions.
         read[0].setText(getColoredPermissionText(c1, c2, c3,
-                Operations.ReadKeyA, true, false));
+                Operation.ReadKeyA, true, false));
         write[0].setText(getColoredPermissionText(c1, c2, c3,
-                Operations.WriteKeyA, true, false));
+                Operation.WriteKeyA, true, false));
         read[1].setText(getColoredPermissionText(c1, c2, c3,
-                Operations.ReadAC, true, false));
+                Operation.ReadAC, true, false));
         write[1].setText(getColoredPermissionText(c1, c2, c3,
-                Operations.WriteAC, true, false));
+                Operation.WriteAC, true, false));
         read[2].setText(getColoredPermissionText(c1, c2, c3,
-                Operations.ReadKeyB, true, false));
+                Operation.ReadKeyB, true, false));
         write[2].setText(getColoredPermissionText(c1, c2, c3,
-                Operations.WriteKeyB, true, false));
+                Common.Operation.WriteKeyB, true, false));
 
         // Add rows to layout.
         String[] headers = new String[] {"Key A:", "AC Bits:", "Key B:"};
@@ -255,21 +255,21 @@ public class AccessConditionDecoder extends BasicActivity {
      * A helper function for {@link #addBlockAC(byte[][], boolean)} and
      * {@link #addSectorTrailerAC(byte[][])} creating a colored text
      * depending on the Access Conditions and the requested operation
-     * ({@link Operations}).
+     * ({@link Operation}).
      * @param c1 Access Condition byte "C1"
      * @param c2 Access Condition byte "C2"
      * @param c3 Access Condition byte "C3"
-     * @param op Operation on the tag (see {@link Operations}).
+     * @param op Operation on the tag (see {@link Operation}).
      * @param isSectorTrailer True if it is a Sector Trailer, False otherwise.
      * @param isKeyBReadable True if key B is readable, False otherwise.
      * @return A colored text depending on the return value of
-     * {@link Common#getOperationInfoForBlock(byte, byte, byte, Operations,
+     * {@link Common#getOperationRequirements(byte, byte, byte, Operation,
      * boolean, boolean)}. On Error an empty string will be returned.
      */
     private SpannableString getColoredPermissionText(byte c1, byte c2, byte c3,
-            Operations op, boolean isSectorTrailer,
-            boolean isKeyBReadable) {
-        switch (Common.getOperationInfoForBlock(c1, c2, c3, op,
+                                                     Operation op, boolean isSectorTrailer,
+                                                     boolean isKeyBReadable) {
+        switch (Common.getOperationRequirements(c1, c2, c3, op,
                 isSectorTrailer, isKeyBReadable)) {
         case 0:
             // Never.

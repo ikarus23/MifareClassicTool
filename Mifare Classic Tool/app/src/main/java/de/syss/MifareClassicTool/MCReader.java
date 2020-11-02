@@ -39,7 +39,7 @@ import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import de.syss.MifareClassicTool.Activities.Preferences.Preference;
-import de.syss.MifareClassicTool.Common.Operations;
+import de.syss.MifareClassicTool.Common.Operation;
 
 /**
  * Provides functions to read/write/analyze a MIFARE Classic tag.
@@ -702,8 +702,8 @@ public class MCReader {
      * This method checks if the present tag is writable with the provided keys
      * at the given positions (sectors, blocks). This is done by authenticating
      * with one of the keys followed by reading and interpreting
-     * ({@link Common#getOperationInfoForBlock(byte, byte, byte,
-     * de.syss.MifareClassicTool.Common.Operations, boolean, boolean)}) of the
+     * ({@link Common#getOperationRequirements(byte, byte, byte,
+     * Common.Operation, boolean, boolean)}) of the
      * Access Conditions.
      * @param pos A map of positions (key = sector, value = Array of blocks).
      * For each of these positions you will get the write information
@@ -789,19 +789,19 @@ public class MCReader {
                             || (block == 15 && sector >= 32)) {
                         // Sector Trailer.
                         // Are the Access Bits writable?
-                        int acValue = Common.getOperationInfoForBlock(
+                        int acValue = Common.getOperationRequirements(
                                 acMatrix[0][3],
                                 acMatrix[1][3],
                                 acMatrix[2][3],
-                                Operations.WriteAC,
+                                Operation.WriteAC,
                                 true, isKeyBReadable);
                         // Is key A writable? (If so, key B will be writable
                         // with the same key.)
-                        int keyABValue = Common.getOperationInfoForBlock(
+                        int keyABValue = Common.getOperationRequirements(
                                 acMatrix[0][3],
                                 acMatrix[1][3],
                                 acMatrix[2][3],
-                                Operations.WriteKeyA,
+                                Operation.WriteKeyA,
                                 true, isKeyBReadable);
 
                         int result = keyABValue;
@@ -828,11 +828,11 @@ public class MCReader {
                             }
                         }
                         blockWithWriteInfo.put(
-                                block, Common.getOperationInfoForBlock(
+                                block, Common.getOperationRequirements(
                                         acMatrix[0][acBitsForBlock],
                                         acMatrix[1][acBitsForBlock],
                                         acMatrix[2][acBitsForBlock],
-                                        Operations.Write,
+                                        Operation.Write,
                                         false, isKeyBReadable));
                     }
 

@@ -418,6 +418,7 @@
     <string name="info_invalid_key_file">Error: Not a valid key file</string>
     <string name="info_backup_created">Backup created</string>
     <string name="info_backup_error">Error while creating a full backup</string>
+    <string name="info_irreversible_acs">Warning: The Access Conditions will be irreversible</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
@@ -458,8 +459,9 @@
     <string name="dialog_sector_trailer_warning_title">Writing
         Sector Trailer</string>
     <string name="dialog_sector_trailer_warning">You\'re about to write
-        to a sector trailer. Writing incorrect data may cause irreparable
-        damage to the tag.</string>
+        to a sector trailer. If the access conditions itself are marked as
+        read-only, the changes are irreversible. Writing incorrect
+        data may cause irreparable damage to the tag.</string>
     <string name="dialog_save_keys_title">Save key file</string>
     <string name="dialog_save_keys">Enter a file name for the key file:</string>
     <string name="dialog_new_file_title">New file</string>

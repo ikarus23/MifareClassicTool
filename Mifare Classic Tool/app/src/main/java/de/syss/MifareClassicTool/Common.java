@@ -135,7 +135,7 @@ public class Common extends Application {
     /**
      * Possible operations the on a MIFARE Classic Tag.
      */
-    public enum Operations {
+    public enum Operation {
         Read, Write, Increment, DecTransRest, ReadKeyA, ReadKeyB, ReadAC,
         WriteKeyA, WriteKeyB, WriteAC
     }
@@ -1060,13 +1060,11 @@ public class Common extends Application {
     }
 
     /**
-     * Depending on the provided Access Conditions this method will return
-     * with which key you can achieve the operation ({@link Operations})
-     * you asked for.<br />
-     * This method contains the table from the NXP MIFARE Classic Datasheet.
-     * @param c1 Access Condition byte "C!".
-     * @param c2 Access Condition byte "C2".
-     * @param c3 Access Condition byte "C3".
+     * Depending on the provided Access Conditions, this method will return
+     * which key is required to achieve the operation ({@link Operation}).
+     * @param c1 Access Condition bit "C1".
+     * @param c2 Access Condition bit "C2".
+     * @param c3 Access Condition bit "C3".
      * @param op The operation you want to do.
      * @param isSectorTrailer True if it is a Sector Trailer, False otherwise.
      * @param isKeyBReadable True if key B is readable, False otherwise.
@@ -1079,71 +1077,71 @@ public class Common extends Application {
      * <li>-1 - Error.</li>
      * </ul>
      */
-    public static int getOperationInfoForBlock(byte c1, byte c2, byte c3,
-            Operations op, boolean isSectorTrailer, boolean isKeyBReadable) {
+    public static int getOperationRequirements (byte c1, byte c2, byte c3,
+                Operation op, boolean isSectorTrailer, boolean isKeyBReadable) {
         // Is Sector Trailer?
         if (isSectorTrailer) {
             // Sector Trailer.
-            if (op != Operations.ReadKeyA && op != Operations.ReadKeyB
-                    && op != Operations.ReadAC
-                    && op != Operations.WriteKeyA
-                    && op != Operations.WriteKeyB
-                    && op != Operations.WriteAC) {
+            if (op != Operation.ReadKeyA && op != Operation.ReadKeyB
+                    && op != Operation.ReadAC
+                    && op != Operation.WriteKeyA
+                    && op != Operation.WriteKeyB
+                    && op != Operation.WriteAC) {
                 // Error. Sector Trailer but no Sector Trailer permissions.
                 return 4;
             }
             if          (c1 == 0 && c2 == 0 && c3 == 0) {
-                if (op == Operations.WriteKeyA
-                        || op == Operations.WriteKeyB
-                        || op == Operations.ReadKeyB
-                        || op == Operations.ReadAC) {
+                if (op == Operation.WriteKeyA
+                        || op == Operation.WriteKeyB
+                        || op == Operation.ReadKeyB
+                        || op == Operation.ReadAC) {
                     return 1;
                 }
                 return 0;
             } else if   (c1 == 0 && c2 == 1 && c3 == 0) {
-                if (op == Operations.ReadKeyB
-                        || op == Operations.ReadAC) {
+                if (op == Operation.ReadKeyB
+                        || op == Operation.ReadAC) {
                     return 1;
                 }
                 return 0;
             } else if   (c1 == 1 && c2 == 0 && c3 == 0) {
-                if (op == Operations.WriteKeyA
-                        || op == Operations.WriteKeyB) {
+                if (op == Operation.WriteKeyA
+                        || op == Operation.WriteKeyB) {
                     return 2;
                 }
-                if (op == Operations.ReadAC) {
+                if (op == Operation.ReadAC) {
                     return 3;
                 }
                 return 0;
             } else if   (c1 == 1 && c2 == 1 && c3 == 0) {
-                if (op == Operations.ReadAC) {
+                if (op == Operation.ReadAC) {
                     return 3;
                 }
                 return 0;
             } else if   (c1 == 0 && c2 == 0 && c3 == 1) {
-                if (op == Operations.ReadKeyA) {
+                if (op == Operation.ReadKeyA) {
                     return 0;
                 }
                 return 1;
             } else if   (c1 == 0 && c2 == 1 && c3 == 1) {
-                if (op == Operations.ReadAC) {
+                if (op == Operation.ReadAC) {
                     return 3;
                 }
-                if (op == Operations.ReadKeyA
-                        || op == Operations.ReadKeyB) {
+                if (op == Operation.ReadKeyA
+                        || op == Operation.ReadKeyB) {
                     return 0;
                 }
                 return 2;
             } else if   (c1 == 1 && c2 == 0 && c3 == 1) {
-                if (op == Operations.ReadAC) {
+                if (op == Operation.ReadAC) {
                     return 3;
                 }
-                if (op == Operations.WriteAC) {
+                if (op == Operation.WriteAC) {
                     return 2;
                 }
                 return 0;
             } else if   (c1 == 1 && c2 == 1 && c3 == 1) {
-                if (op == Operations.ReadAC) {
+                if (op == Operation.ReadAC) {
                     return 3;
                 }
                 return 0;
@@ -1152,46 +1150,46 @@ public class Common extends Application {
             }
         } else {
             // Data Block.
-            if (op != Operations.Read && op != Operations.Write
-                    && op != Operations.Increment
-                    && op != Operations.DecTransRest) {
+            if (op != Operation.Read && op != Operation.Write
+                    && op != Operation.Increment
+                    && op != Operation.DecTransRest) {
                 // Error. Data block but no data block permissions.
                 return -1;
             }
             if          (c1 == 0 && c2 == 0 && c3 == 0) {
                 return (isKeyBReadable) ? 1 : 3;
             } else if   (c1 == 0 && c2 == 1 && c3 == 0) {
-                if (op == Operations.Read) {
+                if (op == Operation.Read) {
                     return (isKeyBReadable) ? 1 : 3;
                 }
                 return 0;
             } else if   (c1 == 1 && c2 == 0 && c3 == 0) {
-                if (op == Operations.Read) {
+                if (op == Operation.Read) {
                     return (isKeyBReadable) ? 1 : 3;
                 }
-                if (op == Operations.Write) {
+                if (op == Operation.Write) {
                     return 2;
                 }
                 return 0;
             } else if   (c1 == 1 && c2 == 1 && c3 == 0) {
-                if (op == Operations.Read
-                        || op == Operations.DecTransRest) {
+                if (op == Operation.Read
+                        || op == Operation.DecTransRest) {
                     return (isKeyBReadable) ? 1 : 3;
                 }
                 return 2;
             } else if   (c1 == 0 && c2 == 0 && c3 == 1) {
-                if (op == Operations.Read
-                        || op == Operations.DecTransRest) {
+                if (op == Operation.Read
+                        || op == Operation.DecTransRest) {
                     return (isKeyBReadable) ? 1 : 3;
                 }
                 return 0;
             } else if   (c1 == 0 && c2 == 1 && c3 == 1) {
-                if (op == Operations.Read || op == Operations.Write) {
+                if (op == Operation.Read || op == Operation.Write) {
                     return 2;
                 }
                 return 0;
             } else if   (c1 == 1 && c2 == 0 && c3 == 1) {
-                if (op == Operations.Read) {
+                if (op == Operation.Read) {
                     return 2;
                 }
                 return 0;
@@ -1212,9 +1210,9 @@ public class Common extends Application {
      * <li>C1 = 0, C2 = 0, C3 = 1</li>
      * <li>C1 = 0, C2 = 1, C3 = 0</li>
      * </ul>
-     * @param c1 Access Condition byte "C1"
-     * @param c2 Access Condition byte "C2"
-     * @param c3 Access Condition byte "C3"
+     * @param c1 Access Condition bit "C1" of the Sector Trailer.
+     * @param c2 Access Condition bit "C2" of the Sector Trailer.
+     * @param c3 Access Condition bit "C3" of the Sector Trailer.
      * @return True if key B is readable. False otherwise.
      */
     public static boolean isKeyBReadable(byte c1, byte c2, byte c3) {
