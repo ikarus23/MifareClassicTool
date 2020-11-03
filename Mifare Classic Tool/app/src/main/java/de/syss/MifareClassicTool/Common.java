@@ -298,12 +298,13 @@ public class Common extends Application {
      * Read the URI source line by line.
      * @param uri The URI to read from.
      * @param context The context for the content resolver and in which
-     *                error/info Toasts are shown.
+     * error/info Toasts are shown.
+     * @param readAll If true, comments and empty lines will be read too.
      * @return The content of the URI, each line representing an array item
      * or Null in case of an read error.
      * @see #readLineByLine(BufferedReader, boolean, Context)
      */
-    public static String[] readUriLineByLine(Uri uri, Context context){
+    public static String[] readUriLineByLine(Uri uri, Context context, boolean readAll) {
         InputStream contentStream = null;
         String[] ret = null;
         if (uri == null || context == null) {
@@ -316,7 +317,7 @@ public class Common extends Application {
         }
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(contentStream));
-        ret = readLineByLine(reader, true, context);
+        ret = readLineByLine(reader, readAll, context);
         try {
             reader.close();
         } catch (IOException e) {

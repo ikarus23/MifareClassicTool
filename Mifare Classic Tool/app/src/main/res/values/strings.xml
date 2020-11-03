@@ -295,7 +295,7 @@
     <string name="action_clone_uid">Generate block 0 and clone UID</string>
     <string name="action_calc_sak_atqa">Automatically calculate SAK and ATQA value</string>
     <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
-    <string name="action_file_type_keys">.keys/.txt (Mifare Classic Tool)</string>
+    <string name="action_file_type_keys">.keys/.dic/.txt (Mifare Classic Tool, Proxmark)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
