@@ -873,14 +873,14 @@ public class WriteTag extends BasicActivity {
         startActivityForResult(intent, CKM_WRITE_DUMP);
     }
 
-    // TODO: update doc.
     /**
      * Check if the tag is suitable for the dump ({@link #mDumpWithPos}).
-     * This is done in three steps. The first check determines if the dump
+     * This is done in four steps. The first check determines if the dump
      * fits on the tag (size check). The second check determines if the keys for
-     * relevant sectors are known (key check). At last this method will check
-     * whether the keys with write privileges are known and if some blocks
-     * are read-only (write check).<br />
+     * relevant sectors are known (key check). The third check determines if
+     * specail blocks (block 0 and sector trailers) are correct. At last this
+     * method will check whether the keys with write privileges are known and if
+     * some blocks are read-only (write check).<br />
      * If some of these checks "fail", the user will get a report dialog
      * with the two options to cancel the whole write process or to
      * write as much as possible(call {@link #writeDump(HashMap,

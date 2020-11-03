@@ -236,44 +236,47 @@ public class DumpEditor extends BasicActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        case R.id.menuDumpEditorSave:
-            saveDump();
-            return true;
-        case R.id.menuDumpEditorAscii:
-            showAscii();
-            return true;
-        case R.id.menuDumpEditorAccessConditions:
-            showAC();
-            return true;
-        case R.id.menuDumpEditorValueBlocksAsInt:
-            decodeValueBlocks();
-            return true;
-        case R.id.menuDumpEditorShare:
-            shareDump();
-            return true;
-        case R.id.menuDumpEditorOpenValueBlockTool:
-            openValueBlockTool();
-            return true;
-        case R.id.menuDumpEditorOpenAccessConditionTool:
-            openAccessConditionTool();
-            return true;
-        case R.id.menuDumpEditorOpenBccTool:
-            openBccTool();
-            return true;
-        case R.id.menuDumpEditorDecodeDateOfManuf:
-            decodeDateOfManuf();
-            return true;
-        case R.id.menuDumpEditorWriteDump:
-            writeDump();
-            return true;
-        case R.id.menuDumpEditorDiffDump:
-            diffDump();
-            return true;
-        case R.id.menuDumpEditorSaveKeys:
-            saveKeys();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menuDumpEditorSave:
+                saveDump();
+                return true;
+            case R.id.menuDumpEditorAscii:
+                showAscii();
+                return true;
+            case R.id.menuDumpEditorAccessConditions:
+                showAC();
+                return true;
+            case R.id.menuDumpEditorValueBlocksAsInt:
+                decodeValueBlocks();
+                return true;
+            case R.id.menuDumpEditorShare:
+                shareDump();
+                return true;
+            case R.id.menuDumpEditorOpenValueBlockTool:
+                openValueBlockTool();
+                return true;
+            case R.id.menuDumpEditorOpenAccessConditionTool:
+                openAccessConditionTool();
+                return true;
+            case R.id.menuDumpEditorOpenBccTool:
+                openBccTool();
+                return true;
+            case R.id.menuDumpEditorDecodeDateOfManuf:
+                decodeDateOfManuf();
+                return true;
+            case R.id.menuDumpEditorWriteDump:
+                writeDump();
+                return true;
+            case R.id.menuDumpEditorDiffDump:
+                diffDump();
+                return true;
+            case R.id.menuDumpEditorSaveKeys:
+                saveKeys();
+                return true;
+            case R.id.menuDumpEditorExportDump:
+                exportDump();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -845,17 +848,47 @@ public class DumpEditor extends BasicActivity
 
 
     /**
-     * Share a dump as "file://" stream resource (e.g. as e-mail attachment).
-     * The dump will be checked and stored in the {@link Common#TMP_DIR}
-     * directory. After this, a dialog will be displayed in which the user
-     * can choose between apps that are willing to handle the dump.
-     * @see Common#TMP_DIR
+     * Share a dump file as "file://" stream resource (e.g. as e-mail attachment).
+     * A dialog will be displayed in which the user can choose between apps
+     * that are willing to handle the dump. For sharing, the dump will be
+     * saved as temporary file.
+     * @see #saveDumpToTemp()
      */
     private void shareDump() {
+        File file = saveDumpToTemp();
+        if (file == null || !file.exists() && file.isDirectory()) {
+            return;
+        }
+        // Share file.
+        Common.shareTextFile(this, file);
+    }
+
+    /**
+     * Export the dump using the {@link ImportExportTool}. For exporting, the dump
+     * will be saved as temporary file.
+     * @see #saveDumpToTemp()
+     */
+    private void exportDump() {
+        File file = saveDumpToTemp();
+        if (file == null || !file.exists() && file.isDirectory()) {
+            return;
+        }
+        Intent intent = new Intent(this, ImportExportTool.class);
+        intent.putExtra(ImportExportTool.EXTRA_FILE_PATH, file.getAbsolutePath());
+        intent.putExtra(ImportExportTool.EXTRA_IS_DUMP_FILE, true);
+        startActivity(intent);
+    }
+
+    /**
+     * The dump will be checked and stored in the {@link Common#TMP_DIR} directory.
+     * @return The temporary dump file.
+     * @see Common#TMP_DIR
+     */
+    private File saveDumpToTemp() {
         int err = checkDumpAndUpdateLines();
         if (err != 0) {
             Common.isValidDumpErrorToast(err, this);
-            return;
+            return null;
         }
         // Save dump to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
@@ -875,11 +908,9 @@ public class DumpEditor extends BasicActivity
         if (!Common.saveFile(file, mLines, false)) {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();
-            return;
+            return null;
         }
-
-        // Share file.
-        Common.shareTextFile(this, file);
+        return file;
     }
 
     /**

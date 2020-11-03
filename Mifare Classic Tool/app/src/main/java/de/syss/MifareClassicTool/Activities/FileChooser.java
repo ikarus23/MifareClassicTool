@@ -204,7 +204,7 @@ public class FileChooser extends BasicActivity {
         // Enable/disable the delete menu item if there is a least one file.
         mDeleteFile.setEnabled(!mIsDirEmpty);
 
-        // Enable/disable the new file menu item acording to mIsAllowNewFile.
+        // Enable/disable the new file menu item according to mIsAllowNewFile.
         newFile.setEnabled(mIsAllowNewFile);
 
         return true;

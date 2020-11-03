@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -61,12 +63,24 @@ import de.syss.MifareClassicTool.R;
  */
 public class ImportExportTool extends BasicActivity {
 
+    /**
+     * Boolean value to tell whether the file to export is a key file or a dump file.
+     */
+    public final static String EXTRA_IS_DUMP_FILE =
+            "de.syss.MifareClassicTool.Activity.ImportExportTool.IS_DUMP_FILE";
+    /**
+     * Path to the file which should be exported.
+     */
+    public final static String EXTRA_FILE_PATH =
+            "de.syss.MifareClassicTool.Activity.ImportExportTool.FILE_PATH";
+
     private final static int IMPORT_FILE_CHOSEN = 1;
     private final static int EXPORT_FILE_CHOSEN = 2;
     private final static int EXPORT_LOCATION_CHOSEN = 3;
     private final static int BACKUP_LOCATION_CHOSEN = 4;
-    private boolean mIsExport;
-    private boolean mIsDumpFile;
+    private boolean mIsCalledWithExportFile = false;
+    private boolean mIsExport = false;
+    private boolean mIsDumpFile = false;
     private String mFile;
     private String[] mConvertedContent;
     private FileType mFileType;
@@ -89,11 +103,50 @@ public class ImportExportTool extends BasicActivity {
         }
     }
 
+    /**
+     * Initialize the activity layout.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_export_tool);
+    }
 
+    /**
+     * Check if there was a file appended to the intent calling this activity
+     * and if so, export this file.
+     * @see #EXTRA_FILE_PATH
+     * @see #EXTRA_IS_DUMP_FILE
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Was this tool opened by another activity to export a file?
+        Intent intent = getIntent();
+        if (!mIsCalledWithExportFile && intent.hasExtra(EXTRA_FILE_PATH)) {
+            final File path = new File(intent.getStringExtra(EXTRA_FILE_PATH));
+            if (path.exists() && !path.isDirectory()) {
+                mIsCalledWithExportFile = true;
+                // File to export is known. Trigger the export process.
+                // However, do this with a delay. Context menus (for choosing the
+                // export file type) can only be shown, once the activity is running.
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsExport = true;
+                        if (getIntent().hasExtra(EXTRA_IS_DUMP_FILE)) {
+                            mIsDumpFile = getIntent().getBooleanExtra(
+                                    EXTRA_IS_DUMP_FILE, false);
+                        }
+                        Intent intent = new Intent();
+                        intent.putExtra(FileChooser.EXTRA_CHOSEN_FILE, path.getAbsolutePath());
+                        onActivityResult(EXPORT_FILE_CHOSEN, RESULT_OK, intent);
+                    }
+                }, 300);
+            }
+        }
     }
 
     /**
@@ -400,7 +453,8 @@ public class ImportExportTool extends BasicActivity {
 
     /**
      * Save the converted content with respect to {@link #mFileType} to a given
-     * content URI.
+     * content URI and exit the activity if {@link #mIsCalledWithExportFile} is true.
+     * This is only used by the export process.
      * @param convertedContent Converted content (output of
      * {@link #convertDump(String[], FileType, FileType)} or
      * {@link #convertKeys(String[], FileType, FileType)}).
@@ -431,6 +485,12 @@ public class ImportExportTool extends BasicActivity {
         } else {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();
+        }
+
+        if (mIsCalledWithExportFile) {
+            // Exit this tool if it was called by another activity with
+            // a file to export.
+            finish();
         }
     }
 
