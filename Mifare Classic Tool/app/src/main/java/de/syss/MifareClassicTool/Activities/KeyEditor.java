@@ -144,15 +144,18 @@ public class KeyEditor extends BasicActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
-        case R.id.menuKeyEditorSave:
-            onSave();
-            return true;
-        case R.id.menuKeyEditorShare:
-            shareKeyFile();
-            return true;
-        case R.id.menuKeyEditorRemoveDuplicates:
-            removeDuplicates();
-            return true;
+            case R.id.menuKeyEditorSave:
+                onSave();
+                return true;
+            case R.id.menuKeyEditorShare:
+                shareKeyFile();
+                return true;
+            case R.id.menuKeyEditorRemoveDuplicates:
+                removeDuplicates();
+                return true;
+            case R.id.menuKeyEditorExportKeys:
+                exportKeys();
+                return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -212,18 +215,46 @@ public class KeyEditor extends BasicActivity
     }
 
     /**
-     * Share a key file as "file://" stream resource (e.g. as e-mail
-     * attachment). The key file will be checked and stored in the
-     * {@link Common#TMP_DIR} directory. After this, a dialog will be displayed
-     * in which the user can choose between apps that are willing to
-     * handle the dump.
-     * @see Common#TMP_DIR
-     * @see Common#isValidKeyFileErrorToast(int, Context)
+     * Share a key file as "file://" stream resource (e.g. as e-mail attachment).
+     * A dialog will be displayed in which the user can choose between apps
+     * that are willing to handle the dump. For sharing, the dump will be
+     * saved as temporary file.
+     * @see #saveKeysToTemp()
      *
      */
     private void shareKeyFile() {
-        if (!Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
+        File file = saveKeysToTemp();
+        if (file == null || !file.exists() && file.isDirectory()) {
             return;
+        }
+        // Share file.
+        Common.shareTextFile(this, file);
+    }
+
+    /**
+     * Export the keys using the {@link ImportExportTool}. For exporting, the dump
+     * will be saved as temporary file.
+     * @see #saveKeysToTemp()
+     */
+    private void exportKeys() {
+        File file = saveKeysToTemp();
+        if (file == null || !file.exists() && file.isDirectory()) {
+            return;
+        }
+        Intent intent = new Intent(this, ImportExportTool.class);
+        intent.putExtra(ImportExportTool.EXTRA_FILE_PATH, file.getAbsolutePath());
+        intent.putExtra(ImportExportTool.EXTRA_IS_DUMP_FILE, false);
+        startActivity(intent);
+    }
+
+    /**
+     * The keys will be checked and stored in the {@link Common#TMP_DIR} directory.
+     * @return The temporary key file.
+     * @see Common#TMP_DIR
+     */
+    private File saveKeysToTemp() {
+        if (!Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
+            return null;
         }
         // Save key file to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
@@ -243,11 +274,10 @@ public class KeyEditor extends BasicActivity
         if (!Common.saveFile(file, mLines, false)) {
             Toast.makeText(this, R.string.info_save_error,
                     Toast.LENGTH_LONG).show();
-            return;
+            return null;
         }
 
-        // Share file.
-        Common.shareTextFile(this, file);
+        return file;
     }
 
     /**
@@ -337,7 +367,8 @@ public class KeyEditor extends BasicActivity
 
     /**
      * Check if the user input is a valid key file and update
-     * {@link #mLines}.
+     * {@link #mLines}. Return values should be compliant to
+     * {@link Common#isValidKeyFileErrorToast(int, Context)}.
      * @return <ul>
      * <li>0 - All O.K.</li>
      * <li>1 - There is no key.</li>

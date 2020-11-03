@@ -29,6 +29,8 @@
         android:icon="@android:drawable/ic_menu_share"
         android:title="@string/action_share"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menuKeyEditorExportKeys"
+        android:title="@string/action_export_keys" />
     <item android:id="@+id/menuKeyEditorRemoveDuplicates"
         android:title="@string/action_remove_duplicates" />
 

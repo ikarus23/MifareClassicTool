@@ -455,7 +455,8 @@ public class DumpEditor extends BasicActivity
 
     /**
      * Check if all sectors contain valid data. If all blocks are O.K.
-     * {@link #mLines} will be updated.
+     * {@link #mLines} will be updated. Return values should be compliant
+     * to {@link Common#isValidDumpErrorToast(int, Context)}.
      * @return <ul>
      * <li>0 - All blocks are O.K.</li>
      * <li>1 - At least one sector has not 4 or 16 blocks (lines).</li>
