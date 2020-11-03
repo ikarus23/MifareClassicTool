@@ -264,21 +264,20 @@ public class Common extends Application {
      * Read a file line by line. The file should be a simple text file.
      * Empty lines will not be read.
      * @param file The file to read.
-     * @param readComments Whether to read comments or to ignore them.
-     * Comments are lines STARTING with "#" (and empty lines).
-     * @param context  The context in which the possible "Out of memory"-Toast
+     * @param readAll If true, comments and empty lines will be read too.
+     * @param context The context in which the possible "Out of memory"-Toast
      * will be shown.
      * @return Array of strings representing the lines of the file.
      * If the file is empty or an error occurs "null" will be returned.
      */
-    public static String[] readFileLineByLine(File file, boolean readComments,
+    public static String[] readFileLineByLine(File file, boolean readAll,
             Context context) {
         String[] ret = null;
         BufferedReader reader = null;
         if (file != null && file.exists()) {
             try {
                 reader = new BufferedReader(new FileReader(file));
-                ret = readLineByLine(reader, readComments, context);
+                ret = readLineByLine(reader, readAll, context);
             } catch (FileNotFoundException ex) {
                 ret = null;
             } finally {
@@ -365,30 +364,29 @@ public class Common extends Application {
      * Read a as BufferedReader line by line with some exceptions.
      * Empty lines and leading/tailing whitespaces will be ignored.
      * @param reader The reader object initialized with a file (data).
-     * @param readComments True if comments (marked with #) should be read as well.
+     * @param readAll If true, comments and empty lines will be read too.
      * @param context The Context in which error Toasts will be shown.
      * @return The content with each line representing an array item
      * or Null in case of an read error.
      */
     private static String[] readLineByLine(BufferedReader reader,
-            boolean readComments, Context context) {
+            boolean readAll, Context context) {
         String[] ret = null;
         String line;
         ArrayList<String> linesArray = new ArrayList<>();
         try {
             while ((line = reader.readLine()) != null) {
-                // Remove comments if readComments is false.
-                if (!readComments) {
-                    if (line.matches("^#+$")) {
+                // Ignore leading/tailing whitespaces of line.
+                line = line.trim();
+                // Remove comments if readAll is false.
+                if (!readAll) {
+                    if (line.startsWith("#") || line.equals("")) {
                         continue;
                     }
+                    // Look for content (ignore the comment).
                     line = line.split("#")[0];
-                }
-                // Ignore leading/tailing whitespaces.
-                line = line.trim();
-                // Ignore empty lines.
-                if (line.equals("")) {
-                    continue;
+                    // Ignore leading/tailing whitespaces of content.
+                    line = line.trim();
                 }
                 try {
                     linesArray.add(line);
@@ -1482,7 +1480,7 @@ public class Common extends Application {
         }
         for (String line : lines) {
             // Remove comments.
-            if (line.matches("^#+$")) {
+            if (line.startsWith("#")) {
                 continue;
             }
             line = line.split("#")[0];

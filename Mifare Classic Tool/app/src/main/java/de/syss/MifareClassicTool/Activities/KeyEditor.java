@@ -52,7 +52,7 @@ public class KeyEditor extends BasicActivity
     /**
      * All keys and comments.
      * This will be updated with every
-     * {@link #isValidKeyFile()} check.
+     * {@link #checkDumpAndUpdateLines()} check.
      */
     private String[] mLines;
 
@@ -253,7 +253,7 @@ public class KeyEditor extends BasicActivity
      * @see Common#TMP_DIR
      */
     private File saveKeysToTemp() {
-        if (!Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
+        if (!Common.isValidKeyFileErrorToast(checkDumpAndUpdateLines(), this)) {
             return null;
         }
         // Save key file to to a temporary file which will be
@@ -290,7 +290,7 @@ public class KeyEditor extends BasicActivity
      * @see Common#isValidKeyFileErrorToast(int, Context)
      */
     private void onSave() {
-        if (!Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
+        if (!Common.isValidKeyFileErrorToast(checkDumpAndUpdateLines(), this)) {
             return;
         }
         final File path = Common.getFile(Common.KEYS_DIR);
@@ -331,7 +331,7 @@ public class KeyEditor extends BasicActivity
      * Remove duplicates (keys) from key file.
      */
     private void removeDuplicates() {
-        if (Common.isValidKeyFileErrorToast(isValidKeyFile(), this)) {
+        if (Common.isValidKeyFileErrorToast(checkDumpAndUpdateLines(), this)) {
             ArrayList<String> newLines = new ArrayList<>();
             for (String line : mLines) {
                 if (line.equals("") || line.startsWith("#")) {
@@ -367,8 +367,8 @@ public class KeyEditor extends BasicActivity
 
     /**
      * Check if the user input is a valid key file and update
-     * {@link #mLines}. Return values should be compliant to
-     * {@link Common#isValidKeyFileErrorToast(int, Context)}.
+     * {@link #mLines} and {@link #mKeys}. Return values should be
+     * compliant to {@link Common#isValidKeyFileErrorToast(int, Context)}.
      * @return <ul>
      * <li>0 - All O.K.</li>
      * <li>1 - There is no key.</li>
@@ -377,13 +377,35 @@ public class KeyEditor extends BasicActivity
      * </ul>
      * @see Common#isValidKeyFile(String[])
      */
-    private int isValidKeyFile() {
+    private int checkDumpAndUpdateLines() {
         String[] lines = mKeys.getText().toString()
                 .split(System.getProperty("line.separator"));
         int ret = Common.isValidKeyFile(lines);
-        if (ret == 0) {
-            mLines = lines;
+        if (ret != 0) {
+            return ret;
         }
+
+        // Convert keys to uppercase.
+        mLines = new String[lines.length];
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = lines[i].trim();
+            String line = lines[i];
+            if (line.startsWith("#")) {
+                mLines[i] = lines[i];
+                continue;
+            }
+            line = line.split("#")[0];
+            line = line.trim();
+            if (line.equals("")) {
+                mLines[i] = lines[i];
+                continue;
+            }
+            // Line is a key. Convert to uppercase.
+            line = line.toUpperCase(Locale.getDefault());
+            mLines[i] = line + lines[i].substring(12);
+        }
+
+        setKeyArrayAsText(mLines);
         return ret;
     }
 }
