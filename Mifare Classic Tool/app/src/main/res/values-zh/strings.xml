@@ -22,11 +22,11 @@
 <resources>
 
     <!-- Common stuff -->
-    <string name="app_name">Mifare Classic 工具</string>
+    <string name="app_name">MIFARE Classic Tool</string>
     <string name="app_version">App版本</string>
 
     <!-- Activity titles -->
-    <string name="title_activity_main">Mifare Classic工具</string>
+    <string name="title_activity_main">MIFARE Classic Tool</string>
     <string name="title_activity_read_tag">读标签</string>
     <string name="title_activity_dump_editor">转储编辑器</string>
     <string name="title_activity_access_conditions">访问条件</string>
@@ -266,8 +266,8 @@
     <string name="action_start_external_nfc">转到“External NFC”App</string>
     <string name="action_external_nfc_is_running">“External NFC”正在运行</string>
     <string name="action_clone_uid">计算块0并克隆UID</string>
-    <string name="action_file_type_mct">.mct (Mifare Classic工具)</string>
-    <string name="action_file_type_keys">.keys/.dic/.txt (Mifare Classic工具, Proxmark)</string>
+    <string name="action_file_type_mct">.mct (MIFARE Classic Tool)</string>
+    <string name="action_file_type_keys">.keys/.dic/.txt (MIFARE Classic Tool, Proxmark)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
@@ -356,7 +356,7 @@
     <string name="dialog_nfc_not_enabled">未启用NFC，请到设置中启用。</string>
     <string name="dialog_nfc_not_enabled_title">NFC未启用</string>
     <string name="dialog_no_mfc_support_device_title">没有支持MIFARE Classic的设备</string>
-    <string name="dialog_no_mfc_support_device"><![CDATA[您的设备(由于硬件)不支持MIFARE Classic !!仅可能显示UID和其他一些常规信息。无法进行进一步的I/O操作。<br /><br />您可以在<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">上查看不支持MIFARE Classic的已知设备列表。</a>若您的设备不在该列表中,请通过电子邮件告知开发人员<a href="mailto:fooblubb@gmail.com"></a><br /><br />若您的设备支持USB-OTG,则可以将外部NFC读卡器连接到Android设备。 Mifare Classic Tool应该与<i>External NFC</i>应用程序配合使用,该应用程序支持多种基于USB的NFC读取器。但是可能会有一些限制。]]></string>
+    <string name="dialog_no_mfc_support_device"><![CDATA[您的设备(由于硬件)不支持MIFARE Classic !!仅可能显示UID和其他一些常规信息。无法进行进一步的I/O操作。<br /><br />您可以在<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">上查看不支持MIFARE Classic的已知设备列表。</a>若您的设备不在该列表中,请通过电子邮件告知开发人员<a href="mailto:fooblubb@gmail.com"></a><br /><br />若您的设备支持USB-OTG,则可以将外部NFC读卡器连接到Android设备。 MIFARE Classic Tool应该与<i>External NFC</i>应用程序配合使用,该应用程序支持多种基于USB的NFC读取器。但是可能会有一些限制。]]></string>
     <string name="dialog_no_mfc_support_tag_title">没有MIFARE Classic标签</string>
     <string name="dialog_no_mfc_support_tag"><![CDATA[此标签与MIFARE Classic技术不兼容!请注意,此App仅适用于MIFARE Classic标签!<br /><br /><b>请使用其他标签。</b><br /><br /><small>(注意:在极少数情况下,此消息可能是由于读卡区放置了多个标签或由于特殊的ATQA + SAK值。)</small>]]></string>
     <string name="dialog_save_dump_title">保存转储</string>
@@ -370,7 +370,7 @@
     <string name="dialog_new_file_title">新文件</string>
     <string name="dialog_new_file">输入新文件名</string>
     <string name="dialog_first_run_title">警告</string>
-    <string name="dialog_first_run">本App针对至少基本熟悉MifareClassic技术的用户。App需进行底层操作,因此,几乎所有的数据输入和输出都是十六进制。同样重要的是,你必须明白自己在做什么。例如,若将数据写入标签,或将错误数据写入特定的块,可能会对标签造成不可修复的损坏。\n\n<b>更多的信息和帮助请查看“帮助信息“ </b></string>
+    <string name="dialog_first_run">本App针对至少基本熟悉MIFAREClassic技术的用户。App需进行底层操作,因此,几乎所有的数据输入和输出都是十六进制。同样重要的是,你必须明白自己在做什么。例如,若将数据写入标签,或将错误数据写入特定的块,可能会对标签造成不可修复的损坏。\n\n<b>更多的信息和帮助请查看“帮助信息“ </b></string>
     <string name="dialog_tools_menu_title">可用的工具</string>
     <string name="dialog_wait_write_tag_title">写入中…</string>
     <string name="dialog_wait_write_tag">写标签…\n(不要移除标签)</string>
@@ -412,15 +412,15 @@
     <string name="dialog_save_conflict_dump">这个文件已经存在,怎么办?\n\n<b>注:包含多个转储文件的文件(使用“追加”创建)不能显示、编辑或写入。</b></string>
     <string name="dialog_save_conflict_keyfile">文件已存在,怎么办?</string>
     <string name="dialog_donate_title">捐赠</string>
-    <string name="dialog_donate"><b>MIFARE Classic工具已更新!</b>\n\n如果新特性、问题修复或这个App帮助到你,请考虑支持一下开发者。给他买瓶啤酒吧! ;)</string>
+    <string name="dialog_donate"><b>MIFARE Classic Tool 已更新!</b>\n\n如果新特性、问题修复或这个App帮助到你,请考虑支持一下开发者。给他买瓶啤酒吧! ;)</string>
     <string name="dialog_save_before_quitting_title">更改未保存</string>
     <string name="dialog_save_before_quitting"><b>有未保存的更改!</b> \n要保存这些更改吗?</string>
     <string name="dialog_no_nfc_support_title">没有支持的NFC设备</string>
-    <string name="dialog_no_nfc_support">您的设备没有NFC读卡器,因此,您无法读取或写入NFC标签。 \n\n若您的设备支持USB-OTG,则可以连接外部NFC读卡器。 \n\nMifare Classic工具应与“External NFC“应用程序配合使用,该应用程序支持多种基于USB的NFC读取器,但是可能会有一些限制。</string>
+    <string name="dialog_no_nfc_support">您的设备没有NFC读卡器,因此,您无法读取或写入NFC标签。 \n\n若您的设备支持USB-OTG,则可以连接外部NFC读卡器。 \n\nMIFARE Classic Tool 应与“External NFC“应用程序配合使用,该应用程序支持多种基于USB的NFC读取器,但是可能会有一些限制。</string>
     <string name="dialog_start_external_nfc_title">External NFC服务</string>
-    <string name="dialog_start_external_nfc">“External NFC”服务未运行,请启用该服务,以便Mifare Classic工具使用外部NFC读卡器。</string>
+    <string name="dialog_start_external_nfc">“External NFC”服务未运行,请启用该服务,以便MIFARE Classic Tool 使用外部NFC读卡器。</string>
     <string name="dialog_info_external_nfc_title">External NFC服务</string>
-    <string name="dialog_info_external_nfc">您的设备没有NFC读卡器或不支持MIFARE Classic,但已安装了“External NFC”应用。请确保“External NFC”服务正在运行,以便Mifare Classic工具使用外部NFC读卡器。</string>
+    <string name="dialog_info_external_nfc">您的设备没有NFC读卡器或不支持MIFARE Classic,但已安装了“External NFC”应用。请确保“External NFC”服务正在运行,以便MIFARE Classic Tool 使用外部NFC读卡器。</string>
     <string name="dialog_gen2_tags_info_title">克隆UID</string>
     <string name="dialog_gen2_tags_info">MIFARE Classic标签的第一扇区的第一块包含只读的UID,即不可写入。但是有一些特殊的MIFARE Classic标签(即”2代magic tags”,常见形式为FUID卡及部分CUID卡,又名“块0直接写入标签”),支持通过write命令写入第一个块(包括UID)。本App能够写入此类标签,以克隆UID。但是,某些特殊标签(UID卡,即“一代magic tags”;以及特定种类的CUID卡)需要特殊的命令序列,才能将其置于可以写入厂商块(即块0)的状态。本App无法用于这些标签。</string>
     <string name="dialog_rest_of_block_0_title">块0的其余部分</string>

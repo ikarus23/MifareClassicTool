@@ -294,8 +294,8 @@
     <string name="action_external_nfc_is_running">\"External NFC\" is running</string>
     <string name="action_clone_uid">Generate block 0 and clone UID</string>
     <string name="action_calc_sak_atqa">Automatically calculate SAK and ATQA value</string>
-    <string name="action_file_type_mct">.mct (Mifare Classic Tool)</string>
-    <string name="action_file_type_keys">.keys/.dic/.txt (Mifare Classic Tool, Proxmark)</string>
+    <string name="action_file_type_mct">.mct (MIFARE Classic Tool)</string>
+    <string name="action_file_type_keys">.keys/.dic/.txt (MIFARE Classic Tool, Proxmark)</string>
     <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
     <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
     <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
@@ -434,7 +434,7 @@
         If your device is not on that list, please write an
         <a href="mailto:fooblubb@gmail.com">Email to developer</a>.
         <br /><br />If your device supports USB-OTG you might be able to connect an
-        external NFC reader to your Android device. Mifare Classic Tool should work
+        external NFC reader to your Android device. MIFARE Classic Tool should work
         together with the <i>External NFC</i> app, which supports several USB based
         NFC readers. There might be some limitations though.
         ]]>
@@ -599,19 +599,19 @@
         reader. Therefore you can\'t read or write to NFC tags.
         \n\nIf your device supports USB-OTG you might be able to connect an
         external NFC reader to your Android device.
-        \n\nMifare Classic Tool should work together with the \"External NFC\" app,
+        \n\nMIFARE Classic Tool should work together with the \"External NFC\" app,
         which supports several USB based NFC readers. There might be some limitations though.
     </string>
     <string name="dialog_start_external_nfc_title">External NFC Service</string>
     <string name="dialog_start_external_nfc">The service of \"External NFC\" is not running.
-        Please enable the service in order to use Mifare Classic Tool with an external
+        Please enable the service in order to use MIFARE Classic Tool with an external
         NFC reader.
     </string>
     <string name="dialog_info_external_nfc_title">External NFC Service</string>
     <string name="dialog_info_external_nfc">Your device doesn\'t have a NFC
         reader or MIFARE Classic support, but the \"External NFC\" app is installed.
         Please make sure the \"External NFC\" service is running in order to use
-        Mifare Classic Tool with an external NFC reader.
+        MIFARE Classic Tool with an external NFC reader.
     </string>
     <string name="dialog_gen2_tags_info_title">Cloning the UID</string>
     <string name="dialog_gen2_tags_info">The first block of the first sector of an MIFARE
