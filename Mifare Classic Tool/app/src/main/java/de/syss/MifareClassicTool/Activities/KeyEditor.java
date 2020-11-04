@@ -60,7 +60,7 @@ public class KeyEditor extends BasicActivity
      * True if the user made changes to the key file.
      * Used by the "save before quitting" dialog.
      */
-    private boolean mKeyChanged;
+    private boolean mKeysChanged;
 
     /**
      * If true, the editor will close after a successful save.
@@ -109,7 +109,7 @@ public class KeyEditor extends BasicActivity
                 @Override
                 public void afterTextChanged(Editable s) {
                     // Text was changed.
-                    mKeyChanged = true;
+                    mKeysChanged = true;
                 }
                 @Override
                 public void beforeTextChanged(CharSequence s,
@@ -167,7 +167,7 @@ public class KeyEditor extends BasicActivity
      */
     @Override
     public void onBackPressed() {
-        if (mKeyChanged) {
+        if (mKeysChanged) {
             new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_save_before_quitting_title)
             .setMessage(R.string.dialog_save_before_quitting)
@@ -193,7 +193,7 @@ public class KeyEditor extends BasicActivity
     }
 
     /**
-     * Set the state of {@link #mKeyChanged} to false and close the
+     * Set the state of {@link #mKeysChanged} to false and close the
      * editor if {@link #mCloseAfterSuccessfulSave} is true (due to exiting
      * with unsaved changes) after a successful save process.
      */
@@ -202,7 +202,7 @@ public class KeyEditor extends BasicActivity
         if (mCloseAfterSuccessfulSave) {
             finish();
         }
-        mKeyChanged = false;
+        mKeysChanged = false;
     }
 
     /**
@@ -367,9 +367,10 @@ public class KeyEditor extends BasicActivity
     }
 
     /**
-     * Check if the user input is a valid key file and update
-     * {@link #mLines} and {@link #mKeys}. Return values should be
-     * compliant to {@link Common#isValidKeyFileErrorToast(int, Context)}.
+     * Check if the user input is a valid key file, convert all keys
+     * to upper case and update {@link #mLines} and {@link #mKeys}.
+     * Return values should be compliant to
+     * {@link Common#isValidKeyFileErrorToast(int, Context)}.
      * @return <ul>
      * <li>0 - All O.K.</li>
      * <li>1 - There is no key.</li>
@@ -407,6 +408,8 @@ public class KeyEditor extends BasicActivity
         }
 
         setKeyArrayAsText(mLines);
+        // Checking (and converting them to uppercase) does not count as change.
+        mKeysChanged = false;
         return ret;
     }
 }
