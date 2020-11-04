@@ -1052,6 +1052,24 @@ public class MCReader {
     }
 
     /**
+     * Return the sector that contains a given block.
+     * (Taken from https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/nfc/tech/MifareClassic.java)
+     * @param blockIndex index of block to lookup, starting from 0
+     * @return sector index that contains the block
+     */
+    public static int blockToSector(int blockIndex) {
+        if (blockIndex < 0 || blockIndex >= 256) {
+            throw new IndexOutOfBoundsException(
+                    "Block out of bounds: " + blockIndex);
+        }
+        if (blockIndex < 32 * 4) {
+            return blockIndex / 4;
+        } else {
+            return 32 + (blockIndex - 32 * 4) / 16;
+        }
+    }
+
+    /**
      * Check if the reader is connected to the tag.
      * This is NOT an indicator that the tag is in range.
      * @return True if the reader is connected. False otherwise.

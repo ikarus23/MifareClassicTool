@@ -627,45 +627,26 @@ public class ImportExportTool extends BasicActivity {
                 dest = json.toArray(new String[0]);
                 break;
             case MCT:
-                // Find highest block number to guess the MIFARE Classic tag size.
+                ArrayList<String> export = new ArrayList<String>();
                 Iterator<String> iter = blocks.keys();
-                int maxBlock = -1;
+                int lastKnownSector = -1;
                 while (iter.hasNext()) {
-                    int blockNr = Integer.parseInt(iter.next());
-                    if (blockNr > maxBlock) {
-                        maxBlock = blockNr;
-                    }
-                }
-                // Find the next fitting MIFARE Classic tag size.
-                if (maxBlock < 20) {
-                    maxBlock = 19;
-                    dest = new String[20+5];
-                } else if (maxBlock < 64) {
-                    maxBlock = 63;
-                    dest = new String[64+16];
-                } else if (maxBlock < 128) {
-                    maxBlock = 127;
-                    dest = new String[128+32];
-                } else if (maxBlock < 256) {
-                    maxBlock = 255;
-                    dest = new String[256+40];
-                }
-                // Format blocks to dump in MCT format.
-                int j = 0;
-                int sector = 0;
-                for (int i = 0; i <= maxBlock; i++){
-                    if (i < 127 && i % 4 == 0) {
-                        dest[j++] = "+Sector: " + sector++;
-                    } else if (i >= 128 && i % 16 == 0) {
-                        dest[j++] = "+Sector: " + sector++;
+                    String blockKey = iter.next();
+                    int blockNr = Integer.parseInt(blockKey);
+                    int sector = MCReader.blockToSector(blockNr);
+                    if (lastKnownSector != sector) {
+                        lastKnownSector = sector;
+                        export.add("+Sector: " + sector);
                     }
                     try {
-                        dest[j] = blocks.getString(String.format("%d", i));
-                    } catch (JSONException e) {
-                        dest[j] = MCReader.NO_DATA;
+                        block = blocks.getString(blockKey);
+                        export.add(block);
+                    } catch (JSONException ex) {
+                        // Error. This should never happen.
+                        continue;
                     }
-                    j++;
                 }
+                dest = export.toArray(new String[0]);
                 break;
             case BIN:
                 if (blocks.length() != 20 && blocks.length() != 64 &&
