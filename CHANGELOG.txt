@@ -12,6 +12,7 @@ In development:
  * Exporting dumps and keys is now possible directly from the editors.
  * Comments in key files are now more flexible.
    (This makes MCT compatible with key files from the Proxmark3 project.)
+ * Include comments in exported key files.
  * Some minor bug fixes.
 
 Version 3.2.0:
