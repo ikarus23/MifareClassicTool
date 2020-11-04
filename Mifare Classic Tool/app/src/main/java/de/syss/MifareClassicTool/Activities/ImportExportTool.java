@@ -421,7 +421,9 @@ public class ImportExportTool extends BasicActivity {
      */
     private void readAndConvertExportData(String path) {
         File source = new File(path);
-        String[] content = Common.readFileLineByLine(source, false,this);
+        // Include comments in key files that are exported as .keys/.txt/.dic.
+        boolean includeComments = !mIsDumpFile  && mFileType == FileType.KEYS;
+        String[] content = Common.readFileLineByLine(source, includeComments,this);
         if (content == null) {
             return;
         }
