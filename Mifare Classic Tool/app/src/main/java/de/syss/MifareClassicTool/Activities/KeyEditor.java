@@ -334,6 +334,7 @@ public class KeyEditor extends BasicActivity
         if (Common.isValidKeyFileErrorToast(checkDumpAndUpdateLines(), this)) {
             ArrayList<String> newLines = new ArrayList<>();
             for (String line : mLines) {
+                line = line.trim();
                 if (line.equals("") || line.startsWith("#")) {
                     // Add comments for sure.
                     newLines.add(line);
