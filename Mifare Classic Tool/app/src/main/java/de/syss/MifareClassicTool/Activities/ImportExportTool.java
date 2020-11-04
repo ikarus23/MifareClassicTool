@@ -344,7 +344,7 @@ public class ImportExportTool extends BasicActivity {
                 // Read file.
                 if (mFileType != FileType.BIN) {
                     // Read text file (including comments, if it is a key file).
-                    content = Common.readUriLineByLine(file, this, !mIsDumpFile);
+                    content = Common.readUriLineByLine(file, !mIsDumpFile, this);
                 } else {
                     // Read binary file.
                     byte[] bytes = Common.readUriRaw(file, this);
