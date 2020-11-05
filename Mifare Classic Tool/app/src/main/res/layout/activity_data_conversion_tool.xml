@@ -39,7 +39,7 @@
                 android:id="@+id/textViewDataConversionToolAscii"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minEms="4"
+                android:minEms="5"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
@@ -75,7 +75,7 @@
                 android:id="@+id/textViewDataConversionToolHex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minEms="4"
+                android:minEms="5"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
@@ -111,7 +111,7 @@
                 android:id="@+id/textViewDataConversionToolBin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minEms="4"
+                android:minEms="5"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
@@ -134,6 +134,261 @@
                 android:src="@android:drawable/stat_notify_sync"
                 android:contentDescription="@string/text_convert"
                 android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Byte -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolByte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_byte" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolByte"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolByte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Short -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolShort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_short" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolShort"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolShort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Integer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolInteger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_integer" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolInteger"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolInteger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Long -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_long" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Float -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolFloat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_float" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolFloat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolFloat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Double -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolDouble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_double" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolDouble"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolDouble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Signed/Unsigned -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolSignedness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_signedness" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonDataConversionToolSigned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_signed"
+                    android:checked="true"
+                    android:onClick="onSignednessChanged" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDataConversionToolUnsigned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_unsigned"
+                    android:onClick="onSignednessChanged"/>
+            </RadioGroup>
 
         </LinearLayout>
 

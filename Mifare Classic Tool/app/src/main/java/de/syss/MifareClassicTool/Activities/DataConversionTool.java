@@ -22,6 +22,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import de.syss.MifareClassicTool.Common;
@@ -37,6 +38,13 @@ public class DataConversionTool extends BasicActivity {
     EditText mAscii;
     EditText mHex;
     EditText mBin;
+    EditText mByte;
+    EditText mShort;
+    EditText mInteger;
+    EditText mLong;
+    EditText mFloat;
+    EditText mDouble;
+    boolean mSigned;
 
     /**
      * Initialize the some member variables.
@@ -48,6 +56,18 @@ public class DataConversionTool extends BasicActivity {
         mAscii = findViewById(R.id.editTextDataConversionToolAscii);
         mHex = findViewById(R.id.editTextDataConversionToolHex);
         mBin = findViewById(R.id.editTextDataConversionToolBin);
+        mByte = findViewById(R.id.editTextDataConversionToolByte);
+        mShort = findViewById(R.id.editTextDataConversionToolShort);
+        mInteger = findViewById(R.id.editTextDataConversionToolInteger);
+        mLong = findViewById(R.id.editTextDataConversionToolLong);
+        mFloat = findViewById(R.id.editTextDataConversionToolFloat);
+        mDouble = findViewById(R.id.editTextDataConversionToolDouble);
+    }
+
+    // TODO: doc.
+    public void onSignednessChanged(View view) {
+        RadioButton signed = findViewById(R.id.radioButtonDataConversionToolSigned);
+        mSigned = signed.isChecked();
     }
 
     /**
@@ -72,9 +92,12 @@ public class DataConversionTool extends BasicActivity {
                 break;
             case R.id.imageButtonDataConversionToolBin:
                 String bin = mBin.getText().toString();
-                if (isBin(bin, this)) {
+                if (isBin(bin)) {
                     convertData(Common.bin2Hex(bin));
                 }
+            case R.id.imageButtonDataConversionToolByte:
+                String b = mByte.getText().toString();
+                // TODO.
                 break;
         }
     }
@@ -101,21 +124,22 @@ public class DataConversionTool extends BasicActivity {
         }
         // Bin.
         mBin.setText(Common.hex2Bin(hex));
+        // Byte.
+        // TODO.
     }
 
     /**
      * Check if a string represents binary bytes (0/1, multiple of 8).
      * @param bin The binary string to check.
-     * @param context The Context in which an error Toast will be shown.
      * @return True if string is binary. False otherwise.
      */
-    private boolean isBin(String bin, Context context) {
-        if (bin != null && bin.length() % 8 == 0
-                && bin.matches("[0-1]+")) {
-            return true;
+    private boolean isBin(String bin) {
+        if (bin == null || bin.equals("") || bin.length() % 8 != 0
+                || !bin.matches("[0-1]+")) {
+            Toast.makeText(this, R.string.info_not_bin_data,
+                    Toast.LENGTH_LONG).show();
+            return false;
         }
-        Toast.makeText(context, R.string.info_not_bin_data,
-                Toast.LENGTH_LONG).show();
-        return false;
+        return true;
     }
 }
