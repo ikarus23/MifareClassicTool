@@ -130,7 +130,7 @@ public class DataConversionTool extends BasicActivity {
      */
     public void onOpenGenericConverter(View view) {
         String hex = mHex.getText().toString();
-        if (!Common.isHex(hex, this)) {
+        if (!hex.equals("") && !Common.isHex(hex, this)) {
             return;
         }
         String url = "https://hexconverter.scadacore.com/?HexString=" + hex;
@@ -158,7 +158,7 @@ public class DataConversionTool extends BasicActivity {
      */
     public void onOpenCyberChef(View view) {
         String hex = mHex.getText().toString();
-        if (!Common.isHex(hex, this)) {
+        if (!hex.equals("") && !Common.isHex(hex, this)) {
             return;
         }
         String base64 = Base64.encodeToString(hex.getBytes(), Base64.DEFAULT);
