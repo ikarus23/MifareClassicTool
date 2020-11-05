@@ -19,7 +19,10 @@
 package de.syss.MifareClassicTool.Activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,7 +30,7 @@ import android.widget.Toast;
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
-// TODO (optional): Add more conversion formats like short/int/long/etc.
+
 /**
  * Convert data from formats like ASCII/hex/bin to each other.
  * @author Gerhard Klostermeier
@@ -117,5 +120,53 @@ public class DataConversionTool extends BasicActivity {
         Toast.makeText(context, R.string.info_not_bin_data,
                 Toast.LENGTH_LONG).show();
         return false;
+    }
+
+    /**
+     * Open a generic online type converter with the input from {@link #mHex}.
+     * https://hexconverter.scadacore.com/
+     * @param view The View object that triggered the method
+     * (in this case the generic format converter button).
+     */
+    public void onOpenGenericConverter(View view) {
+        String hex = mHex.getText().toString();
+        if (!Common.isHex(hex, this)) {
+            return;
+        }
+        String url = "https://hexconverter.scadacore.com/?HexString=" + hex;
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
+
+    /**
+     * Open a multi-purpose online format converter.
+     * https://cryptii.com/pipes/integer-encoder
+     * @param view The View object that triggered the method
+     * (in this case the multi-purpose converter button).
+     */
+    public void onOpenMultiPurposeConverter(View view) {
+        String url = "https://cryptii.com/pipes/integer-encoder";
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
+
+    /**
+     * Open the CyberChef website with the input from {@link #mHex}.
+     * https://github.com/gchq/CyberChef/
+     * @param view The View object that triggered the method
+     * (in this case the cyber chef button).
+     */
+    public void onOpenCyberChef(View view) {
+        String hex = mHex.getText().toString();
+        if (!Common.isHex(hex, this)) {
+            return;
+        }
+        String base64 = Base64.encodeToString(hex.getBytes(), Base64.DEFAULT);
+        base64 = base64.trim();
+        base64 = base64.replace("=", "");
+        String url = "https://gchq.github.io/CyberChef/#recipe=From_Hex('Auto')&input="
+                + base64;
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 }
