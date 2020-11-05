@@ -1610,11 +1610,6 @@ public class Common extends Application {
             valid = isValidBcc(uid, byteBcc);
         }
         // Byte0.
-        if (valid && (uidLen == 7 || uidLen == 10)) {
-            // NXP's TagInfo Android app says, double/triple sized UIDs shall
-            // not be 0x00 at the first byte.
-            valid = !byte0.equals("00");
-        }
         if (valid && uidLen == 4) {
             // First byte of single size UID must not be 0x88.
             valid = !byte0.equals("88");
@@ -1627,7 +1622,12 @@ public class Common extends Application {
             // First byte of double/triple sized UID shall not be 0x81-0xFE.
             byte firstByte = hex2ByteArray(byte0)[0];
             valid = (firstByte < 0x81 || firstByte > 0xFE);
-
+        }
+        if (valid && (uidLen == 7 || uidLen == 10)) {
+            // First byte of double/triple sized UIDs shall not be 0x00.
+            // ISO14443-3 says it's defined in 7816-6 and 7816-6:2016 has
+            // still 0x00 as "Reserved for future use by ISO/IEC JTC 1/SC 17".
+            valid = !byte0.equals("00");
         }
         // Byte3.
         if (valid && (uidLen == 7 || uidLen == 10)) {
