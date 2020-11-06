@@ -284,8 +284,8 @@
     <string name="action_import_keys">导入密钥</string>
     <string name="action_export_keys">导出密钥</string>
     <string name="action_backup_all">备份/导出全部内容</string>
-    <string name="action_generic_converter">Generic Type Converter</string>
-    <string name="action_multi_purpose_converter">Multi-Purpose Converter</string>
+    <string name="action_generic_converter">数据类型转换器</string>
+    <string name="action_multi_purpose_converter">多用途转换器</string>
     <string name="action_cyber_chef">Cyber Chef</string>
 
     <!-- Toast messages -->
