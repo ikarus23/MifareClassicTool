@@ -2,7 +2,7 @@ Changelog of MifareClassicTool (MCT):
 
 In development:
  * Permission to read/write external storage (SD card) has been dropped.
-   See: https://www.icaria.de/mct/help-and-info/#storage
+   Check out: https://www.icaria.de/mct/help-and-info/#storage
  * Prevent writing a wrong BCC value.
  * Show a warning before writing a possibly invalid SAK or ATQA value.
  * Prevent writing invalid access condition bits.
@@ -13,6 +13,7 @@ In development:
  * Comments in key files are now more flexible.
    (This makes MCT compatible with key files from the Proxmark3 project.)
  * Include comments in exported key files.
+ * Extended data conversion tool with (smart) links to online converters.
  * Some minor bug fixes.
 
 Version 3.2.0:
