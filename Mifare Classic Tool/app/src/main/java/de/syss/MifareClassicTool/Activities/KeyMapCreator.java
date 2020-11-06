@@ -129,6 +129,7 @@ public class KeyMapCreator extends BasicActivity {
     private static final int DEFAULT_SECTOR_RANGE_TO = 15;
 
     private Button mCreateKeyMap;
+    private Button mCancel;
     private LinearLayout mKeyFilesGroup;
     private TextView mSectorRange;
     private final Handler mHandler = new Handler();
@@ -152,6 +153,7 @@ public class KeyMapCreator extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_key_map);
         mCreateKeyMap = findViewById(R.id.buttonCreateKeyMap);
+        mCancel = findViewById(R.id.buttonCreateKeyMapCancel);
         mSectorRange = findViewById(R.id.textViewCreateKeyMapFromTo);
         mKeyFilesGroup = findViewById(
                 R.id.linearLayoutCreateKeyMapKeyFiles);
@@ -320,6 +322,7 @@ public class KeyMapCreator extends BasicActivity {
     public void onCancelCreateKeyMap(View view) {
         if (mIsCreatingKeyMap) {
             mIsCreatingKeyMap = false;
+            mCancel.setEnabled(false);
         } else {
             finish();
         }
@@ -471,13 +474,20 @@ public class KeyMapCreator extends BasicActivity {
                 mCreateKeyMap.setEnabled(true);
                 reader.close();
                 if (mIsCreatingKeyMap && mProgressStatus != -1) {
+                    // Finished creating the key map.
                     keyMapCreated(reader);
-                } else {
+                } else if (mIsCreatingKeyMap && mProgressStatus == -1 ){
                     // Error during key map creation.
                     Common.setKeyMap(null);
                     Common.setKeyMapRange(-1, -1);
+                    mCancel.setEnabled(true);
                     Toast.makeText(context, R.string.info_key_map_error,
                             Toast.LENGTH_LONG).show();
+                } else {
+                    // Key map creation was canceled by the user.
+                    Common.setKeyMap(null);
+                    Common.setKeyMapRange(-1, -1);
+                    mCancel.setEnabled(true);
                 }
                 mIsCreatingKeyMap = false;
             });
