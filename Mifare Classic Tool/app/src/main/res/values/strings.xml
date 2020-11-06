@@ -639,7 +639,7 @@
         (and possibly the BCC) in block 0 represent SAK and ATQA.
         \n\nIf this option is used, the values will be generated automatically. If not, the values
         coded into \"rest of block 0\" will be used.</string>
-    <string name="dialog_block0_data_warning_title">Block 0 Data</string>
+    <string name="dialog_block0_data_warning_title">Block 0 Data Check</string>
     <string name="dialog_block0_data_warning">You are about to write data to block 0.
         However, it looks like your data might be invalid.
         \n\nOn some 2nd gen tags, values like SAK and ATQA can be controlled by bytes
