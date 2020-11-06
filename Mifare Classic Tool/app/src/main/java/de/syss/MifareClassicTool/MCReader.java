@@ -854,10 +854,9 @@ public class MCReader {
      * will not be interpreted.
      * @param context The context in which the possible "Out of memory"-Toast
      * will be shown.
-     * @return True if the key files are correctly loaded. False
-     * on error (out of memory).
+     * @return Number of keys loaded. -1 if out of memory.
      */
-    public boolean setKeyFile(File[] keyFiles, Context context) {
+    public int setKeyFile(File[] keyFiles, Context context) {
         boolean hasAllZeroKey = false;
         HashSet<byte[]> keys = new HashSet<>();
         for (File file : keyFiles) {
@@ -875,7 +874,7 @@ public class MCReader {
                             // Error. Too many keys (out of memory).
                             Toast.makeText(context, R.string.info_to_many_keys,
                                     Toast.LENGTH_LONG).show();
-                            return false;
+                            return -1;
                         }
                     }
                 }
@@ -888,13 +887,14 @@ public class MCReader {
                 // NOTE: The all-F key has to be tested always first if there
                 // is a all-0 key in the key file, because of a bug in
                 // some tags and/or devices.
-                // https://github.com/ikarus23/MifareClassicTool/iss000000000000ues/66
+                // https://github.com/ikarus23/MifareClassicTool/issues/66
                 byte[] fKey = Common.hex2ByteArray("FFFFFFFFFFFF");
                 mKeysWithOrder.remove(fKey);
                 mKeysWithOrder.add(0, fKey);
             }
+            return keys.size();
         }
-        return true;
+        return 0;
     }
 
     /**

@@ -283,8 +283,6 @@
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nueva etiqueta encontrada</string>
     <string name="info_no_tag_found">Error: no hay una etiqueta MIFARE Classic</string>
-    <string name="info_wait_key_map">Creando mapa de claves&#8230;
-        Espere por favor&#8230;</string>
     <string name="info_tag_removed_while_reading">Error: Etiqueta retirada durante
         la lectura</string>
     <string name="info_no_vb_in_dump">No hay value blocks en este dumpeo</string>

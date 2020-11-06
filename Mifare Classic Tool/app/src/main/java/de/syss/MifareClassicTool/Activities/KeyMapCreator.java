@@ -389,7 +389,8 @@ public class KeyMapCreator extends BasicActivity {
 
                 // Set key files.
                 File[] keys = keyFiles.toArray(new File[0]);
-                if (!reader.setKeyFile(keys, this)) {
+                int numberOfLoadedKeys = reader.setKeyFile(keys, this);
+                if (numberOfLoadedKeys < 1) {
                     // Error.
                     reader.close();
                     return;
@@ -425,8 +426,9 @@ public class KeyMapCreator extends BasicActivity {
                 mProgressBar.setMax((mLastSector-mFirstSector)+1);
                 mCreateKeyMap.setEnabled(false);
                 mIsCreatingKeyMap = true;
-                Toast.makeText(this, R.string.info_wait_key_map,
-                        Toast.LENGTH_SHORT).show();
+                String message = numberOfLoadedKeys + " " + getString(
+                        R.string.info_keys_loaded_please_wait);
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 // Read as much as possible with given key file.
                 createKeyMap(reader, this);
             }
