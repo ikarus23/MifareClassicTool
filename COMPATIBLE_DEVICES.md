@@ -15,6 +15,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Google Pixel
 * Google Pixel 2
 * Google Pixel 3
+* Google Pixel 3a
 * Honor 9
 * Honor 10
 * HTC One
