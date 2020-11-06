@@ -3,9 +3,12 @@ MIFARE Classic Tool (MCT)
 
 An Android NFC app for reading, writing, analyzing, etc. MIFARE Classic RFID tags.
 
-* [MIFARE Classic Tool on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool)
+
+<a href="https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool"><img src="pics/assets/google-play-badge.png" alt="Get it on Play Store" height="80"></a>
+<a href="https://f-droid.org/packages/de.syss.MifareClassicTool/"><img src="pics/assets/fdroid-badge.png" alt="Get it on F-Droid" height="80"></a>
+<a href="https://www.icaria.de/mct/releases/"><img src="pics/assets/direct-apk-download-badge.png" alt="Get the APK" height="80"></a>
+
 * [MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)
-* [MIFARE Classic Tool on F-Droid](https://f-droid.org/packages/de.syss.MifareClassicTool/)
 * [MIFARE Classic Tool on Huawei's AppGallery](https://appgallery1.huawei.com/#/app/C101783071)
 * [Screenshots](http://www.icaria.de/mct/screenshots/)
   (outdated, check Google Play)
