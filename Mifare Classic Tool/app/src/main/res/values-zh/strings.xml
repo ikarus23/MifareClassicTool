@@ -291,6 +291,7 @@
     <!-- Toast messages -->
     <string name="info_new_tag_found">发现新标签</string>
     <string name="info_no_tag_found">错误:未发现MIFARE Classic标签</string>
+    <string name="info_keys_loaded_please_wait">密钥已加载。创建密钥映射中…请稍等…</string>
     <string name="info_tag_removed_while_reading">错误:读取过程中失去连接</string>
     <string name="info_no_vb_in_dump">这个转储中没有值块</string>
     <string name="info_valid_dump_not_hex">错误:一些块包含无效数据(非十六进制)</string>
