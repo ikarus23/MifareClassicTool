@@ -3,7 +3,7 @@ Incompatible Devices
 
 This is a list of Android devices which are incompatible to MIFARE Classic Tool.
 This app **will not work** on the following devices because their hardware
-(NFC-controller) does not support MIFARE Classic
+(NFC-controller) or their drivers/firmware do not support MIFARE Classic
 ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
 
 
