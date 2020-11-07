@@ -1,0 +1,41 @@
+This is a low-level tool for reading, writing and analyzing MIFARE Classic RFID tags.
+It is designed for users who have at least basic familiarity with the MIFARE Classic technology.
+It provides several features to interact with (and only with) MIFARE Classic RFID-Tags.
+
+<ul>
+  <li>Read MIFARE Classic tags</li>
+  <li>Save, edit and share the tag data you read</li>
+  <li>Write to MIFARE Classic tags (block-wise)</li>
+  <li>Clone MIFARE Classic tags<br />
+    (Write dump of a tag to another tag; write 'dump-wise')</li>
+  <li>Key management based on dictionary-attack<br />
+    (Write the keys you know in a file (dictionary).<br />
+    MCT will try to authenticate with these
+    keys against all sectors<br />and read as much as possible.)
+  </li>
+  <li>Format a tag back to the factory/delivery state</li>
+  <li>Write the manufacturer block of special MIFARE Classic tags</li>
+  <li>Use external NFC readers like ACR 122U</li>
+  <li>Create, edit, save and share key files (dictionaries)</li>
+  <li>Decode &amp; Encode MIFARE Classic Value Blocks</li>
+  <li>Decode &amp; Encode MIFARE Classic Access Conditions</li>
+  <li>Display generic tag information</li>
+  <li>Display the tag data as highlighted hex</li>
+  <li>Display the tag data as 7-Bit US-ASCII</li>
+  <li>Display the MIFARE Classic Access Conditions as a table</li>
+  <li>Display MIFARE Classic Value Blocks as integer</li>
+  <li>Calcualate the BCC</li>
+  <li>Quick UID clone feature</li>
+  <li>Import/export/convert files</li>
+  <li>In-App (offline) help and information</li>
+  <li>It's open source ;)</li>
+</ul>
+
+More information can be found at the
+<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md">README</a>.
+
+It should work on most NFC-enabled devices but there are exceptions. Have a look at the
+<a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">list
+of devices which are known to be incompatible to MIFARE Classic</a>.
+
+MIFARE® is a registered trademark of NXP Semiconductors.

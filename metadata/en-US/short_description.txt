@@ -1,0 +1,1 @@
+An NFC app for reading, writing, analyzing, etc. MIFARE Classic RFID tags.

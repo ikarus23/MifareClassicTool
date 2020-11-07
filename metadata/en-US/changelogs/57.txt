@@ -1,0 +1,5 @@
+ * Added backup (export everything) option.
+ * Export location is now choosable.
+ * Updated Chinese translation.
+ * Updated Spanish translation.
+ * Some minor bug fixes.
