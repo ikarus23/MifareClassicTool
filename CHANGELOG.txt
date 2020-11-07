@@ -14,6 +14,8 @@ In development:
    (This makes MCT compatible with key files from the Proxmark3 project.)
  * Include comments in exported key files.
  * Extended data conversion tool with (smart) links to online converters.
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
  * Updated Chinese translation. Thanks to "Nkh0472".
  * Some minor bug fixes.
 
