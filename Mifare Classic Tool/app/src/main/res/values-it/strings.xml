@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MIFARE Classic Tool</string>
-    <string name="app_version">Versione app</string>
+    <string name="app_version">Versione App</string>
     <string name="title_activity_main">MIFARE Classic Tool</string>
     <string name="title_activity_read_tag">Leggi dal tag</string>
     <string name="title_activity_access_conditions">Condizioni di accesso</string>
@@ -101,13 +101,15 @@
     <string name="text_starting_at_0">(Partendo da 0)</string>
     <string name="text_open_key_file_title">Apri o crea un file di chiavi</string>
     <string name="text_choose_dump_to_write">Scegli il dump da scrivere:</string>
-    <string name="text_tag_type_guess">\Il campo "Produttore e tipo di tag\" potrebbe essere\nsbagliato. Guarda la sezione \"Informazioni\" per maggiori informazioni.</string>
+    <string name="text_tag_type_guess">Il campo \"Produttore e tipo di tag\" potrebbe essere sbagliato.
+        Guarda la sezione \"Informazioni\" per maggiori informazioni.</string>
     <string name="text_addr">Indirizzo</string>
     <string name="text_ac_label">Condizioni di accesso</string>
     <string name="text_dump_1">Dump 1 (A)</string>
     <string name="text_dump_2">Dump 2 (B)</string>
     <string name="text_option_info">Informazioni sulle opzioni</string>
-    <string name="text_write_dump_info">Scrivi un dump (or solo alcuni settori di esso) su\nun tag. I blocchi che contengono dati sconosciuti (---) verranno saltati!</string>
+    <string name="text_write_dump_info">Scrivi un dump (or solo alcuni settori di esso) su
+        un tag. I blocchi che contengono dati sconosciuti (---) verranno saltati!</string>
     <string name="dialog_date_of_manuf_title">Data di fabbricazione</string>
     <string name="text_factory_format_info">Prova a portare il tag allo stato di fabbrica.</string>
     <string name="text_incr_decr_value_block_info">Incrementa/Decrementa e poi trasferisci un Value Block. (Se non sai cos\'è, cerca nella sezione \"Informazioni\")</string>
@@ -147,7 +149,9 @@
     <string name="text_invalid_ac">Le Condizioni di Accesso non sono valide</string>
     <string name="text_more_converter">Più convertitori (online)</string>
     <string name="text_uid_to_clone">UID da clonare</string>
-    <string name="text_clone_uid_info">Questo strumento può clonare l\'UID di un tag su un\n\"magic tag\" (2 gen, compatibile con Android, scrivibile direttamente,\nblock 0 riscrivibile). Premi il bottone info per ottenere maggiori informazioni.</string>
+    <string name="text_clone_uid_info">Questo strumento può clonare l\'UID di un tag su un
+        \"magic tag\" (2 gen, compatibile con Android, scrittura diretta,
+        block 0 riscrivibile). Premi il bottone info per ottenere maggiori informazioni.</string>
     <string name="text_use_uid_of_scanned_tag">Usa l\'UID del tag scansionato</string>
     <string name="text_reset_clone_process">Ripristina il processo di clonazione</string>
     <string name="text_clone_error">Errore: Sei sicuro di avere un magic tag (2 gen)?</string>
@@ -179,13 +183,13 @@
     <string name="text_missing_files_update">Hai perso i file dopo l\'aggiornamento alla versione 4.0.0 o superiore? Fai riferimento a \"1.2 Data storage\" nella sezione\"Informazioni\".</string>
     <string name="action_select_all">Seleziona tutto</string>
     <string name="hint_hex_00">00</string>
-    <string name="hint_int_423">es.: 423</string>
-    <string name="hint_custom_sector_count">es.: 16 per 1K</string>
+    <string name="hint_int_423">es: 423</string>
+    <string name="hint_custom_sector_count">es: 16 per 1K</string>
     <string name="hint_custom_retry_authentication_count">Numero di tentativi</string>
     <string name="hint_hex_3_byte">Esadecimale, 3 byte</string>
     <string name="hint_hex_4_byte">Esadecimale, 4 byte</string>
     <string name="hint_hex_4_7_10_byte">Esadecimale, 4/7/10 byte</string>
-    <string name="hint_hex_16_byte">Esadecimale, 16 byte (es. 0A4F&#8230;)</string>
+    <string name="hint_hex_16_byte">Esadecimale, 16 byte (es 0A4F&#8230;)</string>
     <string name="action_open_key_file">Apri file con le chiavi</string>
     <string name="action_select_none">Deseleziona tutto</string>
     <string name="action_cancel_all">Annulla la scrittura</string>
@@ -266,7 +270,26 @@
     <string name="info_keys_loaded_please_wait">Chiavi caricate. Sto facendo la mappatura&#8230;</string>
     <string name="info_tag_removed_while_reading">Errore: Tag rimosso durante la lettura</string>
     <string name="dialog_about_mct_title">Informazioni su MCT</string>
-    <string name="dialog_about_mct">"\n<![CDATA[\n<b>MIFARE Classic Tool (MCT)<br /><br />\n&#8226; Versione: %1$s<br />\n&#8226; Licenza:\n<a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />\n&#8226; Pagina del progetto:\n<a href="https://github.com/ikarus23/MifareClassicTool">MCT\nsu github</a><br />\n&#8226; Recensisci questa app:\n<a href="market://details?id=de.syss.MifareClassicTool">su\nGoogle Play</a><br />         &#8226; Dona:\n<a href="market://details?id=de.syss.MifareClassicToolDonate">\nGoogle Play</a></b><br /><br />\nInformazioni utili:<br />\n&#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Segnalazioni\nBug</a><br />\n&#8226; <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">Changelog\n/ Version History</a><br />\n&#8226; <a href="http://publications.icaria.de/mct/">Documentazione,\nAPK, etc.</a><br />\n&#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Thread\nat the Proxmark forum</a><br /><br />\nMIFARE&reg; è un marchio registrato di NXP Semiconductors.\n]]>\n"</string>
+    <string name="dialog_about_mct">
+        <![CDATA[
+        <b>MIFARE Classic Tool (MCT)<br /><br />
+        &#8226; Versione: %1$s<br />
+        &#8226; Licenza:
+        <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />
+        &#8226; Pagina del progetto:
+        <a href="https://github.com/ikarus23/MifareClassicTool">MCT su github</a><br />
+        &#8226; Recensisci questa app:
+        <a href="market://details?id=de.syss.MifareClassicTool">su Google Play</a><br />
+        &#8226; Dona:
+        <a href="market://details?id=de.syss.MifareClassicToolDonate">Google Play</a></b><br /><br />
+        Informazioni utili:<br />
+        &#8226; <a href="https://github.com/ikarus23/MifareClassicTool/issues">Segnalazioni Bug:</a><br />
+        &#8226; <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">Changelog / Version History</a><br />
+        &#8226; <a href="http://publications.icaria.de/mct/">Documentazione, APK, etc.</a><br />
+        &#8226; <a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Discussione sul forum Proxmark</a><br /><br />
+        MIFARE&reg; è un marchio registrato di NXP Semiconductors.
+        ]]>
+        </string>
     <string name="dialog_write_sectors_title">Scrivi i settori</string>
     <string name="dialog_new_file_title">Nuovo file</string>
     <string name="dialog_sector_trailer_warning_title">Scrivendo il blocco finale del settore</string>
@@ -341,7 +364,7 @@
     <string name="info_not_bin_data">Errore: I dati devono essere in binario (0/1, multipli di 8)</string>
     <string name="info_not_16_byte">Errore: I dati devono essere lunghi esattamente 16 byte (32 caratteri)</string>
     <string name="info_block_not_in_sector">Errore: Il settore non contiene un blocco col numero dato.</string>
-    <string name="info_error_writing_block">"Errore: il blocco è di sola lettura o non scrivibile con le chiavi presenti nel file delle chiavi "</string>
+    <string name="info_error_writing_block">Errore: il blocco è di sola lettura o non scrivibile con le chiavi presenti nel file delle chiavi</string>
     <string name="info_error_writing_value_block">Errore: blocco senza valore, autorizzazioni insufficienti o valore errato</string>
     <string name="info_none_key_valid_for_reading">Errore: Nessuna delle chiavi è valida per la lettura</string>
     <string name="info_not_supported_now">Questa funzione non è supportata in questa versione (forse in futuro...).</string>
@@ -370,7 +393,15 @@
     <string name="dialog_sector_trailer_warning">Stai per scrivere nella parte finale del settore. Se la Condizione di Accesso è impostata in sola lettura, i dati scritti in quel settore non possono essere più modificati. La scrittura di dati errati alla fine del settore può causare danni irreparabili al tag.</string>
     <string name="dialog_save_conflict_keyfile">Questo file esiste già. Cosa vuoi fare?</string>
     <string name="dialog_save_conflict_dump">Questo file esiste già, cosa vuoi fare? <b> N.B.: un file contenente più file di dump (creati con \"Aggiungi\") non può essere visualizzato, modificato o scritto. </b></string>
-    <string name="dialog_donate">"<b>MIFARE Classic Tool has been updated!</b>\nPuoi trovare il\n<a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">changelog completo</a>         online.\nSe le nuove funzionalità, i fix, o l'app in generale ti ha aiutato,\nprendi in considerazione la possibilità di supportare gli sviluppatori. Offri loro una birra! ;)\n\\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Ottieni\nla versione donatore</a>\n\\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT\nsu github / link donazioni</a>"</string>
+    <string name="dialog_donate"><b>MIFARE Classic Tool è stato aggiornato!</b>
+        \nPuoi trovare il
+        <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">changelog completo</a>
+        online.
+        \n\nSe le nuove funzionalità, i fix, o l'app in generale ti hanno aiutato,
+        prendi in considerazione la possibilità di supportare gli sviluppatori. Offri loro una birra! ;)
+        \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Ottieni la versione donatore</a>
+        \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT su github / link donazioni</a>
+        </string>
     <string name="dialog_save_before_quitting"><b> Ci sono cambiamenti non salvati!</b> Li vuoi salvare?</string>
     <string name="dialog_no_nfc_support_title">Il tuo dispositivo non supporta NFC</string>
     <string name="dialog_start_external_nfc_title">Servizio NFC esterno</string>
@@ -379,15 +410,47 @@
     <string name="dialog_no_nfc_support">Se il tuo dispositivo supporta USB-OTG, puoi collegare un lettore NFC esterno. MIFARE Classic Tool deve essere usato insieme all\'applicazione \"External NFC\", che supporta una molti lettori NFC USB, ma potrebbero esserci alcune limitazioni.</string>
     <string name="dialog_info_external_nfc">Il tuo dispositivo nonha un lettore NFC o non supporta i tag MIFARE Classic, ma è stata installata l\'applicazione \"External NFC\". Assicurati che essa sia in esecuzione, e poi usa  MIFARE Classic Tool per gestire il tag.</string>
     <string name="dialog_date_of_manuf_error"><b> La data di produzione contiene dati non validi. </b> Gli ultimi 2 byte del blocco fornitore (blocco 0) devono essere in formato Binary Coded Decimal (solo numeri). Il primo byte (settimana di produzione) deve essere compreso tra 1 e 53 (ad esempio, 28). Il secondo byte (anno di produzione) deve essere compreso tra 0 e 99 (ad esempio, 12, che significa 2012).</string>
-    <string name="dialog_date_of_manuf"><![CDATA[I tag sono stati prodotti durante il periodo da <b>%1$s </b> a <b>%2$s </b> <br /> <br /> (Le informazioni potrebbero essere errate. Consulta "Informazioni "per saperne di più.)]]></string>
+    <string name="dialog_date_of_manuf">
+        <![CDATA[
+        I tag sono stati prodotti durante il periodo compreso fra <b>%1$s</b> e <b>%2$s</b>
+        <br /> <br />
+        (Queste informazioni potrebbero essere sbagliate. Consulta la sezione \"Informazioni\"
+        per saperne di più.)
+        ]]>
+        </string>
     <string name="dialog_custom_sector_count">Imposta un numero di settori personalizzato, ignorando quello rivelato da Android. Utile per tag con 2KB di memoria.</string>
     <string name="dialog_write_sectors">Seleziona i settori che vuoi scrivere:</string>
     <string name="dialog_static_ac"><b> Sostituisci tutte le Condizioni di Accesso nel dump con quelle selezionate. </b> Ciò è utile se il file di dump conteneva Condizioni di Accesso che non possono poi essere cambiate. Se il lettore non li controlla prima di scriverli, potresti rendere i tag riutilizzabili. <b> Attenzione: dati errati possono causare danni irreparabili al tag.</b></string>
     <string name="dialog_retry_authentication">Riprova l\'autenticazione (a un settore/blocco) X volte se fallisce: alcuni tag col blocco 0 riscrivibile e UID lungo 7 byte lo richiedono. Ciò potrebbe aiutare a far funzionare meglio alcuni dispositivi, come il Google Nexus 5X o il Huawei P10. Nella maggior parte dei casi dovresti lasciarla disabilitata poichè rallenta la lettura, la scrittura e la mappatura.</string>
-    <string name="dialog_auto_reconnect">Durante il processo di mappatura delle chiavi, se la connessione viene persa (problema con l\'antenna, timeout, ecc.), l\'app proverà a riconnettersi ogni 500ms,  fino a quando non ci riesce. \\n <b> Può essere utile se si verificano problemi durante il processo di mappatura delle chiavi. Tuttavia, ciò può anche causare un comportamento anomalo di MCT. </b> Per alcuni tag speciali, come smartMX, questo può essere utile.</string>
-    <string name="dialog_block0_writing">Il primo blocco del settore 0 del tag MIFARE Classic non è scrivibile. Assicurati di usare una magic card di seconda generazione che supporti la scrittura blocco 0. Nel blocco 0 di alcuni tag, il valore dopo l\'UID indica BCC, SAK e ATQA. Assicurati che i valori siano corretti. Scrivere dati errati nel blocco 0 potrebbe rompere il tag. <b> Vedere la sezione \"Informazioni\" - \"Scrivi tag\" per ulteriori informazioni. </b></string>
-    <string name="dialog_no_mfc_support_device"><![CDATA[Il tuo dispositivo (a causa dell'hardware) non supporta MIFARE Classic! Possono essere visualizzati solo l'UID e alcune informazioni generali. Non è possibile eseguire ulteriori operazioni di I/O. <br /> <br /> Puoi vedere una lista dei dispositivi non supportati su <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">github</a>, se il tuo dispositivo non è nell'elenco, avvisa lo sviluppatore tramite <a href="mailto:fooblubb@gmail.com">email</a> <br /> <br /> Se il tuo dispositivo supporta USB-OTG, puoi collegare un lettore di schede NFC esterno al tuo dispositivo Android. MIFARE Classic Tool deve essere utilizzato insieme all'applicazione <i>External NFC</i>, che supporta molti lettori NFC basati su USB, ma potrebbero esserci alcune restrizioni. ]]></string>
-    <string name="dialog_no_mfc_support_tag"><![CDATA[Questo tag non è un tag MIFARE Classic! Questa app è disponibile solo per quest tipo di tag! <br /> <br /> <b> Prova a leggere un altro tag.</b> <br /> <br /> <small> (N.B.: in rari casi, questo messaggio potrebbe essere dovuto a più tag posizionati sul lettore o a un particolare valore di ATQA e SAK.) </small >]]></string>
+    <string name="dialog_auto_reconnect">Se la connessione viene persa (un problema con l\'antenna, timeout, ecc.) durante la mappatura delle chiavi, l\'app proverà a riconnettersi ogni 500ms, fino a quando non ci riesce.
+        \n\n<b> Questo può essere utile se si verificano problemi durante la mappatura delle chiavi, ma può causare un comportamento anomalo di MCT.</b>
+        \n\nPer problemi con alcuni tag speciali, come lo smartMX, questa opzione può aiutare a risolverli.</string>
+    <string name="dialog_block0_writing">Il primo blocco del settore 0 del tag MIFARE Classic non è scrivibile.
+        \n\nAssicurati di usare una magic card di seconda generazione che supporti la scrittura blocco 0.
+        \n\nNel blocco 0 di alcuni tag, il valore dopo l\'UID indica BCC, SAK e ATQA.
+        Assicurati che i valori siano corretti. Scrivere dati errati nel blocco 0 potrebbe rompere il tag.
+        
+        \n\n<b> Vedere la sezione \"Informazioni\" - \"Scrivi tag\"
+        per maggiori informazioni.</b></string>
+    <string name="dialog_no_mfc_support_device">
+        <![CDATA[
+        Il tuo dispositivo non supporta MIFARE Classic (a causa dell'hardware)!
+        È possibile vedere solo l'UID e poche altre informazioni generiche. Non è possibile eseguire ulteriori operazioni di I/O.
+        <br /><br /> Puoi vedere una lista dei dispositivi non supportati su <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">github</a>.
+        Se il tuo dispositivo non è nell'elenco, avvisa lo sviluppatore tramite <a href="mailto:fooblubb@gmail.com">email</a>.
+        <br /><br /> Se il tuo dispositivo supporta USB-OTG, puoi collegare un lettore di schede NFC esterno al tuo dispositivo Android.
+        MIFARE Classic Tool deve essere utilizzato insieme all'applicazione <i>External NFC</i>, che supporta molti lettori NFC basati su USB, ma potrebbero esserci alcune restrizioni.
+        ]]>
+        </string>
+    <string name="dialog_no_mfc_support_tag">
+        <![CDATA[
+        Questo tag non è un tag MIFARE Classic!
+        Questa app supporta solo tipo di tag!
+        <br /><br /><b>Prova a leggere un altro tag.</b>
+        <br /><br /><small> (N.B.: in rari casi, questo errore potrebbe essere un falso positivo
+            dovuto a più tag posizionati sul lettore o a un particolare valore di ATQA e SAK.)</small >
+        ]]>
+        </string>
     <string name="info_ac_not_hex">Errore: Le condizioni di accesso non sono in esadecimale (0-9, A-F)</string>
     <string name="info_ac_not_3_byte">Errore: Le condizioni di accesso devono essere lunghe 3 byte (6 caratteri)</string>
     <string name="info_file_to_big">Errore: Il file è troppo grande (non c\'è abbastanza memoria)</string>
