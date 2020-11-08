@@ -74,8 +74,10 @@
     <string name="text_invalid_ac_or_sector_dead">Condizioni di accesso non valide o settore morto :(</string>
     <string name="text_keys_read_only">Le chiavi (A e B) sono di sola lettura</string>
     <string name="text_ac_read_only">Le condizioni di accesso sono di sola lettura</string>
-    <string name="text_write_key_b_not_known">Chiave col permesso di scrivere (B)         sconosciuta</string>
-    <string name="text_write_key_a_not_known">Chiave col permesso di scrivere (A)         sconosciuta</string>
+    <string name="text_write_key_b_not_known">Chiave col permesso di scrivere (B)
+        sconosciuta</string>
+    <string name="text_write_key_a_not_known">Chiave col permesso di scrivere (A)
+        sconosciuta</string>
     <string name="text_key_map_progress">Progresso nella mappatura delle chiavi:</string>
     <string name="title_activity_data_conversion_tool">Strumento per la Conversione dei Dati</string>
     <string name="text_ac_incr">Incr.:</string>
