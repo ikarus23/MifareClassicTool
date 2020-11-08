@@ -81,7 +81,7 @@
     <string name="text_key_map_progress">Progresso nella mappatura delle chiavi:</string>
     <string name="title_activity_data_conversion_tool">Strumento per la Conversione dei Dati</string>
     <string name="text_ac_incr">Incr.:</string>
-    <string name="text_identical_data">-----------Identico------------</string>
+    <string name="text_identical_data">------------Identico------------</string>
     <string name="text_invalid_data">--Dati non validi--</string>
     <string name="text_a">A:</string>
     <string name="text_b">B:</string>
