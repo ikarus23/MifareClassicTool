@@ -16,6 +16,7 @@ In development:
  * Extended data conversion tool with (smart) links to online converters.
  * Added more well known keys to the extended key file.
    (Remove the old and restart MCT to get the new key file.)
+ * Added Italian translation. Thanks to Erik Pellizzon.
  * Updated Chinese translation. Thanks to "Nkh0472".
  * Some minor bug fixes.
 
