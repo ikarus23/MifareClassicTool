@@ -307,7 +307,7 @@
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nuovo tag trovato</string>
     <string name="info_no_tag_found">Errore: tag MIFARE Classic non trovato</string>
-    <string name="info_keys_loaded_please_wait">Chiavi caricate. Sto facendo l'associazione&#8230;</string>
+    <string name="info_keys_loaded_please_wait">Chiavi caricate. Sto facendo l\'associazione&#8230;</string>
     <string name="info_tag_removed_while_reading">Errore: Tag rimosso durante la lettura</string>
     <string name="info_no_vb_in_dump">Non ci sono value blocks in questo dump</string>
     <string name="info_valid_dump_not_hex">Errore: Alcuni blocchi contengono
@@ -398,13 +398,13 @@
     <string name="dialog_no_mfc_support_device_title">Il lettore NFC non supporta i tag MIFARE Classic</string>
     <string name="dialog_no_mfc_support_device">
         <![CDATA[
-        Il tuo dispositivo non supporta i tag MIFARE Classic (colpa dell'hardware)!
-        È possibile vedere solo l'UID e poche altre informazioni generiche.
+        Il tuo dispositivo non supporta i tag MIFARE Classic (colpa dell\'hardware)!
+        È possibile vedere solo l\'UID e poche altre informazioni generiche.
         Non è possibile eseguire altre operazioni di I/O.
         <br /><br />Puoi vedere una lista dei dispositivi non supportati su <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">github</a>.
-        Se il tuo dispositivo non è nell'elenco, avvisa lo sviluppatore tramite <a href="mailto:fooblubb@gmail.com">email</a>.
+        Se il tuo dispositivo non è nell\'elenco, avvisa lo sviluppatore tramite <a href="mailto:fooblubb@gmail.com">email</a>.
         <br /><br />Se il tuo dispositivo supporta USB-OTG, puoi collegare un lettore di schede NFC esterno al tuo dispositivo Android.
-        MIFARE Classic Tool deve essere utilizzato insieme all'applicazione <i>External NFC</i>, che supporta molti lettori NFC basati su USB, ma 
+        MIFARE Classic Tool deve essere utilizzato insieme all\'applicazione <i>External NFC</i>, che supporta molti lettori NFC basati su USB, ma
         potrebbero esserci alcune restrizioni.
         ]]>
         </string>
@@ -412,7 +412,7 @@
     <string name="dialog_no_mfc_support_tag">
         <![CDATA[
         Questo tag non è un tag MIFARE Classic!
-        Quest'app supporta solo questo tipo di tag NFC!
+        Quest\'app supporta solo questo tipo di tag NFC!
         <br /><br /><b>Prova a leggere un altro tag.</b>
         <br /><br /><small>(N.B.: In alcuni casi, questo errore potrebbe essere un falso positivo
             dovuto a più tag posizionati sul lettore o a un particolare valore di ATQA e SAK.)</small >
@@ -528,7 +528,7 @@
         \nPuoi trovare il
         <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">changelog completo</a>
         online.
-        \n\nSe le nuove funzionalità, i fix, o l'app in generale ti hanno aiutato,
+        \n\nSe le nuove funzionalità, i fix, o l\'app in generale ti hanno aiutato,
         prendi in considerazione la possibilità di aiutare lo sviluppatore. Offrigli una birra! ;)
         \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Ottieni la versione donatore</a>
         \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
