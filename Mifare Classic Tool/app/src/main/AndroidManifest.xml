@@ -112,6 +112,12 @@
             android:label="@string/title_activity_write_tag" >
         </activity>
         <activity
+            android:name="de.syss.MifareClassicTool.Activities.WriteTagFragmentActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:icon="@drawable/write_tag">
+        </activity>
+        <activity
             android:name="de.syss.MifareClassicTool.Activities.ReadTag"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/read_tag"

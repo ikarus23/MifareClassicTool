@@ -64,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/write_tag"
-                    android:onClick="onShowWriteTag"
+                    android:onClick="onShowWriteTagFragmentActivity"
                     android:text="@string/action_write_tag" />
 
             </LinearLayout>

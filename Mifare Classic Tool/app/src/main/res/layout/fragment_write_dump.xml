@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.syss.MifareClassicTool.Fragments.WriteDumpFragment"
+    android:paddingTop="15dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:background="@color/background_material_dark">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutWriteTagWriteBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:tag="write_block_layout">
+
+        <TextView
+            android:id="@+id/textViewWriteTagDumpInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_write_dump_info"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:theme="@style/Theme.AppCompat" />
+
+        <Button
+            android:id="@+id/buttonWriteTagDump"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewWriteTagDumpInfo"
+            android:theme="@style/Theme.AppCompat"
+            android:text="@string/action_write_full_dump" />
+
+        <CheckBox
+            android:id="@+id/checkBoxWriteTagDumpOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonWriteTagDump"
+            android:text="@string/action_show_options" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutWriteTagDumpOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkBoxWriteTagDumpOptions"
+            android:orientation="vertical"
+            android:paddingLeft="35dp"
+            android:visibility="gone" >
+
+            <RelativeLayout
+                android:id="@+id/layoutWriteTagDumpStaticAC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxWriteTagDumpStaticAC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/imageButtonWriteTagDumpStaticACInfo"
+                    android:text="@string/action_static_ac" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagDumpStaticAC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignRight="@+id/checkBoxWriteTagDumpStaticAC"
+                    android:layout_below="@id/checkBoxWriteTagDumpStaticAC"
+                    android:ems="8"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:theme="@style/Theme.AppCompat"
+                    android:maxLength="6"
+                    android:minEms="3"
+                    android:text="@string/text_static_ac_default" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonWriteTagDumpStaticACInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:theme="@style/Theme.AppCompat"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/layoutWriteTagDumpWriteManuf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxWriteTagDumpWriteManuf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/imageButtonWriteTagDumpWriteManufInfo"
+                    android:text="@string/action_write_mfid" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonWriteTagDumpWriteManufInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:theme="@style/Theme.AppCompat"
+                    android:src="@android:drawable/ic_dialog_info" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

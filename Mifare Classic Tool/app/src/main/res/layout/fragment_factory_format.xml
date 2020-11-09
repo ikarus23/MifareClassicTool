@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--
+    /*
+     * This program is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU General Public License as published by
+     * the Free Software Foundation, either version 3 of the License, or
+     * (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     *
+     * You should have received a copy of the GNU General Public License
+     * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
+    -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.syss.MifareClassicTool.Fragments.FactoryFormatFragment"
+    android:paddingTop="15dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:background="@color/background_material_dark">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutFactoryFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:tag="write_block_layout">
+
+        <TextView
+            android:id="@+id/textViewWriteTatFactoryFormatInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/text_factory_format_info"
+            android:theme="@style/Theme.AppCompat"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/buttonWriteTagFactoryFormat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.AppCompat"
+            android:layout_below="@+id/textViewWriteTatFactoryFormatInfo"
+            android:text="@string/action_factory_format" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
