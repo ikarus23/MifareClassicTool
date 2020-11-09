@@ -1,6 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
+ *
+
+Version 4.0.0:
  * Permission to read/write external storage (SD card) has been dropped.
    Check out: https://www.icaria.de/mct/help-and-info/#storage
  * Prevent writing a wrong BCC value.

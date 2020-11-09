@@ -1,0 +1,18 @@
+ * Permission to read/write external storage (SD card) has been dropped.
+   Check out: https://www.icaria.de/mct/help-and-info/#storage
+ * Prevent writing a wrong BCC value.
+ * Show a warning before writing a possibly invalid SAK or ATQA value.
+ * Prevent writing invalid access condition bits.
+ * Show a warning before writing irreversible access condition bits.
+ * Clone UID tool has now an option to automatically calculate
+   the SAK and ATQA values.
+ * Exporting dumps and keys is now possible directly from the editors.
+ * Comments in key files are now more flexible.
+   (This makes MCT compatible with key files from the Proxmark3 project.)
+ * Include comments in exported key files.
+ * Extended data conversion tool with (smart) links to online converters.
+ * Added more well known keys to the extended key file.
+   (Remove the old and restart MCT to get the new key file.)
+ * Added Italian translation. Thanks to Erik Pellizzon.
+ * Updated Chinese translation. Thanks to "Nkh0472".
+ * Some minor bug fixes.
