@@ -91,9 +91,9 @@ public class CloneUidTool extends BasicActivity {
 
         // If a tag was scanned before, fill the UID.
         if (Common.getTag() != null) {
-            mUid.setText(Common.byte2Hex(Common.getUID()));
+            mUid.setText(Common.bytes2Hex(Common.getUID()));
             appendToLog(getString(R.string.text_use_uid_of_scanned_tag)
-                + " (" + Common.byte2Hex(Common.getUID()) + ")");
+                + " (" + Common.bytes2Hex(Common.getUID()) + ")");
         }
     }
 
@@ -112,14 +112,14 @@ public class CloneUidTool extends BasicActivity {
         }
         // Was the new intent a new tag?
         if (typeCheck != -4) {
-            String uid = Common.byte2Hex(Common.getUID());
+            String uid = Common.bytes2Hex(Common.getUID());
             switch (mStatus) {
                 case INIT:
                     // Original tag scanned.
                     mUid.setText(uid);
                     appendToLog(getString(
                             R.string.text_use_uid_of_scanned_tag)
-                            + " (" + Common.byte2Hex(Common.getUID())
+                            + " (" + Common.bytes2Hex(Common.getUID())
                             + ")");
                     break;
                 case BLOCK0_CALCULATED:
@@ -200,7 +200,7 @@ public class CloneUidTool extends BasicActivity {
 
         // Calculate BCC for 4-byte UIDs and construct full block 0.
         if (mUidLen == 4) {
-            byte bcc = Common.calcBcc(Common.hex2ByteArray(uid));
+            byte bcc = Common.calcBcc(Common.hex2Bytes(uid));
             mBlock0Complete = uid + String.format("%02X", bcc) + mBlock0Rest;
         } else {
             mBlock0Complete = uid + mBlock0Rest.substring(
@@ -221,7 +221,7 @@ public class CloneUidTool extends BasicActivity {
     private void writeManufacturerBlock() {
 
         boolean keyB = mRadioButtonKeyB.isChecked();
-        byte[] key = Common.hex2ByteArray(
+        byte[] key = Common.hex2Bytes(
                 mEditTextBlock0Key.getText().toString());
 
         // Create reader.
@@ -268,7 +268,7 @@ public class CloneUidTool extends BasicActivity {
         // Write to block 0.
         appendToLog(getString(R.string.text_writing_block_0));
         int result = reader.writeBlock(0, 0,
-                Common.hex2ByteArray(mBlock0Complete), key, keyB);
+                Common.hex2Bytes(mBlock0Complete), key, keyB);
 
         // Error handling.
         switch (result) {
@@ -490,7 +490,7 @@ public class CloneUidTool extends BasicActivity {
         byte[] bytesUid = new byte[4];
         while (uid.equals("00000000")) {
             new Random().nextBytes(bytesUid);
-            uid = Common.byte2Hex(bytesUid);
+            uid = Common.bytes2Hex(bytesUid);
         }
         mUid.setText(uid);
         Toast.makeText(this, R.string.info_random_uid,

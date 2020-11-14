@@ -733,7 +733,7 @@ public class Common extends Application {
                 return -3;
             }
             setTag(tag);
-            logUid(byte2Hex(tag.getId()));
+            logUid(bytes2Hex(tag.getId()));
 
             boolean isCopyUID = getPreferences().getBoolean(
                     AutoCopyUID.toString(), false);
@@ -752,7 +752,7 @@ public class Common extends Application {
                 // Show Toast message with UID.
                 String id = context.getResources().getString(
                         R.string.info_new_tag_found) + " (UID: ";
-                id += byte2Hex(tag.getId());
+                id += bytes2Hex(tag.getId());
                 id += ")";
                 Toast.makeText(context, id, Toast.LENGTH_LONG).show();
             }
@@ -1366,7 +1366,7 @@ public class Common extends Application {
      * @return True if it is a value block. False otherwise.
      */
     public static boolean isValueBlock(String hexString) {
-        byte[] b = Common.hex2ByteArray(hexString);
+        byte[] b = Common.hex2Bytes(hexString);
         if (b != null && b.length == 16) {
             // Google some NXP info PDFs about MIFARE Classic to see how
             // Value Blocks are formatted.
@@ -1605,8 +1605,8 @@ public class Common extends Application {
         // BCC.
         if (!skipBccCheck && valid && uidLen == 4) {
             // The 5th byte of block 0 should be the BCC.
-            byte byteBcc = hex2ByteArray(bcc)[0];
-            byte[] uid = hex2ByteArray(block0.substring(0, 8));
+            byte byteBcc = hex2Bytes(bcc)[0];
+            byte[] uid = hex2Bytes(block0.substring(0, 8));
             valid = isValidBcc(uid, byteBcc);
         }
         // Byte0.
@@ -1620,7 +1620,7 @@ public class Common extends Application {
         }
         if (valid && (uidLen == 7 || uidLen == 10)) {
             // First byte of double/triple sized UID shall not be 0x81-0xFE.
-            byte firstByte = hex2ByteArray(byte0)[0];
+            byte firstByte = hex2Bytes(byte0)[0];
             valid = (firstByte < 0x81 || firstByte > 0xFE);
         }
         if (valid && (uidLen == 7 || uidLen == 10)) {
@@ -1666,7 +1666,7 @@ public class Common extends Application {
         }
         // SAK.
         // Check if there is a valid MIFARE Classic/SmartMX/Plus SAK.
-        byte byteSak = hex2ByteArray(sak)[0];
+        byte byteSak = hex2Bytes(sak)[0];
         boolean validSak = false;
         if (valid) {
             if ((byteSak >> 1 & 1) == 0) { // SAK bit 2 = 1?
@@ -1730,11 +1730,11 @@ public class Common extends Application {
             case 2:
                 byte[] revBytes = bytes.clone();
                 reverseByteArrayInPlace(revBytes);
-                return hex2Dec(byte2Hex(revBytes));
+                return hex2Dec(bytes2Hex(revBytes));
             case 1:
-                return hex2Dec(byte2Hex(bytes));
+                return hex2Dec(bytes2Hex(bytes));
         }
-        return byte2Hex(bytes);
+        return bytes2Hex(bytes);
     }
 
     /**
@@ -1765,7 +1765,7 @@ public class Common extends Application {
      * @param bytes Bytes to convert.
      * @return The bytes in hex string format.
      */
-    public static String byte2Hex(byte[] bytes) {
+    public static String bytes2Hex(byte[] bytes) {
         StringBuilder ret = new StringBuilder();
         if (bytes != null) {
             for (Byte b : bytes) {
@@ -1781,7 +1781,7 @@ public class Common extends Application {
      * @param hex The hex string to convert
      * @return An array of bytes with the values of the string.
      */
-    public static byte[] hex2ByteArray(String hex) {
+    public static byte[] hex2Bytes(String hex) {
         if (!(hex != null && hex.length() % 2 == 0
                 && hex.matches("[0-9A-Fa-f]+"))) {
             return null;
@@ -1810,7 +1810,7 @@ public class Common extends Application {
                 && hex.matches("[0-9A-Fa-f]+"))) {
             return null;
         }
-        byte[] bytes = hex2ByteArray(hex);
+        byte[] bytes = hex2Bytes(hex);
         String ret = null;
         // Replace non printable ASCII with ".".
         for(int i = 0; i < bytes.length; i++) {

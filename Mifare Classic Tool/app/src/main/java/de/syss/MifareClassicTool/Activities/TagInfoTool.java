@@ -146,7 +146,7 @@ public class TagInfoTool extends BasicActivity {
                     android.R.style.TextAppearance_Medium);
             mLayout.addView(genericInfo);
             // Get generic info and set these as text.
-            String uid = Common.byte2Hex(tag.getId());
+            String uid = Common.bytes2Hex(tag.getId());
             int uidLen = tag.getId().length;
             uid += " (" + uidLen + " byte";
             if (uidLen == 7) {
@@ -160,7 +160,7 @@ public class TagInfoTool extends BasicActivity {
             // http://nfc-tools.org/index.php?title=ISO14443A
             byte[] atqaBytes = nfca.getAtqa();
             atqaBytes = new byte[] {atqaBytes[1], atqaBytes[0]};
-            String atqa = Common.byte2Hex(atqaBytes);
+            String atqa = Common.bytes2Hex(atqaBytes);
             // SAK in big endian.
             byte[] sakBytes = new byte[] {
                     (byte)((nfca.getSak() >> 8) & 0xFF),
@@ -168,16 +168,16 @@ public class TagInfoTool extends BasicActivity {
             String sak;
             // Print the first SAK byte only if it is not 0.
             if (sakBytes[0] != 0) {
-                sak = Common.byte2Hex(sakBytes);
+                sak = Common.bytes2Hex(sakBytes);
             } else {
-                sak = Common.byte2Hex(new byte[] {sakBytes[1]});
+                sak = Common.bytes2Hex(new byte[] {sakBytes[1]});
             }
             String ats = "-";
             IsoDep iso = IsoDep.get(tag);
             if (iso != null ) {
                 byte[] atsBytes = iso.getHistoricalBytes();
                 if (atsBytes != null && atsBytes.length > 0) {
-                    ats = Common.byte2Hex(atsBytes);
+                    ats = Common.bytes2Hex(atsBytes);
                 }
             }
             // Identify tag type.

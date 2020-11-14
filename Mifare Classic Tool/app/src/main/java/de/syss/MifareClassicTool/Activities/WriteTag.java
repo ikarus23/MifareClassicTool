@@ -443,8 +443,8 @@ public class WriteTag extends BasicActivity {
 
         // BCC.
         if (uidLen == 4 ) {
-            byte bcc = Common.hex2ByteArray(block0.substring(8, 10))[0];
-            byte[] uid = Common.hex2ByteArray(block0.substring(0, 8));
+            byte bcc = Common.hex2Bytes(block0.substring(8, 10))[0];
+            byte[] uid = Common.hex2Bytes(block0.substring(0, 8));
             boolean isValidBcc = Common.isValidBcc(uid, bcc);
             if (!isValidBcc) {
                 // Error. BCC is not valid. Show error message.
@@ -484,7 +484,7 @@ public class WriteTag extends BasicActivity {
      */
     private int checkAccessConditions(String sectorTrailer, boolean showToasts) {
         // Check if Access Conditions are valid.
-        byte[] acBytes = Common.hex2ByteArray(sectorTrailer.substring(12, 18));
+        byte[] acBytes = Common.hex2Bytes(sectorTrailer.substring(12, 18));
         byte[][] acMatrix = Common.acBytesToACMatrix(acBytes);
         if (acMatrix == null) {
             // Error. Invalid ACs.
@@ -577,14 +577,14 @@ public class WriteTag extends BasicActivity {
 
         if (keys[1] != null) {
             result = reader.writeBlock(sector, block,
-                    Common.hex2ByteArray(mDataText.getText().toString()),
+                    Common.hex2Bytes(mDataText.getText().toString()),
                     keys[1], true);
         }
         // Error while writing? Maybe tag has default factory settings ->
         // try to write with key a (if there is one).
         if (result == -1 && keys[0] != null) {
             result = reader.writeBlock(sector, block,
-                    Common.hex2ByteArray(mDataText.getText().toString()),
+                    Common.hex2Bytes(mDataText.getText().toString()),
                     keys[0], false);
         }
         reader.close();
@@ -848,7 +848,7 @@ public class WriteTag extends BasicActivity {
                     dump[i] = newBlock;
                 }
                 mDumpWithPos.get(sector).put(block++,
-                        Common.hex2ByteArray(dump[i]));
+                        Common.hex2Bytes(dump[i]));
             } else {
                 block++;
             }
@@ -985,7 +985,7 @@ public class WriteTag extends BasicActivity {
                 } else if (mWriteManufBlock.isChecked()
                         && sector == 0 && block == 0) {
                     // Block 0 should be written. Check it.
-                    String block0 = Common.byte2Hex(mDumpWithPos.get(0).get(0));
+                    String block0 = Common.bytes2Hex(mDumpWithPos.get(0).get(0));
                     int block0Check = checkBlock0(block0, false);
                     switch (block0Check) {
                         case 1:
@@ -1006,7 +1006,7 @@ public class WriteTag extends BasicActivity {
 
                 // Special Access Conditions checks.
                 if ((sector < 31 && block == 3) || sector >= 31 && block == 15) {
-                    String sectorTrailer = Common.byte2Hex(
+                    String sectorTrailer = Common.bytes2Hex(
                             mDumpWithPos.get(sector).get(block));
                     int acCheck = checkAccessConditions(sectorTrailer, false);
                     switch (acCheck) {

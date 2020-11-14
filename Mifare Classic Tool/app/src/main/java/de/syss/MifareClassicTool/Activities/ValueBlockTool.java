@@ -73,7 +73,7 @@ public class ValueBlockTool extends BasicActivity {
             return;
         }
         // Decode.
-        byte[] vbAsBytes = Common.hex2ByteArray(
+        byte[] vbAsBytes = Common.hex2Bytes(
                 data.substring(0, 8));
         // Bytes -> Int. -> reverse.
         int vbAsInt = Integer.reverseBytes(ByteBuffer.wrap(vbAsBytes).getInt());
@@ -117,10 +117,10 @@ public class ValueBlockTool extends BasicActivity {
             return;
         }
         // Int. -> reverse -> byte array -> hex string.
-        String vb = Common.byte2Hex(ByteBuffer.allocate(4).putInt(
+        String vb = Common.bytes2Hex(ByteBuffer.allocate(4).putInt(
                 Integer.reverseBytes(vbAsInt)).array());
         // Int. -> invert -> reverse -> byte array -> hex string.
-        String vbInverted = Common.byte2Hex(ByteBuffer.allocate(4).putInt(
+        String vbInverted = Common.bytes2Hex(ByteBuffer.allocate(4).putInt(
                 Integer.reverseBytes(~vbAsInt)).array());
         String addrInverted = Integer.toHexString(
                 ~Integer.parseInt(addrText, 16)).toUpperCase(

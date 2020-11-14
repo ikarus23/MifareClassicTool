@@ -593,7 +593,7 @@ public class ImportExportTool extends BasicActivity {
                         blockBytes[j] = (byte) binary.charAt(i + j);
                     }
                     block = "    \"" + i/16 + "\": \"" +
-                            Common.byte2Hex(blockBytes) + "\",";
+                            Common.bytes2Hex(blockBytes) + "\",";
                     json.add(block);
                 }
                 break;
@@ -694,7 +694,7 @@ public class ImportExportTool extends BasicActivity {
                                 Toast.LENGTH_LONG).show();
                         return null;
                     }
-                    byte[] bytes = Common.hex2ByteArray(block);
+                    byte[] bytes = Common.hex2Bytes(block);
                     if (bytes == null) {
                         // Error. Invalid block.
                         Toast.makeText(this, R.string.info_convert_error,
@@ -777,7 +777,7 @@ public class ImportExportTool extends BasicActivity {
                     for (int j = 0; j < 6; j++) {
                         keyBytes[j] = (byte) binary.charAt(i + j);
                     }
-                    keys[i/6] = Common.byte2Hex(keyBytes);
+                    keys[i/6] = Common.bytes2Hex(keyBytes);
                 }
                 break;
         }
@@ -798,7 +798,7 @@ public class ImportExportTool extends BasicActivity {
                 dest = new String[1];
                 StringBuilder sb = new StringBuilder();
                 for (String key : keys) {
-                    byte[] bytes = Common.hex2ByteArray(key);
+                    byte[] bytes = Common.hex2Bytes(key);
                     if (bytes == null) {
                         // Error. Invalid key.
                         Toast.makeText(this, R.string.info_convert_error,
