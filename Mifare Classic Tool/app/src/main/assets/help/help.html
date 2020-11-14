@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+
 <!--
 /*
  * Copyright 2013 Gerhard Klostermeier
@@ -18,10 +20,6 @@
  */
 -->
 
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>Help and Info</title>
 </head>
@@ -30,7 +28,7 @@
   <div align="center">
     <img src="mct_logo.png" width="250px" alt="logo" />
   </div>
-  <hr />
+  <hr>
   <h1>Help and Info</h1>
   <h2>Table of Contents</h2>
   <ul>
@@ -83,7 +81,9 @@
     </li>
     <li><a href="#external_nfc">8. External NFC</a></li>
   </ul>
-  <hr />
+
+
+  <hr>
 
   <h2 id="general_information">1. General Information</h2>
     This tool provides several features to interact with (and only with)
@@ -177,7 +177,10 @@
   external storage (SD card) in a folder named <i>MifareClassicTool</i>. Dump files are
   in the format <i>.mct</i> and key files are in the format <i>.keys</i>. It is possible
   to import multiple files at once.
-  <br /><br />
+  <ul>
+    <li>Dump files: /sdcard/MifareClassicTool/dump-files/ (import as .mct)</li>
+    <li>Key files: /sdcard/MifareClassicTool/key-files/ (import as .keys)</li>
+  </ul>
   The regular version and the
   <a href="https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate">donate version</a>
   of MCT can not share the same storage. Therefore each version has its own dump an key files.
@@ -190,24 +193,26 @@
     2012/2013. It is free software under the
     <a href="https://www.gnu.org/licenses/gpl-3.0.txt">
       GNU General Public License v3.0 (GPLv3)</a>.
-    <br /><br />
+    <br><br>
     Icons used in this application:
     <ul>
 	  <li>Logo: <a href="http://www.beneketraub.com/">Beneke Traub</a>
-        <br />(<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+        <br>(<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
         Commons 4.0</a>)
       </li>
       <li>Oxygen Icons: <a href="http://www.oxygen-icons.org/">www.oxygen-icons.org</a>
-        <br />(<a href="http://www.gnu.org/licenses/lgpl.html">GNU
+        <br>(<a href="http://www.gnu.org/licenses/lgpl.html">GNU
           Lesser General Public License</a>)
       </li>
       <li>RFID Tag: <a href="http://www.nfc-tag.de/">www.nfc-tag.de</a>
-        <br />(<a href="http://creativecommons.org/licenses/by/3.0/">Creative
+        <br>(<a href="http://creativecommons.org/licenses/by/3.0/">Creative
           Commons 3.0</a>)
       </li>
     </ul>
     MIFARE&reg; is a registered trademark of NXP Semiconductors.
-  <hr />
+
+
+  <hr>
 
 
   <h2 id="getting_started">2. Getting Started</h2>
@@ -218,30 +223,30 @@
     normal RFID-Readers and some special software
     (<a href="https://github.com/nfc-tools/mfcuk">mfcuk</a>,
     <a href="https://github.com/nfc-tools/mfoc">mfoc</a>).
-    <br /><br />
+    <br><br>
     The application comes with standard key files called
     <i>std.keys</i> and <i>extended-std.keys</i>, which contains the
     well known keys and some standard keys from a short Google search.
     You can try to read a tag with this key file using
     &quot;Read Tag&quot; from main menu.
-    <br /><br />
+    <br><br>
     Once you know some keys, you cam to put them into a simple text
     file (one key per line). You can do this on your PC and import
     the file using MCT's <a href="#import_export_tool">Import/Export
     Tool</a>, or you can create a new key file via &quot;Edit or Add
     Key File&quot; from main menu. If you are finished setting up your
     key file, you can read a tag using &quot;Read Tag&quot; from main menu.
-    <br /><br />
+    <br><br>
     <b>Advantages of the Key Files Concept:</b>
     <ul>
       <li>
         <b>You don't have to worry about which key is for which
-        sector.</b><br />
+        sector.</b><br>
         The application tries to authenticate with all keys from the key
         file against all sectors (like a dictionary-attack).
       </li>
       <li>
-        <b>You don't have to know all the keys.</b><br />
+        <b>You don't have to know all the keys.</b><br>
         If neither key A nor key B for a specific sector is found in the
         key file (dictionary), the application will skip reading said
         sector.
@@ -250,22 +255,24 @@
     This dictionary-attack based mapping process
     (keys &lt;-&gt; sectors) makes it easy for you to read as much as
     possible with the keys you know!
-  <hr />
+
+
+  <hr>
 
 
   <h2 id="read_tag">3. Read Tag</h2>
     Technically speaking, reading an RFID-Tag is done in two steps:
     <ul>
       <li>
-        <i>Choose a key file</i><br />
+        <i>Choose a key file</i><br>
         Press &quot;Read Tag&quot; in the main menu. Now select
         key files which (perhaps) contain the keys for the tag.
         You can also specify the range of sectors you want to read.
-        Start the mapping process with the lower right button.<br />
+        Start the mapping process with the lower right button.<br>
         But: For large key files this could take quite some time!
       </li>
       <li>
-        <i>Read tag</i><br />
+        <i>Read tag</i><br>
         After the keys are mapped to sectors based on a kind of
         dictionary-attack, the application will instantly start
         to read the tag. The result will be displayed in a
@@ -273,7 +280,9 @@
         <a href="#edit_dump_file">Edit Tag Dump File</a>.)
       </li>
     </ul>
-  <hr />
+
+
+  <hr>
 
 
   <h2 id="write_tag">4. Write Tag</h2>
@@ -295,32 +304,32 @@
     If you want to clone a tag, you first have to read and then dump
     the original tag. The second step is to restore the dumped data on another
     tag (for which you know the keys). You need the keys with write privileges
-    for all sectors you want to write.<br />
+    for all sectors you want to write.<br>
     After selecting the dump, the sectors and the key files, the App will check
     everything for you! If there are issues like 'block is read-only', 'key
     with write access not known', etc., you will get a report before writing.
-    <br /><br />
+    <br><br>
     <b>Options:</b>
     <ul>
       <li>
-        <i>Use static (custom) Access Conditions</i><br />
+        <i>Use static (custom) Access Conditions</i><br>
         By enabling this option, all Access Conditions from the dump
         will be replaced with the chosen ones.
-        <br />This is useful if the dump contains Access Conditions
+        <br>This is useful if the dump contains Access Conditions
         that will be permanent for a tag. In case the reader does not check
         them, you can easily use custom ones to make the tag reusable.
       </li>
       <li>
-        <i>Write to Manufacturer Block</i><br />
+        <i>Write to Manufacturer Block</i><br>
         The first block of the first sector of an <b>original</b>
         MIFARE Classic tag is read-only i.e. not writable. But there are
         <b>special</b> MIFARE Classic tags (aka <i>magic tags</i> 2nd gen/gen2) that support
         writing to the manufacturer block with a simple write command. This App is
         able to write to such tags and can therefore create fully correct clones.
-        <br />However, some special tags require a special command sequence to
+        <br>However, some special tags require a special command sequence to
         put them into the state where writing to the manufacturer block is
         possible. These tags will not work.
-        <br />Also, make sure the the BCC value (see
+        <br>Also, make sure the the BCC value (see
         <a href="#bcc_tool">BCC Calculator</a>), the SAK and the ATQA values are
         correct. If you just want to clone a UID, please use the
         <a href="#clone_uid_tool">Clone UID Tool</a>.
@@ -351,13 +360,15 @@
       </li>
     </ul>
     If a increment or decrement fails due to an interrupted and therefore
-    incomplete transaction, the Value Block could become unusable.<br /><br />
+    incomplete transaction, the Value Block could become unusable.<br><br>
 
     If you don't know what a MIFARE Classic Value Block is, you should read
     chapter 8.6.2.1 of the
     <a href="https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf">
     MIFARE Classic (1k) Datasheet</a> (PDF).
-  <hr />
+
+
+  <hr>
 
 
   <h2 id="edit_dump_file">5. Edit Tag Dump File</h2>
@@ -365,12 +376,12 @@
     This editor can be accessed by two different ways:
     <ul>
       <li>
-        <i>Read a tag</i><br />
+        <i>Read a tag</i><br>
         After reading a tag the result is displayed in this
         editor (See chapter <a href="#read_tag">Read Tag</a>.)
       </li>
       <li>
-        <i>Open a saved tag</i><br />
+        <i>Open a saved tag</i><br>
         You can edit a saved dump via &quot;Edit Tag Dump&quot; from
         main menu.
       </li>
@@ -381,7 +392,7 @@
   <h3 id="share_dump">5.1 Share a Dump</h3>
     From the dump editor you can share a dump (via toolbar or menu item).
     You can choose between Apps that are willing to process the dump file.
-    Note that some Apps fail to process the dump.<br />
+    Note that some Apps fail to process the dump.<br>
     Apps which are known to work with MCT: Gmail, Bluetooth, etc.
 
   <h3 id="display_ascii">5.2 Display Data as ASCII</h3>
@@ -407,14 +418,14 @@
 
   <h3 id="display_manuf_date">5.5 Display the date of manufacture</h3>
     From the dump editor you can decode the date of manufacture (via the menu).
-    <br /><br />
+    <br><br>
     The last 2 bytes of the manufacturer block (sector 0, block 0) are
     representing the date of manufacture. They should be in binary
     coded decimal format (BCD, only digits, no letters). The first byte
     represents the week of manufacture and must be between 1 and 53.
     The second byte represents the year of manufacture and must be between 0
     and the current year (e.g. 12, meaning 2012).
-    <br /><br />
+    <br><br>
     This is not a standard. Some manufacturers don't stick to this.
     So it is possible that MCT can't display the date of manufacture
     or display a wrong one.
@@ -432,17 +443,19 @@
     You can save the keys of the currently viewed tag into a key file.
     This could be used to speed up the mapping process for the corresponding tag
     because the new key file will only contain valid keys.
-  <hr />
+
+
+  <hr>
 
 
   <h2 id="edit_key_file">6. Edit or Add Key File</h2>
     There are two ways to create a key file:
     <ul>
-      <li><i>This Application</i><br />
+      <li><i>This Application</i><br>
         You can create a new key file via
         &quot;Edit/Add Key File&quot; from main menu.
       </li>
-      <li><i>On your Computer</i><br />
+      <li><i>On your Computer</i><br>
         You can create a simple text file on your computer and
         import it using MCT's <a href="#import_export_tool">Import/Export Tool</a>.
       </li>
@@ -451,21 +464,23 @@
     key per line (hexadecimal, 6 bytes, 12 characters).
     Lines <b>starting</b> with # as well as empty lines are
     ignored.
-    <br /><br />
+    <br><br>
     You can edit key files any time you want with
     &quot;Edit/Add Key File&quot; from main menu.
-    <br /><br />
+    <br><br>
     Because key files are used like dictionaries in dictionary-attacks,
     it is sufficient to enter only different keys (even if the key
     is used for multiple sectors). You can remove duplicates
     in a key file (via menu) from the key editor. Also it is possible to
     share key files like dump files (see chapter
     <a href="#share_dump">Share a Dump</a>).
-    <br /><br />
+    <br><br>
     For other advantages see chapter
     <a href="#getting_started">Getting Started</a>, section
     &quot;Advantages of the key files concept&quot;.
-  <hr />
+
+
+  <hr>
 
 
   <h2 id="tools">7. Tools</h2>
@@ -474,11 +489,11 @@
   <h3 id="tag_info_tool">7.1 Display Tag Info</h3>
     In this view you can see some generic information
     (like UID, ATQA, SAK, Tag size, etc.) about the RFID-Tag.
-    <br /><br />
+    <br><br>
     If your device does not support MIFARE Classic, this is the
     only thing you can do with this App. :(
-    <br /><br />
-    <b>Tag type and manufacturer identification:</b><br />
+    <br><br>
+    <b>Tag type and manufacturer identification:</b><br>
     The identification mechanism is based on
     <a href="http://nfc-tools.org/index.php?title=ISO14443A">this website</a>.
     If you want to have a closer look at MIFARE tag identification read
@@ -487,7 +502,7 @@
     <a href="http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt">
     helpful file</a> for ATS (ATR) based identification is provided
     by the PCSC project.
-    <br /><br />
+    <br><br>
     The tag type and manufacturer determined by MCT could be wrong for
     several reasons:
     <ul>
@@ -502,9 +517,9 @@
     chapter 8.6.2.1 of the
     <a href="https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf">
     MIFARE Classic (1k) Datasheet</a> (PDF).
-    <br /><br />
+    <br><br>
     In most cases the &quot;Addr&quot; of a value block is 00 (hex)
-    because it is not used. However, according to NXP it<br />
+    because it is not used. However, according to NXP it<br>
     &quot;can be used to save the storage address of a
     block, when implementing a powerful backup management.&quot;.
 
@@ -526,7 +541,7 @@
     This tool can calculate the Bit Count Check (BCC) value. For MIFARE
     Classic tags with a 4-byte UID, the BCC must be the 5th byte of the very
     first block (manufacturers block).
-    <br /><br />
+    <br><br>
     More information about calculating the BCC and how it is used during
     the anti-collision phase can be found in
     <a href="http://cache.nxp.com/documents/application_note/AN10927.pdf">NXP's AN10927</a>.
@@ -545,7 +560,7 @@
     .bin/.mfd/.dump (Proxmark, libnfc, mfoc, others), .eml (Proxmark emulator) and
     .json (Proxmark, Chameleon Mini GUI). For converting a dump file from e.g.
     .bin to .json, it can be simply imported and then exported again.
-    <br /><br />
+    <br><br>
     A full backup of all dump and key files can be made using the backup function.
     The data will be saved as ZIP archive.
 
@@ -564,7 +579,7 @@
     or shared with other apps.
 
 
-  <hr />
+  <hr>
 
 
   <h2 id="external_nfc">8. External NFC</h2>
@@ -572,7 +587,7 @@
     <a href="https://play.google.com/store/apps/details?id=eu.dedb.nfc.service">External NFC</a>.
     This app allows you to connect an external USB-based RFID reader to
     your Android device. Not every RFID reader is supported by External
-    NFC and your Android device must be USB-OTG enabled.<br /><br />
+    NFC and your Android device must be USB-OTG enabled.<br><br>
 
     Readers which should work:
     <ul>
@@ -581,7 +596,7 @@
       <li>PN532 via USB-UART adapters</li>
     </ul>
 
-    According to user reports, the ACR 122U reader works the best.<br /><br />
+    According to user reports, the ACR 122U reader works the best.<br><br>
 
     For questions regarding the External NFC app please have a look at its
     <a href="https://play.google.com/store/apps/details?id=eu.dedb.nfc.service">Play Store</a>
