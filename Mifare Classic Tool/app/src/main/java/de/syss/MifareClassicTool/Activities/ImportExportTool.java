@@ -117,7 +117,7 @@ public class ImportExportTool extends BasicActivity {
             mIsCalledWithExportFile = savedInstanceState.getBoolean(
                     "is_called_with_export_file");
             mFile = savedInstanceState.getString("file");
-            mConvertedContent = (String[]) savedInstanceState.getSerializable(
+            mConvertedContent = savedInstanceState.getStringArray(
                     "converted_content");
         }
     }
@@ -170,7 +170,7 @@ public class ImportExportTool extends BasicActivity {
         outState.putBoolean("is_export", mIsExport);
         outState.putBoolean("is_called_with_export_file", mIsCalledWithExportFile);
         outState.putString("file", mFile);
-        outState.putSerializable("converted_content", mConvertedContent);
+        outState.putStringArray("converted_content", mConvertedContent);
     }
 
     /**

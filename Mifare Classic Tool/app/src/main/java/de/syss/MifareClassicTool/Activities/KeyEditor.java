@@ -84,8 +84,7 @@ public class KeyEditor extends BasicActivity
                     "close_after_successful_save");
             mKeysChanged = savedInstanceState.getBoolean("keys_changed");
             mFileName = savedInstanceState.getString("file_name");
-            mLines = (String[]) savedInstanceState.getSerializable(
-                    "lines");
+            mLines = savedInstanceState.getStringArray("lines");
         } else if (intent != null && intent.hasExtra(
                 FileChooser.EXTRA_CHOSEN_FILE)) {
             mKeys = findViewById(R.id.editTextKeyEditorKeys);
@@ -143,7 +142,7 @@ public class KeyEditor extends BasicActivity
         outState.putBoolean("close_after_successful_save", mCloseAfterSuccessfulSave);
         outState.putBoolean("keys_changed", mKeysChanged);
         outState.putString("file_name", mFileName);
-        outState.putSerializable("lines", mLines);
+        outState.putStringArray("lines", mLines);
     }
 
     /**
