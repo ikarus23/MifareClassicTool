@@ -508,12 +508,15 @@ public class ImportExportTool extends BasicActivity {
      * @param source The data to be converted.
      * @param srcType The type of the {@code source} data.
      * @param destType The type for the return value.
-     * @return The converted data.
+     * @return The converted data. Null on error.
      * @see FileType
      */
     @SuppressLint("DefaultLocale")
     private String[] convertDump(String[] source, FileType srcType,
             FileType destType) {
+        if (source == null || srcType == null || destType == null) {
+            return null;
+        }
         // Convert source to json.
         ArrayList<String> json = new ArrayList<String>();
         String block = null;
@@ -714,12 +717,15 @@ public class ImportExportTool extends BasicActivity {
      * @param source The data to be converted.
      * @param srcType The type of the {@code source} data.
      * @param destType The type for the return value.
-     * @return The converted data.
+     * @return The converted data. Null on error.
      * @see FileType
      */
     @SuppressLint("DefaultLocale")
     private String[] convertKeys(String[] source, FileType srcType,
                                  FileType destType) {
+        if (source == null || srcType == null || destType == null) {
+            return null;
+        }
         // Convert source to strings.
         String[] keys = null;
         switch (srcType) {
