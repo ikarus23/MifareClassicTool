@@ -104,7 +104,7 @@ public class ImportExportTool extends BasicActivity {
     }
 
     /**
-     * Initialize the activity layout.
+     * Initialize the activity layout and state if there is one.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +159,10 @@ public class ImportExportTool extends BasicActivity {
         }
     }
 
+    /**
+     * Save important state data before this activity gets destroyed.
+     * @param outState The state to put data into.
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

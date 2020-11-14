@@ -166,7 +166,8 @@ public class WriteTag extends BasicActivity {
     }
 
     /**
-     * Save {@link #mWriteManufBlock} state and {@link #mDumpWithPos}.
+     * Save important state data before this activity gets destroyed.
+     * @param outState The state to put data into.
      */
     @Override
     protected void onSaveInstanceState (Bundle outState) {

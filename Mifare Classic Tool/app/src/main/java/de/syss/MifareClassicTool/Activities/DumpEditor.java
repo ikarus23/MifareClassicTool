@@ -209,7 +209,8 @@ public class DumpEditor extends BasicActivity
     }
 
     /**
-     * Save {@link #mLines} and {@link #mDumpName}.
+     * Save important state data before this activity gets destroyed.
+     * @param outState The state to put data into.
      */
     @Override
     protected void onSaveInstanceState (Bundle outState) {
