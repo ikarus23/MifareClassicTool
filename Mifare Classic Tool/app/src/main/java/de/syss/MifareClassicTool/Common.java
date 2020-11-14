@@ -312,7 +312,7 @@ public class Common extends Application {
         }
         try {
             contentStream = context.getContentResolver().openInputStream(uri);
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException | SecurityException ex) {
             return null;
         }
 
@@ -342,7 +342,7 @@ public class Common extends Application {
         }
         try {
             contentStream = context.getContentResolver().openInputStream(uri);
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException | SecurityException ex) {
             return null;
         }
 
