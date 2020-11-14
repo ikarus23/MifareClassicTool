@@ -169,7 +169,7 @@ public class WriteTag extends BasicActivity {
      * Save {@link #mWriteManufBlock} state and {@link #mDumpWithPos}.
      */
     @Override
-    public void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("write_manuf_block", mWriteManufBlock.isChecked());
         outState.putSerializable("dump_with_pos", mDumpWithPos);

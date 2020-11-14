@@ -212,7 +212,7 @@ public class DumpEditor extends BasicActivity
      * Save {@link #mLines} and {@link #mDumpName}.
      */
     @Override
-    public void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState (Bundle outState) {
         outState.putStringArray("lines", mLines);
         outState.putString("file_name", mDumpName);
     }

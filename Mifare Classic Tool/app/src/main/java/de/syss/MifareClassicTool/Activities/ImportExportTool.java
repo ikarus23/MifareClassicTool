@@ -110,6 +110,16 @@ public class ImportExportTool extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_export_tool);
+
+        if (savedInstanceState != null) {
+            mIsDumpFile = savedInstanceState.getBoolean("is_dump_file");
+            mIsExport = savedInstanceState.getBoolean("is_export");
+            mIsCalledWithExportFile = savedInstanceState.getBoolean(
+                    "is_called_with_export_file");
+            mFile = savedInstanceState.getString("file");
+            mConvertedContent = (String[]) savedInstanceState.getSerializable(
+                    "converted_content");
+        }
     }
 
     /**
@@ -147,6 +157,16 @@ public class ImportExportTool extends BasicActivity {
                 }, 300);
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("is_dump_file", mIsDumpFile);
+        outState.putBoolean("is_export", mIsExport);
+        outState.putBoolean("is_called_with_export_file", mIsCalledWithExportFile);
+        outState.putString("file", mFile);
+        outState.putSerializable("converted_content", mConvertedContent);
     }
 
     /**
