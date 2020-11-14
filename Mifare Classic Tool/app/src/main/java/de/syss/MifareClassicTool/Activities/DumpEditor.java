@@ -184,7 +184,15 @@ public class DumpEditor extends BasicActivity
             setIntent(null);
         } else if (savedInstanceState != null) {
             // Recreated after kill by Android (due to low memory).
-            mDumpName = savedInstanceState.getString("file_name");
+            mCloseAfterSuccessfulSave = savedInstanceState.getBoolean(
+                    "close_after_successful_save");
+            mDumpChanged = savedInstanceState.getBoolean("dump_changed");
+            mKeysName = savedInstanceState.getString("keys_name");
+            mUID = savedInstanceState.getString("uid");
+            if (mUID != null) {
+                setTitle(getTitle() + " (" + mUID + ")");
+            }
+            mDumpName = savedInstanceState.getString("dump_name");
             if (mDumpName != null) {
                 setTitle(getTitle() + " (" + mDumpName + ")");
             }
@@ -193,6 +201,20 @@ public class DumpEditor extends BasicActivity
                 initEditor(mLines);
             }
         }
+    }
+
+    /**
+     * Save important state data before this activity gets destroyed.
+     * @param outState The state to put data into.
+     */
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        outState.putBoolean("dump_changed", mDumpChanged);
+        outState.putBoolean("close_after_successful_save", mCloseAfterSuccessfulSave);
+        outState.putString("keys_name", mKeysName);
+        outState.putString("dump_name", mDumpName);
+        outState.putString("uid", mUID);
+        outState.putStringArray("lines", mLines);
     }
 
     /**
@@ -206,16 +228,6 @@ public class DumpEditor extends BasicActivity
         menu.findItem(R.id.menuDumpEditorWriteDump).setEnabled(
                 !Common.useAsEditorOnly());
         return true;
-    }
-
-    /**
-     * Save important state data before this activity gets destroyed.
-     * @param outState The state to put data into.
-     */
-    @Override
-    protected void onSaveInstanceState (Bundle outState) {
-        outState.putStringArray("lines", mLines);
-        outState.putString("file_name", mDumpName);
     }
 
     /**
