@@ -3,7 +3,7 @@ MIFARE Classic Tool (MCT)
 
 一个用于对MIFARE Classic RFID标签进行读取、写入、分析等操作的Android NFC应用程序。
 
-*以其他语言阅读本文: [English](README.md), [简体中文](README.zh-cn.md).
+*以其他语言阅读本文: [English](README.md), [简体中文](README.zh-CN.md).
 
 <a href="https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool"><img src="pics/assets/google-play-badge.png" alt="从Play商店中下载" height="80"></a>
 <a href="https://f-droid.org/packages/de.syss.MifareClassicTool/"><img src="pics/assets/fdroid-badge.png" alt="从F-Droid商店中下载" height="80"></a>
