@@ -1,4 +1,4 @@
-MIFARE Classic工具 (MCT)
+MIFARE Classic Tool (MCT)
 =========================
 
 一个用于对MIFARE Classic RFID标签进行读取、写入、分析等操作的Android NFC应用程序。
@@ -26,7 +26,7 @@ MIFARE Classic工具 (MCT)
 * 保存，编辑和分享您读取的标签数据
 * 写入MIFARE Classic标签(逐块)
 * 克隆MIFARE Classic标签
-  (将标签的转储写入另一个标签； write 'dump-wise')
+  (将标签的转储写入另一个标签；逐文件写入)
 * 基于字典攻击的密钥管理
   (将已知密钥写入字典文件)
   MCT将尝试对所有扇区使用这些密钥进行身份验证，并尽可能多地读取。请参阅章节[入门](#入门)。
@@ -63,14 +63,14 @@ MIFARE Classic工具 (MCT)
   如果您想读/写RFID标签，您首先需要这个特定标签的密钥。欲了解更多信息，请参阅章节[入门](#入门)。
 * 此应用程序不会提供**暴力攻击**功能。因为协议太慢了。
 * 注意！卸载此应用程序将会永久删除其保存的所有文件（转储/密钥）。
-* **原始**MIFARE Classic标签中的第一个块是 **只读的**，即无法向其写入任何数据。 
-  但是有一些特殊的MIFARE Classic标签支持通过简单的写命令写入制造商块(即块0)。（通常称为“ 2代魔术标签”，即中文购物网站上通常可以见到的FUID及部分CUID卡；某些CUID卡无法使用，详见[MIFARE Classic DirectWrite](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md#mifare-classic-directwrite-aka-gen2-aka-cuid)，但在中文购物网站上似乎不必担心遇到这类特殊的卡片。）该应用程序能够写入此类标签，因此可以创建完全正确的克隆。但是，某些特殊标签需要**特殊命令序列**以使其可以写入制造商块（“ 1代魔术标签”，即中文购物网站上通常可以见到的UID卡）。  
-  本应用无法操作这类标签，请购买时注意区分！
- 另外，请确保BCC值（请使用“ BCC计算器”）、SAK和ATQA值正确。如果您只想克隆一个UID，请使用“克隆UID工具”。
+* **原始**MIFARE Classic标签中的第一个块是**只读的**，即无法向其写入任何数据。 
+  但是有一些特殊的MIFARE Classic标签支持通过简单的写命令写入制造商块(即块0)，该应用程序能够写入此类标签，因此可以创建完全正确的克隆。（通常称为“ 2代魔术标签”，即中文购物网站上通常可以见到的CUID卡；某些CUID卡无法使用，详见[MIFARE Classic DirectWrite](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md#mifare-classic-directwrite-aka-gen2-aka-cuid)，但在中文购物网站上似乎不必担心遇到这类特殊的卡片；FUID/UFUID未经测试，欢迎在issue中反馈使用效果。）  
+  然而，某些特殊标签需要**特殊命令序列**以使其可以写入制造商块（“ 1代魔术标签”，即中文购物网站上通常可以见到的UID卡）。本应用无法写入这类标签的制造商块，请购买时注意区分！  
+  另外，请确保BCC值（请使用“ BCC计算器”）、SAK和ATQA值正确。如果您只想克隆一个UID，请使用“克隆UID工具”。
 * 本应用程序在某些硬件（NFC控制器）不支持MIFARE Classic的设备上**无法使用** ([了解更多](https://github.com/ikarus23/MifareClassicTool/issues/1))。
   **您可以在[这里](https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md)找到已知不兼容设备列表**
 
-有关MIFARE Classic的更多信息，请参阅[维基百科](https://en.wikipedia.org/wiki/MIFARE)，[百度一下](https://www.baidu.com/s?ie=UTF-8&wd=MIFARE%20Classic)或者阅读NXP的[MIFARE Classic (1k) '数据表'](https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf)(PDF)。
+有关MIFARE Classic的更多信息，请参阅[维基百科](https://en.wikipedia.org/wiki/MIFARE)，[百度搜索](https://www.baidu.com/s?ie=UTF-8&wd=MIFARE%20Classic)或者阅读NXP的[MIFARE Classic (1k) '数据表'](https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf)(PDF)。
 
 
 入门
