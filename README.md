@@ -3,12 +3,15 @@ MIFARE Classic Tool (MCT)
 
 An Android NFC app for reading, writing, analyzing, etc. MIFARE Classic RFID tags.
 
-*Read this in other languages: [English](README.md), [简体中文](README.zh-CN.md).
+<a href="https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool"><img src="metadata/common/assets/google-play-badge.png" alt="Get it on Play Store" height="80"></a>
+<a href="https://f-droid.org/packages/de.syss.MifareClassicTool/"><img src="metadata/common/assets/fdroid-badge.png" alt="Get it on F-Droid" height="80"></a>
+<a href="https://www.icaria.de/mct/releases/"><img src="metadata/common/assets/direct-apk-download-badge.png" alt="Get the APK" height="80"></a>
 
-<a href="https://play.google.com/store/apps/details?id=de.syss.MifareClassicTool"><img src="pics/assets/google-play-badge.png" alt="Get it on Play Store" height="80"></a>
-<a href="https://f-droid.org/packages/de.syss.MifareClassicTool/"><img src="pics/assets/fdroid-badge.png" alt="Get it on F-Droid" height="80"></a>
-<a href="https://www.icaria.de/mct/releases/"><img src="pics/assets/direct-apk-download-badge.png" alt="Get the APK" height="80"></a>
+Read this informaiton in other languages:
+* [English](README.md)
+* [简体中文](README.zh-CN.md).
 
+Helpful links:
 * [MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)
 * [MIFARE Classic Tool on Huawei's AppGallery](https://appgallery1.huawei.com/#/app/C101783071)
 * [Screenshots](https://www.icaria.de/mct/screenshots/latest/)
@@ -81,14 +84,15 @@ Some important things are:
   MIFARE Classic tag is **read-only** i.e. not writable. But there
   are **special** MIFARE Classic tags that support writing to the
   manufacturer block with a simple write command (often called "magic tag
-  gen2" aka "CUID"). This App is able to write to such tags and can therefore
-  create fully correct clones. However, app will not work with some special tags, 
-  because they require a **special command sequence** to put them into the 
-  state where writing to the manufacturer block is possible (often called 
-  "gen1" tags aka "UID"). Meanwhile, this app technically could work with
-  "FUID" and "UFUID", but neither has been tested (if you did, write a 
-  issue to tell me!).([read more](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md))  
+  gen2" or "CUID"). This App is able to write to such tags and can therefore
+  create fully correct clones. "FUID" and "UFUID" tags should work too,
+  but they have not been tested so far. However, app will not work with
+  all special tags. Some of them require a **special command sequence** to
+  put them into the state where writing to the manufacturer block is possible.
+  These tags are often called  "gen1", "gen1a" or "UID".  
   Remember this when you are shopping for special tags!  
+  More information about magic cards can be found
+  [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md).
   Also, make sure the the BCC value (check out the "BCC Calculator Tool"),
   the SAK and the ATQA values are correct. If you just want to clone a UID,
   please use the "Clone UID Tool".
