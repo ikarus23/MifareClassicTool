@@ -28,12 +28,12 @@ Features
 * Clone MIFARE Classic tags  
   (Write dump of a tag to another tag; write 'dump-wise')
 * Key management based on dictionary-attack  
-  (Write the keys you know in a file (dictionary).  
+  (Write the keys you know in a file (dictionary)).  
   MCT will try to authenticate with these  
   keys against all sectors and read as much as possible.  
   See chapter [Getting Started](#getting-started).)
 * Format a tag back to the factory/delivery state
-* Write the manufacturer block of special MIFARE Classic tags
+* Write the manufacturer block (block 0) of special MIFARE Classic tags
 * Use external NFC readers like ACR 122U  
   (See the [Help & Info section](https://publications.icaria.de/mct/help-and-info/#external_nfc)
   for more information.)
@@ -46,7 +46,7 @@ Features
 * Display the tag data as 7-Bit US-ASCII
 * Display the MIFARE Classic Access Conditions as a table
 * Display MIFARE Classic Value Blocks as integer
-* Calcualate the BCC
+* Calcualate the BCC (Block Check Character)
 * Quick UID clone feature
 * Import/export/convert files
 * In-App (offline) help and information
@@ -76,7 +76,7 @@ Some important things are:
   capability in this application. It is way too slow due
   to the protocol.
 * Be aware! Uninstalling this app will delete all files
-  (dumps/keys) permanently.
+  (dumps/keys) saved by it permanently.
 * The first block of the first sector of an **original**
   MIFARE Classic tag is **read-only** i.e. not writable. But there
   are **special** MIFARE Classic tags that support writing to the
@@ -86,7 +86,7 @@ Some important things are:
   because they require a **special command sequence** to put them into the 
   state where writing to the manufacturer block is possible (often called 
   "gen1" tags aka "UID"). Meanwhile, this app technically could work with
-  "FUID" and "UFUID", but neither has been tested (if you tested them, write a 
+  "FUID" and "UFUID", but neither has been tested (if you did, write a 
   issue to tell me!).([read more](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md))  
   Remember this when you are shopping for special tags!  
   Also, make sure the the BCC value (check out the "BCC Calculator Tool"),
@@ -134,6 +134,7 @@ using &quot;Read Tag&quot; from main menu.
 Advantages of the Key Files Concept:
 * **You don't have to worry about which key is for which sector.**  
   The application tries to authenticate with all keys from the key
+  file (dictionary).
 * **You don't have to know all the keys.**  
   If neither key A nor key B for a specific sector is found in the
   key file (dictionary), the application will skip reading said
