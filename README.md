@@ -81,13 +81,14 @@ Some important things are:
   MIFARE Classic tag is **read-only** i.e. not writable. But there
   are **special** MIFARE Classic tags that support writing to the
   manufacturer block with a simple write command (often called "magic tag
-  gen2"). This App is able to write to such tags and can therefore create
-  fully correct clones. However, some special tags require a
-  **special command sequence** to put them into the state where
-  writing to the manufacturer block is possible (often called "gen1"
-  tags).  
-  These tags will not work. Remember this when you are shopping for special
-  tags!  
+  gen2" aka "CUID"). This App is able to write to such tags and can therefore
+  create fully correct clones. However, app will not work with some special tags, 
+  because they require a **special command sequence** to put them into the 
+  state where writing to the manufacturer block is possible (often called 
+  "gen1" tags aka "UID"). Meanwhile, this app technically could work with
+  "FUID" and "UFUID", but neither has been tested (if you tested them, write a 
+  issue to tell me!).([read more](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md))  
+  Remember this when you are shopping for special tags!  
   Also, make sure the the BCC value (check out the "BCC Calculator Tool"),
   the SAK and the ATQA values are correct. If you just want to clone a UID,
   please use the "Clone UID Tool".
