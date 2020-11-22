@@ -575,17 +575,20 @@ public class WriteTag extends BasicActivity {
         byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
 
-        if (keys[1] != null) {
-            result = reader.writeBlock(sector, block,
-                    Common.hex2Bytes(mDataText.getText().toString()),
-                    keys[1], true);
-        }
-        // Error while writing? Maybe tag has default factory settings ->
-        // try to write with key a (if there is one).
-        if (result == -1 && keys[0] != null) {
+        // Try key A first, even though, most of the time, the write key is B.
+        // Some magic tags report successful writing with key B although it is
+        // marked as readable in the access bit and the write was not successful.
+        // This is not allowed by the standard anyways...
+        if (keys[0] != null) {
             result = reader.writeBlock(sector, block,
                     Common.hex2Bytes(mDataText.getText().toString()),
                     keys[0], false);
+        }
+        // Error while writing? Try to write with key B (if there is one).
+        if (result == -1 && keys[1] != null) {
+            result = reader.writeBlock(sector, block,
+                    Common.hex2Bytes(mDataText.getText().toString()),
+                    keys[1], true);
         }
         reader.close();
 
