@@ -272,22 +272,23 @@ public class Common extends Application {
      */
     public static String[] readFileLineByLine(File file, boolean readAll,
             Context context) {
+        if (file == null || !file.exists()) {
+            return null;
+        }
         String[] ret = null;
         BufferedReader reader = null;
-        if (file != null && file.exists()) {
-            try {
-                reader = new BufferedReader(new FileReader(file));
-                ret = readLineByLine(reader, readAll, context);
-            } catch (FileNotFoundException ex) {
-                ret = null;
-            } finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG, "Error while closing file.", e);
-                        ret = null;
-                    }
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            ret = readLineByLine(reader, readAll, context);
+        } catch (FileNotFoundException ex) {
+            ret = null;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Error while closing file.", e);
+                    ret = null;
                 }
             }
         }

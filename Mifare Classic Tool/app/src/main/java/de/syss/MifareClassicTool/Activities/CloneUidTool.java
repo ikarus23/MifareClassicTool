@@ -59,7 +59,7 @@ public class CloneUidTool extends BasicActivity {
     // access control systems only check for the UID.
     private String mBlock0Rest = "080400475955D141103607";
     // Default key to write to a factory formatted block 0 of "magic tag gen2".
-    private String mBlock0Key = "FFFFFFFFFFFF";
+    private String mBlock0Key = MCReader.DEFAULT_KEY;
     private boolean mIgnoreIncorrectBlock0 = false;
     private enum Status { INIT, BLOCK0_CALCULATED, CLONED }
     private Status mStatus = Status.INIT;

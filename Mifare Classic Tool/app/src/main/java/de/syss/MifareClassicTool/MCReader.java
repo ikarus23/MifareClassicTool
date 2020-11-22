@@ -56,13 +56,18 @@ public class MCReader {
      * Placeholder for unreadable blocks.
      */
     public static final String NO_DATA = "--------------------------------";
+    /**
+     * Default key of MIFARE Classic tags.
+     */
+    public static final String DEFAULT_KEY = "FFFFFFFFFFFF";
 
     private final MifareClassic mMFC;
     private SparseArray<byte[][]> mKeyMap = new SparseArray<>();
     private int mKeyMapStatus = 0;
     private int mLastSector = -1;
     private int mFirstSector = 0;
-    private ArrayList<byte[]> mKeysWithOrder;
+    private ArrayList<String> mKeysWithOrder;
+    private boolean mHasAllZeroKey = false;
 
     /**
      * Initialize a MIFARE Classic reader for the given tag.
@@ -530,7 +535,7 @@ public class MCReader {
             int retryAuthCount = Common.getPreferences().getInt(
                     Preference.RetryAuthenticationCount.toString(), 1);
 
-            byte[][] keys = new byte[2][];
+            String[] keys = new String[2];
             boolean[] foundKeys = new boolean[] {false, false};
             boolean auth;
 
@@ -538,12 +543,13 @@ public class MCReader {
             // authentication method A and B.
             keysloop:
             for (int i = 0; i < mKeysWithOrder.size(); i++) {
-                byte[] key = mKeysWithOrder.get(i);
+                String key = mKeysWithOrder.get(i);
+                byte[] bytesKey = Common.hex2Bytes(key);
                 for (int j = 0; j < retryAuthCount+1;) {
                     try {
                         if (!foundKeys[0]) {
                             auth = mMFC.authenticateSectorWithKeyA(
-                                    mKeyMapStatus, key);
+                                    mKeyMapStatus, bytesKey);
                             if (auth) {
                                 keys[0] = key;
                                 foundKeys[0] = true;
@@ -551,7 +557,7 @@ public class MCReader {
                         }
                         if (!foundKeys[1]) {
                             auth = mMFC.authenticateSectorWithKeyB(
-                                    mKeyMapStatus, key);
+                                    mKeyMapStatus, bytesKey);
                             if (auth) {
                                 keys[1] = key;
                                 foundKeys[1] = true;
@@ -601,21 +607,32 @@ public class MCReader {
             }
             if (!error && (foundKeys[0] || foundKeys[1])) {
                 // At least one key found. Add key(s).
-                mKeyMap.put(mKeyMapStatus, keys);
-                // Key reuse is very likely, so try the found keys second.
-                // NOTE: The all-F key has to be tested always first if there
+                byte[][] bytesKeys = new byte[2][];
+                bytesKeys[0] = Common.hex2Bytes(keys[0]);
+                bytesKeys[1] = Common.hex2Bytes(keys[1]);
+                mKeyMap.put(mKeyMapStatus, bytesKeys);
+                // Key reuse is very likely, so try the found keys first or,
+                // if a all all-0 key is present, second.
+                // The all-F key has to be tested always first if there
                 // is a all-0 key in the key file, because of a bug in
                 // some tags and/or devices.
                 // https://github.com/ikarus23/MifareClassicTool/issues/66
-                byte[] fKey = Common.hex2Bytes("FFFFFFFFFFFF");
                 if (mKeysWithOrder.size() > 2) {
-                    if (foundKeys[0] && !Arrays.equals(keys[0], fKey)) {
+                    if (foundKeys[0]) {
                         mKeysWithOrder.remove(keys[0]);
-                        mKeysWithOrder.add(1, keys[0]);
+                        if (mHasAllZeroKey && !keys[0].equals(DEFAULT_KEY)) {
+                            mKeysWithOrder.add(1, keys[0]);
+                        } else {
+                            mKeysWithOrder.add(0, keys[0]);
+                        }
                     }
-                    if (foundKeys[1] && !Arrays.equals(keys[1], fKey)) {
+                    if (foundKeys[1]) {
                         mKeysWithOrder.remove(keys[1]);
-                        mKeysWithOrder.add(1, keys[1]);
+                        if (mHasAllZeroKey && !keys[1].equals(DEFAULT_KEY)) {
+                            mKeysWithOrder.add(1, keys[1]);
+                        } else {
+                            mKeysWithOrder.add(0, keys[1]);
+                        }
                     }
                 }
             }
@@ -854,22 +871,21 @@ public class MCReader {
      * will not be interpreted.
      * @param context The context in which the possible "Out of memory"-Toast
      * will be shown.
-     * @return Number of keys loaded. -1 if out of memory.
+     * @return Number of keys loaded. -1 on error.
      */
     public int setKeyFile(File[] keyFiles, Context context) {
-        boolean hasAllZeroKey = false;
-        HashSet<byte[]> keys = new HashSet<>();
+        if (keyFiles == null || keyFiles.length == 0 || context == null) {
+            return -1;
+        }
+        HashSet<String> keys = new HashSet<>();
         for (File file : keyFiles) {
             String[] lines = Common.readFileLineByLine(file, false, context);
             if (lines != null) {
                 for (String line : lines) {
                     if (!line.equals("") && line.length() == 12
                             && line.matches("[0-9A-Fa-f]+")) {
-                        if (line.equals("000000000000")) {
-                            hasAllZeroKey = true;
-                        }
                         try {
-                            keys.add(Common.hex2Bytes(line));
+                            keys.add(line);
                         } catch (OutOfMemoryError e) {
                             // Error. Too many keys (out of memory).
                             Toast.makeText(context, R.string.info_to_many_keys,
@@ -881,16 +897,15 @@ public class MCReader {
             }
         }
         if (keys.size() > 0) {
+            mHasAllZeroKey = keys.contains("000000000000");
             mKeysWithOrder = new ArrayList<>(keys);
-            byte[] zeroKey = Common.hex2Bytes("000000000000");
-            if (hasAllZeroKey) {
+            if (mHasAllZeroKey) {
                 // NOTE: The all-F key has to be tested always first if there
                 // is a all-0 key in the key file, because of a bug in
                 // some tags and/or devices.
                 // https://github.com/ikarus23/MifareClassicTool/issues/66
-                byte[] fKey = Common.hex2Bytes("FFFFFFFFFFFF");
-                mKeysWithOrder.remove(fKey);
-                mKeysWithOrder.add(0, fKey);
+                mKeysWithOrder.remove(DEFAULT_KEY);
+                mKeysWithOrder.add(0, DEFAULT_KEY);
             }
             return keys.size();
         }
