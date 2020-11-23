@@ -128,6 +128,8 @@ public class WriteTag extends BasicActivity {
                 R.id.relativeLayoutWriteTagWriteBlock));
         mWriteModeLayouts.add(findViewById(R.id.linearLayoutWriteTagDump));
         mWriteModeLayouts.add(findViewById(
+                R.id.linearLayoutWriteTagCloneUid));
+        mWriteModeLayouts.add(findViewById(
                 R.id.linearLayoutWriteTagFactoryFormat));
         mWriteModeLayouts.add(findViewById(
                 R.id.relativeLayoutWriteTagValueBlock));
@@ -1286,6 +1288,18 @@ public class WriteTag extends BasicActivity {
                     Toast.LENGTH_LONG).show());
             a.finish();
         }).start();
+    }
+
+    /**
+     * Open the clone UID tool.
+     * @param view The View object that triggered the method
+     * (in this case the clone UID button).
+     * @see KeyMapCreator
+     */
+    public void onCloneUid(View view) {
+        // Show the clone UID tool.
+        Intent intent = new Intent(this, CloneUidTool.class);
+        startActivity(intent);
     }
 
     /**

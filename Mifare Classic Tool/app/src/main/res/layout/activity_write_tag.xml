@@ -306,6 +306,43 @@
                 android:background="@color/light_gray" />
 
             <RadioButton
+                android:id="@+id/radioButtonWriteTagCloneUid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_horizontal"
+                android:onClick="onChangeWriteMode"
+                android:tag="clone_uid"
+                android:text="@string/action_show_clone_uid"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/blue" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutWriteTagCloneUid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:tag="clone_uid_layout"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/buttonWriteTagCloneUid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCloneUid"
+                    android:text="@string/action_open_clone_uid_tool" />
+            </LinearLayout>
+
+            <!-- Separator -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_margin="10dp"
+                android:background="@color/light_gray" />
+
+            <RadioButton
                 android:id="@+id/radioButtonWriteTagFactoryFormat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

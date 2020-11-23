@@ -309,6 +309,7 @@
     <string name="action_generic_converter">Generic Type Converter</string>
     <string name="action_multi_purpose_converter">Multi-Purpose Converter</string>
     <string name="action_cyber_chef">Cyber Chef</string>
+    <string name="action_open_clone_uid_tool">Open the Clone UID Tool</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>
