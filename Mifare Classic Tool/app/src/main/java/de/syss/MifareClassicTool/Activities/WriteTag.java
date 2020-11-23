@@ -572,23 +572,43 @@ public class WriteTag extends BasicActivity {
         }
         int sector = Integer.parseInt(mSectorTextBlock.getText().toString());
         int block = Integer.parseInt(mBlockTextBlock.getText().toString());
+        String data = mDataText.getText().toString();
         byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
 
-        // Try key A first, even though, most of the time, the write key is B.
-        // Some magic tags report successful writing with key B although it is
-        // marked as readable in the access bit and the write was not successful.
-        // This is not allowed by the standard anyways...
-        if (keys[0] != null) {
-            result = reader.writeBlock(sector, block,
-                    Common.hex2Bytes(mDataText.getText().toString()),
-                    keys[0], false);
-        }
-        // Error while writing? Try to write with key B (if there is one).
-        if (result == -1 && keys[1] != null) {
-            result = reader.writeBlock(sector, block,
-                    Common.hex2Bytes(mDataText.getText().toString()),
-                    keys[1], true);
+        if (sector == 0 && block == 0) {
+            // Write the manufacturer bock. This is only possible on gen2 tags.
+            // There are some gen2 tags which report a successful write, although
+            // the write was not successful. Therefore, we try write it using both keys.
+            int resultKeyA = -1;
+            int resultKeyB = -1;
+            if (keys[1] != null) {
+                resultKeyB = reader.writeBlock(sector, block,
+                        Common.hex2Bytes(data),
+                        keys[1], true);
+            }
+            if (keys[0] != null) {
+                resultKeyA = reader.writeBlock(sector, block,
+                        Common.hex2Bytes(data),
+                        keys[0], false);
+            }
+            if (resultKeyA == 0 || resultKeyB == 0) {
+                result = 0;
+            }
+        } else {
+            // Normal block.
+            // Try key B first.
+            if (keys[1] != null) {
+                result = reader.writeBlock(sector, block,
+                        Common.hex2Bytes(data),
+                        keys[1], true);
+            }
+            // Error while writing? Try to write with key A (if there is one).
+            if ((result == -1 || result == 4) && keys[0] != null) {
+                result = reader.writeBlock(sector, block,
+                        Common.hex2Bytes(data),
+                        keys[0], false);
+            }
         }
         reader.close();
 
