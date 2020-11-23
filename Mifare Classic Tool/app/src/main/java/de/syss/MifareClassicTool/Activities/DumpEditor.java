@@ -430,18 +430,24 @@ public class DumpEditor extends BasicActivity
         final Context context = this;
         final IActivityThatReactsToSave activity = this;
 
-        // Ask user for filename.
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setLines(1);
-        input.setHorizontallyScrolling(true);
+        // Init. layout.
+        View dialogLayout = getLayoutInflater().inflate(
+                R.layout.dialog_save_file,
+                findViewById(android.R.id.content), false);
+        TextView message = (TextView) dialogLayout.findViewById(
+                R.id.textViewDialogSaveFileMessage);
+        final EditText input = (EditText) dialogLayout.findViewById(
+                R.id.editTextDialogSaveFileName);
+        message.setText(messageId);
         input.setText(fileName);
-        input.setSelection(input.getText().length());
-        new AlertDialog.Builder(this)
+        input.requestFocus();
+        input.setSelection(0);
+
+        // Ask user for filename.
+        AlertDialog ad = new AlertDialog.Builder(this)
             .setTitle(titleId)
-            .setMessage(messageId)
             .setIcon(android.R.drawable.ic_menu_save)
-            .setView(input)
+            .setView(dialogLayout)
             .setPositiveButton(R.string.action_save,
                     (dialog, whichButton) -> {
                         if (input.getText() != null
@@ -462,7 +468,8 @@ public class DumpEditor extends BasicActivity
                         }
                     })
             .setNegativeButton(R.string.action_cancel,
-                    (dialog, whichButton) -> mCloseAfterSuccessfulSave = false).show();
+                    (dialog, whichButton) -> mCloseAfterSuccessfulSave = false)
+            .show();
         onUpdateColors(null);
     }
 

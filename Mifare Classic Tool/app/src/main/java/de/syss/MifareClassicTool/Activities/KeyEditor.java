@@ -24,11 +24,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -45,7 +46,7 @@ import de.syss.MifareClassicTool.R;
  * @author Gerhard Klostermeier
  */
 public class KeyEditor extends BasicActivity
-        implements IActivityThatReactsToSave{
+        implements IActivityThatReactsToSave {
 
     private EditText mKeys;
     private String mFileName;
@@ -317,18 +318,24 @@ public class KeyEditor extends BasicActivity
         final Context cont = this;
         final IActivityThatReactsToSave activity =
                 this;
-        // Ask user for filename.
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setLines(1);
-        input.setHorizontallyScrolling(true);
+        // Init. layout.
+        View dialogLayout = getLayoutInflater().inflate(
+                R.layout.dialog_save_file,
+                findViewById(android.R.id.content), false);
+        TextView message = (TextView) dialogLayout.findViewById(
+                R.id.textViewDialogSaveFileMessage);
+        final EditText input = (EditText) dialogLayout.findViewById(
+                R.id.editTextDialogSaveFileName);
+        message.setText(R.string.dialog_save_keys);
         input.setText(mFileName);
-        input.setSelection(input.getText().length());
+        input.requestFocus();
+        input.setSelection(0);
+
+        // Ask user for filename.
         new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_save_keys_title)
-            .setMessage(R.string.dialog_save_keys)
             .setIcon(android.R.drawable.ic_menu_save)
-            .setView(input)
+            .setView(dialogLayout)
             .setPositiveButton(R.string.action_ok,
                     (dialog, whichButton) -> {
                         if (input.getText() != null
@@ -344,7 +351,8 @@ public class KeyEditor extends BasicActivity
                         }
                     })
             .setNegativeButton(R.string.action_cancel,
-                    (dialog, whichButton) -> mCloseAfterSuccessfulSave = false).show();
+                    (dialog, whichButton) -> mCloseAfterSuccessfulSave = false)
+            .show();
     }
 
     /**

@@ -91,7 +91,8 @@
         <activity
             android:name="de.syss.MifareClassicTool.Activities.FileChooser"
             android:icon="@drawable/open"
-            android:label="@string/title_activity_file_chooser" >
+            android:label="@string/title_activity_file_chooser"
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name="de.syss.MifareClassicTool.Activities.AccessConditionDecoder"

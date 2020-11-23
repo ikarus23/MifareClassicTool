@@ -24,11 +24,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -328,17 +328,29 @@ public class FileChooser extends BasicActivity {
         if (mDir.getName().equals(Common.KEYS_DIR)) {
             prefill = ".keys";
         }
-        // Ask user for filename.
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setLines(1);
+        // Init. layout.
+        View dialogLayout = getLayoutInflater().inflate(
+                R.layout.dialog_save_file,
+                findViewById(android.R.id.content), false);
+        TextView message = (TextView) dialogLayout.findViewById(
+                R.id.textViewDialogSaveFileMessage);
+        final EditText input = (EditText) dialogLayout.findViewById(
+                R.id.editTextDialogSaveFileName);
+        message.setText(R.string.dialog_new_file);
         input.setText(prefill);
-        input.setHorizontallyScrolling(true);
+        input.requestFocus();
+        input.setSelection(0);
+        // Show keyboard.
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+        // Ask user for filename.
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_new_file_title)
-                .setMessage(R.string.dialog_new_file)
                 .setIcon(android.R.drawable.ic_menu_add)
-                .setView(input)
+                .setView(dialogLayout)
                 .setPositiveButton(R.string.action_ok,
                         (dialog, whichButton) -> {
                             if (input.getText() != null
@@ -364,7 +376,8 @@ public class FileChooser extends BasicActivity {
                 .setNegativeButton(R.string.action_cancel,
                         (dialog, whichButton) -> {
                             // Do nothing.
-                        }).show();
+                        })
+                .show();
     }
 
     /**
