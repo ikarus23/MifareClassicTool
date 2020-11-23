@@ -29,7 +29,7 @@
         android:required="true" />
 
     <application
-        android:name="de.syss.MifareClassicTool.Common"
+        android:name=".Common"
         android:allowBackup="false"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,7 +37,7 @@
         android:theme="@style/AppTheme" >
         <!-- Main Activity -->
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.MainMenu"
+            android:name=".Activities.MainMenu"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main"
             android:launchMode="singleTop" >
@@ -49,7 +49,7 @@
         </activity>
 
         <activity-alias
-            android:targetActivity="de.syss.MifareClassicTool.Activities.MainMenu"
+            android:targetActivity=".Activities.MainMenu"
             android:name=".MainMenuAlias"
             android:label="@string/title_activity_main"
             android:launchMode="singleTop" >
@@ -77,121 +77,121 @@
 
         <!-- Other Activities -->
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.KeyMapCreator"
+            android:name=".Activities.KeyMapCreator"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/map_keys_to_sector"
             android:label="@string/title_activity_create_key_map" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.DumpEditor"
+            android:name=".Activities.DumpEditor"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/edit_dump"
             android:label="@string/title_activity_dump_editor" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.FileChooser"
+            android:name=".Activities.FileChooser"
             android:icon="@drawable/open"
             android:label="@string/title_activity_file_chooser"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.AccessConditionDecoder"
+            android:name=".Activities.AccessConditionDecoder"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/access_conditions"
             android:label="@string/title_activity_access_conditions" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.ValueBlocksToInt"
+            android:name=".Activities.ValueBlocksToInt"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_to_int"
             android:label="@string/title_activity_value_blocks" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.WriteTag"
+            android:name=".Activities.WriteTag"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/write_tag"
             android:label="@string/title_activity_write_tag" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.ReadTag"
+            android:name=".Activities.ReadTag"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/read_tag"
             android:label="@string/title_activity_read_tag" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.KeyEditor"
+            android:name=".Activities.KeyEditor"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:icon="@drawable/edit_keys"
             android:label="@string/title_activity_key_editor" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.HelpAndInfo"
+            android:name=".Activities.HelpAndInfo"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/help_and_info"
             android:label="@string/title_activity_help" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.HexToAscii"
+            android:name=".Activities.HexToAscii"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/hex_to_ascii"
             android:label="@string/title_activity_hex_to_ascii" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.TagInfoTool"
+            android:name=".Activities.TagInfoTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/tag_info"
             android:label="@string/title_activity_tag_info" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.ValueBlockTool"
+            android:name=".Activities.ValueBlockTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_tool"
             android:label="@string/title_activity_value_block_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.AccessConditionTool"
+            android:name=".Activities.AccessConditionTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/access_condition_tool"
             android:label="@string/title_activity_access_condition_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.Preferences"
+            android:name=".Activities.Preferences"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/preferences"
             android:label="@string/title_activity_preferences" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.DiffTool"
+            android:name=".Activities.DiffTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/diff_tool"
             android:label="@string/title_activity_diff_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.BccTool"
+            android:name=".Activities.BccTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/bcc_tool"
             android:label="@string/title_activity_bcc_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.CloneUidTool"
+            android:name=".Activities.CloneUidTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/clone_uid"
             android:label="@string/title_activity_clone_uid" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.ImportExportTool"
+            android:name=".Activities.ImportExportTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/value_block_tool"
             android:label="@string/title_activity_import_export_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.UidLogTool"
+            android:name=".Activities.UidLogTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/edit_dump"
             android:label="@string/title_activity_uid_log_tool" >
         </activity>
         <activity
-            android:name="de.syss.MifareClassicTool.Activities.DataConversionTool"
+            android:name=".Activities.DataConversionTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/hex_to_ascii"
             android:label="@string/title_activity_data_conversion_tool" >

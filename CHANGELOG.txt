@@ -1,7 +1,7 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
- * Improved speed of mapping (fixed errors).
+ * Improved speed of key mapping (fixed errors).
  * Write block 0 of some gen2 tags more reliable.
  * Added more well known keys to the extended key file.
    (extended-std.keys file will be updated automatically.)
