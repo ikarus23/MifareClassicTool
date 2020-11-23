@@ -1,0 +1,7 @@
+ * Improved speed of key mapping (fixed errors).
+ * Write block 0 of some gen2 tags more reliable.
+ * Added more well known keys to the extended key file.
+   (extended-std.keys file will be updated automatically.)
+ * Updated Chinese translation. Thanks to "Nkh0472".
+ * Some minor bug fixes.
+
