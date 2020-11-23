@@ -321,6 +321,10 @@ public class CloneUidTool extends BasicActivity {
         }
 
         // SAK.
+        // NOTE: Tags might not appear to be genuine/valid NXP/Infinion tags.
+        // For a 4b UID/1k MFC tag the SAK should be 0x08 but the "corresponding" byte in
+        // block 0 (byte nr. 5) must by 0x88. This is not possible with some gen2 tags,
+        // because they use byte nr. 5 as SAK value.
         String sak = null;
         if (tagSize == MifareClassic.SIZE_MINI) {
             sak = "09";
