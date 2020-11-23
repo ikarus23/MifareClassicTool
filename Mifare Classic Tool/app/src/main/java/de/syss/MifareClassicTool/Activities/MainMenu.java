@@ -92,10 +92,11 @@ public class MainMenu extends Activity {
 
     /**
      * Check for NFC hardware and MIFARE Classic support.
-     * If the directory structure and the std. keys files is not already there
-     * it will be created. Also, at the first run of this App, a warning
+     * The directory structure and the std. keys files will be created as well.
+     * Also, at the first run of this App, a warning
      * notice and a donate message will be displayed.
-     * @see #copyStdKeysFilesIfNecessary()
+     * @see #initFolders()
+     * @see #copyStdKeysFiles()
      */
     @SuppressLint("SetTextI18n")
     @Override
@@ -119,6 +120,7 @@ public class MainMenu extends Activity {
         mDumpEditor = findViewById(R.id.buttonMainEditCardDump);
 
         initFolders();
+        copyStdKeysFiles();
     }
 
     /**
@@ -592,9 +594,6 @@ public class MainMenu extends Activity {
                 file.delete();
             }
         }
-
-        // Create std. key file if there is none.
-        copyStdKeysFilesIfNecessary();
     }
 
     /**
@@ -903,47 +902,44 @@ public class MainMenu extends Activity {
     /**
      * Copy the standard key files ({@link Common#STD_KEYS} and
      * {@link Common#STD_KEYS_EXTENDED}) form assets to {@link Common#KEYS_DIR}.
-     * Key files are simple text files. Any plain text editor will do the trick.
      * @see Common#KEYS_DIR
      * @see Common#HOME_DIR
      * @see Common#copyFile(InputStream, OutputStream)
      */
-    private void copyStdKeysFilesIfNecessary() {
+    private void copyStdKeysFiles() {
         File std = Common.getFile(
                 Common.KEYS_DIR + "/" + Common.STD_KEYS);
         File extended = Common.getFile(
                 Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
         AssetManager assetManager = getAssets();
 
-        if (!std.exists()) {
-            // Copy std.keys.
-            try {
-                InputStream in = assetManager.open(
-                        Common.KEYS_DIR + "/" + Common.STD_KEYS);
-                OutputStream out = new FileOutputStream(std);
-                Common.copyFile(in, out);
-                in.close();
-                out.flush();
-                out.close();
-              } catch(IOException e) {
-                  Log.e(LOG_TAG, "Error while copying 'std.keys' from assets "
-                          + "to internal storage.");
-              }
-        }
-        if (!extended.exists()) {
-            // Copy extended-std.keys.
-            try {
-                InputStream in = assetManager.open(
-                        Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
-                OutputStream out = new FileOutputStream(extended);
-                Common.copyFile(in, out);
-                in.close();
-                out.flush();
-                out.close();
-              } catch(IOException e) {
-                  Log.e(LOG_TAG, "Error while copying 'extended-std.keys' "
-                          + "from assets to internal storage.");
-              }
-        }
+        // Copy std.keys.
+        try {
+            InputStream in = assetManager.open(
+                    Common.KEYS_DIR + "/" + Common.STD_KEYS);
+            OutputStream out = new FileOutputStream(std);
+            Common.copyFile(in, out);
+            in.close();
+            out.flush();
+            out.close();
+          } catch(IOException e) {
+              Log.e(LOG_TAG, "Error while copying 'std.keys' from assets "
+                      + "to internal storage.");
+          }
+
+        // Copy extended-std.keys.
+        try {
+            InputStream in = assetManager.open(
+                    Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
+            OutputStream out = new FileOutputStream(extended);
+            Common.copyFile(in, out);
+            in.close();
+            out.flush();
+            out.close();
+          } catch(IOException e) {
+              Log.e(LOG_TAG, "Error while copying 'extended-std.keys' "
+                      + "from assets to internal storage.");
+          }
+
     }
 }

@@ -123,10 +123,12 @@ normal RFID-Readers and some special software
 [mfoc](https://github.com/nfc-tools/mfoc)).
 
 The application comes with standard key files called
-*std.keys* and *extended-std.keys*, which contains the
+*std.keys* and *extended-std.keys*, which contain the
 well known keys and some standard keys from a short Google search.
-You can try to read a tag with this key file using
-&quot;Read Tag&quot; from main menu.
+You can try to read a tag with these key files using
+&quot;Read Tag&quot; from main menu. Changes to these key files
+will be lost. Create your own key file for your keys.
+
 
 Once you know some keys, you cam to put them into a simple text
 file (one key per line). You can do this on your PC and import
