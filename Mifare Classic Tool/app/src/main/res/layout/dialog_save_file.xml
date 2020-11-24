@@ -40,7 +40,8 @@
         android:id="@+id/editTextDialogSaveFileName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:singleLine="true" />
+        android:inputType="textNoSuggestions"
+        android:singleLine="true"
+        android:importantForAutofill="no" />
 
 </LinearLayout>
