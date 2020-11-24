@@ -251,6 +251,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonCloneUidToolSakAtqaInfo"
                     android:text="@string/action_calc_sak_atqa"
                     android:checked="true" />
 
