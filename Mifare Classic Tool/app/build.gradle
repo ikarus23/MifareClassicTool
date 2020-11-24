@@ -24,6 +24,12 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    allprojects {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
 }
 
 dependencies {
