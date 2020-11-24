@@ -94,4 +94,9 @@
         process right now. -->
         <ignore path="src/main/res/values/*" />
     </issue>
+
+    <issue id="UnusedResources">
+        <!-- Ignore warings about the unused launcher icons. Andorid needs them. -->
+        <ignore regexp="ic_launcher" />
+    </issue>
 </lint>
