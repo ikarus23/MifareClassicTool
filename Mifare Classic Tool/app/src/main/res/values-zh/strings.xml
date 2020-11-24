@@ -287,6 +287,7 @@
     <string name="action_generic_converter">数据类型转换器</string>
     <string name="action_multi_purpose_converter">多用途转换器</string>
     <string name="action_cyber_chef">Cyber Chef</string>
+    <string name="action_open_clone_uid_tool">打开UID克隆工具</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">发现新标签</string>
