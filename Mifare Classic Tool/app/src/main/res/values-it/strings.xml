@@ -365,7 +365,7 @@
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
     <string name="info_ac_reset_keyb_not_readable">La chiave B è leggibile.
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
-    <string name="info_strange_error">Errore: È successo un errore improvviso e non sappiamo perchè.
+    <string name="info_strange_error">Errore: È successo un errore improvviso e non sappiamo perché.
         Per favore faccelo sapere usando la pagina del progetto così proviamo a risolverlo.</string>
     <string name="info_key_map_error">Errore: La connessione col tag è stata persa</string>
     <string name="info_block0_missing">Errore: Non è presente il blocco del produttore (0)</string>
@@ -498,7 +498,7 @@
     <string name="dialog_retry_authentication_title">Riprova l\'autenticazione</string>
     <string name="dialog_retry_authentication">Riprova l\'autenticazione (a un settore/blocco) X volte se fallisce: alcuni tag col blocco 0 
         riscrivibile e UID lungo 7 byte lo richiedono. Ciò potrebbe aiutare a far funzionare meglio alcuni dispositivi, come il Google Nexus 5X o il 
-        Huawei P10. Nella maggior parte dei casi dovresti lasciarla disabilitata poichè rallenta la lettura, la scrittura e la mappatura.</string>
+        Huawei P10. Nella maggior parte dei casi dovresti lasciarla disabilitata poiché rallenta la lettura, la scrittura e la mappatura.</string>
     <string name="dialog_custom_sector_count_title">Numero Personalizzato di Settori</string>
     <string name="dialog_custom_sector_count">Imposta un numero di settori personalizzato, ignorando quello rivelato da Android.
         Utile per tag con 2KB di memoria.</string>
