@@ -20,6 +20,7 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutDialogSaveFile"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -31,7 +32,9 @@
         android:id="@+id/textViewDialogSaveFileMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/text_enter_file_name"
+        android:labelFor="@+id/editTextDialogSaveFileName" />
 
     <EditText
         android:id="@+id/editTextDialogSaveFileName"

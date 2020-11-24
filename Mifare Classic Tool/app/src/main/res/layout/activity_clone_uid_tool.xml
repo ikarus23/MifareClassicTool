@@ -144,7 +144,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
                     android:text="@string/text_clone_uid_manufacturer_block_rest"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextCloneUidToolBlock0Rest" />
 
                 <EditText
                     android:id="@+id/editTextCloneUidToolBlock0Rest"
@@ -186,7 +187,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolWriteKeyInfo"
                     android:text="@string/text_write_key"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextCloneUidToolWriteKey" />
 
                 <EditText
                     android:id="@+id/editTextCloneUidToolWriteKey"

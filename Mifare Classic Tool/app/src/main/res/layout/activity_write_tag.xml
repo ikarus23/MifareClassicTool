@@ -76,7 +76,8 @@
                     android:layout_alignParentTop="true"
                     android:padding="5dp"
                     android:text="@string/text_sector"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextWriteTagSector" />
 
                 <EditText
                     android:id="@+id/editTextWriteTagSector"
@@ -109,7 +110,8 @@
                     android:layout_below="@id/textViewWriteTagSector"
                     android:padding="5dp"
                     android:text="@string/text_block"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextWriteTagBlock" />
 
                 <EditText
                     android:id="@+id/editTextWriteTagBlock"
@@ -238,7 +240,8 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_toLeftOf="@+id/imageButtonWriteTagDumpStaticACInfo"
-                            android:text="@string/action_static_ac" />
+                            android:text="@string/action_static_ac"
+                            android:labelFor="@+id/editTextWriteTagDumpStaticAC" />
 
                         <EditText
                             android:id="@+id/editTextWriteTagDumpStaticAC"
@@ -435,7 +438,8 @@
                     android:layout_alignBaseline="@+id/editTextWriteTagValueBlockSector"
                     android:padding="5dp"
                     android:text="@string/text_sector"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextWriteTagValueBlockSector" />
 
                 <EditText
                     android:id="@+id/editTextWriteTagValueBlockSector"
@@ -468,7 +472,8 @@
                     android:layout_below="@id/textViewWriteTagValueBlockSector"
                     android:padding="5dp"
                     android:text="@string/text_block"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextWriteTagValueBlockBlock" />
 
                 <EditText
                     android:id="@+id/editTextWriteTagValueBlockBlock"
@@ -501,7 +506,8 @@
                     android:layout_below="@id/editTextWriteTagValueBlockBlock"
                     android:padding="5dp"
                     android:text="@string/text_value"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextWriteTagValueBlockValue" />
 
                 <EditText
                     android:id="@+id/editTextWriteTagValueBlockValue"

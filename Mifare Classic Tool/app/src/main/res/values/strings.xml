@@ -202,6 +202,7 @@
     <string name="text_missing_files_update">Missing files after updating from version prior
             to 4.0.0? Please read section \"1.2 Data Storage\" of \"Help and Info\".</string>
     <string name="text_more_converter">More converter (online)</string>
+    <string name="text_enter_file_name">Enter a file name</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -651,7 +652,6 @@
         NXP\'s specifications.
         \n\nProceed at your own risk!</string>
 
-
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
@@ -661,5 +661,6 @@
     <string name="hint_int_423">e.g. 423</string>
     <string name="hint_custom_sector_count">e.g. 16 for 1K</string>
     <string name="hint_custom_retry_authentication_count">Number of retries</string>
+    <string name="hint_key">HEX, 6 bytes per line</string>
 
 </resources>

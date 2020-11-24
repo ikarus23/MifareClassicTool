@@ -43,7 +43,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
-                android:text="@string/text_hex" />
+                android:text="@string/text_hex"
+                android:labelFor="@+id/editTextDataConversionToolHex"/>
 
             <EditText
                 android:id="@+id/editTextDataConversionToolHex"
@@ -79,7 +80,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
-                android:text="@string/text_ascii" />
+                android:text="@string/text_ascii"
+                android:labelFor="@+id/editTextDataConversionToolAscii" />
 
             <EditText
                 android:id="@+id/editTextDataConversionToolAscii"
@@ -115,7 +117,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:gravity="right"
                 android:paddingRight="5dp"
-                android:text="@string/text_bin" />
+                android:text="@string/text_bin"
+                android:labelFor="@+id/editTextDataConversionToolBin" />
 
             <EditText
                 android:id="@+id/editTextDataConversionToolBin"
