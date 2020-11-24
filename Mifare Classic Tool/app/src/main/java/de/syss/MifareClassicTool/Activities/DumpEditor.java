@@ -26,6 +26,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -573,9 +574,11 @@ public class DumpEditor extends BasicActivity
                     et.setLayoutParams(new LayoutParams(
                             LayoutParams.WRAP_CONTENT,
                             LayoutParams.WRAP_CONTENT));
+                    et.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
                     et.setInputType(et.getInputType()
                             |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                            |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+                            |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+                            |InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     et.setTypeface(Typeface.MONOSPACE);
                     // Set text size of an EditText to the text size of
                     // a TextView. (getTextSize() returns
