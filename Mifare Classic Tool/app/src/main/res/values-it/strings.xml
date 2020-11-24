@@ -182,7 +182,6 @@
     <string name="text_sak_atqa_calc_warning">Attenzione: Non è possibile calcolare il SAK/ATQA, verrà usato il valore predefinito.</string>
     <string name="text_reset_clone_process">Resettando la clonazione</string>
     <string name="text_select_file">Seleziona un file</string>
-    <string name="text_select_directory">Seleziona un percorso</string>
     <string name="text_choose_dump_file">Scegli un file dump</string>
     <string name="text_choose_key_file">Scegli un file con le chiavi</string>
     <string name="text_import_export_tool_info">Se esiste già un file

@@ -175,7 +175,6 @@
     <string name="text_sak_atqa_calc_warning">警告: 无法计算 SAK/ATQA, 将使用默认值</string>
     <string name="text_reset_clone_process">重置克隆过程</string>
     <string name="text_select_file">选择文件</string>
-    <string name="text_select_directory">选择目录</string>
     <string name="text_choose_dump_file">选择转储文件</string>
     <string name="text_choose_key_file">选择一些密钥文件:</string>
     <string name="text_import_export_tool_info">若已存在同名文件,则该文件将被覆盖｡</string>

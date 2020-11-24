@@ -184,7 +184,6 @@
     <string name="text_sak_atqa_calc_warning">Warning: Could not calculate SAK/ATQA, using default</string>
     <string name="text_reset_clone_process">Resetting the clone process</string>
     <string name="text_select_file">Select file</string>
-    <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
     <string name="text_choose_key_file">Choose key file</string>
     <string name="text_import_export_tool_info">If a file with the same name already
