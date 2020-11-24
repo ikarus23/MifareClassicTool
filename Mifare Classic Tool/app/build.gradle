@@ -28,4 +28,5 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
 }
