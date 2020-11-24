@@ -195,13 +195,13 @@ public class Preferences extends BasicActivity {
      * Defaults to 0 (Hex) if all else fails!
      */
     private int getUIDFormatSequence() {
-        switch(mUIDFormatRadioGroup.getCheckedRadioButtonId()) {
-            case R.id.radioButtonHex:
-                return 0;
-            case R.id.radioButtonDecBE:
-                return 1;
-            case R.id.radioButtonDecLE:
-                return 2;
+        int id = mUIDFormatRadioGroup.getCheckedRadioButtonId();
+        if (id == R.id.radioButtonHex) {
+            return 0;
+        } else if (id == R.id.radioButtonDecBE) {
+            return 1;
+        } else if (id == R.id.radioButtonDecLE) {
+            return 2;
         }
         return 0;
     }

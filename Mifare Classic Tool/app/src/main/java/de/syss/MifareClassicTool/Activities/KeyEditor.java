@@ -164,22 +164,21 @@ public class KeyEditor extends BasicActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuKeyEditorSave:
-                onSave();
-                return true;
-            case R.id.menuKeyEditorShare:
-                shareKeyFile();
-                return true;
-            case R.id.menuKeyEditorRemoveDuplicates:
-                removeDuplicates();
-                return true;
-            case R.id.menuKeyEditorExportKeys:
-                exportKeys();
-                return true;
-        default:
-            return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menuKeyEditorSave) {
+            onSave();
+            return true;
+        } else if (id == R.id.menuKeyEditorShare) {
+            shareKeyFile();
+            return true;
+        } else if (id == R.id.menuKeyEditorRemoveDuplicates) {
+            removeDuplicates();
+            return true;
+        } else if (id == R.id.menuKeyEditorExportKeys) {
+            exportKeys();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

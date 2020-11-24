@@ -217,16 +217,15 @@ public class FileChooser extends BasicActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuFileChooserNewFile:
-                onNewFile();
-                return true;
-            case R.id.menuFileChooserDeleteFile:
-                onDeleteFile();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menuFileChooserNewFile) {
+            onNewFile();
+            return true;
+        } else if (itemId == R.id.menuFileChooserDeleteFile) {
+            onDeleteFile();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
