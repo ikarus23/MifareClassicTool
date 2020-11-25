@@ -175,7 +175,6 @@
     <string name="text_sak_atqa_calc_warning">警告: 无法计算 SAK/ATQA, 将使用默认值</string>
     <string name="text_reset_clone_process">重置克隆过程</string>
     <string name="text_select_file">选择文件</string>
-    <string name="text_select_directory">选择目录</string>
     <string name="text_choose_dump_file">选择转储文件</string>
     <string name="text_choose_key_file">选择一些密钥文件:</string>
     <string name="text_import_export_tool_info">若已存在同名文件,则该文件将被覆盖｡</string>
@@ -191,6 +190,7 @@
     <string name="text_invalid_ac">无效访问控制条件</string>
     <string name="text_missing_files_update">从4.0.0之前的版本更新后丢失了文件？请参考 \"帮助信息\" 中的 \"1.2 Data Storage\"。</string>
     <string name="text_more_converter">更多转换器 (联网)</string>
+    <string name="text_enter_file_name">输入文件名</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">读标签</string>
@@ -451,12 +451,13 @@
     <string name="dialog_block0_data_warning">你将向块0中写入数据,但数据看起来可能是无效的。\n\n在某些2代标签中,像SAK和ATQA这样的值由块0中的数据控制。如果写入了错误的值,标签可能会无法工作(或许可逆)。但也有标签会忽略错误的值。此外,UID应遵循ISO 14443规范。\n\n此处的块0检查试图确保您正在以符合NXP规范的形式写入数据。\n\n请您自己承担风险！</string>
 
     <!-- Hints -->
-    <string name="hint_hex_16_byte">十六进制,16字节(如0A4F…)</string>
-    <string name="hint_hex_3_byte">十六进制,3字节</string>
-    <string name="hint_hex_4_byte">十六进制,4字节</string>
-    <string name="hint_hex_4_7_10_byte">十六进制,4/7/10字节</string>
+    <string name="hint_hex_16_byte">HEX,16字节(如0A4F…)</string>
+    <string name="hint_hex_3_byte">HEX,3字节</string>
+    <string name="hint_hex_4_byte">HEX,4字节</string>
+    <string name="hint_hex_4_7_10_byte">HEX,4/7/10字节</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">如:423</string>
     <string name="hint_custom_sector_count">如1K:16</string>
     <string name="hint_custom_retry_authentication_count">重试次数</string>
+    <string name="hint_key">HEX,每行6字节</string>
 </resources>
