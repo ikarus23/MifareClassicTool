@@ -206,6 +206,7 @@ public class FileChooser extends BasicActivity {
 
         // Enable/disable the new file menu item according to mIsAllowNewFile.
         newFile.setEnabled(mIsAllowNewFile);
+        newFile.setVisible(mIsAllowNewFile);
 
         return true;
     }
