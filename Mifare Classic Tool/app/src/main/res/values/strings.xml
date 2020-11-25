@@ -423,6 +423,7 @@
     <string name="info_backup_created">Backup created</string>
     <string name="info_backup_error">Error while creating a full backup</string>
     <string name="info_irreversible_acs">Warning: The access conditions will be irreversible</string>
+    <string name="info_std_key_overwrite">Error: Standard key files can not be overwritten</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

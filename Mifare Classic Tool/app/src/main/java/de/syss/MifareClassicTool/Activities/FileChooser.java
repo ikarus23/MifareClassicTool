@@ -369,7 +369,7 @@ public class FileChooser extends BasicActivity {
                                 setResult(Activity.RESULT_OK, intent);
                                 finish();
                             } else {
-                                // Empty name is not allowed.
+                                // Invalid file name.
                                 Toast.makeText(cont, R.string.info_invalid_file_name,
                                         Toast.LENGTH_LONG).show();
                             }

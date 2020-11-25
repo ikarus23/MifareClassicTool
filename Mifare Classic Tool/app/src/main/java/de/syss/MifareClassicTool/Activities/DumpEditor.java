@@ -463,7 +463,7 @@ public class DumpEditor extends BasicActivity
                                 mKeysName = file.getName();
                             }
                         } else {
-                            // Empty name is not allowed.
+                            // Invalid file name.
                             Toast.makeText(context, R.string.info_invalid_file_name,
                                     Toast.LENGTH_LONG).show();
                         }
