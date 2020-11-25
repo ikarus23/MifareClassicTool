@@ -343,7 +343,6 @@
     <string name="info_valid_keys_no_keys">Errore: Ci dev\'essere almeno una chiave</string>
     <string name="info_valid_keys_not_hex">Errore: Alcune chiavi contengono dati non validi (non hex)</string>
     <string name="info_valid_keys_not_6_byte">Errore: Alcune chiavi non sono lunghe 6 byte (12 caratteri)</string>
-    <string name="info_empty_file_name">Errore: I file devono avere un nome</string>
     <string name="info_save_successful">Dati salvati correttamente</string>
     <string name="info_save_error">Errore: Errore durante il salvataggio dei dati</string>
     <string name="info_file_already_exists">Errore: Il file esiste già</string>

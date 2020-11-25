@@ -329,8 +329,7 @@
         datos inválidos (no hex)</string>
     <string name="info_valid_keys_not_6_byte"> Error: Algunas claves no
         son de 6 bytes (12 caracteres)</string>
-    <string name="info_empty_file_name">Error: Los archivos deben tener
-        un nombre</string>
+
     <string name="info_save_successful">Datos guardados correctamente</string>
     <string name="info_save_error">Error: Error al guardar datos</string>
     <string name="info_file_already_exists">Error: Archivo ya existe</string>

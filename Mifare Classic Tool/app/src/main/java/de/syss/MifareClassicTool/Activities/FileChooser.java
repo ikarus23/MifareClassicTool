@@ -353,7 +353,8 @@ public class FileChooser extends BasicActivity {
                 .setPositiveButton(R.string.action_ok,
                         (dialog, whichButton) -> {
                             if (input.getText() != null
-                                    && !input.getText().toString().equals("")) {
+                                    && !input.getText().toString().equals("")
+                                    && !input.getText().toString().contains("/")) {
                                 File file = new File(mDir.getPath(),
                                         input.getText().toString());
                                 if (file.exists()) {
@@ -368,7 +369,7 @@ public class FileChooser extends BasicActivity {
                                 finish();
                             } else {
                                 // Empty name is not allowed.
-                                Toast.makeText(cont, R.string.info_empty_file_name,
+                                Toast.makeText(cont, R.string.info_invalid_file_name,
                                         Toast.LENGTH_LONG).show();
                             }
                         })

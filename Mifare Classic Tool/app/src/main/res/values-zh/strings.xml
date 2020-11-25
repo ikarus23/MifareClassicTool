@@ -322,7 +322,6 @@
     <string name="info_valid_keys_no_keys">错误:必须至少有一个密钥</string>
     <string name="info_valid_keys_not_hex">错误:一些密钥包含无效数据(非十六进制)</string>
     <string name="info_valid_keys_not_6_byte">错误:一些密钥长度非6字节(12字符)</string>
-    <string name="info_empty_file_name">错误:必须要有文件名</string>
     <string name="info_save_successful">数据保存成功</string>
     <string name="info_save_error">错误:保存数据时出错</string>
     <string name="info_file_already_exists">错误:文件已存在</string>

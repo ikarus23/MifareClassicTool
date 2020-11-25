@@ -451,7 +451,8 @@ public class DumpEditor extends BasicActivity
             .setPositiveButton(R.string.action_save,
                     (dialog, whichButton) -> {
                         if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
+                                && !input.getText().toString().equals("")
+                                && !input.getText().toString().contains("/")) {
                             File file = new File(path.getPath(),
                                     input.getText().toString());
                             Common.checkFileExistenceAndSave(file, data,
@@ -463,7 +464,7 @@ public class DumpEditor extends BasicActivity
                             }
                         } else {
                             // Empty name is not allowed.
-                            Toast.makeText(context, R.string.info_empty_file_name,
+                            Toast.makeText(context, R.string.info_invalid_file_name,
                                     Toast.LENGTH_LONG).show();
                         }
                     })

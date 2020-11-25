@@ -367,7 +367,7 @@
         invalid data (not hex)</string>
     <string name="info_valid_keys_not_6_byte"> Error: Some keys
         don\'t have 6 bytes (12 characters)</string>
-    <string name="info_empty_file_name">Error: Files must have a name</string>
+    <string name="info_invalid_file_name">Error: File name is not valid</string>
     <string name="info_save_successful">Data successfully saved</string>
     <string name="info_save_error">Error: Error while saving data</string>
     <string name="info_file_already_exists">Error: File already exists</string>
