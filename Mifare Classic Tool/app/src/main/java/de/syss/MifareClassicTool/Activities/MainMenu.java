@@ -32,7 +32,6 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -47,6 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.pm.PackageInfoCompat;
+import androidx.core.text.HtmlCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -328,8 +328,9 @@ public class MainMenu extends Activity {
      * @see #runStartUpNode(StartUpNode)
      */
     private AlertDialog createHasNoMifareClassicSupportDialog() {
-        CharSequence styledText = Html.fromHtml(
-                getString(R.string.dialog_no_mfc_support_device));
+        CharSequence styledText = HtmlCompat.fromHtml(
+                getString(R.string.dialog_no_mfc_support_device),
+                HtmlCompat.FROM_HTML_MODE_LEGACY);
         return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_no_mfc_support_device_title)
                 .setMessage(styledText)
@@ -778,9 +779,9 @@ public class MainMenu extends Activity {
      * Show the about dialog.
      */
     private void onShowAboutDialog() {
-        CharSequence styledText = Html.fromHtml(
-                getString(R.string.dialog_about_mct,
-                Common.getVersionCode()));
+        CharSequence styledText = HtmlCompat.fromHtml(
+                getString(R.string.dialog_about_mct, Common.getVersionCode()),
+                HtmlCompat.FROM_HTML_MODE_LEGACY);
         AlertDialog ad = new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_about_mct_title)
             .setMessage(styledText)

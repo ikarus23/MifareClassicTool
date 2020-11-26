@@ -27,7 +27,6 @@ import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
@@ -37,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.core.widget.TextViewCompat;
 
 import de.syss.MifareClassicTool.Common;
@@ -102,8 +102,8 @@ public class TagInfoTool extends BasicActivity {
             // Error.
             return;
         }
-        CharSequence styledText = Html.fromHtml(
-                getString(messageID));
+        CharSequence styledText = HtmlCompat.fromHtml(
+                getString(messageID), HtmlCompat.FROM_HTML_MODE_LEGACY);
         AlertDialog ad = new AlertDialog.Builder(this)
         .setTitle(titleID)
         .setMessage(styledText)

@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -45,6 +44,7 @@ import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -788,9 +788,9 @@ public class DumpEditor extends BasicActivity
                     calendar.add(Calendar.DATE, 6);
                     String endDate = sdf.format(calendar.getTime());
 
-                    styledText = Html.fromHtml(getString(
-                            R.string.dialog_date_of_manuf,
-                            startDate, endDate));
+                    styledText = HtmlCompat.fromHtml(
+                            getString(R.string.dialog_date_of_manuf, startDate, endDate),
+                            HtmlCompat.FROM_HTML_MODE_LEGACY);
                 } else {
                     throw new NumberFormatException();
                 }
