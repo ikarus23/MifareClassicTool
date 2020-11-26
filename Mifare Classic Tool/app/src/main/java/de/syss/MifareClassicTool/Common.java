@@ -982,6 +982,7 @@ public class Common extends Application {
      * <li>-1 - Can not check because Android version is >= 8.</li>
      * </ul>
      */
+    @SuppressWarnings("deprecation")
     public static int isExternalNfcServiceRunning(Context context) {
         // getRunningServices() is deprecated since Android 8.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
