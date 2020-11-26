@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -59,7 +61,7 @@ public class HexToAscii extends BasicActivity {
                         ascii = TextUtils.concat(ascii, Common.colorString(
                                 getString(R.string.text_sector)
                                 + ": " + sectorNumber,
-                                getResources().getColor(R.color.blue)), s);
+                                ContextCompat.getColor(this, R.color.blue)), s);
                     } else {
                         // Data.
                         String converted = Common.hex2Ascii(line);

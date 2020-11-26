@@ -44,6 +44,8 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,19 +137,19 @@ public class DumpEditor extends BasicActivity
         // Color caption.
         SpannableString keyA = Common.colorString(
                 getString(R.string.text_keya),
-                getResources().getColor(R.color.light_green));
+                ContextCompat.getColor(this, R.color.light_green));
         SpannableString keyB =  Common.colorString(
                 getString(R.string.text_keyb),
-                getResources().getColor(R.color.dark_green));
+                ContextCompat.getColor(this, R.color.dark_green));
         SpannableString ac = Common.colorString(
                 getString(R.string.text_ac),
-                getResources().getColor(R.color.orange));
+                ContextCompat.getColor(this, R.color.orange));
         SpannableString uidAndManuf = Common.colorString(
                 getString(R.string.text_uid_and_manuf),
-                getResources().getColor(R.color.purple));
+                ContextCompat.getColor(this, R.color.purple));
         SpannableString vb = Common.colorString(
                 getString(R.string.text_valueblock),
-                getResources().getColor(R.color.yellow));
+                ContextCompat.getColor(this, R.color.yellow));
 
         TextView caption = findViewById(
                 R.id.textViewDumpEditorCaption);
@@ -158,7 +160,7 @@ public class DumpEditor extends BasicActivity
                 R.id.textViewDumpEditorCaptionTitle);
         SpannableString updateText = Common.colorString(
                 getString(R.string.text_update_colors),
-                getResources().getColor(R.color.blue));
+                ContextCompat.getColor(this, R.color.blue));
         updateText.setSpan(new UnderlineSpan(), 0, updateText.length(), 0);
         captionTitle.setText(TextUtils.concat(
                 getString(R.string.text_caption_title),
@@ -562,7 +564,7 @@ public class DumpEditor extends BasicActivity
                 // Add sector header (TextView).
                 TextView tv = new TextView(this);
                 tv.setTextColor(
-                        getResources().getColor(R.color.blue));
+                        ContextCompat.getColor(this, R.color.blue));
                 tv.setText(getString(R.string.text_sector) +
                         ": " + sectorNumber);
                 mLayout.addView(tv);
@@ -608,7 +610,7 @@ public class DumpEditor extends BasicActivity
                 // Error Line: Line is a sector that could not be read.
                 TextView tv = new TextView(this);
                 tv.setTextColor(
-                        getResources().getColor(R.color.red));
+                        ContextCompat.getColor(this, R.color.red));
                 tv.setText("   " +  getString(
                         R.string.text_no_key_io_error));
                 tv.setTag("error");
@@ -995,12 +997,12 @@ public class DumpEditor extends BasicActivity
             // First block (UID, manuf. data).
             ret = new SpannableString(TextUtils.concat(
                     Common.colorString(data,
-                            getResources().getColor(R.color.purple))));
+                            ContextCompat.getColor(this, R.color.purple))));
         } else {
             if (Common.isValueBlock(data)) {
                 // Value block.
                 ret = Common.colorString(data,
-                        getResources().getColor(R.color.yellow));
+                        ContextCompat.getColor(this, R.color.yellow));
             } else {
                 // Just data.
                 ret = new SpannableString(data);
@@ -1017,12 +1019,9 @@ public class DumpEditor extends BasicActivity
      */
     private SpannableString colorSectorTrailer(String data) {
         // Get sector trailer colors.
-        int colorKeyA = getResources().getColor(
-                R.color.light_green);
-        int colorKeyB = getResources().getColor(
-                R.color.dark_green);
-        int colorAC = getResources().getColor(
-                R.color.orange);
+        int colorKeyA = ContextCompat.getColor(this, R.color.light_green);
+        int colorKeyB = ContextCompat.getColor(this, R.color.dark_green);
+        int colorAC = ContextCompat.getColor(this, R.color.orange);
         try {
             SpannableString keyA = Common.colorString(
                     data.substring(0, 12), colorKeyA);

@@ -27,6 +27,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import androidx.core.content.ContextCompat;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.Common.Operation;
 import de.syss.MifareClassicTool.R;
@@ -109,7 +111,7 @@ public class AccessConditionDecoder extends BasicActivity {
         // Add sector header.
         TextView header = new TextView(this);
         header.setText(Common.colorString(sectorHeader,
-                getResources().getColor(R.color.blue)),
+                ContextCompat.getColor(this, R.color.blue)),
                 BufferType.SPANNABLE);
         TableRow tr = new TableRow(this);
         tr.setLayoutParams(new LayoutParams(
@@ -124,7 +126,7 @@ public class AccessConditionDecoder extends BasicActivity {
             TextView error = new TextView(this);
             String errorText = getString(R.string.text_invalid_ac);
             error.setText(Common.colorString(errorText,
-                    getResources().getColor(R.color.red)),
+                    ContextCompat.getColor(this, R.color.red)),
                     BufferType.SPANNABLE);
             tr = new TableRow(this);
             tr.setLayoutParams(new LayoutParams(
@@ -274,23 +276,23 @@ public class AccessConditionDecoder extends BasicActivity {
         case 0:
             // Never.
             return Common.colorString(getString(R.string.text_never),
-                    getResources().getColor(R.color.orange));
+                    ContextCompat.getColor(this, R.color.orange));
         case 1:
             // Key A.
             return Common.colorString(getString(R.string.text_key_a),
-                    getResources().getColor(R.color.yellow));
+                    ContextCompat.getColor(this, R.color.yellow));
         case 2:
             // Key B.
             return Common.colorString(getString(R.string.text_key_b),
-                    getResources().getColor(R.color.yellow));
+                    ContextCompat.getColor(this, R.color.yellow));
         case 3:
             // Key A|B.
             return Common.colorString(getString(R.string.text_key_ab),
-                    getResources().getColor(R.color.light_green));
+                    ContextCompat.getColor(this, R.color.light_green));
         case 4:
             // Access Condition Error.
             return Common.colorString(getString(R.string.text_ac_error),
-                    getResources().getColor(R.color.red));
+                    ContextCompat.getColor(this, R.color.red));
         default:
             // Error:
             return new SpannableString("");

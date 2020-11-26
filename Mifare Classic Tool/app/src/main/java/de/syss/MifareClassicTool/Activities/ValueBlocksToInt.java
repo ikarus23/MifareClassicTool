@@ -26,6 +26,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import androidx.core.content.ContextCompat;
+
 import java.nio.ByteBuffer;
 
 import de.syss.MifareClassicTool.Common;
@@ -97,7 +99,7 @@ public class ValueBlocksToInt extends BasicActivity {
     private void addPosInfoRow(String value) {
         TextView header = new TextView(this);
         header.setText(Common.colorString(value,
-                getResources().getColor(R.color.blue)),
+                ContextCompat.getColor(this, R.color.blue)),
                 BufferType.SPANNABLE);
         TableRow tr = new TableRow(this);
         tr.setLayoutParams(new LayoutParams(
@@ -125,7 +127,7 @@ public class ValueBlocksToInt extends BasicActivity {
                 LayoutParams.WRAP_CONTENT));
         what.setText(R.string.text_vb_orig);
         value.setText(Common.colorString(hexValueBlock.substring(0, 8),
-                getResources().getColor(R.color.yellow)));
+                ContextCompat.getColor(this, R.color.yellow)));
         tr.addView(what);
         tr.addView(value);
         mLayout.addView(tr, new LayoutParams(
@@ -147,7 +149,7 @@ public class ValueBlocksToInt extends BasicActivity {
         int i = bb.getInt();
         String asInt = "" + i;
         value.setText(Common.colorString(asInt,
-                getResources().getColor(R.color.light_green)));
+                ContextCompat.getColor(this, R.color.light_green)));
         tr.addView(what);
         tr.addView(value);
         mLayout.addView(tr, new LayoutParams(
