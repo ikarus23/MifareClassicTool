@@ -46,6 +46,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.pm.PackageInfoCompat;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -233,8 +235,8 @@ public class MainMenu extends Activity {
                 }
                 int currentVersion = 0;
                 try {
-                    currentVersion = getPackageManager().getPackageInfo(
-                            getPackageName(), 0).versionCode;
+                    currentVersion = (int) PackageInfoCompat.getLongVersionCode(
+                            getPackageManager().getPackageInfo(getPackageName(), 0));
                 } catch (NameNotFoundException e) {
                     Log.d(LOG_TAG, "Version not found.");
                 }
