@@ -206,6 +206,7 @@ public class FileChooser extends BasicActivity {
 
         // Enable/disable the new file menu item according to mIsAllowNewFile.
         newFile.setEnabled(mIsAllowNewFile);
+        newFile.setVisible(mIsAllowNewFile);
 
         return true;
     }
@@ -217,16 +218,15 @@ public class FileChooser extends BasicActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuFileChooserNewFile:
-                onNewFile();
-                return true;
-            case R.id.menuFileChooserDeleteFile:
-                onDeleteFile();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menuFileChooserNewFile) {
+            onNewFile();
+            return true;
+        } else if (itemId == R.id.menuFileChooserDeleteFile) {
+            onDeleteFile();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -354,7 +354,8 @@ public class FileChooser extends BasicActivity {
                 .setPositiveButton(R.string.action_ok,
                         (dialog, whichButton) -> {
                             if (input.getText() != null
-                                    && !input.getText().toString().equals("")) {
+                                    && !input.getText().toString().equals("")
+                                    && !input.getText().toString().contains("/")) {
                                 File file = new File(mDir.getPath(),
                                         input.getText().toString());
                                 if (file.exists()) {
@@ -368,8 +369,8 @@ public class FileChooser extends BasicActivity {
                                 setResult(Activity.RESULT_OK, intent);
                                 finish();
                             } else {
-                                // Empty name is not allowed.
-                                Toast.makeText(cont, R.string.info_empty_file_name,
+                                // Invalid file name.
+                                Toast.makeText(cont, R.string.info_invalid_file_name,
                                         Toast.LENGTH_LONG).show();
                             }
                         })

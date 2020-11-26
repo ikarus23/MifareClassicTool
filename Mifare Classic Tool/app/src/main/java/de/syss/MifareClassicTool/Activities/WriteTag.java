@@ -1227,12 +1227,12 @@ public class WriteTag extends BasicActivity {
 
         // Display don't remove warning.
         LinearLayout ll = new LinearLayout(this);
-        int pad = Common.dpToPx(10);
+        int pad = Common.dpToPx(20);
         ll.setPadding(pad, pad, pad, pad);
         ll.setGravity(Gravity.CENTER);
         ProgressBar progressBar = new ProgressBar(this);
         progressBar.setIndeterminate(true);
-        pad = Common.dpToPx(5);
+        pad = Common.dpToPx(20);
         progressBar.setPadding(0, 0, pad, 0);
         TextView tv = new TextView(this);
         tv.setText(getString(R.string.dialog_wait_write_tag));

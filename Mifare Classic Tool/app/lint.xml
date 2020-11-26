@@ -62,6 +62,8 @@
         <!-- This dashes are right the way they are. -->
         <ignore path="src/main/res/values/strings.xml" />
         <ignore path="src/main/res/values-es/strings.xml" />
+        <ignore path="src/main/res/values-zh/strings.xml" />
+        <ignore path="src/main/res/values-it/strings.xml" />
     </issue>
 
     <issue id="SelectableText">
@@ -91,5 +93,10 @@
         <!-- Ignore missing translations. There is no real translation
         process right now. -->
         <ignore path="src/main/res/values/*" />
+    </issue>
+
+    <issue id="UnusedResources">
+        <!-- Ignore warings about the unused launcher icons. Andorid needs them. -->
+        <ignore regexp="ic_launcher" />
     </issue>
 </lint>

@@ -184,7 +184,6 @@
     <string name="text_sak_atqa_calc_warning">Warning: Could not calculate SAK/ATQA, using default</string>
     <string name="text_reset_clone_process">Resetting the clone process</string>
     <string name="text_select_file">Select file</string>
-    <string name="text_select_directory">Select directory</string>
     <string name="text_choose_dump_file">Choose dump file</string>
     <string name="text_choose_key_file">Choose key file</string>
     <string name="text_import_export_tool_info">If a file with the same name already
@@ -202,6 +201,7 @@
     <string name="text_missing_files_update">Missing files after updating from version prior
             to 4.0.0? Please read section \"1.2 Data Storage\" of \"Help and Info\".</string>
     <string name="text_more_converter">More converter (online)</string>
+    <string name="text_enter_file_name">Enter a file name</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -367,7 +367,7 @@
         invalid data (not hex)</string>
     <string name="info_valid_keys_not_6_byte"> Error: Some keys
         don\'t have 6 bytes (12 characters)</string>
-    <string name="info_empty_file_name">Error: Files must have a name</string>
+    <string name="info_invalid_file_name">Error: File name is not valid</string>
     <string name="info_save_successful">Data successfully saved</string>
     <string name="info_save_error">Error: Error while saving data</string>
     <string name="info_file_already_exists">Error: File already exists</string>
@@ -423,6 +423,7 @@
     <string name="info_backup_created">Backup created</string>
     <string name="info_backup_error">Error while creating a full backup</string>
     <string name="info_irreversible_acs">Warning: The access conditions will be irreversible</string>
+    <string name="info_std_key_overwrite">Error: Standard key files can not be overwritten</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.
@@ -651,7 +652,6 @@
         NXP\'s specifications.
         \n\nProceed at your own risk!</string>
 
-
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
@@ -661,5 +661,6 @@
     <string name="hint_int_423">e.g. 423</string>
     <string name="hint_custom_sector_count">e.g. 16 for 1K</string>
     <string name="hint_custom_retry_authentication_count">Number of retries</string>
+    <string name="hint_key">HEX, 6 bytes per line</string>
 
 </resources>

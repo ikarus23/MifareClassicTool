@@ -164,22 +164,21 @@ public class KeyEditor extends BasicActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuKeyEditorSave:
-                onSave();
-                return true;
-            case R.id.menuKeyEditorShare:
-                shareKeyFile();
-                return true;
-            case R.id.menuKeyEditorRemoveDuplicates:
-                removeDuplicates();
-                return true;
-            case R.id.menuKeyEditorExportKeys:
-                exportKeys();
-                return true;
-        default:
-            return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menuKeyEditorSave) {
+            onSave();
+            return true;
+        } else if (id == R.id.menuKeyEditorShare) {
+            shareKeyFile();
+            return true;
+        } else if (id == R.id.menuKeyEditorRemoveDuplicates) {
+            removeDuplicates();
+            return true;
+        } else if (id == R.id.menuKeyEditorExportKeys) {
+            exportKeys();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -303,11 +302,7 @@ public class KeyEditor extends BasicActivity
 
     /**
      * Check if it is a valid key file
-     * ask user for a save name and then call
-     * {@link Common#checkFileExistenceAndSave(File, String[], boolean,
-     * Context, IActivityThatReactsToSave)}
-     * @see Common#checkFileExistenceAndSave(File, String[], boolean, Context,
-     * IActivityThatReactsToSave)
+     * ask user for a save name and then call {@link #saveFile(String, File)}.
      * @see Common#isValidKeyFileErrorToast(int, Context)
      */
     private void onSave() {
@@ -315,9 +310,6 @@ public class KeyEditor extends BasicActivity
             return;
         }
         final File path = Common.getFile(Common.KEYS_DIR);
-        final Context cont = this;
-        final IActivityThatReactsToSave activity =
-                this;
         // Init. layout.
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_save_file,
@@ -338,21 +330,35 @@ public class KeyEditor extends BasicActivity
             .setView(dialogLayout)
             .setPositiveButton(R.string.action_ok,
                     (dialog, whichButton) -> {
-                        if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
-                            File file = new File(path.getPath(),
-                                    input.getText().toString());
-                            Common.checkFileExistenceAndSave(file, mLines,
-                                    false, cont, activity);
-                        } else {
-                            // Empty name is not allowed.
-                            Toast.makeText(cont, R.string.info_empty_file_name,
-                                    Toast.LENGTH_LONG).show();
-                        }
+                        saveFile(input.getText().toString(), path);
                     })
             .setNegativeButton(R.string.action_cancel,
                     (dialog, whichButton) -> mCloseAfterSuccessfulSave = false)
             .show();
+    }
+
+    /**
+     * Save {@link #mLines} to a file. Makes also sure not to overwrite a
+     * standard key file.
+     * @param fileName Name of the key file.
+     * @param path Path of where to save the key file.
+     * @see Common#checkFileExistenceAndSave(
+     *          File, String[], boolean, Context, IActivityThatReactsToSave)
+     */
+    private void saveFile(String fileName, File path) {
+        if (fileName == null || fileName.equals("") || fileName.contains("/")) {
+            Toast.makeText(this, R.string.info_invalid_file_name,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (fileName.equals(Common.STD_KEYS) || fileName.equals(Common.STD_KEYS_EXTENDED)) {
+            Toast.makeText(this, R.string.info_std_key_overwrite,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        File file = new File(path.getPath(), fileName);
+        Common.checkFileExistenceAndSave(file, mLines,
+                false, this, this);
     }
 
     /**

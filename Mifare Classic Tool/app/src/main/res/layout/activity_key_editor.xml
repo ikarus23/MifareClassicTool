@@ -45,9 +45,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textCapCharacters|textMultiLine|textNoSuggestions"
+            android:inputType="textCapCharacters|textMultiLine|textNoSuggestions|textVisiblePassword"
             android:typeface="monospace"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:hint="@string/hint_key" />
 
     </ScrollView>
 

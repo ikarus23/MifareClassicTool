@@ -602,7 +602,7 @@ public class MainMenu extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.general_options, menu);
+        getMenuInflater().inflate(R.menu.main_menu_functions, menu);
         return true;
     }
 
@@ -802,16 +802,15 @@ public class MainMenu extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-        case R.id.menuMainPreferences:
+        int id = item.getItemId();
+        if (id == R.id.menuMainPreferences) {
             onShowPreferences();
             return true;
-        case R.id.menuMainAbout:
+        } else if (id == R.id.menuMainAbout) {
             onShowAboutDialog();
             return true;
-        default:
-            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -823,46 +822,45 @@ public class MainMenu extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         Intent intent;
-        switch (item.getItemId()) {
-        case R.id.menuMainTagInfo:
+        int id = item.getItemId();
+        if (id == R.id.menuMainTagInfo) {
             intent = new Intent(this, TagInfoTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainValueBlockTool:
+        } else if (id == R.id.menuMainValueBlockTool) {
             intent = new Intent(this, ValueBlockTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainAccessConditionTool:
+        } else if (id == R.id.menuMainAccessConditionTool) {
             intent = new Intent(this, AccessConditionTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainDiffTool:
+        } else if (id == R.id.menuMainDiffTool) {
             intent = new Intent(this, DiffTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainBccTool:
+        } else if (id == R.id.menuMainBccTool) {
             intent = new Intent(this, BccTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainCloneUidTool:
+        } else if (id == R.id.menuMainCloneUidTool) {
             intent = new Intent(this, CloneUidTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainImportExportTool:
+        } else if (id == R.id.menuMainImportExportTool) {
             intent = new Intent(this, ImportExportTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainUidLogTool:
+        } else if (id == R.id.menuMainUidLogTool) {
             intent = new Intent(this, UidLogTool.class);
             startActivity(intent);
             return true;
-        case R.id.menuMainDataConversionTool:
+        } else if (id == R.id.menuMainDataConversionTool) {
             intent = new Intent(this, DataConversionTool.class);
             startActivity(intent);
             return true;
-        default:
-            return super.onContextItemSelected(item);
         }
+        return super.onContextItemSelected(item);
     }
 
     /**

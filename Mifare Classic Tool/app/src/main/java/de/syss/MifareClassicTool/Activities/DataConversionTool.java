@@ -62,23 +62,19 @@ public class DataConversionTool extends BasicActivity {
      */
     public void onConvert(View view) {
         int id = view.getId();
-        switch (id) {
-            case R.id.imageButtonDataConversionToolAscii:
-                String ascii = mAscii.getText().toString();
-                convertData(Common.ascii2Hex(ascii));
-                break;
-            case R.id.imageButtonDataConversionToolHex:
-                String hex = mHex.getText().toString();
-                if (Common.isHex(hex, this)) {
-                    convertData(hex);
-                }
-                break;
-            case R.id.imageButtonDataConversionToolBin:
-                String bin = mBin.getText().toString();
-                if (isBin(bin, this)) {
-                    convertData(Common.bin2Hex(bin));
-                }
-                break;
+        if (id == R.id.imageButtonDataConversionToolAscii) {
+            String ascii = mAscii.getText().toString();
+            convertData(Common.ascii2Hex(ascii));
+        } else if (id == R.id.imageButtonDataConversionToolHex) {
+            String hex = mHex.getText().toString();
+            if (Common.isHex(hex, this)) {
+                convertData(hex);
+            }
+        } else if (id == R.id.imageButtonDataConversionToolBin) {
+            String bin = mBin.getText().toString();
+            if (isBin(bin, this)) {
+                convertData(Common.bin2Hex(bin));
+            }
         }
     }
 

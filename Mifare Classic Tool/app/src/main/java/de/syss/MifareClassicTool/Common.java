@@ -36,7 +36,6 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -46,6 +45,7 @@ import android.util.SparseArray;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -179,7 +179,6 @@
         Tag (2nd gen)?</string>
     <string name="text_uid_length_error">Error: Tamaño del UID incorrecto (4 vs. 7 vs. 10 bytes)</string>
     <string name="text_select_file">Selecciona un fichero</string>
-    <string name="text_select_directory">Selecciona un directorio</string>
     <string name="text_choose_dump_file">Elige un archivo dump</string>
     <string name="text_import_export_tool_info">Si un fichero con el mismo nombre ya existe en el moment
         ode importar, este será sobreescrito.</string>
@@ -330,8 +329,7 @@
         datos inválidos (no hex)</string>
     <string name="info_valid_keys_not_6_byte"> Error: Algunas claves no
         son de 6 bytes (12 caracteres)</string>
-    <string name="info_empty_file_name">Error: Los archivos deben tener
-        un nombre</string>
+
     <string name="info_save_successful">Datos guardados correctamente</string>
     <string name="info_save_error">Error: Error al guardar datos</string>
     <string name="info_file_already_exists">Error: Archivo ya existe</string>

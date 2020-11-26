@@ -92,7 +92,7 @@
                 android:typeface="monospace"
                 android:hint="@string/hint_hex_4_7_10_byte"
                 android:imeOptions="actionDone"
-                android:inputType="textCapCharacters|textNoSuggestions"
+                android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
                 android:maxLength="20"
                 android:importantForAutofill="no" />
 
@@ -144,7 +144,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
                     android:text="@string/text_clone_uid_manufacturer_block_rest"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextCloneUidToolBlock0Rest" />
 
                 <EditText
                     android:id="@+id/editTextCloneUidToolBlock0Rest"
@@ -155,7 +156,7 @@
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
                     android:typeface="monospace"
                     android:imeOptions="actionDone"
-                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
                     android:maxLength="22"
                     android:importantForAutofill="no" />
 
@@ -186,7 +187,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolWriteKeyInfo"
                     android:text="@string/text_write_key"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextCloneUidToolWriteKey" />
 
                 <EditText
                     android:id="@+id/editTextCloneUidToolWriteKey"
@@ -197,7 +199,7 @@
                     android:layout_below="@+id/textViewCloneUidToolWriteKey"
                     android:typeface="monospace"
                     android:imeOptions="actionDone"
-                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
                     android:maxLength="22"
                     android:importantForAutofill="no" />
 
@@ -249,6 +251,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonCloneUidToolSakAtqaInfo"
                     android:text="@string/action_calc_sak_atqa"
                     android:checked="true" />
 

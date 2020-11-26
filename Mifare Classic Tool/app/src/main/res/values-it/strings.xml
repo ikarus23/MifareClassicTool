@@ -182,7 +182,6 @@
     <string name="text_sak_atqa_calc_warning">Attenzione: Non è possibile calcolare il SAK/ATQA, verrà usato il valore predefinito.</string>
     <string name="text_reset_clone_process">Resettando la clonazione</string>
     <string name="text_select_file">Seleziona un file</string>
-    <string name="text_select_directory">Seleziona un percorso</string>
     <string name="text_choose_dump_file">Scegli un file dump</string>
     <string name="text_choose_key_file">Scegli un file con le chiavi</string>
     <string name="text_import_export_tool_info">Se esiste già un file
@@ -340,11 +339,10 @@
     <string name="info_error_writing_value_block">Errore: blocco senza valore, autorizzazioni insufficienti o valore errato</string>
     <string name="info_write_successful">Dati scritti con successo</string>
     <string name="info_none_key_valid_for_reading">Errore: Nessuna delle chiavi è valida per la lettura</string>
-    <string name="info_not_supported_now">Questa funzione non è supportata in questa versione (forse arriverà in futuro...).</string>
+    <string name="info_not_supported_now">Questa funzione non è supportata in questa versione (forse arriverà in futuro…).</string>
     <string name="info_valid_keys_no_keys">Errore: Ci dev\'essere almeno una chiave</string>
     <string name="info_valid_keys_not_hex">Errore: Alcune chiavi contengono dati non validi (non hex)</string>
     <string name="info_valid_keys_not_6_byte">Errore: Alcune chiavi non sono lunghe 6 byte (12 caratteri)</string>
-    <string name="info_empty_file_name">Errore: I file devono avere un nome</string>
     <string name="info_save_successful">Dati salvati correttamente</string>
     <string name="info_save_error">Errore: Errore durante il salvataggio dei dati</string>
     <string name="info_file_already_exists">Errore: Il file esiste già</string>
@@ -365,7 +363,7 @@
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
     <string name="info_ac_reset_keyb_not_readable">La chiave B è leggibile.
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
-    <string name="info_strange_error">Errore: È successo un errore improvviso e non sappiamo perchè.
+    <string name="info_strange_error">Errore: È successo un errore improvviso e non sappiamo perché.
         Per favore faccelo sapere usando la pagina del progetto così proviamo a risolverlo.</string>
     <string name="info_key_map_error">Errore: La connessione col tag è stata persa</string>
     <string name="info_block0_missing">Errore: Non è presente il blocco del produttore (0)</string>
@@ -498,7 +496,7 @@
     <string name="dialog_retry_authentication_title">Riprova l\'autenticazione</string>
     <string name="dialog_retry_authentication">Riprova l\'autenticazione (a un settore/blocco) X volte se fallisce: alcuni tag col blocco 0 
         riscrivibile e UID lungo 7 byte lo richiedono. Ciò potrebbe aiutare a far funzionare meglio alcuni dispositivi, come il Google Nexus 5X o il 
-        Huawei P10. Nella maggior parte dei casi dovresti lasciarla disabilitata poichè rallenta la lettura, la scrittura e la mappatura.</string>
+        Huawei P10. Nella maggior parte dei casi dovresti lasciarla disabilitata poiché rallenta la lettura, la scrittura e la mappatura.</string>
     <string name="dialog_custom_sector_count_title">Numero Personalizzato di Settori</string>
     <string name="dialog_custom_sector_count">Imposta un numero di settori personalizzato, ignorando quello rivelato da Android.
         Utile per tag con 2KB di memoria.</string>

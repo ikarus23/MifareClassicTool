@@ -195,27 +195,21 @@ public class ImportExportTool extends BasicActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuDumpFileTypesMct:
-                mFileType = FileType.MCT;
-                break;
-            case R.id.menuDumpFileTypesJson:
-                mFileType = FileType.JSON;
-                break;
-            case R.id.menuDumpFileTypesBinMfd:
-                mFileType = FileType.BIN;
-                break;
-            case R.id.menuDumpFileTypesEml:
-                mFileType = FileType.EML;
-                break;
-            case R.id.menuKeysFileTypesKeys:
-                mFileType = FileType.KEYS;
-                break;
-            case R.id.menuKeysFileTypesBin:
-                mFileType = FileType.BIN;
-                break;
-            default:
-                return super.onContextItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menuDumpFileTypesMct) {
+            mFileType = FileType.MCT;
+        } else if (id == R.id.menuDumpFileTypesJson) {
+            mFileType = FileType.JSON;
+        } else if (id == R.id.menuDumpFileTypesBinMfd) {
+            mFileType = FileType.BIN;
+        } else if (id == R.id.menuDumpFileTypesEml) {
+            mFileType = FileType.EML;
+        } else if (id == R.id.menuKeysFileTypesKeys) {
+            mFileType = FileType.KEYS;
+        } else if (id == R.id.menuKeysFileTypesBin) {
+            mFileType = FileType.BIN;
+        } else {
+            return super.onContextItemSelected(item);
         }
 
         if (mIsExport) {

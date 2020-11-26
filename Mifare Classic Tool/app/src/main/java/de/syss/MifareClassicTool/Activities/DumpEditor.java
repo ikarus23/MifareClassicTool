@@ -26,6 +26,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -248,49 +249,48 @@ public class DumpEditor extends BasicActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
-        switch (item.getItemId()) {
-            case R.id.menuDumpEditorSave:
-                saveDump();
-                return true;
-            case R.id.menuDumpEditorAscii:
-                showAscii();
-                return true;
-            case R.id.menuDumpEditorAccessConditions:
-                showAC();
-                return true;
-            case R.id.menuDumpEditorValueBlocksAsInt:
-                decodeValueBlocks();
-                return true;
-            case R.id.menuDumpEditorShare:
-                shareDump();
-                return true;
-            case R.id.menuDumpEditorOpenValueBlockTool:
-                openValueBlockTool();
-                return true;
-            case R.id.menuDumpEditorOpenAccessConditionTool:
-                openAccessConditionTool();
-                return true;
-            case R.id.menuDumpEditorOpenBccTool:
-                openBccTool();
-                return true;
-            case R.id.menuDumpEditorDecodeDateOfManuf:
-                decodeDateOfManuf();
-                return true;
-            case R.id.menuDumpEditorWriteDump:
-                writeDump();
-                return true;
-            case R.id.menuDumpEditorDiffDump:
-                diffDump();
-                return true;
-            case R.id.menuDumpEditorSaveKeys:
-                saveKeys();
-                return true;
-            case R.id.menuDumpEditorExportDump:
-                exportDump();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menuDumpEditorSave) {
+            saveDump();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorAscii) {
+            showAscii();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorAccessConditions) {
+            showAC();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorValueBlocksAsInt) {
+            decodeValueBlocks();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorShare) {
+            shareDump();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorOpenValueBlockTool) {
+            openValueBlockTool();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorOpenAccessConditionTool) {
+            openAccessConditionTool();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorOpenBccTool) {
+            openBccTool();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorDecodeDateOfManuf) {
+            decodeDateOfManuf();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorWriteDump) {
+            writeDump();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorDiffDump) {
+            diffDump();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorSaveKeys) {
+            saveKeys();
+            return true;
+        } else if (itemId == R.id.menuDumpEditorExportDump) {
+            exportDump();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -451,7 +451,8 @@ public class DumpEditor extends BasicActivity
             .setPositiveButton(R.string.action_save,
                     (dialog, whichButton) -> {
                         if (input.getText() != null
-                                && !input.getText().toString().equals("")) {
+                                && !input.getText().toString().equals("")
+                                && !input.getText().toString().contains("/")) {
                             File file = new File(path.getPath(),
                                     input.getText().toString());
                             Common.checkFileExistenceAndSave(file, data,
@@ -462,8 +463,8 @@ public class DumpEditor extends BasicActivity
                                 mKeysName = file.getName();
                             }
                         } else {
-                            // Empty name is not allowed.
-                            Toast.makeText(context, R.string.info_empty_file_name,
+                            // Invalid file name.
+                            Toast.makeText(context, R.string.info_invalid_file_name,
                                     Toast.LENGTH_LONG).show();
                         }
                     })
@@ -573,9 +574,11 @@ public class DumpEditor extends BasicActivity
                     et.setLayoutParams(new LayoutParams(
                             LayoutParams.WRAP_CONTENT,
                             LayoutParams.WRAP_CONTENT));
+                    et.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
                     et.setInputType(et.getInputType()
                             |InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                            |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+                            |InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+                            |InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     et.setTypeface(Typeface.MONOSPACE);
                     // Set text size of an EditText to the text size of
                     // a TextView. (getTextSize() returns
