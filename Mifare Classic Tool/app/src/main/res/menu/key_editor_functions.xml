@@ -19,16 +19,19 @@
 -->
 
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@+id/menuKeyEditorSave"
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/action_save"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource" />
     <item android:id="@+id/menuKeyEditorShare"
         android:icon="@android:drawable/ic_menu_share"
         android:title="@string/action_share"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource" />
     <item android:id="@+id/menuKeyEditorExportKeys"
         android:title="@string/action_export_keys" />
     <item android:id="@+id/menuKeyEditorRemoveDuplicates"
