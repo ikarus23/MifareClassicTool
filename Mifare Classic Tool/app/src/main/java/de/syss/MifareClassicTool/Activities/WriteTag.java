@@ -479,7 +479,7 @@ public class WriteTag extends BasicActivity {
     /**
      * Check if the Access Conditions of a Sector Trailer are correct and
      * if they are irreversible (shows a error message if needed).
-     * @param sectorTrailer
+     * @param sectorTrailer The Sector Trailer as hex string.
      * @param showToasts If true, show error mesages as toast.
      * @return <ul>
      * <li>0 - Everything is O.K.</li>

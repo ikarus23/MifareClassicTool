@@ -446,7 +446,7 @@ public class DumpEditor extends BasicActivity
         input.setSelection(0);
 
         // Ask user for filename.
-        AlertDialog ad = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
             .setTitle(titleId)
             .setIcon(android.R.drawable.ic_menu_save)
             .setView(dialogLayout)

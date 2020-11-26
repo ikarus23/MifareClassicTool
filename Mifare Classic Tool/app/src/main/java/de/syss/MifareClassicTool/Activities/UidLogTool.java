@@ -105,7 +105,7 @@ public class UidLogTool extends BasicActivity {
         if (logEntries != null) {
             // Reverse order (newest top).
             ArrayList<String> tempEntries =
-                    new ArrayList<String>(Arrays.asList(logEntries));
+                    new ArrayList<>(Arrays.asList(logEntries));
             Collections.reverse(tempEntries);
             mUidLog.setText(TextUtils.join(
                     System.getProperty("line.separator"), tempEntries));

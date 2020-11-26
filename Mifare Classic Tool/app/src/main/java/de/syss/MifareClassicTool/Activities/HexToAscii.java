@@ -35,9 +35,6 @@ import de.syss.MifareClassicTool.R;
  */
 public class HexToAscii extends BasicActivity {
 
-    private static final String LOG_TAG =
-            HexToAscii.class.getSimpleName();
-
     /**
      * Initialize the activity with the data from the Intent
      * ({@link DumpEditor#EXTRA_DUMP}) by displaying them as

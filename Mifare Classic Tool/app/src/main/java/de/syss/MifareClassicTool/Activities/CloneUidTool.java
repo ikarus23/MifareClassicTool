@@ -360,9 +360,7 @@ public class CloneUidTool extends BasicActivity {
                             writeManufacturerBlock();
                         })
                 .setNegativeButton(R.string.action_cancel,
-                        (dialog, id) -> {
-                            dialog.cancel();
-                        })
+                        (dialog, id) -> dialog.cancel())
                 .setOnCancelListener(
                         dialog -> {
                             // Cancel.

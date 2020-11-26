@@ -60,6 +60,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -337,7 +338,6 @@ public class Common extends Application {
      */
     public static byte[] readUriRaw(Uri uri, Context context) {
         InputStream contentStream = null;
-        String[] ret = null;
         if (uri == null || context == null) {
             return null;
         }
@@ -593,7 +593,6 @@ public class Common extends Application {
         if (contentUri == null || lines == null || context == null || lines.length == 0) {
             return false;
         }
-        int i;
         String concatenatedLines = TextUtils.join(
                 System.getProperty("line.separator"), lines);
         byte[] bytes = concatenatedLines.getBytes();
@@ -1821,11 +1820,7 @@ public class Common extends Application {
             }
         }
         // Hex to ASCII.
-        try {
-            ret = new String(bytes, "US-ASCII");
-        } catch (UnsupportedEncodingException e) {
-            Log.e(LOG_TAG, "Error while encoding to ASCII", e);
-        }
+        ret = new String(bytes, StandardCharsets.US_ASCII);
         return ret;
     }
 

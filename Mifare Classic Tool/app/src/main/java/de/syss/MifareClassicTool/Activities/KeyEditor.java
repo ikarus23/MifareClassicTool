@@ -329,9 +329,7 @@ public class KeyEditor extends BasicActivity
             .setIcon(android.R.drawable.ic_menu_save)
             .setView(dialogLayout)
             .setPositiveButton(R.string.action_ok,
-                    (dialog, whichButton) -> {
-                        saveFile(input.getText().toString(), path);
-                    })
+                    (dialog, whichButton) -> saveFile(input.getText().toString(), path))
             .setNegativeButton(R.string.action_cancel,
                     (dialog, whichButton) -> mCloseAfterSuccessfulSave = false)
             .show();

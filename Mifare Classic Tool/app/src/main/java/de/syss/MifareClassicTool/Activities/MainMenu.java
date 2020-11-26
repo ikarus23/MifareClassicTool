@@ -502,9 +502,7 @@ public class MainMenu extends Activity {
                             runStartUpNode(StartUpNode.DonateDialog);
                         })
                 .setNeutralButton(R.string.action_start_external_nfc,
-                        (dialog, which) -> {
-                            Common.openApp(context, "eu.dedb.nfc.service");
-                        })
+                        (dialog, which) -> Common.openApp(context, "eu.dedb.nfc.service"))
                 .setNegativeButton(R.string.action_editor_only,
                         (dialog, id) -> {
                             // Only use Editor.

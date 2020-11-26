@@ -142,18 +142,15 @@ public class ImportExportTool extends BasicActivity {
                 // However, do this with a delay. Context menus (for choosing the
                 // export file type) can only be shown, once the activity is running.
                 final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mIsExport = true;
-                        if (getIntent().hasExtra(EXTRA_IS_DUMP_FILE)) {
-                            mIsDumpFile = getIntent().getBooleanExtra(
-                                    EXTRA_IS_DUMP_FILE, false);
-                        }
-                        Intent intent = new Intent();
-                        intent.putExtra(FileChooser.EXTRA_CHOSEN_FILE, path.getAbsolutePath());
-                        onActivityResult(EXPORT_FILE_CHOSEN, RESULT_OK, intent);
+                handler.postDelayed(() -> {
+                    mIsExport = true;
+                    if (getIntent().hasExtra(EXTRA_IS_DUMP_FILE)) {
+                        mIsDumpFile = getIntent().getBooleanExtra(
+                                EXTRA_IS_DUMP_FILE, false);
                     }
+                    Intent intent1 = new Intent();
+                    intent1.putExtra(FileChooser.EXTRA_CHOSEN_FILE, path.getAbsolutePath());
+                    onActivityResult(EXPORT_FILE_CHOSEN, RESULT_OK, intent1);
                 }, 300);
             }
         }
@@ -536,7 +533,7 @@ public class ImportExportTool extends BasicActivity {
             return null;
         }
         // Convert source to json.
-        ArrayList<String> json = new ArrayList<String>();
+        ArrayList<String> json = new ArrayList<>();
         String block = null;
         if (srcType != FileType.JSON) {
             json.add("{");
@@ -546,7 +543,7 @@ public class ImportExportTool extends BasicActivity {
         }
         switch (srcType) {
             case JSON:
-                json = new ArrayList<String>(Arrays.asList(source));
+                json = new ArrayList<>(Arrays.asList(source));
                 break;
             case MCT:
                 int err = Common.isValidDump(source, true);
@@ -648,7 +645,7 @@ public class ImportExportTool extends BasicActivity {
                 dest = json.toArray(new String[0]);
                 break;
             case MCT:
-                ArrayList<String> export = new ArrayList<String>();
+                ArrayList<String> export = new ArrayList<>();
                 Iterator<String> iter = blocks.keys();
                 int lastKnownSector = -1;
                 while (iter.hasNext()) {
