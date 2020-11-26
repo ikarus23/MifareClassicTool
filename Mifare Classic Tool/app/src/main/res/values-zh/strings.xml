@@ -190,6 +190,7 @@
     <string name="text_invalid_ac">无效访问控制条件</string>
     <string name="text_missing_files_update">从4.0.0之前的版本更新后丢失了文件？请参考 \"帮助信息\" 中的 \"1.2 Data Storage\"。</string>
     <string name="text_more_converter">更多转换器 (联网)</string>
+    <string name="text_enter_file_name">输入文件名</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">读标签</string>
@@ -286,6 +287,7 @@
     <string name="action_generic_converter">数据类型转换器</string>
     <string name="action_multi_purpose_converter">多用途转换器</string>
     <string name="action_cyber_chef">Cyber Chef</string>
+    <string name="action_open_clone_uid_tool">打开UID克隆工具</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">发现新标签</string>
@@ -322,6 +324,7 @@
     <string name="info_valid_keys_no_keys">错误:必须至少有一个密钥</string>
     <string name="info_valid_keys_not_hex">错误:一些密钥包含无效数据(非十六进制)</string>
     <string name="info_valid_keys_not_6_byte">错误:一些密钥长度非6字节(12字符)</string>
+    <string name="info_invalid_file_name">错误:文件名无效</string>
     <string name="info_save_successful">数据保存成功</string>
     <string name="info_save_error">错误:保存数据时出错</string>
     <string name="info_file_already_exists">错误:文件已存在</string>
@@ -364,6 +367,7 @@
     <string name="info_backup_created">已创建备份</string>
     <string name="info_backup_error">创建完整备份时出现了错误</string>
     <string name="info_irreversible_acs">警告:访问控制条件将不可逆</string>
+    <string name="info_std_key_overwrite">错误:无法覆盖标准密钥文件</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">未启用NFC,请到设置中启用。</string>
@@ -448,12 +452,13 @@
     <string name="dialog_block0_data_warning">你将向块0中写入数据,但数据看起来可能是无效的。\n\n在某些2代标签中,像SAK和ATQA这样的值由块0中的数据控制。如果写入了错误的值,标签可能会无法工作(或许可逆)。但也有标签会忽略错误的值。此外,UID应遵循ISO 14443规范。\n\n此处的块0检查试图确保您正在以符合NXP规范的形式写入数据。\n\n请您自己承担风险！</string>
 
     <!-- Hints -->
-    <string name="hint_hex_16_byte">十六进制,16字节(如0A4F…)</string>
-    <string name="hint_hex_3_byte">十六进制,3字节</string>
-    <string name="hint_hex_4_byte">十六进制,4字节</string>
-    <string name="hint_hex_4_7_10_byte">十六进制,4/7/10字节</string>
+    <string name="hint_hex_16_byte">HEX,16字节(如0A4F…)</string>
+    <string name="hint_hex_3_byte">HEX,3字节</string>
+    <string name="hint_hex_4_byte">HEX,4字节</string>
+    <string name="hint_hex_4_7_10_byte">HEX,4/7/10字节</string>
     <string name="hint_hex_00">00</string>
     <string name="hint_int_423">如:423</string>
     <string name="hint_custom_sector_count">如1K:16</string>
     <string name="hint_custom_retry_authentication_count">重试次数</string>
+    <string name="hint_key">HEX,每行6字节</string>
 </resources>
