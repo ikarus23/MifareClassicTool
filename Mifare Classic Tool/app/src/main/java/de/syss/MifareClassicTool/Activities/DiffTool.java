@@ -31,6 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.TextViewCompat;
+
 import java.io.File;
 
 import de.syss.MifareClassicTool.Common;
@@ -145,8 +147,8 @@ public class DiffTool extends BasicActivity {
 
                 // Add sector header.
                 TextView header = new TextView(this);
-                header.setTextAppearance(
-                        this, android.R.style.TextAppearance_Medium);
+                TextViewCompat.setTextAppearance(header,
+                        android.R.style.TextAppearance_Medium);
                 header.setPadding(0, Common.dpToPx(20), 0, 0);
                 header.setTextColor(Color.WHITE);
                 header.setText(getString(R.string.text_sector) + ": " + sector);

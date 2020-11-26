@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.TextViewCompat;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
@@ -136,7 +137,7 @@ public class TagInfoTool extends BasicActivity {
             headerGenericInfo.setText(Common.colorString(
                     getString(R.string.text_generic_info),
                     ContextCompat.getColor(this, R.color.blue)));
-            headerGenericInfo.setTextAppearance(this,
+            TextViewCompat.setTextAppearance(headerGenericInfo,
                     android.R.style.TextAppearance_Large);
             headerGenericInfo.setGravity(Gravity.CENTER_HORIZONTAL);
             int pad = Common.dpToPx(5); // 5dp to px.
@@ -144,7 +145,7 @@ public class TagInfoTool extends BasicActivity {
             mLayout.addView(headerGenericInfo);
             TextView genericInfo = new TextView(this);
             genericInfo.setPadding(pad, pad, pad, pad);
-            genericInfo.setTextAppearance(this,
+            TextViewCompat.setTextAppearance(genericInfo,
                     android.R.style.TextAppearance_Medium);
             mLayout.addView(genericInfo);
             // Get generic info and set these as text.
@@ -229,14 +230,14 @@ public class TagInfoTool extends BasicActivity {
                 headerMifareInfo.setText(Common.colorString(
                         getString(R.string.text_mf_info),
                         ContextCompat.getColor(this, R.color.blue)));
-                headerMifareInfo.setTextAppearance(
-                        this, android.R.style.TextAppearance_Large);
+                TextViewCompat.setTextAppearance(headerMifareInfo,
+                        android.R.style.TextAppearance_Large);
                 headerMifareInfo.setGravity(Gravity.CENTER_HORIZONTAL);
                 headerMifareInfo.setPadding(pad, pad * 2, pad, pad);
                 mLayout.addView(headerMifareInfo);
                 TextView mifareInfo = new TextView(this);
                 mifareInfo.setPadding(pad, pad, pad, pad);
-                mifareInfo.setTextAppearance(this,
+                TextViewCompat.setTextAppearance(mifareInfo,
                         android.R.style.TextAppearance_Medium);
                 mLayout.addView(mifareInfo);
 
@@ -276,7 +277,7 @@ public class TagInfoTool extends BasicActivity {
             TextView text = new TextView(this);
             int pad = Common.dpToPx(5);
             text.setPadding(pad, pad, 0, 0);
-            text.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+            TextViewCompat.setTextAppearance(text, android.R.style.TextAppearance_Medium);
             text.setText(getString(R.string.text_no_tag));
             mLayout.removeAllViews();
             mLayout.addView(text);

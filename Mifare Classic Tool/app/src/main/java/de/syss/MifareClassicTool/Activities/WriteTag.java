@@ -42,6 +42,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.widget.TextViewCompat;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -1147,7 +1149,7 @@ public class WriteTag extends BasicActivity {
             TextView textView = new TextView(this);
             textView.setText(R.string.dialog_write_issues);
             textView.setPadding(0,0,0, Common.dpToPx(5));
-            textView.setTextAppearance(this,
+            TextViewCompat.setTextAppearance(textView,
                     android.R.style.TextAppearance_Medium);
             ListView listView = new ListView(this);
             ll.addView(textView);
