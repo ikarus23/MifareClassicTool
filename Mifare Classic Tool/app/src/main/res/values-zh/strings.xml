@@ -324,7 +324,7 @@
     <string name="info_valid_keys_no_keys">错误:必须至少有一个密钥</string>
     <string name="info_valid_keys_not_hex">错误:一些密钥包含无效数据(非十六进制)</string>
     <string name="info_valid_keys_not_6_byte">错误:一些密钥长度非6字节(12字符)</string>
-    <string name="info_empty_file_name">错误:必须要有文件名</string>
+    <string name="info_invalid_file_name">错误:文件名无效</string>
     <string name="info_save_successful">数据保存成功</string>
     <string name="info_save_error">错误:保存数据时出错</string>
     <string name="info_file_already_exists">错误:文件已存在</string>
@@ -367,6 +367,7 @@
     <string name="info_backup_created">已创建备份</string>
     <string name="info_backup_error">创建完整备份时出现了错误</string>
     <string name="info_irreversible_acs">警告:访问控制条件将不可逆</string>
+    <string name="info_std_key_overwrite">错误:无法覆盖标准密钥文件</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">未启用NFC,请到设置中启用。</string>
