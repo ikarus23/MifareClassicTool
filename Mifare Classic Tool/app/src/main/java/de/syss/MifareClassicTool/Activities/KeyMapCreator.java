@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils.TruncateAt;
@@ -132,7 +133,7 @@ public class KeyMapCreator extends BasicActivity {
     private Button mCancel;
     private LinearLayout mKeyFilesGroup;
     private TextView mSectorRange;
-    private final Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
     private int mProgressStatus;
     private ProgressBar mProgressBar;
     private boolean mIsCreatingKeyMap;

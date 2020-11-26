@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class ReadTag extends Activity {
 
     private final static int KEY_MAP_CREATOR = 1;
 
-    private final Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
     private SparseArray<String[]> mRawDump;
 
     /**

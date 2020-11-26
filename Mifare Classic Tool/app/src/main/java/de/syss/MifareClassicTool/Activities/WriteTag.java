@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
@@ -1250,7 +1251,7 @@ public class WriteTag extends BasicActivity {
 
         // Start writing in new thread.
         final Activity a = this;
-        final Handler handler = new Handler();
+        final Handler handler = new Handler(Looper.getMainLooper());
         new Thread(() -> {
             // Write dump to tag.
             for (int sector : writeOnPos.keySet()) {
