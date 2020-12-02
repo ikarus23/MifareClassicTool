@@ -1,6 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
 In development:
+ *
+
+Version 4.0.2:
  * Various minor improvements (layout, usage, code base).
  * Updated Chinese translation. Thanks to "Nkh0472".
  * Some minor bug fixes.

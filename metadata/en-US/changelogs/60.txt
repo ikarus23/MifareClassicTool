@@ -1,0 +1,3 @@
+ * Various minor improvements (layout, usage, code base).
+ * Updated Chinese translation. Thanks to "Nkh0472".
+ * Some minor bug fixes.
