@@ -95,8 +95,8 @@
     Some important things are:
     <ul>
       <li>The features this tool provides are very basic. There are no such
-        fancy things like saving a URL to an RFID-Tag with a nice looking
-        graphical user interface. If you want so save things on a tag,
+        fancy things as saving a URL to an RFID-Tag with a nice looking
+        graphical user interface. If you want to save things on a tag,
         you have to input the raw hexadecimal data.
       </li>
       <li>This App <b>can not crack/hack</b>
@@ -163,7 +163,7 @@
 
   <h3 id="storage">1.2 Data Storage</h3>
   This app stores data in the app-specific, internal storage. Files like a saved dump from
-  a read-out tag can not be access by any other app or with a computer (USB). If you want to
+  a read-out tag can not be accessed by any other app or with a computer (USB). If you want to
   use them elsewhere, you can use the share button or MCT's
   <a href="#import_export_tool">Import/Export Tool</a>.
   <br /><br />
@@ -228,15 +228,15 @@
     <i>std.keys</i> and <i>extended-std.keys</i>, which contains the
     well known keys and some standard keys from a short Google search.
     You can try to read a tag with these key files using
-    &quot;Read Tag&quot; from main menu. Changes to these key files
+    &quot;Read Tag&quot; from the main menu. Changes to these key files
     will be lost. Create your own key file for your keys.
     <br><br>
     Once you know some keys, you cam to put them into a simple text
     file (one key per line). You can do this on your PC and import
     the file using MCT's <a href="#import_export_tool">Import/Export
     Tool</a>, or you can create a new key file via &quot;Edit or Add
-    Key File&quot; from main menu. If you are finished setting up your
-    key file, you can read a tag using &quot;Read Tag&quot; from main menu.
+    Key File&quot; from the main menu. If you are finished setting up your
+    key file, you can read a tag using &quot;Read Tag&quot; from the main menu.
     <br><br>
     <b>Advantages of the Key Files Concept:</b>
     <ul>
@@ -292,21 +292,21 @@
     to certain blocks may cause irreparable damage to the tag.
 
   <h3 id="write_block">4.1 Write Block</h3>
-    First you have to specify to which block you want to write to.
+    First, you have to specify to which block you want to write to.
     Typical (MIFARE Classic 1k) ranges are: sector 0-15, block 0-3.
     The second step is to enter the data you want to write. This is
     done in hexadecimal format with a length of 16 bytes (32 characters).
-    After pressing the button, the last step is to chose key files
-    which (possibly) contain the key with privilege to write for this
+    After pressing the button, the last step is to choose key files
+    which (possibly) contain the key with the privilege to write for this
     sector/block.
 
   <h3 id="write_dump">4.2 Write Dump (Clone)</h3>
-    With this method you can write a dump (or some sectors of it) to a tag.
+    With this method, you can write a dump (or some sectors of it) to a tag.
     If you want to clone a tag, you first have to read and then dump
     the original tag. The second step is to restore the dumped data on another
     tag (for which you know the keys). You need the keys with write privileges
     for all sectors you want to write.<br>
-    After selecting the dump, the sectors and the key files, the App will check
+    After selecting the dump, the sectors, and the key files, the App will check
     everything for you! If there are issues like 'block is read-only', 'key
     with write access not known', etc., you will get a report before writing.
     <br><br>
@@ -330,7 +330,7 @@
         <br>However, some special tags require a special command sequence to
         put them into the state where writing to the manufacturer block is
         possible. These tags will not work.
-        <br>Also, make sure the the BCC value (see
+        <br>Also, make sure the BCC value (see
         <a href="#bcc_tool">BCC Calculator</a>), the SAK and the ATQA values are
         correct. If you just want to clone a UID, please use the
         <a href="#clone_uid_tool">Clone UID Tool</a>.
@@ -338,12 +338,12 @@
     </ul>
 
   <h3 id="factory_format">4.3 Factory Format</h3>
-    This will try to format the tag back to factory/delivery state. In this
+    This will try to format the tag back to the factory/delivery state. In this
     state, all data block bytes are 0x00 and the sector trailers contain
     0xFFFFFFFFFFFF as key A/B and 0xFF078000 as access conditions.
 
   <h3 id="write_value_block">4.4 Incr./Decr. Value Block</h3>
-    With this method you can increment or decrement and than transfer a Value Block.
+    With this method, you can increment or decrement and then transfer a Value Block.
     If an increment or decrement fails, it is due to one of the following reasons:
     <ul>
       <li>
@@ -384,33 +384,33 @@
       <li>
         <i>Open a saved tag</i><br>
         You can edit a saved dump via &quot;Edit Tag Dump&quot; from
-        main menu.
+        the main menu.
       </li>
     </ul>
     You can save a dump into a file by pressing the save toolbar button
     (or menu item).
 
   <h3 id="share_dump">5.1 Share a Dump</h3>
-    From the dump editor you can share a dump (via toolbar or menu item).
+    From the dump editor, you can share a dump (via toolbar or menu item).
     You can choose between Apps that are willing to process the dump file.
     Note that some Apps fail to process the dump.<br>
     Apps which are known to work with MCT: Gmail, Bluetooth, etc.
 
   <h3 id="display_ascii">5.2 Display Data as ASCII</h3>
-    From the dump editor you can display the data in 7-Bit US-ASCII (via menu).
-    Non printable characters are replaced with a dot (".").
+    From the dump editor, you can display the data in 7-Bit US-ASCII (via menu).
+    Non-printable characters are replaced with a dot (".").
     The last block of a sector, the sector trailer, will not be
     translated to ASCII.
 
   <h3 id="display_ac">5.3 Display Access Conditions</h3>
-    From the dump editor you can display the MIFARE Classic Access
+    From the dump editor, you can display the MIFARE Classic Access
     Conditions as a table (via the menu). If you do not know what they are,
     you can read chapter 8.6.3 and 8.7 (and subchapters) from the
     <a href="https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf">
     MIFARE Classic (1k) Datasheet</a> (PDF).
 
   <h3 id="display_vb">5.4 Display Value Blocks as Integers</h3>
-    From the dump editor you can decode blocks formatted as
+    From the dump editor, you can decode blocks formatted as
     MIFARE Classic Value Block to integer format (via the menu).
     For further information regarding Value Blocks read/see
     chapter 8.6.2.1 from the
@@ -418,7 +418,7 @@
     MIFARE Classic (1k) Datasheet</a> (PDF).
 
   <h3 id="display_manuf_date">5.5 Display the date of manufacture</h3>
-    From the dump editor you can decode the date of manufacture (via the menu).
+    From the dump editor, you can decode the date of manufacture (via the menu).
     <br><br>
     The last 2 bytes of the manufacturer block (sector 0, block 0) are
     representing the date of manufacture. They should be in binary
@@ -454,7 +454,7 @@
     <ul>
       <li><i>This Application</i><br>
         You can create a new key file via
-        &quot;Edit/Add Key File&quot; from main menu.
+        &quot;Edit/Add Key File&quot; from the main menu.
       </li>
       <li><i>On your Computer</i><br>
         You can create a simple text file on your computer and
@@ -467,7 +467,7 @@
     ignored.
     <br><br>
     You can edit key files any time you want with
-    &quot;Edit/Add Key File&quot; from main menu.
+    &quot;Edit/Add Key File&quot; from the main menu.
     <br><br>
     Because key files are used like dictionaries in dictionary-attacks,
     it is sufficient to enter only different keys (even if the key
@@ -488,7 +488,7 @@
     This section provides some general tools to work with MIFARE Classic.
 
   <h3 id="tag_info_tool">7.1 Display Tag Info</h3>
-    In this view you can see some generic information
+    In this view, you can see some generic information
     (like UID, ATQA, SAK, Tag size, etc.) about the RFID-Tag.
     <br><br>
     If your device does not support MIFARE Classic, this is the
@@ -519,14 +519,14 @@
     <a href="https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf">
     MIFARE Classic (1k) Datasheet</a> (PDF).
     <br><br>
-    In most cases the &quot;Addr&quot; of a value block is 00 (hex)
+    In most cases, the &quot;Addr&quot; of a value block is 00 (hex)
     because it is not used. However, according to NXP it<br>
     &quot;can be used to save the storage address of a
     block, when implementing a powerful backup management.&quot;.
 
   <h3 id="ac_tool">7.3 Access Condition Decoder/Encoder</h3>
     This tool is capable of decoding MIFARE Classic Access Conditions into a
-    more human readable format and the other way around (encode to
+    more human-readable format and the other way around (encode to
     MIFARE Classic Access Conditions).
     If you don't know what MIFARE Classic Access Conditions are, you should read
     chapter 8.7 of the
@@ -534,8 +534,8 @@
     MIFARE Classic (1k) Datasheet</a> (PDF).
 
   <h3 id="diff_tool">7.4 Diff Tool (Compare Dumps)</h3>
-    This tool is capable of showing you the difference between two dumps.
-    Just select the dumps you want to compare and tool will highlight all
+    This tool is capable of showing you the difference between the two dumps.
+    Just select the dumps you want to compare and the tool will highlight all
     the sections where the two dumps differ from each other.
 
   <h3 id="bcc_tool">7.5 BCC Calculator</h3>
@@ -549,7 +549,7 @@
 
   <h3 id="clone_uid_tool">7.6 Clone UID</h3>
     This tool helps to clone UIDs easily. Just touch
-    the original tag to read its UID, hit the button and then place a
+    the original tag to read its UID, hit the button, and then place a
     compatible tag (&quot;magic tag 2nd gen&quot;) in the reader field.
     Regarding the compatible tags, please have a look at the &quot;Write
     to Manufacturer Block&quot; section of the
@@ -563,10 +563,10 @@
     .bin to .json, it can be simply imported and then exported again.
     <br><br>
     A full backup of all dump and key files can be made using the backup function.
-    The data will be saved as ZIP archive.
+    The data will be saved as a ZIP archive.
 
   <h3 id="data_conversion_tool">7.8 Convert Data</h3>
-    This tool can convert data (bytes) to and from deferent formats. So far
+    This tool can convert data (bytes) to and from different formats. So far
     the following data types are supported.
     <ul>
     <li>ASCII</li>
@@ -576,7 +576,7 @@
 
   <h3 id="uid_log_tool">7.9 UID Log</h3>
     This tool shows the log of discovered tags. A log entry consists of the
-    date, time and the UID of the discovered tag. The log file can be cleared
+    date, time, and the UID of the discovered tag. The log file can be cleared
     or shared with other apps.
 
 
