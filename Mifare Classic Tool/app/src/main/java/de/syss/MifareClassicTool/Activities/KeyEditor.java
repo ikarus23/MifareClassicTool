@@ -412,6 +412,10 @@ public class KeyEditor extends BasicActivity
      * @see Common#isValidKeyFile(String[])
      */
     private int checkDumpAndUpdateLines() {
+        String editorText = mKeys.getText().toString();
+        if (editorText == null) {
+            return 1;
+        }
         String[] lines = mKeys.getText().toString()
                 .split(System.getProperty("line.separator"));
         int ret = Common.isValidKeyFile(lines);
