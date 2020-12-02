@@ -7,7 +7,7 @@ An Android NFC app for reading, writing, analyzing, etc. MIFARE Classic RFID tag
 <a href="https://f-droid.org/packages/de.syss.MifareClassicTool/"><img src="metadata/common/assets/fdroid-badge.png" alt="Get it on F-Droid" height="80"></a>
 <a href="https://www.icaria.de/mct/releases/"><img src="metadata/common/assets/direct-apk-download-badge.png" alt="Get the APK" height="80"></a>
 
-Read this informaiton in other languages:
+Read this information in other languages:
 * [English](README.md)
 * [简体中文](README.zh-CN.md)
 
@@ -49,7 +49,7 @@ Features
 * Display the tag data as 7-Bit US-ASCII
 * Display the MIFARE Classic Access Conditions as a table
 * Display MIFARE Classic Value Blocks as integer
-* Calcualate the BCC (Block Check Character)
+* Calculate the BCC (Block Check Character)
 * Quick UID clone feature
 * Import/export/convert files
 * In-App (offline) help and information
@@ -68,8 +68,8 @@ because all data input and output is in hexadecimal.
 
 Some important things are:
 * The features this tool provides are very basic. There are no such
-  fancy things like saving a URL to an RFID-Tag with a nice looking
-  graphical user interface. If you want so save things on a tag,
+  fancy things as saving a URL to an RFID-Tag with a nice looking
+  graphical user interface. If you want to save things on a tag,
   you have to input the raw hexadecimal data.
 * This App **can not crack/hack**
   any MIFARE Classic keys. If you want to read/write an RFID-Tag, you
@@ -86,14 +86,14 @@ Some important things are:
   manufacturer block with a simple write command (often called "magic tag
   gen2" or "CUID"). This App is able to write to such tags and can therefore
   create fully correct clones. "FUID" and "UFUID" tags should work too,
-  but they have not been tested so far. However, app will not work with
+  but they have not been tested so far. However, the app will not work with
   all special tags. Some of them require a **special command sequence** to
   put them into the state where writing to the manufacturer block is possible.
   These tags are often called  "gen1", "gen1a" or "UID".  
   Remember this when you are shopping for special tags!  
   More information about magic cards can be found
   [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md).
-  Also, make sure the the BCC value (check out the "BCC Calculator Tool"),
+  Also, make sure the BCC value (check out the "BCC Calculator Tool"),
   the SAK and the ATQA values are correct. If you just want to clone a UID,
   please use the "Clone UID Tool".
 * This app **will not work** on some devices because their hardware
@@ -126,16 +126,16 @@ The application comes with standard key files called
 *std.keys* and *extended-std.keys*, which contain the
 well known keys and some standard keys from a short Google search.
 You can try to read a tag with these key files using
-&quot;Read Tag&quot; from main menu. Changes to these key files
+&quot;Read Tag&quot; from the main menu. Changes to these key files
 will be lost. Create your own key file for your keys.
 
 
 Once you know some keys, you cam to put them into a simple text
 file (one key per line). You can do this on your PC and import
 the file using MCT's import/export tool, or you can create a new
-key file via &quot;Edit or Add Key File&quot; from main menu.
+key file via &quot;Edit or Add Key File&quot; from the main menu.
 If you are finished setting up your key file, you can read a tag
-using &quot;Read Tag&quot; from main menu.
+using &quot;Read Tag&quot; from the main menu.
 
 Advantages of the Key Files Concept:
 * **You don't have to worry about which key is for which sector.**  
