@@ -115,6 +115,16 @@ public class MainMenu extends Activity {
         Button tools = findViewById(R.id.buttonMainTools);
         registerForContextMenu(tools);
 
+        // Restore state.
+        if (savedInstanceState != null) {
+            mDonateDialogWasShown = savedInstanceState.getBoolean(
+                    "donate_dialog_was_shown");
+            mInfoExternalNfcDialogWasShown = savedInstanceState.getBoolean(
+                    "info_external_nfc_dialog_was_shown");
+            mHasNoNfc = savedInstanceState.getBoolean("has_no_nfc");
+            mOldIntent = savedInstanceState.getParcelable("old_intent");
+        }
+
         // Bind main layout buttons.
         mReadTag = findViewById(R.id.buttonMainReadTag);
         mWriteTag = findViewById(R.id.buttonMainWriteTag);
@@ -123,6 +133,19 @@ public class MainMenu extends Activity {
 
         initFolders();
         copyStdKeysFiles();
+    }
+
+    /**
+     * Save important state data before this activity gets destroyed.
+     * @param outState The state to put data into.
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("donate_dialog_was_shown", mDonateDialogWasShown);
+        outState.putBoolean("info_external_nfc_dialog_was_shown", mInfoExternalNfcDialogWasShown);
+        outState.putBoolean("has_no_nfc", mHasNoNfc);
+        outState.putParcelable("old_intent", mOldIntent);
     }
 
     /**
