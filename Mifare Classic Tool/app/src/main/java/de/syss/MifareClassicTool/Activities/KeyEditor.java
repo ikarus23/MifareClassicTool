@@ -412,7 +412,11 @@ public class KeyEditor extends BasicActivity
      * @see Common#isValidKeyFile(String[])
      */
     private int checkDumpAndUpdateLines() {
-        String editorText = mKeys.getText().toString();
+        Editable editorContent = mKeys.getText();
+        if (editorContent == null) {
+            return 1;
+        }
+        String editorText = editorContent.toString();
         if (editorText == null) {
             return 1;
         }
