@@ -420,8 +420,7 @@ public class KeyEditor extends BasicActivity
         if (editorText == null) {
             return 1;
         }
-        String[] lines = mKeys.getText().toString()
-                .split(System.getProperty("line.separator"));
+        String[] lines = editorText.split(System.getProperty("line.separator"));
         int ret = Common.isValidKeyFile(lines);
         if (ret != 0) {
             return ret;
