@@ -26,7 +26,7 @@ from sys import exit, argv
 def main():
   """ Convert a MCT dump file to a .eml file (Proxmark3 emulator). """
   # Are there enouth arguments?
-  if len(argv) is not 3:
+  if len(argv) != 3:
     usage()
 
   # Convert the file line by line.
