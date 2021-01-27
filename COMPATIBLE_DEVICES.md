@@ -72,6 +72,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Xiaomi Mi 5
 * Xiaomi Mi 9T
 * Xiaomi Mi 10T
+* Xiaomi Redmi K30 5G
 * Xiaomi Redmi Note 9 Pro
 * Yota Phone (YD201, YD206)
 * ZTE Axxon 7
