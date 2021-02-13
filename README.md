@@ -32,9 +32,8 @@ Features
   (Write dump of a tag to another tag; write 'dump-wise')
 * Key management based on dictionary-attack  
   (Write the keys you know in a file (dictionary)).  
-  MCT will try to authenticate with these  
-  keys against all sectors and read as much as possible.  
-  See chapter [Getting Started](#getting-started).)
+  MCT will try to authenticate with these keys against all sectors and read as much as possible.  
+  See chapter [Getting Started](#getting-started).
 * Format a tag back to the factory/delivery state
 * Write the manufacturer block (block 0) of special MIFARE Classic tags
 * Use external NFC readers like ACR 122U  
@@ -104,7 +103,7 @@ Some important things are:
 
 For further information about MIFARE Classic check
 [Wikipedia](https://en.wikipedia.org/wiki/MIFARE),
-[do some Google searches](https://www.google.com/search?q=mifare+classic")
+[do some Google searches](https://www.google.com/search?q="mifare+classic")
 or read the
 [MIFARE Classic (1k) 'Datasheet'](https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf)
 (PDF) from NXP.
@@ -130,7 +129,7 @@ You can try to read a tag with these key files using
 will be lost. Create your own key file for your keys.
 
 
-Once you know some keys, you cam to put them into a simple text
+Once you know some keys, you can put them into a simple text
 file (one key per line). You can do this on your PC and import
 the file using MCT's import/export tool, or you can create a new
 key file via &quot;Edit or Add Key File&quot; from the main menu.
