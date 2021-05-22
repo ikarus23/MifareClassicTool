@@ -21,6 +21,7 @@ package de.syss.MifareClassicTool;
 import android.content.Context;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
+import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import android.os.Parcel;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
+
+import androidx.core.content.res.TypedArrayUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -437,8 +440,66 @@ public class MCReader {
         }
         // Write block.
         int block = mMFC.sectorToBlock(sectorIndex) + blockIndex;
+        // NOTE: See warning on writeBlock0Gen3().
+//        if (block == 0) {
+//            // Try first to write block 0 using the gen3 approach. This must be done
+//            // before using the gen2 (normal) approach, because gen3 always just return
+//            // a write success even if it fails.
+//            int writeGen3block0 = 0;
+//            writeGen3block0 = writeBlock0Gen3(data, key, useAsKeyB);
+//            if (writeGen3block0 == 0) {
+//                return 0;
+//            }
+//        }
         try {
+            // Normal write (also feasible for block 0 of gen2 cards).
             mMFC.writeBlock(block, data);
+        } catch (IOException e) {
+//            if (block == 0) {
+//                // Writing to block 0 failed. Maybe it is a gen3 card. Try it.
+//                return writeBlock0Gen3(data);
+//            }
+            Log.e(LOG_TAG, "Error while writing block to tag.", e);
+            return -1;
+        }
+        return 0;
+    }
+
+    // WARNING: This function is based on the description from here:
+    // https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/magic_cards_notes.md#mifare-classic-apdu-aka-gen3
+    // When tested, it did work, however, sectors 0-31 bricked on the 4k tag that was used.
+    // Changing the UID again was still possible. However, something does not seem to be stable,
+    // Therefore this function is not triggered right now.
+    /**
+     * Write block 0 of a gen3 card using an APDU (no authentication needed).
+     * @param data The data of block 0, 16 bytes.
+     * @return
+     * <ul>
+     * <li>0 - success</li>
+     * <li>1 - block 0 data are not 16 bytes long</li>
+     * <li>-1 - Something went wrong during the attempt to write block 0</li>
+     * </ul>
+     */
+    public int writeBlock0Gen3(byte[] data) {
+        if (data.length != 16) {
+            return 1;
+        }
+        // Write block.
+        byte[] writeCommand = {(byte)0x90, (byte)0xF0, (byte)0xCC, (byte)0xCC, (byte)0x10};
+        byte[] fullCommand = new byte[writeCommand.length + data.length];
+        System.arraycopy(writeCommand, 0, fullCommand, 0, writeCommand.length);
+        System.arraycopy(data, 0, fullCommand, writeCommand.length, data.length);
+        try {
+            NfcA gen3Tag = NfcA.get(mMFC.getTag());
+            if (gen3Tag == null) {
+                throw new IOException("Tag is not IsoDep compatible.");
+            }
+            mMFC.close();
+            gen3Tag.connect();
+            byte[] response = gen3Tag.transceive(fullCommand);
+            // TODO: check response for success.
+            gen3Tag.close();
+            mMFC.connect();
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error while writing block to tag.", e);
             return -1;
