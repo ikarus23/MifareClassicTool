@@ -40,6 +40,7 @@
             android:name=".Activities.MainMenu"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main"
+            android:exported="true"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,6 +53,7 @@
             android:targetActivity=".Activities.MainMenu"
             android:name=".MainMenuAlias"
             android:label="@string/title_activity_main"
+            android:exported="true"
             android:launchMode="singleTop" >
             <!-- NFC Tech Filter -->
             <intent-filter>

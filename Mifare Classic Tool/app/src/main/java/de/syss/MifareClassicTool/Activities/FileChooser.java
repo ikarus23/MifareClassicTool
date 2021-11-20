@@ -340,11 +340,19 @@ public class FileChooser extends BasicActivity {
         input.setText(prefill);
         input.requestFocus();
         input.setSelection(0);
+
         // Show keyboard.
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-                InputMethodManager.HIDE_IMPLICIT_ONLY);
+        input.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                input.requestFocus();
+                imm.showSoftInput(input, 0);
+            }
+        }, 100);
 
         // Ask user for filename.
         new AlertDialog.Builder(this)

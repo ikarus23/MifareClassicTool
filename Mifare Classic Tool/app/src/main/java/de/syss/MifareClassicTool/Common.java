@@ -426,8 +426,10 @@ public class Common extends Application {
                     uri, null, null, null, null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(
-                            OpenableColumns.DISPLAY_NAME));
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (index >= 0) {
+                        result = cursor.getString(index);
+                    }
                 }
             } finally {
                 cursor.close();
@@ -651,7 +653,7 @@ public class Common extends Application {
                     targetActivity.getClass()).addFlags(
                             Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(
-                    targetActivity, 0, intent, 0);
+                    targetActivity, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             try {
                 mNfcAdapter.enableForegroundDispatch(
                         targetActivity, pendingIntent, null, new String[][]{
