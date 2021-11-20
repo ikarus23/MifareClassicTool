@@ -35,7 +35,7 @@ This list may be incomplete. You might also want to have a look at
 * LGE LG Optimus L7 II
 * LGE LG Phoenix 2
 * LGE LG V10
-* Motorola One Vision
+* Motorola One Vision Plus
 * Motorola Droid Turbo
 * Motorola Moto Maxx
 * Motorola Moto Style

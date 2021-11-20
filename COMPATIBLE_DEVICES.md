@@ -33,6 +33,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * LGE LG G4 (H815)
 * LGE LG G5
 * LGE LG G6 (H870)
+* Motorola One Vision
 * Motorola G5 Plus
 * Motorola Photon Q
 * Nokia 5
