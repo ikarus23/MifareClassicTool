@@ -1,0 +1,4 @@
+ * Added more well known keys to the extended key file.
+   (extended-std.keys file will be updated automatically.)
+ * Bugfix: Prevent crash when key editor loads from saved instance.
+ * Some minor bug fixes.

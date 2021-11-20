@@ -18,6 +18,9 @@
 
 package de.syss.MifareClassicTool;
 
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.AutoCopyUID;
+import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UIDFormat;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -58,7 +61,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -68,9 +70,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import de.syss.MifareClassicTool.Activities.IActivityThatReactsToSave;
-
-import static de.syss.MifareClassicTool.Activities.Preferences.Preference.AutoCopyUID;
-import static de.syss.MifareClassicTool.Activities.Preferences.Preference.UIDFormat;
 
 
 /**
