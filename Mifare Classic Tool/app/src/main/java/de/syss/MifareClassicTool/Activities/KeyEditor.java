@@ -79,6 +79,14 @@ public class KeyEditor extends BasicActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key_editor);
 
+        mKeys = findViewById(R.id.editTextKeyEditorKeys);
+        // This is a (ugly) fix for a bug in Android 5.0+
+        // https://code.google.com/p/android-developer-preview
+        //    /issues/detail?id=110
+        // (The EditText has the monospace typeface
+        // property set via XML. But Android ignores it...)
+        mKeys.setTypeface(Typeface.MONOSPACE);
+
         Intent intent = getIntent();
         if (savedInstanceState != null) {
             mCloseAfterSuccessfulSave = savedInstanceState.getBoolean(
@@ -88,16 +96,6 @@ public class KeyEditor extends BasicActivity
             mLines = savedInstanceState.getStringArray("lines");
         } else if (intent != null && intent.hasExtra(
                 FileChooser.EXTRA_CHOSEN_FILE)) {
-            mKeys = findViewById(R.id.editTextKeyEditorKeys);
-
-            // This is a (ugly) fix for a bug in Android 5.0+
-            // https://code.google.com/p/android-developer-preview
-            //    /issues/detail?id=110
-            // (The EditText has the monospace typeface
-            // property set via XML. But Android ignores it...)
-            mKeys.setTypeface(Typeface.MONOSPACE);
-
-
             File keyFile = new File(getIntent().getStringExtra(
                     FileChooser.EXTRA_CHOSEN_FILE));
             mFileName = keyFile.getName();
