@@ -2,6 +2,9 @@ Changelog of MifareClassicTool (MCT):
 
 In development:
 
+Version 4.0.4:
+ * Bugfix: Discover tags correctly again.
+
 Version 4.0.3:
  * Added more well known keys to the extended key file.
    (extended-std.keys file will be updated automatically.)
