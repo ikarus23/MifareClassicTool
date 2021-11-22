@@ -652,7 +652,7 @@ public class Common extends Application {
                     targetActivity.getClass()).addFlags(
                             Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(
-                    targetActivity, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                    targetActivity, 0, intent, PendingIntent.FLAG_MUTABLE);
             try {
                 mNfcAdapter.enableForegroundDispatch(
                         targetActivity, pendingIntent, null, new String[][]{
