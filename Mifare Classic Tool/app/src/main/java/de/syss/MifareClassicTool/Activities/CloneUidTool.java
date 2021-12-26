@@ -79,7 +79,7 @@ public class CloneUidTool extends BasicActivity {
                 R.id.editTextCloneUidToolWriteKey);
         mStatusLogContent = findViewById(
                 R.id.textViewCloneUidToolStatusLogContent);
-        mShowOptions = (CheckBox) findViewById(
+        mShowOptions = findViewById(
                 R.id.checkBoxCloneUidToolOptions);
         mRadioButtonKeyB = findViewById(
                 R.id.radioButtonCloneUidToolKeyB);
@@ -390,7 +390,7 @@ public class CloneUidTool extends BasicActivity {
      * (in this case the "show options" check box).
      */
     public void onShowOptions(View view) {
-        LinearLayout optionsLayout = (LinearLayout) findViewById(
+        LinearLayout optionsLayout = findViewById(
                 R.id.linearLayoutOptions);
         if (mShowOptions.isChecked()) {
             optionsLayout.setVisibility(View.VISIBLE);

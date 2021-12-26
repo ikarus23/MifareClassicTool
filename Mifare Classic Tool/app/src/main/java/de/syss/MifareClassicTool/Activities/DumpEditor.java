@@ -436,9 +436,9 @@ public class DumpEditor extends BasicActivity
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_save_file,
                 findViewById(android.R.id.content), false);
-        TextView message = (TextView) dialogLayout.findViewById(
+        TextView message = dialogLayout.findViewById(
                 R.id.textViewDialogSaveFileMessage);
-        final EditText input = (EditText) dialogLayout.findViewById(
+        final EditText input = dialogLayout.findViewById(
                 R.id.editTextDialogSaveFileName);
         message.setText(messageId);
         input.setText(fileName);
@@ -975,7 +975,7 @@ public class DumpEditor extends BasicActivity
             if (mDumpName == null) {
                 mKeysName = "UID_" + mUID;
             } else {
-                mKeysName = new String(mDumpName);
+                mKeysName = mDumpName;
             }
         }
         mKeysName += ".keys";

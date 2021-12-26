@@ -257,12 +257,10 @@ public class WriteTag extends BasicActivity {
 
         // Error handling for the return value of KeyMapCreator.
         // So far, only error nr. 4 needs to be handled.
-        switch (ckmError) {
-        case 4:
-            // Error. Path from the calling intend was null.
+        if (ckmError == 4) {// Error. Path from the calling intend was null.
             // (This is really strange and should not occur.)
             Toast.makeText(this, R.string.info_strange_error,
-                    Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show();
         }
     }
 
@@ -872,7 +870,7 @@ public class WriteTag extends BasicActivity {
                     // with the static ones.
                     String newBlock = dump[i].substring(0, 12)
                             + mStaticAC.getText().toString()
-                            + dump[i].substring(18, dump[i].length());
+                            + dump[i].substring(18);
                     dump[i] = newBlock;
                 }
                 mDumpWithPos.get(sector).put(block++,

@@ -71,15 +71,14 @@ public class ReadTag extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch(requestCode) {
-        case KEY_MAP_CREATOR:
+        if (requestCode == KEY_MAP_CREATOR) {
             if (resultCode != Activity.RESULT_OK) {
                 // Error.
                 if (resultCode == 4) {
                     // Error. Path from the calling intend was null.
                     // (This is really strange and should not occur.)
                     Toast.makeText(this, R.string.info_strange_error,
-                            Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();
                 }
                 finish();
                 return;
@@ -87,7 +86,6 @@ public class ReadTag extends Activity {
                 // Read Tag.
                 readTag();
             }
-            break;
         }
     }
 

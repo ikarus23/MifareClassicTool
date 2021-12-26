@@ -32,6 +32,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -97,6 +99,7 @@ public class ImportExportTool extends BasicActivity {
             this.text = text;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return text;
@@ -488,7 +491,7 @@ public class ImportExportTool extends BasicActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
-        boolean success = false;
+        boolean success;
         if (mFileType != FileType.BIN) {
             success = Common.saveFile(contentDestination, convertedContent, this);
         } else {
@@ -551,7 +554,7 @@ public class ImportExportTool extends BasicActivity {
                     Common.isValidDumpErrorToast(err, this);
                     return null;
                 }
-                int sectorNumber = 0;
+                int sectorNumber;
                 int blockNumber = 0;
                 for (String line : source) {
                     if (line.startsWith("+")) {
@@ -624,7 +627,7 @@ public class ImportExportTool extends BasicActivity {
             return null;
         }
 
-        JSONObject blocks = null;
+        JSONObject blocks;
         try {
             JSONObject parsedJson = new JSONObject(TextUtils.join("", json));
             blocks = parsedJson.getJSONObject("blocks");
@@ -886,7 +889,7 @@ public class ImportExportTool extends BasicActivity {
                             file.getAbsolutePath().substring(commonPathLen));
                     entry.setTime(file.lastModified());
                     out.putNextEntry(entry);
-                    int count = 0;
+                    int count;
                     while ((count = origin.read(data, 0, BUFFER)) != -1) {
                         out.write(data, 0, count);
                     }

@@ -21,7 +21,6 @@ package de.syss.MifareClassicTool;
 import android.content.Context;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
-import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
@@ -30,8 +29,6 @@ import android.os.Parcel;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
-
-import androidx.core.content.res.TypedArrayUtils;
 
 import java.io.File;
 import java.io.IOException;
