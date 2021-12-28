@@ -903,7 +903,18 @@ public class Common extends Application {
                         // MIFARE Plus EV1 2K/4K SL1
                         return -1;
                     } else {
-                        return -1;
+                        if ((sak & 1) == 1) { // SAK bit 1 = 1?
+                            // MIFARE Mini
+                            return -1;
+                        } else {
+                            // MIFARE Classic 1k
+                            // MIFARE SmartMX 1k
+                            // MIFARE Plus S 2K SL1
+                            // MIFARE Plus X 2K SL1
+                            // MIFARE Plus SE 1K
+                            // MIFARE Plus EV1 2K/4K SL1
+                            return -1;
+                        }
                     }
                 } else {
                     // Some MIFARE tag, but not Classic or Classic compatible.
