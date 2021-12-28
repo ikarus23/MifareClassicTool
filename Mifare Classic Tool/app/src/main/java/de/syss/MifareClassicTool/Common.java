@@ -275,7 +275,7 @@ public class Common extends Application {
         if (file == null || !file.exists()) {
             return null;
         }
-        String[] ret = null;
+        String[] ret;
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(file));
@@ -306,8 +306,8 @@ public class Common extends Application {
      * @see #readLineByLine(BufferedReader, boolean, Context)
      */
     public static String[] readUriLineByLine(Uri uri, boolean readAll, Context context) {
-        InputStream contentStream = null;
-        String[] ret = null;
+        InputStream contentStream;
+        String[] ret;
         if (uri == null || context == null) {
             return null;
         }
@@ -336,7 +336,7 @@ public class Common extends Application {
      * an read error.
      */
     public static byte[] readUriRaw(Uri uri, Context context) {
-        InputStream contentStream = null;
+        InputStream contentStream;
         if (uri == null || context == null) {
             return null;
         }
@@ -372,7 +372,7 @@ public class Common extends Application {
      */
     private static String[] readLineByLine(BufferedReader reader,
             boolean readAll, Context context) {
-        String[] ret = null;
+        String[] ret;
         String line;
         ArrayList<String> linesArray = new ArrayList<>();
         try {
@@ -421,17 +421,14 @@ public class Common extends Application {
     public static String getFileName(Uri uri, Context context) {
         String result = null;
         if (uri.getScheme().equals("content")) {
-            Cursor cursor = context.getContentResolver().query(
-                    uri, null, null, null, null);
-            try {
+            try (Cursor cursor = context.getContentResolver().query(
+                uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                     if (index >= 0) {
                         result = cursor.getString(index);
                     }
                 }
-            } finally {
-                cursor.close();
             }
         }
         if (result == null) {
@@ -580,7 +577,7 @@ public class Common extends Application {
         } else {
             error = true;
         }
-        return error == false;
+        return !error;
     }
 
     /**
@@ -608,7 +605,7 @@ public class Common extends Application {
      * @return True if file writing was successful. False otherwise.
      */
     public static boolean saveFile(Uri contentUri, byte[] bytes, Context context) {
-        OutputStream output = null;
+        OutputStream output;
         if (contentUri == null || bytes == null || context == null || bytes.length == 0) {
             return false;
         }
@@ -982,7 +979,6 @@ public class Common extends Application {
      * <li>-1 - Can not check because Android version is >= 8.</li>
      * </ul>
      */
-    @SuppressWarnings("deprecation")
     public static int isExternalNfcServiceRunning(Context context) {
         // getRunningServices() is deprecated since Android 8.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -1325,7 +1321,7 @@ public class Common extends Application {
      * @param hexString The string to check.
      * @param context The Context in which the Toast will be shown.
      * @return True if sting is hex an 16 Bytes long, False otherwise.
-     * @see #isHex(String, Context)  
+     * @see #isHex(String, Context)
      */
     public static boolean isHexAnd16Byte(String hexString, Context context) {
         boolean isHex = isHex(hexString, context);
@@ -1375,14 +1371,12 @@ public class Common extends Application {
             // For better reading (~ = invert operator):
             // if (b0=b8 and b0=~b4) and (b1=b9 and b9=~b5) ...
             // ... and (b12=b14 and b13=b15 and b12=~b13) then
-            if (    (b[0] == b[8] && (byte)(b[0]^0xFF) == b[4]) &&
-                    (b[1] == b[9] && (byte)(b[1]^0xFF) == b[5]) &&
-                    (b[2] == b[10] && (byte)(b[2]^0xFF) == b[6]) &&
-                    (b[3] == b[11] && (byte)(b[3]^0xFF) == b[7]) &&
-                    (b[12] == b[14] && b[13] == b[15] &&
-                    (byte)(b[12]^0xFF) == b[13])) {
-                return true;
-            }
+            return (b[0] == b[8] && (byte) (b[0] ^ 0xFF) == b[4]) &&
+                (b[1] == b[9] && (byte) (b[1] ^ 0xFF) == b[5]) &&
+                (b[2] == b[10] && (byte) (b[2] ^ 0xFF) == b[6]) &&
+                (b[3] == b[11] && (byte) (b[3] ^ 0xFF) == b[7]) &&
+                (b[12] == b[14] && b[13] == b[15] &&
+                    (byte) (b[12] ^ 0xFF) == b[13]);
         }
         return false;
     }
@@ -1634,7 +1628,7 @@ public class Common extends Application {
         // Byte3.
         if (valid && (uidLen == 7 || uidLen == 10)) {
             // The 3rd byte of a double/triple sized UID shall not be 0x88.
-            valid = !block0.substring(4, 6).equals("88");
+            valid = !block0.startsWith("88", 4);
         }
         // ATQA.
         // Check if there is a special ATQA tied to MIFARE SmartMX or TNP3xxx.
@@ -1813,7 +1807,7 @@ public class Common extends Application {
             return null;
         }
         byte[] bytes = hex2Bytes(hex);
-        String ret = null;
+        String ret;
         // Replace non printable ASCII with ".".
         for(int i = 0; i < bytes.length; i++) {
             if (bytes[i] < (byte)0x20 || bytes[i] == (byte)0x7F) {

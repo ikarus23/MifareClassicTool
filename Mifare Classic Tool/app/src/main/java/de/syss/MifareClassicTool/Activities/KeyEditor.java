@@ -312,9 +312,9 @@ public class KeyEditor extends BasicActivity
         View dialogLayout = getLayoutInflater().inflate(
                 R.layout.dialog_save_file,
                 findViewById(android.R.id.content), false);
-        TextView message = (TextView) dialogLayout.findViewById(
+        TextView message = dialogLayout.findViewById(
                 R.id.textViewDialogSaveFileMessage);
-        final EditText input = (EditText) dialogLayout.findViewById(
+        final EditText input = dialogLayout.findViewById(
                 R.id.editTextDialogSaveFileName);
         message.setText(R.string.dialog_save_keys);
         input.setText(mFileName);

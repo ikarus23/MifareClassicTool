@@ -26,3 +26,7 @@ Mifare Classic Tool/app/release
 # OS specific
 **/.DS_Store
 
+.idea
+.vscode
+build
+*.jar

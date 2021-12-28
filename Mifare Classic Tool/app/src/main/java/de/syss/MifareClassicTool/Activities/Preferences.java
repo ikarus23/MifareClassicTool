@@ -31,6 +31,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -62,6 +64,7 @@ public class Preferences extends BasicActivity {
             this.text = text;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return text;
