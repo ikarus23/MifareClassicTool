@@ -886,7 +886,7 @@ public class Common extends Application {
             // Check if device does not support MIFARE Classic.
             // For doing so, check if the SAK of the tag indicate that
             // it's a MIFARE Classic tag.
-            // See: https://www.nxp.com/docs/en/application-note/AN10834.pdf (page 7)
+            // See: https://www.nxp.com/docs/en/application-note/AN10833.pdf (page 6)
             NfcA nfca = NfcA.get(tag);
             byte sak = (byte)nfca.getSak();
             if ((sak>>1 & 1) == 1) {
@@ -894,30 +894,18 @@ public class Common extends Application {
                 return -2;
             } else {
                 if ((sak>>3 & 1) == 1) { // SAK bit 4 = 1?
-                    if((sak>>4 & 1) == 1) { // SAK bit 5 = 1?
-                        // MIFARE Classic 2K
-                        // MIFARE Classic 4K
-                        // MIFARE SmartMX 4K
-                        // MIFARE Plus S 4K SL1
-                        // MIFARE Plus X 4K SL1
-                        // MIFARE Plus EV1 2K/4K SL1
-                        return -1;
-                    } else {
-                        if ((sak & 1) == 1) { // SAK bit 1 = 1?
-                            // MIFARE Mini
-                            return -1;
-                        } else {
-                            // MIFARE Classic 1k
-                            // MIFARE SmartMX 1k
-                            // MIFARE Plus S 2K SL1
-                            // MIFARE Plus X 2K SL1
-                            // MIFARE Plus SE 1K
-                            // MIFARE Plus EV1 2K/4K SL1
-                            return -1;
-                        }
-                    }
-                } else {
-                    // Some MIFARE tag, but not Classic or Classic compatible.
+                    // Note: Other SAK bits are irrelevant. Tag is MIFARE Classic compatible.
+                    // MIFARE Mini
+                    // MIFARE Classic 1K/2K/4K
+                    // MIFARE SmartMX 1K/4K
+                    // MIFARE Plus S 2K/4K SL1
+                    // MIFARE Plus X 2K/4K SL1
+                    // MIFARE Plus SE 1K
+                    // MIFARE Plus EV1 2K/4K SL1
+                    return -1;
+                } else { // SAK bit 4 = 0
+                    // Note: Other SAK bits are irrelevant. Tag is *not* MIFARE Classic compatible.
+                    // Tags like MIFARE Plus in SL2, MIFARE Ultralight, MIFARE DESFire, etc.
                     return -2;
                 }
             }
