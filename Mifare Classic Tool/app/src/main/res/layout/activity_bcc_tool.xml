@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:hint="@string/hint_hex_4_byte"
             android:imeOptions="actionDone"
-            android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+            android:inputType="textCapCharacters|textNoSuggestions"
             android:maxLength="8"
             android:importantForAutofill="no" />
 

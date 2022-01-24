@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:hint="@string/hint_hex_16_byte"
             android:imeOptions="actionDone"
-            android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+            android:inputType="textCapCharacters|textNoSuggestions"
             android:maxLength="32"
             android:importantForAutofill="no" />
 
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_hex_00"
             android:imeOptions="actionDone"
-            android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+            android:inputType="textCapCharacters|textNoSuggestions"
             android:maxLength="2"
             android:minEms="2"
             android:importantForAutofill="no" />

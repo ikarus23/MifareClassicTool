@@ -153,7 +153,7 @@
                     android:layout_alignLeft="@+id/editTextWriteTagBlock"
                     android:layout_below="@id/editTextWriteTagBlock"
                     android:hint="@string/hint_hex_16_byte"
-                    android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                    android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="32"
                     android:importantForAutofill="no" />
 
@@ -252,7 +252,7 @@
                             android:layout_below="@id/checkBoxWriteTagDumpStaticAC"
                             android:ems="8"
                             android:imeOptions="actionDone"
-                            android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                            android:inputType="textCapCharacters|textNoSuggestions"
                             android:maxLength="6"
                             android:minEms="3"
                             android:text="@string/text_static_ac_default"

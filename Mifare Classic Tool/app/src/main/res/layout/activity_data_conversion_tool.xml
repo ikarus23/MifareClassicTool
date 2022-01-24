@@ -53,7 +53,7 @@
                 android:layout_weight="1"
                 android:typeface="monospace"
                 android:imeOptions="actionDone"
-                android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                android:inputType="textCapCharacters|textNoSuggestions"
                 android:importantForAutofill="no" />
 
             <ImageButton

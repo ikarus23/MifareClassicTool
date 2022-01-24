@@ -92,7 +92,7 @@
                 android:typeface="monospace"
                 android:hint="@string/hint_hex_4_7_10_byte"
                 android:imeOptions="actionDone"
-                android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                android:inputType="textCapCharacters|textNoSuggestions"
                 android:maxLength="20"
                 android:importantForAutofill="no" />
 
@@ -156,7 +156,7 @@
                     android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
                     android:typeface="monospace"
                     android:imeOptions="actionDone"
-                    android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                    android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="22"
                     android:importantForAutofill="no" />
 
@@ -199,7 +199,7 @@
                     android:layout_below="@+id/textViewCloneUidToolWriteKey"
                     android:typeface="monospace"
                     android:imeOptions="actionDone"
-                    android:inputType="textCapCharacters|textNoSuggestions|textVisiblePassword"
+                    android:inputType="textCapCharacters|textNoSuggestions"
                     android:maxLength="22"
                     android:importantForAutofill="no" />
 
