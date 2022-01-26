@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
-        minSdkVersion 19
-        targetSdkVersion 31
+        minSdk 19
+        targetSdk 31
         versionCode 62
         versionName '4.0.4'
     }
