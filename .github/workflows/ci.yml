@@ -3,11 +3,9 @@ name: CI
 on:
   push:
     paths:
-      - '.github/workflows/ci.yaml'
       - 'Mifare Classic Tool/**'
   pull_request:
     paths:
-      - '.github/workflows/ci.yaml'
       - 'Mifare Classic Tool/**'
 
 env:
@@ -15,14 +13,10 @@ env:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle/wrapper/gradle-wrapper.properties', '**/buildSrc/src/main/kotlin/**.kt') }}
+      - uses: actions/checkout@v3
+      - uses: gradle/gradle-build-action@v2
       - name: Build
         working-directory: ${{ env.PROJECT_PATH }}
-        run: ./gradlew --parallel assembleRelease
+        run: ./gradlew assemble
