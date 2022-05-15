@@ -1,7 +1,7 @@
 Compatible Devices
 ====================
 
-This is a list of Android devices which are complatible to MIFARE Classic Tool.
+This is a list of Android devices which are compatible to MIFARE Classic Tool.
 This app **has been known to work** on the following devices because their
 hardware (NFC-controller) does support MIFARE Classic
 ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
@@ -52,6 +52,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy A8 Plus
 * Samsung Galaxy A40 (SM-A405FN)
 * Samsung Galaxy A51
+* Samsung Galaxy J3 (2016) (Models: J320FN, J320F, J320P)
 * Samsung Galaxy J7 Pro (2017, Android 8.1)
 * Samsung Galaxy Nexus
 * Samsung Galaxy Note 2

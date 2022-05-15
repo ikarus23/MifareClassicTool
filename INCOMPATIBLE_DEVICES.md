@@ -54,7 +54,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy Alpha
 * Samsung Galaxy E7
 * Samsung Galaxy Express 2
-* Samsung Galaxy J3 (2016)
+* Samsung Galaxy J3 (2016) (Models: J320G, J320M, J320A, J320V)
 * Samsung Galaxy J5 (2017)
 * Samsung Galaxy J7 (2016, 2017)
 * Samsung Galaxy Mega
