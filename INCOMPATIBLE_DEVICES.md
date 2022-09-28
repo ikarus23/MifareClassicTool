@@ -15,6 +15,7 @@ This list may be incomplete. You might also want to have a look at
 * Blackview BV5500 Pro/Plus
 * Blackview BV8000 Pro
 * Doogee S60
+* Fairphone 3
 * Foxcon InFocus M320
 * Google Nexus 4
 * Google Nexus 5
