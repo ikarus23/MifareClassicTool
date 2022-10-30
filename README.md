@@ -86,7 +86,8 @@ Some important things are:
   gen2" or "CUID"). This App is able to write to such tags and can therefore
   create fully correct clones. "FUID" and "UFUID" tags should work too,
   but they have not been tested so far. However, the app will not work with
-  all special tags. Some of them require a **special command sequence** to
+  all special tags. Some of them require a **special command sequence** (which
+  cannot be sent due to limitations in the Android NFC API) to
   put them into the state where writing to the manufacturer block is possible.
   These tags are often called  "gen1", "gen1a" or "UID".  
   Remember this when you are shopping for special tags!  
