@@ -80,6 +80,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Xiaomi Mi 10T
 * Xiaomi Mi 10T Pro
 * Xiaomi Mi 11 Lite 5G NE
+* Xiaomi Mi Mix 2S
 * Xiaomi Redmi K20 Pro
 * Xiaomi Redmi K30 5G
 * Xiaomi Redmi Note 9 Pro
