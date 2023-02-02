@@ -38,6 +38,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Motorola G5 Plus
 * Motorola Photon Q
 * Nokia 5
+* Nokia 6.1
 * Nokia 6.2
 * Nokia 7 Plus
 * Nokia 8
@@ -59,6 +60,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy Nexus
 * Samsung Galaxy Note 2
 * Samsung Galaxy Note 8
+* Samsung Galaxy Note 10
 * Samsung Galaxy S3 (i9300)
 * Samsung Galaxy S3 Duo (i9300i)
 * Samsung Galaxy S5
