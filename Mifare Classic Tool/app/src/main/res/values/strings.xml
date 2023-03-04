@@ -436,7 +436,7 @@
         thing possible is to display the UID and some other generic
         information. Further I/O operations are impossible.
         <br /><br />You can view a list of known devices with no MIFARE Classic
-        support at <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">github</a>.
+        support at <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/INCOMPATIBLE_DEVICES.md">GitHub</a>.
         If your device is not on that list, please write an
         <a href="mailto:fooblubb@gmail.com">Email to developer</a>.
         <br /><br />If your device supports USB-OTG you might be able to connect an
@@ -520,7 +520,7 @@
         <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a><br />
         &#8226; Project Page:
         <a href="https://github.com/ikarus23/MifareClassicTool">MCT
-        on github</a><br />
+        on GitHub</a><br />
         &#8226; Rate this app:
         <a href="market://details?id=de.syss.MifareClassicTool">via
         Google Play</a><br />
@@ -594,7 +594,7 @@
         \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Get
         the donate version</a>
         \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
-        on github / donate link</a>
+        on GitHub / donate link</a>
     </string>
     <string name="dialog_save_before_quitting_title">Unsaved changes</string>
     <string name="dialog_save_before_quitting"><b>There are unsaved changes!</b>
