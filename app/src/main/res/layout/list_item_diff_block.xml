@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2014 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/textViewDiffBlockDump1Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="5dp"
+        android:text="@string/text_a" />
+
+    <TextView
+        android:id="@+id/textViewDiffBlockDump1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewDiffBlockDump1Label"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textViewDiffBlockDiff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewDiffBlockDump1"
+        android:layout_below="@+id/textViewDiffBlockDump1"
+        android:layout_marginTop="-7dp"
+        android:layout_marginBottom="-7dp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/textViewDiffBlockDump2Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewDiffBlockDiff"
+        android:text="@string/text_b" />
+
+    <TextView
+        android:id="@+id/textViewDiffBlockDump2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewDiffBlockDump1"
+        android:layout_below="@+id/textViewDiffBlockDiff"
+        android:typeface="monospace" />
+
+    <!-- Separator -->
+    <View
+        android:id="@+id/separatorDiffBlock"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_alignLeft="@+id/textViewDiffBlockDump2Label"
+        android:layout_alignRight="@+id/textViewDiffBlockDump2"
+        android:layout_below="@+id/textViewDiffBlockDump2"
+        android:background="@color/light_gray" />
+
+</RelativeLayout>

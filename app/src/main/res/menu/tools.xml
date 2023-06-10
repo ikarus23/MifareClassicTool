@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menuMainTagInfo"
+        android:title="@string/action_show_tag_info" />
+    <item android:id="@+id/menuMainCloneUidTool"
+        android:title="@string/action_show_clone_uid" />
+    <item android:id="@+id/menuMainDiffTool"
+        android:title="@string/action_show_diff_tool" />
+    <item android:id="@+id/menuMainAccessConditionTool"
+        android:title="@string/action_show_ac_tool" />
+    <item android:id="@+id/menuMainValueBlockTool"
+        android:title="@string/action_show_vb_tool" />
+    <item android:id="@+id/menuMainBccTool"
+        android:title="@string/action_show_bcc_tool" />
+    <item android:id="@+id/menuMainDataConversionTool"
+        android:title="@string/action_show_data_conversion_tool" />
+    <item android:id="@+id/menuMainUidLogTool"
+        android:title="@string/action_show_uid_log_tool" />
+    <item android:id="@+id/menuMainImportExportTool"
+        android:title="@string/action_show_import_export_tool" />
+</menu>

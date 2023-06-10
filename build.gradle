@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+task runTests(type: Exec) {
+    workingDir './'  // 设置工作目录为项目根目录
+    commandLine 'gradlew', 'test'  // 执行 gradlew test 命令
+}

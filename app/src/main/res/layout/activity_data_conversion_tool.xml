@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2020 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Hex -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolHex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_hex"
+                android:labelFor="@+id/editTextDataConversionToolHex"/>
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolHex"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolHex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert"/>
+
+        </LinearLayout>
+
+        <!-- ASCII -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolAscii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_ascii"
+                android:labelFor="@+id/editTextDataConversionToolAscii" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolAscii"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:typeface="monospace"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolAscii"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Bin -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolBin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_bin"
+                android:labelFor="@+id/editTextDataConversionToolBin" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolBin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberSigned"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolBin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewDataConversionToolMoreOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="left"
+            android:paddingTop="20dp"
+            android:paddingLeft="4dp"
+            android:text="@string/text_more_converter" />
+
+        <Button
+            android:id="@+id/buttonDataConversionToolGenericConverter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_generic_converter"
+            android:onClick="onOpenGenericConverter"/>
+
+        <Button
+            android:id="@+id/buttonDataConversionToolMultiPurpose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_multi_purpose_converter"
+            android:onClick="onOpenMultiPurposeConverter"/>
+
+        <Button
+            android:id="@+id/buttonDataConversionToolCyberChef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_cyber_chef"
+            android:onClick="onOpenCyberChef" />
+
+    </LinearLayout>
+
+</ScrollView>

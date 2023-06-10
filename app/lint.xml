@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<lint>
+
+    <issue id="UselessParent">
+        <!-- Non scroll table header. -->
+        <ignore path="src/main/res/layout/activity_access_condition_decoder.xml" />
+        <ignore path="src/main/res/layout/activity_value_blocks_to_int.xml" />
+        <!-- Only radio group in parent layout. -->
+        <ignore path="src/main/res/layout/activity_write_tag.xml" />
+    </issue>
+
+    <issue id="UselessLeaf">
+        <!-- Suppress edit text focus on startup. -->
+        <ignore path="src/main/res/layout/activity_value_block_tool.xml" />
+        <ignore path="src/main/res/layout/activity_dump_editor.xml" />
+        <ignore path="src/main/res/layout/activity_write_dump.xml" />
+        <ignore path="src/main/res/layout/activity_key_editor.xml" />
+        <ignore path="src/main/res/layout/activity_write_tag.xml" />
+        <ignore path="src/main/res/layout/activity_access_condition_tool.xml" />
+    </issue>
+
+    <issue id="Orientation">
+        <!-- Horizontal orientation for linear layouts as default is O.K. -->
+        <ignore path="src/main/res/layout/activity_key_editor.xml" />
+    </issue>
+
+    <issue id="UnusedResources">
+        <!-- Resources are used dynamically. -->
+        <ignore path="src/main/res/values/tag_type_list.xml" />
+        <ignore path="src/main/res/values/access_conditions.xml" />
+    </issue>
+
+    <issue id="UnusedAttribute">
+        <!-- Newer XML attributes like "showAsAction" will be ignored
+        by older android versions. This is exactly the right behavior. -->
+        <ignore path="src/main/res/menu/dump_editor_functions.xml" />
+        <ignore path="src/main/res/menu/general_options.xml" />
+        <ignore path="src/main/res/menu/key_editor_functions.xml" />
+    </issue>
+
+    <issue id="TypographyDashes">
+        <!-- This dashes are right the way they are. -->
+        <ignore path="src/main/res/values/strings.xml" />
+        <ignore path="src/main/res/values-es/strings.xml" />
+        <ignore path="src/main/res/values-zh/strings.xml" />
+        <ignore path="src/main/res/values-it/strings.xml" />
+    </issue>
+
+    <issue id="SelectableText">
+        <!-- Text is set programmatically (but static). -->
+        <ignore path="src/main/res/layout/activity_dump_editor.xml" />
+        <ignore path="src/main/res/layout/activity_hex_to_ascii.xml" />
+    </issue>
+
+    <!-- Sparse Arrays are not really usefull for small collections. -->
+    <!-- http://www.programmingmobile.com/2012/07/android-performance-tweaking-parsearray.html -->
+    <issue id="UseSparseArrays" severity="ignore" />
+
+    <!-- If icon is only in "drawable", it is suitable for all resolutions. -->
+    <issue id="IconLocation" severity="ignore" />
+    <issue id="IconDensities" severity="ignore" />
+
+    <issue id="RtlHardcoded">
+        <!-- Ignore right-to-left layouts for now. -->
+        <ignore path="src/main/res/layout/*" />
+    </issue>
+    <issue id="RtlSymmetry">
+        <!-- Ignore right-to-left layouts for now. -->
+        <ignore path="src/main/res/layout/*" />
+    </issue>
+
+    <issue id="MissingTranslation">
+        <!-- Ignore missing translations. There is no real translation
+        process right now. -->
+        <ignore path="src/main/res/values/*" />
+    </issue>
+
+    <issue id="UnusedResources">
+        <!-- Ignore warings about the unused launcher icons. Andorid needs them. -->
+        <ignore regexp="ic_launcher" />
+    </issue>
+</lint>

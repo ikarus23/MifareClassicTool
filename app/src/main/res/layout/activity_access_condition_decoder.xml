@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutAccessConditionDecoder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Activities.AccessConditionDecoder" >
+
+    <TableRow
+        android:id="@+id/tableRowAccessConditionDecoderHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_gray"
+        android:padding="3dp" >
+
+        <TextView
+            android:id="@+id/textViewAccessConditionDecoderHeader1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="30dp"
+            android:text="@string/text_ac_pos"
+            android:textColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/textViewAccessConditionDecoderHeader2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="25dp"
+            android:text="@string/text_ac_read"
+            android:textColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/textViewAccessConditionDecoderHeader3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="25dp"
+            android:text="@string/text_ac_write"
+            android:textColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/textViewAccessConditionDecoderHeader4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="25dp"
+            android:text="@string/text_ac_incr"
+            android:textColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/textViewAccessConditionDecoderHeader5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_ac_decr"
+            android:textColor="@color/light_gray" />
+    </TableRow>
+
+    <ScrollView
+        android:id="@+id/scrollViewAccessConditionDecoder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tableRowAccessConditionDecoderHeader" >
+
+        <TableLayout
+            android:id="@+id/tableLayoutAccessConditionDecoder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp" >
+
+            <!-- Fake table Row with the width of the
+            (external, nonscroll) header -->
+
+		    <TableRow
+		        android:id="@+id/tableRowAccessConditionDecoderHeaderFake"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:id="@+id/textViewAccessConditionDecoderHeaderFake1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:height="0dp"
+		            android:paddingRight="30dp"
+		            android:text="@string/text_ac_pos" />
+		
+		        <TextView
+		            android:id="@+id/textViewAccessConditionDecoderHeaderFake2"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:height="0dp"
+		            android:paddingRight="25dp"
+		            android:text="@string/text_ac_read" />
+		
+		        <TextView
+		            android:id="@+id/textViewAccessConditionDecoderHeaderFake3"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:height="0dp"
+		            android:paddingRight="25dp"
+		            android:text="@string/text_ac_write" />
+		
+		        <TextView
+		            android:id="@+id/textViewAccessConditionDecoderHeaderFake4"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:height="0dp"
+		            android:paddingRight="25dp"
+		            android:text="@string/text_ac_incr" />
+		
+		        <TextView
+		            android:id="@+id/textViewAccessConditionDecoderHeaderFake5"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:height="0dp"
+		            android:text="@string/text_ac_decr" />
+
+		    </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

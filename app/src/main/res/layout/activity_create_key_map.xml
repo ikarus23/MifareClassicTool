@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutCreateKeyMap"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Activities.KeyMapCreator"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCreateKeyMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textViewCreateKeyMapSectorRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="3dp"
+            android:text="@string/text_sector_range"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textViewCreateKeyMapFromTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="3dp"
+            android:text="@string/text_sector_range_all"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+
+        <Button
+            android:id="@+id/buttonCreateKeyMapChangeRange"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="34dip"
+            android:onClick="onChangeSectorRange"
+            android:text="@string/action_change" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewCreateKeyMapChooseKeyFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayoutCreateKeyMap"
+        android:paddingLeft="5dp"
+        android:text="@string/text_choose_key_files"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/buttonCreateKeyMapSelectAll"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewCreateKeyMapChooseKeyFile"
+        android:minHeight="34dip"
+        android:onClick="onSelectAll"
+        android:text="@string/action_select_all" />
+
+    <Button
+        android:id="@+id/buttonCreateKeyMapSelectNone"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/buttonCreateKeyMapSelectAll"
+        android:layout_toRightOf="@id/buttonCreateKeyMapSelectAll"
+        android:minHeight="34dip"
+        android:onClick="onSelectNone"
+        android:text="@string/action_select_none" />
+
+    <ScrollView
+        android:id="@+id/scrollViewCreateKeyMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewCreateKeyMapProgess"
+        android:layout_below="@id/buttonCreateKeyMapSelectAll"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCreateKeyMapKeyFiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textViewCreateKeyMapProgess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCreateKeyMap"
+        android:layout_alignParentLeft="true"
+        android:padding="5dp"
+        android:text="@string/text_key_map_progress"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ProgressBar
+        android:id="@+id/progressBarCreateKeyMap"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonCreateKeyMap"
+        android:layout_toRightOf="@id/textViewCreateKeyMapProgess"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/buttonCreateKeyMapCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/buttonCreateKeyMap"
+        android:onClick="onCancelCreateKeyMap"
+        android:text="@string/action_cancel" />
+
+    <Button
+        android:id="@+id/buttonCreateKeyMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/buttonCreateKeyMapCancel"
+        android:onClick="onCreateKeyMap"
+        android:text="@string/action_create_key_map" />
+
+</RelativeLayout>

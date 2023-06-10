@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2014 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutDiffTool"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context="Activities.DiffTool" >
+
+    <Button
+        android:id="@+id/buttonDiffToolDump1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewDiffToolDump1"
+        android:gravity="left|center_vertical"
+        android:onClick="onChooseDump1"
+        android:text="@string/action_chose_dump" />
+
+    <TextView
+        android:id="@+id/textViewDiffToolDump1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonDiffToolDump1"
+        android:layout_alignBottom="@+id/buttonDiffToolDump1"
+        android:layout_alignParentLeft="true"
+        android:paddingRight="5dp"
+        android:text="@string/text_dump_1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/buttonDiffToolDump2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonDiffToolDump1"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonDiffToolDump1"
+        android:gravity="left|center_vertical"
+        android:onClick="onChooseDump2"
+        android:text="@string/action_chose_dump" />
+
+    <TextView
+        android:id="@+id/textViewDiffToolDump2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonDiffToolDump2"
+        android:layout_alignBottom="@+id/buttonDiffToolDump2"
+        android:layout_alignParentLeft="true"
+        android:paddingRight="5dp"
+        android:text="@string/text_dump_2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <!-- Separator -->
+    <View
+        android:id="@+id/separatorDiffTool"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/buttonDiffToolDump2"
+        android:background="@color/light_gray" />
+
+    <ScrollView
+        android:id="@+id/scrollViewDiffTool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/separatorDiffTool" >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutDiffTool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical" >
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

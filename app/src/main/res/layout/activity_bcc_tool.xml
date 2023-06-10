@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2015 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/relativeLayoutValueBlockTool"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="de.syss.MifareClassicTool.Activities.BccTool" >
+
+    <!-- Dummy to prevent EditTexts from getting focus on Activity startup -->
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:ignore="UselessLeaf" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBccToolUid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textViewBccToolUid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/text_uid_part"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editTextBccToolUid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_hex_4_byte"
+            android:imeOptions="actionDone"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxLength="8"
+            android:importantForAutofill="no" />
+
+        <ImageButton
+            android:id="@+id/imageButtonBccToolPaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_paste"
+            android:onClick="onPasteFromClipboard"
+            android:src="@drawable/paste" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonBccToolCalc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutBccToolUid"
+        android:layout_margin="5dp"
+        android:drawableTop="@drawable/arrow_down"
+        android:onClick="onCalculate"
+        android:text="@string/action_calc_bcc" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBccToolBcc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonBccToolCalc"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textViewBccToolBcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/text_bcc"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:labelFor="@+id/editTextBccToolBcc" />
+
+        <!--
+        There is an ugly hack to make the edit text not editable. Maybe it's
+        better to just use a text view. But users are used to copy text
+        only from input fields... Also, making a text view selectable is only
+        supported for API level 11+
+        -->
+        <EditText
+            android:id="@+id/editTextBccToolBcc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:textIsSelectable="true"
+            android:importantForAutofill="no" />
+
+        <ImageButton
+            android:id="@+id/imageButtonBccToolCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_copy"
+            android:onClick="onCopyToClipboard"
+            android:src="@drawable/copy" />
+
+    </LinearLayout>
+
+</RelativeLayout>

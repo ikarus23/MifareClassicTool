@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2015 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollViewCloneUidTool"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="de.syss.MifareClassicTool.Activities.CloneUidTool"
+        android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCloneUidTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutCloneUidToolInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@xml/layout_border"
+            android:padding="2dp"
+            android:layout_marginBottom="5dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/text_clone_uid_info"
+                android:layout_toLeftOf="@+id/imageButtonCloneUidToolInfo"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageButton
+                android:id="@+id/imageButtonCloneUidToolInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/text_option_info"
+                android:onClick="onShowInfo"
+                android:src="@android:drawable/ic_dialog_info" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCloneUidToolToClone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/textViewCloneUidToolOriginalUid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="@string/text_uid_to_clone"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <!-- Dummy for preventing EditTexts to get focus on
+                Activity startup -->
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="0dip"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                tools:ignore="UselessLeaf" />
+
+            <EditText
+                android:id="@+id/editTextCloneUidToolOriginalUid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:typeface="monospace"
+                android:hint="@string/hint_hex_4_7_10_byte"
+                android:imeOptions="actionDone"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:maxLength="20"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonCloneUidToolPaste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_paste"
+                android:onClick="onPasteUidFromClipboard"
+                android:src="@drawable/paste" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_random_uid"
+                android:onClick="onRandomUid"
+                android:src="@drawable/random" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBoxCloneUidToolOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onShowOptions"
+            android:text="@string/action_show_options" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="35dp"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutCloneUidToolRestOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@xml/layout_border"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textViewCloneUidToolBlock0Rest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
+                    android:text="@string/text_clone_uid_manufacturer_block_rest"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextCloneUidToolBlock0Rest" />
+
+                <EditText
+                    android:id="@+id/editTextCloneUidToolBlock0Rest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewCloneUidToolBlock0Rest"
+                    android:layout_alignLeft="@+id/textViewCloneUidToolBlock0Rest"
+                    android:layout_toLeftOf="@+id/imageButtonCloneUidToolBlock0RestInfo"
+                    android:typeface="monospace"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:maxLength="22"
+                    android:importantForAutofill="no" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonCloneUidToolBlock0RestInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowBlock0RestInfo"
+                    android:src="@android:drawable/ic_dialog_info"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutCloneUidToolKeyOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp" >
+
+                <TextView
+                    android:id="@+id/textViewCloneUidToolWriteKey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonCloneUidToolWriteKeyInfo"
+                    android:text="@string/text_write_key"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:labelFor="@+id/editTextCloneUidToolWriteKey" />
+
+                <EditText
+                    android:id="@+id/editTextCloneUidToolWriteKey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignRight="@+id/textViewCloneUidToolWriteKey"
+                    android:layout_below="@+id/textViewCloneUidToolWriteKey"
+                    android:typeface="monospace"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:maxLength="22"
+                    android:importantForAutofill="no" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupCloneUidToolKeys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextCloneUidToolWriteKey"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonCloneUidToolKeyA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_key_a"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonCloneUidToolKeyB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_key_b" />
+
+                </RadioGroup>
+
+                <ImageButton
+                    android:id="@+id/imageButtonCloneUidToolWriteKeyInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowWriteKeyInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutCloneUidToolSakAtqaOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxCloneUidToolSakAtqa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonCloneUidToolSakAtqaInfo"
+                    android:text="@string/action_calc_sak_atqa"
+                    android:checked="true" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonCloneUidToolSakAtqaInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowSakAtqaInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCloneUidToolCalculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:onClick="onCalculateBlock0"
+            android:text="@string/action_clone_uid" />
+
+        <TextView
+            android:id="@+id/textViewCloneUidToolStatusLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="@string/text_status_log"
+            android:textColor="@color/blue"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textViewCloneUidToolStatusLogContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@xml/layout_border"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+</ScrollView>

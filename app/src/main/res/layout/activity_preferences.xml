@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2014 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutPreferences"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Activities.Preferences"
+    android:padding="5dp" >
+
+    <ScrollView
+        android:id="@+id/scrollViewPreferences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/separatorPreferences"
+        android:layout_alignParentTop="true" >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutPreferences"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesSaveLastUsedKeyFiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesSaveLastUsedKeyFiles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/action_save_last_key_files" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesCustomSectorCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesUseCustomSectorCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonPreferencesCustomSectorCount"
+                    android:text="@string/action_use_custom_sector_count"
+                    android:onClick="onUseCustomSectorCountChanged" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonPreferencesCustomSectorCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowCustomSectorCountInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+                <!-- Dummy for preventing EditTexts to get focus on
+                Activity startup -->
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="0dip"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    tools:ignore="UselessLeaf" />
+
+                <EditText
+                    android:id="@+id/editTextPreferencesCustomSectorCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/checkBoxPreferencesUseCustomSectorCount"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="30dp"
+                    android:ems="8"
+                    android:hint="@string/hint_custom_sector_count"
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesRetryAuthentication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesUseRetryAuthentication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/imageButtonPreferencesRetryAuthentication"
+                    android:text="@string/action_retry_authentication"
+                    android:onClick="onUseRetryAuthenticationChanged" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonPreferencesRetryAuthentication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowRetryAuthenticationInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+                <!-- Dummy for preventing EditTexts to get focus on
+                Activity startup -->
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="0dip"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    tools:ignore="UselessLeaf" />
+
+                <EditText
+                    android:id="@+id/editTextPreferencesRetryAuthenticationCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/checkBoxPreferencesUseRetryAuthentication"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="30dp"
+                    android:ems="8"
+                    android:hint="@string/hint_custom_retry_authentication_count"
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesAutoReconnect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesAutoReconnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/imageButtonPreferencesAutoReconnectInfo"
+                    android:text="@string/action_auto_reconnect" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonPreferencesAutoReconnectInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/text_option_info"
+                    android:onClick="onShowAutoReconnectInfo"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesCopyUID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/layout_border"
+                android:padding="2dp"
+                android:layout_marginBottom="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesCopyUID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="toggleUIDFormat"
+                    android:text="@string/action_auto_copy_uid" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupUIDFormat"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/checkBoxPreferencesCopyUID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonHex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/text_hex" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonDecBE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_dec_be" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonDecLE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_dec_le" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPreferencesAutostartIfCardDetected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@xml/layout_border"
+                android:padding="2dp">
+
+                <CheckBox
+                    android:id="@+id/checkBoxPreferencesAutostartIfCardDetected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/action_autostart_if_tag_detected" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Separator -->
+    <View
+        android:id="@+id/separatorPreferences"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_margin="2dp"
+        android:layout_above="@+id/buttonPreferencesSave"
+        android:background="@color/light_gray" />
+
+    <Button
+        android:id="@+id/buttonPreferencesSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/buttonPreferencesCancel"
+        android:onClick="onSave"
+        android:text="@string/action_save" />
+
+    <Button
+        android:id="@+id/buttonPreferencesCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onCancel"
+        android:text="@string/action_cancel" />
+
+</RelativeLayout>

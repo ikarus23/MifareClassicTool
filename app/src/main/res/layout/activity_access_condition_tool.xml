@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutAccessConditionTool"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Activities.AccessConditionTool" >
+
+    <!-- Dummy to prevent EditTexts from getting focus on Activity startup -->
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAccessConditionToolAC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textViewAccessConditionToolAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/text_ac_label"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editTextAccessConditionToolAC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_hex_3_byte"
+            android:imeOptions="actionDone"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxEms="6"
+            android:maxLength="6"
+            android:minEms="6"
+            android:importantForAutofill="no" />
+
+        <ImageButton
+            android:id="@+id/imageButtonAccessConditionToolCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_copy"
+            android:onClick="onCopyToClipboard"
+            android:src="@drawable/copy" />
+
+        <ImageButton
+            android:id="@+id/imageButtonAccessConditionToolPaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_paste"
+            android:onClick="onPasteFromClipboard"
+            android:src="@drawable/paste" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAccessConditionToolConvert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayoutAccessConditionToolAC"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp" >
+
+        <Button
+            android:id="@+id/buttonAccessConditionToolDecode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/arrow_down"
+            android:onClick="onDecode"
+            android:text="@string/action_decode"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/buttonAccessConditionToolEncode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/arrow_up"
+            android:onClick="onEncode"
+            android:text="@string/action_encode"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollViewAccessConditionTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayoutAccessConditionToolConvert" >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAccessConditionToolBlocks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolStep1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_step_1_sector_trailer"
+                android:layout_marginBottom="2dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_3"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_sector_trailer_4"
+                android:onClick="onChooseACforSectorTrailer" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolStep2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_step_2_data_blocks"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_0"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock0"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_data_block_no_keyb_0"
+                android:tag="0"
+                android:onClick="onChooseACforDataBock" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_data_block_no_keyb_0"
+                android:tag="1"
+                android:onClick="onChooseACforDataBock" />
+
+            <TextView
+                android:id="@+id/textViewAccessConditionToolBlock2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_block_2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonAccessConditionToolBlock2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/ac_data_block_no_keyb_0"
+                android:tag="2"
+                android:onClick="onChooseACforDataBock" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

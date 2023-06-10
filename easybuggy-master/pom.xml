@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.t246osslab.easybuggy</groupId>
+	<artifactId>easybuggy</artifactId>
+	<version>1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<easybuggy-port>8081</easybuggy-port>
+		<!-- default properties (JDK 1.7 or earlier) -->
+		<jvm.args.perm.size>-XX:MaxPermSize=128m</jvm.args.perm.size>
+		<jvm.args.gc.log.path>-Xloggc:logs/gc.log</jvm.args.gc.log.path>
+		<jvm.args.print.heap.at.gc>-XX:+PrintHeapAtGC</jvm.args.print.heap.at.gc>
+		<jvm.args.print.gc.details>-XX:+PrintGCDetails</jvm.args.print.gc.details>
+		<jvm.args.print.gc.date.stamps>-XX:+PrintGCDateStamps</jvm.args.print.gc.date.stamps>
+		<jvm.args.gc.log.file.rotation>-XX:+UseGCLogFileRotation</jvm.args.gc.log.file.rotation>
+		<jvm.args.number.of.gc.log.files>-XX:NumberOfGCLogFiles=5</jvm.args.number.of.gc.log.files>
+		<jvm.args.gc.log.file.size>-XX:GCLogFileSize=10M</jvm.args.gc.log.file.size>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>JDK8-Switch</id>
+			<activation>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<jvm.args.perm.size>-XX:MaxMetaspaceSize=128m</jvm.args.perm.size>
+				<jvm.args.gc.log.path>-Xloggc:logs/gc_%p_%t.log</jvm.args.gc.log.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>JDK11-Switch</id>
+			<activation>
+				<jdk>11</jdk>
+			</activation>
+			<properties>
+				<jvm.args.perm.size>-XX:MaxMetaspaceSize=128m</jvm.args.perm.size>
+				<jvm.args.gc.log.path>-Xlog:gc*:logs/gc_%p_%t.log:time,level,tags:filecount=5,filesize=10M</jvm.args.gc.log.path>
+				<!-- TODO Remove these properties -->
+				<jvm.args.print.heap.at.gc>-Dummy=Dummy</jvm.args.print.heap.at.gc>
+				<jvm.args.print.gc.details>-Dummy=Dummy</jvm.args.print.gc.details>
+				<jvm.args.print.gc.date.stamps>-Dummy=Dummy</jvm.args.print.gc.date.stamps>
+				<jvm.args.gc.log.file.rotation>-Dummy=Dummy</jvm.args.gc.log.file.rotation>
+				<jvm.args.number.of.gc.log.files>-Dummy=Dummy</jvm.args.number.of.gc.log.files>
+				<jvm.args.gc.log.file.size>-Dummy=Dummy</jvm.args.gc.log.file.size>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.8.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjdk.jol</groupId>
+			<artifactId>jol-core</artifactId>
+			<version>0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.directory.server</groupId>
+			<artifactId>apacheds-all</artifactId>
+			<version>1.5.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.directory.shared</groupId>
+					<artifactId>shared-ldap</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.owasp.esapi</groupId>
+			<artifactId>esapi</artifactId>
+			<version>2.1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>ognl</groupId>
+			<artifactId>ognl</artifactId>
+			<version>3.0.17</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<id>enforce-java</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>[3.0.0,)</version>
+								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>[1.6,)</version>
+									<message>[ERROR] OLD JDK [${java.version}] in use.
+										EasyBuggy requires JDK 1.6 or later</message>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-empty-directory-and-english-properties</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<mkdir dir="logs" />
+								<copy file="${basedir}/src/main/resources/messages_en.properties"
+									tofile="${project.build.outputDirectory}/messages.properties" />
+								<copy file="${basedir}/src/main/resources/indexpage_en.properties"
+									tofile="${project.build.outputDirectory}/indexpage.properties" />
+								<delete
+									file="${project.build.outputDirectory}/org/t246osslab/easybuggy/core/utils/DeleteClassWhileMavenBuild.class" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<warName>ROOT</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<id>tomcat-run</id>
+						<goals>
+							<goal>exec-war-only</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<path>/</path>
+							<enableNaming>true</enableNaming>
+							<finalName>easybuggy.jar</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>startup-uber-start</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<classpathScope>test</classpathScope>
+							<executable>java</executable>
+							<arguments>
+								<argument>${jvm.args.perm.size}</argument>
+								<argument>${jvm.args.gc.log.path}</argument>
+								<argument>-Xmx256m</argument>
+								<argument>-XX:MaxDirectMemorySize=90m</argument>
+								<argument>-XX:+UseSerialGC</argument>
+								<argument>${jvm.args.print.heap.at.gc}</argument>
+								<argument>${jvm.args.print.gc.details}</argument>
+								<argument>${jvm.args.print.gc.date.stamps}</argument>
+								<argument>${jvm.args.gc.log.file.rotation}</argument>
+								<argument>${jvm.args.number.of.gc.log.files}</argument>
+								<argument>${jvm.args.gc.log.file.size}</argument>
+								<argument>-XX:GCTimeLimit=15</argument>
+								<argument>-XX:GCHeapFreeLimit=50</argument>
+								<argument>-XX:+HeapDumpOnOutOfMemoryError</argument>
+								<argument>-XX:HeapDumpPath=logs/</argument>
+								<argument>-XX:ErrorFile=logs/hs_err_pid%p.log</argument>
+								<!-- <argument>-XX:NativeMemoryTracking=summary</argument> -->
+								<!-- Auto kill JVM when OOME occurs: For post-8u92 JDKs -->
+								<!-- <argument>-XX:+CrashOnOutOfMemoryError</argument> -->
+								<!-- Auto kill JVM when OOME occurs: For Linux -->
+								<!-- <argument>-XX:OnOutOfMemoryError="kill -9 %p"</argument> -->
+								<!-- Auto kill JVM when OOME occurs: For Windows -->
+								<!-- -XX:OnOutOfMemoryError=taskkill /F /PID %p -->
+								<!-- UnlockCommercialFeatures/FlightRecorder: For Oracle Java commercial use -->
+								<!-- <argument>-XX:+UnlockCommercialFeatures</argument> <argument>-XX:+FlightRecorder</argument> -->
+								<!-- <argument>-agentpath:/root/eclipse/plugins/org.zeroturnaround.eclipse.embedder_7.0.8.RELEASE/jrebel/lib/libjrebel64.so</argument> -->
+								<argument>-agentlib:jdwp=transport=dt_socket,server=y,address=9009,suspend=n</argument>
+								<argument>-Dderby.stream.error.file=logs/derby.log</argument>
+								<argument>-Dderby.infolog.append=true</argument>
+								<argument>-Dderby.language.logStatementText=true</argument>
+								<argument>-Dderby.locks.deadlockTrace=true</argument>
+								<argument>-Dderby.locks.monitor=true</argument>
+								<argument>-Dderby.storage.rowLocking=true</argument>
+								<argument>-Dcom.sun.management.jmxremote</argument>
+								<argument>-Dcom.sun.management.jmxremote.port=7900</argument>
+								<argument>-Dcom.sun.management.jmxremote.ssl=false</argument>
+								<argument>-Dcom.sun.management.jmxremote.authenticate=false</argument>
+								<!-- <argument>-Djava.security.manager</argument>
+								<argument>-Djava.security.policy=catalina.policy</argument> -->
+								<!-- <argument>-Deasybuggy.mode=only-vulnerabilities</argument> -->
+								<argument>-ea</argument>
+								<argument>-jar</argument>
+								<argument>target/easybuggy.jar</argument>
+								<argument>-httpPort=${easybuggy-port}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-antrun-plugin
+										</artifactId>
+										<versionRange>[1.3,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

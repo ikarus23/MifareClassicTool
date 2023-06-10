@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<resources>
+    <color name="blue">@android:color/holo_blue_light</color>
+    <color name="light_green">#66FF66</color>
+    <color name="dark_green">#338800</color>
+    <color name="orange">#FF6600</color>
+    <color name="purple">#9933FF</color>
+    <color name="yellow">#CCCC00</color>
+    <color name="red">#FF0000</color>
+    <color name="light_gray">#DDDDDD</color>
+    <color name="middle_gray">#444444</color>
+    <color name="dark_gray">#222222</color>
+    <color name="white">#FFFFFF</color>
+</resources>

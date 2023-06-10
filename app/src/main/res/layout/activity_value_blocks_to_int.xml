@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutValueBlocksToInt"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Activities.ValueBlocksToInt" >
+
+ <TableRow
+     android:id="@+id/tableRowValueBlocksToIntHeader"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:background="@color/dark_gray"
+     android:padding="3dp" >
+
+        <TextView
+            android:id="@+id/textViewValueBlocksToIntHeader1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="100dp"
+            android:text="@string/text_vb_location"
+            android:textColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/textViewValueBlocksToIntHeader2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_vb_value"
+            android:textColor="@color/light_gray" />
+    </TableRow>
+
+    <ScrollView
+        android:id="@+id/scrollViewValueBlocksToInt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tableRowValueBlocksToIntHeader" >
+
+        <TableLayout
+            android:id="@+id/tableLayoutValueBlocksToInt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <!-- Fake table Row with the width of the
+            (external, nonscroll) header -->
+
+            <TableRow
+                android:id="@+id/tableRowValueBlocksToIntHeaderFake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp" >
+        
+                <TextView
+                    android:id="@+id/textViewValueBlocksToIntHeaderFake1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:height="0dp"
+                    android:paddingRight="100dp"
+                    android:text="@string/text_vb_location" />
+        
+                <TextView
+                    android:id="@+id/textViewValueBlocksToIntHeaderFake2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:height="0dp"
+                    android:text="@string/text_vb_value" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+</RelativeLayout>

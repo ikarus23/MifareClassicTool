@@ -1,0 +1,2 @@
+#!/bin/bash
+javac -cp /home/alumno/.m2/repository/junit/junit/4.8.1/junit-4.8.1.jar:/home/alumno/Escritorio/MifareClassicTool/"Mifare Classic Tool"/app/src/test/java/ -d build/test-classes /home/alumno/Escritorio/MifareClassicTool/"Mifare Classic Tool"/app/src/test/java/de/syss/MifareClassicTool/MainMenuTest.java

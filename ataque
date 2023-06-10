@@ -1,0 +1,4 @@
+#!/bin/bash
+curl -d "name=admin&password=' OR '1'='1" http://localhost:8081/sqlijc
+curl -d "jsonString={}');java.lang.System.exit(0);//" http://localhost:8081/codeijc
+curl -d "string=>tpircs/<;)eikooc.tnemucod(trela>tpIrcs<" http://localhost:8081/xss

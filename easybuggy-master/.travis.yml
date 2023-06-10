@@ -1,0 +1,12 @@
+language: java
+
+jdk:
+  - openjdk7
+  
+install: true
+
+script: mvn -DskipTests=true clean verify
+
+notifications:
+  email:
+    - ktamura.biz.80@gmail.com

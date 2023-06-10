@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<resources>
+    <!--
+        Taken from http://nfc-tools.org/index.php?title=ISO14443A
+        The string mame is tag_+ATQA+SAK+ATS with hex-letters in uppercase.
+        (Names must have at least one char. This is why it strats with "tag_")
+    -->
+    <!-- Special tag types -->
+    <string name="tag_unknown">Unknown</string>
+    <string name="tag_unknown_mf_classic">MIFARE Classic, Unknown</string>
+
+    <!-- With ATS -->
+    <string name="tag_0344207577810280">MIFARE DESFire or
+        \nMIFARE DESFire EV1, NXP</string>
+    <string name="tag_0304283877B14A434f503331">JCOP31, IBM</string>
+    <string name="tag_0048207877B1024A434F5076323431">JCOP31 v2.4.1, IBM</string>
+    <string name="tag_0048203833B14A434F503431563232">JCOP41 v2.2, IBM</string>
+    <string name="tag_0004283833B14A434F50343156323331">JCOP41 v2.3.1, IBM</string>
+
+    <!-- Without ATS (ATQA+SAK) -->
+    <string name="tag_000409">MIFARE Mini, NXP</string>
+    <string name="tag_000408">MIFARE Classic 1k, NXP</string>
+    <string name="tag_000218">MIFARE Classic 4k, NXP</string>
+    <string name="tag_004218">MIFARE Classic 4k, NXP</string>
+    <string name="tag_004400">MIFARE Ultralight, NXP</string>
+    <string name="tag_000488">MIFARE Classic 1K, Infineon</string>
+    <string name="tag_000298">MPCOS, Gemplus</string>
+    <string name="tag_000238">MIFARE Classic 4k - emulated (6212 Classic), Nokia</string>
+    <string name="tag_000838">MIFARE Classic 4k - emulated (6131 NFC), Nokia</string>
+    <string name="tag_034420">MIFARE DESFire or
+        \nMIFARE DESFire EV1, NXP</string>
+    <string name="tag_030428">JCOP31, IBM</string>
+    <string name="tag_004820">JCOP, IBM</string>
+    <string name="tag_000428">JCOP41, IBM</string>
+    <string name="tag_0F0101">TNP3xxx (MFC compatible), NXP</string>
+
+    <!-- Without SAK+ATS (only ATQA) -->
+    <string name="tag_0C00">Jewel, Innovision R&amp;T</string>
+</resources>
