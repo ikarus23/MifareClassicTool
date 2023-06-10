@@ -14,3 +14,7 @@ allprojects {
         mavenCentral()
     }
 }
+task runTests(type: Exec) {
+    workingDir './'  // 设置工作目录为项目根目录
+    commandLine 'gradlew', 'test'  // 执行 gradlew test 命令
+}

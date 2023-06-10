@@ -30,4 +30,10 @@ android {
 dependencies {
     implementation "androidx.core:core:1.9.0"
     implementation "androidx.preference:preference:1.2.0"
+    testImplementation 'junit:junit:4.13.2'
+	testImplementation 'org.mockito:mockito-core:4.2.0'
+}
+task runTests(type: Exec) {
+    workingDir './'  // 设置工作目录为项目根目录
+    commandLine 'gradlew', 'test'  // 执行 gradlew test 命令
 }
