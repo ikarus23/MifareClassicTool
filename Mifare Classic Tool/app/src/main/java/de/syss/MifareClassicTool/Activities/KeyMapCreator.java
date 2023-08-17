@@ -89,7 +89,8 @@ public class KeyMapCreator extends BasicActivity {
             "de.syss.MifareClassicTool.Activity.SECTOR_CHOOSER";
     /**
      * An integer value that represents the number of the
-     * first sector for the key mapping process.
+     * first sector for the key mapping process. -1 will set the
+     * rage to "all".
      */
     public final static String EXTRA_SECTOR_CHOOSER_FROM =
             "de.syss.MifareClassicTool.Activity.SECTOR_CHOOSER_FROM";
@@ -189,7 +190,12 @@ public class KeyMapCreator extends BasicActivity {
             custom = true;
         }
         if (custom) {
-            mSectorRange.setText(from + " - " + to);
+            if (from.equals("-1")) {
+                // from being "-1" means that the range should be set to "all".
+                mSectorRange.setText(getString(R.string.text_sector_range_all));
+            } else {
+                mSectorRange.setText(from + " - " + to);
+            }
         }
 
         // Init. title and button text.

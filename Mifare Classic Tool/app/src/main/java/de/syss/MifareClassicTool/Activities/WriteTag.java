@@ -1327,6 +1327,7 @@ public class WriteTag extends BasicActivity {
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
                 Common.getFile(Common.KEYS_DIR).getAbsolutePath());
         intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, -1);
         intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT,
                 getString(R.string.action_create_key_map_and_factory_format));
         startActivityForResult(intent, CKM_FACTORY_FORMAT);
