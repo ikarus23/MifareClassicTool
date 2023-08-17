@@ -1267,9 +1267,21 @@ public class WriteTag extends BasicActivity {
                     }
 
                     // Write block.
-                    int result = reader.writeBlock(sector, block,
+                    // Writing multiple blocks consecutively sometimes fails. I have no idea why.
+                    // It also depends on the data (see: https://github.com/ikarus23/MifareClassicTool/issues/412).
+                    // This makes no sense. This error does not occurs while debugging which
+                    // might indicate a timing issue. When adding a delay of 200 ms, the error
+                    // does not occur. Retrying to write also works. This why the ugly workaround
+                    // of trying to write at least two times was added.
+                    int result = 0;
+                    for (int i = 0; i < 2; i++) {
+                        result = reader.writeBlock(sector, block,
                             mDumpWithPos.get(sector).get(block),
                             writeKey, useAsKeyB);
+                        if (result == 0) {
+                            break;
+                        }
+                    }
 
                     if (result != 0) {
                         // Error. Some error while writing.
