@@ -21,6 +21,7 @@ android {
         }
     }
     buildToolsVersion '33.0.2'
+    namespace 'de.syss.MifareClassicTool'
 
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"

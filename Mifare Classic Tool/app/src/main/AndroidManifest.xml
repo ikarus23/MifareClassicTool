@@ -19,8 +19,7 @@
 -->
 
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.syss.MifareClassicTool" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.NFC" />
 
