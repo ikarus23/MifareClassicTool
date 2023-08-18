@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
     namespace "de.syss.MifareClassicTool"
 
     defaultConfig {
