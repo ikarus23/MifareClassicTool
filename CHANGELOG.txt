@@ -2,6 +2,15 @@ Changelog of MifareClassicTool (MCT):
 
 In development:
 
+Version 4.0.5:
+ * Added more well known keys to the extended key file.
+   (extended-std.keys file will be updated automatically.)
+ * Bugfix: Ignore saved default sector range for the
+   factory format function. Thanks to David "baudav" Baumann.
+ * Bugfix/Workaround: Try to write block twice, if needed.
+   Thanks to "btwang0512".
+ * Some minor code cleanup.
+
 Version 4.0.4:
  * Bugfix: Discover tags correctly again.
 
