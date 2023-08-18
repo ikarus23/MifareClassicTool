@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
         minSdk 19
-        targetSdk 31
+        targetSdk 33
         versionCode 62
         versionName '4.0.4'
     }
@@ -20,7 +20,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '33.0.2'
     namespace 'de.syss.MifareClassicTool'
 
     tasks.withType(JavaCompile) {
