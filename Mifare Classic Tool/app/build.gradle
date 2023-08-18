@@ -5,14 +5,14 @@ plugins {
 
 android {
     compileSdk 33
-    namespace 'de.syss.MifareClassicTool'
+    namespace "de.syss.MifareClassicTool"
 
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
         minSdk 19
-        targetSdk 33
-        versionCode 62
-        versionName '4.0.4'
+        targetSdk 31
+        versionCode 63
+        versionName '4.0.5'
     }
 
     buildTypes {
