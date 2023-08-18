@@ -29,5 +29,5 @@ tasks.withType(JavaCompile).configureEach {
 
 dependencies {
     implementation "androidx.core:core:1.9.0"
-    implementation "androidx.preference:preference:1.2.0"
+    implementation "androidx.preference:preference:1.2.1"
 }
