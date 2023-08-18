@@ -1,9 +1,10 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.application' version '8.1.0'
 }
 
 android {
     compileSdk 33
+    namespace 'de.syss.MifareClassicTool'
 
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
@@ -20,11 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'de.syss.MifareClassicTool'
+}
 
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 dependencies {
