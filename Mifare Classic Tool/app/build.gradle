@@ -6,6 +6,7 @@ android {
     compileSdk 33
 
     defaultConfig {
+        namespace "de.syss.MifareClassicTool"
         applicationId "de.syss.MifareClassicTool"
         minSdk 19
         targetSdk 33
