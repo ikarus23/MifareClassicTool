@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class DiffTool extends BasicActivity {
     private LinearLayout mDiffContent;
     private Button mDumpFileButton1;
     private Button mDumpFileButton2;
+    private CheckBox mDumpHideIdentical;
     private SparseArray<String[]> mDump1;
     private SparseArray<String[]> mDump2;
 
@@ -74,6 +76,7 @@ public class DiffTool extends BasicActivity {
         mDiffContent = findViewById(R.id.linearLayoutDiffTool);
         mDumpFileButton1 = findViewById(R.id.buttonDiffToolDump1);
         mDumpFileButton2 = findViewById(R.id.buttonDiffToolDump2);
+        mDumpHideIdentical = findViewById(R.id.checkBoxDiffToolHideIdentical);
 
         // Check if one or both dumps are already chosen via Intent
         // (from DumpEditor).
@@ -143,6 +146,21 @@ public class DiffTool extends BasicActivity {
                 if (blocks == null) {
                     // No such sector.
                     continue;
+                }
+
+                // If the Hide Identical Sectors is checked,
+                // Do not display the same sector.
+                if (mDumpHideIdentical.isChecked() && blocks.length > 1) {
+                    int block;
+                    for (block = 0; block < blocks.length; block++) {
+                        if (blocks[block].length != 0) {
+                            break;
+                        }
+                    }
+                    if (block == blocks.length) {
+                        // Identical sector.
+                        continue;
+                    }
                 }
 
                 // Add sector header.
@@ -239,6 +257,14 @@ public class DiffTool extends BasicActivity {
     public void onChooseDump2(View view) {
         Intent intent = prepareFileChooserForDump();
         startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE_2);
+    }
+
+    /**
+     * Run diff if the Hide Identical Sectors option is changed.
+     * @see #runDiff()
+     */
+    public void onHideIdenticalChanged(View view) {
+        runDiff();
     }
 
     /**
