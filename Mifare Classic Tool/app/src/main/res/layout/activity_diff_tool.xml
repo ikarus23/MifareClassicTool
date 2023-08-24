@@ -37,8 +37,8 @@
             android:id="@+id/buttonDiffToolDump1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textViewDiffToolDump1"
             android:gravity="left|center_vertical"
             android:onClick="onChooseDump1"
@@ -59,12 +59,9 @@
             android:id="@+id/buttonDiffToolDump2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonDiffToolDump1"
             android:layout_alignLeft="@+id/buttonDiffToolDump1"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="-1dp"
+            android:layout_below="@+id/buttonDiffToolDump1"
             android:gravity="left|center_vertical"
             android:onClick="onChooseDump2"
             android:text="@string/action_chose_dump" />
@@ -110,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
         </LinearLayout>
 
