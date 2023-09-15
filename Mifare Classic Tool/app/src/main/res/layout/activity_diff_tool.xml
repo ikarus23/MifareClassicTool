@@ -19,56 +19,73 @@
 -->
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayoutDiffTool"
+    android:id="@+id/linearLayoutDiffToolTop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
+    android:orientation="vertical"
     tools:context="Activities.DiffTool" >
 
-    <Button
-        android:id="@+id/buttonDiffToolDump1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textViewDiffToolDump1"
-        android:gravity="left|center_vertical"
-        android:onClick="onChooseDump1"
-        android:text="@string/action_chose_dump" />
+    <RelativeLayout
+        android:id="@+id/relativeLayoutDiffTool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textViewDiffToolDump1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonDiffToolDump1"
-        android:layout_alignBottom="@+id/buttonDiffToolDump1"
-        android:layout_alignParentLeft="true"
-        android:paddingRight="5dp"
-        android:text="@string/text_dump_1"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <Button
+            android:id="@+id/buttonDiffToolDump1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textViewDiffToolDump1"
+            android:gravity="left|center_vertical"
+            android:onClick="onChooseDump1"
+            android:text="@string/action_chose_dump" />
 
-    <Button
-        android:id="@+id/buttonDiffToolDump2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonDiffToolDump1"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/buttonDiffToolDump1"
-        android:gravity="left|center_vertical"
-        android:onClick="onChooseDump2"
-        android:text="@string/action_chose_dump" />
+        <TextView
+            android:id="@+id/textViewDiffToolDump1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonDiffToolDump1"
+            android:layout_alignBottom="@+id/buttonDiffToolDump1"
+            android:layout_alignParentLeft="true"
+            android:paddingRight="5dp"
+            android:text="@string/text_dump_1"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textViewDiffToolDump2"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/buttonDiffToolDump2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/buttonDiffToolDump1"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/buttonDiffToolDump1"
+            android:gravity="left|center_vertical"
+            android:onClick="onChooseDump2"
+            android:text="@string/action_chose_dump" />
+
+        <TextView
+            android:id="@+id/textViewDiffToolDump2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonDiffToolDump2"
+            android:layout_alignBottom="@+id/buttonDiffToolDump2"
+            android:layout_alignParentLeft="true"
+            android:paddingRight="5dp"
+            android:text="@string/text_dump_2"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/checkBoxDiffToolHideIdentical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonDiffToolDump2"
-        android:layout_alignBottom="@+id/buttonDiffToolDump2"
-        android:layout_alignParentLeft="true"
-        android:paddingRight="5dp"
-        android:text="@string/text_dump_2"
+        android:onClick="onHideIdenticalChanged"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="@string/action_hide_identical_sectors"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <!-- Separator -->
@@ -78,17 +95,12 @@
         android:layout_height="2dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_below="@+id/buttonDiffToolDump2"
         android:background="@color/light_gray" />
 
     <ScrollView
         android:id="@+id/scrollViewDiffTool"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/separatorDiffTool" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/linearLayoutDiffTool"
@@ -101,4 +113,4 @@
 
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

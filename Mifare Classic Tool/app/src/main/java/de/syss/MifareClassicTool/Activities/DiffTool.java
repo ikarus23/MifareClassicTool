@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class DiffTool extends BasicActivity {
     private LinearLayout mDiffContent;
     private Button mDumpFileButton1;
     private Button mDumpFileButton2;
+    private CheckBox mDumpHideIdentical;
     private SparseArray<String[]> mDump1;
     private SparseArray<String[]> mDump2;
 
@@ -74,6 +76,7 @@ public class DiffTool extends BasicActivity {
         mDiffContent = findViewById(R.id.linearLayoutDiffTool);
         mDumpFileButton1 = findViewById(R.id.buttonDiffToolDump1);
         mDumpFileButton2 = findViewById(R.id.buttonDiffToolDump2);
+        mDumpHideIdentical = findViewById(R.id.checkBoxDiffToolHideIdentical);
 
         // Check if one or both dumps are already chosen via Intent
         // (from DumpEditor).
@@ -128,13 +131,20 @@ public class DiffTool extends BasicActivity {
      * Run diff if there are two dumps and show the result in the GUI.
      * @see MCDiffUtils#diffIndices(SparseArray, SparseArray)
      */
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void runDiff() {
         // Check if both dumps are there.
         if (mDump1 != null && mDump2 != null) {
             mDiffContent.removeAllViews();
             SparseArray<Integer[][]> diff = MCDiffUtils.diffIndices(
                     mDump1, mDump2);
+
+            // Add the difference between dumps.
+            int totalLength = 0;
+            int diffLength = 0;
+            TextView difference = new TextView(this);
+            difference.setPadding(0, Common.dpToPx(10), 0, 0);
+            mDiffContent.addView(difference);
 
             // Walk trough all possible sectors (this way the right
             // order will be guaranteed).
@@ -143,6 +153,34 @@ public class DiffTool extends BasicActivity {
                 if (blocks == null) {
                     // No such sector.
                     continue;
+                }
+
+                // A sector that exists only in one dump is counted as differences.
+                if (blocks.length == 0 || blocks.length == 1) {
+                    String[] bs = blocks.length == 0
+                        ? mDump1.get(sector) : mDump2.get(sector);
+                    for (String b : bs) {
+                        totalLength += b.length();
+                        diffLength += b.length();
+                    }
+                }
+
+                // If the Hide Identical Sectors option is checked,
+                // Do not display the same sector.
+                if (mDumpHideIdentical.isChecked() && blocks.length > 1) {
+                    int block;
+                    for (block = 0; block < blocks.length; block++) {
+                        if (blocks[block].length != 0) {
+                            break;
+                        }
+                    }
+                    if (block == blocks.length) {
+                        // Identical sector.
+                        for (String b : mDump1.get(sector)) {
+                            totalLength += b.length();
+                        }
+                        continue;
+                    }
                 }
 
                 // Add sector header.
@@ -197,6 +235,8 @@ public class DiffTool extends BasicActivity {
                     dump1.setText(mDump1.get(sector)[block]);
                     dump2.setText(mDump2.get(sector)[block]);
 
+                    totalLength += mDump1.get(sector)[block].length();
+
                     if (blocks[block].length == 0) {
                         // Set diff line for identical blocks.
                         diffIndex.setTextColor(Color.GREEN);
@@ -208,7 +248,8 @@ public class DiffTool extends BasicActivity {
                         // Walk through all symbols to populate the diff line.
                         for (int i : blocks[block]) {
                             diffString.setCharAt(i, 'X');
-
+                            // Count the differences.
+                            diffLength++;
                         }
                     }
                     // Add diff entry.
@@ -216,6 +257,14 @@ public class DiffTool extends BasicActivity {
                     mDiffContent.addView(rl);
                 }
             }
+
+            // Show the difference percentage between two dumps.
+            float percentage = 0;
+            if (totalLength > 0) {
+                percentage = (float)diffLength / totalLength * 100f;
+            }
+            difference.setText(getString(R.string.text_difference_between_dumps) +
+                ": " + String.format("%.2f", percentage) + " %");
         }
     }
 
@@ -239,6 +288,14 @@ public class DiffTool extends BasicActivity {
     public void onChooseDump2(View view) {
         Intent intent = prepareFileChooserForDump();
         startActivityForResult(intent, FILE_CHOOSER_DUMP_FILE_2);
+    }
+
+    /**
+     * Run diff if the Hide Identical Sectors option is changed.
+     * @see #runDiff()
+     */
+    public void onHideIdenticalChanged(View view) {
+        runDiff();
     }
 
     /**
