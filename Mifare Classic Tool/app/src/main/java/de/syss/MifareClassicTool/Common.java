@@ -217,14 +217,20 @@ public class Common extends Application {
      * Some functions depend on this context.
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void onCreate() {
         super.onCreate();
         mAppContext = getApplicationContext();
         mScale = getResources().getDisplayMetrics().density;
 
         try {
-            mVersionCode = getPackageManager().getPackageInfo(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                mVersionCode = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.PackageInfoFlags.of(0)).versionName;
+            } else {
+                mVersionCode = getPackageManager().getPackageInfo(
                     getPackageName(), 0).versionName;
+            }
         } catch (NameNotFoundException e) {
             Log.d(LOG_TAG, "Version not found.");
         }
@@ -234,12 +240,24 @@ public class Common extends Application {
      * Check if this is the first installation of this app or just an update.
      * @return True if app was not installed before. False otherwise.
      */
+    @SuppressWarnings("deprecation")
     public static boolean isFirstInstall() {
         try {
-            long firstInstallTime = mAppContext.getPackageManager()
+            long firstInstallTime = 0;
+            long lastUpdateTime = 1;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                firstInstallTime = mAppContext.getPackageManager().getPackageInfo(
+                    mAppContext.getPackageName(),
+                    PackageManager.PackageInfoFlags.of(0)).firstInstallTime;
+                lastUpdateTime = mAppContext.getPackageManager().getPackageInfo(
+                    mAppContext.getPackageName(),
+                    PackageManager.PackageInfoFlags.of(0)).lastUpdateTime;
+            } else {
+                firstInstallTime = mAppContext.getPackageManager()
                     .getPackageInfo(mAppContext.getPackageName(), 0).firstInstallTime;
-            long lastUpdateTime = mAppContext.getPackageManager()
+                lastUpdateTime = mAppContext.getPackageManager()
                     .getPackageInfo(mAppContext.getPackageName(), 0).lastUpdateTime;
+            }
             return firstInstallTime == lastUpdateTime;
         } catch (PackageManager.NameNotFoundException e) {
             return true;
@@ -722,10 +740,16 @@ public class Common extends Application {
      * @see #mUID
      * @see #checkMifareClassicSupport(Tag, Context)
      */
+    @SuppressWarnings("deprecation")
     public static int treatAsNewTag(Intent intent, Context context) {
         // Check if Intent has a NFC Tag.
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            Tag tag;
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag.class);
+            } else {
+                tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            }
             tag = MCReader.patchTag(tag);
             if (tag == null) {
                 return -3;
@@ -967,6 +991,7 @@ public class Common extends Application {
      * <li>-1 - Can not check because Android version is >= 8.</li>
      * </ul>
      */
+    @SuppressWarnings("deprecation")
     public static int isExternalNfcServiceRunning(Context context) {
         // getRunningServices() is deprecated since Android 8.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -1000,10 +1025,16 @@ public class Common extends Application {
      * @param context The context for the package manager.
      * @return True if the app is installed. False otherwise.
      */
+    @SuppressWarnings("deprecation")
     public static boolean isAppInstalled(String uri, Context context) {
         PackageManager pm = context.getPackageManager();
         try {
-            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                pm.getPackageInfo(uri, PackageManager.PackageInfoFlags.of(
+                    PackageManager.GET_ACTIVITIES));
+            } else {
+                pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            }
             return true;
         } catch (Exception e) {
             // Should only throw PackageManager.NameNotFoundException, but

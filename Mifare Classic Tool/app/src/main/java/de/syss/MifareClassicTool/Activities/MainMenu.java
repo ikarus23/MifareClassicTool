@@ -26,10 +26,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
@@ -101,6 +103,7 @@ public class MainMenu extends Activity {
      * @see #copyStdKeysFiles()
      */
     @SuppressLint("SetTextI18n")
+    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +125,12 @@ public class MainMenu extends Activity {
             mInfoExternalNfcDialogWasShown = savedInstanceState.getBoolean(
                     "info_external_nfc_dialog_was_shown");
             mHasNoNfc = savedInstanceState.getBoolean("has_no_nfc");
-            mOldIntent = savedInstanceState.getParcelable("old_intent");
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                mOldIntent = savedInstanceState.getParcelable("old_intent", Intent.class );
+            } else {
+                mOldIntent = savedInstanceState.getParcelable("old_intent");
+            }
+
         }
 
         // Bind main layout buttons.
@@ -157,6 +165,7 @@ public class MainMenu extends Activity {
      * @param startUpNode The node of the startup checks chain.
      * @see StartUpNode
      */
+    @SuppressWarnings("deprecation")
     private void runStartUpNode(StartUpNode startUpNode) {
         SharedPreferences sharedPref =
                 getPreferences(Context.MODE_PRIVATE);
@@ -258,8 +267,14 @@ public class MainMenu extends Activity {
                 }
                 int currentVersion = 0;
                 try {
-                    currentVersion = (int) PackageInfoCompat.getLongVersionCode(
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        currentVersion = (int) PackageInfoCompat.getLongVersionCode(
+                            getPackageManager().getPackageInfo(getPackageName(),
+                                PackageManager.PackageInfoFlags.of(0)));
+                    } else {
+                        currentVersion = (int) PackageInfoCompat.getLongVersionCode(
                             getPackageManager().getPackageInfo(getPackageName(), 0));
+                    }
                 } catch (NameNotFoundException e) {
                     Log.d(LOG_TAG, "Version not found.");
                 }
