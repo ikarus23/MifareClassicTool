@@ -199,6 +199,8 @@
     <string name="text_missing_files_update">Hai perso i file dopo l\'aggiornamento alla versione 4.0.0 o superiore? Fai riferimento
         al punto \"1.2 Data Storage\" nella sezione \"Informazioni\".</string>
     <string name="text_more_converter">Più convertitori (online)</string>
+    <string name="text_enter_file_name">Inserisci un nome per il file</string>
+    <string name="text_difference_between_dumps">Differenza tra dumps</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Leggi Tag</string>
@@ -302,11 +304,13 @@
     <string name="action_generic_converter">Convertitore del tipo di dati</string>
     <string name="action_multi_purpose_converter">Convertitore multiuso</string>
     <string name="action_cyber_chef">Cyber Chef</string>
+    <string name="action_open_clone_uid_tool">Apri lo strumento per clonare l\'UID</string>
+    <string name="action_hide_identical_sectors">Hide identical sectors</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nuovo tag trovato</string>
     <string name="info_no_tag_found">Errore: tag MIFARE Classic non trovato</string>
-    <string name="info_keys_loaded_please_wait">Chiavi caricate. Sto facendo l\'associazione&#8230;</string>
+    <string name="info_keys_loaded_please_wait">Chiavi caricate. Sto facendo l\'associazione&#8230; Potrebbe volerci un po' di tempo&#8230;</string>
     <string name="info_tag_removed_while_reading">Errore: Tag rimosso durante la lettura</string>
     <string name="info_no_vb_in_dump">Non ci sono value blocks in questo dump</string>
     <string name="info_valid_dump_not_hex">Errore: Alcuni blocchi contengono
@@ -343,6 +347,7 @@
     <string name="info_valid_keys_no_keys">Errore: Ci dev\'essere almeno una chiave</string>
     <string name="info_valid_keys_not_hex">Errore: Alcune chiavi contengono dati non validi (non hex)</string>
     <string name="info_valid_keys_not_6_byte">Errore: Alcune chiavi non sono lunghe 6 byte (12 caratteri)</string>
+    <string name="info_invalid_file_name">Errore: Il nome del file non è valido</string>
     <string name="info_save_successful">Dati salvati correttamente</string>
     <string name="info_save_error">Errore: Errore durante il salvataggio dei dati</string>
     <string name="info_file_already_exists">Errore: Il file esiste già</string>
@@ -388,6 +393,7 @@
     <string name="info_backup_created">Backup creato</string>
     <string name="info_backup_error">Errore durante la creazione di un backup completo</string>
     <string name="info_irreversible_acs">Attenzione: Le Condizioni di Accesso saranno irreversibili</string>
+	<string name="info_std_key_overwrite">Errore: I file delle chiavi standard non possono essere sovrascritti</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">Il lettore NFC non è abilitato.
@@ -586,5 +592,6 @@
     <string name="hint_int_423">es: 423</string>
     <string name="hint_custom_sector_count">es: 16 per 1K</string>
     <string name="hint_custom_retry_authentication_count">Numero di tentativi</string>
+    <string name="hint_key">Esadecimale, 6 byte per linea</string>
 
 </resources>
