@@ -261,7 +261,7 @@
     <string name="action_show_value_blocks_as_int">Value Blocks come interi.</string>
     <string name="action_show_tag_info">Mostra le informazioni sul tag</string>
     <string name="action_show_vb_tool">De-/Codificatore del Value Block</string>
-    <string name="action_show_ac_tool">De-/Codificatore delle Condizioni di Accessp</string>
+    <string name="action_show_ac_tool">De-/Codificatore delle Condizioni di Accesso</string>
     <string name="action_show_diff_tool">Strumento Differenze (confronta i dump)</string>
     <string name="action_show_bcc_tool">Calcolatore del BCC</string>
     <string name="action_show_clone_uid">Clona l\'UID</string>
@@ -348,7 +348,7 @@
     <string name="info_file_already_exists">Errore: Il file esiste già</string>
     <string name="info_tag_too_small">Errore: Il tag è troppo piccolo (il settore è fuori dall\'intervallo)</string>
     <string name="info_write_error">Errore: Sono avvenuti alcuni errori durante la scrittura. Potrebbe essere una cosa brutta.</string>
-    <string name="info_tag_lost_check_dump">Errore; Il tag risulta mancante durante la verifica del dump</string>
+    <string name="info_tag_lost_check_dump">Errore: Il tag risulta mancante durante la verifica del dump</string>
     <string name="info_nothing_to_write">Non c\'è più niente da scrivere</string>
     <string name="info_no_int_to_encode">Errore: Nessun valore intero inserito</string>
     <string name="info_addr_not_hex_byte">Errore: Indirizzo non esadecimale (0-9, A-F, 2 caratteri)</string>
@@ -361,7 +361,7 @@
     <string name="info_ac_format_error">Errore: Le Condizioni di Accesso non sono valide</string>
     <string name="info_ac_reset_keyb_readable">La chiave B è leggibile.
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
-    <string name="info_ac_reset_keyb_not_readable">La chiave B è leggibile.
+    <string name="info_ac_reset_keyb_not_readable">La chiave B non è leggibile.
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
     <string name="info_strange_error">Errore: È successo un errore improvviso e non sappiamo perché.
         Per favore faccelo sapere usando la pagina del progetto così proviamo a risolverlo.</string>
