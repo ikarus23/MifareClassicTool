@@ -200,7 +200,7 @@
         al punto \"1.2 Data Storage\" nella sezione \"Informazioni\".</string>
     <string name="text_more_converter">Più convertitori (online)</string>
     <string name="text_enter_file_name">Inserisci un nome per il file</string>
-    <string name="text_difference_between_dumps">Differenza tra dumps</string>
+    <string name="text_difference_between_dumps">Differenza tra i dump</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Leggi Tag</string>
@@ -305,7 +305,7 @@
     <string name="action_multi_purpose_converter">Convertitore multiuso</string>
     <string name="action_cyber_chef">Cyber Chef</string>
     <string name="action_open_clone_uid_tool">Apri lo strumento per clonare l\'UID</string>
-    <string name="action_hide_identical_sectors">Hide identical sectors</string>
+    <string name="action_hide_identical_sectors">Nascondi i settori identici</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nuovo tag trovato</string>
@@ -592,6 +592,6 @@
     <string name="hint_int_423">es: 423</string>
     <string name="hint_custom_sector_count">es: 16 per 1K</string>
     <string name="hint_custom_retry_authentication_count">Numero di tentativi</string>
-    <string name="hint_key">Esadecimale, 6 byte per linea</string>
+    <string name="hint_key">Esadecimale, 6 byte per riga</string>
 
 </resources>
