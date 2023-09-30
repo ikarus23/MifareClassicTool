@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.tech.MifareClassic;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -103,7 +104,7 @@ public class WriteTag extends BasicActivity {
      * accordingly.
      */
     // It is checked but the IDE don't get it.
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "deprecation"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,8 +142,12 @@ public class WriteTag extends BasicActivity {
         if (savedInstanceState != null) {
             mWriteManufBlock.setChecked(
                     savedInstanceState.getBoolean("write_manuf_block", false));
-            Serializable s = savedInstanceState
-                    .getSerializable("dump_with_pos");
+            Serializable s = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                s = savedInstanceState.getSerializable("dump_with_pos", HashMap.class);
+            } else {
+                s = savedInstanceState.getSerializable("dump_with_pos");
+            }
             if (s instanceof HashMap<?, ?>) {
                 mDumpWithPos = (HashMap<Integer, HashMap<Integer, byte[]>>) s;
             }
