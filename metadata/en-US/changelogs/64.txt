@@ -1,0 +1,9 @@
+ * Added "Hide Identical Sectors" option and show
+   tag data difference in percent for the Diff Tool
+   (Thanks to Deun Lee)
+ * Added French translation
+   (Thanks to Nicolas "iomega11" André)
+ * Improved Italian translation
+   (Thanks to Nicolas "iomega11" André and
+   Erik "ErikPelli" Pellizzon)
+ * Updated for Android 13
