@@ -1148,7 +1148,13 @@ public class MCReader {
      * @return True if the reader is connected. False otherwise.
      */
     public boolean isConnected() {
-        return mMFC.isConnected();
+        boolean isConnected = false;
+        try {
+            isConnected = mMFC.isConnected();
+        } catch (RuntimeException ex) {
+            isConnected = false;
+        }
+        return isConnected;
     }
 
     /**
@@ -1190,8 +1196,9 @@ public class MCReader {
             Thread t = new Thread(() -> {
                 try {
                     mMFC.connect();
-                } catch (IOException | IllegalStateException | SecurityException ex) {
-                    // The SecurityException is thrown when an old stored Tag object is used.
+                } catch (IOException | RuntimeException ex) {
+                    // The SecurityException (RuntimeException subclass) is thrown
+                    // when an old stored Tag object is used.
                     // It would be best to change the workflow/logic of this app.
                     // https://stackoverflow.com/questions/75695662/securityexception-while-ndef-connect-on-android-13
                     // https://issuetracker.google.com/issues/272552420
@@ -1223,7 +1230,7 @@ public class MCReader {
         try {
             mMFC.close();
         }
-        catch (IOException | SecurityException ex) {
+        catch (IOException | RuntimeException  ex) {
             // See connect()
             Log.d(LOG_TAG, "Error on closing tag.");
         }
