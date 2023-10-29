@@ -1176,31 +1176,37 @@ public class MCReader {
     public void connect() throws Exception {
         final AtomicBoolean error = new AtomicBoolean(false);
 
+        if (mMFC == null || mMFC.getTag() == null) {
+            error.set(true);
+        }
+
         // Do not connect if already connected.
-        if (isConnected()) {
+        if (error.get() == false && isConnected()) {
             return;
         }
 
         // Connect in a worker thread. (connect() might be blocking).
-        Thread t = new Thread(() -> {
+        if (error.get() == false) {
+            Thread t = new Thread(() -> {
+                try {
+                    mMFC.connect();
+                } catch (IOException | IllegalStateException | SecurityException ex) {
+                    // The SecurityException is thrown when an old stored Tag object is used.
+                    // It would be best to change the workflow/logic of this app.
+                    // https://stackoverflow.com/questions/75695662/securityexception-while-ndef-connect-on-android-13
+                    // https://issuetracker.google.com/issues/272552420
+                    // https://github.com/status-im/status-mobile/issues/14815
+                    error.set(true);
+                }
+            });
+            t.start();
+
+            // Wait for the connection (max 500millis).
             try {
-                mMFC.connect();
-            } catch (IOException | IllegalStateException | SecurityException ex) {
-                // The SecurityException is thrown when an old stored Tag object is used.
-                // It would be best to change the workflow/logic of this app.
-                // https://stackoverflow.com/questions/75695662/securityexception-while-ndef-connect-on-android-13
-                // https://issuetracker.google.com/issues/272552420
-                // https://github.com/status-im/status-mobile/issues/14815
+                t.join(500);
+            } catch (InterruptedException ex) {
                 error.set(true);
             }
-        });
-        t.start();
-
-        // Wait for the connection (max 500millis).
-        try {
-            t.join(500);
-        } catch (InterruptedException ex) {
-            error.set(true);
         }
 
         // If there was an error log it and throw an exception.
@@ -1217,7 +1223,8 @@ public class MCReader {
         try {
             mMFC.close();
         }
-        catch (IOException e) {
+        catch (IOException | SecurityException ex) {
+            // See connect()
             Log.d(LOG_TAG, "Error on closing tag.");
         }
     }
