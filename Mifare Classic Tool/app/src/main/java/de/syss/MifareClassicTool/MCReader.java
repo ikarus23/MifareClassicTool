@@ -1185,7 +1185,12 @@ public class MCReader {
         Thread t = new Thread(() -> {
             try {
                 mMFC.connect();
-            } catch (IOException | IllegalStateException ex) {
+            } catch (IOException | IllegalStateException | SecurityException ex) {
+                // The SecurityException is thrown when an old stored Tag object is used.
+                // It would be best to change the workflow/logic of this app.
+                // https://stackoverflow.com/questions/75695662/securityexception-while-ndef-connect-on-android-13
+                // https://issuetracker.google.com/issues/272552420
+                // https://github.com/status-im/status-mobile/issues/14815
                 error.set(true);
             }
         });
