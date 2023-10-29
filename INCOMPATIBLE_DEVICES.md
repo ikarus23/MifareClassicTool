@@ -74,6 +74,7 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S7 Edge (some Versions)
 * Samsung Galaxy Tab Active 2
 * Samsung Galaxy Xcover 3
+* Sharp Aquos Zero 2
 * Sharp Disney Mobile on DoCoMo SH-02G
 * Sony Xperia X Compact
 * Sony Xperia Z2 (some models)
