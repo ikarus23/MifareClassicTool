@@ -528,7 +528,7 @@
     <string name="dialog_save_conflict_keyfile">Questo file esiste già.
         Cosa vuoi fare?</string>
     <string name="dialog_donate_title">Dona</string>
-    <string name="dialog_donate"><b>MIFARE Classic Tool è stato aggiornatod!</b>
+    <string name="dialog_donate"><b>MIFARE Classic Tool è stato aggiornato!</b>
         \nPuoi trovare il
         <a href="https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">changelog completo</a>
         online.
