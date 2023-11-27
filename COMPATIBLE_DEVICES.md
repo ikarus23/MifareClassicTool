@@ -10,6 +10,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Asus Pegasus 2 (X550)
 * BQ Aquaris X2 Pro
 * BQ Aquaris X5 Plus (Android 7.1.1)
+* Fairphone 4
 * Google Nexus 7 (2012)
 * Google Nexus 6P
 * Google Pixel
@@ -64,6 +65,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy Note 10
 * Samsung Galaxy S3 (i9300)
 * Samsung Galaxy S3 Duo (i9300i)
+* Samsung Galaxy S3 Mini Value Edition (GT-I8200N)
 * Samsung Galaxy S5
 * Samsung Galaxy S7 (Android 8.0)
 * Samsung Galaxy S7 Edge (hero2qltechn, Android 7.0)
