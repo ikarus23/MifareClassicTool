@@ -11,6 +11,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * BQ Aquaris X2 Pro
 * BQ Aquaris X5 Plus (Android 7.1.1)
 * Fairphone 4
+* Fairphone 5
 * Google Nexus 7 (2012)
 * Google Nexus 6P
 * Google Pixel
