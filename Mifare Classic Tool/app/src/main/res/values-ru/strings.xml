@@ -1,32 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="abc_action_bar_home_description">Перейти на главный экран</string>
-    <string name="abc_action_bar_up_description">Перейти вверх</string>
-    <string name="abc_action_menu_overflow_description">Ещё</string>
-    <string name="abc_action_mode_done">Готово</string>
-    <string name="abc_activity_chooser_view_see_all">Показать все</string>
-    <string name="abc_activitychooserview_choose_application">Выберите приложение</string>
-    <string name="abc_capital_off">ВЫКЛ</string>
-    <string name="abc_capital_on">ВКЛ</string>
-    <string name="abc_menu_alt_shortcut_label">Alt+</string>
-    <string name="abc_menu_ctrl_shortcut_label">Ctrl+</string>
-    <string name="abc_menu_delete_shortcut_label">delete</string>
-    <string name="abc_menu_enter_shortcut_label">Ввод</string>
-    <string name="abc_menu_function_shortcut_label">Function+</string>
-    <string name="abc_menu_meta_shortcut_label">Meta+</string>
-    <string name="abc_menu_shift_shortcut_label">Shift+</string>
-    <string name="abc_menu_space_shortcut_label">Пробел</string>
-    <string name="abc_menu_sym_shortcut_label">Символ+</string>
-    <string name="abc_prepend_shortcut_label">Меню+</string>
-    <string name="abc_search_hint">Поиск…</string>
-    <string name="abc_searchview_description_clear">Удалить запрос</string>
-    <string name="abc_searchview_description_query">Поисковый запрос</string>
-    <string name="abc_searchview_description_search">Поиск</string>
-    <string name="abc_searchview_description_submit">Отправить запрос</string>
-    <string name="abc_searchview_description_voice">Голосовой поиск</string>
-    <string name="abc_shareactionprovider_share_with">Поделиться с помощью</string>
-    <string name="abc_shareactionprovider_share_with_application">Поделиться с помощью %s</string>
-    <string name="abc_toolbar_collapse_description">Свернуть</string>
     <string name="ac_data_block_0">"Read: A|B
 Write: A|B
 Incr: A|B
@@ -221,14 +194,7 @@ Write KeyB: Never"</string>
     <string name="action_write_value_block">Написать блок значения</string>
     <string name="app_name">MIFARE Classic Tool</string>
     <string name="app_version">Версия приложения</string>
-    <string name="call_notification_answer_action">Ответить</string>
-    <string name="call_notification_answer_video_action">Видео</string>
-    <string name="call_notification_decline_action">Отклонить</string>
-    <string name="call_notification_hang_up_action">Завершить</string>
-    <string name="call_notification_incoming_text">Входящий вызов</string>
-    <string name="call_notification_ongoing_text">Текущий вызов</string>
-    <string name="call_notification_screening_text">Фильтрация входящего вызова</string>
-    <string name="copy">Копировать</string>
+
     <string name="dialog_about_mct">" &lt;b>MIFARE Classic Tool (MCT)&lt;br />&lt;br /> &amp;#8226; Версия: %1$s&lt;br /> &amp;#8226; Лицензия: &lt;a href=https://www.gnu.org/licenses/gpl-3.0.txt>GPLv3&lt;/a>&lt;br /> &amp;#8226; Страница проекта: &lt;a href=https://github.com/ikarus23/MifareClassicTool>MCT на GitHub&lt;/a>&lt;br /> &amp;#8226; Оцените это приложение: &lt;a href=market://details?id=de.syss.MifareClassicTool>via Google Play&lt;/a>&lt;br /> &amp;#8226; Пожертвовать: &lt;a href=market://details?id=de.syss.MifareClassicToolDonate> Google Play&lt;/a>&lt;/b>&lt;br />&lt;br /> Полезная информация:&lt;br /> &amp;#8226; &lt;a href=https://github.com/ikarus23/MifareClassicTool/issues>Bug Tracker&lt;/a>&lt;br /> &amp;#8226; &lt;a href=https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt>Changelog / Version History&lt;/a>&lt;br /> &amp;#8226; &lt;a href=http://publications.icaria.de/mct/>Documentation, APKs, etc.&lt;/a>&lt;br /> &amp;#8226; &lt;a href=http://www.proxmark.org/forum/viewtopic.php?id=1535>Thread at the Proxmark forum&lt;/a>&lt;br />&lt;br /> MIFARE&amp;reg; является зарегистрированной торговой маркой NXP Semiconductors. "</string>
     <string name="dialog_about_mct_title">О компании MCT</string>
     <string name="dialog_auto_calc_sak_atqa">«Для некоторых магических тегов 2-го поколения значения UID (и, возможно, BCC) в блоке 0 представляют собой SAK и ATQA. 
@@ -342,7 +308,6 @@ Write KeyB: Never"</string>
     <string name="dialog_write_issues_title">Проблемы с записью</string>
     <string name="dialog_write_sectors">Выберите сектора, которые вы хотите записать:</string>
     <string name="dialog_write_sectors_title">Запись секторов</string>
-    <string name="expand_button_title">Дополнительно</string>
     <string name="hint_custom_retry_authentication_count">Количество повторных попыток</string>
     <string name="hint_custom_sector_count">например, 16 для 1K</string>
     <string name="hint_hex_00">00</string>
@@ -431,11 +396,6 @@ ACs блоков данных обновлены."</string>
     <string name="info_value_too_big">Ошибка: значение слишком велико.</string>
     <string name="info_write_error">Ошибка: Во время записи произошла ошибка. (Это может быть плохо.)</string>
     <string name="info_write_successful">Данные успешно записаны</string>
-    <string name="not_set">Не указано</string>
-    <string name="preference_copied">Текст \"%1$s\" скопирован в буфер обмена</string>
-    <string name="search_menu_title">Поиск</string>
-    <string name="status_bar_notification_info_overflow">999+</string>
-    <string name="summary_collapsed_preference_list">%1$s, %2$s</string>
     <string name="tag_000218">MIFARE Classic 4k, NXP</string>
     <string name="tag_000238">MIFARE Classic 4k - emulated (6212 Classic), Nokia</string>
     <string name="tag_000298">MPCOS, Gemplus</string>
@@ -616,6 +576,4 @@ MIFARE DESFire EV1, NXP"</string>
     <string name="title_activity_value_block_tool">Кодировщик &amp; расшифровки блоков значения</string>
     <string name="title_activity_value_blocks">Блоки значений в виде целых чисел</string>
     <string name="title_activity_write_tag">Запись метки</string>
-    <string name="v7_preference_off">ВЫКЛ.</string>
-    <string name="v7_preference_on">ВКЛ.</string>
 </resources>
