@@ -944,39 +944,19 @@ public class MainMenu extends Activity {
      * @see Common#copyFile(InputStream, OutputStream)
      */
     private void copyStdKeysFiles() {
-        File std = Common.getFile(
-                Common.KEYS_DIR + "/" + Common.STD_KEYS);
-        File extended = Common.getFile(
-                Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
         AssetManager assetManager = getAssets();
-
-        // Copy std.keys.
         try {
-            InputStream in = assetManager.open(
-                    Common.KEYS_DIR + "/" + Common.STD_KEYS);
-            OutputStream out = new FileOutputStream(std);
-            Common.copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-          } catch(IOException e) {
-              Log.e(LOG_TAG, "Error while copying 'std.keys' from assets "
-                      + "to internal storage.");
-          }
-
-        // Copy extended-std.keys.
-        try {
-            InputStream in = assetManager.open(
-                    Common.KEYS_DIR + "/" + Common.STD_KEYS_EXTENDED);
-            OutputStream out = new FileOutputStream(extended);
-            Common.copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-          } catch(IOException e) {
-              Log.e(LOG_TAG, "Error while copying 'extended-std.keys' "
-                      + "from assets to internal storage.");
-          }
-
+            for (String file : assetManager.list(Common.KEYS_DIR)) {
+                String filePath = Common.KEYS_DIR + "/" + file;
+                InputStream in = assetManager.open(filePath);
+                OutputStream out = new FileOutputStream(Common.getFile(filePath));
+                Common.copyFile(in, out);
+                in.close();
+                out.flush();
+                out.close();
+            }
+        } catch(IOException e) {
+            Log.e(LOG_TAG, "Error while copying files from assets.");
+        }
     }
 }
