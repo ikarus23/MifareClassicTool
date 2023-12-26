@@ -231,16 +231,32 @@ Write KeyB: Never"</string>
     <string name="copy">Копировать</string>
     <string name="dialog_about_mct">" &lt;b>MIFARE Classic Tool (MCT)&lt;br />&lt;br /> &amp;#8226; Версия: %1$s&lt;br /> &amp;#8226; Лицензия: &lt;a href=https://www.gnu.org/licenses/gpl-3.0.txt>GPLv3&lt;/a>&lt;br /> &amp;#8226; Страница проекта: &lt;a href=https://github.com/ikarus23/MifareClassicTool>MCT на GitHub&lt;/a>&lt;br /> &amp;#8226; Оцените это приложение: &lt;a href=market://details?id=de.syss.MifareClassicTool>via Google Play&lt;/a>&lt;br /> &amp;#8226; Пожертвовать: &lt;a href=market://details?id=de.syss.MifareClassicToolDonate> Google Play&lt;/a>&lt;/b>&lt;br />&lt;br /> Полезная информация:&lt;br /> &amp;#8226; &lt;a href=https://github.com/ikarus23/MifareClassicTool/issues>Bug Tracker&lt;/a>&lt;br /> &amp;#8226; &lt;a href=https://raw.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt>Changelog / Version History&lt;/a>&lt;br /> &amp;#8226; &lt;a href=http://publications.icaria.de/mct/>Documentation, APKs, etc.&lt;/a>&lt;br /> &amp;#8226; &lt;a href=http://www.proxmark.org/forum/viewtopic.php?id=1535>Thread at the Proxmark forum&lt;/a>&lt;br />&lt;br /> MIFARE&amp;reg; является зарегистрированной торговой маркой NXP Semiconductors. "</string>
     <string name="dialog_about_mct_title">О компании MCT</string>
-    <string name="dialog_auto_calc_sak_atqa">«Для некоторых магических тегов 2-го поколения значения UID (и, возможно, BCC) в блоке 0 представляют собой SAK и ATQA. Если используется эта опция, значения будут сгенерированы автоматически. В противном случае будут использоваться значения, закодированные в «остатке блока 0».</string>
+    <string name="dialog_auto_calc_sak_atqa">«Для некоторых магических тегов 2-го поколения значения UID (и, возможно, BCC) в блоке 0 представляют собой SAK и ATQA. 
+	
+Если используется эта опция, значения будут сгенерированы автоматически. В противном случае будут использоваться значения, закодированные в «остатке блока 0».</string>
     <string name="dialog_auto_calc_sak_atqa_title">Расчет SAK и ATQA</string>
     <string name="dialog_auto_reconnect">«Если тег потеряется во время процесса сопоставления клавиш (из-за проблем с антенной, таймаута и т. д.), приложение попытается повторно подключиться к нему (с задержкой 500 мс), пока одна попытка не будет успешной. <b>Это может помочь, если у вас возникнут проблемы в процессе сопоставления клавиш. Однако это также может привести к странному поведению MCT.</b>"
 
+
 Известные проблемы, при которых может помочь этот параметр:
+
   • Специальные теги (например, smartMX)»."</string>
     <string name="dialog_auto_reconnect_title">Авто переподключение</string>
-    <string name="dialog_block0_data_warning">«Вы собираетесь записать данные в блок 0. Однако, похоже, что ваши данные могут быть недействительными. В некоторых тегах 2-го поколения такие значения, как SAK и ATQA, могут контролироваться байтами в блоке 0. Если вы зададите неправильные значения, тег может (soft-)brick. Но есть и теги, которые игнорируют неправильные значения. Независимо от этого, UID должен соответствовать спецификации ISO 14443. Эта проверка блока 0 пытается убедиться в том, что вы пишете жалобу на данные в соответствии со спецификациями NXP. Действуйте на свой страх и риск!»</string>
+    <string name="dialog_block0_data_warning">«Вы собираетесь записать данные в блок 0. Однако, похоже, что ваши данные могут быть недействительными. 
+	В некоторых тегах 2-го поколения такие значения, как SAK и ATQA, могут контролироваться байтами в блоке 0. Если вы зададите неправильные значения, тег может (soft-)brick. 
+	Но есть и теги, которые игнорируют неправильные значения. Независимо от этого, UID должен соответствовать спецификации ISO 14443. 
+	Эта проверка блока 0 пытается убедиться в том, что вы пишете жалобу на данные в соответствии со спецификациями NXP. 
+	Действуйте на свой страх и риск!»
+	
+	</string>
     <string name="dialog_block0_data_warning_title">Проверка данных блока 0</string>
-    <string name="dialog_block0_writing">«Запись в первый блок сектора 0 в исходных метках MIFARE Classic невозможна. Убедитесь, что вы используете «магическую метку» (2-го поколения/поколения 2), которая поддерживает запись в блок производителя. В некоторых тегах значения UID в блоке 0 представляют собой BCC, SAK и ATQA. Убедитесь, что значения верны. Запись неправильных данных в блок 0 может привести к разрушению метки. <b>Для получения дополнительной информации посетите раздел «Написание меток» в разделе «Справка и информация».</b></string>
+    <string name="dialog_block0_writing">«Запись в первый блок сектора 0 в исходных метках MIFARE Classic невозможна. 
+	Убедитесь, что вы используете «магическую метку» (2-го поколения/поколения 2), которая поддерживает запись в блок производителя. 
+	В некоторых тегах значения UID в блоке 0 представляют собой BCC, SAK и ATQA. Убедитесь, что значения верны. 
+	Запись неправильных данных в блок 0 может привести к разрушению метки. <b>Для получения дополнительной информации посетите раздел «Написание меток» в разделе «Справка и информация».</b>
+	
+	
+	</string>
     <string name="dialog_block0_writing_title">Записать в блок 0</string>
     <string name="dialog_choose_ac_title">Выбор условий доступа</string>
     <string name="dialog_custom_sector_count">Принудительно задайте собственное количество секторов и игнорируйте количество секторов, обнаруженное Android. Это может быть полезно для тегов с памятью 2 КБ.</string>
@@ -281,11 +297,19 @@ Write KeyB: Never"</string>
     <string name="dialog_no_mfc_support_device_title">Отсутствует поддержка MIFARE Classic.</string>
     <string name="dialog_no_mfc_support_tag">Этот тег не совместим с технологией MIFARE Classic! Обратите внимание, что это приложение предназначено только для тегов MIFARE Classic! &lt;br />&lt;br />&lt;b>Пожалуйста, используйте другой тег.&lt;/b> &lt;br />&lt;br />&lt;small>(Примечание: в некоторых редких случаях это сообщение может быть ложное срабатывание, вызванное несколькими тегами в поле чтения или странными значениями ATQA+SAK.)&lt;/small></string>
     <string name="dialog_no_mfc_support_tag_title">Не является тегом MIFARE Classic</string>
-    <string name="dialog_no_nfc_support">«На вашем устройстве нет устройства чтения NFC. Поэтому вы не можете читать или записывать теги NFC. Если ваше устройство поддерживает USB-OTG, возможно, вы сможете подключить внешнее устройство чтения NFC к устройству Android. MIFARE Classic Tool должен работать вместе с приложением «Внешний NFC», которое поддерживает несколько USB-считывателей NFC. Хотя могут быть некоторые ограничения».</string>
+    <string name="dialog_no_nfc_support">«На вашем устройстве нет устройства чтения NFC. 
+	Поэтому вы не можете читать или записывать теги NFC. Если ваше устройство поддерживает USB-OTG, возможно, вы сможете подключить внешнее устройство чтения NFC к устройству Android. 
+	MIFARE Classic Tool должен работать вместе с приложением «Внешний NFC», которое поддерживает несколько USB-считывателей NFC. 
+	Хотя могут быть некоторые ограничения».
+	</string>
     <string name="dialog_no_nfc_support_title">Поддержка NFC отсутствует</string>
     <string name="dialog_rest_of_block_0">Теги MIFARE Classic обычно можно записывать только поблочно. UID представлен первыми байтами блока 0. Чтобы изменить UID, необходимо записать полный блок 0. Остальные данные блока 0 — это байты, которые будут добавлены к UID для представления полного блока.</string>
     <string name="dialog_rest_of_block_0_title">Остальная часть блока 0</string>
-    <string name="dialog_retry_authentication">«Повторите аутентификацию (для доступа к сектору/блоку) X раз, если она не удалась. Некоторым тегам это необходимо для хорошей работы (например, некоторым тегам с возможностью записи в блоке 0 с 7-байтовым UID). Кроме того, это может помочь обеспечить более стабильную работу некоторых устройств (например, Google Nexus 5X или Huawei P10). Имейте в виду, что это может замедлить чтение, письмо или даже сопоставление клавиш. В большинстве случаев вам следует оставить эту опцию отключенной».</string>
+    <string name="dialog_retry_authentication">«Повторите аутентификацию (для доступа к сектору/блоку) X раз, если она не удалась. 
+	Некоторым тегам это необходимо для хорошей работы (например, некоторым тегам с возможностью записи в блоке 0 с 7-байтовым UID). 
+	Кроме того, это может помочь обеспечить более стабильную работу некоторых устройств (например, Google Nexus 5X или Huawei P10). 
+	Имейте в виду, что это может замедлить чтение, письмо или даже сопоставление клавиш. 
+	В большинстве случаев вам следует оставить эту опцию отключенной».</string>
     <string name="dialog_retry_authentication_title">Повторить аутентификацию</string>
     <string name="dialog_save_before_quitting"><b>Есть несохраненные изменения!</b>"
 Хотите сохранить эти изменения? "</string>
@@ -311,8 +335,8 @@ Write KeyB: Never"</string>
 "<b>ВНИМАНИЕ: ввод неправильных данных может привести к непоправимому повреждению метки.</b></string>
     <string name="dialog_static_ac_title">Использовать статические условия доступа</string>
     <string name="dialog_tools_menu_title">Доступные инструменты</string>
-    <string name="dialog_wait_write_tag">"Запись тега...
-(Не удаляйте тег) "</string>
+    <string name="dialog_wait_write_tag">"Запись тега...(Не удаляйте тег)"
+	</string>
     <string name="dialog_wait_write_tag_title">Запись…</string>
     <string name="dialog_write_issues">Были обнаружены проблемы, которые влияют на запись в тег. Ознакомьтесь со ВСЕМ списком ниже!</string>
     <string name="dialog_write_issues_title">Проблемы с записью</string>
@@ -544,7 +568,8 @@ MIFARE DESFire EV1, NXP"</string>
     <string name="text_step_2_data_blocks">Шаг 2: Выберите ACs для блоков данных</string>
     <string name="text_strange_error">Произошла странная ошибка:(</string>
     <string name="text_tag_type_and_manuf">Тип и производитель метки</string>
-    <string name="text_tag_type_guess">«Тип тега и производитель» могут быть неверным. Дополнительную информацию см. в разделе «Справка и информация».</string>
+    <string name="text_tag_type_guess">«Тип тега и производитель» могут быть неверным. 
+	Дополнительную информацию см. в разделе «Справка и информация».</string>
     <string name="text_to">До</string>
     <string name="text_uid">UID</string>
     <string name="text_uid_and_manuf">UID &amp; Информация о производителе</string>
@@ -594,4 +619,3 @@ MIFARE DESFire EV1, NXP"</string>
     <string name="v7_preference_off">ВЫКЛ.</string>
     <string name="v7_preference_on">ВКЛ.</string>
 </resources>
-
