@@ -1,10 +1,10 @@
 plugins {
-    id 'com.android.application' version '8.1.2'
+    id 'com.android.application' version '8.2.0'
     id 'org.jetbrains.kotlin.android' version '1.9.0'
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
     namespace "de.syss.MifareClassicTool"
 
     defaultConfig {
