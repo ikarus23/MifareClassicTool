@@ -750,7 +750,6 @@ public class Common extends Application {
             } else {
                 tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             }
-            tag = MCReader.patchTag(tag);
             if (tag == null) {
                 return -3;
             }
