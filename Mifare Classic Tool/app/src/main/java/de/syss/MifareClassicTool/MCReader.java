@@ -23,6 +23,7 @@ import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -131,6 +132,11 @@ public class MCReader {
         oldParcel.readIntArray(oldTechList);
         Bundle[] oldTechExtras = oldParcel.createTypedArray(Bundle.CREATOR);
         int serviceHandle = oldParcel.readInt();
+        // Android 14
+        long mCookie = 0;
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            mCookie = oldParcel.readLong();
+        }
         int isMock = oldParcel.readInt();
         IBinder tagService;
         if (isMock == 0) {
@@ -151,9 +157,9 @@ public class MCReader {
                     nfcaIdx = i;
                 }
                 if (oldTechExtras[i] != null
-                        && oldTechExtras[i].containsKey("sak")) {
+                    && oldTechExtras[i].containsKey("sak")) {
                     sak = (short) (sak
-                            | oldTechExtras[i].getShort("sak"));
+                        | oldTechExtras[i].getShort("sak"));
                     isFirstSak = nfcaIdx == i;
                 }
             } else if (techList[i].equals(MifareClassic.class.getName())) {
@@ -189,6 +195,11 @@ public class MCReader {
         newParcel.writeIntArray(oldTechList);
         newParcel.writeTypedArray(oldTechExtras, 0);
         newParcel.writeInt(serviceHandle);
+        // Android 14
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            newParcel.writeLong(mCookie);
+        }
+
         newParcel.writeInt(isMock);
         if (isMock == 0) {
             newParcel.writeStrongBinder(tagService);
