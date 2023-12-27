@@ -72,7 +72,6 @@ This list may be incomplete. You might also want to have a look at
 * Samsung Galaxy S6 Edge
 * Samsung Galaxy S6 Edge Plus
 * Samsung Galaxy S7 Edge (some Versions)
-* Samsung Galaxy Tab Active 2
 * Samsung Galaxy Xcover 3
 * Sharp Aquos Zero 2
 * Sharp Disney Mobile on DoCoMo SH-02G
