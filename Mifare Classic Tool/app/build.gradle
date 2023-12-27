@@ -15,6 +15,10 @@ android {
         versionName '4.1.0'
     }
 
+    androidResources {
+        generateLocaleConfig true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
