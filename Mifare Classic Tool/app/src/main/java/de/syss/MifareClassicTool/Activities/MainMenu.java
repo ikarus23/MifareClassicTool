@@ -47,6 +47,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.pm.PackageInfoCompat;
 import androidx.core.text.HtmlCompat;
 
@@ -69,7 +70,7 @@ import de.syss.MifareClassicTool.R;
  * </ul>
  * @author Gerhard Klostermeier
  */
-public class MainMenu extends Activity {
+public class MainMenu extends AppCompatActivity {
 
     private static final String LOG_TAG =
             MainMenu.class.getSimpleName();

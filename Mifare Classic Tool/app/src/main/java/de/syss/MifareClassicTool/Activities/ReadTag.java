@@ -26,6 +26,8 @@ import android.os.Looper;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,7 +41,7 @@ import de.syss.MifareClassicTool.R;
  * read the tag.
  * @author Gerhard Klostermeier
  */
-public class ReadTag extends Activity {
+public class ReadTag extends AppCompatActivity {
 
     private final static int KEY_MAP_CREATOR = 1;
 

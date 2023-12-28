@@ -203,6 +203,7 @@
     <string name="text_more_converter">More converter (online)</string>
     <string name="text_enter_file_name">Enter a file name</string>
     <string name="text_difference_between_dumps">Difference between dumps</string>
+    <string name="text_choose_language">Choose custom app language</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -665,5 +666,13 @@
     <string name="hint_custom_sector_count">e.g. 16 for 1K</string>
     <string name="hint_custom_retry_authentication_count">Number of retries</string>
     <string name="hint_key">HEX, 6 bytes per line</string>
+
+    <!-- Supported locales. No need for translation! -->
+    <string-array name="supported_locales" translatable="false">
+        <item>English (en)</item>
+        <item>Français (fr)</item>
+        <item>Italiano (it)</item>
+        <item>简体中文 (zh)</item>
+    </string-array>
 
 </resources>

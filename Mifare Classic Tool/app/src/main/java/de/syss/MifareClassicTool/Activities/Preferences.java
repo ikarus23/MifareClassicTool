@@ -25,13 +25,18 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
@@ -40,7 +45,7 @@ import de.syss.MifareClassicTool.R;
  * This view will let the user edit global preferences.
  * @author Gerhard Klostermeier
  */
-public class Preferences extends BasicActivity {
+public class Preferences extends BasicActivity implements AdapterView.OnItemSelectedListener {
 
     /**
      * Enumeration with all preferences. This enumeration implements
@@ -55,7 +60,8 @@ public class Preferences extends BasicActivity {
         UseCustomSectorCount("use_custom_sector_count"),
         CustomSectorCount("custom_sector_count"),
         UseRetryAuthentication("use_retry_authentication"),
-        RetryAuthenticationCount("retry_authentication_count");
+        RetryAuthenticationCount("retry_authentication_count"),
+        CustomAppLanguage("custom_app_language");
         // Add more preferences here (comma separated).
 
         private final String text;
@@ -80,6 +86,7 @@ public class Preferences extends BasicActivity {
     private EditText mCustomSectorCount;
     private EditText mRetryAuthenticationCount;
     private RadioGroup mUIDFormatRadioGroup;
+    private Spinner mLangauge;
 
     private PackageManager mPackageManager;
     private ComponentName mComponentName;
@@ -114,6 +121,7 @@ public class Preferences extends BasicActivity {
                 R.id.checkBoxPreferencesUseRetryAuthentication);
         mRetryAuthenticationCount = findViewById(
                 R.id.editTextPreferencesRetryAuthenticationCount);
+        mLangauge = findViewById(R.id.spinnerPreferencesLanguage);
 
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
@@ -136,11 +144,27 @@ public class Preferences extends BasicActivity {
         mRetryAuthenticationCount.setText("" + pref.getInt(
                 Preference.RetryAuthenticationCount.toString(), 1));
         detectAutostartIfCardDetectedState();
+        getLanguageAndUpdateChooser();
 
         // UID Format Options (hide/show)
         mUIDFormatRadioGroup = findViewById(
                 R.id.radioGroupUIDFormat);
         toggleUIDFormat(null);
+    }
+
+    /**
+     * Get used language from MCTs own settings and set it in the custom app language
+     * chooser UI. (This might be wrong if a user changed the language using Androids
+     * system settings.)
+     */
+    private void getLanguageAndUpdateChooser() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+            this, R.array.supported_locales, android.R.layout.simple_spinner_dropdown_item);
+        mLangauge.setAdapter(adapter);
+        SharedPreferences pref = Common.getPreferences();
+        int langID = pref.getInt(Preference.CustomAppLanguage.toString(), 0);
+        mLangauge.setSelection(langID);
+        mLangauge.setOnItemSelectedListener(this);
     }
 
     /**
@@ -162,6 +186,29 @@ public class Preferences extends BasicActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * Change the app language to the selected language.
+     * @param parent The AdapterView where the selection happened
+     * @param view The view within the AdapterView that was clicked
+     * @param pos The position of the view in the adapter
+     * @param id The row id of the item that is selected
+     */
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        String lang =  (String)parent.getItemAtPosition(pos);
+        String langCode = lang.substring(lang.indexOf("(")+1, lang.indexOf(")"));
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(langCode);
+        AppCompatDelegate.setApplicationLocales(appLocale);
+    }
+
+    /**
+     * Dummy. This implementation is required by OnItemSelectedListener.
+     * @param parent The AdapterView that now contains no selected item.
+     */
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Do nothing (this implementation is required by OnItemSelectedListener).
     }
 
     /**
@@ -348,6 +395,8 @@ public class Preferences extends BasicActivity {
                 customSectorCount);
         edit.putInt(Preference.RetryAuthenticationCount.toString(),
                 retryAuthenticationCount);
+        edit.putInt(Preference.CustomAppLanguage.toString(),
+                (int)mLangauge.getSelectedItemId());
         edit.apply();
 
         int newState;

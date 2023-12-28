@@ -21,6 +21,8 @@ package de.syss.MifareClassicTool.Activities;
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import de.syss.MifareClassicTool.Common;
 
 /**
@@ -32,7 +34,7 @@ import de.syss.MifareClassicTool.Common;
  * @author Gerhard Klostermeier
  *
  */
-public abstract class BasicActivity extends Activity {
+public abstract class BasicActivity extends AppCompatActivity {
 
     /**
      * Enable NFC foreground dispatch system.
