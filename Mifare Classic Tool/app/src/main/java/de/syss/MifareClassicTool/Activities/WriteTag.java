@@ -583,13 +583,13 @@ public class WriteTag extends BasicActivity {
         String data = mDataText.getText().toString();
         byte[][] keys = Common.getKeyMap().get(sector);
         int result = -1;
+        int resultKeyA = -1;
+        int resultKeyB = -1;
 
+        // Write. There are some tags which report a successful write, although
+        // the write was not successful. Therefore, we try to write it using both keys.
         if (sector == 0 && block == 0) {
             // Write the manufacturer bock. This is only possible on gen2 tags.
-            // There are some gen2 tags which report a successful write, although
-            // the write was not successful. Therefore, we try write it using both keys.
-            int resultKeyA = -1;
-            int resultKeyB = -1;
             if (keys[1] != null) {
                 resultKeyB = reader.writeBlock(sector, block,
                         Common.hex2Bytes(data),
@@ -600,25 +600,29 @@ public class WriteTag extends BasicActivity {
                         Common.hex2Bytes(data),
                         keys[0], false);
             }
-            if (resultKeyA == 0 || resultKeyB == 0) {
-                result = 0;
-            }
         } else {
-            // Normal block.
-            // Try key B first.
+            // Normal block. Try key B first.
             if (keys[1] != null) {
-                result = reader.writeBlock(sector, block,
+                resultKeyB = reader.writeBlock(sector, block,
                         Common.hex2Bytes(data),
                         keys[1], true);
             }
-            // Error while writing? Try to write with key A (if there is one).
-            if ((result == -1 || result == 4) && keys[0] != null) {
-                result = reader.writeBlock(sector, block,
+            // Try to write with key A (if there is one).
+            if (keys[0] != null) {
+                resultKeyA = reader.writeBlock(sector, block,
                         Common.hex2Bytes(data),
                         keys[0], false);
             }
+
         }
         reader.close();
+        if (resultKeyA == 0 || resultKeyB == 0) {
+            result = 0;
+        } else if (resultKeyA == 2 || resultKeyB == 2) {
+            result = 2;
+        } else if (resultKeyA == -1 || resultKeyB == -1) {
+            result = -1;
+        }
 
         // Error handling.
         switch (result) {
