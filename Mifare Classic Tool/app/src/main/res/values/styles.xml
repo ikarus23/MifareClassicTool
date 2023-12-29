@@ -20,5 +20,5 @@
 
 
 <resources>
-    <style name="AppTheme" parent="android:Theme.Holo" />
+    <style name="AppTheme" parent="Theme.AppCompat" />
 </resources>

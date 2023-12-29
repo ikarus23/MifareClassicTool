@@ -46,7 +46,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -649,11 +648,14 @@ public class ImportExportTool extends BasicActivity {
                 break;
             case MCT:
                 ArrayList<String> export = new ArrayList<>();
-                Iterator<String> iter = blocks.keys();
                 int lastKnownSector = -1;
-                while (iter.hasNext()) {
-                    String blockKey = iter.next();
-                    int blockNr = Integer.parseInt(blockKey);
+                // Go through all possible blocks in a sorted order.
+                for (int blockNr = 0; blockNr < 256; blockNr++) {
+                    String blockKey = Integer.toString(blockNr);
+                    if (!blocks.has(blockKey)) {
+                        // Block does not exists. Skip.
+                        continue;
+                    }
                     int sector = MCReader.blockToSector(blockNr);
                     if (lastKnownSector != sector) {
                         lastKnownSector = sector;
