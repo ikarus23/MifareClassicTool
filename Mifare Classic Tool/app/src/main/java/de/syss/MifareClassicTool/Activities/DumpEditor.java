@@ -160,7 +160,7 @@ public class DumpEditor extends BasicActivity
                 R.id.textViewDumpEditorCaptionTitle);
         SpannableString updateText = Common.colorString(
                 getString(R.string.text_update_colors),
-                ContextCompat.getColor(this, R.color.blue));
+                ContextCompat.getColor(this, R.color.accent));
         updateText.setSpan(new UnderlineSpan(), 0, updateText.length(), 0);
         captionTitle.setText(TextUtils.concat(
                 getString(R.string.text_caption_title),
@@ -564,7 +564,7 @@ public class DumpEditor extends BasicActivity
                 // Add sector header (TextView).
                 TextView tv = new TextView(this);
                 tv.setTextColor(
-                        ContextCompat.getColor(this, R.color.blue));
+                        ContextCompat.getColor(this, R.color.accent));
                 tv.setText(getString(R.string.text_sector) +
                         ": " + sectorNumber);
                 mLayout.addView(tv);

@@ -111,7 +111,7 @@ public class AccessConditionDecoder extends BasicActivity {
         // Add sector header.
         TextView header = new TextView(this);
         header.setText(Common.colorString(sectorHeader,
-                ContextCompat.getColor(this, R.color.blue)),
+                ContextCompat.getColor(this, R.color.accent)),
                 BufferType.SPANNABLE);
         TableRow tr = new TableRow(this);
         tr.setLayoutParams(new LayoutParams(

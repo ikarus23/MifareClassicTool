@@ -20,7 +20,7 @@
 
 
 <resources>
-    <color name="blue">@android:color/holo_blue_light</color>
+    <color name="accent">@android:color/holo_blue_light</color>
     <color name="light_green">#66FF66</color>
     <color name="dark_green">#338800</color>
     <color name="orange">#FF6600</color>

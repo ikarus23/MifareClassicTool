@@ -20,5 +20,5 @@
 
 
 <resources>
-    <style name="AppTheme" parent="android:Theme.Holo" />
+    <color name="accent">#80CBC4</color> <!-- colorAccent of Material theme -->
 </resources>

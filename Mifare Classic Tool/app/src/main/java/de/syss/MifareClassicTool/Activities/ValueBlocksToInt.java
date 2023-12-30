@@ -99,7 +99,7 @@ public class ValueBlocksToInt extends BasicActivity {
     private void addPosInfoRow(String value) {
         TextView header = new TextView(this);
         header.setText(Common.colorString(value,
-                ContextCompat.getColor(this, R.color.blue)),
+                ContextCompat.getColor(this, R.color.accent)),
                 BufferType.SPANNABLE);
         TableRow tr = new TableRow(this);
         tr.setLayoutParams(new LayoutParams(
