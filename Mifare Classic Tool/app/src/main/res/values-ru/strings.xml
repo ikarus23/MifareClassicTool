@@ -452,7 +452,7 @@ MIFARE DESFire EV1, NXP"</string>
     <string name="text_choose_dump_file">Выберите файл дампа</string>
     <string name="text_choose_dump_to_write">Выберите дамп для записи:</string>
     <string name="text_choose_key_file">Выберите ключ (и):</string>
-    <string name="text_choose_key_files">Выберите какой-нибудь ключевой файл(ы):</string>
+    <string name="text_choose_key_files">Выберите необходимые файлы ключей:</string>
     <string name="text_chooser_info_text">Выберите файл:</string>
     <string name="text_clone_error">Ошибка: Вы уверены, что у вас есть magic tag (2-го поколения)?</string>
     <string name="text_clone_successfully">UID успешно клонирован.</string>
