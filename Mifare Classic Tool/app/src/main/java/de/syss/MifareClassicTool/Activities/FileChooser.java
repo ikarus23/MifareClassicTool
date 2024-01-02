@@ -31,10 +31,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatRadioButton;
 
 import java.io.File;
 import java.util.Arrays;
@@ -241,7 +242,7 @@ public class FileChooser extends BasicActivity {
      * @see #EXTRA_CHOSEN_FILENAME
      */
     public void onFileChosen(View view) {
-        RadioButton selected = findViewById(
+        AppCompatRadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
         Intent intent = new Intent();
         File file = new File(mDir.getPath(), selected.getText().toString());
@@ -274,14 +275,14 @@ public class FileChooser extends BasicActivity {
             Arrays.sort(files);
             for (File f : files) {
                 if (f.isFile()) { // Do not list directories.
-                    RadioButton r = new RadioButton(this);
+                    AppCompatRadioButton r = new AppCompatRadioButton(this);
                     r.setText(f.getName());
                     mGroupOfFiles.addView(r);
                 }
             }
             if (mGroupOfFiles.getChildCount() > 0) {
                 isEmpty = false;
-                ((RadioButton) mGroupOfFiles.getChildAt(0)).setChecked(true);
+                ((AppCompatRadioButton) mGroupOfFiles.getChildAt(0)).setChecked(true);
             }
         } else {
             // No files in directory.
@@ -390,7 +391,7 @@ public class FileChooser extends BasicActivity {
      * @see #updateFileIndex(File)
      */
     private void onDeleteFile() {
-        RadioButton selected = findViewById(
+        AppCompatRadioButton selected = findViewById(
                 mGroupOfFiles.getCheckedRadioButtonId());
         File file = new File(mDir.getPath(), selected.getText().toString());
         file.delete();

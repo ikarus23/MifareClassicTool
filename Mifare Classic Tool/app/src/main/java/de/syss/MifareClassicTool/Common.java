@@ -1905,9 +1905,9 @@ public class Common extends Application {
     }
 
     /**
-     * TODO
-     * @param context
-     * @return
+     * Get the current themes accent color.
+     * @param context Context with a theme.
+     * @return The accent color of the theme.
      */
     public static int getThemeAccentColor (final Context context) {
         final TypedValue value = new TypedValue ();

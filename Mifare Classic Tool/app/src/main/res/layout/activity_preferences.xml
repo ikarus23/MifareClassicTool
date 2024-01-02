@@ -275,6 +275,28 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/relativeLayoutPreferencesTheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@xml/layout_border"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textViewPreferencesTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_choose_theme" />
+
+                <Spinner
+                    android:id="@+id/spinnerPreferencesTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

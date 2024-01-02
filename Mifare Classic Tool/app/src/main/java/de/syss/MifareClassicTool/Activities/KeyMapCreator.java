@@ -37,13 +37,13 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatEditText;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -565,7 +565,7 @@ public class KeyMapCreator extends BasicActivity {
 
         InputFilter[] f = new InputFilter[1];
         f[0] = new InputFilter.LengthFilter(2);
-        final EditText from = new EditText(this);
+        final AppCompatEditText from = new AppCompatEditText(this);
         from.setEllipsize(TruncateAt.END);
         from.setMaxLines(1);
         from.setSingleLine();
@@ -573,7 +573,7 @@ public class KeyMapCreator extends BasicActivity {
         from.setMinimumWidth(60);
         from.setFilters(f);
         from.setGravity(Gravity.CENTER_HORIZONTAL);
-        final EditText to = new EditText(this);
+        final AppCompatEditText to = new AppCompatEditText(this);
         to.setEllipsize(TruncateAt.END);
         to.setMaxLines(1);
         to.setSingleLine();

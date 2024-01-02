@@ -48,6 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.pm.PackageInfoCompat;
 import androidx.core.text.HtmlCompat;
 
@@ -107,6 +108,7 @@ public class MainMenu extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
@@ -329,6 +331,31 @@ public class MainMenu extends AppCompatActivity {
         Common.setUseAsEditorOnly(useAsEditorOnly);
         mReadTag.setEnabled(!useAsEditorOnly);
         mWriteTag.setEnabled(!useAsEditorOnly);
+    }
+
+    /**
+     * Set the theme according to preferences or system settings.
+     * Default to "dark" theme before Android 10.
+     * Defualt to "follow system" theme for Android 10+.
+     */
+    private void setTheme() {
+        SharedPreferences pref = Common.getPreferences();
+        int themeID;
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            // Default to dark before Android 10.
+            themeID = pref.getInt(Preferences.Preference.CustomAppTheme.toString(), 0);
+        } else {
+            // Follow system theme for Android 10+.
+            themeID = pref.getInt(Preferences.Preference.CustomAppTheme.toString(), 2);
+        }
+        switch (themeID) {
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
     }
 
     /**

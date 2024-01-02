@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 
@@ -159,8 +160,7 @@ public class DumpEditor extends BasicActivity
         TextView captionTitle = findViewById(
                 R.id.textViewDumpEditorCaptionTitle);
         SpannableString updateText = Common.colorString(
-                getString(R.string.text_update_colors),
-                ContextCompat.getColor(this, R.color.accent));
+                getString(R.string.text_update_colors), Common.getThemeAccentColor(this));
         updateText.setSpan(new UnderlineSpan(), 0, updateText.length(), 0);
         captionTitle.setText(TextUtils.concat(
                 getString(R.string.text_caption_title),
@@ -493,7 +493,7 @@ public class DumpEditor extends BasicActivity
         ArrayList<String> checkedLines = new ArrayList<>();
         for(int i = 0; i < mLayout.getChildCount(); i++) {
             View child = mLayout.getChildAt(i);
-            if (child instanceof EditText) {
+            if (child instanceof AppCompatEditText) {
                 String[] lines = ((EditText)child).getText().toString()
                         .split(System.getProperty("line.separator"));
                 if (lines.length != 4 && lines.length != 16) {
@@ -553,7 +553,7 @@ public class DumpEditor extends BasicActivity
         boolean tmpDumpChanged = mDumpChanged;
         mLayout.removeAllViews();
         boolean isFirstBlock = false;
-        EditText et = null;
+        AppCompatEditText et = null;
         ArrayList<SpannableString> blocks =
                 new ArrayList<>(4);
         for (int i = 0; i < lines.length; i++) {
@@ -563,8 +563,7 @@ public class DumpEditor extends BasicActivity
                 String sectorNumber = lines[i].split(": ")[1];
                 // Add sector header (TextView).
                 TextView tv = new TextView(this);
-                tv.setTextColor(
-                        ContextCompat.getColor(this, R.color.accent));
+                tv.setTextColor(Common.getThemeAccentColor(this));
                 tv.setText(getString(R.string.text_sector) +
                         ": " + sectorNumber);
                 mLayout.addView(tv);
@@ -572,7 +571,7 @@ public class DumpEditor extends BasicActivity
                 // next line is not an error line ("*").
                 if (i+1 != lines.length && !lines[i+1].startsWith("*")) {
                     // Add sector data (EditText).
-                    et = new EditText(this);
+                    et = new AppCompatEditText(this);
                     et.setLayoutParams(new LayoutParams(
                             LayoutParams.WRAP_CONTENT,
                             LayoutParams.WRAP_CONTENT));

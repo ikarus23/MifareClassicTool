@@ -135,8 +135,7 @@ public class TagInfoTool extends BasicActivity {
             // Create views and add them to the layout.
             TextView headerGenericInfo = new TextView(this);
             headerGenericInfo.setText(Common.colorString(
-                    getString(R.string.text_generic_info),
-                    ContextCompat.getColor(this, R.color.accent)));
+                    getString(R.string.text_generic_info), Common.getThemeAccentColor(this)));
             TextViewCompat.setTextAppearance(headerGenericInfo,
                     android.R.style.TextAppearance_Large);
             headerGenericInfo.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -192,7 +191,7 @@ public class TagInfoTool extends BasicActivity {
                 tagType = getString(tagTypeResourceID);
             }
 
-            int hc = ContextCompat.getColor(this, R.color.accent);
+            int hc = Common.getThemeAccentColor(this);
             genericInfo.setText(TextUtils.concat(
                     Common.colorString(getString(R.string.text_uid) + ":", hc),
                     "\n", uid, "\n",
@@ -228,8 +227,7 @@ public class TagInfoTool extends BasicActivity {
                 // Create views and add them to the layout.
                 TextView headerMifareInfo = new TextView(this);
                 headerMifareInfo.setText(Common.colorString(
-                        getString(R.string.text_mf_info),
-                        ContextCompat.getColor(this, R.color.accent)));
+                        getString(R.string.text_mf_info), Common.getThemeAccentColor(this)));
                 TextViewCompat.setTextAppearance(headerMifareInfo,
                         android.R.style.TextAppearance_Large);
                 headerMifareInfo.setGravity(Gravity.CENTER_HORIZONTAL);

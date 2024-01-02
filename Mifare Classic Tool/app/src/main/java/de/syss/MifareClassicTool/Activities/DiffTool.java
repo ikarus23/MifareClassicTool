@@ -188,7 +188,7 @@ public class DiffTool extends BasicActivity {
                 TextViewCompat.setTextAppearance(header,
                         android.R.style.TextAppearance_Medium);
                 header.setPadding(0, Common.dpToPx(20), 0, 0);
-                header.setTextColor(Color.WHITE);
+                header.setTextColor(Common.getThemeAccentColor(this));
                 header.setText(getString(R.string.text_sector) + ": " + sector);
                 mDiffContent.addView(header);
 

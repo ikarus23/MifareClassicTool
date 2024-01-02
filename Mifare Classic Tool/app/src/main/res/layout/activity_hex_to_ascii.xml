@@ -32,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white"
         android:typeface="monospace" />
 
 </ScrollView>

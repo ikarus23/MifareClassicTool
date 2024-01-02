@@ -204,6 +204,7 @@
     <string name="text_enter_file_name">Enter a file name</string>
     <string name="text_difference_between_dumps">Difference between dumps</string>
     <string name="text_choose_language">Choose custom app language</string>
+    <string name="text_choose_theme">Choose custom theme</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -313,6 +314,11 @@
     <string name="action_cyber_chef">Cyber Chef</string>
     <string name="action_open_clone_uid_tool">Open the Clone UID Tool</string>
     <string name="action_hide_identical_sectors">Hide identical sectors</string>
+    <string-array name="action_themes">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Follow System (Android 10+)</item>
+    </string-array>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

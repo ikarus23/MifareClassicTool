@@ -23,9 +23,9 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -38,6 +38,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
@@ -45,7 +48,7 @@ import de.syss.MifareClassicTool.R;
  * This view will let the user edit global preferences.
  * @author Gerhard Klostermeier
  */
-public class Preferences extends BasicActivity implements AdapterView.OnItemSelectedListener {
+public class Preferences extends BasicActivity {
 
     /**
      * Enumeration with all preferences. This enumeration implements
@@ -61,7 +64,8 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
         CustomSectorCount("custom_sector_count"),
         UseRetryAuthentication("use_retry_authentication"),
         RetryAuthenticationCount("retry_authentication_count"),
-        CustomAppLanguage("custom_app_language");
+        CustomAppLanguage("custom_app_language"),
+        CustomAppTheme("custom_app_theme");
         // Add more preferences here (comma separated).
 
         private final String text;
@@ -87,6 +91,7 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
     private EditText mRetryAuthenticationCount;
     private RadioGroup mUIDFormatRadioGroup;
     private Spinner mLangauge;
+    private Spinner mTheme;
 
     private PackageManager mPackageManager;
     private ComponentName mComponentName;
@@ -122,6 +127,7 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
         mRetryAuthenticationCount = findViewById(
                 R.id.editTextPreferencesRetryAuthenticationCount);
         mLangauge = findViewById(R.id.spinnerPreferencesLanguage);
+        mTheme = findViewById(R.id.spinnerPreferencesTheme);
 
         // Assign the last stored values.
         SharedPreferences pref = Common.getPreferences();
@@ -145,6 +151,7 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
                 Preference.RetryAuthenticationCount.toString(), 1));
         detectAutostartIfCardDetectedState();
         getLanguageAndUpdateChooser();
+        getThemeAndUpdateChooser();
 
         // UID Format Options (hide/show)
         mUIDFormatRadioGroup = findViewById(
@@ -164,7 +171,28 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
         SharedPreferences pref = Common.getPreferences();
         int langID = pref.getInt(Preference.CustomAppLanguage.toString(), 0);
         mLangauge.setSelection(langID);
-        mLangauge.setOnItemSelectedListener(this);
+    }
+
+    /**
+     * Get the used theme from MCTs own settings and set it in the custom app theme chooser UI.
+     * Defaults to "dark" theme for Android < 10 if not set.
+     * Defualts to "follow system theme" for Android >= 10 if not set.
+     */
+    private void getThemeAndUpdateChooser() {
+        CharSequence themeArray[] = getResources().getStringArray(R.array.action_themes);
+        ArrayList<CharSequence> themeArrayList = new ArrayList<>(Arrays.asList(themeArray));
+        SharedPreferences pref = Common.getPreferences();
+        int themeID;
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            themeArrayList.remove(2);
+            themeID = pref.getInt(Preference.CustomAppTheme.toString(), 0);
+        } else {
+            themeID = pref.getInt(Preference.CustomAppTheme.toString(), 2);
+        }
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
+            android.R.layout.simple_spinner_dropdown_item, themeArrayList);
+        mTheme.setAdapter(adapter);
+        mTheme.setSelection(themeID);
     }
 
     /**
@@ -186,29 +214,6 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
             default:
                 break;
         }
-    }
-
-    /**
-     * Change the app language to the selected language.
-     * @param parent The AdapterView where the selection happened
-     * @param view The view within the AdapterView that was clicked
-     * @param pos The position of the view in the adapter
-     * @param id The row id of the item that is selected
-     */
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        String lang =  (String)parent.getItemAtPosition(pos);
-        String langCode = lang.substring(lang.indexOf("(")+1, lang.indexOf(")"));
-        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(langCode);
-        AppCompatDelegate.setApplicationLocales(appLocale);
-    }
-
-    /**
-     * Dummy. This implementation is required by OnItemSelectedListener.
-     * @param parent The AdapterView that now contains no selected item.
-     */
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Do nothing (this implementation is required by OnItemSelectedListener).
     }
 
     /**
@@ -397,8 +402,11 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
                 retryAuthenticationCount);
         edit.putInt(Preference.CustomAppLanguage.toString(),
                 (int)mLangauge.getSelectedItemId());
+        edit.putInt(Preference.CustomAppTheme.toString(),
+                (int)mTheme.getSelectedItemId());
         edit.apply();
 
+        // Update card detection on autostart.
         int newState;
         if (mPrefAutostartIfCardDetected.isChecked()) {
             newState = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
@@ -409,6 +417,29 @@ public class Preferences extends BasicActivity implements AdapterView.OnItemSele
                 mComponentName,
                 newState,
                 PackageManager.DONT_KILL_APP);
+
+        // Update language.
+        String lang = (String) mLangauge.getSelectedItem();
+        String langCode = lang.substring(lang.indexOf("(") + 1, lang.indexOf(")"));
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(langCode);
+        AppCompatDelegate.setApplicationLocales(appLocale);
+
+        // Update theme.
+        int theme = (int)mTheme.getSelectedItemId();
+        switch (theme) {
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case 2:
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
 
         // Exit the preferences view.
         finish();
