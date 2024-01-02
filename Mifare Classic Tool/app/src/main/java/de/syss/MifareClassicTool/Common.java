@@ -45,6 +45,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -1901,6 +1902,17 @@ public class Common extends Application {
         ret.setSpan(new ForegroundColorSpan(color),
                 0, data.length(), 0);
         return ret;
+    }
+
+    /**
+     * TODO
+     * @param context
+     * @return
+     */
+    public static int getThemeAccentColor (final Context context) {
+        final TypedValue value = new TypedValue ();
+        context.getTheme ().resolveAttribute (androidx.appcompat.R.attr.colorAccent, value, true);
+        return value.data;
     }
 
     /**

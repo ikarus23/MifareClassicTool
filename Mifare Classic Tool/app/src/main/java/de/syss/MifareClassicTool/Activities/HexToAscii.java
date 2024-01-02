@@ -57,8 +57,7 @@ public class HexToAscii extends BasicActivity {
                         String sectorNumber = line.split(": ")[1];
                         ascii = TextUtils.concat(ascii, Common.colorString(
                                 getString(R.string.text_sector)
-                                + ": " + sectorNumber,
-                                ContextCompat.getColor(this, R.color.accent)), s);
+                                + ": " + sectorNumber, Common.getThemeAccentColor(this)), s);
                     } else {
                         // Data.
                         String converted = Common.hex2Ascii(line);

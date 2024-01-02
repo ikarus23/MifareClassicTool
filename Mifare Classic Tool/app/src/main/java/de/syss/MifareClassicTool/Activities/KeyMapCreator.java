@@ -37,12 +37,13 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -277,7 +278,8 @@ public class KeyMapCreator extends BasicActivity {
         if (keyFiles != null) {
             Arrays.sort(keyFiles);
             for (File f : keyFiles) {
-                CheckBox c = new CheckBox(this);
+                AppCompatCheckBox c = new AppCompatCheckBox(this);
+                //c.setTextAppearance(this, R.style.AppTheme);
                 c.setText(f.getName());
                 if (selectLastUsedKeyFiles && selectedFiles != null
                         && selectedFiles.contains(f.getName())) {
@@ -313,7 +315,7 @@ public class KeyMapCreator extends BasicActivity {
      */
     private void selectKeyFiles(boolean allOrNone) {
         for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
-            CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt(i);
+            AppCompatCheckBox c = (AppCompatCheckBox) mKeyFilesGroup.getChildAt(i);
             c.setChecked(allOrNone);
         }
     }
@@ -355,7 +357,7 @@ public class KeyMapCreator extends BasicActivity {
         // Check for checked check boxes.
         ArrayList<String> fileNames = new ArrayList<>();
         for (int i = 0; i < mKeyFilesGroup.getChildCount(); i++) {
-            CheckBox c = (CheckBox) mKeyFilesGroup.getChildAt(i);
+            AppCompatCheckBox c = (AppCompatCheckBox) mKeyFilesGroup.getChildAt(i);
             if (c.isChecked()) {
                 fileNames.add(c.getText().toString());
             }
@@ -553,7 +555,7 @@ public class KeyMapCreator extends BasicActivity {
         tvTo.setText(" " + getString(R.string.text_to) + ": ");
         tvTo.setTextSize(18);
 
-        final CheckBox saveAsDefault = new CheckBox(this);
+        final AppCompatCheckBox saveAsDefault = new AppCompatCheckBox(this);
         saveAsDefault.setLayoutParams(new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         saveAsDefault.setText(R.string.action_save_as_default);

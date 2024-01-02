@@ -49,7 +49,7 @@
                 android:tag="write_block"
                 android:text="@string/action_wirte_block"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/accent" />
+                android:textColor="?attr/colorAccent" />
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutWriteTagWriteBlock"
@@ -183,7 +183,7 @@
                 android:tag="write_dump"
                 android:text="@string/action_write_dump_clone"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/accent" />
+                android:textColor="?attr/colorAccent" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutWriteTagDump"
@@ -318,7 +318,7 @@
                 android:tag="clone_uid"
                 android:text="@string/action_show_clone_uid"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/accent" />
+                android:textColor="?attr/colorAccent" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutWriteTagCloneUid"
@@ -355,7 +355,7 @@
                 android:tag="factory_format"
                 android:text="@string/action_factory_format"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/accent" />
+                android:textColor="?attr/colorAccent" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutWriteTagFactoryFormat"
@@ -400,7 +400,7 @@
                 android:tag="write_value_block"
                 android:text="@string/text_incr_decr_value_block"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/accent" />
+                android:textColor="?attr/colorAccent" />
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutWriteTagValueBlock"

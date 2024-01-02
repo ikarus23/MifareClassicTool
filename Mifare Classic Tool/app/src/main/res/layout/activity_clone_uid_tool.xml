@@ -285,7 +285,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="@string/text_status_log"
-            android:textColor="@color/accent"
+            android:textColor="?attr/colorAccent"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
