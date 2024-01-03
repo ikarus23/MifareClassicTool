@@ -720,9 +720,8 @@ public class Common extends Application {
 
     /**
      * For Activities which want to treat new Intents as Intents with a new
-     * Tag attached. If the given Intent has a Tag extra, it will be patched
-     * by {@link MCReader#patchTag(Tag)} and {@link #mTag} as well as
-     * {@link #mUID} will be updated. The UID will be loged using
+     * Tag attached. If the given Intent has a Tag extra, {@link #mTag}
+     * as well as {@link #mUID} will be updated. The UID will be loged using
      * {@link #logUid(String)}. A Toast message will be shown in the
      * Context of the calling Activity. This method will also check if the
      * device/tag supports MIFARE Classic (see return values and

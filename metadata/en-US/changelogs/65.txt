@@ -1,0 +1,9 @@
+ * Choosing the language is now possible.
+ * Choosing the theme (light/dark) is now possible
+   (the light theme is not very good yet).
+ * Bugfix: Export dumps in .mct format without corrupting
+   (Thanks to "twisteroid ambassador").
+ * Bugfix: Writing a block with a readable key B.
+ * Fixed several crashes.
+ * Updated for Android 14.
+ * Some minor code cleanup.

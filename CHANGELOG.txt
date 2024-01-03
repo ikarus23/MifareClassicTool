@@ -1,17 +1,26 @@
 Changelog of MifareClassicTool (MCT):
 
-In development:
+Version 4.2.0:
+ * Choosing the language is now possible.
+ * Choosing the theme (light/dark) is now possible
+   (the light theme is not very good yet).
+ * Bugfix: Export dumps in .mct format without corrupting
+   (Thanks to "twisteroid ambassador").
+ * Bugfix: Writing a block with a readable key B.
+ * Fixed several crashes.
+ * Updated for Android 14.
+ * Some minor code cleanup.
 
 Version 4.1.0:
  * Added "Hide Identical Sectors" option and show
    tag data difference in percent for the Diff Tool
-   (Thanks to Deun Lee)
+   (Thanks to Deun Lee).
  * Added French translation
-   (Thanks to Nicolas "iomega11" André)
+   (Thanks to Nicolas "iomega11" André).
  * Improved Italian translation
    (Thanks to Nicolas "iomega11" André and
-   Erik "ErikPelli" Pellizzon)
- * Updated for Android 13
+   Erik "ErikPelli" Pellizzon).
+ * Updated for Android 13.
 
 Version 4.0.5:
  * Added more well known keys to the extended key file.
