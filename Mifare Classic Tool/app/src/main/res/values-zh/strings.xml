@@ -191,6 +191,9 @@
     <string name="text_missing_files_update">从4.0.0之前的版本更新后丢失了文件？请参考 \"帮助信息\" 中的 \"1.2 Data Storage\"。</string>
     <string name="text_more_converter">更多转换器 (联网)</string>
     <string name="text_enter_file_name">输入文件名</string>
+    <string name="text_difference_between_dumps">转储间差异</string>
+    <string name="text_choose_language">选择应用语言</string>
+    <string name="text_choose_theme">选择主题</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">读标签</string>
@@ -288,6 +291,12 @@
     <string name="action_multi_purpose_converter">多用途转换器</string>
     <string name="action_cyber_chef">Cyber Chef</string>
     <string name="action_open_clone_uid_tool">打开UID克隆工具</string>
+    <string name="action_hide_identical_sectors">隐藏相同的扇区</string>
+    <string-array name="action_themes">
+        <item>暗色</item>
+        <item>亮色</item>
+        <item>跟随系统 (Android 10+)</item>
+    </string-array>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">发现新标签</string>
@@ -461,4 +470,13 @@
     <string name="hint_custom_sector_count">如1K:16</string>
     <string name="hint_custom_retry_authentication_count">重试次数</string>
     <string name="hint_key">HEX,每行6字节</string>
+
+    <!-- Supported locales. No need for translation! -->
+    <string-array name="supported_locales" translatable="false">
+        <item>English (en)</item>
+        <item>Français (fr)</item>
+        <item>Italiano (it)</item>
+        <item>简体中文 (zh)</item>
+    </string-array>
+
 </resources>
