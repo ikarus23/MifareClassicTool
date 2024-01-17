@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2013 Gerhard Klostermeier
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+
+
+<resources>
+
+    <!-- Common stuff -->
+    <string name="app_name">MIFARE Classic Tool</string>
+    <string name="app_version">Versão</string>
+
+    <!-- Activity titles -->
+    <string name="title_activity_main">MIFARE Classic Tool</string>
+    <string name="title_activity_read_tag">Ler etiqueta</string>
+    <string name="title_activity_dump_editor">Editor de dumps</string>
+    <string name="title_activity_access_conditions">Condições de acesso</string>
+    <string name="title_activity_write_tag">Gravar etiqueta</string>
+    <string name="title_activity_create_key_map">Mapear chaves a sectores</string>
+    <string name="title_activity_file_chooser">Escolher arquivos</string>
+    <string name="title_activity_value_blocks">Valor do bloco como inteiro</string>
+    <string name="title_activity_key_editor">Editor de chaves</string>
+    <string name="title_activity_help">Ajuda e informação</string>
+    <string name="title_activity_hex_to_ascii">Dados em ASCII</string>
+    <string name="title_activity_tag_info">Informação da etiqueta</string>
+    <string name="title_activity_value_block_tool">Descodificador e codificador de valores de bloco</string>
+    <string name="title_activity_access_condition_tool">Descodificador e codificador de condição de acesso</string>
+    <string name="title_activity_preferences">Preferências</string>
+    <string name="title_activity_diff_tool">Ferramenta Diff</string>
+    <string name="title_activity_bcc_tool">Calculadora de BCC</string>
+    <string name="title_activity_clone_uid">Clonar UID na Magic Tag (2 gen)</string>
+    <string name="title_activity_import_export_tool">Importar/Exportar</string>
+    <string name="title_activity_uid_log_tool">Log do UID</string>
+    <string name="title_activity_data_conversion_tool">Ferramenta de Conversão de Dados</string>
+
+    <!-- Texts (labels etc.) -->
+    <string name="text_choose_key_file">Escolhe um ficheiro de chaves:</string>
+    <string name="text_choose_key_files">Escolhe ficheiro(s) de chaves:</string>
+    <string name="text_wait_read_tag">Lendo etiqueta&#8230;\n(Não removas
+        a etiqueta)</string>
+    <string name="text_key_map_progress">Progresso do mapeamento de chaves:</string>
+    <string name="text_sector">Sector</string>
+    <string name="text_block">Bloco</string>
+    <string name="text_caption_title">Título</string>
+    <string name="text_keya">ChaveA</string>
+    <string name="text_keyb">ChaveB</string>
+    <string name="text_ac">ACs</string>
+    <string name="text_uid">UID</string>
+    <string name="text_uid_and_manuf">Info de UID e fabricante</string>
+    <string name="text_valueblock">Bloco de Valor</string>
+    <string name="text_chooser_info_text">Escolhe um ficheiro:</string>
+    <string name="text_open_dump_title">Abrir dump de etiqueta</string>
+    <string name="text_no_files_in_chooser">Não se encontram ficheiros</string>
+    <string name="text_ac_read">Ler:</string>
+    <string name="text_ac_write">Gravar:</string>
+    <string name="text_ac_incr">Incr.:</string>
+    <string name="text_ac_decr">Decr./Trans./Rest.:</string>
+    <string name="text_ac_pos">Localização:</string>
+    <string name="text_ac_error">Erro: Esta configuração é desconhecida</string>
+    <string name="text_vb_location">Localização:</string>
+    <string name="text_vb_value">Valor:</string>
+    <string name="text_vb_orig">Original:</string>
+    <string name="text_vb_as_int_decoded">Como inteiro:</string>
+    <string name="text_sector_range">Criar mapa para sectores:</string>
+    <string name="text_sector_range_all">Todos</string>
+    <string name="text_update_colors">Actualizar cores</string>
+    <string name="text_data">Dados:</string>
+    <string name="text_value">Valor</string>
+    <string name="text_write_dump_info">Gravar um dump (ou alguns sectores
+        dele) numa etiqueta. Os blocos que contenham informação
+        desconhecida (---) serão ignorados!</string>
+    <string name="text_factory_format_info">Tentar formatar a etiqueta para o
+        estado original</string>
+    <string name="text_incr_decr_value_block_info">Incrementar ou diminuir</string>
+    <string name="text_starting_at_0">(Iniciando em 0)</string>
+    <string name="text_open_key_file_title">Abrir ou criar ficheiro de chaves</string>
+    <string name="text_choose_dump_to_write">Escolhe o dump que será escrito:</string>
+    <string name="text_from">Desde</string>
+    <string name="text_to">Até</string>
+    <string name="text_key_a">Chave A</string>
+    <string name="text_key_b">Chave B</string>
+    <string name="text_key_ab">Chave A|B</string>
+    <string name="text_never">Nunca</string>
+    <string name="text_keys_not_known">Chaves (A e B) desconhecidas</string>
+    <string name="text_block_read_only">Bloco só de leitura</string>
+    <string name="text_write_key_a_not_known">Chave com acesso de escrita (A)
+        desconhecida</string>
+    <string name="text_write_key_b_not_known">Chave com acesso de escrita (B)
+        desconhecida</string>
+    <string name="text_ac_read_only">Condições de acesso de leitura apenas</string>
+    <string name="text_keys_read_only">As chaves (A e B) são apenas de leitura</string>
+    <string name="text_invalid_ac_or_sector_dead">Condições de acesso inválidas ou
+        sector morto:(</string>
+    <string name="text_strange_error">Ocorreu um erro estranho :(</string>
+    <string name="text_no_mfc_support_device">Este dispositivo não suporta
+        MIFARE Classic!</string>
+    <string name="text_no_mfc_support_tag">Não é uma etiqueta MIFARE Classic!</string>
+    <string name="text_no_tag">Não há uma etiqueta MIFARE Classic presente</string>
+    <string name="text_generic_info">Informação genérica</string>
+    <string name="text_mf_info">Info de MIFARE Classic</string>
+    <string name="text_rf_tech">Tecnologia RF</string>
+    <string name="text_rf_tech_14a">ISO/IEC 14443, Tipo A</string>
+    <string name="text_atqa">ATQA</string>
+    <string name="text_sak">SAK</string>
+    <string name="text_ats">ATS</string>
+    <string name="text_tag_type_and_manuf">Fabricante e tipo de etiqueta</string>
+    <string name="text_tag_type_guess">O \"Fabricante e tipo de etiqueta\" pode
+        estar errado.\nReveja  \"Ajuda e info\" para mais informação.</string>
+    <string name="text_mem_size">Tamanho da memória</string>
+    <string name="text_block_size">Tamanho do bloco</string>
+    <string name="text_sector_count">Número de sectores</string>
+    <string name="text_block_count">Número de blocos</string>
+    <string name="text_vb">VB:</string>
+    <string name="text_vb_as_int">VB como inteiro:</string>
+    <string name="text_addr">Directório:</string>
+    <string name="text_copy">Copiar</string>
+    <string name="text_paste">Colar</string>
+    <string name="text_option_info">Info de opções</string>
+    <string name="text_static_ac_default">08778F</string>
+    <string name="text_no_key_io_error">Não se encontraram chaves
+        (ou sector morto)</string>
+    <string name="text_ac_label">ACs:</string>
+    <string name="text_block_0">Bloco 0 (0-4):</string>
+    <string name="text_block_1">Bloco 1 (5-9):</string>
+    <string name="text_block_2">Bloco 2 (10-14):</string>
+    <string name="text_block_3">Bloco 3 (15) - Sector final:</string>
+    <string name="text_step_1_sector_trailer">Passo 1:
+       Selecciona ACs para o sector final</string>
+    <string name="text_step_2_data_blocks">Passo 2:
+       Selecciona ACs para blocos de dados</string>
+
+
+
+     <string name="text_dump_1">Dump 1 (A)</string>
+    <string name="text_dump_2">Dump 2 (B)</string>
+    <string name="text_a">A:</string>
+    <string name="text_b">B:</string>
+    <string name="text_dump_from_editor">Dump desde o editor</string>
+    <string name="text_incr_decr_value_block">Incr./Decr. Bloco de Valor</string>
+    <string name="text_increment">Incremento</string>
+    <string name="text_decrement">Decremento</string>
+    <!-- Has to be 32 chars long. The text should be centered. -->
+    <string name="text_identical_data">------------Idêntico------------</string>
+    <!-- Has to be 16 chars long. The text should be centered. -->
+    <string name="text_invalid_data">--D. Inválidos--</string>
+    <string name="text_only_in_dump1">Sector só aparece no dump 1 (A)</string>
+    <string name="text_only_in_dump2">Sector só aparece no dump 2 (B)</string>
+    <string name="text_uid_part">UID (parte)</string>
+    <string name="text_bcc">BCC</string>
+    <string name="text_clone_uid_info">Esta ferramenta pode clonar o UID de uma etiqueta para uma
+        \"magic tag\" (2nd gen, compatível com Android, escrita directa,
+        block 0 gravável). Pressiona o botão Info para obter mais informação.</string>
+    <string name="text_uid_to_clone">UID para clonar</string>
+    <string name="text_clone_uid_manufacturer_block_rest">O resto do bloco 0</string>
+    <string name="text_write_key">A chave para gravar o bloco 0</string>
+    <string name="text_status_log">Log de estado</string>
+    <string name="text_use_uid_of_scanned_tag">Utiliza o UID de etiquetas lidas</string>
+    <string name="text_block_0_generated">Bloco 0 gerado</string>
+    <string name="text_data_to_write">Dados a gravar:</string>
+    <string name="text_waiting_for_magic_tag">A aguardar uma Magic Tag (2nd gen)</string>
+    <string name="text_writing_block_0">A gravar bloco 0</string>
+    <string name="text_no_errors_on_write">Sem erros durante o processo de escrita</string>
+    <string name="text_rescan_tag_to_check">Reler clone para validar</string>
+    <string name="text_checking_clone">Validando clone</string>
+    <string name="text_clone_successfully">UID clonada correctamente</string>
+    <string name="text_uid_match_error">As UIDs não coincidem</string>
+    <string name="text_clone_error">Erro: Tens a certeza que é uma Magic
+        Tag (2nd gen)?</string>
+    <string name="text_uid_length_error">Erro: Tamanho do UID incorrecto (4 vs. 7 vs. 10 bytes)</string>
+    <string name="text_block0_warning">Aviso: Bloco 0 pode contar dados inválidos (BCC/SAK/ATQA/UID0)</string>
+    <string name="text_sak_atqa_calc_warning">Aviso: Não foi possível calcular o SAK/ATQA, usando o de omissão</string>
+    <string name="text_reset_clone_process">A fazer reset ao processo de clone</string>
+    <string name="text_select_file">Selecciona um ficheiro</string>
+    <string name="text_choose_dump_file">Escolhe um ficheiro dump</string>
+    <string name="text_import_export_tool_info">Se já existir um ficheiro com o mesmo nome
+        durante a importação, será sobreescrito.</string>
+    <string name="text_random_uid">UID aleatório</string>
+    <string name="text_no_uid_logs">O log do UID está vazio</string>
+    <string name="text_not_ascii">Não é ASCII</string>
+    <string name="text_convert">Converter</string>
+    <string name="text_ascii">ASCII</string>
+    <string name="text_hex">Hex</string>
+    <string name="text_bin">Bin</string>
+    <string name="text_dec_be">Dec (BE)</string>
+    <string name="text_dec_le">Dec (LE)</string>
+
+    <!-- Actions (Buttons, Checkboxs, etc. -->
+    <string name="text_invalid_ac">Condições de Acesso inválidas</string>
+    <string name="text_missing_files_update">Ficheiros em falta após a actualização anterior
+            a 4.0.0? Por favor lê \"1.2 Armazenamento de dados\" of \"Ajuda e Info\".</string>
+    <string name="text_more_converter">Mais conversores (online)</string>
+    <string name="text_enter_file_name">Nome do ficheiro</string>
+    <string name="text_difference_between_dumps">Diferença entre dumps</string>
+    <string name="text_choose_language">Escolher linguagem</string>
+    <string name="text_choose_theme">Escolher tema</string>
+    <string name="action_read_tag">Ler etiqueta</string>
+    <string name="action_write_tag">Gravar etiqueta</string>
+    <string name="action_edit_tag_dump">Editar/analizar dump</string>
+    <string name="action_edit_key_dump">Editar/analizar ficheiro de chaves</string>
+    <string name="action_tools">Ferramentas</string>
+    <string name="action_exit_app">Sair da aplicação</string>
+    <string name="action_nfc">Ir a ajustes de NFC</string>
+    <string name="action_create_key_map">Mapear chaves a sectores</string>
+    <string name="action_create_key_map_and_read">Iniciar mapeamento e
+        ler etiqueta</string>
+    <string name="action_help">Ajuda e info</string>
+    <string name="action_editor_only">Usar só como editor</string>
+    <string name="action_ok">Aceitar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_choose_file">Escolher ficheiro seleccionado</string>
+    <string name="action_open_dump_file">Abrir dump</string>
+    <string name="action_change">Alterar</string>
+    <string name="action_read_all_sectors">Ler todos os sectores</string>
+    <string name="action_write_block">Gravar bloco</string>
+    <string name="action_create_key_map_and_write_block">Iniciar mapeamento e
+        gravar bloco</string>
+    <string name="action_create_key_map_and_write_dump">Iniciar mapeamento e
+        gravar dump</string>
+    <string name="action_create_key_map_and_factory_format">Iniciar mapeamento e
+        formatar etiqueta</string>
+    <string name="action_create_key_map_and_write_value_block">Iniciar mapeamento e
+        gravar Bloco de Valor</string>
+    <string name="action_write_full_dump">Seleccionar dump</string>
+    <string name="action_i_know_what_i_am_doing">Sei o que estou a fazer</string>
+    <string name="action_open_key_file">Abrir ficheiro de chaves</string>
+    <string name="action_select_all">Seleccionar todos</string>
+    <string name="action_select_none">Remover selecção</string>
+    <string name="action_cancel_all">Cancelar escrita</string>
+    <string name="action_skip_blocks">Gravar o que for possível</string>
+    <string name="action_more">Ler mais&#8230;</string>
+    <string name="action_decode">Decodificar</string>
+    <string name="action_encode">Codificar</string>
+    <string name="action_wirte_block">Gravar bloco</string>
+    <string name="action_write_dump_clone">Gravar Dump (Clone)</string>
+    <string name="action_write_dump">Gravar dump (clonar)</string>
+    <string name="action_factory_format">Formato de fábrica</string>
+    <string name="action_write_value_block">Gravar Block de Valor</string>
+    <string name="action_write_mfid">Avançado: Habilitar escrita do bloco
+        de fábrica</string>
+    <string name="action_show_options">Mostrar opções</string>
+    <string name="action_static_ac">Usar estas condições de acesso para
+        todos os sectores:</string>
+    <string name="action_retry_authentication">Tentar autenticar de novo se falhar</string>
+    <string name="action_auto_reconnect">Avançado: Auto-reconectar se
+        perder a etiqueta durante o processo de mapeamento de chaves</string>
+    <string name="action_auto_copy_uid">Auto copiar UID</string>
+    <string name="action_save_last_key_files">Relembar os ficheiros de chaves
+        seleccionados (diálogo de mapeamento de chaves)</string>
+    <string name="action_autostart_if_tag_detected">Auto-iniciar a aplicação se uma etiqueta for
+        detectada</string>
+    <string name="action_use_custom_sector_count">Usar número de sectores personalizado</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_share">Partilhar</string>
+    <string name="action_data_as_ascii">Dados como ASCII</string>
+    <string name="action_decode_ac">Descodificar condições de acesso</string>
+    <string name="action_show_value_blocks_as_int">Blocos de Valor como inteiros.</string>
+    <string name="action_show_tag_info">Mostrar informação da etiqueta</string>
+    <string name="action_show_vb_tool">De-/Codificador de Bloco de Valor</string>
+    <string name="action_show_ac_tool">De-/Codificador de condições
+        de acesso</string>
+    <string name="action_show_diff_tool">Diff (Comparar Dumps)</string>
+    <string name="action_show_bcc_tool">Calculadora BCC</string>
+    <string name="action_show_clone_uid">Clonar UID</string>
+    <string name="action_show_import_export_tool">Importar/Exportar/Converter Ficheiros</string>
+    <string name="action_show_uid_log_tool">Log de UID</string>
+    <string name="action_show_data_conversion_tool">Converter Dados</string>
+    <string name="action_compare_dump">Comparar Dump</string>
+    <string name="action_create_new_file">Criar novo ficheiro</string>
+    <string name="action_delete_file">Eliminar ficheiro</string>
+    <string name="action_remove_duplicates">Remover duplicados</string>
+    <string name="action_show_preferences">Preferências</string>
+    <string name="action_show_about">Acerca de</string>
+    <string name="action_decode_manuf_date">Decodificar data de fabrico</string>
+    <string name="action_replace">Substituir</string>
+    <string name="action_append">Combinar</string>
+    <string name="action_do_not_show_again">Não mostrar esta mensagem de novo</string>
+    <string name="action_chose_dump">Escolhe um dump&#8230;</string>
+    <string name="action_dont_save">Não guardar</string>
+    <string name="action_save_as_default">Guardar como pré-definido</string>
+    <string name="action_save_keys">Guardar chaves</string>
+    <string name="action_calc_bcc">Calcular BCC</string>
+    <string name="action_install_external_nfc">Instala \"External NFC\"</string>
+    <string name="action_start_external_nfc">Ir para \"External NFC\"</string>
+    <string name="action_external_nfc_is_running">\"External NFC\" está em execução</string>
+    <string name="action_clone_uid">Calcular o bloco 0 e clonar UID</string>
+    <string name="action_calc_sak_atqa">Calcular automaticamente o valor SAK e ATQA</string>
+    <string name="action_file_type_mct">.mct (MIFARE Classic Tool)</string>
+    <string name="action_file_type_keys">.keys/.dic/.txt (MIFARE Classic Tool, Proxmark)</string>
+    <string name="action_file_type_mdf_bin">.bin/.mfd/.dump (Proxmark, libnfc, mfoc, …)</string>
+    <string name="action_file_type_eml">.eml (Proxmark emulator)</string>
+    <string name="action_file_type_json">.json (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_file_type_bin">.bin (Proxmark, Chameleon Mini GUI)</string>
+    <string name="action_import_dump">Importar Dump</string>
+    <string name="action_export_dump">Exportar Dump</string>
+    <string name="action_import_keys">Importar Chaves</string>
+    <string name="action_export_keys">Exportar Chaves</string>
+
+    <!-- Toast messages -->
+    <string name="action_backup_all">Backup / Exportar Tudo</string>
+    <string name="action_generic_converter">Conversor Genérico</string>
+    <string name="action_multi_purpose_converter">Conversor Multi-Usos</string>
+    <string name="action_cyber_chef">Cyber Chef</string>
+    <string name="action_open_clone_uid_tool">Abrir a ferramenta de Clone UID</string>
+    <string name="action_hide_identical_sectors">Esconder sectores idênticos</string>
+    <string name="info_new_tag_found">Nova etiqueta encontrada</string>
+    <string name="info_no_tag_found">Erro: não há uma etiqueta MIFARE Classic</string>
+    <string name="info_keys_loaded_please_wait">chaves carregadas. A criar mapa de chaves&#8230;
+        Aguarde por favor&#8230;</string>
+    <string name="info_tag_removed_while_reading">Erro: Etiqueta retirada durante
+        a leitura</string>
+    <string name="info_no_vb_in_dump">Não há value blocks neste dump</string>
+    <string name="info_valid_dump_not_hex">Erro: Alguns blocos não contêm
+        dados válidos (no hex)</string>
+    <string name="info_valid_dump_not_4_or_16_lines">Erro: Alguns sectores
+        não têm 4 ou 16 blocos (linhas)</string>
+    <string name="info_valid_dump_not_16_bytes">Erro: alguns blocos não
+        têm 16 bytes (32 caracteres)</string>
+    <string name="info_valid_dump_sector_range">Erro: Sector fora do limite
+        (&#60; 0 o &#62; 39)</string>
+    <string name="info_valid_dump_double_sector">Erro: Mais de uma vez o
+        mesmo número de sector</string>
+    <string name="info_valid_dump_empty_dump">Erro: Dumpo vazio</string>
+    <string name="info_editor_init_error">Erro: Dados incorrectos para
+        este editor</string>
+    <string name="info_no_dumps">Não há dumps.
+        Lê uma etiqueta e guarda o dump</string>
+    <string name="info_invalid_range">Erro no limite de mapeamento</string>
+    <string name="info_mapping_sector_out_of_range">Erro no limite de mapeamento:
+       Sector fora de limite. Usa uma etiqueta maior.</string>
+    <string name="info_no_key_found">Não se encontrou uma chave válida no
+        o ficheiro de chaves</string>
+    <string name="info_data_location_not_set">Erro: Bloco ou sector
+        não especificado</string>
+    <string name="info_sector_out_of_range">Erro: Sector fora do limite</string>
+    <string name="info_block_out_of_range">Erro: Bloco fora do limite</string>
+    <string name="info_not_hex_data">Erro: Os dados devem estar em hexadecimal
+        (0-9 e A-F)</string>
+    <string name="info_not_bin_data">Erro: Dados têm de ser binários
+        (0/1, multiplo de 8)</string>
+	<string name="info_not_16_byte">Erro: Os dados devem ter 16 bytes
+        (32 caracteres) de comprimento</string>
+    <string name="info_is_not_vb">Erro: Não é um value block.</string>
+    <string name="info_block_not_in_sector">Erro: O sector não contém o
+        número do bloco especificado.</string>
+    <string name="info_error_writing_block">Erro: O bloco é de apenas de leitura
+        ou não gravável com as chaves do ficheiro de chaves</string>
+    <string name="info_error_writing_value_block">Erro: Não é um Bloco de Valor,
+          permissões insuficientes ou valor incorrecto</string>
+    <string name="info_write_successful">Dados escritos com sucesso</string>
+    <string name="info_none_key_valid_for_reading">Erro: Nenhuma das
+        chaves é válida para leitura</string>
+    <string name="info_not_supported_now">Esta função não está suportada
+        nesta versão (Talvez em versões futuras&#8230;)</string>
+    <string name="info_valid_keys_no_keys">Erro: Deve haver pelo menos
+        uma chave</string>
+    <string name="info_valid_keys_not_hex">Erro: Algunas chaves contêm
+        dados inválidos (no hex)</string>
+    <string name="info_valid_keys_not_6_byte"> Erro: Algunas chaves não
+        são de 6 bytes (12 caracteres)</string>
+
+    <string name="info_invalid_file_name">Erro: Nome de ficheiro inválido</string>
+    <string name="info_save_successful">Dados guardados correctamente</string>
+    <string name="info_save_error">Erro: Erro ao guardar dados</string>
+    <string name="info_file_already_exists">Erro: Arquivo já existe</string>
+    <string name="info_tag_too_small">Erro: A etiqueta é demasiado pequena
+        para o dump seleccionado</string>
+    <string name="info_write_error">Erro: Algum erro ocorreu durante a
+        escrita.\nPodia ser realmente mau.</string>
+    <string name="info_tag_lost_check_dump">Erro: Etiqueta perdida durante a validação</string>
+    <string name="info_nothing_to_write">Não existe nada a gravar</string>
+    <string name="info_no_int_to_encode">Erro: Não existe um inteiro para
+        codificar</string>
+    <string name="info_addr_not_hex_byte">Erro: A direcção não é um
+        byte hexadecimal (0-9, A-F, 2 caracteres)</string>
+    <string name="info_copied_to_clipboard">Copiado para memória</string>
+    <string name="info_invalid_int">Não é um inteiro válido</string>
+    <string name="info_ac_not_hex">Erro: As condições de acesso não são
+        hexadecimales (0-9, A-F)</string>
+    <string name="info_ac_not_3_byte">Erro: As condições de acesso têm
+        de ter 3 bytes (6 caracteres) de comprimento</string>
+    <string name="info_file_to_big">Erro: O ficheiro é demasiado grande
+        (sem memória)</string>
+    <string name="info_to_many_keys">Erro: Demasiadas chaves (sem memória)</string>
+    <string name="info_ac_format_error">Erro: As condições de acesso
+        são inválidas</string>
+    <string name="info_ac_reset_keyb_readable">A chave B é legível.
+        \nACs dos blocos de dados actualizados.</string>
+    <string name="info_ac_reset_keyb_not_readable">A chave B não é legível.
+        \nACs dos blocos de dados actualizados.</string>
+    <string name="info_strange_error">Erro: Ocorreu um erro estranho&#8230;
+        e não sabemos porquê :(\nPor favor, informa na página do projecto</string>
+    <string name="info_key_map_error">Erro: Ligação perdida com a etiqueta</string>
+    <string name="info_block0_missing">Erro: Não há bloco de fábrica
+        (bloco 0)</string>
+    <string name="info_not_vb">Erro: O bloco seleccionado não é um Bloco de Valor</string>
+    <string name="info_value_too_big">Erro: O valor é demasiado grande</string>
+    <string name="info_bcc_not_valid">Erro: O bloco 0 do BCC não é válido</string>
+    <string name="info_invalid_uid_length">Erro: Tamanho do UID inválido</string>
+    <string name="info_sector_count_error">Erro: O total de sectores deve estar entre 1 e 40</string>
+    <string name="info_share_error">Erro: Erro ao partilhar ficheiro</string>
+    <string name="info_retry_authentication_count_error">Erro: As tentativas devem estar entre
+        1 e 1000</string>
+    <string name="info_mapping_no_keyfile_selected">Erro: Não seleccionou nenhum ficheiro de chaves</string>
+    <string name="info_mapping_no_keyfile_found">Erro: Nãofoi encontrado nenhum ficheiro de chaves</string>
+    <string name="info_rest_of_block_0_length">Erro: O comprimento do bloco 0
+        é incorrecto</string>
+    <string name="info_incorrect_key">Erro: A chave não é correcta</string>
+    <string name="info_file_exported">Arquivo exportado para o armazenamento externo</string>
+    <string name="info_file_imported">Arquivo importado</string>
+    <string name="info_convert_error">Erro: Não foi possível converter</string>
+    <string name="info_incomplete_dump">Erro: Dump incompleto o de demasiado grande</string>
+    <string name="info_error_reading_file">Erro: Não foi possível ler o ficheiro</string>
+    <string name="info_random_uid">Gerar UID aleatório</string>
+    <string name="info_invalid_key_file">Erro: Não é um ficheiro de chaves válido</string>
+
+
+    <!-- Dialog messages -->
+    <string name="info_backup_created">Backup criado</string>
+    <string name="info_backup_error">Erro ao criar um backup completo</string>
+    <string name="info_irreversible_acs">Aviso: As condições de acesso são irreversíveis</string>
+    <string name="info_std_key_overwrite">Error Chaves Standard não podem ser sobreescritas</string>
+    <string name="dialog_nfc_not_enabled">A opção NFC não está habilitada.
+        Por favor, configure e habilite 1º.</string>
+    <string name="dialog_nfc_not_enabled_title">NFC não habilitado</string>
+    <string name="dialog_no_mfc_support_device_title">Não há suporte para
+        MIFARE Classic</string>
+    <string name="dialog_no_mfc_support_device">O teu dispositivo
+        (por razões de hardware) não suporta MIFARE Classic! O único que
+        pode fazer é mostrar o UID e alguma informação geral extra.
+        As operações de I/O não são permitidas.
+        \n\n<b>Esta aplicacion carece de uso neste dispositivo.</b>
+        \n\nDispositivos conhecidos SEM compatibilidade com MIFARE Classic:\n
+        &#8226; Google Nexus 4\n
+        &#8226; Google Nexus 5\n
+        &#8226; Google Nexus 7 (2013)\n
+        &#8226; Google Nexus 10\n
+        &#8226; Samsung Galaxy S4\n
+        &#8226; Samsung Galaxy Ace 3\n
+        &#8226; Samsung Galaxy Express 2\n
+        &#8226; Samsung Galaxy Mega\n
+        &#8226; Samsung Galaxy Note 3\n
+        &#8226; Samsung Galaxy Note 4\n
+        &#8226; LG G2\n
+        &#8226; LG Optimus L7 II</string>
+    <string name="dialog_no_mfc_support_tag_title">Não é uma etiqueta MIFARE Classic</string>
+    <string name="dialog_no_mfc_support_tag">Esta etiqueta não é compatível com a
+        tecnologia MIFARE Classic! Esta aplicação está desenhada apenas para MIFARE Classic!
+        \n\n<b>Por favor, utiliza outra etiqueta.</b>
+        \n\n<small>(Aviso: Em alguns casos esta mensagem pode ser um falso
+        positivo causado por mais de uma etiqueta no campo do leitor ou valores
+        ATQA+SAK estranhos.)</small></string>
+    <string name="dialog_save_dump_title">Guardar dump</string>
+    <string name="dialog_save_dump">Introduz um nome para o ficheiro:</string>
+    <string name="dialog_mapping_range_title">Escolher limite</string>
+    <string name="dialog_mapping_range">Escolhe o limite de sectores para o
+        processo de mapeamento de chaves\n(0 é o primeiro sector):</string>
+    <string name="dialog_sector_trailer_warning_title">Gravando sector
+        trailer</string>
+    <string name="dialog_sector_trailer_warning">Estás a ponto de gravar o
+        sector trailer. Gravar dados incorrectos pode causar
+        danos irreparáveis na etiqueta.</string>
+    <string name="dialog_save_keys_title">Guardar ficheiro de chaves</string>
+    <string name="dialog_save_keys">Introduz um nome para o ficheiro
+        de chaves:</string>
+    <string name="dialog_new_file_title">Novo ficheiro:</string>
+    <string name="dialog_new_file">Introduz um nome para o novo ficheiro:</string>
+    <string name="dialog_first_run_title">AVISO</string>
+    <string name="dialog_first_run">Esta aplicação está dedicada
+        a utilizadores que tenham ao menos uma familiaridade básica com a
+        tecnologia MIFARE Classic. As funcionalidades são básicas e de
+        a baixo nível. Por outro lado, quase todos os dados de entrada e saída
+        serão em hexadecimal. É importante que entendas o que estás a fazer,
+        p.e. se escreves dados numa etiqueta. Gravar dados erróneos em certos
+        blocos pode causar danos irreparáveis à etiqueta.
+        \n\n<b>PARA MAIS INFORMAÇÃO E AJUDA CONSULTA A SECÇÃO
+        \"Ajuda e info\".</b></string>
+    <string name="dialog_write_issues_title">Problema de escrita</string>
+    <string name="dialog_write_issues">Foram encontrados problemas que afectam a escrita da etiqueta.
+        Verifica a lista completa abaixo!</string>
+    <string name="dialog_tools_menu_title">Ferramentas disponíveis</string>
+    <string name="dialog_wait_write_tag_title">Gravando…</string>
+    <string name="dialog_wait_write_tag">Gravando etiqueta…\n(Não removas
+        a etiqueta)</string>
+    <string name="dialog_share_title">Enviar ficheiro de dump a…</string>
+    <string name="dialog_block0_writing_title">Gravar bloco de fábrica</string>
+    <string name="dialog_block0_writing"><b>Gravar o primeiro bloco do sector 0
+        não é possível em etiquetas MIFARE Classic originais.</b>
+        \n\nPor favor confirma que estás a usar uma etiqueta especial que
+        suporta escrita no bloco de fábrica
+        (com um comando MIFARE Classic normal).
+        \n\n<b>Vê a secção \"Gravar etiqueta\" de
+        \"Ajuda e info\" para mais informação.</b></string>
+    <string name="dialog_static_ac_title">Usar condições de acesso
+        estáticas</string>
+    <string name="dialog_static_ac"><b>Substituir todas as condições de acesso do
+        dump com as seleccionadas.</b>
+        \n\nIsto é útil se o dump contém condições de acesso
+        que serão permanentes para uma etiqueta. No caso do leitor não
+        as verificar, podes fácilmente usar umas personalizadas para fazer
+        a etiqueta reutilizável.
+        \n\n<b>Aviso: Gravar dados incorrectos pode causar
+        danos à etiqueta.</b></string>
+    <string name="dialog_choose_ac_title">Escolher condições de acesso</string>
+    <string name="dialog_write_sectors_title">Gravar sectores</string>
+    <string name="dialog_write_sectors">Selecciona os sectores
+        que queres gravar:</string>
+    <string name="dialog_about_mct_title">Acerca de MCT</string>
+    <!--
+      A work around is needed for styled resources that use format strings.
+      Notice that the opening bracket is HTML-escaped, using the &lt; notation.
+      See: https://developer.android.com/guide/topics/resources/string-resource.html
+    -->
+    <string name="dialog_about_mct">&lt;b>MIFARE Classic Tool (MCT)&lt;br />&lt;br />
+        &#8226; Versão: %1$s&lt;br />
+        &#8226; Licença:
+        &lt;a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3&lt;/a>&lt;br />
+        &#8226; Página do projecto:
+        &lt;a href="https://github.com/ikarus23/MifareClassicTool">MCT
+        en GitHub&lt;/a>&lt;/b>&lt;br />&lt;br />
+        Informação útil:&lt;br />
+        &#8226; &lt;a href="https://github.com/ikarus23/MifareClassicTool/issues">Bug
+        Tracker&lt;/a>&lt;br />
+        &#8226; &lt;a href="https://raw2.github.com/ikarus23/MifareClassicTool/master/CHANGELOG.txt">
+        / Histórico de alterações da versão&lt;/a>&lt;br />
+        &#8226; &lt;a href="http://publications.icaria.de/mct/">Documentação,
+        APKs, etc.&lt;/a>&lt;br />
+        &#8226; &lt;a href="http://www.proxmark.org/forum/viewtopic.php?id=1535">Artigo
+        no fórum do Proxmark&lt;/a></string>
+    <string name="dialog_auto_reconnect_title">Auto-reconectar</string>
+    <string name="dialog_auto_reconnect">Si a coneión com a etiqueta se pierde durante
+        o processo de mapeamento de chaves (problemas de antena, timeout, etc.),
+        a aplicação intentará reconectarse (con um delay de 500ms)
+        hasta que um intento tenga éxito.
+        \n\n<b>Esto pode ayudar si encuentra problemas durante o processo de mapeamento
+        de chaves. De cualquier modo, pode hacer que MCT se comporte de manera extraña.</b>
+        \n\nProblemas conocidos en que esta opción pode ayudar:\n
+        &#8226; Etiquetas especiales (e.g. smartMX)</string>
+    <string name="dialog_retry_authentication_title">Repetir autenticação</string>
+    <string name="dialog_retry_authentication">Repete a autenticação (para acesso a sector ou bloco)
+        X vezes se falhar.\n\nAlgumas etiquetas necessitam disto para funcionar correctamente (e.g. some block 0
+        writable tags with 7 bytes UID). Também pode ajudar alguns equipamentos a trabalharem de forma
+        consistente (e.g. the Google Nexus 5X ou Huawei P10).\n\nAtenção que nesta situação
+        a leitura, escrita ou mapeamento podem ser mais lentos. Na maioria dos casos esta
+        opção deve estar inactiva.</string>
+    <string name="dialog_custom_sector_count_title">Total de Sectores</string>
+    <string name="dialog_custom_sector_count">Forçar contagem de sectores
+        e ignorar a contagem detectada pelo Android. Isto pode ser útil
+        para etiquetas com 2K de memória.</string>
+    <string name="dialog_date_of_manuf_title">Data de Fabrico</string>
+    <string name="dialog_date_of_manuf">A etiqueta foi fabricada entre
+        &lt;b>%1$s&lt;/b> e &lt;b>%2$s&lt;/b>.&lt;br />&lt;br />
+        (Esta informação pode estar errada. Reveja \"Ajuda e info\" para
+        mais informação.)</string>
+    <string name="dialog_date_of_manuf_error"><b>A data de fabrico contém
+        dados inválidos.</b>
+        \n\nOs dois últimos bytes do bloco de fábrica deviam estar codificados
+        em formato decimal binário (apenas dígitos, não letras). O primeiro byte
+        (semana de fabrico) deve estar entre 1 e 53 (p.e. 28).
+        O segundo byte (ano de fabricação) deve estar entre 0 e o aao actual
+         (e.g. 12, sendo o ano 2012).
+        \n\nPossivelmente a etiqueta não é um MIFARE Classic original.</string>
+
+
+
+
+     <string name="dialog_save_conflict_title">O ficheiro já existe</string>
+    <string name="dialog_save_conflict_dump">Os ficheiros já existem.
+        Que pretendes fazer?
+        \n\n<b>Nota: Os ficheiros que contêm vários dumps (criados usando
+        \"append\") não podem ser mostrados, editados o escritos por esta app.</b></string>
+    <string name="dialog_save_conflict_keyfile">Este ficheiro já existe.
+        Que pretendes fazer?</string>
+    <string name="dialog_donate_title">Doar</string>
+    <string name="dialog_donate">
+        <b>MIFARE Classic Tool foi actualizado!</b>
+        \n\nSe as novas funcionalidades, correcções ou a app em general te faz feliz,
+        por favor, considera dar uma alegria ao programador. Compra-lhe uma cerveja! ;)
+        \n\n\u2022 <a href="market://details?id=de.syss.MifareClassicToolDonate">Obtém a versão de doadores</a>
+        \n\u2022 <a href="https://github.com/ikarus23/MifareClassicTool/blob/master/README.md#mifare-classic-tool-mct">MCT
+        em GitHub / link para doar</a>
+    </string>
+    <string name="dialog_save_before_quitting_title">Alterações sem gravar</string>
+        <string name="dialog_save_before_quitting"><b>Há alterações por gravar!</b>
+        \nQueres guardar as alterações?
+    </string>
+    <string name="dialog_no_nfc_support_title">Sem suporte para NFC</string>
+    <string name="dialog_no_nfc_support">O teu dispositivo não tem um leitor NFC. Não podes ler ou gravar etiquetas NFC.
+        \n\nSe o teu dispositivo suporta USB-OTG podes conectar um leitor
+        externo NFC ao teu dispositivo Android.
+        \n\nMIFARE Classic Tool deverá funcionar conjuntamente com a app \"NFC Externo\",
+        a qual suporta vários leitores NFC USB. No entanto, podem existir algumas limitações.
+    </string>
+    <string name="dialog_start_external_nfc_title">Serviço NFC Externo</string>
+    <string name="dialog_start_external_nfc">O serviço \"NFC Externo\" não está em execução.
+        Por favor, habilita o serviço para que MIFARE Classic Tool possa usar um leitor NFC externo.
+    </string>
+    <string name="dialog_info_external_nfc_title">Serviço NFC Externo</string>
+    <string name="dialog_info_external_nfc">O teu dispositivo não tem um leitor NFC
+        ou não é suportado para MIFARE Classic, mas a app \"External NFC\" está instalada.
+        Por favor confirma que o serviço \"NFC Externo\" está em execução para poder usar
+        MIFARE Classic Tool com um leitor externo de NFC.
+    </string>
+    <string name="dialog_gen2_tags_info_title">Clonando o UID</string>
+    <string name="dialog_gen2_tags_info">O primeiro bloco do primeiro sector de uma etiqueta MIFARE
+        Classic contém o UID e é apenas de leitura, ou seja, não se pode gravar. No entanto, há
+        etiquetas especiais MIFARE Classic (\"Magic Tags 2nd Gen\", ou \"block 0 direct write tags\")
+        que admitem a escrita no primeiro bloco (incluindo o UID) com um simples comando de escrita.
+        Esta aplicação pode gravar nestas etiquetas e, portanto, pode clonar o UID. Algumas
+        etiquetas (\"Magic Tags 1st Gen\") requerem uma sequência de comandos especial para colocá-las no
+        estado em que é possível gravar o bloco do fabricante. Estas etiquetas não funcionam.</string>
+    <string name="dialog_rest_of_block_0_title">Resto do Bloco 0</string>
+    <string name="dialog_rest_of_block_0">As etiquetas MIFARE Classic normalmente solo poden
+        escritas por blocos. EL UID é representado por os primeros bytes do bloco 0. Para cambiar o UID,
+        se debe gravar o bloco 0 completo. Os dados do \"resto do bloco 0\" son
+        os bytes que se agregarán ao UID para representar um bloco completo.</string>
+    <string name="dialog_key_for_block_0_title">Chave para o Bloco 0</string>
+    <string name="dialog_key_for_block_0">Para gravar en o bloco 0 (el bloco com o UID),
+        necesita a chave com privilegios de escrita. Para las etiquetas com formato en blanco o de fábrica,
+        a chave A tiene um valor de \"FFFFFFFFFFFF\".</string>
+    <string name="dialog_auto_calc_sak_atqa_title">Calcular SAK e ATQA</string>
+    <string name="dialog_auto_calc_sak_atqa">Para algumas Magic Tags de 2ª geração, os valores atrás do UID
+        (e possivelmente o BCC) no bloco 0 representam o SAK e ATQA.
+        \n\nSe esta opção for usada, os valores vão ser gerados automaticamente. Caso contrário, os valores
+        existentes em \"rest do bloco 0\" serão usados.</string>
+    <string name="dialog_block0_data_warning_title">Validação do Bloco 0</string>
+    <string name="dialog_block0_data_warning">Estás prestes a gravar dados no bloco 0.
+        No entanto, parece que são dados inválidos.
+        \n\nEm algumas etiquetas de 2ª geração, valores como SAK ou ATQA são controlados pelos bytes
+        no bloco 0. Se inserires valores errados, a etiqueta pode ficar em soft-brick. Também há
+        etiquetas que ignoram valores errados. Independentemente, um UID deve seguir
+        a norma ISO 14443.
+        \n\nEsta validação do bloco 0 garante que estás a gravar dados compatíveis com a
+        especificação NXP.
+        \n\nContinua por tua conta e risco!</string>
+
+
+    <!-- Hints -->
+    <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
+    <string name="hint_hex_3_byte">HEX, 3 bytes</string>
+    <string name="hint_hex_4_byte">HEX, 4 bytes</string>
+    <string name="hint_hex_4_7_10_byte">HEX, 4/7/10 bytes</string>
+    <string name="hint_hex_00">00</string>
+    <string name="hint_int_423">e.g. 423</string>
+    <string name="hint_custom_sector_count">e.g. 16 para 1K</string>
+    <string name="hint_custom_retry_authentication_count">Número de tentativas</string>
+    <string name="hint_key">HEX, 6 bytes por linha</string>
+
+</resources>

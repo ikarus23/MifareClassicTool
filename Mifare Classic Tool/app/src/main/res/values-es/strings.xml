@@ -79,6 +79,7 @@
     <string name="text_sector_range_all">Todos</string>
     <string name="text_update_colors">Actualizar colores</string>
     <string name="text_data">Datos:</string>
+    <string name="text_value">Valor</string>
     <string name="text_write_dump_info">Escribir un dumpeo (o algunos sectores
         de él) en una a etiqueta. ¡Los blosques que contengan información
         desconocida (---) serán ignorados!</string>
