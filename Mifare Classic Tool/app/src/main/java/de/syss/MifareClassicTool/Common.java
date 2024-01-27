@@ -847,17 +847,23 @@ public class Common extends Application {
         // "brcm" libs are for devices with Broadcom chips. Broadcom chips
         // don't support MIFARE Classic.
         File libsFolder = new File("/system/lib");
+        if (!libsFolder.exists()) {
+            libsFolder = new File("/system/lib64");
+        }
         File[] libs = libsFolder.listFiles();
-        for (File lib : libs) {
-            if (lib.isFile()
+        if (libs != null) {
+            for (File lib : libs) {
+                if (lib.isFile()
                     && lib.getName().startsWith("libnfc")
                     && lib.getName().contains("brcm")
                     // Add here other non NXP NFC libraries.
-                    ) {
-                mHasMifareClassicSupport = -1;
-                return false;
+                ) {
+                    mHasMifareClassicSupport = -1;
+                    return false;
+                }
             }
         }
+
 
         mHasMifareClassicSupport = 1;
         return true;
