@@ -1,0 +1,8 @@
+ * Added Russian translation (Thanks to "IIIef").
+ * Added Portuguese translation (Thanks to "YaBa").
+ * Fixed crash on Samsung Galaxy S24 Ultra
+   (Thanks to Eduardo Speroni).
+ * Fixed some crashes related to Android 14.
+ * Added more well known keys to the extended key file.
+   (extended-std.keys file will be updated automatically.)
+

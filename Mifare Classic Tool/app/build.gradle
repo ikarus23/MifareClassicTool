@@ -11,8 +11,8 @@ android {
         applicationId "de.syss.MifareClassicTool"
         minSdk 19
         targetSdk 33
-        versionCode 65
-        versionName '4.2.0'
+        versionCode 66
+        versionName '4.2.1'
     }
 
     androidResources {
