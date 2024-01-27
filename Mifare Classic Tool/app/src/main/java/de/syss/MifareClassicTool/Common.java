@@ -673,7 +673,7 @@ public class Common extends Application {
                 mNfcAdapter.enableForegroundDispatch(
                         targetActivity, pendingIntent, null, new String[][]{
                                 new String[]{NfcA.class.getName()}});
-            } catch (IllegalStateException ex) {
+            } catch (IllegalStateException | SecurityException ex) {
                 Log.d(LOG_TAG, "Error: Could not enable the NFC foreground" +
                         "dispatch system. The activity was not in foreground.");
             }
@@ -863,7 +863,6 @@ public class Common extends Application {
                 }
             }
         }
-
 
         mHasMifareClassicSupport = 1;
         return true;
