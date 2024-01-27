@@ -235,7 +235,7 @@ public class MCReader {
                     Log.d(LOG_TAG, "(Recoverable) Error while reading block "
                             + i + " from tag.");
                     blocks.add(NO_DATA);
-                    if (!mMFC.isConnected()) {
+                    if (!isConnected()) {
                         throw new TagLostException(
                                 "Tag removed during readSector(...)");
                     }
