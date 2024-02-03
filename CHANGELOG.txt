@@ -1,5 +1,9 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 4.2.2:
+ * Fixed crash when opening the preferences using
+   Chinese language.
+
 Version 4.2.1:
  * Added Russian translation (Thanks to "IIIef").
  * Added Portuguese translation (Thanks to "YaBa").

@@ -1,0 +1,2 @@
+ * Fixed crash when opening the preferences using
+   Chinese language.
