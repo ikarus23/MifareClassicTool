@@ -471,12 +471,4 @@
     <string name="hint_custom_retry_authentication_count">重试次数</string>
     <string name="hint_key">HEX,每行6字节</string>
 
-    <!-- Supported locales. No need for translation! -->
-    <string-array name="supported_locales" translatable="false">
-        <item>English (en)</item>
-        <item>Français (fr)</item>
-        <item>Italiano (it)</item>
-        <item>简体中文 (zh)</item>
-    </string-array>
-
 </resources>
