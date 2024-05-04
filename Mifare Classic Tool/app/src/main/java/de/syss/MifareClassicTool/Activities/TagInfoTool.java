@@ -127,6 +127,7 @@ public class TagInfoTool extends BasicActivity {
     private void updateTagInfo(Tag tag) {
 
         if (tag != null) {
+            NfcA nfca = NfcA.get(tag);
             // Check for MIFARE Classic support.
             mMFCSupport = Common.checkMifareClassicSupport(tag, this);
 
@@ -157,7 +158,6 @@ public class TagInfoTool extends BasicActivity {
                 uid += ", CL3";
             }
             uid += ")";
-            NfcA nfca = NfcA.get(tag);
             // Swap ATQA to match the common order like shown here:
             // http://nfc-tools.org/index.php?title=ISO14443A
             byte[] atqaBytes = nfca.getAtqa();
