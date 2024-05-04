@@ -733,7 +733,7 @@ public class Common extends Application {
      * <li>0 - The device/tag supports MIFARE Classic</li>
      * <li>-1 - Device does not support MIFARE Classic.</li>
      * <li>-2 - Tag does not support MIFARE Classic.</li>
-     * <li>-3 - Error (tag or context is null).</li>
+     * <li>-3 - Error (tag or context is null or dead object).</li>
      * <li>-4 - Wrong Intent (action is not "ACTION_TECH_DISCOVERED").</li>
      * </ul>
      * @see #mTag
@@ -745,10 +745,14 @@ public class Common extends Application {
         // Check if Intent has a NFC Tag.
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag;
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag.class);
-            } else {
-                tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            try {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag.class);
+                } else {
+                    tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                }
+            } catch (RuntimeException ex) {
+                return -3;
             }
             if (tag == null) {
                 return -3;
