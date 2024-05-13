@@ -65,6 +65,7 @@ public class MCReader {
     private int mFirstSector = 0;
     private ArrayList<String> mKeysWithOrder;
     private boolean mHasAllZeroKey = false;
+    private boolean cancelCreateKeyMap = false;
 
     /**
      * Initialize a MIFARE Classic reader for the given tag.
@@ -105,6 +106,10 @@ public class MCReader {
             }
         }
         return mcr;
+    }
+
+    public void cancelCreateKeyMap() {
+        cancelCreateKeyMap = true;
     }
 
     /**
@@ -460,6 +465,7 @@ public class MCReader {
     public int buildNextKeyMapPart() {
         // Clear status and key map before new walk through sectors.
         boolean error = false;
+        cancelCreateKeyMap = false;
         if (mKeysWithOrder != null && mLastSector != -1) {
             if (mKeyMapStatus == mLastSector+1) {
                 mKeyMapStatus = mFirstSector;
@@ -487,6 +493,9 @@ public class MCReader {
                 byte[] bytesKey = Common.hex2Bytes(key);
                 for (int j = 0; j < retryAuthCount+1;) {
                     try {
+                        if (cancelCreateKeyMap) {
+                            return -1;
+                        }
                         if (!foundKeys[0]) {
                             auth = mMFC.authenticateSectorWithKeyA(
                                     mKeyMapStatus, bytesKey);

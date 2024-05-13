@@ -142,6 +142,7 @@ public class KeyMapCreator extends BasicActivity {
     private File mKeyDirPath;
     private int mFirstSector;
     private int mLastSector;
+    private MCReader currentReader;
 
     /**
      * Set layout, set the mapping range
@@ -331,6 +332,9 @@ public class KeyMapCreator extends BasicActivity {
     public void onCancelCreateKeyMap(View view) {
         if (mIsCreatingKeyMap) {
             mIsCreatingKeyMap = false;
+            if (currentReader != null) {
+                currentReader.cancelCreateKeyMap();
+            }
             mCancel.setEnabled(false);
         } else {
             finish();
@@ -395,6 +399,7 @@ public class KeyMapCreator extends BasicActivity {
 
                 // Create reader.
                 MCReader reader = Common.checkForTagAndCreateReader(this);
+                currentReader = reader;
                 if (reader == null) {
                     return;
                 }
