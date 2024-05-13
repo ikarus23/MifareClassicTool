@@ -84,6 +84,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Sony Xperia XZ
 * Wiko Wim Lite
 * Xiaomi Mi 5
+* Xiaomi Mi 9 Lite
 * Xiaomi Mi 9T
 * Xiaomi Mi 10T
 * Xiaomi Mi 10T Pro
