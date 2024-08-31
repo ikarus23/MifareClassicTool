@@ -20,6 +20,7 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollViewImortExportTool"
     android:layout_width="match_parent"
@@ -110,10 +111,10 @@
             android:id="@+id/textViewImportExportToolInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_dialog_info"
             android:drawablePadding="5dp"
             android:padding="5dp"
-            android:text="@string/text_import_export_tool_info" />
+            android:text="@string/text_import_export_tool_info"
+            app:drawableLeftCompat="@android:drawable/ic_dialog_info" />
 
     </LinearLayout>
 
