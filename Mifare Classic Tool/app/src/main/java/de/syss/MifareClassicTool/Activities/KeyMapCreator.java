@@ -176,10 +176,10 @@ public class KeyMapCreator extends BasicActivity {
         String from = sharedPref.getString("default_mapping_range_from", "");
         String to = sharedPref.getString("default_mapping_range_to", "");
         // Are there default values?
-        if (!from.equals("")) {
+        if (!from.isEmpty()) {
             custom = true;
         }
-        if (!to.equals("")) {
+        if (!to.isEmpty()) {
             custom = true;
         }
         // Are there given values?
@@ -606,12 +606,12 @@ public class KeyMapCreator extends BasicActivity {
                         String txtFrom = "" + DEFAULT_SECTOR_RANGE_FROM;
                         String txtTo = "" + DEFAULT_SECTOR_RANGE_TO;
                         boolean noFrom = false;
-                        if (!from.getText().toString().equals("")) {
+                        if (!from.getText().toString().isEmpty()) {
                             txtFrom = from.getText().toString();
                         } else {
                             noFrom = true;
                         }
-                        if (!to.getText().toString().equals("")) {
+                        if (!to.getText().toString().isEmpty()) {
                             txtTo = to.getText().toString();
                         } else if (noFrom) {
                             // No values provided. Read all sectors.

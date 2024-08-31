@@ -403,7 +403,7 @@ public class Common extends Application {
                 line = line.trim();
                 // Remove comments if readAll is false.
                 if (!readAll) {
-                    if (line.startsWith("#") || line.equals("")) {
+                    if (line.startsWith("#") || line.isEmpty()) {
                         continue;
                     }
                     // Look for content (ignore the comment).
@@ -1513,7 +1513,7 @@ public class Common extends Application {
             line = line.trim();
 
             // Ignore empty lines.
-            if (line.equals("")) {
+            if (line.isEmpty()) {
                 continue;
             }
 
@@ -1852,7 +1852,7 @@ public class Common extends Application {
      * @return Converted hex string.
      */
     public static String ascii2Hex(String ascii) {
-        if (!(ascii != null && !ascii.equals(""))) {
+        if (!(ascii != null && !ascii.isEmpty())) {
             return null;
         }
         char[] chars = ascii.toCharArray();
@@ -1932,7 +1932,7 @@ public class Common extends Application {
      */
     public static void copyToClipboard(String text, Context context,
                                        boolean showMsg) {
-        if (!text.equals("")) {
+        if (!text.isEmpty()) {
             android.content.ClipboardManager clipboard =
                     (android.content.ClipboardManager)
                     context.getSystemService(

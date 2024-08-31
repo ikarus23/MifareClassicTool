@@ -84,7 +84,7 @@ public class DataConversionTool extends BasicActivity {
      * @param hex The hex string to be converted into different formats.
      */
     private void convertData(String hex) {
-        if (hex == null || hex.equals("")) {
+        if (hex == null || hex.isEmpty()) {
             Toast.makeText(this, R.string.info_convert_error,
                     Toast.LENGTH_SHORT).show();
             return;
@@ -126,7 +126,7 @@ public class DataConversionTool extends BasicActivity {
      */
     public void onOpenGenericConverter(View view) {
         String hex = mHex.getText().toString();
-        if (!hex.equals("") && !Common.isHex(hex, this)) {
+        if (!hex.isEmpty() && !Common.isHex(hex, this)) {
             return;
         }
         String url = "https://hexconverter.scadacore.com/?HexString=" + hex;
@@ -154,7 +154,7 @@ public class DataConversionTool extends BasicActivity {
      */
     public void onOpenCyberChef(View view) {
         String hex = mHex.getText().toString();
-        if (!hex.equals("") && !Common.isHex(hex, this)) {
+        if (!hex.isEmpty() && !Common.isHex(hex, this)) {
             return;
         }
         String base64 = Base64.encodeToString(hex.getBytes(), Base64.DEFAULT);

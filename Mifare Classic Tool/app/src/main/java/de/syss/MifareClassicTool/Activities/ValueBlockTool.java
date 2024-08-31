@@ -90,7 +90,7 @@ public class ValueBlockTool extends BasicActivity {
     public void onEncode(View view) {
         String vbText = mVBasInt.getText().toString();
         String addrText = mAddr.getText().toString();
-        if (vbText.equals("")){
+        if (vbText.isEmpty()){
             // Error. There is no integer to encode.
             Toast.makeText(this, R.string.info_no_int_to_encode,
                     Toast.LENGTH_LONG).show();

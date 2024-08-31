@@ -346,8 +346,8 @@ public class WriteTag extends BasicActivity {
      * @return True if both values are okay. False otherwise.
      */
     private boolean checkSectorAndBlock(EditText sector, EditText block) {
-        if (sector.getText().toString().equals("")
-                || block.getText().toString().equals("")) {
+        if (sector.getText().toString().isEmpty()
+                || block.getText().toString().isEmpty()) {
             // Error, location not fully set.
             Toast.makeText(this, R.string.info_data_location_not_set,
                     Toast.LENGTH_LONG).show();

@@ -277,7 +277,7 @@ public class KeyEditor extends BasicActivity
         // Save key file to to a temporary file which will be
         // attached for sharing (and stored in the tmp folder).
         String fileName;
-        if (mFileName.equals("")) {
+        if (mFileName.isEmpty()) {
             // The key file has no name. Use date and time as name.
             GregorianCalendar calendar = new GregorianCalendar();
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
@@ -342,7 +342,7 @@ public class KeyEditor extends BasicActivity
      *          File, String[], boolean, Context, IActivityThatReactsToSave)
      */
     private void saveFile(String fileName, File path) {
-        if (fileName == null || fileName.equals("") || fileName.contains("/")) {
+        if (fileName == null || fileName.isEmpty() || fileName.contains("/")) {
             Toast.makeText(this, R.string.info_invalid_file_name,
                     Toast.LENGTH_LONG).show();
             return;
@@ -365,7 +365,7 @@ public class KeyEditor extends BasicActivity
             ArrayList<String> newLines = new ArrayList<>();
             for (String line : mLines) {
                 line = line.trim();
-                if (line.equals("") || line.startsWith("#")) {
+                if (line.isEmpty() || line.startsWith("#")) {
                     // Add comments for sure.
                     newLines.add(line);
                     continue;
@@ -435,7 +435,7 @@ public class KeyEditor extends BasicActivity
             }
             line = line.split("#")[0];
             line = line.trim();
-            if (line.equals("")) {
+            if (line.isEmpty()) {
                 mLines[i] = lines[i];
                 continue;
             }

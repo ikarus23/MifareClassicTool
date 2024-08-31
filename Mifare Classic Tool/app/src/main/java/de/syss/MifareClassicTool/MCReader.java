@@ -831,7 +831,7 @@ public class MCReader {
             String[] lines = Common.readFileLineByLine(file, false, context);
             if (lines != null) {
                 for (String line : lines) {
-                    if (!line.equals("") && line.length() == 12
+                    if (!line.isEmpty() && line.length() == 12
                             && line.matches("[0-9A-Fa-f]+")) {
                         try {
                             keys.add(line);

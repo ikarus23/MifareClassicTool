@@ -454,7 +454,7 @@ public class DumpEditor extends BasicActivity
             .setPositiveButton(R.string.action_save,
                     (dialog, whichButton) -> {
                         if (input.getText() != null
-                                && !input.getText().toString().equals("")
+                                && !input.getText().toString().isEmpty()
                                 && !input.getText().toString().contains("/")) {
                             File file = new File(path.getPath(),
                                     input.getText().toString());

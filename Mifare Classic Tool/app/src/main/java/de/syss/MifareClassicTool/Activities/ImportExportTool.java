@@ -599,7 +599,7 @@ public class ImportExportTool extends BasicActivity {
                     return null;
                 }
                 for (int i = 0; i < source.length; i++) {
-                    if (source[i].equals("")) {
+                    if (source[i].isEmpty()) {
                         // Error. Empty line in .eml file.
                         Toast.makeText(this, R.string.info_incomplete_dump,
                                 Toast.LENGTH_LONG).show();
