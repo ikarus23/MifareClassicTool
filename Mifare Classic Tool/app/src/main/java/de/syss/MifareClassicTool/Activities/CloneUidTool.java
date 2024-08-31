@@ -382,7 +382,7 @@ public class CloneUidTool extends BasicActivity {
         if (!content.equals("")) {
             newline = "\n";
         }
-        content = content + newline + "\u2022 " + text;
+        content = content + newline + "• " + text;
         mStatusLogContent.setText(content);
     }
 
