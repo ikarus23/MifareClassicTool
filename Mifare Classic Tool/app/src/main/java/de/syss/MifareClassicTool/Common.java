@@ -377,6 +377,11 @@ public class Common extends Application {
             return null;
         }
 
+        try {
+            contentStream.close();
+        } catch (IOException e) {
+            return null;
+        }
         return buffer.toByteArray();
     }
 
