@@ -105,7 +105,6 @@ public class MainMenu extends AppCompatActivity {
      * @see #copyStdKeysFiles()
      */
     @SuppressLint("SetTextI18n")
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setTheme();
@@ -168,7 +167,6 @@ public class MainMenu extends AppCompatActivity {
      * @param startUpNode The node of the startup checks chain.
      * @see StartUpNode
      */
-    @SuppressWarnings("deprecation")
     private void runStartUpNode(StartUpNode startUpNode) {
         SharedPreferences sharedPref =
                 getPreferences(Context.MODE_PRIVATE);

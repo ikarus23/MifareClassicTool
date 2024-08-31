@@ -179,7 +179,7 @@ public class Preferences extends BasicActivity {
      * Defualts to "follow system theme" for Android >= 10 if not set.
      */
     private void getThemeAndUpdateChooser() {
-        CharSequence themeArray[] = getResources().getStringArray(R.array.action_themes);
+        CharSequence[] themeArray = getResources().getStringArray(R.array.action_themes);
         ArrayList<CharSequence> themeArrayList = new ArrayList<>(Arrays.asList(themeArray));
         SharedPreferences pref = Common.getPreferences();
         int themeID;

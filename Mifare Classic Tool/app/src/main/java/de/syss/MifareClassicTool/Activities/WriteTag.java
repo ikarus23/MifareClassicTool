@@ -104,7 +104,7 @@ public class WriteTag extends BasicActivity {
      * accordingly.
      */
     // It is checked but the IDE don't get it.
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
