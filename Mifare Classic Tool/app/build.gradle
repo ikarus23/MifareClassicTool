@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application' version '8.4.0'
+    id 'com.android.application' version '8.6.0'
     id 'org.jetbrains.kotlin.android' version '1.9.0'
 }
 
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "de.syss.MifareClassicTool"
         minSdk 19
-        targetSdk 33
+        targetSdk 34
         versionCode 67
         versionName '4.2.2'
     }
