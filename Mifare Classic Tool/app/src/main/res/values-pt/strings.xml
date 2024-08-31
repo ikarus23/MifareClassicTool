@@ -630,7 +630,7 @@
         os bytes que se agregarán ao UID para representar um bloco completo.</string>
     <string name="dialog_key_for_block_0_title">Chave para o Bloco 0</string>
     <string name="dialog_key_for_block_0">Para gravar en o bloco 0 (el bloco com o UID),
-        necesita a chave com privilegios de escrita. Para las etiquetas com formato en blanco o de fábrica,
+        necesita a chave com privilégios de escrita. Para las etiquetas com formato en blanco o de fábrica,
         a chave A tiene um valor de \"FFFFFFFFFFFF\".</string>
     <string name="dialog_auto_calc_sak_atqa_title">Calcular SAK e ATQA</string>
     <string name="dialog_auto_calc_sak_atqa">Para algumas Magic Tags de 2ª geração, os valores atrás do UID
