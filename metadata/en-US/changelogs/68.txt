@@ -1,0 +1,6 @@
+ * Make "cancel" during key map creation more responsive
+   (Thanks to Alan Le Corre).
+ * Added more well known keys to the extended key file.
+   (extended-std.keys file will be updated automatically.)
+ * Fixed several crashes.
+ * Some minor code cleanup.

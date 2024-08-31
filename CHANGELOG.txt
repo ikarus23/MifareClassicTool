@@ -1,5 +1,13 @@
 Changelog of MifareClassicTool (MCT):
 
+Version 4.2.3:
+ * Make "cancel" during key map creation more responsive
+   (Thanks to Alan Le Corre).
+ * Added more well known keys to the extended key file.
+   (extended-std.keys file will be updated automatically.)
+ * Fixed several crashes.
+ * Some minor code cleanup.
+
 Version 4.2.2:
  * Fixed crash when opening the preferences using
    Chinese language.
