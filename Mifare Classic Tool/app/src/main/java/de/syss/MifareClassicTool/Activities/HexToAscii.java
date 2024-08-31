@@ -22,8 +22,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import de.syss.MifareClassicTool.Common;
 import de.syss.MifareClassicTool.R;
 
