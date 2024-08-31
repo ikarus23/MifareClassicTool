@@ -588,33 +588,19 @@ public class WriteTag extends BasicActivity {
 
         // Write. There are some tags which report a successful write, although
         // the write was not successful. Therefore, we try to write it using both keys.
-        if (sector == 0 && block == 0) {
-            // Write the manufacturer bock. This is only possible on gen2 tags.
-            if (keys[1] != null) {
-                resultKeyB = reader.writeBlock(sector, block,
-                        Common.hex2Bytes(data),
-                        keys[1], true);
-            }
-            if (keys[0] != null) {
-                resultKeyA = reader.writeBlock(sector, block,
-                        Common.hex2Bytes(data),
-                        keys[0], false);
-            }
-        } else {
-            // Normal block. Try key B first.
-            if (keys[1] != null) {
-                resultKeyB = reader.writeBlock(sector, block,
-                        Common.hex2Bytes(data),
-                        keys[1], true);
-            }
-            // Try to write with key A (if there is one).
-            if (keys[0] != null) {
-                resultKeyA = reader.writeBlock(sector, block,
-                        Common.hex2Bytes(data),
-                        keys[0], false);
-            }
-
+        // Try key B first.
+        if (keys[1] != null) {
+            resultKeyB = reader.writeBlock(sector, block,
+                    Common.hex2Bytes(data),
+                    keys[1], true);
         }
+        // Try to write with key A (if there is one).
+        if (keys[0] != null) {
+            resultKeyA = reader.writeBlock(sector, block,
+                    Common.hex2Bytes(data),
+                    keys[0], false);
+        }
+
         reader.close();
         if (resultKeyA == 0 || resultKeyB == 0) {
             result = 0;
