@@ -803,7 +803,7 @@ public class MCReader {
                     }
 
                 }
-                if (blockWithWriteInfo.size() > 0) {
+                if (!blockWithWriteInfo.isEmpty()) {
                     ret.put(sector, blockWithWriteInfo);
                 }
             }
@@ -845,7 +845,7 @@ public class MCReader {
                 }
             }
         }
-        if (keys.size() > 0) {
+        if (!keys.isEmpty()) {
             mHasAllZeroKey = keys.contains("000000000000");
             mKeysWithOrder = new ArrayList<>(keys);
             if (mHasAllZeroKey) {

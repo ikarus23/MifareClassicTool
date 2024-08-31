@@ -425,7 +425,7 @@ public class Common extends Application {
             Log.e(LOG_TAG, "Error while reading from file.", ex);
             ret = null;
         }
-        if (linesArray.size() > 0) {
+        if (!linesArray.isEmpty()) {
             ret = linesArray.toArray(new String[0]);
         } else {
             ret = new String[]{""};

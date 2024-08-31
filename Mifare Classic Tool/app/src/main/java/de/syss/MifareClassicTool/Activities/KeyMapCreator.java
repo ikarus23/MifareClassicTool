@@ -366,7 +366,7 @@ public class KeyMapCreator extends BasicActivity {
                 fileNames.add(c.getText().toString());
             }
         }
-        if (fileNames.size() > 0) {
+        if (!fileNames.isEmpty()) {
             // Check if key files still exists.
             ArrayList<File> keyFiles = new ArrayList<>();
             for (String fileName : fileNames) {
@@ -384,7 +384,7 @@ public class KeyMapCreator extends BasicActivity {
                             + "doesn't exists anymore.");
                 }
             }
-            if (keyFiles.size() > 0) {
+            if (!keyFiles.isEmpty()) {
                 // Save last selected key files as "/"-separated string
                 // (if corresponding setting is active).
                 if (saveLastUsedKeyFiles) {

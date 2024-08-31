@@ -70,7 +70,7 @@ public class MCDiffUtils {
                         diffIndices.add(k);
                     }
                 }
-                if (diffIndices.size() == 0) {
+                if (diffIndices.isEmpty()) {
                     // Block was identical.
                     diffSector[j] = new Integer[0];
                 } else {

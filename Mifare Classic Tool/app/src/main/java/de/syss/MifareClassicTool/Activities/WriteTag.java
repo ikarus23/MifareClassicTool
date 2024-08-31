@@ -799,7 +799,7 @@ public class WriteTag extends BasicActivity {
                             mDumpWithPos.remove(sector);
                         }
                     }
-                    if (mDumpWithPos.size() == 0) {
+                    if (mDumpWithPos.isEmpty()) {
                         // Error. There is nothing to write.
                         Toast.makeText(context, R.string.info_nothing_to_write,
                                 Toast.LENGTH_LONG).show();
@@ -1147,7 +1147,7 @@ public class WriteTag extends BasicActivity {
         }
 
         // Show skip/cancel dialog (if needed).
-        if (list.size() != 0) {
+        if (!list.isEmpty()) {
             // If the user skips all sectors/blocks that are not writable,
             // the writeTag() method will be called.
             LinearLayout ll = new LinearLayout(this);
@@ -1222,7 +1222,7 @@ public class WriteTag extends BasicActivity {
             final HashMap<Integer, HashMap<Integer, Integer>> writeOnPos,
             final SparseArray<byte[][]> keyMap) {
         // Check for write data.
-        if (writeOnPos.size() == 0) {
+        if (writeOnPos.isEmpty()) {
             // Nothing to write. Exit.
             Toast.makeText(this, R.string.info_nothing_to_write,
                     Toast.LENGTH_LONG).show();

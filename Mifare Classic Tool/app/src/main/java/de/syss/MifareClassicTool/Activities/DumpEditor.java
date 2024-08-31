@@ -739,7 +739,7 @@ public class DumpEditor extends BasicActivity
             }
         }
 
-        if (tmpVBs.size() > 0) {
+        if (!tmpVBs.isEmpty()) {
             String[] vb = tmpVBs.toArray(new String[0]);
             Intent intent = new Intent(this, ValueBlocksToInt.class);
             intent.putExtra(ValueBlocksToInt.EXTRA_VB, vb);
