@@ -299,7 +299,7 @@
     <!-- Toast messages -->
     <string name="info_new_tag_found">Найдена новая метка</string>
     <string name="info_no_tag_found">Ошибка: нет метки MIFARE Classic.</string>
-    <string name="info_keys_loaded_please_wait">ключи загружены. Создание карты ключей... Это может занять некоторое время...</string>
+    <string name="info_keys_loaded_please_wait">ключи загружены. Создание карты ключей… Это может занять некоторое время…</string>
     <string name="info_tag_removed_while_reading">Ошибка: тег удален во время чтения.</string>
     <string name="info_no_vb_in_dump">В этом дампе нет блоков значений.</string>
     <string name="info_valid_dump_not_hex">Ошибка: некоторые блоки содержат недопустимые данные (не шестнадцатеричные).</string>
