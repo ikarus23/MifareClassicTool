@@ -18,6 +18,7 @@
 
 package de.syss.MifareClassicTool.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.nfc.tech.MifareClassic;
@@ -101,6 +102,7 @@ public class CloneUidTool extends BasicActivity {
      * Handle new Intent as a new tag Intent and tread them according to
      * the {@link #mStatus}.
      */
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onNewIntent(Intent intent) {
         int typeCheck = Common.treatAsNewTag(intent, this);

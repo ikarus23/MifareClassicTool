@@ -226,17 +226,17 @@ public class ImportExportTool extends BasicActivity {
      * the import or export process.
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case IMPORT_FILE_CHOSEN: // File for importing has been selected.
                 if (resultCode == RESULT_OK) {
-                    if(data != null ) {
+                    if (data != null) {
                         Uri[] uris;
-                        if(data.getClipData() != null) {
+                        if (data.getClipData() != null) {
                             // Multiple files where selected.
                             uris = new Uri[data.getClipData().getItemCount()];
-                            for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+                            for (int i = 0; i < data.getClipData().getItemCount(); i++) {
                                 uris[i] = data.getClipData().getItemAt(i).getUri();
                             }
                         } else {

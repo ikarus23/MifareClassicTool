@@ -66,6 +66,7 @@ public abstract class BasicActivity extends AppCompatActivity {
      */
     @Override
     public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         int typeCheck = Common.treatAsNewTag(intent, this);
         if (typeCheck == -1 || typeCheck == -2) {
             // Device or tag does not support MIFARE Classic.

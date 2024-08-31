@@ -728,7 +728,8 @@ public class MainMenu extends AppCompatActivity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        if(Common.getPendingComponentName() != null) {
+        super.onNewIntent(intent);
+        if (Common.getPendingComponentName() != null) {
             intent.setComponent(Common.getPendingComponentName());
             startActivity(intent);
         } else {

@@ -212,6 +212,7 @@ public class DumpEditor extends BasicActivity
      */
     @Override
     protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putBoolean("dump_changed", mDumpChanged);
         outState.putBoolean("close_after_successful_save", mCloseAfterSuccessfulSave);
         outState.putString("keys_name", mKeysName);

@@ -75,7 +75,7 @@ public class TagInfoTool extends BasicActivity {
      */
     @Override
     public void onNewIntent(Intent intent) {
-        Common.treatAsNewTag(intent, this);
+        super.onNewIntent(intent);
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             updateTagInfo(Common.getTag());
         }
