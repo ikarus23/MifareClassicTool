@@ -60,6 +60,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy A51
 * Samsung Galaxy J3 (2016) (Models: J320FN, J320F, J320P)
 * Samsung Galaxy J7 Pro (2017, Android 8.1)
+* Samsung Galaxy M11
 * Samsung Galaxy Nexus
 * Samsung Galaxy Note 2
 * Samsung Galaxy Note 8
