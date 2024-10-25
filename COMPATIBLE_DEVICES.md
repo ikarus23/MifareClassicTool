@@ -76,6 +76,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Samsung Galaxy S9
 * Samsung Galaxy S20 FE
 * Samsung Galaxy S22
+* Samsung Galaxy S24 FE
 * Samsung Galaxy Tab Active2
 * Sony Xperia M4 Aqua
 * Sony Xperia V
