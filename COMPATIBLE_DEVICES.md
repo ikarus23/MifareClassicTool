@@ -47,6 +47,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Nokia 6.2
 * Nokia 7 Plus
 * Nokia 8
+* Nokia G21 (TA-1418)
 * OnePlus One (only with certain versions of ROMs)
 * OnePlus 3/3T (only with certain versions of ROMs)
 * OnePlus 5/5T
