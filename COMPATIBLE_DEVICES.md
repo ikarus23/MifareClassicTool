@@ -21,8 +21,8 @@ hardware (NFC-controller) does support MIFARE Classic
 * Google Pixel 3a XL
 * Google Pixel 4a
 * Google Pixel 5a
-* Google Pixel 6a
 * Google Pixel 6 Pro
+* Google Pixel 6a
 * Google Pixel 7
 * Google Pixel 8 / 8 Pro (Android 15+)
 * Google Pixel 8a
