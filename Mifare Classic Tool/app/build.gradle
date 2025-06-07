@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application' version '8.7.1'
+    id 'com.android.application' version '8.7.3'
     id 'org.jetbrains.kotlin.android' version '1.9.0'
 }
 
@@ -25,6 +25,13 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
