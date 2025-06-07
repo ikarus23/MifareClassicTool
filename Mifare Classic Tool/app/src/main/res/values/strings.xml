@@ -680,10 +680,6 @@
     <string name="hint_key">HEX, 6 bytes per line</string>
 
     <!-- Copy/Clone wizard messages -->
-    <string name="text_hold_existing_card">기존 카드를 기기에 대십시오</string>
-    <string name="text_copy_step1">원본 카드 읽기 완료</string>
-    <string name="text_modukey_present">모두키 카드를 기기에 대십시오</string>
-    <string name="text_copy_step2">카드에 쓰는 중…</string>
 
     <!-- Supported locales. No need for translation! -->
     <string-array name="supported_locales" translatable="false">
