@@ -110,6 +110,9 @@ public class WriteTag extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_tag);
 
+        Toast.makeText(this, R.string.text_modukey_present,
+                Toast.LENGTH_SHORT).show();
+
         mSectorTextBlock = findViewById(R.id.editTextWriteTagSector);
         mBlockTextBlock = findViewById(R.id.editTextWriteTagBlock);
         mDataText = findViewById(R.id.editTextWriteTagData);
@@ -1215,6 +1218,9 @@ public class WriteTag extends BasicActivity {
             return;
         }
 
+        Toast.makeText(this, R.string.text_copy_step2,
+                Toast.LENGTH_SHORT).show();
+
         // Create reader.
         final MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
@@ -1231,7 +1237,7 @@ public class WriteTag extends BasicActivity {
         pad = Common.dpToPx(20);
         progressBar.setPadding(0, 0, pad, 0);
         TextView tv = new TextView(this);
-        tv.setText(getString(R.string.dialog_wait_write_tag));
+        tv.setText(getString(R.string.text_copy_step2));
         tv.setTextSize(18);
         ll.addView(progressBar);
         ll.addView(tv);
