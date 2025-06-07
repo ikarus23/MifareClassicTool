@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MIFARE 클래식 툴</string>
+    <string name="app_version">앱 버전</string>
+    <string name="text_hold_existing_card">기존 카드키를 스마트폰 뒷면에 인식한 채로 유지하세요</string>
+    <string name="text_modukey_present">모두키를 스마트폰 뒷면에 인식시켜주세요</string>
+    <string name="text_copy_step1">복사1단계 진행중</string>
+    <string name="text_copy_step2">복사2단계 진행중</string>
+    <string name="action_start_copy">복사시작</string>
+    <string name="action_start_copy_step2">복사2단계 시작</string>
+</resources>

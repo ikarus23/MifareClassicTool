@@ -662,6 +662,12 @@
         NXP\'s specifications.
         \n\nProceed at your own risk!</string>
 
+    <string name="text_hold_existing_card">Hold the existing key card on the back of your phone</string>
+    <string name="text_modukey_present">Present the ModuKey on the back of your phone</string>
+    <string name="text_copy_step1">Copy step 1 in progress</string>
+    <string name="text_copy_step2">Copy step 2 in progress</string>
+    <string name="action_start_copy">Start Copy</string>
+    <string name="action_start_copy_step2">Start Copy Step 2</string>
     <!-- Hints -->
     <string name="hint_hex_16_byte">HEX, 16 bytes (e.g. 0A4F&#8230;)</string>
     <string name="hint_hex_3_byte">HEX, 3 bytes</string>
