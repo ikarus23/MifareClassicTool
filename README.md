@@ -116,6 +116,15 @@ or read the
 [MIFARE Classic (1k) 'Datasheet'](https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf)
 (PDF) from NXP.
 
+Building from Source
+--------------------
+
+The actual Android Studio project is located inside the `Mifare Classic Tool`
+directory. To build the app yourself, open Android Studio and choose **Open**
+to select this folder (not the repository root). Once Android Studio has
+created a `local.properties` file, press *Sync Project with Gradle Files* to
+download dependencies and compile the application.
+
 
 
 Getting Started
