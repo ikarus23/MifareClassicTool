@@ -44,6 +44,7 @@ hardware (NFC-controller) does support MIFARE Classic
 * Motorola One Vision
 * Motorola G5 Plus
 * Motorola Photon Q
+* Nokia 3
 * Nokia 5
 * Nokia 6.1
 * Nokia 6.2
