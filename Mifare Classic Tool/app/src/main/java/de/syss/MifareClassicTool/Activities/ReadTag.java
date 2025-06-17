@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.SparseArray;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class ReadTag extends AppCompatActivity {
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private SparseArray<String[]> mRawDump;
+    private TextView mReadStatus;
 
     /**
      * Show the {@link KeyMapCreator}.
@@ -55,6 +57,10 @@ public class ReadTag extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_tag);
+        mReadStatus = findViewById(R.id.textViewReadTag);
+        mReadStatus.setText(R.string.text_hold_existing_card);
+        Toast.makeText(this, R.string.text_hold_existing_card,
+                Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR,
@@ -143,6 +149,11 @@ public class ReadTag extends AppCompatActivity {
                 Intent intent = new Intent(this, DumpEditor.class);
                 intent.putExtra(DumpEditor.EXTRA_DUMP, dump);
                 startActivity(intent);
+                if (mReadStatus != null) {
+                    mReadStatus.setText(R.string.text_copy_step1);
+                }
+                Toast.makeText(this, R.string.text_copy_step1,
+                        Toast.LENGTH_SHORT).show();
             } else {
                 // Error, keys from key map are not valid for reading.
                 Toast.makeText(this, R.string.info_none_key_valid_for_reading,

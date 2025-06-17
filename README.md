@@ -10,6 +10,7 @@ An Android NFC app for reading, writing, analyzing, etc. MIFARE Classic RFID tag
 Read this information in other languages:
 * [English](README.md)
 * [简体中文](README.zh-CN.md)
+* Korean language support in the app UI
 
 Helpful links:
 * [MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)
@@ -36,6 +37,7 @@ Features
   See chapter [Getting Started](#getting-started).
 * Format a tag back to the factory/delivery state
 * Write the manufacturer block (block 0) of special MIFARE Classic tags
+* Support two-step ModuKey cloning workflow
 * Use external NFC readers like ACR 122U  
   (See the [Help & Info section](https://publications.icaria.de/mct/help-and-info/#external_nfc)
   for more information.)
@@ -52,6 +54,7 @@ Features
 * Quick UID clone feature
 * Import/export/convert files
 * In-App (offline) help and information
+* Korean language support
 * It's free software (open source) ;)
 
 
@@ -96,6 +99,10 @@ Some important things are:
   Also, make sure the BCC value (check out the "BCC Calculator Tool"),
   the SAK and the ATQA values are correct. If you just want to clone a UID,
   please use the "Clone UID Tool".
+ModuKey cards are cloned in two steps:
+1. Use **Write Dump (Clone)** with "Write to Manufacturer Block" enabled to load the ModuKey template.
+2. After writing completes, press the ModuKey button to finalize the data.
+
 * This app **will not work** on some devices because their hardware
   (NFC-controller) does not support MIFARE Classic
   ([read more](https://github.com/ikarus23/MifareClassicTool/issues/1)).
@@ -108,6 +115,15 @@ For further information about MIFARE Classic check
 or read the
 [MIFARE Classic (1k) 'Datasheet'](https://www.nxp.com/docs/en/data-sheet/MF1S50YYX_V1.pdf)
 (PDF) from NXP.
+
+Building from Source
+--------------------
+
+The actual Android Studio project is located inside the `Mifare Classic Tool`
+directory. To build the app yourself, open Android Studio and choose **Open**
+to select this folder (not the repository root). Once Android Studio has
+created a `local.properties` file, press *Sync Project with Gradle Files* to
+download dependencies and compile the application.
 
 
 
