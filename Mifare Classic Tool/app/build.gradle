@@ -40,6 +40,12 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    // ▼ NEW: 레이아웃 제어를 위한 ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+
+    // 기존 의존성들 …
     implementation "androidx.core:core:1.13.1"
     implementation "androidx.preference:preference:1.2.1"
     implementation "androidx.appcompat:appcompat:1.6.1"
