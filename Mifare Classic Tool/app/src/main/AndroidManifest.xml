@@ -160,6 +160,11 @@
             android:label="@string/title_activity_value_block_tool" >
         </activity>
         <activity
+            android:name=".Activities.CopyActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_copy" >
+        </activity>
+        <activity
             android:name=".Activities.AccessConditionTool"
             android:configChanges="orientation|screenSize"
             android:icon="@drawable/access_condition_tool"

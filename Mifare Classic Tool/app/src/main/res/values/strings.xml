@@ -50,6 +50,15 @@
     <string name="title_activity_uid_log_tool">UID Log</string>
     <string name="title_activity_data_conversion_tool">Data Conversion Tool</string>
 
+    <!-- Copy Activity -->
+    <string name="title_activity_copy">Copy Tag</string>
+    <string name="text_copy_start">복사시작</string>
+    <string name="text_copy_start_source">UID : %1$s 카드키가 인식되었습니다. 1단계완료시까지 카드키를 떼지마세요</string>
+    <string name="text_copy_wait_source">카드키를 갖다대기</string>
+    <string name="text_copy_wait_target">모두키를 스마트폰 뒷면에 인식시켜주세요</string>
+    <string name="text_copy_target_detected">인식되었습니다. 2단계완료시까지 떼지마세요</string>
+    <string name="text_copy_done">복사가 완료되었습니다.</string>
+
     <!-- Texts (labels etc.) -->
     <string name="text_choose_key_files">Choose some key file(s):</string>
     <string name="text_wait_read_tag">Reading tag&#8230;\n(Don\'t remove tag)</string>
