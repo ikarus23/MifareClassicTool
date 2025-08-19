@@ -314,6 +314,7 @@
     <string name="action_cyber_chef">Cyber Chef</string>
     <string name="action_open_clone_uid_tool">Open the Clone UID Tool</string>
     <string name="action_hide_identical_sectors">Hide identical sectors</string>
+    <string name="action_clear_logs">Clear Logs</string>
     <string-array name="action_themes">
         <item>Dark</item>
         <item>Light</item>

@@ -30,7 +30,7 @@
     <item
         android:id="@+id/menuUidLogToolClear"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/action_remove_duplicates"
+        android:title="@string/action_clear_logs"
         android:showAsAction="ifRoom"
         tools:ignore="AppCompatResource" />
 
