@@ -27,6 +27,10 @@
         android:name="android.hardware.nfc"
         android:required="true" />
 
+    <queries>
+        <package android:name="eu.dedb.nfc.service" />
+    </queries>
+
     <application
         android:name=".Common"
         android:allowBackup="false"
