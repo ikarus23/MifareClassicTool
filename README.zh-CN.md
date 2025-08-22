@@ -97,7 +97,7 @@ MIFARE Classic Tool (MCT)
 许可
 -------
 
-此应用程序最初由Gerhard Klostermeier与Sys GmbH[(www.syss.de)](https://www.syss.de/)及亚伦大学[(www.htw-aalen.de)](http://www.htw-aalen.de/)在2012/2013年合作开发。它是免费软件，并通过[GNU通用公共许可证版本3(GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)授权。
+此应用程序最初由Gerhard Klostermeier与SySS GmbH及亚伦大学[(www.htw-aalen.de)](http://www.htw-aalen.de/)在2012/2013年合作开发。它是免费软件，并通过[GNU通用公共许可证版本3(GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)授权。
 
 
 应用中的图标:
