@@ -156,8 +156,7 @@ License
 -------
 
 This application was originally developed by
-Gerhard Klostermeier in cooperation with SySS GmbH
-([www.syss.de](https://www.syss.de/)) and Aalen
+Gerhard Klostermeier in cooperation with SySS GmbH and Aalen
 University ([www.htw-aalen.de](http://www.htw-aalen.de/)) in 2012/2013.
 It is free software and licensed under the
 [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.txt)
