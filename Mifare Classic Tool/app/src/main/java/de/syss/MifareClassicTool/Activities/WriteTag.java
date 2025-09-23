@@ -80,6 +80,7 @@ public class WriteTag extends BasicActivity {
     private static final int CKM_WRITE_BLOCK = 3;
     private static final int CKM_FACTORY_FORMAT = 4;
     private static final int CKM_WRITE_NEW_VALUE = 5;
+    private static final int CKM_VALUE_TRANSFER_RESTORE = 6;
 
     private EditText mSectorTextBlock;
     private EditText mBlockTextBlock;
@@ -95,7 +96,12 @@ public class WriteTag extends BasicActivity {
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
     private boolean mWriteDumpFromEditor = false;
     private String[] mDumpFromEditor;
-
+    private EditText mVtrStageSector;
+    private EditText mVtrStageBlock;
+    private EditText mVtrDestSector;
+    private EditText mVtrDestBlock;
+    private EditText mVtrValue;
+    private EditText mVtrAddr;
 
     /**
      * Initialize the layout and some member variables. If the Intent
@@ -137,6 +143,15 @@ public class WriteTag extends BasicActivity {
                 R.id.linearLayoutWriteTagFactoryFormat));
         mWriteModeLayouts.add(findViewById(
                 R.id.relativeLayoutWriteTagValueBlock));
+
+        mVtrStageSector = findViewById(R.id.editTextVtrStagingSector);
+        mVtrStageBlock  = findViewById(R.id.editTextVtrStagingBlock);
+        mVtrDestSector  = findViewById(R.id.editTextVtrDestSector);
+        mVtrDestBlock   = findViewById(R.id.editTextVtrDestBlock);
+        mVtrValue       = findViewById(R.id.editTextVtrValue);
+        mVtrAddr        = findViewById(R.id.editTextVtrAddr);
+
+        mWriteModeLayouts.add(findViewById(R.id.relativeLayoutWriteTagTransferRestore));
 
         // Restore mDumpWithPos and the "write to manufacturer block"-state.
         if (savedInstanceState != null) {
@@ -257,7 +272,13 @@ public class WriteTag extends BasicActivity {
                 writeValueBlock();
             }
             break;
-
+        case CKM_VALUE_TRANSFER_RESTORE:
+            if (resultCode != Activity.RESULT_OK) {
+                ckmError = resultCode;
+            } else {
+                runValueTransferRestore();
+            }
+            break;
         }
 
         // Error handling for the return value of KeyMapCreator.
@@ -565,6 +586,17 @@ public class WriteTag extends BasicActivity {
             startActivityForResult(intent, CKM_WRITE_BLOCK);
         }
     }
+
+    private void createKeyMapForRange(int fromSector, int toSector, int requestCode, String btnText) {
+        Intent intent = new Intent(this, KeyMapCreator.class);
+        intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR, Common.getFile(Common.KEYS_DIR).getAbsolutePath());
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER, false);
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_FROM, Math.min(fromSector, toSector));
+        intent.putExtra(KeyMapCreator.EXTRA_SECTOR_CHOOSER_TO, Math.max(fromSector, toSector));
+        intent.putExtra(KeyMapCreator.EXTRA_BUTTON_TEXT, btnText);
+        startActivityForResult(intent, requestCode);
+    }
+
 
     /**
      * Called from {@link #onActivityResult(int, int, Intent)}
@@ -1298,6 +1330,45 @@ public class WriteTag extends BasicActivity {
         }).start();
     }
 
+    public void onWriteValueTransferRestore(View view) {
+        // Validate staging
+        if (!checkSectorAndBlock(mVtrStageSector, mVtrStageBlock)) return;
+        int sSec = Integer.parseInt(mVtrStageSector.getText().toString());
+        int sBlk = Integer.parseInt(mVtrStageBlock.getText().toString());
+
+        // Validate destination
+        if (!checkSectorAndBlock(mVtrDestSector, mVtrDestBlock)) return;
+        int dSec = Integer.parseInt(mVtrDestSector.getText().toString());
+        int dBlk = Integer.parseInt(mVtrDestBlock.getText().toString());
+
+        // Prevent trailers and manufacturer block
+        // if (!isSectorInRage(this, true)) return;
+        if (sBlk == 3 || sBlk == 15 || (sSec == 0 && sBlk == 0)) {
+            Toast.makeText(this, "Staging block cannot be trailer or block 0/0.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (dBlk == 3 || dBlk == 15 || (dSec == 0 && dBlk == 0)) {
+            Toast.makeText(this, "Destination block cannot be trailer or block 0/0.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Validate value (int32) and addr (hex byte)
+        try { Integer.parseInt(mVtrValue.getText().toString()); }
+        catch (Exception e) {
+            Toast.makeText(this, R.string.info_value_too_big, Toast.LENGTH_LONG).show();
+            return;
+        }
+        String addrText = mVtrAddr.getText().toString();
+        if (!addrText.matches("[0-9A-Fa-f]{2}")) {
+            Toast.makeText(this, "Address must be one hex byte (00-FF).", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        createKeyMapForRange(sSec, dSec, CKM_VALUE_TRANSFER_RESTORE,
+            "Create key map & Transfer/Restore");
+    }
+
+
     /**
      * Open the clone UID tool.
      * @param view The View object that triggered the method
@@ -1482,4 +1553,63 @@ public class WriteTag extends BasicActivity {
                 Toast.LENGTH_LONG).show();
         finish();
     }
+
+    private byte[] encodeValueBlock(int value, int addr) {
+        // Build 16 bytes: V(4 LE) | ~V(4 LE) | V(4 LE) | addr | ~addr | addr | ~addr
+        byte[] v  = java.nio.ByteBuffer.allocate(4).putInt(Integer.reverseBytes(value)).array();
+        byte[] nv = java.nio.ByteBuffer.allocate(4).putInt(Integer.reverseBytes(~value)).array();
+        byte a    = (byte)(addr & 0xFF);
+        byte na   = (byte)(~a);
+        byte[] out = new byte[16];
+        System.arraycopy(v,  0, out, 0, 4);
+        System.arraycopy(nv, 0, out, 4, 4);
+        System.arraycopy(v,  0, out, 8, 4);
+        out[12] = a;  out[13] = na;  out[14] = a;  out[15] = na;
+        return out;
+    }
+
+    private void runValueTransferRestore() {
+        MCReader reader = Common.checkForTagAndCreateReader(this);
+        if (reader == null) return;
+
+        int sSec = Integer.parseInt(mVtrStageSector.getText().toString());
+        int sBlk = Integer.parseInt(mVtrStageBlock.getText().toString());
+        int dSec = Integer.parseInt(mVtrDestSector.getText().toString());
+        int dBlk = Integer.parseInt(mVtrDestBlock.getText().toString());
+        int value = Integer.parseInt(mVtrValue.getText().toString());
+        int addr = Integer.parseInt(mVtrAddr.getText().toString(), 16);
+        byte[] vb = encodeValueBlock(value, addr);
+
+        // try key B first, then key A
+        byte[][] ksStage = Common.getKeyMap().get(sSec);
+        byte[][] ksDest  = Common.getKeyMap().get(dSec);
+        int result = -1;
+        int[] order = {1, 0}; // 1 == Key B, 0 == Key A
+
+        outer:
+        for (int i : order) {
+            for (int j : order) {
+                if (ksStage != null && ksDest != null && ksStage[i] != null && ksDest[j] != null) {
+                    result = reader.valueTransferRestore(
+                        sSec, sBlk, dSec, dBlk, vb,
+                        ksStage[i], (i == 1),
+                        ksDest[j],  (j == 1));
+                    if (result != -1) break outer;
+                }
+            }
+        }
+        reader.close();
+
+        switch (result) {
+            case 2:
+                Toast.makeText(this, R.string.info_block_not_in_sector, Toast.LENGTH_LONG).show();
+                return;
+            case -1:
+                Toast.makeText(this, "Error doing transfer/restore (auth/write/ops).", Toast.LENGTH_LONG).show();
+                return;
+        }  // TODO: remove hardcoded strings
+        Toast.makeText(this, "Transfer/Restore successful.", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
 }
