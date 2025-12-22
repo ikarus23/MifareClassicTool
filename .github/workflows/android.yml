@@ -6,16 +6,12 @@ permissions:
 on:
   push:
     branches:
-      - main
+      - master
     tags:
       - "v*"
-    paths:
-      - 'Mifare Classic Tool/**'
   pull_request:
     branches:
-      - main
-    paths:
-      - 'Mifare Classic Tool/**'
+      - master
   workflow_dispatch:
 
 env:
