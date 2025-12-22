@@ -1,0 +1,44 @@
+name: AndroidCI
+
+on:
+  push:
+    paths:
+      - 'Mifare Classic Tool/**'
+  pull_request:
+    paths:
+      - 'Mifare Classic Tool/**'
+  workflow_dispatch:
+env:
+  PROJECT_PATH: "Mifare Classic Tool"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Grant execute permission to gradlew
+        working-directory: "${{ env.PROJECT_PATH }}"
+        run: chmod +x gradlew
+
+      - name: Setup Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: Build Debug APK
+        working-directory: "${{ env.PROJECT_PATH }}"
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MifareClassicTool-debug
+          path: |
+            ${{ env.PROJECT_PATH }}/app/build/outputs/apk/debug/*.apk

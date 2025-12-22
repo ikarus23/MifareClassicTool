@@ -1,13 +1,23 @@
 name: AndroidCI
 
+permissions:
+  contents: write
+
 on:
   push:
+    branches:
+      - main
+    tags:
+      - "v*"
     paths:
       - 'Mifare Classic Tool/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'Mifare Classic Tool/**'
   workflow_dispatch:
+
 env:
   PROJECT_PATH: "Mifare Classic Tool"
 
@@ -19,26 +29,64 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: zulu
+          distribution: temurin
           java-version: 17
+          cache: gradle
 
       - name: Grant execute permission to gradlew
         working-directory: "${{ env.PROJECT_PATH }}"
         run: chmod +x gradlew
 
-      - name: Setup Gradle cache
-        uses: gradle/gradle-build-action@v2
-
       - name: Build Debug APK
         working-directory: "${{ env.PROJECT_PATH }}"
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload APK
+      - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: MifareClassicTool-debug
           path: |
             ${{ env.PROJECT_PATH }}/app/build/outputs/apk/debug/*.apk
+
+      # ===============================
+      # 仅在 tag (v*) 时创建 Release
+      # ===============================
+      - name: Create GitHub Release & Upload APK
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MifareClassicTool ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          files: |
+            ${{ env.PROJECT_PATH }}/app/build/outputs/apk/debug/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ===============================
+      # 可选：上传 OSS（仅 tag）
+      # ===============================
+      - name: Install ossutil
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          curl -L https://gosspublic.alicdn.com/ossutil/1.7.9/ossutil64 \
+            -o /usr/local/bin/ossutil
+          chmod +x /usr/local/bin/ossutil
+
+      - name: Upload APK to Aliyun OSS
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          OSS_KEY: ${{ secrets.ALI_OSS_KEY }}
+          OSS_SECRET: ${{ secrets.ALI_OSS_SECRET }}
+        run: |
+          ossutil config \
+            --access-key-id=$OSS_KEY \
+            --access-key-secret=$OSS_SECRET \
+            --endpoint=oss-cn-guangzhou.aliyuncs.com
+
+          ossutil cp \
+            "${{ env.PROJECT_PATH }}/app/build/outputs/apk/debug/" \
+            oss://kgyydsgithub/ci-builds/${{ github.ref_name }}/ \
+            -r -f
