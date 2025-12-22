@@ -1,0 +1,49 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) 拉取代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2) 设置 JDK（Android 构建需要 JDK）
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # 3) 让 Gradle Wrapper 可执行
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      # 4) 缓存 Gradle 依赖（加速）
+      - name: Cache gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties', '**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # 5) 构建 APK
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      # 6) 保存构建产物到 artifacts 以供下载
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MCT-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
