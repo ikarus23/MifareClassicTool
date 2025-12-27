@@ -13,7 +13,6 @@ Read this information in other languages:
 
 Helpful links:
 * [MIFARE Classic Tool (Donate Version) on Google Play](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)
-* [MIFARE Classic Tool on Huawei's AppGallery](https://appgallery1.huawei.com/#/app/C101783071)
 * [Screenshots](https://www.icaria.de/mct/screenshots/latest/)
 * [Help & Info/User Manual](https://www.icaria.de/mct/help-and-info/)
 * [Additional stuff](https://www.icaria.de/mct/) (Documentation, APK files, etc.)

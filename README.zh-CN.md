@@ -13,7 +13,6 @@ MIFARE Classic Tool (MCT)
 
 链接:
 * [Google Play上的MIFARE Classic Tool (捐赠版)](https://play.google.com/store/apps/details?id=de.syss.MifareClassicToolDonate)
-* [华为AppGallery上的MIFARE Classic Tool](https://appgallery1.huawei.com/#/app/C101783071)
 * [截图](https://www.icaria.de/mct/screenshots/latest/)
 * [帮助与信息/用户手册](https://www.icaria.de/mct/help-and-info/)
 * [其他内容](https://www.icaria.de/mct/) (文档，APK文件等)
