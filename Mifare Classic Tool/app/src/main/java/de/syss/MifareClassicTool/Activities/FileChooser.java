@@ -226,6 +226,9 @@ public class FileChooser extends BasicActivity {
         } else if (itemId == R.id.menuFileChooserDeleteFile) {
             onDeleteFile();
             return true;
+        } else if (itemId == R.id.menuFileChooserImportExportFiles) {
+            onImportExportFiles();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -397,4 +400,13 @@ public class FileChooser extends BasicActivity {
         file.delete();
         mIsDirEmpty = updateFileIndex(mDir);
     }
+
+    /**
+     * Open the {@link ImportExportTool}.
+     */
+    private void onImportExportFiles() {
+        Intent intent = new Intent(this, ImportExportTool.class);
+        startActivity(intent);
+    }
+
 }

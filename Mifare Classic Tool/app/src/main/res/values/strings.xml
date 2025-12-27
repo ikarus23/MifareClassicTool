@@ -308,6 +308,7 @@
     <string name="action_export_dump">Export Dump</string>
     <string name="action_import_keys">Import Keys</string>
     <string name="action_export_keys">Export Keys</string>
+    <string name="action_import_export_file">Import/Export Files</string>
     <string name="action_backup_all">Backup / Export Everything</string>
     <string name="action_generic_converter">Generic Type Converter</string>
     <string name="action_multi_purpose_converter">Multi-Purpose Converter</string>

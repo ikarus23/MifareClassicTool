@@ -28,4 +28,6 @@
         tools:ignore="AppCompatResource" />
     <item android:id="@+id/menuFileChooserDeleteFile"
         android:title="@string/action_delete_file" />
+    <item android:id="@+id/menuFileChooserImportExportFiles"
+        android:title="@string/action_import_export_file" />
 </menu>
