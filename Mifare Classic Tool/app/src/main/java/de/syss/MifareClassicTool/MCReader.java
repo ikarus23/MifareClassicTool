@@ -879,6 +879,81 @@ public class MCReader {
         return false;
     }
 
+    /**
+     * Write a prepared value block to a staging block (normal write),
+     * then RESTORE from staging into the temp transfer buffer,
+     * then TRANSFER to the destination value block.
+     * Finally, restore the original content of the staging block.
+     * TODO: check if we have permission to write to staging block!
+     *
+     * @return 0 on success; 2 if a block index is not inside its sector;
+     *        -1 on auth/IO errors.
+     */
+    public int valueTransferRestore(
+        int stageSector, int stageBlock, int destSector, int destBlock,
+        byte[] valueBlock16,
+        byte[] keyStage, boolean useKeyBStage,
+        byte[] keyDest,  boolean useKeyBDest) {
+
+        try {
+            mMFC.connect();
+
+            // block numbers validation
+            int stageBlocks = mMFC.getBlockCountInSector(stageSector);
+            int destBlocks  = mMFC.getBlockCountInSector(destSector);
+            if (stageBlock < 0 || stageBlock >= stageBlocks) return 2;
+            if (destBlock  < 0 || destBlock  >= destBlocks)  return 2;
+
+            // safety against writing to trailer and manufacturer block safety
+            if (stageBlock == stageBlocks - 1 || (stageSector == 0 && stageBlock == 0)) return -1;
+            if (destBlock  == destBlocks - 1  || (destSector  == 0 && destBlock  == 0)) return -1;
+
+            int stageAbs = mMFC.sectorToBlock(stageSector) + stageBlock;
+            int destAbs  = mMFC.sectorToBlock(destSector)  + destBlock;
+
+            boolean ok = useKeyBStage
+                ? mMFC.authenticateSectorWithKeyB(stageSector, keyStage)
+                : mMFC.authenticateSectorWithKeyA(stageSector, keyStage);
+            if (!ok)
+                return -1;
+
+            // save original content, from this block
+            byte[] original = mMFC.readBlock(stageAbs);
+
+            // write the prepared value block in correct format
+            mMFC.writeBlock(stageAbs, valueBlock16);
+
+            // perform a RESTORE
+            mMFC.restore(stageAbs);
+
+            ok = useKeyBDest
+                ? mMFC.authenticateSectorWithKeyB(destSector, keyDest)
+                : mMFC.authenticateSectorWithKeyA(destSector, keyDest);
+            if (!ok)
+                return -1;
+
+            // perform a TRANSFER
+            mMFC.transfer(destAbs);
+
+            // write the original content back
+            if (stageSector != destSector) {
+                ok = useKeyBStage
+                    ? mMFC.authenticateSectorWithKeyB(stageSector, keyStage)
+                    : mMFC.authenticateSectorWithKeyA(stageSector, keyStage);
+                if (!ok) return -1;
+            }
+            mMFC.writeBlock(stageAbs, original);
+
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        } finally {
+            try { mMFC.close(); } catch (Exception ignored) { }
+        }
+    }
+
+
+
     // TODO: Make this a function with three return values.
     // 0 = Auth. successful.
     // 1 = Auth. not successful.

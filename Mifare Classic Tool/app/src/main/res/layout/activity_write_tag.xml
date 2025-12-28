@@ -550,7 +550,153 @@
                     android:onClick="onWriteValue"
                     android:text="@string/action_write_value_block" />
             </RelativeLayout>
+
+
+            <!-- Separator -->
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_margin="10dp"
+                android:background="@color/light_gray" />
+
+            <!-- Value Transfer & Restore (new) -->
+
+            <RadioButton
+                android:id="@+id/radioButtonWriteTagTransferRestore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_horizontal"
+                android:onClick="onChangeWriteMode"
+                android:tag="writetag_transfer_restore"
+                android:text="Value Transfer and Restore"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="?attr/colorAccent" />
+
+            <!-- TODO: remove hardcoded strings -->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutWriteTagTransferRestore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:tag="writetag_transfer_restore_layout"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/labelVtrStaging"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Staging (source) sector,block" />
+
+                <LinearLayout
+                    android:id="@+id/rowVtrStaging"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/labelVtrStaging"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextVtrStagingSector"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="sector" />
+
+                    <EditText
+                        android:id="@+id/editTextVtrStagingBlock"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="block" />
+                </LinearLayout>
+
+                <!-- Destination -->
+                <TextView
+                    android:id="@+id/labelVtrDest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rowVtrStaging"
+                    android:layout_marginTop="8dp"
+                    android:text="Destination sector,block" />
+
+                <LinearLayout
+                    android:id="@+id/rowVtrDest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/labelVtrDest"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextVtrDestSector"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="sector" />
+
+                    <EditText
+                        android:id="@+id/editTextVtrDestBlock"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="block" />
+                </LinearLayout>
+
+                <!-- Value + Addr -->
+                <TextView
+                    android:id="@+id/labelVtrValAddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rowVtrDest"
+                    android:layout_marginTop="8dp"
+                    android:text="Value (int32) and address (1 byte hex)" />
+
+                <LinearLayout
+                    android:id="@+id/rowVtrValAddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/labelVtrValAddr"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextVtrValue"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.5"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberSigned"
+                        android:hint="value (e.g. 123)" />
+
+                    <EditText
+                        android:id="@+id/editTextVtrAddr"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="2"
+                        android:hint="addr (00-FF)" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonWriteTagTransferRestore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rowVtrValAddr"
+                    android:layout_marginTop="10dp"
+                    android:onClick="onWriteValueTransferRestore"
+                    android:text="Create key map &amp; Transfer/Restore" />
+            </RelativeLayout>
+
+
+
         </RadioGroup>
+
+
+
+
+
     </LinearLayout>
 
 </ScrollView>

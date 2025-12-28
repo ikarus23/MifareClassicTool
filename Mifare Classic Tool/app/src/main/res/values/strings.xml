@@ -20,6 +20,13 @@
 
 
 <resources>
+    <!-- TODO: this is uncategorized -->
+    <string name="hint_staging_block">Staging block</string>
+    <string name="hint_destination_block">Destination block</string>
+    <string name="hint_value_decimal">Value (32 bit integer)</string>
+    <string name="hint_address_hex">Address (in hexadecimal)</string>
+    <string name="btn_execute_transfer_restore">Execute transfer restore</string>
+
 
     <!-- Common stuff -->
     <string name="app_name">MIFARE Classic Tool</string>
