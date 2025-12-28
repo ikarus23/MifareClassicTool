@@ -144,12 +144,12 @@ public class WriteTag extends BasicActivity {
         mWriteModeLayouts.add(findViewById(
                 R.id.relativeLayoutWriteTagValueBlock));
 
-        mVtrStageSector = findViewById(R.id.editTextVtrStagingSector);
-        mVtrStageBlock  = findViewById(R.id.editTextVtrStagingBlock);
-        mVtrDestSector  = findViewById(R.id.editTextVtrDestSector);
-        mVtrDestBlock   = findViewById(R.id.editTextVtrDestBlock);
-        mVtrValue       = findViewById(R.id.editTextVtrValue);
-        mVtrAddr        = findViewById(R.id.editTextVtrAddr);
+        mVtrStageSector = findViewById(R.id.editTextWriteTagTransferRestoreStagingSector);
+        mVtrStageBlock  = findViewById(R.id.editTextWriteTagTransferRestoreStagingBlock);
+        mVtrDestSector  = findViewById(R.id.editTextWriteTagTransferRestoreDestinationSector);
+        mVtrDestBlock   = findViewById(R.id.editTextWriteTagTransferRestoreDestinationBlock);
+        mVtrValue       = findViewById(R.id.editTextWriteTagTransferRestoreValue);
+        mVtrAddr        = findViewById(R.id.editTextWriteTagTransferRestoreAddress);
 
         mWriteModeLayouts.add(findViewById(R.id.relativeLayoutWriteTagTransferRestore));
 

@@ -129,6 +129,11 @@ public class Common extends Application {
     public static final String STD_KEYS_EXTENDED = "extended-std.keys";
 
     /**
+     * Keys from the extended-std.keys file which are known to work on hotel cards.
+     */
+    public static final String STD_HOTEL_KEYS = "hotel-std.keys";
+
+    /**
      * Log file with UIDs which have been discovered in the past.
      */
     public static final String UID_LOG_FILE = "uid-log-file.txt";

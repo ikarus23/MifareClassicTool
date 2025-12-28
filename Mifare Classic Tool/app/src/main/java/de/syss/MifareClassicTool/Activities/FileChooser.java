@@ -296,9 +296,10 @@ public class FileChooser extends BasicActivity {
         // Add storage model update info, if MCT was updated and there are no
         // or only standard files.
         if ((!Common.isFirstInstall() && isEmpty) ||
-                (!Common.isFirstInstall() && files != null && files.length == 2
+                (!Common.isFirstInstall() && files != null && files.length == 3
                 && files[0].getName().equals(Common.STD_KEYS_EXTENDED)
-                && files[1].getName().equals(Common.STD_KEYS))) {
+                && files[2].getName().equals(Common.STD_KEYS)
+                && files[1].getName().equals(Common.STD_HOTEL_KEYS))) {
             chooserText += getString(R.string.text_missing_files_update) + "\n\n";
         }
         Intent intent = getIntent();

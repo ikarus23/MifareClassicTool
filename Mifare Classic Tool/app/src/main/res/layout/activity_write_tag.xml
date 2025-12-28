@@ -559,7 +559,7 @@
                 android:layout_margin="10dp"
                 android:background="@color/light_gray" />
 
-            <!-- Value Transfer & Restore (new) -->
+            <!-- TODO: remove hardcoded strings -->
 
             <RadioButton
                 android:id="@+id/radioButtonWriteTagTransferRestore"
@@ -573,129 +573,180 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?attr/colorAccent" />
 
-            <!-- TODO: remove hardcoded strings -->
+            <!-- Dummy for preventing EditTexts to get focus on
+            Activity startup -->
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="0dip"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
             <RelativeLayout
                 android:id="@+id/relativeLayoutWriteTagTransferRestore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:visibility="gone"
-                android:tag="writetag_transfer_restore_layout"
-                android:padding="8dp">
+                android:tag="writetag_transfer_restore_layout" >
 
                 <TextView
-                    android:id="@+id/labelVtrStaging"
+                    android:id="@+id/textViewWriteTagTransferRestoreInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Staging (source) sector,block" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="5dp"
+                    android:text="Set value of Value Block even if there are only decrement/transfer/restore permissions"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <LinearLayout
-                    android:id="@+id/rowVtrStaging"
+                <GridLayout
+                    android:id="@+id/gridLayoutWriteTagTransferRestore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/labelVtrStaging"
-                    android:orientation="horizontal">
+                    android:layout_below="@id/textViewWriteTagTransferRestoreInfo"
+                    android:columnCount="4"
+                    android:rowCount="2" >
+
+                    <TextView
+                        android:id="@+id/textViewWriteTagTransferRestoreStaging"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:padding="5dp"
+                        android:text="Staging"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:labelFor="@+id/editTextWriteTagTransferRestoreStagingSector" />
 
                     <EditText
-                        android:id="@+id/editTextVtrStagingSector"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:id="@+id/editTextWriteTagTransferRestoreStagingSector"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:gravity="center_horizontal"
                         android:inputType="number"
-                        android:hint="sector" />
-
-                    <EditText
-                        android:id="@+id/editTextVtrStagingBlock"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:hint="block" />
-                </LinearLayout>
-
-                <!-- Destination -->
-                <TextView
-                    android:id="@+id/labelVtrDest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rowVtrStaging"
-                    android:layout_marginTop="8dp"
-                    android:text="Destination sector,block" />
-
-                <LinearLayout
-                    android:id="@+id/rowVtrDest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/labelVtrDest"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/editTextVtrDestSector"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:hint="sector" />
-
-                    <EditText
-                        android:id="@+id/editTextVtrDestBlock"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:hint="block" />
-                </LinearLayout>
-
-                <!-- Value + Addr -->
-                <TextView
-                    android:id="@+id/labelVtrValAddr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rowVtrDest"
-                    android:layout_marginTop="8dp"
-                    android:text="Value (int32) and address (1 byte hex)" />
-
-                <LinearLayout
-                    android:id="@+id/rowVtrValAddr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/labelVtrValAddr"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/editTextVtrValue"
-                        android:layout_width="0dp"
-                        android:layout_weight="1.5"
-                        android:layout_height="wrap_content"
-                        android:inputType="number|numberSigned"
-                        android:hint="value (e.g. 123)" />
-
-                    <EditText
-                        android:id="@+id/editTextVtrAddr"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"
                         android:maxLength="2"
-                        android:hint="addr (00-FF)" />
-                </LinearLayout>
+                        android:minEms="3"
+                        android:importantForAutofill="no"
+                        android:hint="@string/text_sector" />
+
+                    <EditText
+                        android:id="@+id/editTextWriteTagTransferRestoreStagingBlock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="2"
+                        android:gravity="center_horizontal"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:minEms="3"
+                        android:importantForAutofill="no"
+                        android:hint="@string/text_block" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteTagHint5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="3"
+                        android:text="@string/text_starting_at_0"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteTagTransferRestoreDestination"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:padding="5dp"
+                        android:text="Destination"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:labelFor="@+id/editTextWriteTagTransferRestoreDestinationSector" />
+
+                    <EditText
+                        android:id="@+id/editTextWriteTagTransferRestoreDestinationSector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:gravity="center_horizontal"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:minEms="3"
+                        android:importantForAutofill="no"
+                        android:hint="@string/text_sector" />
+
+                    <EditText
+                        android:id="@+id/editTextWriteTagTransferRestoreDestinationBlock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="2"
+                        android:gravity="center_horizontal"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:minEms="3"
+                        android:importantForAutofill="no"
+                        android:hint="@string/text_block" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteTagHint6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="3"
+                        android:text="@string/text_starting_at_0"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                </GridLayout>
+
+                <TextView
+                    android:id="@+id/textViewWriteTagTransferRestoreValueAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gridLayoutWriteTagTransferRestore"
+                    android:layout_alignBaseline="@id/editTextWriteTagTransferRestoreValue"
+                    android:padding="5dp"
+                    android:text="Value and Address"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagTransferRestoreValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gridLayoutWriteTagTransferRestore"
+                    android:layout_toRightOf="@id/textViewWriteTagTransferRestoreValueAddress"
+                    android:maxLength="10"
+                    android:minEms="6"
+                    android:importantForAutofill="no"
+                    android:inputType="number|numberSigned"
+                    android:hint="@string/hint_int_423" />
+
+                <EditText
+                    android:id="@+id/editTextWriteTagTransferRestoreAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gridLayoutWriteTagTransferRestore"
+                    android:layout_toRightOf="@id/editTextWriteTagTransferRestoreValue"
+                    android:maxLength="2"
+                    android:minEms="2"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_hex_00" />
 
                 <Button
                     android:id="@+id/buttonWriteTagTransferRestore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/rowVtrValAddr"
+                    android:layout_below="@id/textViewWriteTagTransferRestoreValueAddress"
                     android:layout_marginTop="10dp"
                     android:onClick="onWriteValueTransferRestore"
                     android:text="Create key map &amp; Transfer/Restore" />
             </RelativeLayout>
 
-
-
         </RadioGroup>
-
-
-
-
 
     </LinearLayout>
 

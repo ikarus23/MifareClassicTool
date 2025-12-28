@@ -964,8 +964,9 @@ public class MainMenu extends AppCompatActivity {
     }
 
     /**
-     * Copy the standard key files ({@link Common#STD_KEYS} and
-     * {@link Common#STD_KEYS_EXTENDED}) form assets to {@link Common#KEYS_DIR}.
+     * Copy the standard key files ({@link Common#STD_KEYS},
+     * {@link Common#STD_KEYS_EXTENDED} and {@link Common#STD_HOTEL_KEYS})
+     * form assets to {@link Common#KEYS_DIR}.
      * @see Common#KEYS_DIR
      * @see Common#HOME_DIR
      * @see Common#copyFile(InputStream, OutputStream)

@@ -347,7 +347,8 @@ public class KeyEditor extends BasicActivity
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (fileName.equals(Common.STD_KEYS) || fileName.equals(Common.STD_KEYS_EXTENDED)) {
+        if (fileName.equals(Common.STD_KEYS) || fileName.equals(Common.STD_KEYS_EXTENDED) ||
+                fileName.equals(Common.STD_HOTEL_KEYS)) {
             Toast.makeText(this, R.string.info_std_key_overwrite,
                     Toast.LENGTH_LONG).show();
             return;
