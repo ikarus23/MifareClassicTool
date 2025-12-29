@@ -587,6 +587,13 @@ public class WriteTag extends BasicActivity {
         }
     }
 
+    /**
+     * TODO Doc
+     * @param fromSector
+     * @param toSector
+     * @param requestCode
+     * @param btnText
+     */
     private void createKeyMapForRange(int fromSector, int toSector, int requestCode, String btnText) {
         Intent intent = new Intent(this, KeyMapCreator.class);
         intent.putExtra(KeyMapCreator.EXTRA_KEYS_DIR, Common.getFile(Common.KEYS_DIR).getAbsolutePath());
@@ -1379,9 +1386,13 @@ public class WriteTag extends BasicActivity {
             return;
         }
 
-        // TODO: What if s < d?
-        createKeyMapForRange(sSec, dSec, CKM_VALUE_TRANSFER_RESTORE,
-            "Create key map & Transfer/Restore");
+        if (sSec < dSec) {
+            createKeyMapForRange(sSec, dSec, CKM_VALUE_TRANSFER_RESTORE,
+                this.getString(R.string.action_create_key_map_and_write_value_block));
+        } else {
+            createKeyMapForRange(dSec, sSec, CKM_VALUE_TRANSFER_RESTORE,
+                this.getString(R.string.action_create_key_map_and_write_value_block));
+        }
     }
 
 
