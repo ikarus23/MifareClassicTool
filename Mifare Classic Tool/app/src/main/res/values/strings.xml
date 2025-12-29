@@ -429,6 +429,7 @@
         (block 0)</string>
     <string name="info_not_vb">Error: Selected block is not a Value Block</string>
     <string name="info_value_too_big">Error: The value is too big</string>
+    <string name="info_value_too_small">Error: The value is too small</string>
     <string name="info_bcc_not_valid">Error: BCC of block 0 is not valid</string>
     <string name="info_invalid_uid_length">Error: Invalid UID length</string>
     <string name="info_sector_count_error">Error: Sector count must be between 1 and 40</string>
@@ -451,6 +452,10 @@
     <string name="info_backup_error">Error while creating a full backup</string>
     <string name="info_irreversible_acs">Warning: The access conditions will be irreversible</string>
     <string name="info_std_key_overwrite">Error: Standard key files can not be overwritten</string>
+    <string name="info_error_staging_sector_trailer_block0">Error: Staging block can not be
+        sector trailer or manufacturer block</string>
+    <string name="info_error_destination_sector_trailer_block0">Error: Destination block can not
+        be sector trailer or manufacturer block</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">The NFC adapter is not enabled.

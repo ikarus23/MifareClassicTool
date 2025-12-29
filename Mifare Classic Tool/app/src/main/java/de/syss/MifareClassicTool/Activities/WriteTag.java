@@ -1346,28 +1346,40 @@ public class WriteTag extends BasicActivity {
         int dBlk = Integer.parseInt(mVtrDestBlock.getText().toString());
 
         // Prevent trailers and manufacturer block
-        // if (!isSectorInRage(this, true)) return;
         if (sBlk == 3 || sBlk == 15 || (sSec == 0 && sBlk == 0)) {
-            Toast.makeText(this, "Staging block cannot be trailer or block 0/0.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.info_error_staging_sector_trailer_block0,
+                Toast.LENGTH_LONG).show();
             return;
         }
         if (dBlk == 3 || dBlk == 15 || (dSec == 0 && dBlk == 0)) {
-            Toast.makeText(this, "Destination block cannot be trailer or block 0/0.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.info_error_destination_sector_trailer_block0,
+                Toast.LENGTH_LONG).show();
             return;
         }
 
-        // Validate value (int32) and addr (hex byte)
-        try { Integer.parseInt(mVtrValue.getText().toString()); }
-        catch (Exception e) {
+        // Validate value (int32).
+        if (mVtrValue.getText().toString().equals("")) {
+            Toast.makeText(this, R.string.info_no_int_to_encode, Toast.LENGTH_LONG).show();
+            return;
+        }
+        long value = Long.parseLong(mVtrValue.getText().toString());
+        if (value > Integer.MAX_VALUE) {
             Toast.makeText(this, R.string.info_value_too_big, Toast.LENGTH_LONG).show();
             return;
         }
-        String addrText = mVtrAddr.getText().toString();
-        if (!addrText.matches("[0-9A-Fa-f]{2}")) {
-            Toast.makeText(this, "Address must be one hex byte (00-FF).", Toast.LENGTH_LONG).show();
+        if (value < Integer.MIN_VALUE) {
+            Toast.makeText(this, R.string.info_value_too_small, Toast.LENGTH_LONG).show();
             return;
         }
 
+        // Validate address.
+        String addrText = mVtrAddr.getText().toString();
+        if (!addrText.matches("[0-9A-Fa-f]{2}")) {
+            Toast.makeText(this, R.string.info_addr_not_hex_byte, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // TODO: What if s < d?
         createKeyMapForRange(sSec, dSec, CKM_VALUE_TRANSFER_RESTORE,
             "Create key map & Transfer/Restore");
     }
