@@ -212,6 +212,12 @@
     <string name="text_difference_between_dumps">Difference between dumps</string>
     <string name="text_choose_language">Choose custom app language</string>
     <string name="text_choose_theme">Choose custom theme</string>
+    <string name="text_transfer_restore_value_block">Transfer &amp; Restore Value Block</string>
+    <string name="text_transfer_restore_value_block_info">Set value of a Value Block even
+        if there are only decrement/transfer/restore permissions</string>
+    <string name="text_staging">Staging</string>
+    <string name="text_destination">Destination</string>
+    <string name="text_value_and_address">Value &amp; Address</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Read Tag</string>
@@ -328,6 +334,8 @@
         <item>Light</item>
         <item>Follow System (Android 10+)</item>
     </string-array>
+    <string name="action_write_value_block_transfer_restore">Write Value Block
+        with Transfer &amp; Restore</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">New tag found</string>

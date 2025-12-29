@@ -1330,7 +1330,11 @@ public class WriteTag extends BasicActivity {
         }).start();
     }
 
-    public void onWriteValueTransferRestore(View view) {
+    /**
+     * TODO: Doc.
+     * @param view
+     */
+    public void onWriteValueBlockTransferRestore(View view) {
         // Validate staging
         if (!checkSectorAndBlock(mVtrStageSector, mVtrStageBlock)) return;
         int sSec = Integer.parseInt(mVtrStageSector.getText().toString());

@@ -559,8 +559,6 @@
                 android:layout_margin="10dp"
                 android:background="@color/light_gray" />
 
-            <!-- TODO: remove hardcoded strings -->
-
             <RadioButton
                 android:id="@+id/radioButtonWriteTagTransferRestore"
                 android:layout_width="match_parent"
@@ -569,7 +567,7 @@
                 android:gravity="center_horizontal"
                 android:onClick="onChangeWriteMode"
                 android:tag="writetag_transfer_restore"
-                android:text="Value Transfer and Restore"
+                android:text="@string/text_transfer_restore_value_block"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?attr/colorAccent" />
 
@@ -597,7 +595,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:padding="5dp"
-                    android:text="Set value of Value Block even if there are only decrement/transfer/restore permissions"
+                    android:text="@string/text_transfer_restore_value_block_info"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <GridLayout
@@ -615,7 +613,7 @@
                         android:layout_row="0"
                         android:layout_column="0"
                         android:padding="5dp"
-                        android:text="Staging"
+                        android:text="@string/text_staging"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:labelFor="@+id/editTextWriteTagTransferRestoreStagingSector" />
 
@@ -661,7 +659,7 @@
                         android:layout_row="1"
                         android:layout_column="0"
                         android:padding="5dp"
-                        android:text="Destination"
+                        android:text="@string/text_destination"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:labelFor="@+id/editTextWriteTagTransferRestoreDestinationSector" />
 
@@ -709,7 +707,7 @@
                     android:layout_below="@id/gridLayoutWriteTagTransferRestore"
                     android:layout_alignBaseline="@id/editTextWriteTagTransferRestoreValue"
                     android:padding="5dp"
-                    android:text="Value and Address"
+                    android:text="@string/text_value_and_address"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
@@ -738,12 +736,12 @@
 
                 <Button
                     android:id="@+id/buttonWriteTagTransferRestore"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewWriteTagTransferRestoreValueAddress"
                     android:layout_marginTop="10dp"
-                    android:onClick="onWriteValueTransferRestore"
-                    android:text="Create key map &amp; Transfer/Restore" />
+                    android:onClick="onWriteValueBlockTransferRestore"
+                    android:text="@string/action_write_value_block_transfer_restore" />
             </RelativeLayout>
 
         </RadioGroup>
