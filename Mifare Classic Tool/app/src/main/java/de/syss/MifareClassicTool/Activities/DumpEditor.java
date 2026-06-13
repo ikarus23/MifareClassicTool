@@ -292,6 +292,9 @@ public class DumpEditor extends BasicActivity
         } else if (itemId == R.id.menuDumpEditorExportDump) {
             exportDump();
             return true;
+        } else if (itemId == R.id.menuDumpEditorCopyAllSectors) {
+            copyAllSectorsToClipboard();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -903,6 +906,37 @@ public class DumpEditor extends BasicActivity
         intent.putExtra(ImportExportTool.EXTRA_FILE_PATH, file.getAbsolutePath());
         intent.putExtra(ImportExportTool.EXTRA_IS_DUMP_FILE, true);
         startActivity(intent);
+    }
+
+    /**
+     * Copy all sectors as a string to the clipboard, maintaining newlines
+     * between all blocks.
+     */
+    private void copyAllSectorsToClipboard() {
+        int err = checkDumpAndUpdateLines();
+        if (err != 0) {
+            Common.isValidDumpErrorToast(err, this);
+            return;
+        }
+
+        // Build the dump string from mLines
+        StringBuilder dumpString = new StringBuilder();
+        for (int i = 0; i < mLines.length; i++) {
+            String line = mLines[i];
+            
+            // Skip sector headers
+            if (line.startsWith("+")) {
+                continue;
+            }
+
+            // Add a newline before appending (except for the very first block)
+            if (dumpString.length() > 0) {
+                dumpString.append(System.lineSeparator());
+            }
+            dumpString.append(line);
+        }
+
+        Common.copyToClipboard(dumpString.toString(), this, true);
     }
 
     /**

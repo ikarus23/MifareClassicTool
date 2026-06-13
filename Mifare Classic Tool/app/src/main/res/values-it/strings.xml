@@ -314,6 +314,7 @@
     <string name="action_open_clone_uid_tool">Apri lo strumento per clonare l\'UID</string>
     <string name="action_hide_identical_sectors">Nascondi i settori identici</string>
     <string name="action_clear_logs">Pulisci Logs</string>
+    <string name="action_copy_all_sectors">Copia tutti i settori</string>
     <string-array name="action_themes">
         <item>Scuro</item>
         <item>Chiaro</item>

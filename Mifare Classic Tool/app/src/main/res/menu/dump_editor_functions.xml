@@ -53,4 +53,6 @@
         android:title="@string/action_show_ac_tool" />
     <item android:id="@+id/menuDumpEditorOpenBccTool"
           android:title="@string/action_show_bcc_tool" />
+    <item android:id="@+id/menuDumpEditorCopyAllSectors"
+        android:title="@string/action_copy_all_sectors" />
 </menu>
