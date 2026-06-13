@@ -277,7 +277,7 @@
     <string name="action_show_uid_log_tool">Log dell\'UID</string>
     <string name="action_show_data_conversion_tool">Converti Dati</string>
     <string name="action_compare_dump">Confronta Dump</string>
-    <string name="action_create_new_file">Create un nuovo File</string>
+    <string name="action_create_new_file">Crea un nuovo File</string>
     <string name="action_delete_file">Elimina un File</string>
     <string name="action_remove_duplicates">Elimina i doppioni</string>
     <string name="action_show_preferences">Preferenze</string>
