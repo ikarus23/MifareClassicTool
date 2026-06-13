@@ -80,7 +80,7 @@
     <string name="text_update_colors">Aggiorna i colori</string>
     <string name="text_data">Dati</string>
     <string name="text_value">Valore</string>
-    <string name="text_write_dump_info">Scrivi un dump (or solo alcuni settori di esso) su
+    <string name="text_write_dump_info">Scrivi un dump (o solo alcuni settori di esso) su
         un tag. I blocchi che contengono dati sconosciuti (---) verranno saltati!</string>
     <string name="text_factory_format_info">Prova a resettare il tag
         allo stato di fabbrica.</string>
@@ -198,7 +198,15 @@
         al punto \"1.2 Data Storage\" nella sezione \"Informazioni\".</string>
     <string name="text_more_converter">Più convertitori (online)</string>
     <string name="text_enter_file_name">Inserisci un nome per il file</string>
-    <string name="text_difference_between_dumps">Differenza tra i dump</string>
+    <string name="text_difference_between_dumps">Differenza tra i dump</string>`
+    <string name="text_choose_language">Scegli la lingua personalizzata dell'app</string>
+    <string name="text_choose_theme">Scegli il tema personalizzato</string>
+    <string name="text_transfer_restore_value_block">Transfer &amp; Restore Value Block</string>
+    <string name="text_transfer_restore_value_block_info">Imposta il valore di un Value Block anche
+        se sono presenti solo permessi di decremento/transfer/restore</string>
+    <string name="text_staging">Sorgente</string>
+    <string name="text_destination">Destinazione</string>
+    <string name="text_value_and_address">Valore &amp; Indirizzo</string>
 
     <!-- Actions (Buttons, Checkboxs, etc. -->
     <string name="action_read_tag">Leggi Tag</string>
@@ -298,12 +306,21 @@
     <string name="action_export_dump">Esporta Dump</string>
     <string name="action_import_keys">Importa Chiavi</string>
     <string name="action_export_keys">Esporta Chiavi</string>
+    <string name="action_import_export_file">Importa/Esporta File</string>
     <string name="action_backup_all">Backup / esportazione di tutto il contenuto</string>
     <string name="action_generic_converter">Convertitore del tipo di dati</string>
     <string name="action_multi_purpose_converter">Convertitore multiuso</string>
     <string name="action_cyber_chef">Cyber Chef</string>
     <string name="action_open_clone_uid_tool">Apri lo strumento per clonare l\'UID</string>
     <string name="action_hide_identical_sectors">Nascondi i settori identici</string>
+    <string name="action_clear_logs">Pulisci Logs</string>
+    <string-array name="action_themes">
+        <item>Scuro</item>
+        <item>Chiaro</item>
+        <item>Segui Sistema (Android 10+)</item>
+    </string-array>
+    <string name="action_write_value_block_transfer_restore">Scrivi Value Block
+        con Transfer &amp; Restore</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nuovo tag trovato</string>
@@ -318,7 +335,7 @@
     <string name="info_valid_dump_not_16_bytes">Errore: Alcuni
         blocchi non sono lunghi 16 byte (32 caratteri)</string>
     <string name="info_valid_dump_sector_range">Errore: Settore fuori
-        dall\'intervallo (&#60; 0 or &#62; 39)</string>
+        dall\'intervallo (&#60; 0 o &#62; 39)</string>
     <string name="info_valid_dump_double_sector">Errore: Numero del settore duplicato</string>
     <string name="info_valid_dump_empty_dump">Errore: dump vuoto</string>
     <string name="info_editor_init_error">Errore: I dati non sono corretti per questo
@@ -392,6 +409,17 @@
     <string name="info_backup_error">Errore durante la creazione di un backup completo</string>
     <string name="info_irreversible_acs">Attenzione: Le Condizioni di Accesso saranno irreversibili</string>
 	<string name="info_std_key_overwrite">Errore: I file delle chiavi standard non possono essere sovrascritti</string>
+    <string name="info_staging_equal_destination">Errore: Sorgente e destinazione non
+        possono essere uguali</string>
+    <string name="info_staging_sector_trailer_block0">Errore: Blocco sorgente non può essere
+        la parte finale del settore o un blocco del produttore</string>
+    <string name="info_destination_sector_trailer_block0">Errore: Blocco di destinazione non può essere
+        la parte finale del settore o un blocco del produttore</string>
+    <string name="info_no_key_for_staging">Errore: Nessuna chiave trovata per il blocco sorgente</string>
+    <string name="info_no_key_for_destination">Errore: Nessuna chiave trovata per il blocco di destinazione</string>
+    <string name="info_no_write_key_for_staging">Errore: Non è stata trovata alcuna chiave con permessi
+        di scrittura per il blocco sorgente</string>
+    <string name="info_no_restore_staging">Errore: Nessun permesso di ripristino nel blocco sorgente</string>
 
     <!-- Dialog messages -->
     <string name="dialog_nfc_not_enabled">Il lettore NFC non è abilitato.
