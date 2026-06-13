@@ -149,7 +149,7 @@
     <string name="text_dump_from_editor">Dump dall\'editor</string>
     <string name="text_incr_decr_value_block">Incr./Decr. Valore di un Blocco</string>
     <string name="text_increment">Incrementa</string>
-    <string name="text_decrement">Decrement</string>
+    <string name="text_decrement">Decrementa</string>
     <!-- Has to be 16 chars long. The text should be centered. -->
     <string name="text_invalid_data">-Dati NON Validi</string>
     <string name="text_only_in_dump1">Il settore è presente solo nel dump 1 (A)</string>
@@ -158,13 +158,13 @@
     <string name="text_bcc">BCC</string>
     <string name="text_clone_uid_info">Questo strumento può clonare l\'UID di un tag su un
         \"magic tag\" (2 gen, compatibile con Android, scrittura diretta,
-        block 0 riscrivibile). Premi il bottone info per ottenere maggiori informazioni.</string>
+        blocco 0 riscrivibile). Premi il bottone info per ottenere maggiori informazioni.</string>
     <string name="text_uid_to_clone">UID da clonare</string>
     <string name="text_clone_uid_manufacturer_block_rest">Il resto del blocco 0</string>
     <string name="text_write_key">La chiave per scrivere il blocco 0</string>
     <string name="text_status_log">Log dello stato</string>
     <string name="text_use_uid_of_scanned_tag">Usa l\'UID del tag scansionato</string>
-    <string name="text_block_0_generated">Block 0 generato</string>
+    <string name="text_block_0_generated">Blocco 0 generato</string>
     <string name="text_data_to_write">Dati da scrivere:</string>
     <string name="text_waiting_for_magic_tag">Aspettando il magic tag (2 gen)</string>
     <string name="text_writing_block_0">Scrivendo il blocco 0</string>
@@ -288,7 +288,7 @@
     <string name="action_do_not_show_again">Non mostare questo messaggio di nuovo</string>
     <string name="action_chose_dump">Scegli un Dump&#8230;</string>
     <string name="action_dont_save">Non salvare</string>
-    <string name="action_save_as_default">Save come Predefinito</string>
+    <string name="action_save_as_default">Salva come Predefinito</string>
     <string name="action_save_keys">Salva Chiavi</string>
     <string name="action_calc_bcc">Calcola BCC</string>
     <string name="action_install_external_nfc">Installa l\'app \"External NFC\"</string>
