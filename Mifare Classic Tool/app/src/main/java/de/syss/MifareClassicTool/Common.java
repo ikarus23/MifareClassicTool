@@ -1758,9 +1758,9 @@ public class Common extends Application {
             case 2:
                 byte[] revBytes = bytes.clone();
                 reverseByteArrayInPlace(revBytes);
-                return hex2Dec(bytes2Hex(revBytes));
+                return hex2DecBE(bytes2Hex(revBytes));
             case 1:
-                return hex2Dec(bytes2Hex(bytes));
+                return hex2DecBE(bytes2Hex(bytes));
         }
         return bytes2Hex(bytes);
     }
@@ -1771,7 +1771,7 @@ public class Common extends Application {
      * @param hex The hexadecimal value to convert.
      * @return String representation of the decimal value of hexString.
      */
-    public static String hex2Dec(String hex) {
+    public static String hex2DecBE(String hex) {
         if (!(hex != null && hex.length() % 2 == 0
                 && hex.matches("[0-9A-Fa-f]+"))) {
             return null;
@@ -1783,6 +1783,35 @@ public class Common extends Application {
             ret = Long.toString(Long.parseLong(hex, 16));
         } else {
             BigInteger bigInteger = new BigInteger(hex , 16);
+            ret = bigInteger.toString();
+        }
+        return ret;
+    }
+
+    /**
+     * Convert a hexadecimal string to a Little Endian decimal string.
+     * Uses BigInteger only if the hexadecimal string is longer than 7 bytes.
+     * @param hex The hexadecimal value to convert.
+     * @return String representation of the decimal value of hexString.
+     */
+    public static String hex2DecLE(String hex) {
+        if (!(hex != null && hex.length() % 2 == 0
+                && hex.matches("[0-9A-Fa-f]+"))) {
+            return null;
+        }
+        // Reverse the byte order (pairs of characters) for Little Endian
+        StringBuilder reversedHex = new StringBuilder(hex.length());
+        for (int i = hex.length() - 2; i >= 0; i -= 2) {
+            reversedHex.append(hex, i, i + 2);
+        }
+        String leHex = reversedHex.toString();
+        String ret;
+        if (leHex == null || leHex.isEmpty()) {
+            ret = "0";
+        } else if (leHex.length() <= 14) {
+            ret = Long.toString(Long.parseLong(leHex, 16));
+        } else {
+            BigInteger bigInteger = new BigInteger(leHex, 16);
             ret = bigInteger.toString();
         }
         return ret;
@@ -1902,6 +1931,61 @@ public class Common extends Application {
             hex = "0" + hex;
         }
         return hex;
+    }
+
+    /**
+     * Convert a decimal string to a hex string.
+     * Uses BigInteger only if the decimal string is longer than 18 digits.
+     * @param dec Decimal string to convert.
+     * @return Converted hex string.
+     */
+    public static String decBE2Hex(String dec) {
+        if (!(dec != null && !dec.isEmpty()
+                && dec.matches("\\d+"))) {
+            return null;
+        }
+        String hex;
+        if (dec.length() <= 18) {
+            hex = Long.toHexString(Long.parseLong(dec)).toUpperCase();
+        } else {
+            BigInteger bigInt = new BigInteger(dec, 10);
+            hex = bigInt.toString(16).toUpperCase();
+        }
+        // Pad left with a zero if the hex string has an odd length
+        if (hex.length() % 2 != 0) {
+            hex = "0" + hex;
+        }
+        return hex;
+    }
+
+    /**
+     * Convert a decimal (Little Endian) to a hex string.
+     * Uses BigInteger only if the decimal string is longer than 18 digits.
+     * @param dec Decimal string to convert.
+     * @return Converted hex string.
+     */
+public static String decLE2Hex(String dec) {
+        if (!(dec != null && !dec.isEmpty()
+                && dec.matches("\\d+"))) {
+            return null;
+        }
+        String hex;
+        if (dec.length() <= 18) {
+            hex = Long.toHexString(Long.parseLong(dec)).toUpperCase();
+        } else {
+            BigInteger bigInt = new BigInteger(dec, 10);
+            hex = bigInt.toString(16).toUpperCase();
+        }
+        // Pad left with a zero if the hex string has an odd length
+        if (hex.length() % 2 != 0) {
+            hex = "0" + hex;
+        }
+        // Reverse the byte order (pairs of characters) for Little Endian
+        StringBuilder reversedHex = new StringBuilder(hex.length());
+        for (int i = hex.length() - 2; i >= 0; i -= 2) {
+            reversedHex.append(hex, i, i + 2);
+        }
+        return reversedHex.toString();
     }
 
     /**

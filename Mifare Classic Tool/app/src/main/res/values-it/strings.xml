@@ -333,6 +333,7 @@
     <string name="info_block_out_of_range">Errore: Il blocco non è compreso nell\'intervallo</string>
     <string name="info_not_hex_data">Errore: I dati devono essere in esadecimale (0-9 e A-F)</string>
     <string name="info_not_bin_data">Errore: I dati devono essere in binario (0/1, multipli di 8)</string>
+    <string name="info_not_dec_data">Errore: I dati devono essere in decimale (0-9)</string>
     <string name="info_not_16_byte">Errore: I dati devono essere lunghi esattamente 16 byte (32 caratteri)</string>
     <string name="info_is_not_vb">Errore: Non è un Value Block</string>
     <string name="info_block_not_in_sector">Errore: Il settore non contiene un blocco col numero dato.</string>
