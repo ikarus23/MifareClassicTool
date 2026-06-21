@@ -371,6 +371,8 @@
         (0-9 and A-F)</string>
     <string name="info_not_bin_data">Error: Data must be in binary
         (0/1, multiple of 8)</string>
+    <string name="info_not_dec_data">Error: Data must be in decimal
+        (0-9)</string>
     <string name="info_not_16_byte">Error: Data must be 16 bytes
         (32 characters) long</string>
     <string name="info_is_not_vb">Error: Not a value block.</string>

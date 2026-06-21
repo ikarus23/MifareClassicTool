@@ -140,6 +140,80 @@
 
         </LinearLayout>
 
+        <!-- Dec (BE) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolDecBE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_dec_be"
+                android:labelFor="@+id/editTextDataConversionToolDecBE" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolDecBE"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolDecBE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
+        <!-- Dec (LE) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDataConversionToolDecLE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:gravity="right"
+                android:paddingRight="5dp"
+                android:text="@string/text_dec_le"
+                android:labelFor="@+id/editTextDataConversionToolDecLE" />
+
+            <EditText
+                android:id="@+id/editTextDataConversionToolDecLE"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:typeface="monospace"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDataConversionToolDecLE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="@string/text_convert"
+                android:onClick="onConvert" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/textViewDataConversionToolMoreOptions"
             android:layout_width="wrap_content"

@@ -40,6 +40,8 @@ public class DataConversionTool extends BasicActivity {
     EditText mAscii;
     EditText mHex;
     EditText mBin;
+    EditText mDecBE;
+    EditText mDecLE;
 
     /**
      * Initialize the some member variables.
@@ -51,6 +53,8 @@ public class DataConversionTool extends BasicActivity {
         mAscii = findViewById(R.id.editTextDataConversionToolAscii);
         mHex = findViewById(R.id.editTextDataConversionToolHex);
         mBin = findViewById(R.id.editTextDataConversionToolBin);
+        mDecBE = findViewById(R.id.editTextDataConversionToolDecBE);
+        mDecLE = findViewById(R.id.editTextDataConversionToolDecLE);
     }
 
     /**
@@ -74,6 +78,16 @@ public class DataConversionTool extends BasicActivity {
             String bin = mBin.getText().toString();
             if (isBin(bin, this)) {
                 convertData(Common.bin2Hex(bin));
+            }
+        } else if (id == R.id.imageButtonDataConversionToolDecBE) {
+            String dec = mDecBE.getText().toString();
+            if (isDec(dec, this)) {
+                convertData(Common.decBE2Hex(dec));
+            }
+        } else if (id == R.id.imageButtonDataConversionToolDecLE) {
+            String dec = mDecLE.getText().toString();
+            if (isDec(dec, this)) {
+                convertData(Common.decLE2Hex(dec));
             }
         }
     }
@@ -100,6 +114,10 @@ public class DataConversionTool extends BasicActivity {
         }
         // Bin.
         mBin.setText(Common.hex2Bin(hex));
+        // Dec (BE).
+        mDecBE.setText(Common.hex2DecBE(hex));
+        // Dec (LE).
+        mDecLE.setText(Common.hex2DecLE(hex));
     }
 
     /**
@@ -116,6 +134,21 @@ public class DataConversionTool extends BasicActivity {
         Toast.makeText(context, R.string.info_not_bin_data,
                 Toast.LENGTH_LONG).show();
         return false;
+    }
+
+    /**
+     * Check if a string represents a decimal number.
+     * @param dec Decimal string to check.
+     * @param context The Context in which an error Toast will be shown.
+     * @return True if string is decimal. False otherwise.
+     */
+    private boolean isDec(String dec, Context context) {
+        if (dec == null || dec.isEmpty() || !dec.matches("\\d+")) {
+            Toast.makeText(context, R.string.info_not_dec_data,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     /**
