@@ -288,7 +288,7 @@
     <string name="action_cyber_chef">Cyber Chef</string>
     <string name="action_open_clone_uid_tool">打开UID克隆工具</string>
     <string name="action_hide_identical_sectors">隐藏相同的扇区</string>
-    <string name="action_copy_all_sectors">复制所有扇区</string>
+    <string name="action_copy_all_sectors">将所有扇区复制到剪贴板</string>
     <string-array name="action_themes">
         <item>暗色</item>
         <item>亮色</item>

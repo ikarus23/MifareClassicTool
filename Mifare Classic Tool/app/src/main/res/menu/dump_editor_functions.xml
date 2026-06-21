@@ -26,11 +26,6 @@
         android:title="@string/action_save"
         android:showAsAction="ifRoom"
         tools:ignore="AppCompatResource" />
-    <item android:id="@+id/menuDumpEditorShare"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/action_share"
-        android:showAsAction="ifRoom"
-        tools:ignore="AppCompatResource" />
     <item android:id="@+id/menuDumpEditorAscii"
         android:title="@string/action_data_as_ascii" />
     <item android:id="@+id/menuDumpEditorAccessConditions"
@@ -43,8 +38,6 @@
         android:title="@string/action_compare_dump" />
     <item android:id="@+id/menuDumpEditorWriteDump"
         android:title="@string/action_write_dump" />
-    <item android:id="@+id/menuDumpEditorExportDump"
-        android:title="@string/action_export_dump" />
     <item android:id="@+id/menuDumpEditorSaveKeys"
           android:title="@string/action_save_keys" />
     <item android:id="@+id/menuDumpEditorOpenValueBlockTool"
@@ -53,6 +46,13 @@
         android:title="@string/action_show_ac_tool" />
     <item android:id="@+id/menuDumpEditorOpenBccTool"
           android:title="@string/action_show_bcc_tool" />
+    <item android:id="@+id/menuDumpEditorShare"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/action_share"
+        android:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource" />
     <item android:id="@+id/menuDumpEditorCopyAllSectors"
         android:title="@string/action_copy_all_sectors" />
+    <item android:id="@+id/menuDumpEditorExportDump"
+        android:title="@string/action_export_dump" />
 </menu>
