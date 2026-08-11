@@ -216,36 +216,46 @@ public class MCReader {
                 lastBlock = firstBlock + 16;
             }
             for (int i = firstBlock; i < lastBlock; i++) {
-                try {
-                    byte[] blockBytes = mMFC.readBlock(i);
-                    // mMFC.readBlock(i) must return 16 bytes or throw an error.
-                    // At least this is what the documentation says.
-                    // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
-                    // sometimes returns < 16 bytes for unknown reasons.
-                    // Update: Aaand sometimes it returns more than 16 bytes...
-                    // The appended byte(s) are 0x00.
-                    if (blockBytes.length < 16) {
-                        throw new IOException();
-                    }
-                    if (blockBytes.length > 16) {
-                        blockBytes = Arrays.copyOf(blockBytes,16);
-                    }
+                boolean blockRead = false;
+                for (int attempt = 0; attempt < 2 && !blockRead; attempt++) {
+                    try {
+                        byte[] blockBytes = mMFC.readBlock(i);
+                        // mMFC.readBlock(i) must return 16 bytes or throw an error.
+                        // At least this is what the documentation says.
+                        // On Samsung's Galaxy S5 and Sony's Xperia Z2 however, it
+                        // sometimes returns < 16 bytes for unknown reasons.
+                        // Update: Aaand sometimes it returns more than 16 bytes...
+                        // The appended byte(s) are 0x00.
+                        if (blockBytes.length < 16) {
+                            throw new IOException();
+                        }
+                        if (blockBytes.length > 16) {
+                            blockBytes = Arrays.copyOf(blockBytes,16);
+                        }
 
-                    blocks.add(Common.bytes2Hex(blockBytes));
-                } catch (TagLostException e) {
-                    throw e;
-                } catch (IOException e) {
-                    // Could not read block.
-                    // (Maybe due to key/authentication method.)
-                    Log.d(LOG_TAG, "(Recoverable) Error while reading block "
-                            + i + " from tag.");
-                    blocks.add(NO_DATA);
-                    if (!isConnected()) {
-                        throw new TagLostException(
-                                "Tag removed during readSector(...)");
+                        blocks.add(Common.bytes2Hex(blockBytes));
+                        blockRead = true;
+                    } catch (TagLostException e) {
+                        throw e;
+                    } catch (IOException e) {
+                        if (attempt == 0 && reconnectAfterFailedMifareOperation()
+                                && authenticate(sectorIndex, key, useAsKeyB)) {
+                            // The Android 17 NFC stack can leave the MIFARE
+                            // session unusable after a failed read. Retry the
+                            // block with a fresh connection and authentication.
+                            continue;
+                        }
+                        // Could not read block.
+                        // (Maybe due to key/authentication method.)
+                        Log.d(LOG_TAG, "(Recoverable) Error while reading block "
+                                + i + " from tag.");
+                        blocks.add(NO_DATA);
+                        if (!isConnected()) {
+                            throw new TagLostException(
+                                    "Tag removed during readSector(...)");
+                        }
+                        break;
                     }
-                    // After an error, a re-authentication is needed.
-                    authenticate(sectorIndex, key, useAsKeyB);
                 }
             }
             ret = blocks.toArray(new String[0]);
@@ -502,6 +512,10 @@ public class MCReader {
                             if (auth) {
                                 keys[0] = key;
                                 foundKeys[0] = true;
+                            } else if (!reconnectAfterFailedMifareOperation()) {
+                                // Tag lost while reconnecting. Abort.
+                                error = true;
+                                break keysloop;
                             }
                         }
                         if (!foundKeys[1]) {
@@ -510,6 +524,10 @@ public class MCReader {
                             if (auth) {
                                 keys[1] = key;
                                 foundKeys[1] = true;
+                            } else if (!reconnectAfterFailedMifareOperation()) {
+                                // Tag lost while reconnecting. Abort.
+                                error = true;
+                                break keysloop;
                             }
                         }
                     } catch (Exception e) {
@@ -1050,7 +1068,8 @@ public class MCReader {
             return false;
         }
         boolean ret = false;
-        for (int i = 0; i < retryCount+1; i++) {
+        int attempts = Math.max(retryAuth ? retryCount + 1 : 1, 2);
+        for (int i = 0; i < attempts; i++) {
             try {
                 if (!useAsKeyB) {
                     // Key A.
@@ -1063,9 +1082,13 @@ public class MCReader {
                 Log.d(LOG_TAG, "Error authenticating with tag.");
                 return false;
             }
-            // Retry?
-            if (ret || !retryAuth) {
+            if (ret || i == attempts - 1) {
                 break;
+            }
+            // Workaround for a regression on Android 17 (issue #549): a failed
+            // authentication poisons the RF session. Reconnect before retrying.
+            if (!reconnectAfterFailedMifareOperation()) {
+                return false;
             }
         }
         return ret;
@@ -1206,6 +1229,36 @@ public class MCReader {
             }
         }
         return false;
+    }
+
+    /**
+     * Close the connection to the tag and reconnect to it.
+     * This is a workaround for a regression on Android 17 (issue #549)
+     * where a failed authentication "poisons" the RF session and all
+     * subsequent authentications fail, even with the correct key. The
+     * implicit reconnect done by the NFC stack (reSelect) does not reset
+     * the MIFARE Classic state machine; only a full close+connect does.
+     * @return True if the tag is connected again. False if the tag was lost.
+     */
+    private boolean reconnectAfterFailedMifareOperation() {
+        close();
+        for (int attempt = 0; attempt < 10; attempt++) {
+            try {
+                connect();
+            } catch (Exception e) {
+                // Do nothing, try again.
+            }
+            if (isConnected()) {
+                return true;
+            }
+            // Sleep for 50ms before retrying.
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // Do nothing.
+            }
+        }
+        return isConnected();
     }
 
     /**
