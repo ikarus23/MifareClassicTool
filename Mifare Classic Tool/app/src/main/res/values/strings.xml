@@ -263,6 +263,9 @@
     <string name="action_write_mfid">Advanced: Enable writing to
         manufacturer block</string>
     <string name="action_show_options">Show Options</string>
+    <string name="action_batch_write">Batch write: write this dump to
+        multiple tags until stopped</string>
+    <string name="action_stop_batch_write">Stop</string>
     <string name="action_static_ac">Use these Access Conditions for all
         sectors:</string>
     <string name="action_retry_authentication">Retry the authentication if it fails</string>
@@ -527,6 +530,11 @@
     <string name="dialog_tools_menu_title">Available tools</string>
     <string name="dialog_wait_write_tag_title">Writing&#8230;</string>
     <string name="dialog_wait_write_tag">Writing tag&#8230;\n(Don\'t remove tag)</string>
+    <string name="dialog_batch_write_title">Batch Write</string>
+    <string name="text_batch_write_waiting">Cards written successfully: %1$d
+        \n\nRemove the current tag and place the next tag to continue writing
+        the same dump, or press Stop to end batch writing.</string>
+    <string name="info_batch_write_stopped">Batch write stopped.</string>
     <string name="dialog_share_title">Send file to…</string>
     <string name="dialog_block0_writing_title">Write manufacturer block</string>
     <string name="dialog_block0_writing">Writing to the first block of sector 0

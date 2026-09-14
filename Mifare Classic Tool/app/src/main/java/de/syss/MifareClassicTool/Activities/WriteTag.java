@@ -94,6 +94,7 @@ public class WriteTag extends BasicActivity {
     private ArrayList<View> mWriteModeLayouts;
     private CheckBox mWriteManufBlock;
     private CheckBox mEnableStaticAC;
+    private CheckBox mBatchWrite;
     private HashMap<Integer, HashMap<Integer, byte[]>> mDumpWithPos;
     private HashSet<String> mKeysFromDump;
     private boolean mWriteDumpFromEditor = false;
@@ -104,6 +105,25 @@ public class WriteTag extends BasicActivity {
     private EditText mVtrDestBlock;
     private EditText mVtrValue;
     private EditText mVtrAddr;
+
+    /**
+     * True from the moment a batch write session was started (first tag
+     * of the dump written with "batch write" checked) until the user
+     * presses "Stop" on {@link #mBatchWriteDialog}. While active, touching
+     * a new tag ({@link #onNewIntent(Intent)}) automatically writes the
+     * same dump ({@link #mDumpWithPos}) again, reusing the key map that
+     * was mapped for the first tag.
+     */
+    private boolean mBatchWriteMode = false;
+    /**
+     * True while a batch write attempt (check + write) is currently
+     * running. Used to ignore tag events while a write is already
+     * in progress.
+     */
+    private boolean mBatchWriteBusy = false;
+    private int mBatchWriteSuccessCount = 0;
+    private AlertDialog mBatchWriteDialog;
+    private TextView mBatchWriteDialogText;
 
     /**
      * Initialize the layout and some member variables. If the Intent
@@ -134,6 +154,8 @@ public class WriteTag extends BasicActivity {
                 R.id.checkBoxWriteTagDumpStaticAC);
         mWriteManufBlock = findViewById(
                 R.id.checkBoxWriteTagDumpWriteManuf);
+        mBatchWrite = findViewById(
+                R.id.checkBoxWriteTagDumpBatchWrite);
 
         mWriteModeLayouts = new ArrayList<>();
         mWriteModeLayouts.add(findViewById(
@@ -201,6 +223,36 @@ public class WriteTag extends BasicActivity {
         super.onSaveInstanceState(outState);
         outState.putBoolean("write_manuf_block", mWriteManufBlock.isChecked());
         outState.putSerializable("dump_with_pos", mDumpWithPos);
+    }
+
+    /**
+     * While a batch write session is active ({@link #mBatchWriteMode}),
+     * treat every new tag as a request to write the same dump
+     * ({@link #mDumpWithPos}) again, reusing the key map created for the
+     * first tag of the batch.
+     * @param intent The new Intent, e.g. containing a new tag.
+     * @see #mBatchWriteMode
+     * @see #checkDumpAgainstTag()
+     */
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (mBatchWriteMode && !mBatchWriteBusy) {
+            mBatchWriteBusy = true;
+            checkDumpAgainstTag();
+        }
+    }
+
+    /**
+     * Make sure the (possibly still showing) {@link #mBatchWriteDialog}
+     * does not leak the window after this Activity is destroyed.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBatchWriteDialog != null && mBatchWriteDialog.isShowing()) {
+            mBatchWriteDialog.dismiss();
+        }
     }
 
     /**
@@ -689,6 +741,11 @@ public class WriteTag extends BasicActivity {
      * @see #onActivityResult(int, int, Intent)
      */
     public void onWriteDump(View view) {
+        // Reset any leftover state from a previous batch write session.
+        mBatchWriteMode = false;
+        mBatchWriteBusy = false;
+        mBatchWriteSuccessCount = 0;
+
         // Check the static Access Condition option.
         if (mEnableStaticAC.isChecked()) {
             String ac = mStaticAC.getText().toString();
@@ -838,6 +895,12 @@ public class WriteTag extends BasicActivity {
                     if (!isSectorInRage(con, false)) {
                         return;
                     }
+
+                    // Remember whether this is a batch write session. From
+                    // here on, mDumpWithPos won't change anymore, so
+                    // subsequent tags of the batch can reuse it as-is.
+                    mBatchWriteMode = mBatchWrite.isChecked();
+                    mBatchWriteBusy = mBatchWriteMode;
 
                     // Create key map.
                     createKeyMapForDump();
@@ -993,6 +1056,7 @@ public class WriteTag extends BasicActivity {
         if (reader == null) {
             Toast.makeText(this, R.string.info_tag_lost_check_dump,
                     Toast.LENGTH_LONG).show();
+            onBatchWriteAttemptFinished(false);
             return;
         }
 
@@ -1003,6 +1067,7 @@ public class WriteTag extends BasicActivity {
             Toast.makeText(this, R.string.info_tag_too_small,
                     Toast.LENGTH_LONG).show();
             reader.close();
+            onBatchWriteAttemptFinished(false);
             return;
         }
 
@@ -1028,6 +1093,7 @@ public class WriteTag extends BasicActivity {
             // Error while checking for keys with write privileges.
             Toast.makeText(this, R.string.info_tag_lost_check_dump,
                     Toast.LENGTH_LONG).show();
+            onBatchWriteAttemptFinished(false);
             return;
         }
 
@@ -1087,11 +1153,13 @@ public class WriteTag extends BasicActivity {
                         case 1:
                             Toast.makeText(this, R.string.info_tag_lost_check_dump,
                                     Toast.LENGTH_LONG).show();
+                            onBatchWriteAttemptFinished(false);
                             return;
                         case 2:
                             // BCC not valid. Abort.
                             Toast.makeText(this, R.string.info_bcc_not_valid,
                                     Toast.LENGTH_LONG).show();
+                            onBatchWriteAttemptFinished(false);
                             return;
                         case 3:
                             addToList(list, position, getString(
@@ -1110,6 +1178,7 @@ public class WriteTag extends BasicActivity {
                             // Access Conditions not valid. Abort.
                             Toast.makeText(this, R.string.info_ac_format_error,
                                     Toast.LENGTH_LONG).show();
+                            onBatchWriteAttemptFinished(false);
                             return;
                         case 2:
                             addToList(list, position, getString(
@@ -1208,7 +1277,12 @@ public class WriteTag extends BasicActivity {
         }
 
         // Show skip/cancel dialog (if needed).
-        if (!list.isEmpty()) {
+        if (!list.isEmpty() && mBatchWriteMode) {
+            // In batch write mode, don't bother the user with this dialog
+            // for every single tag of the batch. Just skip the blocks that
+            // can't be written, like the "write as much as possible" option.
+            writeDump(writeOnPosSafe, keyMap);
+        } else if (!list.isEmpty()) {
             // If the user skips all sectors/blocks that are not writable,
             // the writeTag() method will be called.
             LinearLayout ll = new LinearLayout(this);
@@ -1287,12 +1361,14 @@ public class WriteTag extends BasicActivity {
             // Nothing to write. Exit.
             Toast.makeText(this, R.string.info_nothing_to_write,
                     Toast.LENGTH_LONG).show();
+            onBatchWriteAttemptFinished(false);
             return;
         }
 
         // Create reader.
         final MCReader reader = Common.checkForTagAndCreateReader(this);
         if (reader == null) {
+            onBatchWriteAttemptFinished(false);
             return;
         }
 
@@ -1355,9 +1431,11 @@ public class WriteTag extends BasicActivity {
 
                     if (result != 0) {
                         // Error. Some error while writing.
-                        handler.post(() -> Toast.makeText(a,
-                                R.string.info_write_error,
-                                Toast.LENGTH_LONG).show());
+                        handler.post(() -> {
+                            Toast.makeText(a, R.string.info_write_error,
+                                    Toast.LENGTH_LONG).show();
+                            onBatchWriteAttemptFinished(false);
+                        });
                         reader.close();
                         warning.cancel();
                         return;
@@ -1367,10 +1445,73 @@ public class WriteTag extends BasicActivity {
             // Finished writing.
             reader.close();
             warning.cancel();
-            handler.post(() -> Toast.makeText(a, R.string.info_write_successful,
-                    Toast.LENGTH_LONG).show());
-            a.finish();
+            handler.post(() -> {
+                Toast.makeText(a, R.string.info_write_successful,
+                        Toast.LENGTH_LONG).show();
+                if (mBatchWriteMode) {
+                    onBatchWriteAttemptFinished(true);
+                } else {
+                    a.finish();
+                }
+            });
         }).start();
+    }
+
+    /**
+     * Called after one batch write attempt (a check + write cycle triggered
+     * either by the initial write or by {@link #onNewIntent(Intent)})
+     * finished, be it successfully or not. Unblocks the batch loop for the
+     * next tag and, unless the batch was stopped in the meantime (see
+     * {@link #showOrUpdateBatchWriteDialog()}), shows the "waiting for next
+     * tag" dialog again.
+     * @param success True if the tag that was just processed was written
+     * successfully.
+     */
+    private void onBatchWriteAttemptFinished(boolean success) {
+        mBatchWriteBusy = false;
+        if (success) {
+            mBatchWriteSuccessCount++;
+        }
+        if (mBatchWriteMode) {
+            showOrUpdateBatchWriteDialog();
+        }
+    }
+
+    /**
+     * Show (or, if already showing, update) the dialog that tells the user
+     * a batch write session is active, how many tags have been written so
+     * far, and that lets the user stop the batch write.
+     * @see #mBatchWriteMode
+     * @see #onNewIntent(Intent)
+     */
+    private void showOrUpdateBatchWriteDialog() {
+        if (mBatchWriteDialog == null) {
+            LinearLayout ll = new LinearLayout(this);
+            int pad = Common.dpToPx(20);
+            ll.setPadding(pad, pad, pad, pad);
+            ll.setOrientation(LinearLayout.VERTICAL);
+            mBatchWriteDialogText = new TextView(this);
+            mBatchWriteDialogText.setTextSize(16);
+            ll.addView(mBatchWriteDialogText);
+            mBatchWriteDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_batch_write_title)
+                .setView(ll)
+                .setCancelable(false)
+                .setNegativeButton(R.string.action_stop_batch_write,
+                        (dialog, which) -> {
+                            mBatchWriteMode = false;
+                            mBatchWriteBusy = false;
+                            Toast.makeText(this,
+                                    R.string.info_batch_write_stopped,
+                                    Toast.LENGTH_SHORT).show();
+                        })
+                .create();
+        }
+        mBatchWriteDialogText.setText(getString(
+                R.string.text_batch_write_waiting, mBatchWriteSuccessCount));
+        if (!mBatchWriteDialog.isShowing()) {
+            mBatchWriteDialog.show();
+        }
     }
 
     /**
