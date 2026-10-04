@@ -265,7 +265,7 @@
     <string name="action_share">Condividi</string>
     <string name="action_data_as_ascii">Dati ASCII</string>
     <string name="action_decode_ac">Decodifica le Condizioni di Accesso</string>
-    <string name="action_show_value_blocks_as_int">Value Blocks come interi.</string>
+    <string name="action_show_value_blocks_as_int">Value Block come interi.</string>
     <string name="action_show_tag_info">Mostra le informazioni sul tag</string>
     <string name="action_show_vb_tool">De-/Codificatore del Value Block</string>
     <string name="action_show_ac_tool">De-/Codificatore delle Condizioni di Accesso</string>
@@ -327,7 +327,7 @@
     <string name="info_no_tag_found">Errore: tag MIFARE Classic non trovato</string>
     <string name="info_keys_loaded_please_wait">Chiavi caricate. Sto facendo l\'associazione&#8230; Potrebbe volerci un po\' di tempo&#8230;</string>
     <string name="info_tag_removed_while_reading">Errore: Tag rimosso durante la lettura</string>
-    <string name="info_no_vb_in_dump">Non ci sono value blocks in questo dump</string>
+    <string name="info_no_vb_in_dump">Non ci sono value block in questo dump</string>
     <string name="info_valid_dump_not_hex">Errore: Alcuni blocchi contengono
         dati non validi (non esadecimali)</string>
     <string name="info_valid_dump_not_4_or_16_lines">Errore: Alcuni
