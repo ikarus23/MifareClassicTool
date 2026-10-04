@@ -201,7 +201,7 @@
     <string name="text_difference_between_dumps">Differenza tra i dump</string>
     <string name="text_choose_language">Scegli la lingua personalizzata dell\'app</string>
     <string name="text_choose_theme">Scegli il tema personalizzato</string>
-    <string name="text_transfer_restore_value_block">Transfer &amp; Restore Value Block</string>
+    <string name="text_transfer_restore_value_block">Transfer e Restore del Value Block</string>
     <string name="text_transfer_restore_value_block_info">Imposta il valore di un Value Block anche
         se sono presenti solo permessi di decremento/transfer/restore</string>
     <string name="text_staging">Sorgente</string>
@@ -217,7 +217,7 @@
     <string name="action_exit_app">Esci dall\'App</string>
     <string name="action_nfc">Vai alle impostazioni NFC</string>
     <string name="action_create_key_map">Associa le chiavi ai settori</string>
-    <string name="action_create_key_map_and_read">Leggi tag e associa
+    <string name="action_create_key_map_and_read">Leggi il tag e associa
         le chiavi</string>
     <string name="action_help">Informazioni</string>
     <string name="action_editor_only">Modalità \"solo editor\"</string>
@@ -242,14 +242,14 @@
     <string name="action_select_all">Seleziona tutto</string>
     <string name="action_select_none">Deseleziona tutto</string>
     <string name="action_cancel_all">Annulla la scrittura</string>
-    <string name="action_skip_blocks">Scrivi solo quello che è possibile</string>
+    <string name="action_skip_blocks">Scrivi solo ciò che è possibile</string>
     <string name="action_more">Leggi di più&#8230;</string>
     <string name="action_decode">Decodifica</string>
     <string name="action_encode">Codifica</string>
     <string name="action_write_dump_clone">Scrivi dump (clonare)</string>
     <string name="action_write_dump">Scrivi dump</string>
     <string name="action_factory_format">Formatta allo stato di fabbrica</string>
-    <string name="action_write_value_block">Scrivi Value Block</string>
+    <string name="action_write_value_block">Scrivi il Value Block</string>
     <string name="action_write_mfid">Avanzato: abilita la scrittura sul blocco 0</string>
     <string name="action_show_options">Mostra le opzioni</string>
     <string name="action_static_ac">Applica queste condizioni di accesso a tutti
@@ -319,8 +319,8 @@
         <item>Chiaro</item>
         <item>Segui Sistema (Android 10+)</item>
     </string-array>
-    <string name="action_write_value_block_transfer_restore">Scrivi Value Block
-        con Transfer &amp; Restore</string>
+    <string name="action_write_value_block_transfer_restore">Scrivi il Value Block
+        con Transfer e Restore</string>
 
     <!-- Toast messages -->
     <string name="info_new_tag_found">Nuovo tag trovato</string>
