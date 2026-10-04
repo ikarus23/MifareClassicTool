@@ -254,7 +254,6 @@
     <string name="action_more">閱讀更多&#8230;</string>
     <string name="action_decode">解碼</string>
     <string name="action_encode">編碼</string>
-    <string name="action_wirte_block">寫入區塊</string>
     <string name="action_write_dump_clone">寫入傾印 (複製)</string>
     <string name="action_write_dump">寫入傾印</string>
     <string name="action_factory_format">恢復出廠設定</string>
@@ -404,8 +403,8 @@
         十六進位 (0-9、A-F)</string>
     <string name="info_ac_not_3_byte">錯誤：存取條件
         必須為 3 位元組 (6 個字元)</string>
-    <string name="info_file_to_big">錯誤：檔案過大 (記憶體不足)</string>
-    <string name="info_to_many_keys">錯誤：金鑰過多 (記憶體不足)</string>
+    <string name="info_file_too_big">錯誤：檔案過大 (記憶體不足)</string>
+    <string name="info_too_many_keys">錯誤：金鑰過多 (記憶體不足)</string>
     <string name="info_ac_format_error">錯誤：存取條件無效</string>
     <string name="info_ac_reset_keyb_readable">金鑰 B 可讀取。
         \n已更新資料區塊的存取條件。</string>

@@ -255,7 +255,6 @@
     <string name="action_more">Read More&#8230;</string>
     <string name="action_decode">Decode</string>
     <string name="action_encode">Encode</string>
-    <string name="action_wirte_block">Write Block</string>
     <string name="action_write_dump_clone">Write Dump (Clone)</string>
     <string name="action_write_dump">Write Dump</string>
     <string name="action_factory_format">Factory Format</string>
@@ -415,8 +414,8 @@
         not hex (0-9, A-F)</string>
     <string name="info_ac_not_3_byte">Error: Access Conditions
         have to be 3 bytes (6 characters) long</string>
-    <string name="info_file_to_big">Error: File is too big (out of memory)</string>
-    <string name="info_to_many_keys">Error: Too many keys (out of memory)</string>
+    <string name="info_file_too_big">Error: File is too big (out of memory)</string>
+    <string name="info_too_many_keys">Error: Too many keys (out of memory)</string>
     <string name="info_ac_format_error">Error: The access conditions
         are invalid</string>
     <string name="info_ac_reset_keyb_readable">Key B is readable.

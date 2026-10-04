@@ -224,7 +224,6 @@
     <string name="action_more">Читать дальше&#8230;</string>
     <string name="action_decode">Расшифровать</string>
     <string name="action_encode">Кодировать</string>
-    <string name="action_wirte_block">Записать блок</string>
     <string name="action_write_dump_clone">Записать дамп (клон)</string>
     <string name="action_write_dump">Записать дамп</string>
     <string name="action_factory_format">Форматировать</string>
@@ -343,8 +342,8 @@
     <string name="info_invalid_int">Недопустимое целое число</string>
     <string name="info_ac_not_hex">Ошибка: Условия доступа не являются шестнадцатеричными (0–9, A–F).</string>
     <string name="info_ac_not_3_byte">Ошибка: Условия доступа должны иметь длину 3 байта (6 символов).</string>
-    <string name="info_file_to_big">Ошибка: файл слишком большой (недостаточно памяти)</string>
-    <string name="info_to_many_keys">Ошибка: слишком много ключей (недостаточно памяти)</string>
+    <string name="info_file_too_big">Ошибка: файл слишком большой (недостаточно памяти)</string>
+    <string name="info_too_many_keys">Ошибка: слишком много ключей (недостаточно памяти)</string>
     <string name="info_ac_format_error">Ошибка: Условия доступа недействительны.</string>
     <string name="info_ac_reset_keyb_readable">"Ключ B читаем. ACs блоков данных обновлены."</string>
     <string name="info_ac_reset_keyb_not_readable">"Ключ B не читаем. ACs блоков данных обновлены."</string>

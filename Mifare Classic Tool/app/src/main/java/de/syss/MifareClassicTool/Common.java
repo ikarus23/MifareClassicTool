@@ -421,7 +421,7 @@ public class Common extends Application {
                 } catch (OutOfMemoryError e) {
                     // Error. File is too big
                     // (too many lines, out of memory).
-                    Toast.makeText(context, R.string.info_file_to_big,
+                    Toast.makeText(context, R.string.info_file_too_big,
                             Toast.LENGTH_LONG).show();
                     return null;
                 }

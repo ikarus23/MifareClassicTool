@@ -246,7 +246,6 @@
     <string name="action_more">Leggi di più&#8230;</string>
     <string name="action_decode">Decodifica</string>
     <string name="action_encode">Codifica</string>
-    <string name="action_wirte_block">Scrivi blocco</string>
     <string name="action_write_dump_clone">Scrivi dump (clonare)</string>
     <string name="action_write_dump">Scrivi dump</string>
     <string name="action_factory_format">Formatta allo stato di fabbrica</string>
@@ -378,8 +377,8 @@
     <string name="info_invalid_int">Non è un intero valido</string>
     <string name="info_ac_not_hex">Errore: Le Condizioni di Accesso non sono in esadecimale (0-9, A-F)</string>
     <string name="info_ac_not_3_byte">Errore: Le Condizioni di Accesso devono essere lunghe 3 byte (6 caratteri)</string>
-    <string name="info_file_to_big">Errore: Il file è troppo grande (non c\'è abbastanza memoria)</string>
-    <string name="info_to_many_keys">Errore: Ci sono troppe chiavi (non c\'è abbastanza memoria)</string>
+    <string name="info_file_too_big">Errore: Il file è troppo grande (non c\'è abbastanza memoria)</string>
+    <string name="info_too_many_keys">Errore: Ci sono troppe chiavi (non c\'è abbastanza memoria)</string>
     <string name="info_ac_format_error">Errore: Le Condizioni di Accesso non sono valide</string>
     <string name="info_ac_reset_keyb_readable">La chiave B è leggibile.
         \nLe Condizioni di Accesso dei blocchi dati sono state aggiornate.</string>
