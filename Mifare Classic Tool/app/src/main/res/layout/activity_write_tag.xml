@@ -298,6 +298,15 @@
                             android:onClick="onShowWriteManufInfo"
                             android:src="@android:drawable/ic_dialog_info" />
                     </RelativeLayout>
+
+                    <CheckBox
+                        android:id="@+id/checkBoxWriteTagDumpBatchWrite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@xml/layout_border"
+                        android:padding="2dp"
+                        android:text="@string/action_batch_write" />
                 </LinearLayout>
             </LinearLayout>
 
