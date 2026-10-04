@@ -422,7 +422,7 @@ public class ImportExportTool extends BasicActivity {
                     continue;
                 }
             } catch (OutOfMemoryError e) {
-                Toast.makeText(this, R.string.info_file_to_big,
+                Toast.makeText(this, R.string.info_file_too_big,
                         Toast.LENGTH_LONG).show();
                 continue;
             }

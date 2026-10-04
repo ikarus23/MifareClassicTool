@@ -902,7 +902,7 @@ public class MCReader {
                             keys.add(line);
                         } catch (OutOfMemoryError e) {
                             // Error. Too many keys (out of memory).
-                            Toast.makeText(context, R.string.info_to_many_keys,
+                            Toast.makeText(context, R.string.info_too_many_keys,
                                     Toast.LENGTH_LONG).show();
                             return -1;
                         }

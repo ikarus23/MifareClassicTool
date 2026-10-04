@@ -243,7 +243,6 @@
     <string name="action_more">Ler mais&#8230;</string>
     <string name="action_decode">Decodificar</string>
     <string name="action_encode">Codificar</string>
-    <string name="action_wirte_block">Gravar bloco</string>
     <string name="action_write_dump_clone">Gravar Dump (Clone)</string>
     <string name="action_write_dump">Gravar dump (clonar)</string>
     <string name="action_factory_format">Formato de fábrica</string>
@@ -391,9 +390,9 @@
         hexadecimales (0-9, A-F)</string>
     <string name="info_ac_not_3_byte">Erro: As condições de acesso têm
         de ter 3 bytes (6 caracteres) de comprimento</string>
-    <string name="info_file_to_big">Erro: O ficheiro é demasiado grande
+    <string name="info_file_too_big">Erro: O ficheiro é demasiado grande
         (sem memória)</string>
-    <string name="info_to_many_keys">Erro: Demasiadas chaves (sem memória)</string>
+    <string name="info_too_many_keys">Erro: Demasiadas chaves (sem memória)</string>
     <string name="info_ac_format_error">Erro: As condições de acesso
         são inválidas</string>
     <string name="info_ac_reset_keyb_readable">A chave B é legível.

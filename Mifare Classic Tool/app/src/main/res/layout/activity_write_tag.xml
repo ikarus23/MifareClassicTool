@@ -47,7 +47,7 @@
                 android:gravity="center_horizontal"
                 android:onClick="onChangeWriteMode"
                 android:tag="write_block"
-                android:text="@string/action_wirte_block"
+                android:text="@string/action_write_block"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?attr/colorAccent" />
 

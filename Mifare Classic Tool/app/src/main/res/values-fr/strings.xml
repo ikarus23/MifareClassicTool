@@ -238,7 +238,6 @@
     <string name="action_more">En savoir plus&#8230;</string>
     <string name="action_decode">Décoder</string>
     <string name="action_encode">Encoder</string>
-    <string name="action_wirte_block">Écrire bloc</string>
     <string name="action_write_dump_clone">Écrire dump (cloner)</string>
     <string name="action_write_dump">Écrire dump</string>
     <string name="action_factory_format">Réinitialiser à l\'état d\'usine</string>
@@ -381,8 +380,8 @@
 		pas au format héxadécimal (0-9, A-F)</string>
     <string name="info_ac_not_3_byte">Erreur: Les Conditions d\'Accès
 		doivent être de longueur 3 octets (6 caractères)</string>
-    <string name="info_file_to_big">Erreur: Le fichier est trop gros (il n\'y a pas assez de mémoire)</string>
-    <string name="info_to_many_keys">Erreur: Il y a trop de clés (il n\'y a pas assez de mémoire)</string>
+    <string name="info_file_too_big">Erreur: Le fichier est trop gros (il n\'y a pas assez de mémoire)</string>
+    <string name="info_too_many_keys">Erreur: Il y a trop de clés (il n\'y a pas assez de mémoire)</string>
     <string name="info_ac_format_error">Erreur: Les Conditions d\'Accès
 		ne sont pas valides</string>
     <string name="info_ac_reset_keyb_readable">La clé B peut être lue.
