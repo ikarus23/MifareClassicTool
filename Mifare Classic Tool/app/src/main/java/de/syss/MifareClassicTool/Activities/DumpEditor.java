@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
@@ -131,6 +132,13 @@ public class DumpEditor extends BasicActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dump_editor);
+        getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                askToSaveOrQuit();
+            }
+        });
 
         mLayout = findViewById(
                 R.id.linearLayoutDumpEditor);
@@ -338,8 +346,7 @@ public class DumpEditor extends BasicActivity
      * Show a dialog in which the user can chose between "save", "don't save"
      * and "cancel", if there are unsaved changes.
      */
-    @Override
-    public void onBackPressed() {
+    private void askToSaveOrQuit() {
         if (mDumpChanged) {
             new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_save_before_quitting_title)
@@ -361,7 +368,7 @@ public class DumpEditor extends BasicActivity
                         finish();
                     }).show();
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 

@@ -32,6 +32,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,6 +80,13 @@ public class KeyEditor extends BasicActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key_editor);
+        getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                askToSaveOrQuit();
+            }
+        });
 
         mKeys = findViewById(R.id.editTextKeyEditorKeys);
         // This is a (ugly) fix for a bug in Android 5.0+
@@ -183,8 +192,7 @@ public class KeyEditor extends BasicActivity
      * Show a dialog in which the user can chose between "save", "don't save"
      * and "cancel", if there are unsaved changes.
      */
-    @Override
-    public void onBackPressed() {
+    private void askToSaveOrQuit() {
         if (mKeysChanged) {
             new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_save_before_quitting_title)
@@ -206,7 +214,7 @@ public class KeyEditor extends BasicActivity
                         finish();
                     }).show();
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 
